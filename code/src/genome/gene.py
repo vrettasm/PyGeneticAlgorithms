@@ -9,7 +9,7 @@ class Gene(object):
     valid: bool = True
 
     @property
-    def is_valid(self):
+    def is_valid(self) -> bool:
         """
         Accessor (getter) of the validity parameter.
 
@@ -19,7 +19,7 @@ class Gene(object):
     # _end_def_
 
     @is_valid.setter
-    def is_valid(self, new_value):
+    def is_valid(self, new_value: bool):
         """
         Accessor (setter) of the validity flag.
 

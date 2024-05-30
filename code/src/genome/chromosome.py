@@ -7,18 +7,28 @@ class Chromosome(object):
     # Define the genome as a list of genes.
     genome: list[Gene] = field(default_factory=list)
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         """
         Checks the validity of the whole chromosome, by
         calling individually all genes is_valid method.
 
-        Additionally, it "double-checks" that all entries
+        In addition, it "double-checks" that all entries
         in the genome are of type 'Gene'.
 
         :return: True if ALL genes are valid, else False.
         """
         return all(isinstance(x, Gene) and x.is_valid
                    for x in self.genome)
+    # _end_def_
+
+    @property
+    def length(self) -> int:
+        """
+        Accessor (getter) of the total length of the genome.
+
+        :return: the length of the genome.
+        """
+        return len(self.genome)
     # _end_def_
 
 # _end_class_
