@@ -85,4 +85,13 @@ class GeneticOperator(object):
         return str_self
     # _end_def_
 
+    def __repr__(self):
+        """
+        Description:
+            Override to provide a simple string that’s a valid Python expression
+            which could be used to recreate the object: ClassName(_probability).
+        """
+        return f"{self.__class__.__name__}({self._probability})"
+    # _end_def_
+
 # _end_class_
