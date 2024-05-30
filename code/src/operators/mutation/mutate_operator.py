@@ -15,8 +15,3 @@ class MutationOperator(GeneticOperator):
     # _end_def_
 
 # _end_class_
-
-
-mut_op = MutationOperator(-0.9)
-
-print(mut_op)
