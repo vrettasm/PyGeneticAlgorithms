@@ -7,7 +7,7 @@ class MutationOperator(GeneticOperator):
         Construct a 'MutationOperator' object with a given
         probability value.
 
-        :param mutation_probability: (float)
+        :param mutation_probability: (float).
         """
 
         # Call the super constructor with the provided probability value.
