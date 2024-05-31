@@ -1,4 +1,5 @@
-from gene import Gene
+from copy import deepcopy
+from code.src.genome.gene import Gene
 from dataclasses import dataclass, field
 
 @dataclass(init=True, repr=True)
@@ -21,14 +22,41 @@ class Chromosome(object):
                    for x in self.genome)
     # _end_def_
 
-    @property
-    def length(self) -> int:
+    def __len__(self) -> int:
         """
-        Accessor (getter) of the total length of the genome.
+        Accessor of the total length of the genome.
 
-        :return: the length of the genome.
+        :return: the length (int) of the genome.
         """
         return len(self.genome)
+    # _end_def_
+
+    def __getitem__(self, index: int):
+        return self.genome[index]
+    # _end_def_
+
+    def __setitem__(self, index: int, item: Gene):
+        self.genome[index] = item
+    # _end_def_
+
+    def __contains__(self, item: Gene) -> bool:
+        """
+        Check for membership.
+
+        :param item: an input Gene that we want to check.
+
+        :return: true if the 'item' belongs in the genome.
+        """
+        return item in self.genome
+    # _end_if_
+
+    def make_deepcopy(self):
+        """
+        Makes a duplicate of the self object.
+
+        :return: a 'deep-copy' of the object.
+        """
+        return deepcopy(self)
     # _end_def_
 
 # _end_class_
