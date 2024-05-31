@@ -17,7 +17,7 @@ class SinglePointCrossover(CrossoverOperator):
         Construct a 'SinglePointCrossover' object with
         a given probability value.
 
-        :param crossover_probability: (float)
+        :param crossover_probability: (float).
         """
 
         # Call the super constructor with the provided
