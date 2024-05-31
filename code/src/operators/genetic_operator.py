@@ -1,3 +1,5 @@
+from numpy.random import default_rng
+
 # Public interface.
 __all__ = ["GeneticOperator"]
 
@@ -13,19 +15,21 @@ __email__ = "michail.vrettas@gmail.com"
 class GeneticOperator(object):
 
     # Object variables.
-    __slots__ = ("_probability",)
+    __slots__ = ("_probability", "_rng")
 
-    def __init__(self, _probability: float = 0.5):
+    def __init__(self, _probability: float):
         """
-        Construct a 'GeneticOperator' object with
-        a given probability value.
+        Construct a 'GeneticOperator' object with a given
+        probability value.
 
-        :param _probability: (float)
+        :param _probability: (float).
         """
 
         # Ensure the default entry value is within range [0, 1].
         self._probability = max(min(float(_probability), 1.0), 0.0)
 
+        # Create a random number generator.
+        self._rng = default_rng()
     # _end_def_
 
     @property
@@ -63,6 +67,16 @@ class GeneticOperator(object):
                             f"Probability should be float: {type(new_value)}.")
         # _end_if_
 
+    # _end_def_
+
+    @property
+    def rng(self):
+        """
+        Accessor method.
+
+        :return: the random number generator.
+        """
+        return self._rng
     # _end_def_
 
     def __str__(self):
