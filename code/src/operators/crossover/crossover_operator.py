@@ -7,10 +7,11 @@ class CrossoverOperator(GeneticOperator):
         Construct a 'CrossoverOperator' object with a given
         probability value.
 
-        :param crossover_probability: (float)
+        :param crossover_probability: (float).
         """
 
-        # Call the super constructor with the provided probability value.
+        # Call the super constructor with the provided probability
+        # value.
         super().__init__(crossover_probability)
     # _end_def_
 
