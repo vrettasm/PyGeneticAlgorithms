@@ -15,7 +15,7 @@ __email__ = "michail.vrettas@gmail.com"
 class GeneticOperator(object):
 
     # Object variables.
-    __slots__ = ("_probability", "_rng")
+    __slots__ = ("_probability", "_rng", "_counter")
 
     def __init__(self, _probability: float):
         """
@@ -30,6 +30,29 @@ class GeneticOperator(object):
 
         # Create a random number generator.
         self._rng = default_rng()
+
+        # Initialize the application counter to zero.
+        self._counter = 0
+    # _end_def_
+
+    @property
+    def counter(self):
+        """
+        Accessor (getter) of the application counter.
+
+        :return: the int value of the counter variable.
+        """
+        return self._counter
+    # _end_def_
+
+    def inc_counter(self):
+        """
+        Increase the counter value by one. This is applied
+        after each application of the genetic operator.
+
+        :return: None.
+        """
+        self._counter += 1
     # _end_def_
 
     @property
