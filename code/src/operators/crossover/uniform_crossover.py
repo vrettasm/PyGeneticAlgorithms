@@ -44,24 +44,21 @@ class UniformCrossover(CrossoverOperator):
         child1 = parent1.make_deepcopy()
         child2 = parent2.make_deepcopy()
 
-        # If the crossover probability is higher than
-        # a uniformly random value, make the changes.
-        if self.probability >= self.rng.random():
+        # Make a local copy of the crossover probability.
+        swap_probability = self.probability
 
-            # Go through all the children's genes and
-            # swap them when the index is even or odd.
-            for i in range(0, num_genes):
+        # Go through all the children's genome.
+        for i in range(0, num_genes):
 
-                # This is true only in the 'even' positions.
-                if i % 2 == 0:
+            # Check the swap probability only for
+            # the 'even' positions in the genome.
+            if i % 2 == 0 and swap_probability >= self.rng.random():
 
-                    # Swap in place between the two positions.
-                    child1[i], child2[i] = child2[i], child1[i]
-                # _end_if_
+                # Swap in place between the two positions.
+                child1[i], child2[i] = child2[i], child1[i]
+            # _end_if_
 
-            # _end_for_
-
-        # _end_if_
+        # _end_for_
 
         # Increase the application counter.
         self.inc_counter()
