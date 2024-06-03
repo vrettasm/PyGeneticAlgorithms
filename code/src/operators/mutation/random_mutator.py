@@ -1,4 +1,3 @@
-from code.src.genome.gene import Gene
 from mutate_operator import MutationOperator
 from code.src.genome.chromosome import Chromosome
 
@@ -25,14 +24,12 @@ class RandomMutator(MutationOperator):
 
     # _end_def_
 
-    def mutate(self, parent: Chromosome, pool: list[Gene]):
+    def mutate(self, parent: Chromosome):
         """
         Perform the mutation operation by randomly replacing
         a gene with a new one from an accepted list of genes.
 
         :param parent: (Chromosome).
-
-        :param pool: (Genes).
 
         :return: child (as Chromosomes).
         """
@@ -48,7 +45,7 @@ class RandomMutator(MutationOperator):
             locus = self.rng.integers(0, len(child))
 
             # Replace the old gene with a new one.
-            child[locus] = self.rng.choice(pool)
+            child[locus] = child[locus].random()
 
             # Increase the application counter.
             self.inc_counter()
