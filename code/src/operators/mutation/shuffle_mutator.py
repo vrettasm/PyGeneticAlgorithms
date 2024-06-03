@@ -1,18 +1,18 @@
 from mutate_operator import MutationOperator
 from code.src.genome.chromosome import Chromosome
 
-class SwapMutator(MutationOperator):
+class ShuffleMutator(MutationOperator):
     """
     Description:
 
-        Swap mutator attempts to mutate the chromosome by swapping the
-        gene values between two randomly selected gene positions.
+        Shuffle mutator attempts to mutate the chromosome by shuffling
+        the gene values between two randomly selected gene positions.
     """
 
     def __init__(self, mutate_probability: float = 0.1):
         """
-        Construct a 'SwapMutator' object with a given probability
-        value.
+        Construct a 'ShuffleMutator' object with a given
+        probability value.
 
         :param mutate_probability: (float).
         """
@@ -25,8 +25,8 @@ class SwapMutator(MutationOperator):
 
     def mutate(self, parent: Chromosome):
         """
-        Perform the mutation operation by swapping the genes at two
-        random positions.
+        Perform the mutation operation by shuffling the genes
+        between at two random positions.
 
         :param parent: (Chromosome).
 
@@ -40,14 +40,22 @@ class SwapMutator(MutationOperator):
         # a uniformly random value, make the changes.
         if self.probability >= self.rng.random():
 
-            # Select randomly the two mutation points.
+            # Select randomly the two mutation end-points.
             loci = self.rng.choice(range(0, len(child)), size=2,
                                    replace=False, shuffle=False)
+
             # Extract the indexes.
             i, j = loci
 
-            # Swap in place between the two positions.
-            child[i], child[j] = child[j], child[i]
+            # Make a slice list of the genes
+            # we want to shuffle.
+            shuffled_chromosome = child[i:j]
+
+            # Shuffle the copied slice in place.
+            self.rng.shuffle(shuffled_chromosome)
+
+            # Put back the shuffled items.
+            child[i:j] = shuffled_chromosome
         # _end_if_
 
         # Increase the application counter.
