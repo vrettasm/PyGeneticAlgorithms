@@ -48,10 +48,10 @@ class SwapMutator(MutationOperator):
 
             # Swap in place between the two positions.
             child[i], child[j] = child[j], child[i]
-        # _end_if_
 
-        # Increase the application counter.
-        self.inc_counter()
+            # Increase the application counter.
+            self.inc_counter()
+        # _end_if_
 
         # Return the offspring.
         return child

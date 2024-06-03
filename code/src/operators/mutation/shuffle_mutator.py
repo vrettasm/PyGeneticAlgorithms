@@ -41,14 +41,13 @@ class ShuffleMutator(MutationOperator):
         if self.probability >= self.rng.random():
 
             # Select randomly the two mutation end-points.
-            loci = self.rng.choice(range(0, len(child)), size=2,
-                                   replace=False, shuffle=False)
-
+            loci = sorted(self.rng.choice(range(0, len(child)), size=2,
+                                          replace=False, shuffle=False))
             # Extract the indexes.
             i, j = loci
 
             # Make a slice list of the genes
-            # we want to shuffle.
+            # we want to shuffle: i -> j.
             shuffled_chromosome = child[i:j]
 
             # Shuffle the copied slice in place.
@@ -56,10 +55,10 @@ class ShuffleMutator(MutationOperator):
 
             # Put back the shuffled items.
             child[i:j] = shuffled_chromosome
-        # _end_if_
 
-        # Increase the application counter.
-        self.inc_counter()
+            # Increase the application counter.
+            self.inc_counter()
+        # _end_if_
 
         # Return the offspring.
         return child

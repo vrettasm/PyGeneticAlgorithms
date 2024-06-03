@@ -39,21 +39,22 @@ class SinglePointCrossover(CrossoverOperator):
         # If the crossover probability is higher than
         # a uniformly random value, make the changes.
         if self.probability >= self.rng.random():
+
             # Select randomly the crossover point.
             locus = self.rng.integers(0, len(parent1))
 
             # Create the new two offsprings at locus.
             child1 = Chromosome(parent1[:locus] + parent2[locus:])
             child2 = Chromosome(parent2[:locus] + parent1[locus:])
+
+            # Increase the application counter.
+            self.inc_counter()
         else:
             # Otherwise each child will point
             # to a deepcopy of a single parent.
             child1 = parent1.make_deepcopy()
             child2 = parent2.make_deepcopy()
         # _end_if_
-
-        # Increase the application counter.
-        self.inc_counter()
 
         # Return the two offsprings.
         return child1, child2

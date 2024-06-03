@@ -88,10 +88,10 @@ class MultiPointCrossover(CrossoverOperator):
 
             # _end_for_
 
-        # _end_if_
+            # Increase the application counter.
+            self.inc_counter()
 
-        # Increase the application counter.
-        self.inc_counter()
+        # _end_if_
 
         # Return the two offsprings.
         return child1, child2
