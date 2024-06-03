@@ -5,17 +5,21 @@ from dataclasses import dataclass, field
 @dataclass(init=True, repr=True)
 class Chromosome(object):
 
-    # Define the genome as a list of genes.
+    # Define the genome as a list of genes. This list
+    # will encode a "single solution to the problem".
     _genome: list[Gene] = field(default_factory=list)
 
-    # Define the fitness value of the chromosome.
+    # The fitness value will correspond to how well the
+    # chromosome fits in its environment, as defined by
+    # the fitness function.
     _fitness: float = 0.0
 
-    # Define a boolean flag.
+    # Define a boolean flag. This flag here can be used
+    # to include hard/soft constraints to the chromosome.
     _valid: bool = True
 
     @property
-    def is_valid(self) -> bool:
+    def valid(self) -> bool:
         """
         Accessor (getter) of the validity parameter.
 
@@ -24,8 +28,8 @@ class Chromosome(object):
         return self._valid
     # _end_def_
 
-    @is_valid.setter
-    def is_valid(self, new_value: bool):
+    @valid.setter
+    def valid(self, new_value: bool):
         """
         Accessor (setter) of the validity flag.
 
@@ -51,6 +55,25 @@ class Chromosome(object):
         :return: the fitness (float) of the genome.
         """
         return self._fitness
+    # _end_def_
+
+    @fitness.setter
+    def fitness(self, new_value: float):
+        """
+        Accessor (setter) of the fitness value.
+
+        :param new_value: (float).
+        """
+        # Check for correct type.
+        if isinstance(new_value, float):
+
+            # Update the fitness value.
+            self._fitness = new_value
+        else:
+            raise TypeError(f"{self.__class__.__name__}: "
+                            f"Fitness should be float: {type(new_value)}.")
+        # _end_if_
+
     # _end_def_
 
     def is_genome_valid(self) -> bool:
