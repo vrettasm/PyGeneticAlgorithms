@@ -54,4 +54,36 @@ class Gene(object):
 
     # _end_def_
 
+    def random(self):
+        """
+        This is a "placeholder"  method, and it should be different
+        for each type of gene. It describes how  a specific type of
+        Gene creates a random version  of itself. The main idea  is
+        that inside  the Chromosome, each gene can represent a very
+        different concept of the  problem, so its  Gene should have
+        its own way of perform random mutation. This way by calling
+        on the "random()" method, each Gene will know how to mutate
+        itself without breaking ay rules/constraints.
+
+        Example:
+        ----------------
+            # G1 represents a gene (in the chromosome list) that
+            # is an integer.
+            g1 = Gene(0)
+
+            # We set the random function to call the randint(0,100).
+            g1.random = lambda: Gene(np.random.randint(100))
+
+            # Now, when we call this g1 will have a 'new' version
+            # of itself with a different random value, generated
+            # by the randint method.
+            g1 = g1.random()
+        --------------------
+
+        :return: None.
+        """
+        raise NotImplementedError(f"{self.__class__.__name__}: "
+                                  "You need to implement this method!")
+    # _end_def_
+
 # _end_class_
