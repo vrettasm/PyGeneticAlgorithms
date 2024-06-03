@@ -8,7 +8,7 @@ class RandomMutator(MutationOperator):
 
         Random mutator attempts to mutate the chromosome by setting
         the gene value (of a randomly chosen position) with another
-        gene selected randomly from a valid GenePool.
+        gene selected randomly from a valid pool of Genes.
     """
 
     def __init__(self, mutate_probability: float = 0.1):
