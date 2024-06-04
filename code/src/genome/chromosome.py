@@ -1,13 +1,15 @@
 from copy import deepcopy
-from code.src.genome.gene import Gene
 from dataclasses import dataclass, field
+
+from src.genome.gene import Gene
+
 
 @dataclass(init=True, repr=True)
 class Chromosome(object):
 
     # Define the genome as a list of genes. This list
     # will encode a "single solution to the problem".
-    _genome: list[Gene] = field(default_factory=list)
+    _genome: list = field(default_factory=list)
 
     # The fitness value will correspond to how well the
     # chromosome fits in its environment, as defined by

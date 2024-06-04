@@ -1,6 +1,8 @@
 import numpy as np
+
+from src.genome.chromosome import Chromosome
 from crossover_operator import CrossoverOperator
-from code.src.genome.chromosome import Chromosome
+
 
 class MultiPointCrossover(CrossoverOperator):
     """

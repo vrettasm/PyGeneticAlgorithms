@@ -1,5 +1,6 @@
-from mutate_operator import MutationOperator
 from code.src.genome.chromosome import Chromosome
+from mutate_operator import MutationOperator
+
 
 class ShuffleMutator(MutationOperator):
     """

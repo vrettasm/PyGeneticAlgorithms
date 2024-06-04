@@ -1,5 +1,6 @@
+from src.genome.chromosome import Chromosome
 from crossover_operator import CrossoverOperator
-from code.src.genome.chromosome import Chromosome
+
 
 class SinglePointCrossover(CrossoverOperator):
     """
