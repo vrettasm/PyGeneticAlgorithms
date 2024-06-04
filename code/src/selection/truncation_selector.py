@@ -1,4 +1,4 @@
-from select_operator import SelectionOperator
+from src.selection.select_operator import SelectionOperator
 
 class TruncationSelector(SelectionOperator):
     pass
