@@ -5,9 +5,15 @@ from typing import Any
 @dataclass(init=True, repr=True)
 class Gene(object):
 
-    # Define the class members.
+    # Datum holds a reference of the gene-data structure.
     datum: Any = None
+
+    # This 'private' function is used in the 'random()'
+    # method to be used by the mutation operators.
     _func: Any = None
+
+    # This flag is used to set the Gene as valid (True)
+    # or invalid (False).
     valid: bool = True
 
     @property
@@ -58,31 +64,16 @@ class Gene(object):
 
     def random(self):
         """
-        This is a "placeholder"  method, and it should be different
-        for each type of Gene. It describes how  a specific type of
-        Gene creates a random version  of itself. The main idea  is
-        that inside  the Chromosome, each Gene can represent a very
-        different concept of the  problem, so its  Gene should have
-        its own way to perform random mutation. This way by calling
-        on the "random()" method, each Gene will know how to mutate
-        itself without breaking ay rules/constraints.
+        This method should be different for each type of Gene. It describes
+        how a specific type of Gene creates a random version of itself. The
+        main  idea is that inside the Chromosome, each Gene can represent a
+        very different concept of the  problem solution, so its Gene should
+        have its own way to perform random mutation.
 
-        Example:
-        -----------------------------------------------------------
-            # G1 represents a gene (in the chromosome list) that
-            # is an integer.
-            g1 = Gene(0)
+        This way by calling on the "random()" method, each Gene will know
+        how to mutate itself without breaking ay rules/constraints.
 
-            # We set the random function to call the randint(100).
-            g1.random = lambda: Gene(np.random.randint(100))
-
-            # Now, when we call this g1 will have a 'new' version
-            # of itself with a different random value, generated
-            # by the randint method.
-            g1 = g1.random()
-        -----------------------------------------------------------
-
-        :return: None.
+        :return: _func().
         """
         if callable(self._func):
             return self._func()
