@@ -1,4 +1,4 @@
-from src.selection.select_operator import SelectionOperator
+from src.operators.selection.select_operator import SelectionOperator
 
 class ProbabilitySelector(SelectionOperator):
     pass
