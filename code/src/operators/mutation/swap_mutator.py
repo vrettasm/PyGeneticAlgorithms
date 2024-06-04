@@ -1,5 +1,5 @@
 from src.genome.chromosome import Chromosome
-from mutate_operator import MutationOperator
+from src.operators.mutation.mutate_operator import MutationOperator
 
 
 class SwapMutator(MutationOperator):
