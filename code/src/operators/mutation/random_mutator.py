@@ -1,4 +1,4 @@
-from code.src.genome.chromosome import Chromosome
+from src.genome.chromosome import Chromosome
 from mutate_operator import MutationOperator
 
 

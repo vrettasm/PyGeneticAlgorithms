@@ -1,4 +1,4 @@
-from code.src.operators.genetic_operator import GeneticOperator
+from src.operators.genetic_operator import GeneticOperator
 
 class MutationOperator(GeneticOperator):
 
