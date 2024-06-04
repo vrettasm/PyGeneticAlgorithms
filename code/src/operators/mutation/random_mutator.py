@@ -5,9 +5,9 @@ class RandomMutator(MutationOperator):
     """
     Description:
 
-        Random mutator attempts to mutate the chromosome by setting
-        the gene value (of a randomly chosen position) with another
-        gene selected randomly from a valid pool of Genes.
+        Random mutator, mutates the chromosome by selecting randomly
+        a position and replace the Gene with a new one that has been
+        generated randomly (uniform probability).
     """
 
     def __init__(self, mutate_probability: float = 0.1):
@@ -27,7 +27,7 @@ class RandomMutator(MutationOperator):
     def mutate(self, parent: Chromosome):
         """
         Perform the mutation operation by randomly replacing
-        a gene with a new one from an accepted list of genes.
+        a gene with a new one that has been generated randomly.
 
         :param parent: (Chromosome).
 

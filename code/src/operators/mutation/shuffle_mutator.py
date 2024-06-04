@@ -5,8 +5,9 @@ class ShuffleMutator(MutationOperator):
     """
     Description:
 
-        Shuffle mutator attempts to mutate the chromosome by shuffling
-        the gene values between two randomly selected gene positions.
+        Shuffle mutator mutates the chromosome by shuffling
+        the gene values between two randomly selected gene
+        end-positions.
     """
 
     def __init__(self, mutate_probability: float = 0.1):
@@ -25,8 +26,8 @@ class ShuffleMutator(MutationOperator):
 
     def mutate(self, parent: Chromosome):
         """
-        Perform the mutation operation by shuffling the genes
-        between at two random positions.
+        Perform the mutation operation by shuffling
+        the genes between at two random positions.
 
         :param parent: (Chromosome).
 
@@ -40,7 +41,7 @@ class ShuffleMutator(MutationOperator):
         # a uniformly random value, make the changes.
         if self.probability >= self.rng.random():
 
-            # Select randomly the two mutation end-points.
+            # Select randomly two mutation end-points.
             loci = sorted(self.rng.choice(range(0, len(child)), size=2,
                                           replace=False, shuffle=False))
             # Extract the indexes.
