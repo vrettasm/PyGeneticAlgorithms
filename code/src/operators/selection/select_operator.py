@@ -15,11 +15,14 @@ class SelectionOperator(GeneticOperator):
         super().__init__(selection_probability)
     # _end_def_
 
-    def select(self):
+    def select(self, population: list):
         """
-        Abstract method that reminds the user that if they want to
+        Abstract method that "reminds" the user that if they want to
         create a Selection Class that inherits from here they should
         implement a select method.
+
+        :param population: is a list, with the chromosomes, to select
+        the parents for the next generation
 
         :return: Nothing but raising an error.
         """
