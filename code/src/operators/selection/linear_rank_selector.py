@@ -34,8 +34,8 @@ class LinearRankSelector(SelectionOperator):
         :return: a new population (list of chromosomes).
         """
 
-        # Sort the population in descending order using as key their fitness value.
-        sorted_population = sorted(population, key=lambda p: p._fitness, reverse=True)
+        # Sort the population in ascending order using their fitness value.
+        sorted_population = sorted(population, key=lambda p: p._fitness)
 
         # Get the length of the population list.
         N = len(sorted_population)
