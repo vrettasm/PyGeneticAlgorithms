@@ -28,8 +28,8 @@ class RouletteWheelSelector(SelectionOperator):
 
     def select(self, population: list[Chromosome]):
         """
-        Select the new individuals from the population that will be passed on to the next genetic operations of
-        crossover and mutation to form the new population of solutions.
+        Select the new individuals from the population that will be passed on to the next genetic operations
+        of crossover and mutation to form the new population of solutions.
 
         :param population:
 
@@ -48,7 +48,7 @@ class RouletteWheelSelector(SelectionOperator):
         selection_probs = [f / sum_fitness for f in abs_fitness]
 
         # Return the (new) selected individuals.
-        return population[self.rng.choice(len(population), p=selection_probs, shuffle=False)]
+        return population[self.rng.choice(len(population), p=selection_probs, replace=True, shuffle=False)]
     # _end_def_
 
 # _end_class_
