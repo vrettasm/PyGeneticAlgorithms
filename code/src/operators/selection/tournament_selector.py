@@ -54,11 +54,11 @@ class TournamentSelector(SelectionOperator):
             # Select randomly 'K' individuals from the initial population.
             parents = choose_K(population)
 
-            # Sort them (in descending order) according to their fitness value.
-            parents = sorted(parents, key=lambda p: p._fitness, reverse=True)
+            # Get the individual with the highest fitness value.
+            winner = max(parents, key=lambda p: p._fitness)
 
             # Copy the best individual in the new list.
-            new_parents_append(parents[0])
+            new_parents_append(winner)
         # _end_for_
 
         return new_parents
