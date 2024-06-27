@@ -15,6 +15,8 @@ class TournamentSelector(SelectionOperator):
         Construct a 'TournamentSelector' object with a given probability value.
 
         :param select_probability: (float).
+
+        :param k: the number of participants in the tournament (int).
         """
 
         # Call the super constructor with the provided probability value.
