@@ -48,7 +48,8 @@ class StochasticUniversalSelector(SelectionOperator):
         # Get a random number between 0 and dist_p.
         start_0 = dist_p * self.rng.random()
 
-        # Pointers := [Start + i*P | i in [0..(N-1)]]
+        # Calculate the pointers at equal distances 'dist_p'
+        # starting from 'start_0.
         pointers = [start_0 + i*dist_p for i in range(0, N)]
 
         # Create a list that will contain the new parents.
