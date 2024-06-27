@@ -1,6 +1,5 @@
 from math import fsum
 from numpy import cumsum
-from numpy.random import shuffle
 from src.genome.chromosome import Chromosome
 from src.operators.selection.select_operator import SelectionOperator
 
@@ -77,7 +76,7 @@ class StochasticUniversalSelector(SelectionOperator):
         # _end_for_
 
         # Return the (new) selected individuals.
-        return shuffle(new_parents)
+        return self.rng.shuffle(new_parents)
     # _end_def_
 
 # _end_class_
