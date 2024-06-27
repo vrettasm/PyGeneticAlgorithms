@@ -1,5 +1,5 @@
 
-class StandardGA(object):
+class IslandGA(object):
 
     def __int__(self):
         pass
