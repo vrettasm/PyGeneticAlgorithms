@@ -36,6 +36,9 @@ class RouletteWheelSelector(SelectionOperator):
         :return: a new population (list of chromosomes).
         """
 
+        # Get the length of the population list.
+        N = len(population)
+
         # Extract the fitness value of each chromosome making
         # sure it is a positive value.
         abs_fitness = [abs(p._fitness) for p in population]
@@ -48,7 +51,8 @@ class RouletteWheelSelector(SelectionOperator):
         selection_probs = [f / sum_fitness for f in abs_fitness]
 
         # Return the (new) selected individuals.
-        return population[self.rng.choice(len(population), p=selection_probs, replace=True, shuffle=False)]
+        return self.rng.choice(population, size=N, p=selection_probs,
+                               replace=True, shuffle=False).tolist()
     # _end_def_
 
 # _end_class_
