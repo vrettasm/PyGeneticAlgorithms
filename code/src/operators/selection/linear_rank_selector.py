@@ -47,7 +47,8 @@ class LinearRankSelector(SelectionOperator):
         selection_probs = [n / sum_ranked_values for n in range(1, N+1)]
 
         # Return the (new) selected individuals.
-        return sorted_population[self.rng.choice(N, p=selection_probs, replace=True, shuffle=False)]
+        return self.rng.choice(sorted_population, size=N, p=selection_probs,
+                               replace=True, shuffle=False).tolist()
     # _end_def_
 
 # _end_class_
