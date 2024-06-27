@@ -10,16 +10,21 @@ class TournamentSelector(SelectionOperator):
         crossover and mutation.
     """
 
-    def __init__(self, select_probability: float = 1.0):
+    def __init__(self, select_probability: float = 1.0, k: int = 5):
         """
         Construct a 'TournamentSelector' object with a given probability value.
 
         :param select_probability: (float).
         """
 
-        # Call the super constructor with the provided
-        # probability value.
+        # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
+
+        # Make sure 'k' is integer.
+        k = int(k)
+
+        # Number of 'participants' of the tournament should be more than 2.
+        self._k = k if k > 2 else 5
     # _end_def_
 
     def select(self, population: list[Chromosome]):
@@ -35,17 +40,23 @@ class TournamentSelector(SelectionOperator):
         # Create a list that will contain the new parents.
         new_parents = []
 
+        # Get the list append method locally.
+        new_parents_append = new_parents.append
+
+        # Define locally the choose function.
+        choose_K = lambda X: self.rng.choice(X, size=self._k, replace=False, shuffle=False)
+
         # Repeat the 'tournament' N times.
         for i in range(len(population)):
 
-            # Select randomly '5' individuals from the initial population.
-            parents = self.rng.choice(population, size=5, replace=False, shuffle=False)
+            # Select randomly 'K' individuals from the initial population.
+            parents = choose_K(population)
 
             # Sort them (in descending order) according to their fitness value.
             parents = sorted(parents, key=lambda p: p._fitness, reverse=True)
 
             # Copy the best individual in the new list.
-            new_parents.append(parents[0])
+            new_parents_append(parents[0])
         # _end_for_
 
         return new_parents
