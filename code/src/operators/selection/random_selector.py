@@ -6,7 +6,7 @@ class RandomSelector(SelectionOperator):
     Description:
 
         Random Selector implements selection assuming that all member of the population have the same probability
-        to be selected as parents (effectively assuming a uniform probability).
+        to be selected as parents 1/N, (effectively assuming a uniform probability).
 
         It does not favour the fit individuals therefore the mixing will be very slow.
     """
@@ -34,5 +34,6 @@ class RandomSelector(SelectionOperator):
         """
 
         # Return the (new) selected individuals.
-        return population[self.rng.choice(len(population), replace=True, shuffle=False)]
+        return self.rng.choice(population, size=len(population),
+                               replace=True, shuffle=False).tolist()
 # _end_class_
