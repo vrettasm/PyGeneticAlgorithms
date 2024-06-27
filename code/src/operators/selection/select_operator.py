@@ -1,3 +1,4 @@
+from src.genome.chromosome import Chromosome
 from src.operators.genetic_operator import GeneticOperator
 
 class SelectionOperator(GeneticOperator):
@@ -15,7 +16,7 @@ class SelectionOperator(GeneticOperator):
         super().__init__(selection_probability)
     # _end_def_
 
-    def select(self, population: list):
+    def select(self, population: list[Chromosome]):
         """
         Abstract method that "reminds" the user that if they want to
         create a Selection Class that inherits from here they should
