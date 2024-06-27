@@ -61,6 +61,9 @@ class TournamentSelector(SelectionOperator):
             new_parents_append(winner)
         # _end_for_
 
+        # Increase the selection counter.
+        self.inc_counter()
+
         return new_parents
     # _end_def_
 

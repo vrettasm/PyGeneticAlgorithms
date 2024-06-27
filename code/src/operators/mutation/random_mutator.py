@@ -48,7 +48,7 @@ class RandomMutator(MutationOperator):
             # Replace the old gene with a new one.
             child[locus] = child[locus].random()
 
-            # Increase the application counter.
+            # Increase the mutator counter.
             self.inc_counter()
         # _end_if_
 

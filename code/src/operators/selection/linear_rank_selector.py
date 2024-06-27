@@ -46,6 +46,9 @@ class LinearRankSelector(SelectionOperator):
         # Calculate the "selection probabilities", of each member in the population.
         selection_probs = [n / sum_ranked_values for n in range(1, N+1)]
 
+        # Increase the selection counter.
+        self.inc_counter()
+
         # Return the (new) selected individuals.
         return self.rng.choice(sorted_population, size=N, p=selection_probs,
                                replace=True, shuffle=False).tolist()

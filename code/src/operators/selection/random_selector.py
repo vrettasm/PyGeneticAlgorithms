@@ -33,6 +33,9 @@ class RandomSelector(SelectionOperator):
         :return: a new population (list of chromosomes).
         """
 
+        # Increase the selection counter.
+        self.inc_counter()
+
         # Return the (new) selected individuals.
         return self.rng.choice(population, size=len(population),
                                replace=True, shuffle=False).tolist()

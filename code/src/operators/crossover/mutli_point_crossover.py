@@ -90,7 +90,7 @@ class MultiPointCrossover(CrossoverOperator):
 
             # _end_for_
 
-            # Increase the application counter.
+            # Increase the crossover counter.
             self.inc_counter()
 
         # _end_if_

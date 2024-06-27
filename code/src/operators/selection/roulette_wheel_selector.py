@@ -50,6 +50,9 @@ class RouletteWheelSelector(SelectionOperator):
         # in the population.
         selection_probs = [f / sum_fitness for f in abs_fitness]
 
+        # Increase the selection counter.
+        self.inc_counter()
+
         # Return the (new) selected individuals.
         return self.rng.choice(population, size=N, p=selection_probs,
                                replace=True, shuffle=False).tolist()

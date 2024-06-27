@@ -58,7 +58,7 @@ class ShuffleMutator(MutationOperator):
             # Put back the shuffled items.
             child[i:j] = shuffled_chromosome
 
-            # Increase the application counter.
+            # Increase the mutator counter.
             self.inc_counter()
         # _end_if_
 

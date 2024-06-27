@@ -48,7 +48,7 @@ class SinglePointCrossover(CrossoverOperator):
             child1 = Chromosome(parent1[:locus] + parent2[locus:])
             child2 = Chromosome(parent2[:locus] + parent1[locus:])
 
-            # Increase the application counter.
+            # Increase the crossover counter.
             self.inc_counter()
         else:
             # Otherwise each child will point

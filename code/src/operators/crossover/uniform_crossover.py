@@ -61,7 +61,7 @@ class UniformCrossover(CrossoverOperator):
 
         # _end_for_
 
-        # Increase the application counter.
+        # Increase the crossover counter.
         self.inc_counter()
 
         # Return the two offsprings.
