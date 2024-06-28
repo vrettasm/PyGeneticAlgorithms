@@ -1,3 +1,4 @@
+from numpy import nan as np_nan
 from src.genome.chromosome import Chromosome
 from src.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -45,8 +46,10 @@ class SinglePointCrossover(CrossoverOperator):
             locus = self.rng.integers(0, len(parent1))
 
             # Create the new two offsprings at locus.
-            child1 = Chromosome(parent1[:locus] + parent2[locus:])
-            child2 = Chromosome(parent2[:locus] + parent1[locus:])
+            # At this point the two new offsprings do not have accurate fitness,
+            # so we set them both to "NaN".
+            child1 = Chromosome(parent1[:locus] + parent2[locus:], _fitness=np_nan)
+            child2 = Chromosome(parent2[:locus] + parent1[locus:], _fitness=np_nan)
 
             # Increase the crossover counter.
             self.inc_counter()

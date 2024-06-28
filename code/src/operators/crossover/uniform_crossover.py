@@ -1,3 +1,4 @@
+from numpy import nan as np_nan
 from src.genome.chromosome import Chromosome
 from src.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -48,6 +49,9 @@ class UniformCrossover(CrossoverOperator):
         # Make a local copy of the crossover probability.
         swap_probability = self.probability
 
+        # Swap flag.
+        swap_flag = False
+
         # Go through all the children's genome.
         for i in range(0, num_genes):
 
@@ -57,9 +61,18 @@ class UniformCrossover(CrossoverOperator):
 
                 # Swap in place between the two positions.
                 child1[i], child2[i] = child2[i], child1[i]
+
+                # Set the swap to true.
+                swap_flag = True
             # _end_if_
 
         # _end_for_
+
+        # Even if one gene has swapped the fitness will not be accurate.
+        if swap_flag:
+            child1.fitness = np_nan
+            child2.fitness = np_nan
+        # _end_if_
 
         # Increase the crossover counter.
         self.inc_counter()
