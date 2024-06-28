@@ -27,7 +27,7 @@ class Gene(object):
         if not callable(_func):
             raise TypeError(f"{self.__class__.__name__}: Random function is not callable.")
         else:
-            # Get the fitness function.
+            # Get the random function.
             self._func = _func
         # _end_if_
 
