@@ -64,10 +64,8 @@ class MultiPointCrossover(CrossoverOperator):
         if self.probability >= self.rng.random():
 
             # Select randomly the crossover points and sort them.
-            loci = sorted(self.rng.choice(range(0, num_genes),
-                                          size=num_loci,
-                                          replace=False,
-                                          shuffle=False))
+            loci = sorted(self.rng.choice(num_genes, size=num_loci,
+                                          replace=False, shuffle=False))
 
             # Initialize an array with True values
             # with the same size as the chromosome.
