@@ -47,13 +47,13 @@ class ShuffleMutator(MutationOperator):
 
             # Make a slice list of the genes
             # we want to shuffle: i -> j.
-            shuffled_chromosome = individual[i:j]
+            sliced_chromosome = individual[i:j]
 
             # Shuffle the copied slice in place.
-            self.rng.shuffle(shuffled_chromosome)
+            self.rng.shuffle(sliced_chromosome)
 
             # Put back the shuffled items.
-            individual[i:j] = shuffled_chromosome
+            individual[i:j] = sliced_chromosome
 
             # Increase the mutator counter.
             self.inc_counter()
