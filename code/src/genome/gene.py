@@ -100,18 +100,17 @@ class Gene(object):
     # _end_def_
 
     # Auxiliary.
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Override to print a readable string presentation of the object.
 
         :return: a string representation of a Gene object.
         """
         return f"{self.__class__.__name__}: datum={self.datum}"
-
     # _end_def_
 
     # Auxiliary.
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         Repr operator is called when a string representation is needed that can be evaluated.
 
