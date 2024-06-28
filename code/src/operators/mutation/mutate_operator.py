@@ -16,13 +16,13 @@ class MutationOperator(GeneticOperator):
         super().__init__(mutation_probability)
     # _end_def_
 
-    def mutate(self, parent: Chromosome):
+    def mutate(self, individual: Chromosome):
         """
         Abstract method that "reminds" the user that if they want to
         create a Mutation Class that inherits from here they should
         implement a mutate method.
 
-        :param parent: the chromosome to be mutated.
+        :param individual: the chromosome to be mutated.
 
         :return: Nothing but raising an error.
         """

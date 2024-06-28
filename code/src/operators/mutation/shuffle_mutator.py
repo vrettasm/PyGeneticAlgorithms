@@ -25,45 +25,40 @@ class ShuffleMutator(MutationOperator):
 
     # _end_def_
 
-    def mutate(self, parent: Chromosome):
+    def mutate(self, individual: Chromosome):
         """
-        Perform the mutation operation by shuffling
-        the genes between at two random positions.
+        Perform the mutation operation by shuffling the genes
+        between at two random positions.
 
-        :param parent: (Chromosome).
+        :param individual: (Chromosome).
 
-        :return: child (as Chromosomes).
+        :return: None.
         """
-
-        # Initially make a copy of the parent.
-        child = parent.make_deepcopy()
 
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
         if self.probability >= self.rng.random():
 
             # Select randomly two mutation end-points.
-            loci = sorted(self.rng.choice(range(0, len(child)), size=2,
+            loci = sorted(self.rng.choice(range(0, len(individual)), size=2,
                                           replace=False, shuffle=False))
             # Extract the indexes.
             i, j = loci
 
             # Make a slice list of the genes
             # we want to shuffle: i -> j.
-            shuffled_chromosome = child[i:j]
+            shuffled_chromosome = individual[i:j]
 
             # Shuffle the copied slice in place.
             self.rng.shuffle(shuffled_chromosome)
 
             # Put back the shuffled items.
-            child[i:j] = shuffled_chromosome
+            individual[i:j] = shuffled_chromosome
 
             # Increase the mutator counter.
             self.inc_counter()
         # _end_if_
 
-        # Return the offspring.
-        return child
     # _end_def_
 
 # _end_class_

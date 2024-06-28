@@ -23,38 +23,33 @@ class SwapMutator(MutationOperator):
 
     # _end_def_
 
-    def mutate(self, parent: Chromosome):
+    def mutate(self, individual: Chromosome):
         """
         Perform the mutation operation by swapping
         the genes at two random positions.
 
-        :param parent: (Chromosome).
+        :param individual: (Chromosome).
 
-        :return: child (as Chromosomes).
+        :return: None.
         """
-
-        # Initially make a copy of the parent.
-        child = parent.make_deepcopy()
 
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
         if self.probability >= self.rng.random():
 
             # Select randomly the two mutation points.
-            loci = self.rng.choice(range(0, len(parent)), size=2,
+            loci = self.rng.choice(range(0, len(individual)), size=2,
                                    replace=False, shuffle=False)
             # Extract the indexes.
             i, j = loci
 
             # Swap in place between the two positions.
-            child[i], child[j] = child[j], child[i]
+            individual[i], individual[j] = individual[j], individual[i]
 
             # Increase the mutator counter.
             self.inc_counter()
         # _end_if_
 
-        # Return the offspring.
-        return child
     # _end_def_
 
 # _end_class_

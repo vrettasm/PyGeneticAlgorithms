@@ -25,35 +25,30 @@ class RandomMutator(MutationOperator):
 
     # _end_def_
 
-    def mutate(self, parent: Chromosome):
+    def mutate(self, individual: Chromosome):
         """
-        Perform the mutation operation by randomly replacing
-        a gene with a new one that has been generated randomly.
+        Perform the mutation operation by randomly replacing a gene
+        with a new one that has been generated randomly.
 
-        :param parent: (Chromosome).
+        :param individual: (Chromosome).
 
-        :return: child (as Chromosomes).
+        :return: None.
         """
-
-        # Initially make a copy of the parent.
-        child = parent.make_deepcopy()
 
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
         if self.probability >= self.rng.random():
 
             # Select randomly the mutation point.
-            locus = self.rng.integers(0, len(child))
+            locus = self.rng.integers(0, len(individual))
 
             # Replace the old gene with a new one.
-            child[locus] = child[locus].random()
+            individual[locus] = individual[locus].random()
 
             # Increase the mutator counter.
             self.inc_counter()
         # _end_if_
 
-        # Return the offspring.
-        return child
     # _end_def_
 
 # _end_class_
