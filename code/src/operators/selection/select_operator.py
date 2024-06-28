@@ -31,4 +31,11 @@ class SelectionOperator(GeneticOperator):
                                   f"You should implement this method!")
     # _end_def_
 
+    def __call__(self, *args, **kwargs):
+        """
+        This is only a wrapper of the "select" method.
+        """
+        return self.select(*args, **kwargs)
+    # _end_def_
+
 # _end_class_

@@ -29,5 +29,13 @@ class CrossoverOperator(GeneticOperator):
         """
         raise NotImplementedError(f"{self.__class__.__name__}: "
                                   f"You should implement this method!")
+    # _end_def_
+
+    def __call__(self, *args, **kwargs):
+        """
+        This is only a wrapper of the "crossover" method.
+        """
+        return self.crossover(*args, **kwargs)
+    # _end_def_
 
 # _end_class_
