@@ -1,20 +1,39 @@
-from dataclasses import dataclass
 from typing import Any
 
 
-@dataclass(init=True, repr=True)
 class Gene(object):
+    """
+    TBD
+    """
 
-    # Datum holds a reference of the gene-data structure.
-    datum: Any = None
+    # Object variables.
+    __slots__ = ("datum", "_func", "valid")
 
-    # This 'private' function is used in the 'random()'
-    # method to be used by the mutation operators.
-    _func: Any = None
+    def __init__(self, datum: Any = None, _func: Any = None, valid: bool = True):
+        """
+        Initialize a Gene object.
 
-    # This flag is used to set the Gene as valid (True)
-    # or invalid (False).
-    valid: bool = True
+        :param datum: Datum holds a reference of the gene-data structure.
+
+        :param _func: This 'private' function is used in the 'random()' method to be used by the mutation operators.
+
+        :param valid: This flag is used to set the Gene as valid (True) or invalid (False).
+        """
+
+        # Copy the data reference.
+        self.datum = datum
+
+        # Make sure the random function is callable.
+        if not callable(_func):
+            raise TypeError(f"{self.__class__.__name__}: Random function is not callable.")
+        else:
+            # Get the fitness function.
+            self._func = _func
+        # _end_if_
+
+        # Copy the valid flag.
+        self.valid = valid
+    # _end_def_
 
     @property
     def is_valid(self) -> bool:
@@ -73,15 +92,11 @@ class Gene(object):
         This way by calling on the random() method, each Gene will know how
         to mutate itself without breaking ay rules/constraints.
 
-        :return: _func().
+        :return: None.
         """
-        if callable(self._func):
-            return self._func()
-        else:
-            raise NotImplementedError(f"{self.__class__.__name__}: "
-                                      f"Random function is not set.")
-        # _end_if_
 
+        # Use the random function to set a new value at the data.
+        self.datum = self._func()
     # _end_def_
 
 # _end_class_
