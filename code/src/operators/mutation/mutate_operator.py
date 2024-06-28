@@ -32,7 +32,7 @@ class MutationOperator(GeneticOperator):
 
     def __call__(self, *args, **kwargs):
         """
-        This is only a wrapper of the "select" method.
+        This is only a wrapper of the "mutate" method.
         """
         return self.mutate(*args, **kwargs)
     # _end_def_
