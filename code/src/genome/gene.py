@@ -70,8 +70,8 @@ class Gene(object):
         very different concept of the  problem solution, so its Gene should
         have its own way to perform random mutation.
 
-        This way by calling on the "random()" method, each Gene will know
-        how to mutate itself without breaking ay rules/constraints.
+        This way by calling on the random() method, each Gene will know how
+        to mutate itself without breaking ay rules/constraints.
 
         :return: _func().
         """
