@@ -1,3 +1,4 @@
+from numpy import nan as np_nan
 from src.genome.chromosome import Chromosome
 from src.operators.mutation.mutate_operator import MutationOperator
 
@@ -44,6 +45,9 @@ class RandomMutator(MutationOperator):
 
             # Replace the old gene with a new one.
             individual[locus] = individual[locus].random()
+
+            # Invalidate the fitness of the chromosome.
+            individual.fitness = np_nan
 
             # Increase the mutator counter.
             self.inc_counter()

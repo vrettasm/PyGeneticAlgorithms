@@ -1,3 +1,4 @@
+from numpy import nan as np_nan
 from src.genome.chromosome import Chromosome
 from src.operators.mutation.mutate_operator import MutationOperator
 
@@ -54,6 +55,9 @@ class ShuffleMutator(MutationOperator):
 
             # Put back the shuffled items.
             individual[i:j] = sliced_chromosome
+
+            # Invalidate the fitness of the chromosome.
+            individual.fitness = np_nan
 
             # Increase the mutator counter.
             self.inc_counter()

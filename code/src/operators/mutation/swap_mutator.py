@@ -1,3 +1,4 @@
+from numpy import nan as np_nan
 from src.genome.chromosome import Chromosome
 from src.operators.mutation.mutate_operator import MutationOperator
 
@@ -45,6 +46,9 @@ class SwapMutator(MutationOperator):
 
             # Swap in place between the two positions.
             individual[i], individual[j] = individual[j], individual[i]
+
+            # Invalidate the fitness of the chromosome.
+            individual.fitness = np_nan
 
             # Increase the mutator counter.
             self.inc_counter()
