@@ -41,7 +41,7 @@ class RouletteWheelSelector(SelectionOperator):
 
         # Extract the fitness value of each chromosome making
         # sure it is a positive value.
-        abs_fitness = [abs(p._fitness) for p in population]
+        abs_fitness = [abs(p.fitness) for p in population]
 
         # Calculate sum of all fitness.
         sum_fitness = fsum(abs_fitness)

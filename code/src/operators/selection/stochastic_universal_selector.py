@@ -37,7 +37,7 @@ class StochasticUniversalSelector(SelectionOperator):
 
         # Extract the fitness value of each chromosome making
         # sure it is a positive value.
-        abs_fitness = [abs(p._fitness) for p in population]
+        abs_fitness = [abs(p.fitness) for p in population]
 
         # Get the size of the population.
         N = len(population)

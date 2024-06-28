@@ -55,7 +55,7 @@ class TournamentSelector(SelectionOperator):
             parents = choose_K(population)
 
             # Get the individual with the highest fitness value.
-            winner = max(parents, key=lambda p: p._fitness)
+            winner = max(parents, key=lambda p: p.fitness)
 
             # Copy the best individual in the new list.
             new_parents_append(winner)

@@ -35,7 +35,7 @@ class LinearRankSelector(SelectionOperator):
         """
 
         # Sort the population in ascending order using their fitness value.
-        sorted_population = sorted(population, key=lambda p: p._fitness)
+        sorted_population = sorted(population, key=lambda p: p.fitness)
 
         # Get the length of the population list.
         N = len(sorted_population)
