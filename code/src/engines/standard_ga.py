@@ -7,7 +7,7 @@ from src.operators.selection.select_operator import SelectionOperator
 from src.operators.crossover.crossover_operator import CrossoverOperator
 
 # Public interface.
-__all__ = ["StandardGA", "correct_population"]
+__all__ = ["StandardGA", "apply_corrections"]
 
 
 def apply_corrections(input_population: list[Chromosome]) -> int:
