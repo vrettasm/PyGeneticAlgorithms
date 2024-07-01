@@ -44,7 +44,7 @@ class RandomMutator(MutationOperator):
             locus = self.rng.integers(0, len(individual))
 
             # Replace the old gene with a new one.
-            individual[locus] = individual[locus].random()
+            individual[locus].random()
 
             # Invalidate the fitness of the chromosome.
             individual.fitness = np_nan
