@@ -6,6 +6,51 @@ from src.operators.mutation.mutate_operator import MutationOperator
 from src.operators.selection.select_operator import SelectionOperator
 from src.operators.crossover.crossover_operator import CrossoverOperator
 
+# Public interface.
+__all__ = ["StandardGA", "correct_population"]
+
+
+def apply_corrections(input_population: list[Chromosome]) -> int:
+    """
+    Check the population for invalid genes and correct them by applying
+    directly the random method.
+
+    :return: the total number of gene corrections in the population.
+    """
+
+    # Holds the number of the corrected chromosomes.
+    corrections_counter = 0
+
+    # Go through all the chromosome members of the input
+    # population.
+    for i, chromosome in enumerate(input_population):
+
+        # Holds the corrected genes.
+        gene_corrections = 0
+
+        # Go through every Gene in the chromosome.
+        for j, gene in enumerate(chromosome):
+
+            if not gene.is_valid or gene.datum is None:
+
+                # Call the gene's random function.
+                gene.random()
+
+                # Update the corrections.
+                gene_corrections += 1
+        # _end_for_
+
+        # Check if there were any gene corrections.
+        if gene_corrections:
+            corrections_counter += gene_corrections
+        # _end_if_
+
+    # _end_for_
+
+    # Return the total number of corrected genes.
+    return corrections_counter
+# _end_def_
+
 
 class StandardGA(object):
     """
@@ -15,9 +60,9 @@ class StandardGA(object):
     # Object variables.
     __slots__ = ("population", "fitness_func", "_select_op", "_cross_op", "_mutate_op")
 
-    def __int__(self, initial_pop: list[Chromosome] = None, fit_func: Callable = None,
-                select_op: SelectionOperator = None, mutate_op: MutationOperator = None,
-                cross_op: CrossoverOperator = None):
+    def __init__(self, initial_pop: list[Chromosome] = None, fit_func: Callable = None,
+                 select_op: SelectionOperator = None, mutate_op: MutationOperator = None,
+                 cross_op: CrossoverOperator = None):
         """
 
         :param initial_pop:
@@ -107,6 +152,7 @@ class StandardGA(object):
 
             # Go through every Gene in the chromosome.
             for gene in chromosome:
+
                 # Call the gene's random function.
                 gene.random()
             # _end_for_
@@ -129,19 +175,23 @@ class StandardGA(object):
         """
         # Return the chromosome with the highest fitness.
         return max(self.population, key=lambda c: c.fitness)
+
     # _end_def_
 
-    def run(self, epochs: int = 100, elitism: bool = True, f_tol: float = 1.0e-8):
+    def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False, f_tol: float = 1.0e-8):
         """
 
         :param epochs:
 
         :param elitism:
 
+        :param correction:
+
         :param f_tol:
 
         :return: None.
         """
+
         # Get the size of the population.
         N = len(self.population)
 
@@ -179,6 +229,20 @@ class StandardGA(object):
                 self._mutate_op(p)
             # _end_for_
 
+            # Check if we want to apply the corrections function.
+            if correction:
+
+                # Apply the function.
+                total_corrections = apply_corrections(population_i)
+
+                # Print only if there were corrections,
+                # to avoid cluttering the screen.
+                if total_corrections:
+                    print(f"> {total_corrections} corrections took place at epoch: {i}.")
+                # _end_if_
+
+            # _end_if_
+
             # Check if 'elitism' is enabled.
             if elitism:
                 # Find the individual chromosome with the highest fitness value
@@ -204,10 +268,10 @@ class StandardGA(object):
             print(f"Epoch: {i + 1} -> Avg. Fitness = {avg_fitness_i:.4f}")
 
             # Step 7: Check for convergence.
-            if np.abs(avg_fitness_i - avg_fitness_0) <= f_tol:
+            if np.fabs(avg_fitness_i - avg_fitness_0) <= f_tol:
 
                 # Display a warning message.
-                print(f"{self.__class__.__name__} finished in {i+1} iterations.")
+                print(f"{self.__class__.__name__} finished in {i + 1} iterations.")
 
                 # Exit from the loop.
                 break
@@ -217,10 +281,7 @@ class StandardGA(object):
             avg_fitness_0 = avg_fitness_i
 
             # Update the old population with the new chromosomes.
-            for k, p in enumerate(population_i):
-                self.population[k] = p
-            # _end_for_
-
+            self.population = population_i.copy()
         # _end_for_
 
         # Final time instant.
