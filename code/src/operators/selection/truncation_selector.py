@@ -40,13 +40,14 @@ class TruncationSelector(SelectionOperator):
         # Sort the population in descending order using their fitness value.
         sorted_population = sorted(population, key=lambda p: p.fitness, reverse=True)
 
+        # Select 'N' using only the higher 'p%' of the (old) population (indexes).
+        index = self.rng.choice(int(N*self._p), size=N, replace=True, shuffle=True)
+
         # Increase the selection counter.
         self.inc_counter()
 
-        # Return the (new) selected individuals, using only the higher 'p%'
-        # of the (old) population.
-        return self.rng.choice(sorted_population[0:int(N*self._p)],
-                               size=N, replace=True, shuffle=True).tolist()
+        # Return the (new) selected individuals.
+        return [sorted_population[i] for i in index]
     # _end_def_
 
 # _end_class_

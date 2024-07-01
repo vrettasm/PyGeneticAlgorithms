@@ -49,9 +49,11 @@ class LinearRankSelector(SelectionOperator):
         # Increase the selection counter.
         self.inc_counter()
 
+        # Select 'N' new individuals (indexes).
+        index = self.rng.choice(N, size=N, p=selection_probs, replace=True, shuffle=False)
+
         # Return the (new) selected individuals.
-        return self.rng.choice(sorted_population, size=N, p=selection_probs,
-                               replace=True, shuffle=False).tolist()
+        return [sorted_population[i] for i in index]
     # _end_def_
 
 # _end_class_

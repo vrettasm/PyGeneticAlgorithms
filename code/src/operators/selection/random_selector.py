@@ -32,11 +32,15 @@ class RandomSelector(SelectionOperator):
 
         :return: a new population (list of chromosomes).
         """
+        # Get the length of the population list.
+        N = len(population)
 
         # Increase the selection counter.
         self.inc_counter()
 
+        # Select 'N' new individuals (indexes).
+        index = self.rng.choice(N, size=N, replace=True, shuffle=False)
+
         # Return the (new) selected individuals.
-        return self.rng.choice(population, size=len(population),
-                               replace=True, shuffle=False).tolist()
+        return [population[i] for i in index]
 # _end_class_

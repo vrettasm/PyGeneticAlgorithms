@@ -38,6 +38,8 @@ class TournamentSelector(SelectionOperator):
 
         :return: a new population (list of chromosomes).
         """
+        # Get the length of the population list.
+        N = len(population)
 
         # Create a list that will contain the new parents.
         new_parents = []
@@ -45,17 +47,19 @@ class TournamentSelector(SelectionOperator):
         # Get the list append method locally.
         new_parents_append = new_parents.append
 
-        # Define locally the choose function.
-        choose_K = lambda X: self.rng.choice(X, size=self._k, replace=False, shuffle=False)
+        # Define locally the choose(N,k) function.
+        choose_k = lambda: self.rng.choice(N, size=self._k, replace=False, shuffle=False)
 
         # Repeat the 'tournament' N times.
-        for i in range(len(population)):
+        for i in range(N):
 
-            # Select randomly 'K' individuals from the initial population.
-            parents = choose_K(population)
+            # Select randomly 'k' individuals (indexes)
+            # from the initial population.
+            index = choose_k()
 
-            # Get the individual with the highest fitness value.
-            winner = max(parents, key=lambda p: p.fitness)
+            # Find the individual with the highest fitness value.
+            winner = max([population[j] for j in index],
+                         key=lambda p: p.fitness)
 
             # Copy the best individual in the new list.
             new_parents_append(winner)
@@ -64,6 +68,7 @@ class TournamentSelector(SelectionOperator):
         # Increase the selection counter.
         self.inc_counter()
 
+        # Return the (new) selected individuals.
         return new_parents
     # _end_def_
 
