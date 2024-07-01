@@ -1,3 +1,4 @@
+import time
 import numpy as np
 from typing import Callable
 from src.genome.chromosome import Chromosome
@@ -20,15 +21,20 @@ class StandardGA(object):
         """
 
         :param initial_pop:
+
         :param fit_func:
+
         :param select_op:
+
         :param mutate_op:
+
         :param cross_op:
+
         :return:
         """
 
         # Copy the reference of the population.
-        self.population = initial_pop
+        self.population = initial_pop.copy()
 
         # Make sure the fitness function is indeed callable.
         if not callable(fit_func):
@@ -61,7 +67,7 @@ class StandardGA(object):
 
     # _end_def_
 
-    def population_fitness(self) -> list:
+    def population_fitness(self) -> list[float]:
         """
         Get the fitness of all the population.
 
@@ -73,9 +79,11 @@ class StandardGA(object):
 
     def evaluate_fitness(self, input_population: list[Chromosome]):
         """
+        Evaluate all the chromosomes of the input list with the fitness function.
 
-        :param input_population:
-        :return:
+        :param input_population: (list)
+
+        :return: None.
         """
         # Get a local copy of the fitness function.
         fit_func = self.fitness_func
@@ -113,13 +121,26 @@ class StandardGA(object):
 
     # _end_def_
 
+    def best_chromosome(self):
+        """
+        Auxiliary method.
+
+        :return: Return the chromosome with the highest fitness.
+        """
+        # Return the chromosome with the highest fitness.
+        return max(self.population, key=lambda c: c.fitness)
+    # _end_def_
+
     def run(self, epochs: int = 100, elitism: bool = True, f_tol: float = 1.0e-8):
         """
 
         :param epochs:
+
         :param elitism:
+
         :param f_tol:
-        :return:
+
+        :return: None.
         """
         # Get the size of the population.
         N = len(self.population)
@@ -133,23 +154,27 @@ class StandardGA(object):
         # Get the average fitness before optimisation.
         avg_fitness_0 = np.mean([p.fitness for p in self.population])
 
-        # Repeat:
+        # Display an information message.
+        print(f"Initial Avg. Fitness = {avg_fitness_0:.4f}")
+
+        # Initial time instant.
+        time_t0 = time.perf_counter()
+
+        # Repeat 'epoch' times.
         for i in range(epochs):
 
-            # Display an information message.
-            print(f"Epoch: {i+1} -> Avg. Fitness = {avg_fitness_0:.4f}")
-
-            # Step 3: SELECT the parents (for the breeding step).
+            # Step 3: SELECT: the parents.
+            # This will create a NEW copy of the population.
             population_i = self._select_op(self.population)
 
-            # Step 4: CROSSOVER
+            # Step 4: CROSSOVER: to produce offsprings.
             for j in range(0, N - 1, 2):
-                # Replace directly the old parents with the new offsprings.
+                # Replace directly the OLD parents with the NEW offsprings.
                 population_i[j], population_i[j + 1] = self._cross_op(population_i[j],
                                                                       population_i[j + 1])
             # _end_for_
 
-            # Step 5: MUTATE
+            # Step 5: MUTATE: in place the offsprings.
             for p in population_i:
                 self._mutate_op(p)
             # _end_for_
@@ -169,35 +194,40 @@ class StandardGA(object):
                 population_i[worst_idx] = best_chromosome
             # _end_if_
 
-            # Step 6: Evaluate population
+            # Step 6: Evaluate population.
             self.evaluate_fitness(population_i)
 
-            # Calculate te average fitness.
+            # Calculate the (new) average fitness.
             avg_fitness_i = np.mean([p.fitness for p in population_i])
 
-            # Step 7: Check for convergence
+            # Display an information message.
+            print(f"Epoch: {i + 1} -> Avg. Fitness = {avg_fitness_i:.4f}")
+
+            # Step 7: Check for convergence.
             if np.abs(avg_fitness_i - avg_fitness_0) <= f_tol:
 
                 # Display a warning message.
                 print(f"{self.__class__.__name__} finished in {i+1} iterations.")
 
-                # TBD
+                # Exit from the loop.
                 break
-            else:
-                # Update the initial average value for the next iteration.
-                avg_fitness_0 = avg_fitness_i
-
-                # Update the old population with the new chromosomes.
-                for j, p in enumerate(population_i):
-                    self.population[j] = p
-                # _end_for_
-
             # _end_if_
+
+            # Update the average value for the next iteration.
+            avg_fitness_0 = avg_fitness_i
+
+            # Update the old population with the new chromosomes.
+            for k, p in enumerate(population_i):
+                self.population[k] = p
+            # _end_for_
 
         # _end_for_
 
-        # Display a warning message.
-        print(f"{self.__class__.__name__} exceeded all the {epochs} iterations.")
+        # Final time instant.
+        time_tf = time.perf_counter()
+
+        # Print final duration in seconds.
+        print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.", end='\n')
 
     # _end_def_
 
