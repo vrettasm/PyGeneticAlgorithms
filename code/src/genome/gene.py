@@ -7,13 +7,13 @@ class Gene(object):
     """
 
     # Object variables.
-    __slots__ = ("datum", "_func", "valid")
+    __slots__ = ("_datum", "_func", "valid")
 
-    def __init__(self, datum: Any = None, _func: Any = None, valid: bool = True):
+    def __init__(self, _datum: Any = None, _func: Any = None, valid: bool = True):
         """
         Initialize a Gene object.
 
-        :param datum: Datum holds a reference of the gene-data structure.
+        :param _datum: Datum holds a reference of the gene-data structure.
 
         :param _func: This 'private' function is used in the 'random()' method to be used by the mutation operators.
 
@@ -21,7 +21,7 @@ class Gene(object):
         """
 
         # Copy the data reference.
-        self.datum = datum
+        self._datum = _datum
 
         # Make sure the random function is callable.
         if not callable(_func):
@@ -33,6 +33,16 @@ class Gene(object):
 
         # Copy the valid flag.
         self.valid = valid
+    # _end_def_
+
+    @property
+    def datum(self) -> Any:
+        """
+        Accessor (getter) of the data reference.
+
+        :return: the datum value.
+        """
+        return self._datum
     # _end_def_
 
     @property
@@ -96,7 +106,7 @@ class Gene(object):
         """
 
         # Use the random function to set a new value at the data.
-        self.datum = self._func()
+        self._datum = self._func()
     # _end_def_
 
     # Auxiliary.
@@ -106,7 +116,7 @@ class Gene(object):
 
         :return: a string representation of a Gene object.
         """
-        return f"{self.__class__.__name__}: datum={self.datum}"
+        return f"{self.__class__.__name__}: datum={self._datum}"
     # _end_def_
 
     # Auxiliary.
@@ -116,7 +126,7 @@ class Gene(object):
 
         :return: Gene().
         """
-        return f"{self.__class__.__name__}(datum={self.datum}, _func={self._func}, valid={self.valid})"
+        return f"{self.__class__.__name__}(datum={self._datum}, _func={self._func}, valid={self.valid})"
     # _end_def_
 
 # _end_class_
