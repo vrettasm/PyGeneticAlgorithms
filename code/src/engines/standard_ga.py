@@ -266,14 +266,23 @@ class StandardGA(object):
             # Step 6: Evaluate population.
             self.evaluate_fitness(population_i)
 
+            # Get the current population fitness values.
+            fitness_i = [p.fitness for p in population_i]
+
             # Calculate the (new) average fitness.
-            avg_fitness_i = np.mean([p.fitness for p in population_i])
+            avg_fitness_i = np.mean(fitness_i)
+
+            # Calculate the (new) standard deviation.
+            std_fitness_i = np.std(fitness_i)
 
             # Display an information message.
             print(f"Epoch: {i + 1} -> Avg. Fitness = {avg_fitness_i:.4f}")
 
             # Step 7: Check for convergence.
-            if np.fabs(avg_fitness_i - avg_fitness_0) <= f_tol:
+            # Here we don't only check the average performance, but we also check the
+            # spread of the population. If all the chromosomes are similar the spread
+            # should be small (very close to zero).
+            if np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and std_fitness_i < 1.0E-3:
 
                 # Display a warning message.
                 print(f"{self.__class__.__name__} finished in {i + 1} iterations.")
