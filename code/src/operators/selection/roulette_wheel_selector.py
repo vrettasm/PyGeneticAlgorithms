@@ -39,16 +39,17 @@ class RouletteWheelSelector(SelectionOperator):
         # Get the length of the population list.
         N = len(population)
 
-        # Extract the fitness value of each chromosome making
-        # sure it is a positive value.
-        abs_fitness = [abs(p.fitness) for p in population]
+        # Extract the fitness value of each chromosome.
+        # This assumes that the fitness values are all
+        # positive.
+        all_fitness = [p.fitness for p in population]
 
         # Calculate sum of all fitness.
-        sum_fitness = fsum(abs_fitness)
+        sum_fitness = fsum(all_fitness)
 
         # Calculate the "selection probabilities", of each member
         # in the population.
-        selection_probs = [f / sum_fitness for f in abs_fitness]
+        selection_probs = [f / sum_fitness for f in all_fitness]
 
         # Select 'N' new individuals (indexes).
         index = self.rng.choice(N, size=N, p=selection_probs, replace=True, shuffle=False)
