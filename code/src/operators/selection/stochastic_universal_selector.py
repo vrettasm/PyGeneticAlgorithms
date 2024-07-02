@@ -35,15 +35,16 @@ class StochasticUniversalSelector(SelectionOperator):
         :return: a new population (list of chromosomes).
         """
 
-        # Extract the fitness value of each chromosome making
-        # sure it is a positive value.
-        abs_fitness = [abs(p.fitness) for p in population]
+        # Extract the fitness value of each chromosome.
+        # This assumes that the fitness values are all
+        # positive.
+        all_fitness = [p.fitness for p in population]
 
         # Get the size of the population.
         N = len(population)
 
         # Compute the distance between pointers.
-        dist_p = fsum(abs_fitness) / N
+        dist_p = fsum(all_fitness) / N
 
         # Get a random number between 0 and dist_p.
         start_0 = dist_p * self.rng.random()
@@ -59,7 +60,7 @@ class StochasticUniversalSelector(SelectionOperator):
         new_parents_append = new_parents.append
 
         # Compute the cumulative sum of the fitness values.
-        cum_sum_fit = cumsum(abs_fitness)
+        cum_sum_fit = cumsum(all_fitness)
 
         # Collect the new parents.
         for p in pointers:
