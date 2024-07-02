@@ -13,36 +13,38 @@ __all__ = ["StandardGA", "apply_corrections"]
 def apply_corrections(input_population: list[Chromosome]) -> int:
     """
     Check the population for invalid genes and correct them by applying
-    directly the random method.
+    directly the random method. It is assumed that the random method of
+    the Gene is always returning a 'valid' value for the Gene.
 
-    :return: the total number of gene corrections in the population.
+    :return: the total number of corrected genes in the population.
     """
 
     # Holds the number of the corrected chromosomes.
     corrections_counter = 0
 
-    # Go through all the chromosome members of the input
-    # population.
-    for i, chromosome in enumerate(input_population):
+    # Go through all the chromosome members
+    # of the input population.
+    for chromosome in input_population:
 
         # Holds the corrected genes.
-        gene_corrections = 0
+        genes_corrected = 0
 
         # Go through every Gene in the chromosome.
-        for j, gene in enumerate(chromosome):
+        for gene in chromosome:
 
+            # Check for validity.
             if not gene.is_valid or gene.datum is None:
 
                 # Call the gene's random function.
                 gene.random()
 
-                # Update the corrections.
-                gene_corrections += 1
+                # Update the counter.
+                genes_corrected += 1
         # _end_for_
 
         # Check if there were any gene corrections.
-        if gene_corrections:
-            corrections_counter += gene_corrections
+        if genes_corrected:
+            corrections_counter += genes_corrected
         # _end_if_
 
     # _end_for_
@@ -56,6 +58,9 @@ class StandardGA(object):
     """
 
     """
+
+    # Make a random number generator.
+    rng_GA = np.random.default_rng()
 
     # Object variables.
     __slots__ = ("population", "fitness_func", "_select_op", "_cross_op", "_mutate_op")
@@ -124,7 +129,8 @@ class StandardGA(object):
 
     def evaluate_fitness(self, input_population: list[Chromosome]):
         """
-        Evaluate all the chromosomes of the input list with the fitness function.
+        Evaluate all the chromosomes of the input list with the custom
+        fitness function.
 
         :param input_population: (list)
 
@@ -229,33 +235,32 @@ class StandardGA(object):
                 self._mutate_op(p)
             # _end_for_
 
-            # Check if we want to apply the corrections function.
+            # Check if 'corrections' are enabled.
             if correction:
-
                 # Apply the function.
                 total_corrections = apply_corrections(population_i)
 
                 # Print only if there were corrections,
                 # to avoid cluttering the screen.
                 if total_corrections:
-                    print(f"> {total_corrections} corrections took place at epoch: {i}.")
+                    print(f"> {total_corrections} correction(s) took place at epoch: {i}.")
                 # _end_if_
 
             # _end_if_
 
             # Check if 'elitism' is enabled.
             if elitism:
+
                 # Find the individual chromosome with the highest fitness value
                 # (from the old population).
                 best_chromosome = max(self.population, key=lambda c: c.fitness)
 
-                # Find the individual chromosome with the lowest fitness value
-                # (from the new population).
-                worst_idx = population_i.index(min(population_i,
-                                                   key=lambda c: c.fitness))
+                # Select randomly a position.
+                locus = self.rng_GA.integers(0, N)
 
-                # Replace the current worst with the previous best.
-                population_i[worst_idx] = best_chromosome
+                # Replace the chromosome with the previous best.
+                population_i[locus] = best_chromosome
+
             # _end_if_
 
             # Step 6: Evaluate population.
