@@ -45,6 +45,15 @@ class GeneticOperator(object):
         return self._counter
     # _end_def_
 
+    def reset_counter(self):
+        """
+        Sets the counter value to zero.
+
+        :return: None.
+        """
+        self._counter = 0
+    # _end_def_
+
     def inc_counter(self):
         """
         Increase the counter value by one. This is applied
