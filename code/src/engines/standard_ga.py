@@ -184,7 +184,8 @@ class StandardGA(object):
 
     # _end_def_
 
-    def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False, f_tol: float = 1.0e-8):
+    def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
+            f_tol: float = 1.0e-8, verbose: bool = False):
         """
 
         :param epochs:
@@ -195,8 +196,15 @@ class StandardGA(object):
 
         :param f_tol:
 
+        :param verbose:
+
         :return: None.
         """
+
+        # Make sure the genetic operator counters are reset before each run().
+        self._cross_op.reset_counter()
+        self._mutate_op.reset_counter()
+        self._select_op.reset_counter()
 
         # Get the size of the population.
         N = len(self.population)
@@ -275,14 +283,19 @@ class StandardGA(object):
             # Calculate the (new) standard deviation.
             std_fitness_i = np.std(fitness_i)
 
-            # Display an information message.
-            print(f"Epoch: {i + 1} -> Avg. Fitness = {avg_fitness_i:.4f}")
+            # Check if we want to print output.
+            if verbose and np.mod(i, 10) == 0:
+
+                # Display an information message.
+                print(f"Epoch: {i + 1:>5} -> Avg. Fitness = {avg_fitness_i:.4f}, "
+                      f"Spread = {std_fitness_i:.4f}")
+            # _end_if_
 
             # Step 7: Check for convergence.
             # Here we don't only check the average performance, but we also check the
             # spread of the population. If all the chromosomes are similar the spread
             # should be small (very close to zero).
-            if np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and std_fitness_i < 1.0E-3:
+            if np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and std_fitness_i < 1.0e-2:
 
                 # Display a warning message.
                 print(f"{self.__class__.__name__} finished in {i + 1} iterations.")
@@ -301,6 +314,9 @@ class StandardGA(object):
         # Final time instant.
         time_tf = time.perf_counter()
 
+        # Display the final average fitness value.
+        print(f"Final Avg. Fitness = {avg_fitness_0:.4f}")
+
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.", end='\n')
 
@@ -312,6 +328,17 @@ class StandardGA(object):
         This is only a wrapper of the "run" method.
         """
         return self.run(*args, **kwargs)
+    # _end_def_
+
+    def print_operator_stats(self):
+        """
+        Print the genetic operators stats.
+
+        :return: None.
+        """
+        print(f"{self._cross_op}")
+        print(f"{self._select_op}")
+        print(f"{self._mutate_op}")
     # _end_def_
 
 # _end_class_
