@@ -301,7 +301,7 @@ class StandardGA(object):
                 self._stats["std"].append(std_fitness_i)
             else:
                 raise RuntimeError(f"{self.__class__.__name__}: "
-                                   f"Something went wrong with at population {i}.")
+                                   f"Something went wrong at population {i}.")
             # _end_if_
 
             # Check if we want to print output.
@@ -316,7 +316,7 @@ class StandardGA(object):
             # Here we don't only check the average performance, but we also check the
             # spread of the population. If all the chromosomes are similar the spread
             # should be small (very close to zero).
-            if np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and std_fitness_i < 1.0e-1:
+            if np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and std_fitness_i < 1.0E-1:
 
                 # Display a warning message.
                 print(f"{self.__class__.__name__} finished in {i + 1} iterations.")
