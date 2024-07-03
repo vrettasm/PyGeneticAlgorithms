@@ -63,7 +63,8 @@ class StandardGA(object):
     rng_GA = np.random.default_rng()
 
     # Object variables.
-    __slots__ = ("population", "fitness_func", "_select_op", "_cross_op", "_mutate_op")
+    __slots__ = ("population", "fitness_func", "_select_op", "_cross_op", "_mutate_op",
+                 "_stats")
 
     def __init__(self, initial_pop: list[Chromosome] = None, fit_func: Callable = None,
                  select_op: SelectionOperator = None, mutate_op: MutationOperator = None,
@@ -103,6 +104,18 @@ class StandardGA(object):
         # Get Crossover Operator.
         self._cross_op = cross_op
 
+        # Placeholder for the dictionary with stats.
+        self._stats = {}
+    # _end_def_
+
+    @property
+    def stats(self):
+        """
+        Accessor method that returns the 'stats' dictionary.
+
+        :return: the dictionary with the statistics from the run.
+        """
+        return self._stats
     # _end_def_
 
     def individual_fitness(self, index: int) -> float:
@@ -134,43 +147,28 @@ class StandardGA(object):
 
         :param input_population: (list)
 
-        :return: None.
+        :return: a list with all the fitness values.
         """
         # Get a local copy of the fitness function.
         fit_func = self.fitness_func
 
+        # List with the fitness of the population.
+        fitness_i = []
+
+        # Make a local copy of the append method.
+        fitness_i_append = fitness_i.append
+
         # Evaluate all the individuals.
         for p in input_population:
+
+            # Assign the fitness to the chromosome.
             p.fitness = fit_func(p)
+
+            # Add it to the return list.
+            fitness_i_append(p.fitness)
         # _end_for_
 
-    # _end_def_
-
-    def initialize_population(self):
-        """
-        Initialize the whole population by calling the random function on each gene separately.
-
-        :return: None.
-        """
-
-        # Go through all the chromosome members of the population.
-        for i, chromosome in enumerate(self.population):
-
-            # Go through every Gene in the chromosome.
-            for gene in chromosome:
-
-                # Call the gene's random function.
-                gene.random()
-            # _end_for_
-
-            # Sanity Check:
-            # The genome of the current chromosome should still be valid.
-            if not chromosome.is_genome_valid():
-                raise RuntimeError(f"{self.__class__.__name__}: Chromosome {i} is invalid.")
-            # _end_if_
-
-        # _end_for_
-
+        return fitness_i
     # _end_def_
 
     def best_chromosome(self):
@@ -206,17 +204,32 @@ class StandardGA(object):
         self._mutate_op.reset_counter()
         self._select_op.reset_counter()
 
+        # Reset stats dictionary.
+        self._stats["avg"] = []
+        self._stats["std"] = []
+
         # Get the size of the population.
         N = len(self.population)
 
-        # Step 1:
-        self.initialize_population()
-
-        # Step 2:
-        self.evaluate_fitness(self.population)
+        # Step 1: Evaluate the initial population.
+        fitness_0 = self.evaluate_fitness(self.population)
 
         # Get the average fitness before optimisation.
-        avg_fitness_0 = np.mean([p.fitness for p in self.population])
+        avg_fitness_0 = np.mean(fitness_0)
+
+        # Get the standard deviation of fitness before optimisation.
+        std_fitness_0 = np.std(fitness_0)
+
+        # Make sure the values are finite.
+        if all(np.isfinite([avg_fitness_0, std_fitness_0])):
+
+            # Store the stats in the dictionary.
+            self._stats["avg"].append(avg_fitness_0)
+            self._stats["std"].append(std_fitness_0)
+        else:
+            raise RuntimeError(f"{self.__class__.__name__}: "
+                               "Something went wrong with the initial population.")
+        # _end_if_
 
         # Display an information message.
         print(f"Initial Avg. Fitness = {avg_fitness_0:.4f}")
@@ -227,18 +240,18 @@ class StandardGA(object):
         # Repeat 'epoch' times.
         for i in range(epochs):
 
-            # Step 3: SELECT: the parents.
+            # Step 2: SELECT: the parents.
             # This will create a NEW copy of the population.
             population_i = self._select_op(self.population)
 
-            # Step 4: CROSSOVER: to produce offsprings.
+            # Step 3: CROSSOVER: to produce offsprings.
             for j in range(0, N - 1, 2):
                 # Replace directly the OLD parents with the NEW offsprings.
                 population_i[j], population_i[j + 1] = self._cross_op(population_i[j],
                                                                       population_i[j + 1])
             # _end_for_
 
-            # Step 5: MUTATE: in place the offsprings.
+            # Step 4: MUTATE: in place the offsprings.
             for p in population_i:
                 self._mutate_op(p)
             # _end_for_
@@ -271,17 +284,25 @@ class StandardGA(object):
 
             # _end_if_
 
-            # Step 6: Evaluate population.
-            self.evaluate_fitness(population_i)
-
-            # Get the current population fitness values.
-            fitness_i = [p.fitness for p in population_i]
+            # Step 5: Evaluate the current population.
+            fitness_i = self.evaluate_fitness(population_i)
 
             # Calculate the (new) average fitness.
             avg_fitness_i = np.mean(fitness_i)
 
             # Calculate the (new) standard deviation.
             std_fitness_i = np.std(fitness_i)
+
+            # Make sure the values are finite.
+            if all(np.isfinite([avg_fitness_i, std_fitness_i])):
+
+                # Store the stats in the dictionary.
+                self._stats["avg"].append(avg_fitness_i)
+                self._stats["std"].append(std_fitness_i)
+            else:
+                raise RuntimeError(f"{self.__class__.__name__}: "
+                                   f"Something went wrong with at population {i}.")
+            # _end_if_
 
             # Check if we want to print output.
             if verbose and np.mod(i, 10) == 0:
@@ -291,11 +312,11 @@ class StandardGA(object):
                       f"Spread = {std_fitness_i:.4f}")
             # _end_if_
 
-            # Step 7: Check for convergence.
+            # Step 6: Check for convergence.
             # Here we don't only check the average performance, but we also check the
             # spread of the population. If all the chromosomes are similar the spread
             # should be small (very close to zero).
-            if np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and std_fitness_i < 1.0e-2:
+            if np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and std_fitness_i < 1.0e-1:
 
                 # Display a warning message.
                 print(f"{self.__class__.__name__} finished in {i + 1} iterations.")
