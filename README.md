@@ -52,11 +52,6 @@ Constraint optimization problems can be easily addressed using the
 to the optimization of the _Rosenbrock equation_, constraint on a circle. This can provide a 'template' for similar
 constraint optimization problems.
 
-### References
-
-   1. Mitchell, Melanie (1996). "An Introduction to Genetic Algorithms". Cambridge, MA: MIT Press. ISBN 9780585030944.
-   2. Schmitt, Lothar M. (2001). "Theory of Genetic Algorithms". Theoretical Computer Science. 259 (1-2): 1-61. doi:10.1016/S0304-3975(00)00406-0
-
 ### To Do:
 
 - Implement the 'IslandModel'
