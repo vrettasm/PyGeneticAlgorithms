@@ -1,6 +1,7 @@
 import time
 import numpy as np
 from typing import Callable
+from collections import defaultdict
 from src.genome.chromosome import Chromosome
 from src.operators.mutation.mutate_operator import MutationOperator
 from src.operators.selection.select_operator import SelectionOperator
@@ -56,7 +57,8 @@ def apply_corrections(input_population: list[Chromosome]) -> int:
 
 class StandardGA(object):
     """
-
+    Standard GA model that at each iteration replaces the whole population using
+    the genetic operators (crossover and mutation).
     """
 
     # Make a random number generator.
@@ -66,22 +68,22 @@ class StandardGA(object):
     __slots__ = ("population", "fitness_func", "_select_op", "_cross_op", "_mutate_op",
                  "_stats")
 
-    def __init__(self, initial_pop: list[Chromosome] = None, fit_func: Callable = None,
-                 select_op: SelectionOperator = None, mutate_op: MutationOperator = None,
-                 cross_op: CrossoverOperator = None):
+    def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, select_op: SelectionOperator = None,
+                 mutate_op: MutationOperator = None, cross_op: CrossoverOperator = None):
         """
+        Default constructor of StandardGA object.
 
-        :param initial_pop:
+        :param initial_pop: list of the initial population of (randomized) chromosomes.
 
-        :param fit_func:
+        :param fit_func: callable fitness function.
 
-        :param select_op:
+        :param select_op: selection operator (must inherit from class SelectionOperator).
 
-        :param mutate_op:
+        :param mutate_op: mutation operator (must inherit from class MutationOperator).
 
-        :param cross_op:
+        :param cross_op: crossover operator (must inherit from class CrossoverOperator).
 
-        :return:
+        :return: a new GA object.
         """
 
         # Copy the reference of the population.
@@ -104,8 +106,8 @@ class StandardGA(object):
         # Get Crossover Operator.
         self._cross_op = cross_op
 
-        # Placeholder for the dictionary with stats.
-        self._stats = {}
+        # Dictionary with stats.
+        self._stats = defaultdict(list)
     # _end_def_
 
     @property
@@ -116,6 +118,31 @@ class StandardGA(object):
         :return: the dictionary with the statistics from the run.
         """
         return self._stats
+    # _end_def_
+
+    def update_stats(self, avg_fitness: float, std_fitness: float):
+        """
+        Update the stats dictionary with the input mean/std values
+        of the fitness.
+
+        :param avg_fitness: (float) mean fitness value of the population.
+
+        :param std_fitness:(float) std fitness value of the population.
+
+        :return: None.
+        """
+
+        # Make sure the input values are finite.
+        if all(np.isfinite([avg_fitness, std_fitness])):
+
+            # Store them in the dictionary.
+            self._stats["avg"].append(avg_fitness)
+            self._stats["std"].append(std_fitness)
+        else:
+            raise RuntimeError(f"{self.__class__.__name__}: Something went wrong with current "
+                               f"population. Mean={avg_fitness:.5f}, Std={std_fitness:.5f}.")
+        # _end_if_
+
     # _end_def_
 
     def individual_fitness(self, index: int) -> float:
@@ -185,16 +212,22 @@ class StandardGA(object):
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
             f_tol: float = 1.0e-8, verbose: bool = False):
         """
+        Main method of the StandardGA class, that implements the evolutionary routine.
 
-        :param epochs:
+        :param epochs: (int) maximum number of iterations in the evolution process.
 
-        :param elitism:
+        :param elitism: (bool) flag that defines elitism. If 'True' then the chromosome
+        with the higher fitness will always be copied to the next generation (unaltered).
 
-        :param correction:
+        :param correction: (bool) flat that if set to 'True' will check the validity of
+        the population (at the gene level) and attempt to correct the genome by calling
+        the random() method of the flawed gene.
 
-        :param f_tol:
+        :param f_tol: (float) tolerance in the difference between the average values of
+        two consecutive populations. It is used to determine the convergence of the population.
 
-        :param verbose:
+        :param verbose: (bool) if 'True' it will display periodically information about
+        the current average fitness and spread of the population.
 
         :return: None.
         """
@@ -205,13 +238,13 @@ class StandardGA(object):
         self._select_op.reset_counter()
 
         # Reset stats dictionary.
-        self._stats["avg"] = []
-        self._stats["std"] = []
+        self._stats["avg"].clear()
+        self._stats["std"].clear()
 
         # Get the size of the population.
         N = len(self.population)
 
-        # Step 1: Evaluate the initial population.
+        # STEP 1: Evaluate the initial population.
         fitness_0 = self.evaluate_fitness(self.population)
 
         # Get the average fitness before optimisation.
@@ -220,16 +253,8 @@ class StandardGA(object):
         # Get the standard deviation of fitness before optimisation.
         std_fitness_0 = np.std(fitness_0)
 
-        # Make sure the values are finite.
-        if all(np.isfinite([avg_fitness_0, std_fitness_0])):
-
-            # Store the stats in the dictionary.
-            self._stats["avg"].append(avg_fitness_0)
-            self._stats["std"].append(std_fitness_0)
-        else:
-            raise RuntimeError(f"{self.__class__.__name__}: "
-                               "Something went wrong with the initial population.")
-        # _end_if_
+        # Update the mean/std in the dictionary.
+        self.update_stats(avg_fitness_0, std_fitness_0)
 
         # Display an information message.
         print(f"Initial Avg. Fitness = {avg_fitness_0:.4f}")
@@ -240,18 +265,18 @@ class StandardGA(object):
         # Repeat 'epoch' times.
         for i in range(epochs):
 
-            # Step 2: SELECT: the parents.
+            # STEP 2: SELECT the parents.
             # This will create a NEW copy of the population.
             population_i = self._select_op(self.population)
 
-            # Step 3: CROSSOVER: to produce offsprings.
+            # STEP 3: CROSSOVER to produce offsprings.
             for j in range(0, N - 1, 2):
                 # Replace directly the OLD parents with the NEW offsprings.
                 population_i[j], population_i[j + 1] = self._cross_op(population_i[j],
                                                                       population_i[j + 1])
             # _end_for_
 
-            # Step 4: MUTATE: in place the offsprings.
+            # STEP 4: MUTATE in place the offsprings.
             for p in population_i:
                 self._mutate_op(p)
             # _end_for_
@@ -284,7 +309,7 @@ class StandardGA(object):
 
             # _end_if_
 
-            # Step 5: Evaluate the current population.
+            # STEP 5: EVALUATE the current population.
             fitness_i = self.evaluate_fitness(population_i)
 
             # Calculate the (new) average fitness.
@@ -293,16 +318,8 @@ class StandardGA(object):
             # Calculate the (new) standard deviation.
             std_fitness_i = np.std(fitness_i)
 
-            # Make sure the values are finite.
-            if all(np.isfinite([avg_fitness_i, std_fitness_i])):
-
-                # Store the stats in the dictionary.
-                self._stats["avg"].append(avg_fitness_i)
-                self._stats["std"].append(std_fitness_i)
-            else:
-                raise RuntimeError(f"{self.__class__.__name__}: "
-                                   f"Something went wrong at population {i}.")
-            # _end_if_
+            # Update the mean/std in the dictionary.
+            self.update_stats(avg_fitness_i, std_fitness_i)
 
             # Check if we want to print output.
             if verbose and np.mod(i, 10) == 0:
@@ -312,7 +329,7 @@ class StandardGA(object):
                       f"Spread = {std_fitness_i:.4f}")
             # _end_if_
 
-            # Step 6: Check for convergence.
+            # STEP 6: Check for convergence.
             # Here we don't only check the average performance, but we also check the
             # spread of the population. If all the chromosomes are similar the spread
             # should be small (very close to zero).
@@ -336,7 +353,7 @@ class StandardGA(object):
         time_tf = time.perf_counter()
 
         # Display the final average fitness value.
-        print(f"Final Avg. Fitness = {avg_fitness_0:.4f}")
+        print(f"Final   Avg. Fitness = {avg_fitness_0:.4f}")
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.", end='\n')
