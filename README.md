@@ -42,15 +42,12 @@ project is ongoing so new things might come along the way.
 
 Some optimization examples on how to use this algorithm:
 
-1. [Sphere](examples/sphere.ipynb)
-2. [Rosenbrock (with constrains)](examples/rosenbrock_on_a_disk.ipynb)
-3. [Rastrigin (maximization)](examples/rastrigin.ipynb)
-4. [Booth](examples/booth.ipynb)
+1. [Minimization](examples/sphere.ipynb)
+2. [Maximization](examples/rastrigin.ipynb)
+3. [Minimization with constrains](examples/rosenbrock_on_a_disk.ipynb)
 
 Constraint optimization problems can be easily addressed using the
-[Penalty Method](https://en.wikipedia.org/wiki/Penalty_method) as described in the link. Example n.2 offers a solution
-to the optimization of the _Rosenbrock equation_, constraint on a circle. This can provide a 'template' for similar
-constraint optimization problems.
+[Penalty Method](https://en.wikipedia.org/wiki/Penalty_method) as described in the link above.
 
 ### To Do:
 
