@@ -1,9 +1,9 @@
 # Genetic Algorithms in Python
 
-Genetic Algorithms [(GA)](https://en.wikipedia.org/wiki/Genetic_algorithm), are metaheuristic algorithms
-inspired by the process of natural selection and belong to a larger class of evolutionary algorithms (EA).
+"Genetic Algorithms [(GA)](https://en.wikipedia.org/wiki/Genetic_algorithm), are metaheuristic algorithms
+inspired by the process of natural selection and belong to a larger class of evolutionary algorithms (EA)."
 
-(From Wikipedia, the free encyclopedia)
+-- (From Wikipedia, the free encyclopedia)
 
 This repository implements a GA in Python3 programming language (using only Numpy as additional library).
 The initial approach offers a "_StandardGA_" class, where the whole population is replaced by another one
