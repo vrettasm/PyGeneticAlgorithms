@@ -12,7 +12,7 @@ of offsprings at the end of each iteration (or epoch).
 The current implementation offers a variety of genetic operators including:
 
 - **Selection operators**:
-  - Linear Rank Selector
+  - [Linear Rank Selector](code/src/operators/selection/linear_rank_selector.py)
   - Random Selector
   - Roulette Wheel Selector
   - Stochastic Universal Selector
