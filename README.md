@@ -13,26 +13,26 @@ The current implementation offers a variety of genetic operators including:
 
 - **Selection operators**:
   - [Linear Rank Selector](code/src/operators/selection/linear_rank_selector.py)
-  - Random Selector
-  - Roulette Wheel Selector
-  - Stochastic Universal Selector
-  - Tournament Selector
-  - Truncation Selector
+  - [Random Selector](code/src/operators/selection/random_selector.py)
+  - [Roulette Wheel Selector](code/src/operators/selection/roulette_wheel_selector.py)
+  - [Stochastic Universal Selector](code/src/operators/selection/stochastic_universal_selector.py)
+  - [Tournament Selector](code/src/operators/selection/tournament_selector.py)
+  - [Truncation Selector](code/src/operators/selection/truncation_selector.py)
 
 - **Crossover operators**:
-  - Single-Point Crossover
-  - Multi-Point Crossover
-  - Uniform Crossover
+  - [Single-Point Crossover](code/src/operators/crossover/single_point_crossover.py)
+  - [Multi-Point Crossover](code/src/operators/crossover/mutli_point_crossover.py)
+  - [Uniform Crossover](code/src/operators/crossover/uniform_crossover.py)
 
 - **Mutation operators**:
-  - Random Mutator
-  - Shuffle Mutator
-  - Swap Mutator
+  - [Random Mutator](code/src/operators/mutation/random_mutator.py)
+  - [Shuffle Mutator](code/src/operators/mutation/shuffle_mutator.py)
+  - [Swap Mutator](code/src/operators/mutation/swap_mutator.py)
 
 Note that incorporating additional genetic operators is easily facilitated by inheriting from the base classes:
-- SelectionOperator
-- CrossoverOperator 
-- MutationOperator
+- [SelectionOperator](code/src/operators/selection/select_operator.py)
+- [CrossoverOperator](code/src/operators/crossover/crossover_operator.py)
+- [MutationOperator](code/src/operators/mutation/mutate_operator.py)
 
 and implement the basic interface as described in these classes. In the examples below I show how one can use
 this code to run a GA for optimization problems (maximization/minimization) with and without constraints. The
