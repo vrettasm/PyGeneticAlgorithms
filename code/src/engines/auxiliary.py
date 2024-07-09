@@ -3,7 +3,7 @@ from src.genome.chromosome import Chromosome
 
 
 # Public interface.
-__all__ = ["apply_corrections", "calculate_mean_std"]
+__all__ = ["apply_corrections"]
 
 def apply_corrections(input_population: list[Chromosome]) -> int:
     """
@@ -46,19 +46,4 @@ def apply_corrections(input_population: list[Chromosome]) -> int:
 
     # Return the total number of corrected genes.
     return corrections_counter
-# _end_def_
-
-def calculate_mean_std(fitness_i: list[float]):
-    """
-    Calculates the mean and standard deviation of a list with fitness values.
-
-    :param fitness_i: list[float] with the fitness values of the population.
-
-    :return: mean, std.
-    """
-    # Convert list to numpy array.
-    arr_fit = np.array(fitness_i, dtype=float, copy=False)
-
-    # Return the (mean/std) of the fitness values.
-    return np.mean(arr_fit), np.std(arr_fit)
 # _end_def_
