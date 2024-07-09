@@ -1,4 +1,5 @@
 import unittest
+from numpy.random import randint
 from src.genome.gene import Gene
 
 class TestGene(unittest.TestCase):
@@ -35,10 +36,10 @@ class TestGene(unittest.TestCase):
         """
 
         # Create a 'dummy' gene.
-        gene_1 = Gene(_datum=0, _func=int, valid=True)
+        gene_1 = Gene(_datum=0, _func=randint, valid=True)
 
         # Create a 'dummy' gene.
-        gene_2 = Gene(_datum=1, _func=int, valid=True)
+        gene_2 = Gene(_datum=1, _func=randint, valid=True)
 
         # Add the two genes, should create a list.
         genome_list = gene_1 + gene_2
