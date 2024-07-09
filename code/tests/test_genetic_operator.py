@@ -80,7 +80,7 @@ class TestGeneticOperator(unittest.TestCase):
         self.assertEqual(0, self.gen_op.counter)
     # _end_def_
 
-# _end_def_
+# _end_class_
 
 
 if __name__ == '__main__':
