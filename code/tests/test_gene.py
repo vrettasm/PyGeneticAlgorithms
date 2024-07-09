@@ -50,6 +50,10 @@ class TestGene(unittest.TestCase):
         self.assertEqual(2, len(genome_list))
 
         # Adding a 'Gene' with another object should raise an error.
+        with self.assertRaises(TypeError):
+            _ = gene_1 + 0.0
+        # _end_with_
+
         # An error will be raised if we try to add a gene to itself.
         with self.assertRaises(TypeError):
             _ = gene_1 + gene_1
