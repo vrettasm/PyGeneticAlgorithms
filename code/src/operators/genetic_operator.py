@@ -91,8 +91,8 @@ class GeneticOperator(object):
                 # Update the probability value.
                 self._probability = new_value
             else:
-                ValueError(f"{self.__class__.__name__}: "
-                           f"Probability should be in [0, 1].")
+                raise ValueError(f"{self.__class__.__name__}: "
+                                 f"Probability should be in [0, 1].")
             # _end_if_
         else:
             raise TypeError(f"{self.__class__.__name__}: "
