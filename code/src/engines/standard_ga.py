@@ -3,7 +3,7 @@ import numpy as np
 from typing import Callable
 from collections import defaultdict
 from src.genome.chromosome import Chromosome
-from src.engines.auxiliary import apply_corrections, calculate_mean_std
+from src.engines.auxiliary import apply_corrections
 from src.operators.mutation.mutate_operator import MutationOperator
 from src.operators.selection.select_operator import SelectionOperator
 from src.operators.crossover.crossover_operator import CrossoverOperator
@@ -152,7 +152,8 @@ class StandardGA(object):
             fitness_i_append(p.fitness)
         # _end_for_
 
-        return fitness_i
+        # Return the fitness in an array.
+        return np.array(fitness_i, dtype=float)
     # _end_def_
 
     def best_chromosome(self):
@@ -198,14 +199,17 @@ class StandardGA(object):
         self._stats["avg"].clear()
         self._stats["std"].clear()
 
+        # Define locally a lambda function for the statistics.
+        calc_mean_std = lambda x: (np.mean(x, dtype=float), np.std(x, dtype=float))
+
         # Get the size of the population.
         N = len(self.population)
 
-        # STEP 1: Evaluate the initial population.
+        # First evaluate the initial population.
         fitness_0 = self.evaluate_fitness(self.population)
 
         # Get the average/std fitness before optimisation.
-        avg_fitness_0, std_fitness_0 = calculate_mean_std(fitness_0)
+        avg_fitness_0, std_fitness_0 = calc_mean_std(fitness_0)
 
         # Update the mean/std in the dictionary.
         self.update_stats(avg_fitness_0, std_fitness_0)
@@ -219,20 +223,20 @@ class StandardGA(object):
         # Repeat 'epoch' times.
         for i in range(epochs):
 
-            # STEP 2: SELECT the parents.
+            # SELECT the parents.
             # This will create a NEW copy of the population.
             population_i = self._select_op(self.population)
 
-            # STEP 3: CROSSOVER to produce offsprings.
+            # CROSSOVER/MUTATE to produce offsprings.
             for j in range(0, N - 1, 2):
                 # Replace directly the OLD parents with the NEW offsprings.
-                population_i[j], population_i[j + 1] = self._cross_op(population_i[j],
-                                                                      population_i[j + 1])
-            # _end_for_
+                population_i[j], population_i[j+1] = self._cross_op(population_i[j],
+                                                                    population_i[j+1])
+                # MUTATE in place the 1st offspring.
+                self._mutate_op(population_i[j])
 
-            # STEP 4: MUTATE in place the offsprings.
-            for p in population_i:
-                self._mutate_op(p)
+                # MUTATE in place the 2nd offspring.
+                self._mutate_op(population_i[j+1])
             # _end_for_
 
             # Check if 'corrections' are enabled.
@@ -263,11 +267,11 @@ class StandardGA(object):
 
             # _end_if_
 
-            # STEP 5: EVALUATE the current population.
+            # EVALUATE the current population.
             fitness_i = self.evaluate_fitness(population_i)
 
             # Calculate the (new) average/std of the fitness.
-            avg_fitness_i, std_fitness_i = calculate_mean_std(fitness_i)
+            avg_fitness_i, std_fitness_i = calc_mean_std(fitness_i)
 
             # Update the mean/std in the dictionary.
             self.update_stats(avg_fitness_i, std_fitness_i)
@@ -280,7 +284,7 @@ class StandardGA(object):
                       f"Spread = {std_fitness_i:.4f}")
             # _end_if_
 
-            # STEP 6: Check for convergence.
+            # Check for convergence.
             # Here we don't only check the average performance, but we also check the
             # spread of the population. If all the chromosomes are similar the spread
             # should be small (very close to zero).
