@@ -87,7 +87,7 @@ class Gene(object):
         """
 
         # Make sure both items are of type 'Gene'.
-        if isinstance(other, Gene):
+        if isinstance(other, Gene) and self != other:
             return [self, other]
         else:
             raise NotImplemented
