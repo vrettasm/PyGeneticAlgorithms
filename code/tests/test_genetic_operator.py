@@ -46,7 +46,6 @@ class TestGeneticOperator(unittest.TestCase):
 
         # Check the input value.
         with self.assertRaises(ValueError):
-
             # Try to set the probability to an invalid value.
             self.gen_op.probability = -1.0
         # _end_with_
