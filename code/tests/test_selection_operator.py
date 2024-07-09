@@ -1,5 +1,4 @@
 import unittest
-from src.genome.chromosome import Chromosome
 from src.operators.selection.select_operator import SelectionOperator
 
 class TestSelectionOperator(unittest.TestCase):
