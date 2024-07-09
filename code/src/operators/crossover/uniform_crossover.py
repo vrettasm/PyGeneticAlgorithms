@@ -57,9 +57,8 @@ class UniformCrossover(CrossoverOperator):
             # Go through all the children's genome.
             for i in range(0, num_genes):
 
-                # Check only for the 'even' positions in the genome.
                 # The two genes will swap with 50% probability.
-                if i % 2 == 0 and self.rng.random() > 0.5:
+                if self.rng.random() > 0.5:
 
                     # Swap in place between the two positions.
                     child1[i], child2[i] = child2[i], child1[i]
