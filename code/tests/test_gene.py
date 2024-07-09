@@ -21,6 +21,7 @@ class TestGene(unittest.TestCase):
 
         :return: None.
         """
+
         # Check the if "_func" is callable.
         with self.assertRaises(TypeError):
             # '0' is not a callable function.
@@ -36,10 +37,10 @@ class TestGene(unittest.TestCase):
         """
 
         # Create a 'dummy' gene.
-        gene_1 = Gene(_datum=0, _func=randint, valid=True)
+        gene_1 = Gene(_datum=0, _func=lambda: randint(5), valid=True)
 
         # Create a 'dummy' gene.
-        gene_2 = Gene(_datum=1, _func=randint, valid=True)
+        gene_2 = Gene(_datum=1, _func=lambda: randint(5), valid=True)
 
         # Add the two genes, should create a list.
         genome_list = gene_1 + gene_2
