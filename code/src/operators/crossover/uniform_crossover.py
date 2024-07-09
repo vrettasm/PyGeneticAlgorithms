@@ -46,36 +46,40 @@ class UniformCrossover(CrossoverOperator):
         child1 = parent1.make_deepcopy()
         child2 = parent2.make_deepcopy()
 
-        # Make a local copy of the crossover probability.
-        swap_probability = self.probability
+        # If the crossover probability is higher than
+        # a uniformly random value, then we apply the
+        # operator.
+        if self.probability >= self.rng.random():
 
-        # Swap flag.
-        swap_flag = False
+            # Swap flag.
+            swap_flag = False
 
-        # Go through all the children's genome.
-        for i in range(0, num_genes):
+            # Go through all the children's genome.
+            for i in range(0, num_genes):
 
-            # Check the swap probability only for
-            # the 'even' positions in the genome.
-            if i % 2 == 0 and swap_probability >= self.rng.random():
+                # Check only for the 'even' positions in the genome.
+                # The two genes will swap with 50% probability.
+                if i % 2 == 0 and self.rng.random() > 0.5:
 
-                # Swap in place between the two positions.
-                child1[i], child2[i] = child2[i], child1[i]
+                    # Swap in place between the two positions.
+                    child1[i], child2[i] = child2[i], child1[i]
 
-                # Set the swap to true.
-                swap_flag = True
+                    # Set the swap to true.
+                    swap_flag = True
+                # _end_if_
+
+            # _end_for_
+
+            # Even if one gene has swapped the fitness will not be accurate.
+            if swap_flag:
+                child1.fitness = np_nan
+                child2.fitness = np_nan
             # _end_if_
 
-        # _end_for_
+            # Increase the crossover counter.
+            self.inc_counter()
 
-        # Even if one gene has swapped the fitness will not be accurate.
-        if swap_flag:
-            child1.fitness = np_nan
-            child2.fitness = np_nan
         # _end_if_
-
-        # Increase the crossover counter.
-        self.inc_counter()
 
         # Return the two offsprings.
         return child1, child2
