@@ -3,6 +3,7 @@ import numpy as np
 from typing import Callable
 from collections import defaultdict
 from src.genome.chromosome import Chromosome
+from joblib import (Parallel, delayed, cpu_count)
 from src.engines.auxiliary import apply_corrections
 from src.operators.mutation.mutate_operator import MutationOperator
 from src.operators.selection.select_operator import SelectionOperator
@@ -20,6 +21,9 @@ class StandardGA(object):
 
     # Make a random number generator.
     rng_GA = np.random.default_rng()
+
+    # Get the maximum number of CPUs.
+    MAX_CPUs = cpu_count()
 
     # Object variables.
     __slots__ = ("population", "fitness_func", "_select_op", "_cross_op", "_mutate_op",
@@ -124,35 +128,42 @@ class StandardGA(object):
 
     # _end_def_
 
-    def evaluate_fitness(self, input_population: list[Chromosome]):
+    def evaluate_fitness(self, input_population: list[Chromosome], parallel: bool = False):
         """
-        Evaluate all the chromosomes of the input list with the custom
-        fitness function.
+        Evaluate all the chromosomes of the input list with the custom fitness function.
 
-        :param input_population: (list)
+        :param input_population: (list) The population of Chromosomes that we want to evaluate
+        their fitness.
 
-        :return: a list with all the fitness values.
+        :param parallel: (bool) Flag that enables parallel computation of the fitness function.
+
+        :return: a numpy array with all the fitness values.
         """
+
         # Get a local copy of the fitness function.
         fit_func = self.fitness_func
 
-        # List with the fitness of the population.
-        fitness_i = []
+        # Check the 'parallel' flag.
+        if parallel:
 
-        # Make a local copy of the append method.
-        fitness_i_append = fitness_i.append
+            # Evaluate the chromosomes in parallel mode.
+            fitness_i = Parallel(n_jobs=self.MAX_CPUs,
+                                 backend="threading")(
+                delayed(fit_func)(p) for p in input_population
+            )
+        else:
 
-        # Evaluate all the individuals.
-        for p in input_population:
+            # Evaluate the chromosomes in serial mode.
+            fitness_i = [fit_func(p) for p in input_population]
 
-            # Assign the fitness to the chromosome.
-            p.fitness = fit_func(p)
+        # _end_if_
 
-            # Add it to the return list.
-            fitness_i_append(p.fitness)
+        # Attach the fitness to each chromosome.
+        for p, fit_eval in zip(input_population, fitness_i):
+            p.fitness = fit_eval
         # _end_for_
 
-        # Return the fitness in an array.
+        # Return the fitness in a numpy array.
         return np.array(fitness_i, dtype=float)
     # _end_def_
 
@@ -168,7 +179,7 @@ class StandardGA(object):
     # _end_def_
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
-            f_tol: float = 1.0e-8, verbose: bool = False):
+            f_tol: float = 1.0e-8, parallel: bool = False, verbose: bool = False):
         """
         Main method of the StandardGA class, that implements the evolutionary routine.
 
@@ -183,6 +194,8 @@ class StandardGA(object):
 
         :param f_tol: (float) tolerance in the difference between the average values of
         two consecutive populations. It is used to determine the convergence of the population.
+
+        :param parallel: (bool) Flag that enables parallel computation of the fitness function.
 
         :param verbose: (bool) if 'True' it will display periodically information about
         the current average fitness and spread of the population.
@@ -206,7 +219,7 @@ class StandardGA(object):
         N = len(self.population)
 
         # First evaluate the initial population.
-        fitness_0 = self.evaluate_fitness(self.population)
+        fitness_0 = self.evaluate_fitness(self.population, parallel)
 
         # Get the average/std fitness before optimisation.
         avg_fitness_0, std_fitness_0 = calc_mean_std(fitness_0)
@@ -268,7 +281,7 @@ class StandardGA(object):
             # _end_if_
 
             # EVALUATE the current population.
-            fitness_i = self.evaluate_fitness(population_i)
+            fitness_i = self.evaluate_fitness(population_i, parallel)
 
             # Calculate the (new) average/std of the fitness.
             avg_fitness_i, std_fitness_i = calc_mean_std(fitness_i)

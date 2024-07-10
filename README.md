@@ -9,6 +9,11 @@ This repository implements a GA in Python3 programming language (using only Nump
 The initial approach offers a "_StandardGA_" class, where the whole population is replaced by another one
 of offsprings at the end of each iteration (or epoch).
 
+> NOTE:
+> For computationally expensive fitness functions the StandardGA class provides the option of parallel
+> evaluation, by setting in the method run(..., parallel=True). However, for fast fitness functions this
+> might actually cause the evolution to converge slower. So the default setting here is "parallel=False".
+
 The current implementation offers a variety of genetic operators including:
 
 - **Selection operators**:
