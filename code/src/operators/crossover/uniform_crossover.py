@@ -38,10 +38,6 @@ class UniformCrossover(CrossoverOperator):
         :return: child1 and child2 (as Chromosomes).
         """
 
-        # Get the number of genes from the first parent (chromosome).
-        # N.B.: It is assumed that both parents have the same size.
-        num_genes = len(parent1)
-
         # Initially each child points to a copy of a single parent.
         child1 = parent1.make_deepcopy()
         child2 = parent2.make_deepcopy()
@@ -55,7 +51,7 @@ class UniformCrossover(CrossoverOperator):
             swap_flag = False
 
             # Go through all the children's genome.
-            for i in range(0, num_genes):
+            for i in range(0, len(parent1)):
 
                 # The two genes will swap with 50% probability.
                 if self.rng.random() > 0.5:
