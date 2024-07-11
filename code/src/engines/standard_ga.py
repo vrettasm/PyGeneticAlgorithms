@@ -188,7 +188,7 @@ class StandardGA(object):
         :param elitism: (bool) flag that defines elitism. If 'True' then the chromosome
         with the higher fitness will always be copied to the next generation (unaltered).
 
-        :param correction: (bool) flat that if set to 'True' will check the validity of
+        :param correction: (bool) flag that if set to 'True' will check the validity of
         the population (at the gene level) and attempt to correct the genome by calling
         the random() method of the flawed gene.
 
