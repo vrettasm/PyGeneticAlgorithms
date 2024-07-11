@@ -121,20 +121,20 @@ class IslandModelGA(object):
     @staticmethod
     def evolve_population(population: list[Chromosome], eval_fitness: Callable, epochs: int,
                           crs_op: CrossoverOperator, mut_op: MutationOperator, sel_op: SelectionOperator,
-                          rnd_gen, f_tol: float = 1.0e-6, elitism: bool = True):
+                          rnd_gen, f_tol: float = 1.0e-6, correction: bool = False, elitism: bool = True):
 
         # Keeps track of the convergence of the population,
-        # along with the iteration that happened.
+        # along with the iteration that terminated.
         has_converged = (False, epochs)
 
         # Get the size of the population.
         N = len(population)
 
-        # Initial evaluation of the population.
-        avg_fitness_0, std_fitness_0 = eval_fitness(population)
-
         # Define local dictionary to hold the statistics.
         local_stats = {"avg": [], "std": []}
+
+        # Initial evaluation of the population.
+        avg_fitness_0, std_fitness_0 = eval_fitness(population)
 
         # Update the local population mean/std.
         if all(np.isfinite([avg_fitness_0, std_fitness_0])):
@@ -166,6 +166,11 @@ class IslandModelGA(object):
                 # MUTATE in place the 2nd offspring.
                 mut_op(population_i[j+1])
             # _end_for_
+
+            # Check if 'corrections' are enabled.
+            if correction:
+                _ = apply_corrections(population_i)
+            # _end_if_
 
             # Check if 'elitism' is enabled.
             if elitism:
@@ -218,24 +223,34 @@ class IslandModelGA(object):
         return population, has_converged, local_stats, elapsed_time
     # _end_def_
 
-    def run(self, epochs: int = 100, elitism: bool = True, allow_migration: bool = False,
-            f_tol: float = 1.0e-8, verbose: bool = False):
+    def run(self, epochs: int = 1000, correction: bool = False, elitism: bool = True,
+            f_tol: float = 1.0e-6, allow_migration: bool = False, n_periods: int = 10,
+            verbose: bool = False):
         """
         Main method of the StandardGA class, that implements the evolutionary routine.
 
         :param epochs: (int) maximum number of iterations in the evolution process.
 
+        :param correction: (bool) flag that if set to 'True' will check the validity of
+        the population (at the gene level) and attempt to correct the genome by calling
+        the random() method of the flawed gene.
+
         :param elitism: (bool) flag that defines elitism. If 'True' then the chromosome
         with the higher fitness will always be copied to the next generation (unaltered).
+
+        :param f_tol: (float) tolerance in the difference between the average values of two
+        consecutive populations. It is used to determine the convergence of the population.
 
         :param allow_migration: (bool) flag that if set to 'True' will allow the migration
         of the best individuals among the different islands.
 
-        :param f_tol: (float) tolerance in the difference between the average values of
-        two consecutive populations. It is used to determine the convergence of the population.
+        :param n_periods: (int) the number of times that we will break the main evolution
+        to allow for chromosomes to migrate. NB: This setting is active only when the option
+        allow_migration == True. Otherwise is ignored.
 
-        :param verbose: (bool) if 'True' it will display periodically information about
-        the current average fitness and spread of the population.
+        :param verbose: (bool) if 'True' it will display periodically information about the
+        current stats of the subpopulations. NB: This setting is active only when the option
+        allow_migration == True. Otherwise is ignored.
 
         :return: None.
         """
@@ -249,32 +264,67 @@ class IslandModelGA(object):
         # Randomly shuffle (in place) the original population.
         self.rng_GA.shuffle(self.population)
 
-        # Split of the total population in subpopulations.
+        # Split of the total population in (active) subpopulations.
+        # Active here means 'still evolving'.
         active_population = [self.population[i::self.num_islands] for i in range(self.num_islands)]
 
-        # Number of iterations for the parallel evolutions.
-        n_iterations = 100
+        # Results placeholder.
+        results = None
 
-        # Main evolution loop.
-        for i in range(epochs):
+        # Check if we allow migration among the populations.
+        if allow_migration:
 
-            # Evolve the subpopulations in parallel for 'n_iterations'.
-            results_i = Parallel(n_jobs=self.MAX_CPUs, backend="threading")(
-                delayed(self.evolve_population)(p, self.fitness_func, n_iterations,
-                                                self._cross_op, self._mutate_op, self._select_op,
-                                                self.rng_GA, f_tol, elitism) for p in active_population
+            # Make sure 'n_periods' is integer.
+            n_periods = int(n_periods)
+
+            # Compute the in-between evolving epochs.
+            n_epochs = int(float(epochs)/n_periods)
+
+            # Compute the remainder epochs (if any).
+            rem_epochs = int(epochs % n_periods)
+
+            # Break the total 'epochs' in 'n_periods'.
+            for i in range(n_periods):
+
+                # If the remainder epochs is not zero, add them in the
+                # last iteration to complete the total number of epochs.
+                if rem_epochs and i == n_periods-1:
+
+                    # Update the n_epochs ONLY in the last period.
+                    n_epochs += rem_epochs
+                # _end_if_
+
+                # Evolve the subpopulations in parallel for 'n_epochs'.
+                results_i = Parallel(n_jobs=self.MAX_CPUs, backend="threading")(
+                    delayed(self.evolve_population)(p, self.fitness_func, n_epochs, self._cross_op,
+                                                    self._mutate_op, self._select_op, self.rng_GA,
+                                                    f_tol, correction, elitism) for p in active_population
+                )
+
+                # Check if we want periodic information on the screen.
+                if verbose:
+                    print("NOT IMPLEMENTED YET")
+                # _end_if_
+
+            # _end_for_
+
+            # Process the results.
+            pass
+
+        else:
+
+            # Evolve the subpopulations in parallel for 'epoch' iterations.
+            results = Parallel(n_jobs=self.MAX_CPUs, backend="threading")(
+                delayed(self.evolve_population)(p, self.fitness_func, epochs, self._cross_op,
+                                                self._mutate_op, self._select_op, self.rng_GA,
+                                                f_tol, correction, elitism) for p in active_population
             )
 
-            # ...
-            if allow_migration:
-                pass
-            # _end_if_
+        # _end_if_
 
-            # ...
-            if verbose:
-                pass
-            # _end_if_
-
+        # Process the final results.
+        for res in results:
+            print(res)
         # _end_for_
 
         # Final time instant.
