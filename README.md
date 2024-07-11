@@ -57,7 +57,6 @@ Constraint optimization problems can be easily addressed using the
 ### To Do:
 
 - Implement the 'IslandModel'
-- Add tests
 - Add more examples
 
 ### Contact
