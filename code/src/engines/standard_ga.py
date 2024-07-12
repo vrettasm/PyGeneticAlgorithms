@@ -88,7 +88,7 @@ class StandardGA(object):
 
         :param avg_fitness: (float) mean fitness value of the population.
 
-        :param std_fitness:(float) std fitness value of the population.
+        :param std_fitness: (float) std fitness value of the population.
 
         :return: None.
         """
