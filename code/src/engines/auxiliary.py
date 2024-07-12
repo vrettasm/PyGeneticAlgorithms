@@ -71,24 +71,6 @@ class SubPopulation(object):
         return int(self.pop_id)
     # _end_def_
 
-    @id.setter
-    def id(self, new_value: int):
-        """
-        Accessor (setter) of the id parameter.
-
-        :param new_value: (int).
-        """
-        # Check for correct type.
-        if isinstance(new_value, int):
-
-            # Update the id value.
-            self.pop_id = new_value
-        else:
-            raise TypeError(f"{self.__class__.__name__}: "
-                            f"SubPopulation id should be <int>: {type(new_value)}.")
-        # _end_if_
-    # _end_def_
-
     def __len__(self) -> int:
         """
         Accessor of the total length of the population.
