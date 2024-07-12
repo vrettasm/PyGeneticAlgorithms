@@ -119,8 +119,3 @@ class SubPopulation(object):
     # _end_if_
 
 # _end_class_
-
-
-s1 = SubPopulation(1, ["q", "b"])
-
-print(s1.id)
