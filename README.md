@@ -17,7 +17,7 @@ might actually cause the evolution to converge slower. So the default setting he
   > NEWS:
   > The IslandModelGA is now **available**! For the moment there is only one migration policy
   > as implemented by the Clockwise Migrator. Any new migration policies can be easily added
-  > by inheriting directly form the Migration Operator (base) class.
+  > by inheriting directly from the Migration Operator (base) class.
   > 
 
 The current implementation offers a variety of genetic operators including:
