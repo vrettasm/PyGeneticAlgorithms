@@ -33,6 +33,12 @@ class ClockwiseMigration(MigrationOperator):
         :return: None.
         """
 
+        # If we have only one active population
+        # exit without migration.
+        if len(island) == 1:
+            return None
+        # _end_if_
+
         # First find the best individual chromosome FROM EACH island.
         best_chromosome = [max(pop_i.population,
                                key=lambda c: c.fitness) for pop_i in island]
