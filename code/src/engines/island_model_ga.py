@@ -4,10 +4,11 @@ from typing import Callable
 from collections import defaultdict
 from src.genome.chromosome import Chromosome
 from joblib import (Parallel, delayed, cpu_count)
-from src.engines.auxiliary import apply_corrections
+from src.engines.auxiliary import apply_corrections, SubPopulation
 from src.operators.mutation.mutate_operator import MutationOperator
 from src.operators.selection.select_operator import SelectionOperator
 from src.operators.crossover.crossover_operator import CrossoverOperator
+from src.operators.migration.clockwise_migration import ClockwiseMigration
 
 # Public interface.
 __all__ = ["IslandModelGA"]
@@ -27,12 +28,12 @@ class IslandModelGA(object):
     MAX_CPUs = cpu_count()
 
     # Object variables.
-    __slots__ = ("population", "fitness_func", "num_islands",
-                 "_select_op", "_cross_op", "_mutate_op", "_stats")
+    __slots__ = ("population", "fitness_func", "num_islands", "_stats",
+                 "_select_op", "_cross_op", "_mutate_op", "_migrate_op")
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, num_islands: int,
                  select_op: SelectionOperator = None, mutate_op: MutationOperator = None,
-                 cross_op: CrossoverOperator = None):
+                 cross_op: CrossoverOperator = None, migrate_op: ClockwiseMigration = None):
         """
         Default constructor of StandardGA object.
 
@@ -47,6 +48,8 @@ class IslandModelGA(object):
         :param mutate_op: mutation operator (must inherit from class MutationOperator).
 
         :param cross_op: crossover operator (must inherit from class CrossoverOperator).
+
+        :param migrate_op: migration operator (must inherit from class MigrationOperator).
 
         :return: a new GA object.
         """
@@ -74,6 +77,9 @@ class IslandModelGA(object):
         # Get Crossover Operator.
         self._cross_op = cross_op
 
+        # Get Migration Operator.
+        self._migrate_op = migrate_op
+
         # Dictionary with stats.
         self._stats = defaultdict(dict)
     # _end_def_
@@ -86,6 +92,16 @@ class IslandModelGA(object):
         :return: the dictionary with the statistics from the run.
         """
         return self._stats
+    # _end_def_
+
+    def best_chromosome(self):
+        """
+        Auxiliary method.
+
+        :return: Return the chromosome with the highest fitness.
+        """
+        # Return the chromosome with the highest fitness.
+        return max(self.population, key=lambda c: c.fitness)
     # _end_def_
 
     def evaluate_fitness(self, in_population: list[Chromosome]):
@@ -119,22 +135,22 @@ class IslandModelGA(object):
     # _end_def_
 
     @staticmethod
-    def evolve_population(population: list[Chromosome], eval_fitness: Callable, epochs: int,
-                          crs_op: CrossoverOperator, mut_op: MutationOperator, sel_op: SelectionOperator,
-                          rnd_gen, f_tol: float = 1.0e-6, correction: bool = False, elitism: bool = True):
+    def evolve_population(island: SubPopulation, eval_fitness: Callable, epochs: int, crs_op: CrossoverOperator,
+                          mut_op: MutationOperator, sel_op: SelectionOperator, rnd_gen, f_tol: float = 1.0e-6,
+                          correction: bool = False, elitism: bool = True):
 
         # Keeps track of the convergence of the population,
         # along with the iteration that terminated.
         has_converged = (False, epochs)
 
         # Get the size of the population.
-        N = len(population)
+        N = len(island.population)
 
         # Define local dictionary to hold the statistics.
         local_stats = {"avg": [], "std": []}
 
         # Initial evaluation of the population.
-        avg_fitness_0, std_fitness_0 = eval_fitness(population)
+        avg_fitness_0, std_fitness_0 = eval_fitness(island.population)
 
         # Update the local population mean/std.
         if all(np.isfinite([avg_fitness_0, std_fitness_0])):
@@ -153,7 +169,7 @@ class IslandModelGA(object):
         for i in range(epochs):
 
             # SELECT the parents.
-            population_i = sel_op(population)
+            population_i = sel_op(island.population)
 
             # CROSSOVER/MUTATE to produce offsprings.
             for j in range(0, N - 1, 2):
@@ -177,7 +193,7 @@ class IslandModelGA(object):
 
                 # Find the individual chromosome with the highest fitness value
                 # (from the old population).
-                best_chromosome = max(population, key=lambda c: c.fitness)
+                best_chromosome = max(island.population, key=lambda c: c.fitness)
 
                 # Select randomly a position.
                 locus = rnd_gen.integers(0, N)
@@ -214,13 +230,13 @@ class IslandModelGA(object):
             avg_fitness_0 = avg_fitness_i
 
             # Update the old population with the new chromosomes.
-            population = population_i.copy()
+            island.population = population_i.copy()
         # _end_for_
 
         # Compute the elapsed time (in seconds).
         elapsed_time = time.perf_counter() - time_t0
 
-        return population, has_converged, local_stats, elapsed_time
+        return island, has_converged, local_stats, elapsed_time
     # _end_def_
 
     def run(self, epochs: int = 1000, correction: bool = False, elitism: bool = True,
@@ -264,12 +280,13 @@ class IslandModelGA(object):
         # Randomly shuffle (in place) the original population.
         self.rng_GA.shuffle(self.population)
 
-        # Split of the total population in (active) subpopulations.
+        # Initial random split of the total population in (active) subpopulations.
         # Active here means 'still evolving'.
-        active_population = [self.population[i::self.num_islands] for i in range(self.num_islands)]
+        active_population = [SubPopulation(i, self.population[i::self.num_islands])
+                             for i in range(self.num_islands)]
 
-        # Results placeholder.
-        results = None
+        # Final population.
+        final_population = []
 
         # Check if we allow migration among the populations.
         if allow_migration:
@@ -286,6 +303,13 @@ class IslandModelGA(object):
             # Break the total 'epochs' in 'n_periods'.
             for i in range(n_periods):
 
+                # Check if we want information on the screen.
+                if verbose:
+
+                    # Print a message to the screen.
+                    print(f"\nCurrent period {i+1} / {n_periods}:\n")
+                # _end_if_
+
                 # If the remainder epochs is not zero, add them in the
                 # last iteration to complete the total number of epochs.
                 if rem_epochs and i == n_periods-1:
@@ -296,39 +320,93 @@ class IslandModelGA(object):
 
                 # Evolve the subpopulations in parallel for 'n_epochs'.
                 results_i = Parallel(n_jobs=self.MAX_CPUs, backend="threading")(
-                    delayed(self.evolve_population)(p, self.fitness_func, n_epochs, self._cross_op,
+                    delayed(self.evolve_population)(p, self.evaluate_fitness, n_epochs, self._cross_op,
                                                     self._mutate_op, self._select_op, self.rng_GA,
                                                     f_tol, correction, elitism) for p in active_population
                 )
 
-                # Check if we want periodic information on the screen.
-                if verbose:
-                    print("NOT IMPLEMENTED YET")
+                # Empty the list of active populations.
+                active_population = []
+
+                # Process the results if the i-th period.
+                for res in results_i:
+
+                    # Extract the results.
+                    island, has_converged, _, elapsed_time = res
+
+                    # Check if we want information on the screen.
+                    if verbose:
+
+                        # Find the current highest fitness.
+                        best_fitness = max([p.fitness for p in island.population])
+
+                        # Print a message to the screen.
+                        print(f"Best Fitness in island {island.id} is:= {best_fitness:.5f}")
+                    # _end_if_
+
+                    # First check if the island has converged.
+                    if has_converged[0]:
+
+                        # Copy the population in the final list.
+                        final_population.extend(island.population)
+
+                        # Print a message to the screen.
+                        if verbose:
+                            print(f"Island population {island.id}, finished in {elapsed_time} (sec).")
+                        # _end_if_
+
+                    else:
+
+                        # Add the island population to the new active list.
+                        active_population.append(island)
+                    # _end_if_
+
+                # _end_for_
+
+                # Check for early termination.
+                if len(active_population) == 0:
+                    break
                 # _end_if_
 
+                # Here we call the migration policy.
+                self._migrate_op(active_population)
             # _end_for_
 
-            # Process the results.
-            pass
+            # Get the rest of the populations that have not yet converged.
+            for pop_j in active_population:
+                final_population.extend(pop_j.population)
+            # _end_for_
 
         else:
 
             # Evolve the subpopulations in parallel for 'epoch' iterations.
             results = Parallel(n_jobs=self.MAX_CPUs, backend="threading")(
-                delayed(self.evolve_population)(p, self.fitness_func, epochs, self._cross_op,
+                delayed(self.evolve_population)(p, self.evaluate_fitness, epochs, self._cross_op,
                                                 self._mutate_op, self._select_op, self.rng_GA,
                                                 f_tol, correction, elitism) for p in active_population
             )
 
-        # _end_if_
+            # Process the final results.
+            for res in results:
 
-        # Process the final results.
-        for res in results:
-            print(res)
-        # _end_for_
+                # Copy only the population.
+                final_population.extend(res[0].population)
+            # _end_for_
+
+        # _end_if_
 
         # Final time instant.
         time_tf = time.perf_counter()
+
+        # Update the population in the class.
+        self.population = final_population
+
+        # Final fitness evaluation.
+        avg_fitness_final, std_fitness_final = self.evaluate_fitness(self.population)
+
+        # Print message.
+        print(f"Final Avg. Fitness = {avg_fitness_final:.4f}, "
+              f"Spread = {std_fitness_final:.4f}")
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.", end='\n')
