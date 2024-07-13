@@ -65,8 +65,17 @@ class IslandModelGA(object):
             self.fitness_func = fit_func
         # _end_if_
 
-        # Assign the number of islands.
-        self.num_islands = num_islands
+        # Sanity check.
+        if num_islands < len(initial_pop):
+
+            # Assign the number of islands.
+            self.num_islands = num_islands
+        else:
+
+            # Raise an error if number of islands is too high.
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Number of requested islands ({num_islands}) exceeds the size of the population.")
+        # _end_if_
 
         # Get Selection Operator.
         self._select_op = select_op
@@ -152,13 +161,10 @@ class IslandModelGA(object):
         # Initial evaluation of the population.
         avg_fitness_0, std_fitness_0 = eval_fitness(island.population)
 
-        # Update the local population mean/std.
-        if all(np.isfinite([avg_fitness_0, std_fitness_0])):
+        # Check for initial errors.
+        if not all(np.isfinite([avg_fitness_0, std_fitness_0])):
 
-            # Store them in the dictionary.
-            local_stats["avg"].append(avg_fitness_0)
-            local_stats["std"].append(std_fitness_0)
-        else:
+            # Raise an error if this happens.
             raise RuntimeError(f"0: Mean={avg_fitness_0:.5f}, Std={std_fitness_0:.5f}.")
         # _end_if_
 
@@ -220,7 +226,7 @@ class IslandModelGA(object):
             if np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and std_fitness_i < 1.0E-1:
 
                 # Switch the convergence flag and track the current iteration.
-                has_converged = (True, i)
+                has_converged = (True, i+1)
 
                 # Exit from the loop.
                 break
@@ -284,7 +290,6 @@ class IslandModelGA(object):
         # Active here means 'still evolving'.
         active_population = [SubPopulation(i, self.population[i::self.num_islands])
                              for i in range(self.num_islands)]
-
         # Final population.
         final_population = []
 
@@ -332,7 +337,14 @@ class IslandModelGA(object):
                 for res in results_i:
 
                     # Extract the results.
-                    island, has_converged, _, elapsed_time = res
+                    island, has_converged, local_stats, elapsed_time = res
+
+                    # This will run only once per island.
+                    if island.id not in self._stats:
+
+                        # Add the key in the statistics dictionary.
+                        self._stats[island.id] = {"avg": [], "std": []}
+                    # _end_if_
 
                     # Check if we want information on the screen.
                     if verbose:
@@ -350,9 +362,13 @@ class IslandModelGA(object):
                         # Copy the population in the final list.
                         final_population.extend(island.population)
 
-                        # Print a message to the screen.
+                        # Check for verbosity.
                         if verbose:
-                            print(f"Island population {island.id}, finished in {elapsed_time} (sec).")
+                            # Compute the total number of iterations.
+                            itr = int(i*n_epochs + has_converged[1])
+
+                            # Print a message to the screen.
+                            print(f"Island population {island.id}, finished in {itr} iterations.")
                         # _end_if_
 
                     else:
@@ -361,6 +377,9 @@ class IslandModelGA(object):
                         active_population.append(island)
                     # _end_if_
 
+                    # Update statistics.
+                    self._stats[island.id]["avg"].extend(local_stats["avg"])
+                    self._stats[island.id]["std"].extend(local_stats["std"])
                 # _end_for_
 
                 # Check for early termination.
@@ -388,9 +407,20 @@ class IslandModelGA(object):
 
             # Process the final results.
             for res in results:
+                # Extract the results.
+                island, has_converged, local_stats, _ = res
+
+                # Check if the island has converged early.
+                if verbose and has_converged[0]:
+                    print(f"Island population {island.id}, "
+                          f"finished in {has_converged[1]} iterations.")
+                # _end_if_
 
                 # Copy only the population.
-                final_population.extend(res[0].population)
+                final_population.extend(island.population)
+
+                # Update the statistics.
+                self._stats[island.id] = local_stats
             # _end_for_
 
         # _end_if_
