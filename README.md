@@ -57,16 +57,16 @@ project is ongoing so new things might come along the way.
 
 Some optimization examples on how to use this algorithm:
 
-1. [Minimization](examples/sphere.ipynb)
-2. [Maximization](examples/rastrigin.ipynb)
-3. [Minimization with constrains](examples/rosenbrock_on_a_disk.ipynb)
+1. StandardGA
+   1. [Minimization](examples/sphere.ipynb)
+   2. [Maximization](examples/rastrigin.ipynb)
+   3. [Minimization with constrains](examples/rosenbrock_on_a_disk.ipynb)
+2. IslandModelGA
+   1. [Sphere Function](examples/sphere_in_parallel.ipynb)
+   2. [Easom Function](examples/easom_in_parallel.ipynb)
 
 Constraint optimization problems can be easily addressed using the
 [Penalty Method](https://en.wikipedia.org/wiki/Penalty_method) as described in the link above.
-
-### To Do:
-
-- Add more examples
 
 ### Contact
 
