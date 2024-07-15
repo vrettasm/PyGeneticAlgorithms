@@ -3,6 +3,7 @@ from src.genome.gene import Gene
 from src.genome.chromosome import Chromosome
 from src.operators.mutation.random_mutator import RandomMutator
 
+
 class TestRandomMutator(unittest.TestCase):
 
     @classmethod

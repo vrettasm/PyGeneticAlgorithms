@@ -3,6 +3,7 @@ from src.genome.gene import Gene
 from src.genome.chromosome import Chromosome
 from src.operators.crossover.single_point_crossover import SinglePointCrossover
 
+
 class TestSinglePointCrossover(unittest.TestCase):
 
     @classmethod

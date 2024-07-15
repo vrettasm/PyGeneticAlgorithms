@@ -3,6 +3,7 @@ from numpy.random import randint
 from src.genome.gene import Gene
 from src.genome.chromosome import Chromosome
 
+
 class TestChromosome(unittest.TestCase):
 
     @classmethod
@@ -14,6 +15,7 @@ class TestChromosome(unittest.TestCase):
     @classmethod
     def tearDownClass(cls) -> None:
         print(" >> TestChromosome - FINISH -")
+
     # _end_def_
 
     def test_fitness(self):
@@ -26,9 +28,8 @@ class TestChromosome(unittest.TestCase):
         # Create a 'dummy' chromosome.
         ch1 = Chromosome()
 
-        # Check the if "fitness" is float/int.
+        # Check if "fitness" is float/int.
         with self.assertRaises(TypeError):
-
             # We allow only float/int.
             ch1.fitness = '0.98'
         # _end_with_
@@ -57,6 +58,7 @@ class TestChromosome(unittest.TestCase):
         # This genome SHOULD NOT be valid.
         self.assertFalse(ch_1.is_genome_valid())
     # _end_def_
+
 
 # _end_class_
 

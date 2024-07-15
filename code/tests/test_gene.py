@@ -2,6 +2,7 @@ import unittest
 from numpy.random import randint
 from src.genome.gene import Gene
 
+
 class TestGene(unittest.TestCase):
 
     @classmethod
@@ -22,7 +23,7 @@ class TestGene(unittest.TestCase):
         :return: None.
         """
 
-        # Check the if "_func" is callable.
+        # Check if "_func" is callable.
         with self.assertRaises(TypeError):
             # '0' is not a callable function.
             _ = Gene(_datum=[1, 0], _func=0, valid=True)
