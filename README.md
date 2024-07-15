@@ -1,6 +1,6 @@
 # Genetic Algorithms in Python
 
-"Genetic Algorithms [(GA)](https://en.wikipedia.org/wiki/Genetic_algorithm), are metaheuristic algorithms
+"Genetic Algorithms [(GA)](https://en.wikipedia.org/wiki/Genetic_algorithm), are meta heuristic algorithms
 inspired by the process of natural selection and belong to a larger class of evolutionary algorithms (EA)."
 
 -- (From Wikipedia, the free encyclopedia)
