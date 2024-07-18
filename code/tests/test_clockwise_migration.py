@@ -59,7 +59,7 @@ class TestClockwiseMigration(unittest.TestCase):
                              )
                ]
 
-        # Find the best chromosome of each subpopulation
+        # Find the best chromosome of each subpopulation.
         best_chromosome = [(i, max(pop_i.population,
                                    key=lambda c: c.fitness)) for i, pop_i in enumerate(pop)]
 
@@ -73,7 +73,7 @@ class TestClockwiseMigration(unittest.TestCase):
 
         print("-----------------")
 
-        # Find the best chromosome of each subpopulation
+        # Find the best chromosome of each subpopulation.
         best_chromosome = [(i, max(pop_i.population,
                                    key=lambda c: c.fitness)) for i, pop_i in enumerate(pop)]
 
