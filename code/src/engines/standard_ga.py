@@ -59,13 +59,25 @@ class StandardGA(object):
         # _end_if_
 
         # Get Selection Operator.
-        self._select_op = select_op
+        if select_op is None:
+            raise ValueError(f"{self.__class__.__name__}: Selection operator is missing.")
+        else:
+            self._select_op = select_op
+        # _end_if_
 
         # Get Mutation Operator.
-        self._mutate_op = mutate_op
+        if mutate_op is None:
+            raise ValueError(f"{self.__class__.__name__}: Mutation operator is missing.")
+        else:
+            self._mutate_op = mutate_op
+        # _end_if_
 
         # Get Crossover Operator.
-        self._cross_op = cross_op
+        if cross_op is None:
+            raise ValueError(f"{self.__class__.__name__}: Crossover operator is missing.")
+        else:
+            self._cross_op = cross_op
+        # _end_if_
 
         # Dictionary with stats.
         self._stats = defaultdict(list)
