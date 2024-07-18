@@ -2,6 +2,7 @@ import unittest
 from src.genome.chromosome import Chromosome
 from src.operators.mutation.mutate_operator import MutationOperator
 
+
 class TestMutationOperator(unittest.TestCase):
 
     @classmethod

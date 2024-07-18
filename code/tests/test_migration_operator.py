@@ -1,5 +1,4 @@
 import unittest
-from src.engines.auxiliary import SubPopulation
 from src.operators.migration.migration_operator import MigrationOperator
 
 

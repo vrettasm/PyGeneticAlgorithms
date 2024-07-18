@@ -3,6 +3,7 @@ from src.genome.gene import Gene
 from src.genome.chromosome import Chromosome
 from src.operators.mutation.shuffle_mutator import ShuffleMutator
 
+
 class TestShuffleMutator(unittest.TestCase):
 
     @classmethod

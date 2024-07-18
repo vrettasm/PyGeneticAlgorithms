@@ -3,6 +3,7 @@ from numpy.random import randint
 from src.genome.gene import Gene
 from src.genome.chromosome import Chromosome
 
+
 class TestChromosome(unittest.TestCase):
 
     @classmethod

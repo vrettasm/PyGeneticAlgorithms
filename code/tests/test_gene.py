@@ -2,6 +2,7 @@ import unittest
 from numpy.random import randint
 from src.genome.gene import Gene
 
+
 class TestGene(unittest.TestCase):
 
     @classmethod
