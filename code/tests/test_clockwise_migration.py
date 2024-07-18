@@ -77,7 +77,7 @@ class TestClockwiseMigration(unittest.TestCase):
         best_chromosome = [(i, max(pop_i.population,
                                    key=lambda c: c.fitness)) for i, pop_i in enumerate(pop)]
 
-        # Print best chromosome After the operation.
+        # Print best chromosome AFTER the operation.
         for bc in best_chromosome:
             print(f"SubPop: {bc[0]}, with max.fit = {bc[1].fitness}")
         # _end_for_
