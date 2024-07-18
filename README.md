@@ -14,9 +14,9 @@ For computationally expensive fitness functions the StandardGA class provides th
 evaluation, by setting in the method run(..., parallel=True). However, for fast fitness functions this
 might actually cause the evolution to converge slower. So the default setting here is "parallel=False".
 
-  > NEWS:
-  > The IslandModelGA is now **available**! For the moment there is only one migration policy
-  > as implemented by the Clockwise Migrator. Any new migration policies can be easily added
+  > **NEWS**:
+  > The IslandModelGA is now available! For the moment there is only one migration policy
+  > implemented by the Clockwise Migrator. Any new migration policies can be easily added
   > by inheriting directly from the Migration Operator (base) class.
   > 
 
