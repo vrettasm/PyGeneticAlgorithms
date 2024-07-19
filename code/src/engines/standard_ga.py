@@ -81,6 +81,7 @@ class StandardGA(object):
 
         # Dictionary with stats.
         self._stats = defaultdict(list)
+
     # _end_def_
 
     @property
@@ -91,6 +92,7 @@ class StandardGA(object):
         :return: the dictionary with the statistics from the run.
         """
         return self._stats
+
     # _end_def_
 
     def update_stats(self, avg_fitness: float, std_fitness: float):
@@ -149,7 +151,7 @@ class StandardGA(object):
 
         :param parallel: (bool) Flag that enables parallel computation of the fitness function.
 
-        :return: a numpy array with all the fitness values.
+        :return: the mean and std of the fitness values.
         """
 
         # Get a local copy of the fitness function.
@@ -175,8 +177,12 @@ class StandardGA(object):
             p.fitness = fit_eval
         # _end_for_
 
-        # Return the fitness in a numpy array.
-        return np.array(fitness_i, dtype=float)
+        # Convert list to numpy array.
+        arr = np.array(fitness_i, dtype=float)
+
+        # Return the mean and std of the fitness values.
+        return np.mean(arr, dtype=float), np.std(arr, dtype=float)
+
     # _end_def_
 
     def best_chromosome(self):
@@ -224,17 +230,11 @@ class StandardGA(object):
         self._stats["avg"].clear()
         self._stats["std"].clear()
 
-        # Define locally a lambda function for the statistics.
-        calc_mean_std = lambda x: (np.mean(x, dtype=float), np.std(x, dtype=float))
-
         # Get the size of the population.
         N = len(self.population)
 
-        # First evaluate the initial population.
-        fitness_0 = self.evaluate_fitness(self.population, parallel)
-
         # Get the average/std fitness before optimisation.
-        avg_fitness_0, std_fitness_0 = calc_mean_std(fitness_0)
+        avg_fitness_0, std_fitness_0 = self.evaluate_fitness(self.population, parallel)
 
         # Update the mean/std in the dictionary.
         self.update_stats(avg_fitness_0, std_fitness_0)
@@ -255,13 +255,13 @@ class StandardGA(object):
             # CROSSOVER/MUTATE to produce offsprings.
             for j in range(0, N - 1, 2):
                 # Replace directly the OLD parents with the NEW offsprings.
-                population_i[j], population_i[j+1] = self._cross_op(population_i[j],
-                                                                    population_i[j+1])
+                population_i[j], population_i[j + 1] = self._cross_op(population_i[j],
+                                                                      population_i[j + 1])
                 # MUTATE in place the 1st offspring.
                 self._mutate_op(population_i[j])
 
                 # MUTATE in place the 2nd offspring.
-                self._mutate_op(population_i[j+1])
+                self._mutate_op(population_i[j + 1])
             # _end_for_
 
             # Check if 'corrections' are enabled.
@@ -279,7 +279,6 @@ class StandardGA(object):
 
             # Check if 'elitism' is enabled.
             if elitism:
-
                 # Find the individual chromosome with the highest fitness value
                 # (from the old population).
                 best_chromosome = max(self.population, key=lambda c: c.fitness)
@@ -292,18 +291,14 @@ class StandardGA(object):
 
             # _end_if_
 
-            # EVALUATE the current population.
-            fitness_i = self.evaluate_fitness(population_i, parallel)
-
             # Calculate the (new) average/std of the fitness.
-            avg_fitness_i, std_fitness_i = calc_mean_std(fitness_i)
+            avg_fitness_i, std_fitness_i = self.evaluate_fitness(population_i, parallel)
 
             # Update the mean/std in the dictionary.
             self.update_stats(avg_fitness_i, std_fitness_i)
 
             # Check if we want to print output.
             if verbose and np.mod(i, 10) == 0:
-
                 # Display an information message.
                 print(f"Epoch: {i + 1:>5} -> Avg. Fitness = {avg_fitness_i:.4f}, "
                       f"Spread = {std_fitness_i:.4f}")
@@ -314,7 +309,6 @@ class StandardGA(object):
             # spread of the population. If all the chromosomes are similar the spread
             # should be small (very close to zero).
             if np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and std_fitness_i < 1.0E-1:
-
                 # Display a warning message.
                 print(f"{self.__class__.__name__} finished in {i + 1} iterations.")
 
@@ -346,6 +340,7 @@ class StandardGA(object):
         This is only a wrapper of the "run" method.
         """
         return self.run(*args, **kwargs)
+
     # _end_def_
 
     def print_operator_stats(self):
