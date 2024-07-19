@@ -1,4 +1,5 @@
 from typing import Any
+from copy import deepcopy
 
 
 class Gene(object):
@@ -131,6 +132,15 @@ class Gene(object):
         :return: Gene().
         """
         return f"{self.__class__.__name__}(datum={self._datum}, _func={self._func}, valid={self.valid})"
+    # _end_def_
+
+    def clone(self):
+        """
+        Makes a duplicate of the self object.
+
+        :return: a 'deep-copy' of the object.
+        """
+        return deepcopy(self)
     # _end_def_
 
 # _end_class_
