@@ -43,8 +43,8 @@ class UniformCrossover(CrossoverOperator):
         N = len(parent1)
 
         # Initially each child points to a copy of a single parent.
-        child1 = parent1.make_deepcopy()
-        child2 = parent2.make_deepcopy()
+        child1 = parent1.clone()
+        child2 = parent2.clone()
 
         # If the crossover probability is higher than
         # a uniformly random value, then we apply the

@@ -221,7 +221,7 @@ class IslandModelGA(object):
                 locus = rnd_gen.integers(0, N)
 
                 # Replace the chromosome with the previous best.
-                population_i[locus] = best_chromosome
+                population_i[locus] = best_chromosome.clone()
 
             # _end_if_
 

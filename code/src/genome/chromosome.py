@@ -128,7 +128,7 @@ class Chromosome(object):
         return item in self._genome
     # _end_if_
 
-    def make_deepcopy(self):
+    def clone(self):
         """
         Makes a duplicate of the self object.
 

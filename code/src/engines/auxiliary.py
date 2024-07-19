@@ -5,6 +5,7 @@ from src.genome.chromosome import Chromosome
 # Public interface.
 __all__ = ["apply_corrections", "SubPopulation"]
 
+
 def apply_corrections(input_population: list[Chromosome]) -> int:
     """
     Check the population for invalid genes and correct them by applying
@@ -47,6 +48,7 @@ def apply_corrections(input_population: list[Chromosome]) -> int:
     # Return the total number of corrected genes.
     return corrections_counter
 # _end_def_
+
 
 @dataclass(init=True, repr=True)
 class SubPopulation(object):

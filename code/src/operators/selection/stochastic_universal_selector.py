@@ -74,7 +74,7 @@ class StochasticUniversalSelector(SelectionOperator):
             # _end_while_
 
             # Add the individual at position 'i' in the new parents pool.
-            new_parents_append(population[i])
+            new_parents_append(population[i].clone())
         # _end_for_
 
         # Increase the selection counter.

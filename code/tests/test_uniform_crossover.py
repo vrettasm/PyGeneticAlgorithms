@@ -3,6 +3,7 @@ from src.genome.gene import Gene
 from src.genome.chromosome import Chromosome
 from src.operators.crossover.uniform_crossover import UniformCrossover
 
+
 class TestUniformCrossover(unittest.TestCase):
 
     @classmethod

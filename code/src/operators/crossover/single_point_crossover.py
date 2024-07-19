@@ -56,8 +56,8 @@ class SinglePointCrossover(CrossoverOperator):
         else:
             # Otherwise each child will point
             # to a deepcopy of a single parent.
-            child1 = parent1.make_deepcopy()
-            child2 = parent2.make_deepcopy()
+            child1 = parent1.clone()
+            child2 = parent2.clone()
         # _end_if_
 
         # Return the two offsprings.

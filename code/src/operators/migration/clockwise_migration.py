@@ -53,7 +53,7 @@ class ClockwiseMigration(MigrationOperator):
                 locus = self.rng.integers(0, len(pop_i.population))
 
                 # Replace the chromosome with the best one from its left.
-                pop_i.population[locus] = best_chromosome[i-1]
+                pop_i.population[locus] = best_chromosome[i-1].clone()
             # _end_if_
 
         # _end_for_
