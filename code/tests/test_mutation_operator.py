@@ -7,12 +7,12 @@ class TestMutationOperator(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(" >> TestMutationOperator - START -")
+        print(">> TestMutationOperator - START -")
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(" >> TestMutationOperator - FINISH -")
+        print(">> TestMutationOperator - FINISH -", end='\n\n')
     # _end_def_
 
     def setUp(self) -> None:

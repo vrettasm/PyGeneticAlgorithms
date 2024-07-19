@@ -8,13 +8,13 @@ class TestChromosome(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(" >> TestChromosome - START -")
+        print(">> TestChromosome - START -")
 
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(" >> TestChromosome - FINISH -")
+        print(">> TestChromosome - FINISH -", end='\n\n')
 
     # _end_def_
 

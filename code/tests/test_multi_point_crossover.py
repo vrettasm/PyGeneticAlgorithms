@@ -8,13 +8,13 @@ class TestMultiPointCrossover(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(" >> TestMultiPointCrossover - START -")
+        print(">> TestMultiPointCrossover - START -")
 
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(" >> TestMultiPointCrossover - FINISH -")
+        print(">> TestMultiPointCrossover - FINISH -", end='\n\n')
     # _end_def_
 
     def setUp(self) -> None:

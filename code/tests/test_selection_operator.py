@@ -6,12 +6,12 @@ class TestSelectionOperator(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(" >> TestSelectionOperator - START -")
+        print(">> TestSelectionOperator - START -")
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(" >> TestSelectionOperator - FINISH -")
+        print(">> TestSelectionOperator - FINISH -", end='\n\n')
     # _end_def_
 
     def setUp(self) -> None:

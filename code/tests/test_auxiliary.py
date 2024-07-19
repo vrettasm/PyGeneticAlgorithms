@@ -8,13 +8,13 @@ class TestAuxiliary(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(" >> TestAuxiliary - START -")
+        print(">> TestAuxiliary - START -")
 
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(" >> TestAuxiliary - FINISH -")
+        print(">> TestAuxiliary - FINISH -", end='\n\n')
 
     # _end_def_
 

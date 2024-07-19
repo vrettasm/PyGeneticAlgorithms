@@ -7,13 +7,13 @@ class TestCrossoverOperator(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(" >> TestCrossoverOperator - START -")
+        print(">> TestCrossoverOperator - START -")
 
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(" >> TestCrossoverOperator - FINISH -")
+        print(">> TestCrossoverOperator - FINISH -", end='\n\n')
     # _end_def_
 
     def setUp(self) -> None:

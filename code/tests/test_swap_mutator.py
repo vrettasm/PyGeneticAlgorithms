@@ -8,13 +8,13 @@ class TestSwapMutator(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(" >> TestSwapMutator - START -")
+        print(">> TestSwapMutator - START -")
 
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(" >> TestSwapMutator - FINISH -")
+        print(">> TestSwapMutator - FINISH -", end='\n\n')
     # _end_def_
 
     def setUp(self) -> None:

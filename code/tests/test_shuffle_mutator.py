@@ -8,13 +8,13 @@ class TestShuffleMutator(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(" >> TestShuffleMutator - START -")
+        print(">> TestShuffleMutator - START -")
 
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(" >> TestShuffleMutator - FINISH -")
+        print(">> TestShuffleMutator - FINISH -", end='\n\n')
     # _end_def_
 
     def setUp(self) -> None:

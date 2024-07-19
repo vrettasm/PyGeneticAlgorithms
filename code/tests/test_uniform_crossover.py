@@ -8,13 +8,13 @@ class TestUniformCrossover(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(" >> TestUniformCrossover - START -")
+        print(">> TestUniformCrossover - START -")
 
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(" >> TestUniformCrossover - FINISH -")
+        print(">> TestUniformCrossover - FINISH -", end='\n\n')
     # _end_def_
 
     def setUp(self) -> None:

@@ -7,12 +7,12 @@ class TestGene(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(" >> TestGene - START -")
+        print(">> TestGene - START -")
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(" >> TestGene - FINISH -")
+        print(">> TestGene - FINISH -", end='\n\n')
     # _end_def_
 
     def test_init(self):
