@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from src.genome.gene import Gene
 
 
-@dataclass(init=True, repr=True)
+@dataclass(init=True, repr=True, slots=True)
 class Chromosome(object):
 
     # Define the genome as a list of genes. This list
