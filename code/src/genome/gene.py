@@ -14,7 +14,7 @@ class Gene(object):
     # Object variables.
     __slots__ = ("_datum", "_func", "valid")
 
-    def __init__(self, _datum: Any = None, _func: Any = None, valid: bool = True):
+        def __init__(self, _datum: Any, _func: Any, valid: bool = True):
         """
         Initialize a Gene object.
 
@@ -36,8 +36,9 @@ class Gene(object):
             self._func = _func
         # _end_if_
 
-        # Copy the valid flag.
-        self.valid = valid
+        # Copy the valid flag. Note that if the '_datum' field is set to None,
+        # the Gene is automatically invalid.
+        self.valid = False if self._datum is None else valid
     # _end_def_
 
     @property

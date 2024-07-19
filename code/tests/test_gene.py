@@ -8,7 +8,6 @@ class TestGene(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         print(" >> TestGene - START -")
-
     # _end_def_
 
     @classmethod
@@ -23,12 +22,36 @@ class TestGene(unittest.TestCase):
         :return: None.
         """
 
+        # Check for required arguments.
+        with self.assertRaises(TypeError):
+
+            # Fields '_datum' and '_func' should be passed explicitly.
+            _ = Gene()
+        # _end_with_
+
         # Check if "_func" is callable.
         with self.assertRaises(TypeError):
+
             # '0' is not a callable function.
             _ = Gene(_datum=[1, 0], _func=0, valid=True)
         # _end_with_
+
     # _end_def_
+
+    def test_valid(self):
+        """
+        Test the valid flag.
+
+        :return: None.
+        """
+
+        # Make a new test Gene, with _datum='None'.
+        gene_1 = Gene(None, _func=lambda: randint(5), valid=True)
+
+        # Even though we have set the 'valid=True', because
+        # of the 'datum=None' the Gene will be invalidated.
+        self.assertFalse(gene_1.valid)
+    # _end_def__
 
     def test_add(self):
         """
