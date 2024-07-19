@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Callable
 from copy import deepcopy
 
 
@@ -14,7 +14,7 @@ class Gene(object):
     # Object variables.
     __slots__ = ("_datum", "_func", "valid")
 
-    def __init__(self, _datum: Any, _func: Any, valid: bool = True):
+    def __init__(self, _datum: Any, _func: Callable, valid: bool = True):
         """
         Initialize a Gene object.
         
