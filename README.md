@@ -12,7 +12,7 @@ of offsprings at the end of each iteration (or epoch).
 NOTE:
 For computationally expensive fitness functions the StandardGA class provides the option of parallel
 evaluation, by setting in the method run(..., parallel=True). However, for fast fitness functions this
-might actually cause the evolution to converge slower. So the default setting here is "parallel=False".
+might actually cause the evolution to progress slower. So the default setting here is "parallel=False".
 
   > **NEWS**:
   > The IslandModelGA is now available! For the moment there is only one migration policy
