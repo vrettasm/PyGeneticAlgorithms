@@ -284,11 +284,11 @@ class IslandModelGA(object):
 
         :param n_periods: (int) the number of times that we will break the main evolution
         to allow for chromosomes to migrate. NB: This setting is active only when the option
-        allow_migration == True. Otherwise is ignored.
+        allow_migration == True. Otherwise, is ignored.
 
         :param verbose: (bool) if 'True' it will display periodically information about the
         current stats of the subpopulations. NB: This setting is active only when the option
-        allow_migration == True. Otherwise is ignored.
+        allow_migration == True. Otherwise, is ignored.
 
         :return: None.
         """
@@ -321,7 +321,7 @@ class IslandModelGA(object):
             # Compute the remainder epochs (if any).
             rem_epochs = int(epochs % n_periods)
 
-            # Break the total 'epochs' in 'n_periods'.
+            # Break the total 'epochs' in n_periods.
             for i in range(n_periods):
 
                 # Check if we want information on the screen.
@@ -339,7 +339,7 @@ class IslandModelGA(object):
                     n_epochs += rem_epochs
                 # _end_if_
 
-                # Evolve the subpopulations in parallel for 'n_epochs'.
+                # Evolve the subpopulations in parallel for n_epochs.
                 results_i = Parallel(n_jobs=self.MAX_CPUs, backend="threading")(
                     delayed(self.evolve_population)(p, self.evaluate_fitness, n_epochs, self._cross_op,
                                                     self._mutate_op, self._select_op, self.rng_GA,
