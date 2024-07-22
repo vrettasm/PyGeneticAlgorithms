@@ -1,6 +1,7 @@
 from src.genome.chromosome import Chromosome
 from src.operators.selection.select_operator import SelectionOperator
 
+
 class LinearRankSelector(SelectionOperator):
     """
     Description:
@@ -41,7 +42,7 @@ class LinearRankSelector(SelectionOperator):
         N = len(sorted_population)
 
         # Calculate sum of all the ranked fitness values: "1 + 2 + 3 + ... + N".
-        sum_ranked_values = int(0.5 * N * (N+1))
+        sum_ranked_values = float(0.5 * N * (N+1))
 
         # Calculate the "selection probabilities", of each member in the population.
         selection_probs = [n / sum_ranked_values for n in range(1, N+1)]
