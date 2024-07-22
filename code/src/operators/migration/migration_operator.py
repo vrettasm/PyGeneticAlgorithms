@@ -4,7 +4,7 @@ from src.operators.genetic_operator import GeneticOperator
 
 class MigrationOperator(GeneticOperator):
 
-    def __init__(self, migration_probability):
+    def __init__(self, migration_probability: float):
         """
         Construct a 'MigrationOperator' object with a given
         probability value.
