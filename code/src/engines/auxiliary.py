@@ -12,6 +12,9 @@ def apply_corrections(input_population: list[Chromosome]) -> int:
     directly the random method. It is assumed that the random method of
     the Gene is always returning a 'valid' value for the Gene.
 
+    :param input_population: List(Chromosome) the population we want to
+    apply corrections (if applicable).
+
     :return: the total number of corrected genes in the population.
     """
 
