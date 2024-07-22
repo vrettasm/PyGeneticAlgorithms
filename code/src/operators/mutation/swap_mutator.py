@@ -39,10 +39,8 @@ class SwapMutator(MutationOperator):
         if self.probability >= self.rng.random():
 
             # Select randomly the two mutation points.
-            loci = self.rng.choice(range(0, len(individual)), size=2,
+            i, j = self.rng.choice(range(0, len(individual)), size=2,
                                    replace=False, shuffle=False)
-            # Extract the indexes.
-            i, j = loci
 
             # Swap in place between the two positions.
             individual[i], individual[j] = individual[j], individual[i]

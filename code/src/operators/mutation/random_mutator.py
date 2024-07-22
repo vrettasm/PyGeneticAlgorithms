@@ -28,8 +28,8 @@ class RandomMutator(MutationOperator):
 
     def mutate(self, individual: Chromosome):
         """
-        Perform the mutation operation by randomly replacing a gene
-        with a new one that has been generated randomly.
+        Perform the mutation operation by randomly replacing a
+        gene with a new one that has been generated randomly.
 
         :param individual: (Chromosome).
 

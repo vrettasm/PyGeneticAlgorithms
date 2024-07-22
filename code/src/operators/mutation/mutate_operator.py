@@ -1,6 +1,7 @@
 from src.genome.chromosome import Chromosome
 from src.operators.genetic_operator import GeneticOperator
 
+
 class MutationOperator(GeneticOperator):
 
     def __init__(self, mutation_probability: float):
