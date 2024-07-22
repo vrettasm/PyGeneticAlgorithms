@@ -1,13 +1,14 @@
 from src.genome.chromosome import Chromosome
 from src.operators.selection.select_operator import SelectionOperator
 
+
 class TournamentSelector(SelectionOperator):
     """
     Description:
 
-        Tournament Selector implements an object that performs selection by choosing the individual from the set of
-        individuals. The winner of each tournament i.e. (the one with the highest fitness value) is selected to perform
-        crossover and mutation.
+        Tournament Selector implements an object that performs selection by choosing the individual
+        from the set of individuals. The winner of each tournament i.e. (the one with the highest
+        fitness value) is selected to perform crossover and mutation.
     """
 
     def __init__(self, select_probability: float = 1.0, k: int = 5):
@@ -31,8 +32,8 @@ class TournamentSelector(SelectionOperator):
 
     def select(self, population: list[Chromosome]):
         """
-        Select the new individuals from the population that will be passed on to the next genetic operations
-        of crossover and mutation to form the new population of solutions.
+        Select the new individuals from the population that will be passed on to the next
+        genetic operations of crossover and mutation to form the new population of solutions.
 
         :param population:
 
@@ -48,7 +49,9 @@ class TournamentSelector(SelectionOperator):
         new_parents_append = new_parents.append
 
         # Define locally the choose(N,k) function.
-        choose_k = lambda: self.rng.choice(N, size=self._k, replace=False, shuffle=False)
+        def choose_k():
+            return self.rng.choice(N, size=self._k, replace=False, shuffle=False)
+        # _end_def_
 
         # Repeat the 'tournament' N times.
         for i in range(N):

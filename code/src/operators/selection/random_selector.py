@@ -1,12 +1,13 @@
 from src.genome.chromosome import Chromosome
 from src.operators.selection.select_operator import SelectionOperator
 
+
 class RandomSelector(SelectionOperator):
     """
     Description:
 
-        Random Selector implements selection assuming that all member of the population have the same probability
-        to be selected as parents 1/N, (effectively assuming a uniform probability).
+        Random Selector implements selection assuming that all member of the population have the
+        same probability to be selected as parents 1/N, effectively assuming a uniform probability.
 
         It does not favour the fit individuals therefore the mixing will be very slow.
     """
@@ -25,8 +26,8 @@ class RandomSelector(SelectionOperator):
 
     def select(self, population: list[Chromosome]):
         """
-        Select the new individuals from the population that will be passed on to the next genetic operations
-        of crossover and mutation to form the new population of solutions.
+        Select the new individuals from the population that will be passed on to the next
+        genetic operations of crossover and mutation to form the new population of solutions.
 
         :param population:
 

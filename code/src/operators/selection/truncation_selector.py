@@ -4,7 +4,11 @@ from src.operators.selection.select_operator import SelectionOperator
 class TruncationSelector(SelectionOperator):
     """
     Description:
-        TBD
+
+        Truncation selector, creates a new population using a pre-defined proportion of the old population.
+        When this method is called, it sorts the individuals of the OLD population using their fitness and
+        then using a predefined value (e.g. p=0.3 or 30%) selects repeatedly new individuals from the top
+        0.3 percent of the old population, until we reach the required size of the NEW population.
     """
 
     def __init__(self, select_probability: float = 1.0, p: float = 0.3):
@@ -26,10 +30,10 @@ class TruncationSelector(SelectionOperator):
 
     def select(self, population: list[Chromosome]):
         """
-        Select the new individuals from the population that will be passed on to the next genetic
-        operations of crossover and mutation to form the new population of solutions.
+        Select the new individuals from the population that will be passed on to the next
+        genetic operations of crossover and mutation to form the new population of solutions.
 
-        :param population:
+        :param population: List of Chromosomes.
 
         :return: a new population (list of chromosomes).
         """

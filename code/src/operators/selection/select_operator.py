@@ -1,6 +1,7 @@
 from src.genome.chromosome import Chromosome
 from src.operators.genetic_operator import GeneticOperator
 
+
 class SelectionOperator(GeneticOperator):
 
     def __init__(self, selection_probability: float):

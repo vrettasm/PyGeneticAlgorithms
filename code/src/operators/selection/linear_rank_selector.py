@@ -5,11 +5,11 @@ class LinearRankSelector(SelectionOperator):
     """
     Description:
 
-        Linear Rank Selector implements an object that performs selection using ranking. The individuals first are
-        sorted according to their fitness values. The rank N is assigned to the best individual and the rank 1 to
-        the worst individual.
+        Linear Rank Selector implements an object that performs selection using ranking.
+        The individuals first are sorted according to their fitness values. The rank N
+        is assigned to the best individual and the rank 1 to the worst individual.
 
-        After that the selection process is similar to the one of Roulette Wheel Selector.
+        After that the selection process is similar to the one of RouletteWheelSelector.
     """
 
     def __init__(self, select_probability: float = 1.0):
@@ -26,8 +26,8 @@ class LinearRankSelector(SelectionOperator):
 
     def select(self, population: list[Chromosome]):
         """
-        Select the new individuals from the population that will be passed on to the next genetic operations
-        of crossover and mutation to form the new population of solutions.
+        Select the new individuals from the population that will be passed on to the next
+        genetic operations of crossover and mutation to form the new population of solutions.
 
         :param population:
 

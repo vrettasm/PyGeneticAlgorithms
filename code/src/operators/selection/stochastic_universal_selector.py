@@ -3,11 +3,12 @@ from numpy import cumsum
 from src.genome.chromosome import Chromosome
 from src.operators.selection.select_operator import SelectionOperator
 
+
 class StochasticUniversalSelector(SelectionOperator):
     """
     Description:
 
-        Stochastic Universal Selector is an extension of fitness proportionate selection (i.e. Roulette Wheel Selection)
+        Stochastic Universal Selector is an extension of fitness proportionate selection (i.e. RouletteWheelSelection)
         which exhibits no bias and minimal spread. Where RWS chooses several solutions from the population by repeated
         random sampling, SUS uses a single random value to sample all the solutions by choosing them at evenly spaced
         intervals. This gives weaker members of the population (according to their fitness) a chance to be chosen.
@@ -27,8 +28,8 @@ class StochasticUniversalSelector(SelectionOperator):
 
     def select(self, population: list[Chromosome]):
         """
-        Select the new individuals from the population that will be passed on to the next genetic
-        operations of crossover and mutation to form the new population of solutions.
+        Select the new individuals from the population that will be passed on to the next
+        genetic operations of crossover and mutation to form the new population of solutions.
 
         :param population:
 
@@ -50,7 +51,7 @@ class StochasticUniversalSelector(SelectionOperator):
         start_0 = dist_p * self.rng.random()
 
         # Calculate the pointers at equal distances 'dist_p'
-        # starting from 'start_0.
+        # starting from 'start_0'.
         pointers = [start_0 + i*dist_p for i in range(0, N)]
 
         # Create a list that will contain the new parents.

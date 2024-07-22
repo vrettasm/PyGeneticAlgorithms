@@ -7,11 +7,12 @@ class RouletteWheelSelector(SelectionOperator):
     """
     Description:
 
-        Roulette Wheel Selector implements 'fitness proportional selection'. Its member of the population is assigned a
-        probability value that is directly proportional to its fitness value (compared to the rest of the population).
+        Roulette Wheel Selector implements 'fitness proportional selection'. Each member of the population
+        is assigned a probability value that is directly proportional to its fitness value (compared to the
+        rest of the population).
 
-        Individuals with higher fitness value are more likely to be selected for parents when forming the new generation
-        of individuals (offsprings).
+        Individuals with higher fitness value are more likely to be selected for parents when forming the
+        new generation of individuals (offsprings).
     """
 
     def __init__(self, select_probability: float = 1.0):
@@ -28,8 +29,8 @@ class RouletteWheelSelector(SelectionOperator):
 
     def select(self, population: list[Chromosome]):
         """
-        Select the new individuals from the population that will be passed on to the next genetic operations
-        of crossover and mutation to form the new population of solutions.
+        Select the new individuals from the population that will be passed on to the next
+        genetic operations of crossover and mutation to form the new population of solutions.
 
         :param population:
 
