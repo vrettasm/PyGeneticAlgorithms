@@ -55,7 +55,7 @@ class MultiPointCrossover(CrossoverOperator):
                              " exceeds the length of the chromosome.")
         # _end_def_
 
-        # Initially each child points to a copy of a single parent.
+        # Initially each child points to a clone of a single parent.
         child1 = parent1.clone()
         child2 = parent2.clone()
 

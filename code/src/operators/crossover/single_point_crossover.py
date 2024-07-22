@@ -45,9 +45,9 @@ class SinglePointCrossover(CrossoverOperator):
             # Select randomly the crossover point.
             locus = self.rng.integers(0, len(parent1))
 
-            # Create the new two offsprings at locus.
-            # At this point the two new offsprings do not have accurate fitness,
-            # so we set them both to "NaN".
+            # Create the two NEW offsprings at locus.
+            # At this point the two new offsprings do not have
+            # accurate fitness, so we set them both to "NaN".
             child1 = Chromosome(parent1[:locus] + parent2[locus:], _fitness=np_nan)
             child2 = Chromosome(parent2[:locus] + parent1[locus:], _fitness=np_nan)
 

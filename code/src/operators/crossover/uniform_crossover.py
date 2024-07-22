@@ -42,13 +42,12 @@ class UniformCrossover(CrossoverOperator):
         # N.B.: It is assumed that both parents have the same size.
         N = len(parent1)
 
-        # Initially each child points to a copy of a single parent.
+        # Initially each child points to a clone of a single parent.
         child1 = parent1.clone()
         child2 = parent2.clone()
 
         # If the crossover probability is higher than
-        # a uniformly random value, then we apply the
-        # operator.
+        # a uniformly random value, make the changes.
         if self.probability >= self.rng.random():
 
             # Swap flag.

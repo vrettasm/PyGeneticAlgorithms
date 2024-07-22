@@ -1,17 +1,19 @@
 from src.genome.chromosome import Chromosome
 from src.operators.genetic_operator import GeneticOperator
 
+
 class CrossoverOperator(GeneticOperator):
 
-    def __init__(self, crossover_probability):
+    def __init__(self, crossover_probability: float):
         """
-        Construct a 'CrossoverOperator' object with a given
-        probability value.
+        Construct a 'CrossoverOperator' object with a
+        given probability value.
 
         :param crossover_probability: (float).
         """
 
-        # Call the super constructor with the provided probability value.
+        # Call the super constructor with the provided
+        # probability value.
         super().__init__(crossover_probability)
     # _end_def_
 
