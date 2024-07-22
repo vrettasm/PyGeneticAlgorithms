@@ -67,11 +67,9 @@ class IslandModelGA(object):
 
         # Sanity check.
         if num_islands < len(initial_pop):
-
             # Assign the number of islands.
             self.num_islands = num_islands
         else:
-
             # Raise an error if number of islands is too high.
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Number of requested islands ({num_islands}) exceeds the size of the population.")
@@ -163,6 +161,10 @@ class IslandModelGA(object):
     def evolve_population(island: SubPopulation, eval_fitness: Callable, epochs: int, crs_op: CrossoverOperator,
                           mut_op: MutationOperator, sel_op: SelectionOperator, rnd_gen, f_tol: float = 1.0e-6,
                           correction: bool = False, elitism: bool = True):
+        """
+        This method is called to evolve each subpopulation independently. It is declared 'static' to avoid problems
+        when passed in the Parallel pool. The input parameters have identical meaning with the ones from the run().
+        """
 
         # Keeps track of the convergence of the population,
         # along with the iteration that terminated.
