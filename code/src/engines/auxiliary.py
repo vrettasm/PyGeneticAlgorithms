@@ -83,10 +83,23 @@ class SubPopulation(object):
     # _end_def_
 
     def __getitem__(self, index: int):
+        """
+        Returns the reference of the Chromosome at position index.
+
+        :param index: (int) position of chromosome to return.
+        """
         return self.population[index]
     # _end_def_
 
     def __setitem__(self, index: int, item: Chromosome):
+        """
+        Sets the input Chromosome in the index position
+        inside the (sub) population.
+
+        :param index: (int) position in the population.
+
+        :param item: Chromosome to attach to the new position.
+        """
         self.population[index] = item
     # _end_def_
 
