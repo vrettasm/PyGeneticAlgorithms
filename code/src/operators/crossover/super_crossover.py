@@ -47,11 +47,9 @@ class SuperCrossover(CrossoverOperator):
         # a uniformly random value, make the changes.
         if self.probability >= self.rng.random():
 
-            # Select randomly the crossover method.
-            index = self.rng.integers(len(self.cross))
-
-            # Call the selected crossover.
-            child1, child2 = self.cross[index].crossover(parent1, parent2)
+            # Select randomly, with equal probability (but this can be changed),
+            # a crossover operator and call its crossover method.
+            child1, child2 = self.rng.choice(self.cross).crossover(parent1, parent2)
 
             # Increase the crossover counter.
             self.inc_counter()
