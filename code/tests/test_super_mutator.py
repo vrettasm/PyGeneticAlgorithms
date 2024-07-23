@@ -68,7 +68,8 @@ class TestSuperMutator(unittest.TestCase):
         # _end_for_
 
         # Make sure the counters add-up.
-        self.assertEqual(all_counters, self.mut_op.counter)
+        self.assertEqual(all_counters, self.mut_op.counter,
+                         "Operator counters do not add up.")
 
     # _end_def_
 
