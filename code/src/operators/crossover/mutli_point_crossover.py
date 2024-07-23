@@ -17,7 +17,7 @@ class MultiPointCrossover(CrossoverOperator):
 
     def __init__(self, crossover_probability: float = 0.9):
         """
-        Construct a 'SinglePointCrossover' object with
+        Construct a 'MultiPointCrossover' object with
         a given probability value.
 
         :param crossover_probability: (float).
