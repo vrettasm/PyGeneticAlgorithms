@@ -51,11 +51,18 @@ class SuperCrossover(CrossoverOperator):
             index = self.rng.integers(len(self.cross))
 
             # Call the selected crossover.
-            self.cross[index].crossover(parent1, parent2)
+            child1, child2 = self.cross[index].crossover(parent1, parent2)
 
             # Increase the crossover counter.
             self.inc_counter()
+        else:
+            # Otherwise each child points to a clone of a single parent.
+            child1 = parent1.clone()
+            child2 = parent2.clone()
         # _end_if_
+
+        # Return the two offsprings.
+        return child1, child2
 
     # _end_def_
 
