@@ -44,11 +44,10 @@ class SuperMutator(MutationOperator):
         # a uniformly random value, make the changes.
         if self.probability >= self.rng.random():
 
-            # Select randomly the mutation method.
-            index = self.rng.integers(len(self.mutator))
-
-            # Call the selected mutator.
-            self.mutator[index].mutate(individual)
+            # Select randomly, with equal probability
+            # (but this can be changed) a mutator and
+            # call its mutation method.
+            self.rng.choice(self.mutator).mutate(individual)
 
             # Increase the mutator counter.
             self.inc_counter()
