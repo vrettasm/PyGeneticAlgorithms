@@ -56,4 +56,15 @@ class SuperMutator(MutationOperator):
 
     # _end_def_
 
+    @property
+    def all_counters(self):
+        """
+        Accessor (getter) of the application counter from all the internal mutators.
+        This is mostly to verify that everything is working as expected.
+
+        :return: a dictionary with the counter calls for all mutator methods.
+        """
+        return {mut_op.__class__.__name__: mut_op.counter for mut_op in self.mutator}
+    # _end_def_
+
 # _end_class_
