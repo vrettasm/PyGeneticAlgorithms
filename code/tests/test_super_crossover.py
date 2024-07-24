@@ -82,6 +82,21 @@ class TestSuperCrossover(unittest.TestCase):
         self.assertEqual(all_counters, self.cross_op.counter,
                          "Operator counters do not add up.")
 
+        # Reset the counters.
+        self.cross_op.reset_counter()
+
+        # Make sure the self.counter is zero.
+        self.assertEqual(0, self.cross_op.counter)
+
+        # Get the new counter values.
+        all_counters = 0
+        for _, counter in self.cross_op.all_counters.items():
+            all_counters += counter
+        # _end_for_
+
+        # Make sure the ALL the counters are zero.
+        self.assertEqual(0, all_counters)
+
     # _end_def_
 
 # _end_class_
