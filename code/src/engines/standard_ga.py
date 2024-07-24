@@ -2,12 +2,17 @@ import time
 import numpy as np
 from typing import Callable
 from collections import defaultdict
+
 from src.genome.chromosome import Chromosome
 from joblib import (Parallel, delayed, cpu_count)
 from src.engines.auxiliary import apply_corrections
 from src.operators.mutation.mutate_operator import MutationOperator
 from src.operators.selection.select_operator import SelectionOperator
 from src.operators.crossover.crossover_operator import CrossoverOperator
+
+from src.operators.mutation.super_mutator import SuperMutator
+from src.operators.crossover.super_crossover import SuperCrossover
+
 
 # Public interface.
 __all__ = ["StandardGA"]
@@ -349,9 +354,30 @@ class StandardGA(object):
 
         :return: None.
         """
-        print(f"{self._cross_op}")
+
+        # First print the selection operator.
         print(f"{self._select_op}")
+
+        # Second print the crossover operator.
+        print(f"{self._cross_op}")
+
+        # Check if we used the SuperCrossover.
+        if isinstance(self._cross_op, SuperCrossover):
+            # Call internally all operators.
+            for op in self._cross_op.list_all:
+                print(f"{op}")
+            # _end_for_
+        # _end_if_
+
+        # Lastly print the mutation operator.
         print(f"{self._mutate_op}")
+
+        # Check if we used the SuperMutator.
+        if isinstance(self._mutate_op, SuperMutator):
+            # Call internally all operators.
+            for op in self._mutate_op.list_all:
+                print(f"{op}")
+            # _end_for_
     # _end_def_
 
 # _end_class_
