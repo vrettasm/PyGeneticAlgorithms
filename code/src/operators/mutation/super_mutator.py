@@ -30,6 +30,16 @@ class SuperMutator(MutationOperator):
 
     # _end_def_
 
+    @property
+    def list_all(self):
+        """
+        Provides access to the internal operators.
+
+        :return: The reference of the tuple with all the mutators.
+        """
+        return self._mutator
+    # _end_def_
+
     def mutate(self, individual: Chromosome):
         """
         Perform the mutation operation by randomly applying another mutator.

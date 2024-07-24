@@ -29,6 +29,16 @@ class SuperCrossover(CrossoverOperator):
 
     # _end_def_
 
+    @property
+    def list_all(self):
+        """
+        Provides access to the internal operators.
+
+        :return: The reference of the tuple with all the crossover operators.
+        """
+        return self._cross
+    # _end_def_
+
     def crossover(self, parent1: Chromosome, parent2: Chromosome):
         """
         Perform the crossover operation on the two input parent
