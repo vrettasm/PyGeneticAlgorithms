@@ -11,23 +11,22 @@ class SuperMutator(MutationOperator):
 
         Super mutator, mutates the chromosome by applying randomly
         all other mutators (one at a time), with equal probability.
-    """
 
-    # Tuple with all the other mutators. Note that in here the mutation
-    # probabilities for each mutator are set to 1.0.
-    mutator = (SwapMutator(1.0), RandomMutator(1.0), ShuffleMutator(1.0))
+        NOTE: In the future the equal probabilities can be amended.
+    """
 
     def __init__(self, mutate_probability: float = 0.1):
         """
-        Construct a 'SuperMutator' object with a given
-        probability value.
+        Construct a 'SuperMutator' object with a predefined probability value.
 
         :param mutate_probability: (float).
         """
 
-        # Call the super constructor with the provided
-        # probability value.
+        # Call the super constructor with the provided probability value.
         super().__init__(mutate_probability)
+
+        # NOTE: In here the mutation probabilities for each mutator are set to 1.0.
+        self._mutator = (SwapMutator(1.0), RandomMutator(1.0), ShuffleMutator(1.0))
 
     # _end_def_
 
@@ -47,7 +46,7 @@ class SuperMutator(MutationOperator):
             # Select randomly, with equal probability
             # (but this can be changed) a mutator and
             # call its mutation method.
-            self.rng.choice(self.mutator).mutate(individual)
+            self.rng.choice(self._mutator).mutate(individual)
 
             # Increase the mutator counter.
             self.inc_counter()
@@ -63,7 +62,26 @@ class SuperMutator(MutationOperator):
 
         :return: a dictionary with the counter calls for all mutator methods.
         """
-        return {mut_op.__class__.__name__: mut_op.counter for mut_op in self.mutator}
+        return {mut_op.__class__.__name__: mut_op.counter for mut_op in self._mutator}
+    # _end_def_
+
+    def reset_counter(self):
+        """
+        Sets ALL the counters to 'zero'. We have to override the super().reset_counter()
+        method, because we have to call explicitly the reset_counter on all the internal
+        operators.
+
+        :return: None.
+        """
+
+        # First call the super() to reset the self internal counter.
+        super().reset_counter()
+
+        # Here call explicitly the reset on each of the internal mutators.
+        for op in self._mutator:
+            op.reset_counter()
+        # _end_for_
+
     # _end_def_
 
 # _end_class_
