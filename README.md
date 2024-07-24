@@ -53,6 +53,12 @@ and implement the basic interface as described in these classes. In the examples
 this code to run a GA for optimization problems (maximization/minimization) with and without constraints. The
 project is ongoing so new things might come along the way.
 
+### Required packages
+
+The recommended version is Python 3.10 (and above). To simplify the required packages just use:
+
+    pip install -r requirements.txt
+
 ### Examples
 
 Some optimization examples on how to use this algorithm:
