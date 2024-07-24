@@ -13,14 +13,9 @@ class SuperCrossover(CrossoverOperator):
         all other crossovers (one at a time), with equal probability.
     """
 
-    # Tuple with all the other crossover operators. Note that in here
-    # the crossover probabilities for each operator are set to 1.0.
-    cross = (UniformCrossover(1.0), MultiPointCrossover(1.0), SinglePointCrossover(1.0))
-
     def __init__(self, crossover_probability: float = 0.9):
         """
-        Construct a 'SuperCrossover' object with a given
-        probability value.
+        Construct a 'SuperCrossover' object with a given probability value.
 
         :param crossover_probability: (float).
         """
@@ -28,6 +23,9 @@ class SuperCrossover(CrossoverOperator):
         # Call the super constructor with the provided
         # probability value.
         super().__init__(crossover_probability)
+
+        # NOTE: In here the crossover probabilities for each operator are set to 1.0.
+        self._cross = (UniformCrossover(1.0), MultiPointCrossover(1.0), SinglePointCrossover(1.0))
 
     # _end_def_
 
@@ -49,7 +47,7 @@ class SuperCrossover(CrossoverOperator):
 
             # Select randomly, with equal probability (but this can be changed),
             # a crossover operator and call its crossover method.
-            child1, child2 = self.rng.choice(self.cross).crossover(parent1, parent2)
+            child1, child2 = self.rng.choice(self._cross).crossover(parent1, parent2)
 
             # Increase the crossover counter.
             self.inc_counter()
@@ -72,7 +70,27 @@ class SuperCrossover(CrossoverOperator):
 
         :return: a dictionary with the counter calls for all crossover methods.
         """
-        return {cross_op.__class__.__name__: cross_op.counter for cross_op in self.cross}
+        return {cross_op.__class__.__name__: cross_op.counter for cross_op in self._cross}
     # _end_def_
+
+    def reset_counter(self):
+        """
+        Sets ALL the counters to 'zero'. We have to override the super().reset_counter()
+        method, because we have to call explicitly the reset_counter on all the internal
+        operators.
+
+        :return: None.
+        """
+
+        # First call the super() to reset the self internal counter.
+        super().reset_counter()
+
+        # Here call explicitly the reset on each of the internal cross operators.
+        for op in self._cross:
+            op.reset_counter()
+        # _end_for_
+
+    # _end_def_
+
 
 # _end_class_
