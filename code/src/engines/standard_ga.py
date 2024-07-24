@@ -13,7 +13,6 @@ from src.operators.crossover.crossover_operator import CrossoverOperator
 from src.operators.mutation.super_mutator import SuperMutator
 from src.operators.crossover.super_crossover import SuperCrossover
 
-
 # Public interface.
 __all__ = ["StandardGA"]
 
@@ -35,7 +34,7 @@ class StandardGA(object):
                  "_stats")
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, select_op: SelectionOperator = None,
-                 mutate_op: MutationOperator = None, cross_op: CrossoverOperator = None):
+                 mutate_op: MutationOperator = None, cross_op: CrossoverOperator = None) -> object:
         """
         Default constructor of StandardGA object.
 
@@ -356,28 +355,30 @@ class StandardGA(object):
         """
 
         # First print the selection operator.
-        print(f"{self._select_op}")
+        print(self._select_op)
 
         # Second print the crossover operator.
-        print(f"{self._cross_op}")
+        print(self._cross_op)
 
         # Check if we used the SuperCrossover.
         if isinstance(self._cross_op, SuperCrossover):
             # Call internally all operators.
             for op in self._cross_op.list_all:
-                print(f"{op}")
+                print(op)
             # _end_for_
         # _end_if_
 
         # Lastly print the mutation operator.
-        print(f"{self._mutate_op}")
+        print(self._mutate_op)
 
         # Check if we used the SuperMutator.
         if isinstance(self._mutate_op, SuperMutator):
             # Call internally all operators.
             for op in self._mutate_op.list_all:
-                print(f"{op}")
+                print(op)
             # _end_for_
+        # _end_if_
+
     # _end_def_
 
 # _end_class_
