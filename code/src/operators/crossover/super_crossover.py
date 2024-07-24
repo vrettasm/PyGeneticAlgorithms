@@ -75,4 +75,23 @@ class SuperCrossover(CrossoverOperator):
         return {cross_op.__class__.__name__: cross_op.counter for cross_op in self.cross}
     # _end_def_
 
+    def reset_counter(self):
+        """
+        Sets ALL the counters to 'zero'. We have to override the super().reset_counter()
+        method, because we have to call explicitly the reset_counter on all the internal
+        operators.
+
+        :return: None.
+        """
+
+        # First call the super() to reset the self internal counter.
+        super().reset_counter()
+
+        # Here call explicitly the reset on each of the crossover operators.
+        for op in self.cross:
+            op.reset_counter()
+        # _end_for_
+
+    # _end_def_
+
 # _end_class_

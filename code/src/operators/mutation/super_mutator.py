@@ -66,4 +66,23 @@ class SuperMutator(MutationOperator):
         return {mut_op.__class__.__name__: mut_op.counter for mut_op in self.mutator}
     # _end_def_
 
+    def reset_counter(self):
+        """
+        Sets ALL the counters to 'zero'. We have to override the super().reset_counter()
+        method, because we have to call explicitly the reset_counter on all the internal
+        operators.
+
+        :return: None.
+        """
+
+        # First call the super() to reset the self internal counter.
+        super().reset_counter()
+
+        # Here call explicitly the reset on each of the mutator operators.
+        for op in self.mutator:
+            op.reset_counter()
+        # _end_for_
+
+    # _end_def_
+
 # _end_class_
