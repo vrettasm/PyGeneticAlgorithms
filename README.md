@@ -21,9 +21,9 @@ parallel mode by definition.
 
   > **NEWS**:
   > Two new genetic operators have been added (**SuperCrossover** and **SuperMutator**). At each iteration they call
-  > randomly one of the other crossover /mutation operators. This way we can add a different mixing of the operators
-  > that may affect the evolution. By default, the selection probabilities of each operator is set equally, but this
-  > constrained can be relaxed, in the future, allowing each operator to have a different probability to be selected.
+  > randomly one of the other crossover / mutation operators. This way we can add a different mixing of the operators
+  > that may affect the evolution. By default, the selection probabilities of all operators are set equally, but this
+  > constrained can be relaxed in the future allowing each operator to have a different probability of being selected.
   >
 
 The current implementation offers a variety of genetic operators including:
