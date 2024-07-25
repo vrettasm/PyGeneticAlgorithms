@@ -5,12 +5,11 @@ inspired by the process of natural selection and belong to a larger class of evo
 
 -- (From Wikipedia, the free encyclopedia)
 
-<div align="justify">
 This repository implements a genetic algorithm (GA) in Python3 programming language, using only Numpy and Joblib
 as additional libraries. The basic approach offers a "StandardGA" class, where the whole population of chromosomes is
 replaced by a new one at the end of each iteration (or epoch). More recently, the new "IslandModelGA" class was added
 that offers a new genetic operator (MigrationOperator), that allows for periodic migration of the bst individuals, among
-the different island populations.<\div>
+the different island populations.
 
 **NOTE**:
 For computationally expensive fitness functions the StandardGA class provides the option of parallel evaluation
