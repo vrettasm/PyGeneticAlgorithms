@@ -10,15 +10,13 @@ This repository implements a genetic algorithm (GA) in Python3 programming langu
 as additional libraries. The basic approach offers a "StandardGA" class, where the whole population of chromosomes is
 replaced by a new one at the end of each iteration (or epoch). More recently, the new "IslandModelGA" class was added
 that offers a new genetic operator (MigrationOperator), that allows for periodic migration of the bst individuals, among
-the different island populations.
+the different island populations.<\div>
 
-  > 
-  > **NOTE**:
-  > For computationally expensive fitness functions the StandardGA class provides the option of parallel evaluation
-  > (of the individual chromosomes), by setting in the method run(..., parallel=True). However, for fast fitness
-  > functions this will actually cause the algorithm to execute slower (due to the time required to open and close the
-  > parallel pool). So the default setting here is "parallel=False".
-  > 
+**NOTE**:
+For computationally expensive fitness functions the StandardGA class provides the option of parallel evaluation
+(of the individual chromosomes), by setting in the method run(..., parallel=True). However, for fast fitness
+functions this will actually cause the algorithm to execute slower (due to the time required to open and close the
+parallel pool). So the default setting here is "parallel=False".
 
   > **NEWS**:
   > Two new genetic operators have been added (**SuperCrossover** and **SuperMutator**). At each iteration they call
@@ -61,7 +59,6 @@ Note that incorporating additional genetic operators is easily facilitated by in
 and implement the basic interface as described in these classes. In the examples below I show how one can use this code
 to run a GA for optimization problems (maximization/minimization) with and without constraints. The project is ongoing
 so new things might come along the way.
-</div>
 
 ### Required packages
 
