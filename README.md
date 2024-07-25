@@ -12,12 +12,13 @@ replaced by a new one at the end of each iteration (or epoch). More recently, th
 that offers a new genetic operator (MigrationOperator), that allows for periodic migration of the bst individuals, among
 the different island populations.
 
-
+  > 
   > **NOTE**:
   > For computationally expensive fitness functions the StandardGA class provides the option of parallel evaluation
   > (of the individual chromosomes), by setting in the method run(..., parallel=True). However, for fast fitness
   > functions this will actually cause the algorithm to execute slower (due to the time required to open and close the
   > parallel pool). So the default setting here is "parallel=False".
+  > 
 
   > **NEWS**:
   > Two new genetic operators have been added (**SuperCrossover** and **SuperMutator**). At each iteration they call
