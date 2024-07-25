@@ -1,5 +1,4 @@
 # PyGeneticAlgorithms: a simple toolbox for using genetic algorithms
-<div align="justify">
 
 "Genetic Algorithms [(GA)](https://en.wikipedia.org/wiki/Genetic_algorithm), are meta heuristic algorithms
 inspired by the process of natural selection and belong to a larger class of evolutionary algorithms (EA)."
