@@ -5,6 +5,7 @@ inspired by the process of natural selection and belong to a larger class of evo
 
 -- (From Wikipedia, the free encyclopedia)
 
+<div align="justify">
 This repository implements a genetic algorithm (GA) in Python3 programming language, using only **Numpy** and **Joblib**
 as additional libraries. The basic approach offers a "_StandardGA_" class, where the whole population of chromosomes is
 replaced by a new one at the end of each iteration (or epoch). More recently, the new "_IslandModelGA_" class was added
@@ -17,12 +18,13 @@ individual chromosomes), by setting in the method run(..., parallel=True). Howev
 actually cause the algorithm to execute slower (due to the time required to open and close the parallel pool). So the
 default setting here is "parallel=False".
 
+
   > **NEWS**:
   > Two new genetic operators have been added (**SuperCrossover** and **SuperMutator**). At each iteration they call
   > randomly one of the other crossover /mutation operators. This way we can add a different mixing of the operators
   > that may affect the evolution. By default, the selection probabilities of each operator is set equally, but this
   > constrained can be relaxed, in the future, allowing each operator to have a different probability to be selected.
-  > 
+  >
 
 The current implementation offers a variety of genetic operators including:
 
@@ -58,6 +60,7 @@ Note that incorporating additional genetic operators is easily facilitated by in
 and implement the basic interface as described in these classes. In the examples below I show how one can use this code
 to run a GA for optimization problems (maximization/minimization) with and without constraints. The project is ongoing
 so new things might come along the way.
+</div>
 
 ### Required packages
 
