@@ -1,23 +1,27 @@
-# Genetic Algorithms in Python
+# PyGeneticAlgorithms: a simple toolbox for using genetic algorithms
 
 "Genetic Algorithms [(GA)](https://en.wikipedia.org/wiki/Genetic_algorithm), are meta heuristic algorithms
 inspired by the process of natural selection and belong to a larger class of evolutionary algorithms (EA)."
 
 -- (From Wikipedia, the free encyclopedia)
 
-This repository implements a GA in Python3 programming language (using only Numpy as additional library).
-The initial approach offers a "_StandardGA_" class, where the whole population is replaced by another one
-of offsprings at the end of each iteration (or epoch).
+This repository implements a genetic algorithm (GA) in Python3 programming language, using only **Numpy** and **Joblib**
+as additional libraries. The basic approach offers a "_StandardGA_" class, where the whole population of chromosomes is
+replaced by a new one at the end of each iteration (or epoch). More recently, the "_IslandModelGA_" class was added that
+offers a new genetic operator (MigratorOperator), that allows for periodic migration of the bst individuals, among the
+different island populations.
 
 NOTE:
-For computationally expensive fitness functions the StandardGA class provides the option of parallel
-evaluation, by setting in the method run(..., parallel=True). However, for fast fitness functions this
-might actually cause the evolution to execute slower. So the default setting here is "parallel=False".
+For computationally expensive fitness functions the StandardGA class provides the option of parallel evaluation (of the
+individual chromosomes), by setting in the method run(..., parallel=True). However, for fast fitness functions this will
+actually cause the algorithm to execute slower (due to the time required to open and close the parallel pool). So the
+default setting here is "parallel=False".
 
   > **NEWS**:
-  > The IslandModelGA is now available! For the moment there is only one migration policy
-  > implemented by the Clockwise Migrator. Any new migration policies can be easily added
-  > by inheriting directly from the Migration Operator (base) class.
+  > Two new genetic operators have been added (**SuperCrossover** and **SuperMutator**). At each iteration they call
+  > randomly one of the other crossover /mutation operators. This way we can add a different mixing of the operators
+  > that may affect the evolution. By default, the selection probabilities of each operator is set equally, but this
+  > constrained can be relaxed, in the future, allowing each operator to have a different probability to be selected.
   > 
 
 The current implementation offers a variety of genetic operators including:
@@ -34,11 +38,13 @@ The current implementation offers a variety of genetic operators including:
   - [Single-Point Crossover](code/src/operators/crossover/single_point_crossover.py)
   - [Multi-Point Crossover](code/src/operators/crossover/mutli_point_crossover.py)
   - [Uniform Crossover](code/src/operators/crossover/uniform_crossover.py)
+  - [Super Crossover](code/src/operators/crossover/super_crossover.py)
 
 - **Mutation operators**:
   - [Random Mutator](code/src/operators/mutation/random_mutator.py)
   - [Shuffle Mutator](code/src/operators/mutation/shuffle_mutator.py)
   - [Swap Mutator](code/src/operators/mutation/swap_mutator.py)
+  - [Super Mutator](code/src/operators/mutation/super_mutator.py)
 
 - **Migration operators**
   - [Clockwise Migrator](code/src/operators/migration/clockwise_migration.py)
@@ -49,9 +55,9 @@ Note that incorporating additional genetic operators is easily facilitated by in
 - [MutationOperator](code/src/operators/mutation/mutate_operator.py)
 - [MigrationOperator](code/src/operators/migration/migration_operator.py)
 
-and implement the basic interface as described in these classes. In the examples below I show how one can use
-this code to run a GA for optimization problems (maximization/minimization) with and without constraints. The
-project is ongoing so new things might come along the way.
+and implement the basic interface as described in these classes. In the examples below I show how one can use this code
+to run a GA for optimization problems (maximization/minimization) with and without constraints. The project is ongoing
+so new things might come along the way.
 
 ### Required packages
 
