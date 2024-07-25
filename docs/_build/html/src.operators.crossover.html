@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.operators.crossover package &mdash; PyGeneticAlgorithms 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=01f34227"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src.operators.migration package" href="src.operators.migration.html" />
+    <link rel="prev" title="src.operators package" href="src.operators.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PyGeneticAlgorithms
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">code</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="src.html">src package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="src.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="src.engines.html">src.engines package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.genome.html">src.genome package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="src.operators.html">src.operators package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PyGeneticAlgorithms</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">code</a></li>
+          <li class="breadcrumb-item"><a href="src.html">src package</a></li>
+          <li class="breadcrumb-item"><a href="src.operators.html">src.operators package</a></li>
+      <li class="breadcrumb-item active">src.operators.crossover package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.operators.crossover.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-operators-crossover-package">
+<h1>src.operators.crossover package<a class="headerlink" href="#src-operators-crossover-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.operators.crossover.crossover_operator">
+<span id="src-operators-crossover-crossover-operator-module"></span><h2>src.operators.crossover.crossover_operator module<a class="headerlink" href="#module-src.operators.crossover.crossover_operator" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.operators.crossover.crossover_operator.CrossoverOperator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.operators.crossover.crossover_operator.</span></span><span class="sig-name descname"><span class="pre">CrossoverOperator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crossover_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/operators/crossover/crossover_operator.html#CrossoverOperator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.operators.crossover.crossover_operator.CrossoverOperator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.operators.html#src.operators.genetic_operator.GeneticOperator" title="src.operators.genetic_operator.GeneticOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneticOperator</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.operators.crossover.crossover_operator.CrossoverOperator.crossover">
+<span class="sig-name descname"><span class="pre">crossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.genome.html#src.genome.chromosome.Chromosome" title="src.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.genome.html#src.genome.chromosome.Chromosome" title="src.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/operators/crossover/crossover_operator.html#CrossoverOperator.crossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.operators.crossover.crossover_operator.CrossoverOperator.crossover" title="Link to this definition"></a></dt>
+<dd><p>Abstract method that “reminds” the user that if they want to
+create a Crossover Class that inherits from here they should
+implement a crossover method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent1</strong> – (Chromosome).</p></li>
+<li><p><strong>parent2</strong> – (Chromosome).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nothing but raising an error.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.operators.crossover.mutli_point_crossover">
+<span id="src-operators-crossover-mutli-point-crossover-module"></span><h2>src.operators.crossover.mutli_point_crossover module<a class="headerlink" href="#module-src.operators.crossover.mutli_point_crossover" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.operators.crossover.mutli_point_crossover.MultiPointCrossover">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.operators.crossover.mutli_point_crossover.</span></span><span class="sig-name descname"><span class="pre">MultiPointCrossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crossover_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/operators/crossover/mutli_point_crossover.html#MultiPointCrossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.operators.crossover.mutli_point_crossover.MultiPointCrossover" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.operators.crossover.crossover_operator.CrossoverOperator" title="src.operators.crossover.crossover_operator.CrossoverOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">CrossoverOperator</span></code></a></p>
+<p>Description:</p>
+<blockquote>
+<div><p>Multipoint crossover creates two children chromosomes (offsprings),
+by taking two parent chromosomes and cutting them at randomly chosen,
+sites (loci).</p>
+<p>It produces faster mixing, compared with single-point crossover.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.operators.crossover.mutli_point_crossover.MultiPointCrossover.crossover">
+<span class="sig-name descname"><span class="pre">crossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.genome.html#src.genome.chromosome.Chromosome" title="src.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.genome.html#src.genome.chromosome.Chromosome" title="src.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_loci</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/operators/crossover/mutli_point_crossover.html#MultiPointCrossover.crossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.operators.crossover.mutli_point_crossover.MultiPointCrossover.crossover" title="Link to this definition"></a></dt>
+<dd><p>Perform the crossover operation on the two input parent
+chromosomes, using multiple cutting points (num_loci).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent1</strong> – (Chromosome).</p></li>
+<li><p><strong>parent2</strong> – (Chromosome).</p></li>
+<li><p><strong>num_loci</strong> – (int).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>child1 and child2 (as Chromosomes).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.operators.crossover.single_point_crossover">
+<span id="src-operators-crossover-single-point-crossover-module"></span><h2>src.operators.crossover.single_point_crossover module<a class="headerlink" href="#module-src.operators.crossover.single_point_crossover" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.operators.crossover.single_point_crossover.SinglePointCrossover">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.operators.crossover.single_point_crossover.</span></span><span class="sig-name descname"><span class="pre">SinglePointCrossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crossover_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/operators/crossover/single_point_crossover.html#SinglePointCrossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.operators.crossover.single_point_crossover.SinglePointCrossover" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.operators.crossover.crossover_operator.CrossoverOperator" title="src.operators.crossover.crossover_operator.CrossoverOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">CrossoverOperator</span></code></a></p>
+<p>Description:</p>
+<blockquote>
+<div><p>Single-point crossover creates two children chromosomes (offsprings),
+by taking two parent chromosomes and cutting them at some, randomly
+chosen, site (locus).</p>
+<p>It produces very slow mixing, compared with multipoint or uniform crossover.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.operators.crossover.single_point_crossover.SinglePointCrossover.crossover">
+<span class="sig-name descname"><span class="pre">crossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.genome.html#src.genome.chromosome.Chromosome" title="src.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.genome.html#src.genome.chromosome.Chromosome" title="src.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/operators/crossover/single_point_crossover.html#SinglePointCrossover.crossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.operators.crossover.single_point_crossover.SinglePointCrossover.crossover" title="Link to this definition"></a></dt>
+<dd><p>Perform the crossover operation on the two input parent chromosomes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent1</strong> – (Chromosome).</p></li>
+<li><p><strong>parent2</strong> – (Chromosome).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>child1 and child2 (as Chromosomes).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.operators.crossover.super_crossover">
+<span id="src-operators-crossover-super-crossover-module"></span><h2>src.operators.crossover.super_crossover module<a class="headerlink" href="#module-src.operators.crossover.super_crossover" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.operators.crossover.super_crossover.SuperCrossover">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.operators.crossover.super_crossover.</span></span><span class="sig-name descname"><span class="pre">SuperCrossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crossover_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/operators/crossover/super_crossover.html#SuperCrossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.operators.crossover.super_crossover.SuperCrossover" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.operators.crossover.crossover_operator.CrossoverOperator" title="src.operators.crossover.crossover_operator.CrossoverOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">CrossoverOperator</span></code></a></p>
+<p>Description:</p>
+<blockquote>
+<div><p>Super crossover, crosses the chromosomes by applying randomly
+all other crossovers (one at a time), with equal probability.</p>
+</div></blockquote>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.operators.crossover.super_crossover.SuperCrossover.all_counters">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_counters</span></span><a class="headerlink" href="#src.operators.crossover.super_crossover.SuperCrossover.all_counters" title="Link to this definition"></a></dt>
+<dd><p>Accessor (getter) of the application counter from all the internal crossovers.
+This is mostly to verify that everything is working as expected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a dictionary with the counter calls for all crossover methods.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.operators.crossover.super_crossover.SuperCrossover.crossover">
+<span class="sig-name descname"><span class="pre">crossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.genome.html#src.genome.chromosome.Chromosome" title="src.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.genome.html#src.genome.chromosome.Chromosome" title="src.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/operators/crossover/super_crossover.html#SuperCrossover.crossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.operators.crossover.super_crossover.SuperCrossover.crossover" title="Link to this definition"></a></dt>
+<dd><p>Perform the crossover operation on the two input parent
+chromosomes, by selecting randomly a predefined method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent1</strong> – (Chromosome).</p></li>
+<li><p><strong>parent2</strong> – (Chromosome).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>child1 and child2 (as Chromosomes).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.operators.crossover.super_crossover.SuperCrossover.list_all">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_all</span></span><a class="headerlink" href="#src.operators.crossover.super_crossover.SuperCrossover.list_all" title="Link to this definition"></a></dt>
+<dd><p>Provides access to the internal operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The reference of the tuple with all the crossover operators.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.operators.crossover.super_crossover.SuperCrossover.reset_counter">
+<span class="sig-name descname"><span class="pre">reset_counter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/operators/crossover/super_crossover.html#SuperCrossover.reset_counter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.operators.crossover.super_crossover.SuperCrossover.reset_counter" title="Link to this definition"></a></dt>
+<dd><p>Sets ALL the counters to ‘zero’. We have to override the super().reset_counter()
+method, because we have to call explicitly the reset_counter on all the internal
+operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.operators.crossover.uniform_crossover">
+<span id="src-operators-crossover-uniform-crossover-module"></span><h2>src.operators.crossover.uniform_crossover module<a class="headerlink" href="#module-src.operators.crossover.uniform_crossover" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.operators.crossover.uniform_crossover.UniformCrossover">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.operators.crossover.uniform_crossover.</span></span><span class="sig-name descname"><span class="pre">UniformCrossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crossover_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/operators/crossover/uniform_crossover.html#UniformCrossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.operators.crossover.uniform_crossover.UniformCrossover" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.operators.crossover.crossover_operator.CrossoverOperator" title="src.operators.crossover.crossover_operator.CrossoverOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">CrossoverOperator</span></code></a></p>
+<p>Description:</p>
+<blockquote>
+<div><p>Uniform crossover creates two children chromosomes (offsprings),
+by taking two parent chromosomes and swap their genes in every
+other location.</p>
+<p>It produces fast mixing, compared with single-point crossover.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.operators.crossover.uniform_crossover.UniformCrossover.crossover">
+<span class="sig-name descname"><span class="pre">crossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.genome.html#src.genome.chromosome.Chromosome" title="src.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.genome.html#src.genome.chromosome.Chromosome" title="src.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/operators/crossover/uniform_crossover.html#UniformCrossover.crossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.operators.crossover.uniform_crossover.UniformCrossover.crossover" title="Link to this definition"></a></dt>
+<dd><p>Perform the crossover operation on the two input parent chromosomes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent1</strong> – (Chromosome).</p></li>
+<li><p><strong>parent2</strong> – (Chromosome).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>child1 and child2 (as Chromosomes).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.operators.crossover">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.operators.crossover" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="src.operators.html" class="btn btn-neutral float-left" title="src.operators package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="src.operators.migration.html" class="btn btn-neutral float-right" title="src.operators.migration package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Michalis Vrettas, PhD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
