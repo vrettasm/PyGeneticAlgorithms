@@ -1,4 +1,5 @@
 # PyGeneticAlgorithms: a simple toolbox for using genetic algorithms
+<div align="justify">
 
 "Genetic Algorithms [(GA)](https://en.wikipedia.org/wiki/Genetic_algorithm), are meta heuristic algorithms
 inspired by the process of natural selection and belong to a larger class of evolutionary algorithms (EA)."
@@ -10,7 +11,7 @@ as additional libraries. The basic approach offers a "StandardGA" class, where t
 replaced by a new one at the end of each iteration (or epoch). More recently, the new "IslandModelGA" class was added
 that offers a new genetic operator (MigrationOperator), that allows for periodic migration of the bst individuals, among
 the different island populations.
-
+  
 **NOTE**:
 For computationally expensive fitness functions the StandardGA class provides the option of parallel evaluation
 (of the individual chromosomes), by setting in the method run(..., parallel=True). However, for fast fitness
