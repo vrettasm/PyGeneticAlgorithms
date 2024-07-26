@@ -120,7 +120,7 @@ Some optimization examples on how to use this algorithm:
    2. [Easom Function](examples/easom_in_parallel.ipynb)
 
 Constraint optimization problems can be easily addressed using the
-[Penalty Method](https://en.wikipedia.org/wiki/Penalty_method) as shown in the example above.
+[Penalty Method](https://en.wikipedia.org/wiki/Penalty_method) as shown in the example (1.III) above.
 
 ### Contact
 
