@@ -60,11 +60,52 @@ and implementing the basic interface as described therein. In the examples that 
 to run a GA for optimization problems (maximization/minimization) with and without constraints. The project is ongoing
 so new things might come along the way.
 
+### Installation
+
+There are two options to install the software.
+
+The easiest way is to visit the GitHub web-page of the project and simply download the source code in
+[zip](https://github.com/vrettasm/PyGeneticAlgorithms/archive/refs/heads/master.zip) format. This option does not
+require a prior installation of git on the computer.
+
+Alternatively one can clone the project directly using git as follows:
+
+    git clone https://github.com/vrettasm/PyGeneticAlgorithms.git
+
 ### Required packages
 
 The recommended version is Python 3.10 (and above). To simplify the required packages just use:
 
     pip install -r requirements.txt
+
+### Fitness function
+
+The most important thing the user has to do is to define the "fitness function". A template is provided here,
+in addition to the examples below.
+```python
+# Fitness function <template>.
+def fitness_func(individual: Chromosome, f_min: bool = False):
+    """
+    This is how a fitness function should look like. The whole
+    evaluation should be implemented (or wrapped around) this
+    function.
+    
+    :param individual: Individual chromosome to be evaluated.
+    
+    :param f_min: Boolean flag indicating whether we are dealing
+    with a minimization or maximization problem.
+    """
+    
+    # CODE TO IMPLEMENT.
+    
+    # Assign the estimated value.
+    f_val = ...
+    
+    # If we want minimization we return the negative.
+    return -f_val if f_min else f_val
+# _end_def_
+```
+Once the fitness function is defined correctly the next steps are straightforward as described in the examples.
 
 ### Examples
 
@@ -79,7 +120,7 @@ Some optimization examples on how to use this algorithm:
    2. [Easom Function](examples/easom_in_parallel.ipynb)
 
 Constraint optimization problems can be easily addressed using the
-[Penalty Method](https://en.wikipedia.org/wiki/Penalty_method) as described in the link above.
+[Penalty Method](https://en.wikipedia.org/wiki/Penalty_method) as shown in the example above.
 
 ### Contact
 
