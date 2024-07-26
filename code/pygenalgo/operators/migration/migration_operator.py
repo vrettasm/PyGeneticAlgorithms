@@ -1,5 +1,5 @@
-from src.engines.auxiliary import SubPopulation
-from src.operators.genetic_operator import GeneticOperator
+from pygenalgo.engines.auxiliary import SubPopulation
+from pygenalgo.operators.genetic_operator import GeneticOperator
 
 
 class MigrationOperator(GeneticOperator):

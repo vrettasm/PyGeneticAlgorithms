@@ -1,6 +1,6 @@
 from numpy import nan as np_nan
-from src.genome.chromosome import Chromosome
-from src.operators.mutation.mutate_operator import MutationOperator
+from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
 
 class ShuffleMutator(MutationOperator):

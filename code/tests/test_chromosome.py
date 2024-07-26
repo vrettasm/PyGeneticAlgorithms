@@ -1,7 +1,7 @@
 import unittest
 from numpy.random import randint
-from src.genome.gene import Gene
-from src.genome.chromosome import Chromosome
+from pygenalgo.genome.gene import Gene
+from pygenalgo.genome.chromosome import Chromosome
 
 
 class TestChromosome(unittest.TestCase):

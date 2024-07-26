@@ -2,13 +2,13 @@ import time
 import numpy as np
 from typing import Callable
 from collections import defaultdict
-from src.genome.chromosome import Chromosome
+from pygenalgo.genome.chromosome import Chromosome
 from joblib import (Parallel, delayed, cpu_count)
-from src.engines.auxiliary import apply_corrections, SubPopulation
-from src.operators.mutation.mutate_operator import MutationOperator
-from src.operators.selection.select_operator import SelectionOperator
-from src.operators.crossover.crossover_operator import CrossoverOperator
-from src.operators.migration.clockwise_migration import ClockwiseMigration
+from pygenalgo.engines.auxiliary import apply_corrections, SubPopulation
+from pygenalgo.operators.mutation.mutate_operator import MutationOperator
+from pygenalgo.operators.selection.select_operator import SelectionOperator
+from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
+from pygenalgo.operators.migration.clockwise_migration import ClockwiseMigration
 
 # Public interface.
 __all__ = ["IslandModelGA"]

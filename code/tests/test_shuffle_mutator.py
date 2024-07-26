@@ -1,7 +1,7 @@
 import unittest
-from src.genome.gene import Gene
-from src.genome.chromosome import Chromosome
-from src.operators.mutation.shuffle_mutator import ShuffleMutator
+from pygenalgo.genome.gene import Gene
+from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.mutation.shuffle_mutator import ShuffleMutator
 
 
 class TestShuffleMutator(unittest.TestCase):

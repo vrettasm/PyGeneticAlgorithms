@@ -1,19 +1,21 @@
 from numpy import nan as np_nan
-from src.genome.chromosome import Chromosome
-from src.operators.mutation.mutate_operator import MutationOperator
+from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
 
-class SwapMutator(MutationOperator):
+class RandomMutator(MutationOperator):
     """
     Description:
 
-        Swap mutator mutates the chromosome by swapping the
-        gene values between two randomly selected gene positions.
+        Random mutator, mutates the chromosome by selecting randomly
+        a position and replace the Gene with a new one that has been
+        generated randomly (uniform probability).
     """
 
     def __init__(self, mutate_probability: float = 0.1):
         """
-        Construct a 'SwapMutator' object with a given probability value.
+        Construct a 'RandomMutator' object with a given
+        probability value.
 
         :param mutate_probability: (float).
         """
@@ -26,8 +28,8 @@ class SwapMutator(MutationOperator):
 
     def mutate(self, individual: Chromosome):
         """
-        Perform the mutation operation by swapping
-        the genes at two random positions.
+        Perform the mutation operation by randomly replacing a
+        gene with a new one that has been generated randomly.
 
         :param individual: (Chromosome).
 
@@ -38,12 +40,11 @@ class SwapMutator(MutationOperator):
         # a uniformly random value, make the changes.
         if self.probability >= self.rng.random():
 
-            # Select randomly the two mutation points.
-            i, j = self.rng.choice(range(0, len(individual)), size=2,
-                                   replace=False, shuffle=False)
+            # Select randomly the mutation point.
+            locus = self.rng.integers(0, len(individual))
 
-            # Swap in place between the two positions.
-            individual[i], individual[j] = individual[j], individual[i]
+            # Replace the old gene with a new one.
+            individual[locus].random()
 
             # Invalidate the fitness of the chromosome.
             individual.fitness = np_nan

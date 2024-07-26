@@ -1,7 +1,7 @@
 import unittest
-from src.genome.gene import Gene
-from src.genome.chromosome import Chromosome
-from src.operators.crossover.super_crossover import SuperCrossover
+from pygenalgo.genome.gene import Gene
+from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.crossover.super_crossover import SuperCrossover
 
 
 class TestSuperCrossover(unittest.TestCase):

@@ -3,15 +3,15 @@ import numpy as np
 from typing import Callable
 from collections import defaultdict
 
-from src.genome.chromosome import Chromosome
+from pygenalgo.genome.chromosome import Chromosome
 from joblib import (Parallel, delayed, cpu_count)
-from src.engines.auxiliary import apply_corrections
-from src.operators.mutation.mutate_operator import MutationOperator
-from src.operators.selection.select_operator import SelectionOperator
-from src.operators.crossover.crossover_operator import CrossoverOperator
+from pygenalgo.engines.auxiliary import apply_corrections
+from pygenalgo.operators.mutation.mutate_operator import MutationOperator
+from pygenalgo.operators.selection.select_operator import SelectionOperator
+from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
-from src.operators.mutation.super_mutator import SuperMutator
-from src.operators.crossover.super_crossover import SuperCrossover
+from pygenalgo.operators.mutation.super_mutator import SuperMutator
+from pygenalgo.operators.crossover.super_crossover import SuperCrossover
 
 # Public interface.
 __all__ = ["StandardGA"]

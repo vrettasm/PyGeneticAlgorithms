@@ -1,7 +1,7 @@
 from copy import deepcopy
 from dataclasses import dataclass, field
 
-from src.genome.gene import Gene
+from pygenalgo.genome.gene import Gene
 
 
 @dataclass(init=True, repr=True)

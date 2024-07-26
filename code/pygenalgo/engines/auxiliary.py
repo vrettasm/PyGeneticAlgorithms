@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from src.genome.chromosome import Chromosome
+from pygenalgo.genome.chromosome import Chromosome
 
 
 # Public interface.

@@ -1,8 +1,8 @@
-from src.genome.chromosome import Chromosome
-from src.operators.crossover.crossover_operator import CrossoverOperator
-from src.operators.crossover.uniform_crossover import UniformCrossover
-from src.operators.crossover.mutli_point_crossover import MultiPointCrossover
-from src.operators.crossover.single_point_crossover import SinglePointCrossover
+from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
+from pygenalgo.operators.crossover.uniform_crossover import UniformCrossover
+from pygenalgo.operators.crossover.mutli_point_crossover import MultiPointCrossover
+from pygenalgo.operators.crossover.single_point_crossover import SinglePointCrossover
 
 
 class SuperCrossover(CrossoverOperator):

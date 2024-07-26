@@ -1,5 +1,5 @@
 import unittest
-from src.operators.migration.migration_operator import MigrationOperator
+from pygenalgo.operators.migration.migration_operator import MigrationOperator
 
 
 class TestMigrationOperator(unittest.TestCase):

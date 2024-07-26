@@ -1,5 +1,5 @@
-from src.genome.chromosome import Chromosome
-from src.operators.selection.select_operator import SelectionOperator
+from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.selection.select_operator import SelectionOperator
 
 
 class TournamentSelector(SelectionOperator):

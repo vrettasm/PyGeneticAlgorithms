@@ -1,5 +1,5 @@
-from src.genome.chromosome import Chromosome
-from src.operators.genetic_operator import GeneticOperator
+from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.genetic_operator import GeneticOperator
 
 
 class SelectionOperator(GeneticOperator):

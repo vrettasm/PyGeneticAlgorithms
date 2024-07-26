@@ -1,8 +1,8 @@
-from src.genome.chromosome import Chromosome
-from src.operators.mutation.swap_mutator import SwapMutator
-from src.operators.mutation.random_mutator import RandomMutator
-from src.operators.mutation.shuffle_mutator import ShuffleMutator
-from src.operators.mutation.mutate_operator import MutationOperator
+from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.mutation.swap_mutator import SwapMutator
+from pygenalgo.operators.mutation.random_mutator import RandomMutator
+from pygenalgo.operators.mutation.shuffle_mutator import ShuffleMutator
+from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
 
 class SuperMutator(MutationOperator):

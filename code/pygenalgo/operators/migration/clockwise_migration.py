@@ -1,5 +1,5 @@
-from src.engines.auxiliary import SubPopulation
-from src.operators.migration.migration_operator import MigrationOperator
+from pygenalgo.engines.auxiliary import SubPopulation
+from pygenalgo.operators.migration.migration_operator import MigrationOperator
 
 
 class ClockwiseMigration(MigrationOperator):
