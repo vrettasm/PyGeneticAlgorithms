@@ -84,6 +84,8 @@ The most important thing the user has to do is to define the "fitness function".
 in addition to the examples below.
 ```python
 # Fitness function <template>.
+from pygenalgo.genome.chromosome import Chromosome
+
 def fitness_func(individual: Chromosome, f_min: bool = False):
     """
     This is how a fitness function should look like. The whole
