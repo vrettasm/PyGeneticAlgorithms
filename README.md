@@ -83,9 +83,9 @@ The recommended version is Python 3.10 (and above). To simplify the required pac
 The most important thing the user has to do is to define the "fitness function". A template is provided here,
 in addition to the examples below.
 ```python
-# Fitness function <template>.
 from pygenalgo.genome.chromosome import Chromosome
 
+# Fitness function <template>.
 def fitness_func(individual: Chromosome, f_min: bool = False):
     """
     This is how a fitness function should look like. The whole
@@ -117,12 +117,15 @@ Some optimization examples on how to use this algorithm:
    1. [Minimization](examples/sphere.ipynb)
    2. [Maximization](examples/rastrigin.ipynb)
    3. [Minimization with constrains](examples/rosenbrock_on_a_disk.ipynb)
+   4. [Multi-objective with constraints](examples/binh_and_korn_multiobjective.ipynb)
 2. IslandModelGA
    1. [Sphere Function](examples/sphere_in_parallel.ipynb)
    2. [Easom Function](examples/easom_in_parallel.ipynb)
 
 Constraint optimization problems can be easily addressed using the
 [Penalty Method](https://en.wikipedia.org/wiki/Penalty_method) as shown in the example (1.III) above.
+Moreover, multi-objective optimizations (with or without constraints) can also be solved as shown in
+the example (1.IV), using the _weighted sum_ method.
 
 ### Contact
 
