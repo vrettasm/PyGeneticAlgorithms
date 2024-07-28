@@ -144,8 +144,9 @@ a higher level the steps that required to use `PyGenAlgo` can be listed as follo
 2. **On multi-objective optimization:**
     Addressing multi-objective optimization problems (with or without constraints), is feasible as long as the user
     forms the fitness function (including the constraints), in an appropriate way. `PyGenAlgo` is 'agnostic' of the
-    type of problem is solving. All that is required is to form the genes correctly, and implement the fitness function.
-    Once these steps are done, the rest follow exactly the same evolution steps as shown in the provided examples.
+    type of problem is solving (single or multi-objective). All that is required is to form the genes correctly, and
+    implement the fitness function. Once these steps are completed, the rest follow exactly the same evolution cycle
+    as shown in the provided examples.
 
 3. **On visualization:**
     In this toolkit, we decided not to provide explict plot functions. The reason is that including plot functions would
