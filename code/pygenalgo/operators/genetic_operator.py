@@ -4,7 +4,7 @@ from numpy.random import default_rng
 __all__ = ["GeneticOperator"]
 
 # Current version.
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 # Author.
 __author__ = "Michalis Vrettas, PhD"
