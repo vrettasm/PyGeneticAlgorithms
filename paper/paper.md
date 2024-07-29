@@ -101,9 +101,7 @@ a higher level the steps that required to use `PyGenAlgo` can be listed as follo
 
 1. **Define the fitness function:** This is a "universal requirement" when using any optimization algorithm. In a GA
     framework the fitness function encodes the constraints about the environment, where the chromosomes are evolving,
-    thus providing direct feedback about how fit they are. Since the GAs by definition are trying to maximize the
-    fitness of the population, in case of minimization problems that has to be reflected in the fitness function.
-    Also, the inclusion of constraints can be easily incorporated using the "Penalty method".
+    thus providing direct feedback about how fit they are.
 
 2. **Define the Gene:** Unlike other software implementations of GAs that provide restricted types of gene encoding in
     our toolkit the Gene class, is designed to hold any data type. That can range from a simple boolean type (0, 1) to
@@ -111,9 +109,7 @@ a higher level the steps that required to use `PyGenAlgo` can be listed as follo
     forming their optimization problem. In addition, since we provide this option of using any data type, the user also
     has to specify a function (that could be unique to each gene, if necessary), that will be responsible to provide
     random values to the gene. This method is called usually during the mutation operation and the purpose of that is to
-    allow the gene to be mutated randomly, but enforcing its validity. For example, if a specific gene in the chromosome
-    is allowed to take only random integer values within the range of [-100, +100], then we can encode that directly so
-    that every time the gene is being mutated the random value it gets is within that range.
+    allow the gene to be mutated randomly, but enforcing its validity.
 
 3. **Construct the initial population of chromosomes:** Once the genes have been formed, constructing the initial
     population is something easy and straightforward. A simple list comprehension is enough to generate all the
@@ -129,8 +125,7 @@ a higher level the steps that required to use `PyGenAlgo` can be listed as follo
 5. **Start the evolution process:** This is the last step and usually involves a simple call to the 'run()' method.
     Here we have to emphasize that even though all the genetic operators, as well as the different 'engines', have 
     default parameters we suggest the user to experiment with different values if required, since there is not going
-    to be 'one optimal setting fits all'. For example, all the MutationOperators have a default mutation probability 
-    set to 0.1 (i.e. 10%). Nevertheless, there are problems that this value could be either too low, or too high.
+    to be 'one optimal setting fits all'.
 
 ## Final notes
 
@@ -152,7 +147,6 @@ a higher level the steps that required to use `PyGenAlgo` can be listed as follo
     In this toolkit, we decided not to provide explicit plot functions. The reason is that including plot functions would
     increase the dependencies of `PyGenAlgo` in other third-party libraries (e.g. matplotlib or seaborn). Therefore, we
     decided to provide easy access to the quantities of interest, such as statistics about the fitness evolution, the
-    best chromosome of the population, etc. Moreover, all the genetic operators implement the `__repr__(self)` method to
-    provide a string representation when they are called by `print()`.
+    best chromosome of the population, etc.
 
 # References
