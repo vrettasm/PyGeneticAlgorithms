@@ -35,7 +35,7 @@ details. The code is freely available on GitHub at [@PyGenAlgo] and distributed 
 
 # Statement of need
 
-Since genetic algorithms are not a new concept in computer science a few implementations, in Python programing language,
+Since genetic algorithms are not a new concept in computer science a few implementations, in Python programming language,
 have already been introduced such as: 1) DEAP [@DEAPFortin2012], 2) LEAP [@LEAPColetti2020], 3) EasyGA [@EasyGA],
 4)PyGAD [@PyGAD2023] and 5) pymoo [@pymoo2020]. All these frameworks come with their merits and their disadvantages. Our
 goal was not to propose a new framework that will outperform all these approaches, but rather provide a simpler alternative,
@@ -149,7 +149,7 @@ a higher level the steps that required to use `PyGenAlgo` can be listed as follo
     as shown in the provided examples.
 
 3. **On visualization:**
-    In this toolkit, we decided not to provide explict plot functions. The reason is that including plot functions would
+    In this toolkit, we decided not to provide explicit plot functions. The reason is that including plot functions would
     increase the dependencies of `PyGenAlgo` in other third-party libraries (e.g. matplotlib or seaborn). Therefore, we
     decided to provide easy access to the quantities of interest, such as statistics about the fitness evolution, the
     best chromosome of the population, etc. Moreover, all the genetic operators implement the `__repr__(self)` method to
