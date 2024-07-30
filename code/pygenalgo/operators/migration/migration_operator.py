@@ -32,7 +32,7 @@ class MigrationOperator(GeneticOperator):
 
     def __call__(self, *args, **kwargs):
         """
-        This is only a wrapper of the "crossover" method.
+        This is only a wrapper of the "migrate" method.
         """
         return self.migrate(*args, **kwargs)
     # _end_def_
