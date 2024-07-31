@@ -116,7 +116,7 @@ Some optimization examples on how to use this algorithm:
 1. StandardGA
    1. [Minimization](examples/sphere.ipynb)
    2. [Maximization](examples/rastrigin.ipynb)
-   3. [Minimization with constrains](examples/rosenbrock_on_a_disk.ipynb)
+   3. [Minimization with constraints](examples/rosenbrock_on_a_disk.ipynb)
    4. [Multi-objective with constraints](examples/binh_and_korn_multiobjective.ipynb)
 2. IslandModelGA
    1. [Sphere Function](examples/sphere_in_parallel.ipynb)
