@@ -1,3 +1,4 @@
+from threading import Lock
 from numpy.random import default_rng
 
 # Public interface.
@@ -12,13 +13,14 @@ __author__ = "Michalis Vrettas, PhD"
 # Email.
 __email__ = "michail.vrettas@gmail.com"
 
+
 class GeneticOperator(object):
 
     # Create a random number generator.
     _rng = default_rng()
 
     # Object variables.
-    __slots__ = ("_probability", "_counter")
+    __slots__ = ("_probability", "_counter", "_lock")
 
     def __init__(self, _probability: float):
         """
@@ -33,6 +35,9 @@ class GeneticOperator(object):
 
         # Initialize the application counter to zero.
         self._counter = 0
+
+        # Initialize a thread lock.
+        self._lock = Lock()
     # _end_def_
 
     @property
@@ -51,7 +56,10 @@ class GeneticOperator(object):
 
         :return: None.
         """
-        self._counter = 0
+        # Protect operator counter.
+        with self._lock:
+            self._counter = 0
+        # _end_with_
     # _end_def_
 
     def inc_counter(self):
@@ -61,7 +69,10 @@ class GeneticOperator(object):
 
         :return: None.
         """
-        self._counter += 1
+        # Protect operator counter.
+        with self._lock:
+            self._counter += 1
+        # _end_with_
     # _end_def_
 
     @property
