@@ -68,18 +68,11 @@ class Chromosome(object):
         """
 
         # Check for correct type.
-        if isinstance(new_value, float):
+        if isinstance(new_value, (int, float)):
 
             # Update the fitness value.
-            self._fitness = new_value
-
-        elif isinstance(new_value, int):
-
-            # First convert the input to 'float'
-            # and then update the fitness value.
             self._fitness = float(new_value)
         else:
-
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Fitness should be float: {type(new_value)}.")
         # _end_if_
