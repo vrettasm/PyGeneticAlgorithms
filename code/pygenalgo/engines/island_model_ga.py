@@ -254,7 +254,7 @@ class IslandModelGA(object):
             avg_fitness_0 = avg_fitness_i
 
             # Update the old population with the new chromosomes.
-            island.population = population_i.copy()
+            island.population = population_i
         # _end_for_
 
         # Compute the elapsed time (in seconds).
@@ -298,9 +298,6 @@ class IslandModelGA(object):
         # Reset stats dictionary.
         self._stats.clear()
 
-        # Initial time instant.
-        time_t0 = time.perf_counter()
-
         # Randomly shuffle (in place) the original population.
         self.rng_GA.shuffle(self.population)
 
@@ -310,6 +307,9 @@ class IslandModelGA(object):
                              for i in range(self.num_islands)]
         # Final population.
         final_population = []
+
+        # Initial time instant.
+        time_t0 = time.perf_counter()
 
         # Check if we allow migration among the populations.
         if allow_migration:
