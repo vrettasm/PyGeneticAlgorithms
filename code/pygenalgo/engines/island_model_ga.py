@@ -342,7 +342,7 @@ class IslandModelGA(object):
                 # _end_if_
 
                 # Evolve the subpopulations in parallel for n_epochs.
-                results_i = Parallel(n_jobs=self.MAX_CPUs, backend="threading")(
+                results_i = Parallel(n_jobs=self.MAX_CPUs, backend="loky")(
                     delayed(self.evolve_population)(p, self.evaluate_fitness, n_epochs, self._cross_op,
                                                     self._mutate_op, self._select_op, self.rng_GA,
                                                     f_tol, correction, elitism) for p in active_population
@@ -417,7 +417,7 @@ class IslandModelGA(object):
         else:
 
             # Evolve the subpopulations in parallel for 'epoch' iterations.
-            results = Parallel(n_jobs=self.MAX_CPUs, backend="threading")(
+            results = Parallel(n_jobs=self.MAX_CPUs, backend="loky")(
                 delayed(self.evolve_population)(p, self.evaluate_fitness, epochs, self._cross_op,
                                                 self._mutate_op, self._select_op, self.rng_GA,
                                                 f_tol, correction, elitism) for p in active_population
