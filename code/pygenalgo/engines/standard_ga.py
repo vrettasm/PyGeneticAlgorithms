@@ -324,7 +324,7 @@ class StandardGA(object):
             avg_fitness_0 = avg_fitness_i
 
             # Update the old population with the new chromosomes.
-            self.population = population_i.copy()
+            self.population = population_i
         # _end_for_
 
         # Final time instant.
