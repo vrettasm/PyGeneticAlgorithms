@@ -151,4 +151,31 @@ class GeneticOperator(object):
         return f"{self.__class__.__name__}({self._probability})"
     # _end_def_
 
+    def __getstate__(self) -> dict:
+        """
+        This method is used when "pickling" the object during the parallel execution.
+        For multiprocessing backends like 'loky' or 'multiprocessing', the Lock() in
+        this object causes problems, since it's not 'pickleable'. Therefore, we have
+        to implement our own getstate method to exclude the '_lock' feature.
+        """
+        return {
+            attr: getattr(self, attr) for attr in self.__slots__
+            if attr not in ("_lock",)
+        }
+    # _end_def_
+
+    def __setstate__(self, state: dict) -> None:
+        """
+        This method works in tandem with the __getstate__() and used to unpickle the
+        object. Since the threading.Lock() is not stored in the 'pickle', we need to
+        add a new one upon creation of the new object.
+        """
+        for attr, value in state.items():
+            setattr(self, attr, value)
+        # _end_for_
+
+        # Add a new lock.
+        self._lock = Lock()
+    # _end_def_
+
 # _end_class_
