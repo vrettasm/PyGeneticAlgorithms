@@ -22,7 +22,7 @@ class GeneticOperator(object):
     # Object variables.
     __slots__ = ("_probability", "_counter", "_lock")
 
-    def __init__(self, _probability: float):
+    def __init__(self, _probability: float) -> None:
         """
         Construct a 'GeneticOperator' object with a given
         probability value.
@@ -41,7 +41,7 @@ class GeneticOperator(object):
     # _end_def_
 
     @property
-    def counter(self):
+    def counter(self) -> int:
         """
         Accessor (getter) of the application counter.
 
@@ -50,7 +50,7 @@ class GeneticOperator(object):
         return self._counter
     # _end_def_
 
-    def reset_counter(self):
+    def reset_counter(self) -> None:
         """
         Sets the counter value to zero.
 
@@ -62,7 +62,7 @@ class GeneticOperator(object):
         # _end_with_
     # _end_def_
 
-    def inc_counter(self):
+    def inc_counter(self) -> None:
         """
         Increase the counter value by one. This is applied
         after each application of the genetic operator.
@@ -76,7 +76,7 @@ class GeneticOperator(object):
     # _end_def_
 
     @property
-    def probability(self):
+    def probability(self) -> float:
         """
         Accessor (getter) of the probability.
 
@@ -86,7 +86,7 @@ class GeneticOperator(object):
     # _end_def_
 
     @probability.setter
-    def probability(self, new_value: float):
+    def probability(self, new_value: float) -> None:
         """
         Accessor (setter) of the probability.
 
@@ -122,7 +122,7 @@ class GeneticOperator(object):
         return self._rng
     # _end_def_
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Description:
             Override to print a readable string presentation of the
@@ -142,7 +142,7 @@ class GeneticOperator(object):
         return str_self
     # _end_def_
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         Description:
             Override to provide a simple string that’s a valid Python expression
