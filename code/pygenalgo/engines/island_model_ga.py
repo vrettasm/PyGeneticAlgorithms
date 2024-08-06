@@ -153,7 +153,7 @@ class IslandModelGA(object):
         # _end_for_
 
         # Get all the fitness values in a numpy array.
-        arr = np.array([p.fitness for p in in_population], dtype=float)
+        arr = np.array([p.fitness for p in in_population], copy=False)
 
         # Return the mean and std values of the fitness.
         return np.mean(arr, dtype=float), np.std(arr, dtype=float)

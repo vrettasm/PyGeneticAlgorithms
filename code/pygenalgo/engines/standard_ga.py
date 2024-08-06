@@ -178,12 +178,12 @@ class StandardGA(object):
         # _end_if_
 
         # Attach the fitness to each chromosome.
-        for p, fit_eval in zip(input_population, fitness_i):
-            p.fitness = fit_eval
+        for p, fit_value in zip(input_population, fitness_i):
+            p.fitness = fit_value
         # _end_for_
 
         # Convert list to numpy array.
-        arr = np.array(fitness_i, dtype=float)
+        arr = np.array(fitness_i, copy=False)
 
         # Return the mean and std of the fitness values.
         return np.mean(arr, dtype=float), np.std(arr, dtype=float)
