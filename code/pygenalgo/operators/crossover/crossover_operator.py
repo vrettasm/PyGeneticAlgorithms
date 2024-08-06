@@ -3,6 +3,11 @@ from pygenalgo.operators.genetic_operator import GeneticOperator
 
 
 class CrossoverOperator(GeneticOperator):
+    """
+    Description:
+
+        Provides the base class (interface) for a Crossover Operator.
+    """
 
     def __init__(self, crossover_probability: float):
         """
