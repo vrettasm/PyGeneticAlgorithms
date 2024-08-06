@@ -9,7 +9,7 @@ class Chromosome(object):
 
     # Define the genome as a list of genes. This list
     # will encode a "single solution to the problem".
-    _genome: list = field(default_factory=list)
+    _genome: list = field(default_factory=list[Gene])
 
     # The fitness value will correspond to how well the
     # chromosome fits in its environment, as defined by
@@ -31,7 +31,7 @@ class Chromosome(object):
     # _end_def_
 
     @valid.setter
-    def valid(self, new_value: bool):
+    def valid(self, new_value: bool) -> None:
         """
         Accessor (setter) of the validity flag.
 
@@ -60,7 +60,7 @@ class Chromosome(object):
     # _end_def_
 
     @fitness.setter
-    def fitness(self, new_value: float):
+    def fitness(self, new_value: float) -> None:
         """
         Accessor (setter) of the fitness value.
 
@@ -102,11 +102,27 @@ class Chromosome(object):
         return len(self._genome)
     # _end_def_
 
-    def __getitem__(self, index: int):
+    def __getitem__(self, index: int) -> Gene:
+        """
+        Get the item at position 'index'.
+
+        :param index: (int) the position that we want to return.
+
+        :return: the reference to a Gene.
+        """
         return self._genome[index]
     # _end_def_
 
-    def __setitem__(self, index: int, item: Gene):
+    def __setitem__(self, index: int, item: Gene) -> None:
+        """
+        Set the 'item' at position 'index'.
+
+        :param index: (int) the position that we want to access.
+
+        :param item: (Gene) the object we want to assign in the genome.
+
+        :return: None.
+        """
         self._genome[index] = item
     # _end_def_
 
