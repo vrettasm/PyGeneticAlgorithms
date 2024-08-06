@@ -314,6 +314,11 @@ class IslandModelGA(object):
         # Check if we allow migration among the populations.
         if allow_migration:
 
+            # Initialize the statistics dictionary.
+            for pop_n in active_population:
+                self._stats[pop_n.id] = {"avg": [], "std": []}
+            # _end_def_
+
             # Make sure 'n_periods' is integer.
             n_periods = int(n_periods)
 
@@ -356,13 +361,6 @@ class IslandModelGA(object):
 
                     # Extract the results.
                     island, has_converged, local_stats, elapsed_time = res
-
-                    # This will run only once per island.
-                    if island.id not in self._stats:
-
-                        # Add the key in the statistics dictionary.
-                        self._stats[island.id] = {"avg": [], "std": []}
-                    # _end_if_
 
                     # Check if we want information on the screen.
                     if verbose:
@@ -410,8 +408,8 @@ class IslandModelGA(object):
             # _end_for_
 
             # Get the rest of the populations that have not yet converged.
-            for pop_j in active_population:
-                final_population.extend(pop_j.population)
+            for pop_n in active_population:
+                final_population.extend(pop_n.population)
             # _end_for_
 
         else:
@@ -425,6 +423,7 @@ class IslandModelGA(object):
 
             # Process the final results.
             for res in results:
+
                 # Extract the results.
                 island, has_converged, local_stats, _ = res
 
