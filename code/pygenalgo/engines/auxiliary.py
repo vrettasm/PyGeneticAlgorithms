@@ -73,7 +73,7 @@ class SubPopulation(object):
 
         :return: the id value.
         """
-        return int(self.pop_id)
+        return self.pop_id
     # _end_def_
 
     def __len__(self) -> int:
@@ -85,7 +85,7 @@ class SubPopulation(object):
         return len(self.population)
     # _end_def_
 
-    def __getitem__(self, index: int):
+    def __getitem__(self, index: int) -> Chromosome:
         """
         Returns the reference of the Chromosome at position index.
 
@@ -94,7 +94,7 @@ class SubPopulation(object):
         return self.population[index]
     # _end_def_
 
-    def __setitem__(self, index: int, item: Chromosome):
+    def __setitem__(self, index: int, item: Chromosome) -> None:
         """
         Sets the input Chromosome in the index position
         inside the (sub) population.
