@@ -53,7 +53,7 @@ class SuperCrossover(CrossoverOperator):
 
         # If the crossover probability is higher than
         # a uniformly random value, make the changes.
-        if self.probability >= self.rng.random():
+        if self.probability > self.rng.random():
 
             # Select randomly, with equal probability (but this can be changed),
             # a crossover operator and call its crossover method.
