@@ -6,6 +6,12 @@ from pygenalgo.genome.gene import Gene
 
 @dataclass(init=True, repr=True)
 class Chromosome(object):
+    """
+    Description:
+
+        Implements a dataclass for the Chromosome entity. This class is responsible for holding
+        the individual solutions, of the optimization problem, during the evolution process.
+    """
 
     # Define the genome as a list of genes. This list
     # will encode a "single solution to the problem".

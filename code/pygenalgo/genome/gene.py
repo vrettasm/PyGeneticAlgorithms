@@ -4,11 +4,13 @@ from copy import deepcopy
 
 class Gene(object):
     """
-    This is the main class that encodes the data of a single Gene in the chromosome.
-    The class encapsulates not only the data, but also the way that this gene can be
-    mutated using a random function. This Gene can be from a single 'bit' to a whole
-    image. This way provides us with flexibility to parameterize the chromosome with
-    different "kinds of genes" each one responsible for a specific function.
+    Description:
+
+        This is the main class that encodes the data of a single Gene in the chromosome.
+        The class encapsulates not only the data, but also the way that this gene can be
+        mutated using a random function. This Gene can be from a single 'bit' to a whole
+        image. This way provides us with flexibility to parameterize the chromosome with
+        different "kinds of genes" each one responsible for a specific function.
     """
 
     # Object variables.
