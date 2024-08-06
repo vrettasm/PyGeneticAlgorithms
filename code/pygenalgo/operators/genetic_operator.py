@@ -15,6 +15,14 @@ __email__ = "michail.vrettas@gmail.com"
 
 
 class GeneticOperator(object):
+    """
+    Description:
+
+        Provides the base class (interface) for a Genetic Operator. This class includes some common
+        variables (such as the probability and the application counter) along with access to them.
+
+        All genetic operators (Selection, Crossover, Mutation, Migration) should inherit this class.
+    """
 
     # Create a random number generator.
     _rng = default_rng()
