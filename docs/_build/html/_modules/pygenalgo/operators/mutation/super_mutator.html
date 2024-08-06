@@ -106,7 +106,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">list_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">list_all</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Provides access to the internal operators.</span>
 
@@ -117,7 +117,7 @@
 
 <div class="viewcode-block" id="SuperMutator.mutate">
 <a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.super_mutator.SuperMutator.mutate">[docs]</a>
-    <span class="k">def</span> <span class="nf">mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform the mutation operation by randomly applying another mutator.</span>
 
@@ -128,7 +128,7 @@
 
         <span class="c1"># If the mutation probability is higher than</span>
         <span class="c1"># a uniformly random value, make the changes.</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">():</span>
 
             <span class="c1"># Select randomly, with equal probability</span>
             <span class="c1"># (but this can be changed) a mutator and</span>
@@ -143,7 +143,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">all_counters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">all_counters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor (getter) of the application counter from all the internal mutators.</span>
 <span class="sd">        This is mostly to verify that everything is working as expected.</span>
@@ -155,7 +155,7 @@
 
 <div class="viewcode-block" id="SuperMutator.reset_counter">
 <a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.super_mutator.SuperMutator.reset_counter">[docs]</a>
-    <span class="k">def</span> <span class="nf">reset_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">reset_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets ALL the counters to &#39;zero&#39;. We have to override the super().reset_counter()</span>
 <span class="sd">        method, because we have to call explicitly the reset_counter on all the internal</span>

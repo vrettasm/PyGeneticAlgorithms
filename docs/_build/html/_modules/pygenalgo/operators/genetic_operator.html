@@ -90,6 +90,14 @@
 <div class="viewcode-block" id="GeneticOperator">
 <a class="viewcode-back" href="../../../pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator">[docs]</a>
 <span class="k">class</span> <span class="nc">GeneticOperator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Description:</span>
+
+<span class="sd">        Provides the base class (interface) for a Genetic Operator. This class includes some common</span>
+<span class="sd">        variables (such as the probability and the application counter) along with access to them.</span>
+
+<span class="sd">        All genetic operators (Selection, Crossover, Mutation, Migration) should inherit this class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Create a random number generator.</span>
     <span class="n">_rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span>
@@ -97,7 +105,7 @@
     <span class="c1"># Object variables.</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_probability&quot;</span><span class="p">,</span> <span class="s2">&quot;_counter&quot;</span><span class="p">,</span> <span class="s2">&quot;_lock&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_probability</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_probability</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a &#39;GeneticOperator&#39; object with a given</span>
 <span class="sd">        probability value.</span>
@@ -116,7 +124,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">counter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">counter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor (getter) of the application counter.</span>
 
@@ -127,7 +135,7 @@
 
 <div class="viewcode-block" id="GeneticOperator.reset_counter">
 <a class="viewcode-back" href="../../../pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.reset_counter">[docs]</a>
-    <span class="k">def</span> <span class="nf">reset_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">reset_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the counter value to zero.</span>
 
@@ -142,7 +150,7 @@
 
 <div class="viewcode-block" id="GeneticOperator.inc_counter">
 <a class="viewcode-back" href="../../../pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.inc_counter">[docs]</a>
-    <span class="k">def</span> <span class="nf">inc_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">inc_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Increase the counter value by one. This is applied</span>
 <span class="sd">        after each application of the genetic operator.</span>
@@ -157,7 +165,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor (getter) of the probability.</span>
 
@@ -167,7 +175,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@probability</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor (setter) of the probability.</span>
 
@@ -203,7 +211,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span>
     <span class="c1"># _end_def_</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Description:</span>
 <span class="sd">            Override to print a readable string presentation of the</span>
@@ -223,7 +231,7 @@
         <span class="k">return</span> <span class="n">str_self</span>
     <span class="c1"># _end_def_</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Description:</span>
 <span class="sd">            Override to provide a simple string that’s a valid Python expression</span>

@@ -99,6 +99,11 @@
 <dt class="sig sig-object py" id="pygenalgo.genome.chromosome.Chromosome">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.genome.chromosome.</span></span><span class="sig-name descname"><span class="pre">Chromosome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_genome:</span> <span class="pre">list</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_fitness:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_valid:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/genome/chromosome.html#Chromosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.genome.chromosome.Chromosome" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Description:</p>
+<blockquote>
+<div><p>Implements a dataclass for the Chromosome entity. This class is responsible for holding
+the individual solutions, of the optimization problem, during the evolution process.</p>
+</div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.genome.chromosome.Chromosome.clone">
 <span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/genome/chromosome.html#Chromosome.clone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.genome.chromosome.Chromosome.clone" title="Link to this definition"></a></dt>
@@ -155,11 +160,14 @@ in the genome are of type ‘Gene’.</p>
 <dt class="sig sig-object py" id="pygenalgo.genome.gene.Gene">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.genome.gene.</span></span><span class="sig-name descname"><span class="pre">Gene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_datum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/genome/gene.html#Gene"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.genome.gene.Gene" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>This is the main class that encodes the data of a single Gene in the chromosome.
+<p>Description:</p>
+<blockquote>
+<div><p>This is the main class that encodes the data of a single Gene in the chromosome.
 The class encapsulates not only the data, but also the way that this gene can be
 mutated using a random function. This Gene can be from a single ‘bit’ to a whole
 image. This way provides us with flexibility to parameterize the chromosome with
 different “kinds of genes” each one responsible for a specific function.</p>
+</div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.genome.gene.Gene.clone">
 <span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/genome/gene.html#Gene.clone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.genome.gene.Gene.clone" title="Link to this definition"></a></dt>
@@ -195,7 +203,7 @@ different “kinds of genes” each one responsible for a specific function.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.genome.gene.Gene.random">
-<span class="sig-name descname"><span class="pre">random</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/genome/gene.html#Gene.random"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.genome.gene.Gene.random" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">random</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/genome/gene.html#Gene.random"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.genome.gene.Gene.random" title="Link to this definition"></a></dt>
 <dd><p>This method should be different for each type of Gene. It describes
 how a specific type of Gene creates a random version of itself. The
 main  idea is that inside the Chromosome, each Gene can represent a

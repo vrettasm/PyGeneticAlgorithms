@@ -79,11 +79,13 @@
 <a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.gene.Gene">[docs]</a>
 <span class="k">class</span> <span class="nc">Gene</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This is the main class that encodes the data of a single Gene in the chromosome.</span>
-<span class="sd">    The class encapsulates not only the data, but also the way that this gene can be</span>
-<span class="sd">    mutated using a random function. This Gene can be from a single &#39;bit&#39; to a whole</span>
-<span class="sd">    image. This way provides us with flexibility to parameterize the chromosome with</span>
-<span class="sd">    different &quot;kinds of genes&quot; each one responsible for a specific function.</span>
+<span class="sd">    Description:</span>
+
+<span class="sd">        This is the main class that encodes the data of a single Gene in the chromosome.</span>
+<span class="sd">        The class encapsulates not only the data, but also the way that this gene can be</span>
+<span class="sd">        mutated using a random function. This Gene can be from a single &#39;bit&#39; to a whole</span>
+<span class="sd">        image. This way provides us with flexibility to parameterize the chromosome with</span>
+<span class="sd">        different &quot;kinds of genes&quot; each one responsible for a specific function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Object variables.</span>
@@ -137,7 +139,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@is_valid</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor (setter) of the validity flag.</span>
 
@@ -154,7 +156,7 @@
         <span class="c1"># _end_if_</span>
     <span class="c1"># _end_def_</span>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        When two genes are added we return a list with the two genes.</span>
 
@@ -174,7 +176,7 @@
 
 <div class="viewcode-block" id="Gene.random">
 <a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.gene.Gene.random">[docs]</a>
-    <span class="k">def</span> <span class="nf">random</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">random</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method should be different for each type of Gene. It describes</span>
 <span class="sd">        how a specific type of Gene creates a random version of itself. The</span>

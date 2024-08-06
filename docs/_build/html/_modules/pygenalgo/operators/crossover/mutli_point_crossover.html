@@ -138,7 +138,7 @@
 
         <span class="c1"># If the crossover probability is higher than</span>
         <span class="c1"># a uniformly random value, make the changes.</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">():</span>
 
             <span class="c1"># Select randomly the crossover points and sort them.</span>
             <span class="n">loci</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_genes</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_loci</span><span class="p">,</span>
