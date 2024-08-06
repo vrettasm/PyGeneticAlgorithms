@@ -62,7 +62,7 @@ class Gene(object):
     # _end_def_
 
     @is_valid.setter
-    def is_valid(self, new_value: bool):
+    def is_valid(self, new_value: bool) -> None:
         """
         Accessor (setter) of the validity flag.
 
@@ -79,7 +79,7 @@ class Gene(object):
         # _end_if_
     # _end_def_
 
-    def __add__(self, other):
+    def __add__(self, other) -> list:
         """
         When two genes are added we return a list with the two genes.
 
@@ -97,7 +97,7 @@ class Gene(object):
 
     # _end_def_
 
-    def random(self):
+    def random(self) -> None:
         """
         This method should be different for each type of Gene. It describes
         how a specific type of Gene creates a random version of itself. The
