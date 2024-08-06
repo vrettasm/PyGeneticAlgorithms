@@ -3,6 +3,11 @@ from pygenalgo.operators.genetic_operator import GeneticOperator
 
 
 class MutationOperator(GeneticOperator):
+    """
+    Description:
+
+        Provides the base class (interface) for a Mutation Operator.
+    """
 
     def __init__(self, mutation_probability: float):
         """
