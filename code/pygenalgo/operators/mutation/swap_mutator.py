@@ -24,7 +24,7 @@ class SwapMutator(MutationOperator):
 
     # _end_def_
 
-    def mutate(self, individual: Chromosome):
+    def mutate(self, individual: Chromosome) -> None:
         """
         Perform the mutation operation by swapping
         the genes at two random positions.
@@ -36,7 +36,7 @@ class SwapMutator(MutationOperator):
 
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
-        if self.probability >= self.rng.random():
+        if self.probability > self.rng.random():
 
             # Select randomly the two mutation points.
             i, j = self.rng.choice(range(0, len(individual)), size=2,

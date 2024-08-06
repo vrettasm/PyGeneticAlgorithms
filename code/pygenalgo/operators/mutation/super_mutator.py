@@ -31,7 +31,7 @@ class SuperMutator(MutationOperator):
     # _end_def_
 
     @property
-    def list_all(self):
+    def list_all(self) -> tuple:
         """
         Provides access to the internal operators.
 
@@ -40,7 +40,7 @@ class SuperMutator(MutationOperator):
         return self._mutator
     # _end_def_
 
-    def mutate(self, individual: Chromosome):
+    def mutate(self, individual: Chromosome) -> None:
         """
         Perform the mutation operation by randomly applying another mutator.
 
@@ -51,7 +51,7 @@ class SuperMutator(MutationOperator):
 
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
-        if self.probability >= self.rng.random():
+        if self.probability > self.rng.random():
 
             # Select randomly, with equal probability
             # (but this can be changed) a mutator and
@@ -65,7 +65,7 @@ class SuperMutator(MutationOperator):
     # _end_def_
 
     @property
-    def all_counters(self):
+    def all_counters(self) -> dict:
         """
         Accessor (getter) of the application counter from all the internal mutators.
         This is mostly to verify that everything is working as expected.
@@ -75,7 +75,7 @@ class SuperMutator(MutationOperator):
         return {mut_op.__class__.__name__: mut_op.counter for mut_op in self._mutator}
     # _end_def_
 
-    def reset_counter(self):
+    def reset_counter(self) -> None:
         """
         Sets ALL the counters to 'zero'. We have to override the super().reset_counter()
         method, because we have to call explicitly the reset_counter on all the internal

@@ -26,7 +26,7 @@ class ShuffleMutator(MutationOperator):
 
     # _end_def_
 
-    def mutate(self, individual: Chromosome):
+    def mutate(self, individual: Chromosome) -> None:
         """
         Perform the mutation operation by shuffling the genes
         between at two random positions.
@@ -38,7 +38,7 @@ class ShuffleMutator(MutationOperator):
 
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
-        if self.probability >= self.rng.random():
+        if self.probability > self.rng.random():
 
             # Select randomly two mutation end-points.
             i, j = sorted(self.rng.choice(range(0, len(individual)), size=2,

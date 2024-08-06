@@ -26,7 +26,7 @@ class RandomMutator(MutationOperator):
 
     # _end_def_
 
-    def mutate(self, individual: Chromosome):
+    def mutate(self, individual: Chromosome) -> None:
         """
         Perform the mutation operation by randomly replacing a
         gene with a new one that has been generated randomly.
@@ -38,7 +38,7 @@ class RandomMutator(MutationOperator):
 
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
-        if self.probability >= self.rng.random():
+        if self.probability > self.rng.random():
 
             # Select randomly the mutation point.
             locus = self.rng.integers(0, len(individual))
