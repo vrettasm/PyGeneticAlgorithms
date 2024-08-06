@@ -91,7 +91,7 @@ class StandardGA(object):
     # _end_def_
 
     @property
-    def stats(self):
+    def stats(self) -> dict:
         """
         Accessor method that returns the 'stats' dictionary.
 
@@ -101,7 +101,7 @@ class StandardGA(object):
 
     # _end_def_
 
-    def update_stats(self, avg_fitness: float, std_fitness: float):
+    def update_stats(self, avg_fitness: float, std_fitness: float) -> None:
         """
         Update the stats dictionary with the input mean/std values
         of the fitness.
@@ -145,7 +145,6 @@ class StandardGA(object):
         :return: A list with all the fitness values.
         """
         return [p.fitness for p in self.population]
-
     # _end_def_
 
     def evaluate_fitness(self, input_population: list[Chromosome], parallel: bool = False):
@@ -188,10 +187,9 @@ class StandardGA(object):
 
         # Return the mean and std of the fitness values.
         return np.mean(arr, dtype=float), np.std(arr, dtype=float)
-
     # _end_def_
 
-    def best_chromosome(self):
+    def best_chromosome(self) -> Chromosome:
         """
         Auxiliary method.
 
@@ -294,7 +292,6 @@ class StandardGA(object):
 
                 # Replace the chromosome with the previous best.
                 population_i[locus] = best_chromosome.clone()
-
             # _end_if_
 
             # Calculate the (new) average/std of the fitness.
@@ -337,7 +334,6 @@ class StandardGA(object):
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.", end='\n')
-
     # _end_def_
 
     # Auxiliary.
@@ -349,7 +345,7 @@ class StandardGA(object):
 
     # _end_def_
 
-    def print_operator_stats(self):
+    def print_operator_stats(self) -> None:
         """
         Print the genetic operators stats.
 
