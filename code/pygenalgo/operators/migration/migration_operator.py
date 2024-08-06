@@ -3,6 +3,11 @@ from pygenalgo.operators.genetic_operator import GeneticOperator
 
 
 class MigrationOperator(GeneticOperator):
+    """
+    Description:
+
+        Provides the base class (interface) for a Migration Operator.
+    """
 
     def __init__(self, migration_probability: float):
         """

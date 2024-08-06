@@ -9,7 +9,6 @@ class ClockwiseMigration(MigrationOperator):
         Clockwise Migration implements a "very basic" migration policy in which
         each island migrates its best chromosome to the population on its right,
         following a "clockwise" rotation movement.
-
     """
 
     def __init__(self, migration_probability: float = 0.95):
