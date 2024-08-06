@@ -19,8 +19,10 @@ __all__ = ["StandardGA"]
 
 class StandardGA(object):
     """
-    Standard GA model that at each iteration replaces the whole population using
-    the genetic operators (crossover and mutation).
+    Description:
+
+        Standard GA model that at each iteration replaces the whole population using
+        the genetic operators (crossover and mutation).
     """
 
     # Make a random number generator.

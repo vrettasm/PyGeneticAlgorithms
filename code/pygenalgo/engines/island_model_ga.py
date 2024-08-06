@@ -16,9 +16,11 @@ __all__ = ["IslandModelGA"]
 
 class IslandModelGA(object):
     """
-    In Island Model GA we run in parallel a number of "islands", each one evolving its own
-    (sub)-population. Optionally we can allow "migration", among the best individuals from
-    each island.
+    Description:
+
+        In Island Model GA we run in parallel a number of "islands", each one evolving its own
+        (sub)-population. Optionally we can allow "migration", among the best individuals from
+        each island.
     """
 
     # Make a random number generator.
