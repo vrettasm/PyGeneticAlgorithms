@@ -92,6 +92,36 @@ class GenericGA(object):
         return self._stats
     # _end_def_
 
+    @property
+    def select_op(self) -> SelectionOperator:
+        """
+        Accessor method that returns the selection operator reference.
+
+        :return: the SelectionOperator.
+        """
+        return self._select_op
+    # _end_def_
+
+    @property
+    def crossover_op(self) -> CrossoverOperator:
+        """
+        Accessor method that returns the crossover operator reference.
+
+        :return: the CrossoverOperator.
+        """
+        return self._cross_op
+    # _end_def_
+
+    @property
+    def mutate_op(self) -> MutationOperator:
+        """
+        Accessor method that returns the mutation operator reference.
+
+        :return: the MutationOperator.
+        """
+        return self._mutate_op
+    # _end_def_
+
     def best_chromosome(self) -> Chromosome:
         """
         Auxiliary method.
