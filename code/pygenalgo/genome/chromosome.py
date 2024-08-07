@@ -85,6 +85,16 @@ class Chromosome(object):
 
     # _end_def_
 
+    @property
+    def genome(self) -> list[Gene]:
+        """
+        Accessor of the genome list of the chromosome.
+
+        :return: the list (of Genes) of the chromosome.
+        """
+        return self._genome
+    # _end_def_
+
     def is_genome_valid(self) -> bool:
         """
         Checks the validity of the whole chromosome, by
