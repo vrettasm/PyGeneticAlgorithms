@@ -2,8 +2,10 @@ import time
 import numpy as np
 from typing import Callable
 from collections import defaultdict
+from joblib import (Parallel, delayed)
+
 from pygenalgo.genome.chromosome import Chromosome
-from joblib import (Parallel, delayed, cpu_count)
+from pygenalgo.engines.generic_ga import GenericGA
 from pygenalgo.engines.auxiliary import apply_corrections, SubPopulation
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
@@ -14,7 +16,7 @@ from pygenalgo.operators.migration.clockwise_migration import ClockwiseMigration
 __all__ = ["IslandModelGA"]
 
 
-class IslandModelGA(object):
+class IslandModelGA(GenericGA):
     """
     Description:
 
@@ -23,15 +25,8 @@ class IslandModelGA(object):
         each island.
     """
 
-    # Make a random number generator.
-    rng_GA = np.random.default_rng()
-
-    # Get the maximum number of CPUs.
-    MAX_CPUs = cpu_count()
-
     # Object variables.
-    __slots__ = ("population", "fitness_func", "num_islands", "_stats",
-                 "_select_op", "_cross_op", "_mutate_op", "_migrate_op")
+    __slots__ = ("num_islands", "_migrate_op")
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, num_islands: int,
                  select_op: SelectionOperator = None, mutate_op: MutationOperator = None,
@@ -56,16 +51,8 @@ class IslandModelGA(object):
         :return: a new GA object.
         """
 
-        # Copy the reference of the population.
-        self.population = initial_pop.copy()
-
-        # Make sure the fitness function is indeed callable.
-        if not callable(fit_func):
-            raise TypeError(f"{self.__class__.__name__}: Fitness function is not callable.")
-        else:
-            # Get the fitness function.
-            self.fitness_func = fit_func
-        # _end_if_
+        # Call the super constructor with all the input parameters.
+        super().__init__(initial_pop, fit_func, select_op, mutate_op, cross_op)
 
         # Sanity check.
         if num_islands < len(initial_pop):
@@ -77,27 +64,6 @@ class IslandModelGA(object):
                              f"Number of requested islands ({num_islands}) exceeds the size of the population.")
         # _end_if_
 
-        # Get Selection Operator.
-        if select_op is None:
-            raise ValueError(f"{self.__class__.__name__}: Selection operator is missing.")
-        else:
-            self._select_op = select_op
-        # _end_if_
-
-        # Get Mutation Operator.
-        if mutate_op is None:
-            raise ValueError(f"{self.__class__.__name__}: Mutation operator is missing.")
-        else:
-            self._mutate_op = mutate_op
-        # _end_if_
-
-        # Get Crossover Operator.
-        if cross_op is None:
-            raise ValueError(f"{self.__class__.__name__}: Crossover operator is missing.")
-        else:
-            self._cross_op = cross_op
-        # _end_if_
-
         # Get Migration Operator.
         if migrate_op is None:
             raise ValueError(f"{self.__class__.__name__}: Migration operator is missing.")
@@ -105,28 +71,8 @@ class IslandModelGA(object):
             self._migrate_op = migrate_op
         # _end_if_
 
-        # Dictionary with stats.
+        # Dictionary with statistics.
         self._stats = defaultdict(dict)
-    # _end_def_
-
-    @property
-    def stats(self) -> dict:
-        """
-        Accessor method that returns the 'stats' dictionary.
-
-        :return: the dictionary with the statistics from the run.
-        """
-        return self._stats
-    # _end_def_
-
-    def best_chromosome(self) -> Chromosome:
-        """
-        Auxiliary method.
-
-        :return: Return the chromosome with the highest fitness.
-        """
-        # Return the chromosome with the highest fitness.
-        return max(self.population, key=lambda c: c.fitness)
     # _end_def_
 
     def evaluate_fitness(self, in_population: list[Chromosome]):
@@ -460,14 +406,6 @@ class IslandModelGA(object):
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.", end='\n')
 
-    # _end_def_
-
-    # Auxiliary.
-    def __call__(self, *args, **kwargs):
-        """
-        This is only a wrapper of the "run" method.
-        """
-        return self.run(*args, **kwargs)
     # _end_def_
 
 # _end_class_

@@ -2,9 +2,10 @@ import time
 import numpy as np
 from typing import Callable
 from collections import defaultdict
+from joblib import (Parallel, delayed)
 
 from pygenalgo.genome.chromosome import Chromosome
-from joblib import (Parallel, delayed, cpu_count)
+from pygenalgo.engines.generic_ga import GenericGA
 from pygenalgo.engines.auxiliary import apply_corrections
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
@@ -17,23 +18,13 @@ from pygenalgo.operators.crossover.super_crossover import SuperCrossover
 __all__ = ["StandardGA"]
 
 
-class StandardGA(object):
+class StandardGA(GenericGA):
     """
     Description:
 
         Standard GA model that at each iteration replaces the whole population using
         the genetic operators (crossover and mutation).
     """
-
-    # Make a random number generator.
-    rng_GA = np.random.default_rng()
-
-    # Get the maximum number of CPUs.
-    MAX_CPUs = cpu_count()
-
-    # Object variables.
-    __slots__ = ("population", "fitness_func", "_select_op", "_cross_op", "_mutate_op",
-                 "_stats")
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, select_op: SelectionOperator = None,
                  mutate_op: MutationOperator = None, cross_op: CrossoverOperator = None) -> object:
@@ -52,53 +43,11 @@ class StandardGA(object):
 
         :return: a new GA object.
         """
+        # Call the super constructor with all the input parameters.
+        super().__init__(initial_pop, fit_func, select_op, mutate_op, cross_op)
 
-        # Copy the reference of the population.
-        self.population = initial_pop.copy()
-
-        # Make sure the fitness function is indeed callable.
-        if not callable(fit_func):
-            raise TypeError(f"{self.__class__.__name__}: Fitness function is not callable.")
-        else:
-            # Get the fitness function.
-            self.fitness_func = fit_func
-        # _end_if_
-
-        # Get Selection Operator.
-        if select_op is None:
-            raise ValueError(f"{self.__class__.__name__}: Selection operator is missing.")
-        else:
-            self._select_op = select_op
-        # _end_if_
-
-        # Get Mutation Operator.
-        if mutate_op is None:
-            raise ValueError(f"{self.__class__.__name__}: Mutation operator is missing.")
-        else:
-            self._mutate_op = mutate_op
-        # _end_if_
-
-        # Get Crossover Operator.
-        if cross_op is None:
-            raise ValueError(f"{self.__class__.__name__}: Crossover operator is missing.")
-        else:
-            self._cross_op = cross_op
-        # _end_if_
-
-        # Dictionary with stats.
+        # Dictionary with statistics.
         self._stats = defaultdict(list)
-
-    # _end_def_
-
-    @property
-    def stats(self) -> dict:
-        """
-        Accessor method that returns the 'stats' dictionary.
-
-        :return: the dictionary with the statistics from the run.
-        """
-        return self._stats
-
     # _end_def_
 
     def update_stats(self, avg_fitness: float, std_fitness: float) -> None:
@@ -124,27 +73,6 @@ class StandardGA(object):
                                f"population. Mean={avg_fitness:.5f}, Std={std_fitness:.5f}.")
         # _end_if_
 
-    # _end_def_
-
-    def individual_fitness(self, index: int) -> float:
-        """
-        Get the fitness value of an individual member of the population.
-
-        :param index: Position of the individual in the population.
-
-        :return: The fitness value (float).
-        """
-        return self.population[index].fitness
-
-    # _end_def_
-
-    def population_fitness(self) -> list[float]:
-        """
-        Get the fitness of all the population.
-
-        :return: A list with all the fitness values.
-        """
-        return [p.fitness for p in self.population]
     # _end_def_
 
     def evaluate_fitness(self, input_population: list[Chromosome], parallel: bool = False):
@@ -187,17 +115,6 @@ class StandardGA(object):
 
         # Return the mean and std of the fitness values.
         return np.mean(arr, dtype=float), np.std(arr, dtype=float)
-    # _end_def_
-
-    def best_chromosome(self) -> Chromosome:
-        """
-        Auxiliary method.
-
-        :return: Return the chromosome with the highest fitness.
-        """
-        # Return the chromosome with the highest fitness.
-        return max(self.population, key=lambda c: c.fitness)
-
     # _end_def_
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
@@ -334,15 +251,6 @@ class StandardGA(object):
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.", end='\n')
-    # _end_def_
-
-    # Auxiliary.
-    def __call__(self, *args, **kwargs):
-        """
-        This is only a wrapper of the "run" method.
-        """
-        return self.run(*args, **kwargs)
-
     # _end_def_
 
     def print_operator_stats(self) -> None:
