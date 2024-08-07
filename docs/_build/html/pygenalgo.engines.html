@@ -149,29 +149,13 @@ the Gene is always returning a ‘valid’ value for the Gene.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.island_model_ga.</span></span><span class="sig-name descname"><span class="pre">IslandModelGA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">initial_pop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_islands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><span class="pre">SelectionOperator</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutate_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.mutate_operator.MutationOperator" title="pygenalgo.operators.mutation.mutate_operator.MutationOperator"><span class="pre">MutationOperator</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cross_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.crossover_operator.CrossoverOperator" title="pygenalgo.operators.crossover.crossover_operator.CrossoverOperator"><span class="pre">CrossoverOperator</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">migrate_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.clockwise_migration.ClockwiseMigration" title="pygenalgo.operators.migration.clockwise_migration.ClockwiseMigration"><span class="pre">ClockwiseMigration</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/island_model_ga.html#IslandModelGA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA" title="pygenalgo.engines.generic_ga.GenericGA"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGA</span></code></a></p>
 <p>Description:</p>
 <blockquote>
 <div><p>In Island Model GA we run in parallel a number of “islands”, each one evolving its own
 (sub)-population. Optionally we can allow “migration”, among the best individuals from
 each island.</p>
 </div></blockquote>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA.MAX_CPUs">
-<span class="sig-name descname"><span class="pre">MAX_CPUs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.MAX_CPUs" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA.best_chromosome">
-<span class="sig-name descname"><span class="pre">best_chromosome</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/island_model_ga.html#IslandModelGA.best_chromosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.best_chromosome" title="Link to this definition"></a></dt>
-<dd><p>Auxiliary method.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Return the chromosome with the highest fitness.</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA.evaluate_fitness">
 <span class="sig-name descname"><span class="pre">evaluate_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/island_model_ga.html#IslandModelGA.evaluate_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.evaluate_fitness" title="Link to this definition"></a></dt>
@@ -199,23 +183,8 @@ when passed in the Parallel pool. The input parameters have identical meaning wi
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA.fitness_func">
-<span class="sig-name descname"><span class="pre">fitness_func</span></span><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.fitness_func" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA.num_islands">
 <span class="sig-name descname"><span class="pre">num_islands</span></span><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.num_islands" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA.population">
-<span class="sig-name descname"><span class="pre">population</span></span><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.population" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA.rng_GA">
-<span class="sig-name descname"><span class="pre">rng_GA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Generator(PCG64)</span> <span class="pre">at</span> <span class="pre">0x7FD6274A7AE0</span></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.rng_GA" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -271,17 +240,6 @@ allow_migration == True. Otherwise, is ignored.</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA.stats">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stats</span></span><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.stats" title="Link to this definition"></a></dt>
-<dd><p>Accessor method that returns the ‘stats’ dictionary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>the dictionary with the statistics from the run.</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -290,28 +248,12 @@ allow_migration == True. Otherwise, is ignored.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.standard_ga.</span></span><span class="sig-name descname"><span class="pre">StandardGA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">initial_pop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><span class="pre">SelectionOperator</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutate_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.mutate_operator.MutationOperator" title="pygenalgo.operators.mutation.mutate_operator.MutationOperator"><span class="pre">MutationOperator</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cross_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.crossover_operator.CrossoverOperator" title="pygenalgo.operators.crossover.crossover_operator.CrossoverOperator"><span class="pre">CrossoverOperator</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/standard_ga.html#StandardGA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA" title="pygenalgo.engines.generic_ga.GenericGA"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGA</span></code></a></p>
 <p>Description:</p>
 <blockquote>
 <div><p>Standard GA model that at each iteration replaces the whole population using
 the genetic operators (crossover and mutation).</p>
 </div></blockquote>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.MAX_CPUs">
-<span class="sig-name descname"><span class="pre">MAX_CPUs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.MAX_CPUs" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.best_chromosome">
-<span class="sig-name descname"><span class="pre">best_chromosome</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></span><a class="reference internal" href="_modules/pygenalgo/engines/standard_ga.html#StandardGA.best_chromosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.best_chromosome" title="Link to this definition"></a></dt>
-<dd><p>Auxiliary method.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Return the chromosome with the highest fitness.</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.evaluate_fitness">
 <span class="sig-name descname"><span class="pre">evaluate_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/standard_ga.html#StandardGA.evaluate_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.evaluate_fitness" title="Link to this definition"></a></dt>
@@ -337,35 +279,10 @@ the genetic operators (crossover and mutation).</p>
 <span class="sig-name descname"><span class="pre">fitness_func</span></span><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.fitness_func" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.individual_fitness">
-<span class="sig-name descname"><span class="pre">individual_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/standard_ga.html#StandardGA.individual_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.individual_fitness" title="Link to this definition"></a></dt>
-<dd><p>Get the fitness value of an individual member of the population.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>index</strong> – Position of the individual in the population.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The fitness value (float).</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.population">
 <span class="sig-name descname"><span class="pre">population</span></span><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.population" title="Link to this definition"></a></dt>
 <dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.population_fitness">
-<span class="sig-name descname"><span class="pre">population_fitness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/standard_ga.html#StandardGA.population_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.population_fitness" title="Link to this definition"></a></dt>
-<dd><p>Get the fitness of all the population.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A list with all the fitness values.</p>
-</dd>
-</dl>
-</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.print_operator_stats">
@@ -377,11 +294,6 @@ the genetic operators (crossover and mutation).</p>
 </dd>
 </dl>
 </dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.rng_GA">
-<span class="sig-name descname"><span class="pre">rng_GA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Generator(PCG64)</span> <span class="pre">at</span> <span class="pre">0x7FD625AF9460</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.rng_GA" title="Link to this definition"></a></dt>
-<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.run">
@@ -425,17 +337,6 @@ the random() method of the flawed gene.</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.stats">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stats</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.stats" title="Link to this definition"></a></dt>
-<dd><p>Accessor method that returns the ‘stats’ dictionary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>the dictionary with the statistics from the run.</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.update_stats">
 <span class="sig-name descname"><span class="pre">update_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">avg_fitness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std_fitness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/standard_ga.html#StandardGA.update_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.update_stats" title="Link to this definition"></a></dt>
@@ -450,6 +351,102 @@ of the fitness.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pygenalgo.engines.generic_ga">
+<span id="pygenalgo-engines-generic-ga-module"></span><h2>pygenalgo.engines.generic_ga module<a class="headerlink" href="#module-pygenalgo.engines.generic_ga" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.generic_ga.</span></span><span class="sig-name descname"><span class="pre">GenericGA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">initial_pop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><span class="pre">SelectionOperator</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutate_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.mutate_operator.MutationOperator" title="pygenalgo.operators.mutation.mutate_operator.MutationOperator"><span class="pre">MutationOperator</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cross_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.crossover_operator.CrossoverOperator" title="pygenalgo.operators.crossover.crossover_operator.CrossoverOperator"><span class="pre">CrossoverOperator</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#GenericGA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Description:</p>
+<blockquote>
+<div><p>Generic GA class models the interface of a specific genetic algorithm model (or engine).
+It provides the common variables and functionality that all GA models should share.</p>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.MAX_CPUs">
+<span class="sig-name descname"><span class="pre">MAX_CPUs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.MAX_CPUs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.best_chromosome">
+<span class="sig-name descname"><span class="pre">best_chromosome</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#GenericGA.best_chromosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.best_chromosome" title="Link to this definition"></a></dt>
+<dd><p>Auxiliary method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Return the chromosome with the highest fitness.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.evaluate_fitness">
+<span class="sig-name descname"><span class="pre">evaluate_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#GenericGA.evaluate_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.evaluate_fitness" title="Link to this definition"></a></dt>
+<dd><p>Evaluate all the chromosomes of the input population list with the
+custom fitness  function. After updating all  the chromosomes with
+their fitness, the method should return the average statistics of
+mean and std.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.fitness_func">
+<span class="sig-name descname"><span class="pre">fitness_func</span></span><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.fitness_func" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.individual_fitness">
+<span class="sig-name descname"><span class="pre">individual_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#GenericGA.individual_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.individual_fitness" title="Link to this definition"></a></dt>
+<dd><p>Get the fitness value of an individual member of the population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>index</strong> – Position of the individual in the population.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The fitness value (float).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.population">
+<span class="sig-name descname"><span class="pre">population</span></span><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.population" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.population_fitness">
+<span class="sig-name descname"><span class="pre">population_fitness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#GenericGA.population_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.population_fitness" title="Link to this definition"></a></dt>
+<dd><p>Get the fitness of all the population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list with all the fitness values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.rng_GA">
+<span class="sig-name descname"><span class="pre">rng_GA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Generator(PCG64)</span> <span class="pre">at</span> <span class="pre">0x7FC517CAFCA0</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.rng_GA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#GenericGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.run" title="Link to this definition"></a></dt>
+<dd><p>Main method of the Generic GA class, that implements the evolutionary routine.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.stats">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stats</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.stats" title="Link to this definition"></a></dt>
+<dd><p>Accessor method that returns the ‘stats’ dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the dictionary with the statistics from the run.</p>
 </dd>
 </dl>
 </dd></dl>

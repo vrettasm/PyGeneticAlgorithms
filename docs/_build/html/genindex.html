@@ -111,12 +111,8 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.best_chromosome">best_chromosome() (pygenalgo.engines.island_model_ga.IslandModelGA method)</a>
-
-      <ul>
-        <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.best_chromosome">(pygenalgo.engines.standard_ga.StandardGA method)</a>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.best_chromosome">best_chromosome() (pygenalgo.engines.generic_ga.GenericGA method)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -165,9 +161,11 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.evaluate_fitness">evaluate_fitness() (pygenalgo.engines.island_model_ga.IslandModelGA method)</a>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.evaluate_fitness">evaluate_fitness() (pygenalgo.engines.generic_ga.GenericGA method)</a>
 
       <ul>
+        <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.evaluate_fitness">(pygenalgo.engines.island_model_ga.IslandModelGA method)</a>
+</li>
         <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.evaluate_fitness">(pygenalgo.engines.standard_ga.StandardGA method)</a>
 </li>
       </ul></li>
@@ -185,7 +183,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.fitness_func">fitness_func (pygenalgo.engines.island_model_ga.IslandModelGA attribute)</a>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.fitness_func">fitness_func (pygenalgo.engines.generic_ga.GenericGA attribute)</a>
 
       <ul>
         <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.fitness_func">(pygenalgo.engines.standard_ga.StandardGA attribute)</a>
@@ -199,9 +197,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.gene.Gene">Gene (class in pygenalgo.genome.gene)</a>
 </li>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA">GenericGA (class in pygenalgo.engines.generic_ga)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator">GeneticOperator (class in pygenalgo.operators.genetic_operator)</a>
+</li>
+      <li><a href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.genome">genome (pygenalgo.genome.chromosome.Chromosome property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -213,7 +215,7 @@
 </li>
       <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.inc_counter">inc_counter() (pygenalgo.operators.genetic_operator.GeneticOperator method)</a>
 </li>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.individual_fitness">individual_fitness() (pygenalgo.engines.standard_ga.StandardGA method)</a>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.individual_fitness">individual_fitness() (pygenalgo.engines.generic_ga.GenericGA method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -245,12 +247,8 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.MAX_CPUs">MAX_CPUs (pygenalgo.engines.island_model_ga.IslandModelGA attribute)</a>
-
-      <ul>
-        <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.MAX_CPUs">(pygenalgo.engines.standard_ga.StandardGA attribute)</a>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.MAX_CPUs">MAX_CPUs (pygenalgo.engines.generic_ga.GenericGA attribute)</a>
 </li>
-      </ul></li>
       <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.clockwise_migration.ClockwiseMigration.migrate">migrate() (pygenalgo.operators.migration.clockwise_migration.ClockwiseMigration method)</a>
 
       <ul>
@@ -268,6 +266,8 @@
         <li><a href="pygenalgo.engines.html#module-pygenalgo.engines">pygenalgo.engines</a>
 </li>
         <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.auxiliary">pygenalgo.engines.auxiliary</a>
+</li>
+        <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.generic_ga">pygenalgo.engines.generic_ga</a>
 </li>
         <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.island_model_ga">pygenalgo.engines.island_model_ga</a>
 </li>
@@ -403,12 +403,12 @@
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.auxiliary.SubPopulation.population">population (pygenalgo.engines.auxiliary.SubPopulation attribute)</a>
 
       <ul>
-        <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.population">(pygenalgo.engines.island_model_ga.IslandModelGA attribute)</a>
+        <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.population">(pygenalgo.engines.generic_ga.GenericGA attribute)</a>
 </li>
         <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.population">(pygenalgo.engines.standard_ga.StandardGA attribute)</a>
 </li>
       </ul></li>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.population_fitness">population_fitness() (pygenalgo.engines.standard_ga.StandardGA method)</a>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.population_fitness">population_fitness() (pygenalgo.engines.generic_ga.GenericGA method)</a>
 </li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.print_operator_stats">print_operator_stats() (pygenalgo.engines.standard_ga.StandardGA method)</a>
 </li>
@@ -433,6 +433,13 @@
 
       <ul>
         <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.auxiliary">module</a>
+</li>
+      </ul></li>
+      <li>
+    pygenalgo.engines.generic_ga
+
+      <ul>
+        <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.generic_ga">module</a>
 </li>
       </ul></li>
       <li>
@@ -512,6 +519,8 @@
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.super_crossover">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pygenalgo.operators.crossover.uniform_crossover
 
@@ -519,8 +528,6 @@
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.uniform_crossover">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pygenalgo.operators.genetic_operator
 
@@ -677,17 +684,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.rng">rng (pygenalgo.operators.genetic_operator.GeneticOperator property)</a>
 </li>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.rng_GA">rng_GA (pygenalgo.engines.island_model_ga.IslandModelGA attribute)</a>
-
-      <ul>
-        <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.rng_GA">(pygenalgo.engines.standard_ga.StandardGA attribute)</a>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.rng_GA">rng_GA (pygenalgo.engines.generic_ga.GenericGA attribute)</a>
 </li>
-      </ul></li>
       <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.roulette_wheel_selector.RouletteWheelSelector">RouletteWheelSelector (class in pygenalgo.operators.selection.roulette_wheel_selector)</a>
 </li>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.run">run() (pygenalgo.engines.island_model_ga.IslandModelGA method)</a>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.run">run() (pygenalgo.engines.generic_ga.GenericGA method)</a>
 
       <ul>
+        <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.run">(pygenalgo.engines.island_model_ga.IslandModelGA method)</a>
+</li>
         <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.run">(pygenalgo.engines.standard_ga.StandardGA method)</a>
 </li>
       </ul></li>
@@ -789,12 +794,8 @@
 </li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA">StandardGA (class in pygenalgo.engines.standard_ga)</a>
 </li>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.stats">stats (pygenalgo.engines.island_model_ga.IslandModelGA property)</a>
-
-      <ul>
-        <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.stats">(pygenalgo.engines.standard_ga.StandardGA property)</a>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.stats">stats (pygenalgo.engines.generic_ga.GenericGA property)</a>
 </li>
-      </ul></li>
       <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.stochastic_universal_selector.StochasticUniversalSelector">StochasticUniversalSelector (class in pygenalgo.operators.selection.stochastic_universal_selector)</a>
 </li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.auxiliary.SubPopulation">SubPopulation (class in pygenalgo.engines.auxiliary)</a>

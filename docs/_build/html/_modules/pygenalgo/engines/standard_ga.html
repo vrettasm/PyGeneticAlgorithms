@@ -75,9 +75,10 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
-<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">,</span> <span class="n">cpu_count</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pygenalgo.engines.generic_ga</span> <span class="kn">import</span> <span class="n">GenericGA</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.engines.auxiliary</span> <span class="kn">import</span> <span class="n">apply_corrections</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.mutate_operator</span> <span class="kn">import</span> <span class="n">MutationOperator</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.selection.select_operator</span> <span class="kn">import</span> <span class="n">SelectionOperator</span>
@@ -92,23 +93,13 @@
 
 <div class="viewcode-block" id="StandardGA">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA">[docs]</a>
-<span class="k">class</span> <span class="nc">StandardGA</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">StandardGA</span><span class="p">(</span><span class="n">GenericGA</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
 <span class="sd">        Standard GA model that at each iteration replaces the whole population using</span>
 <span class="sd">        the genetic operators (crossover and mutation).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1"># Make a random number generator.</span>
-    <span class="n">rng_GA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span>
-
-    <span class="c1"># Get the maximum number of CPUs.</span>
-    <span class="n">MAX_CPUs</span> <span class="o">=</span> <span class="n">cpu_count</span><span class="p">()</span>
-
-    <span class="c1"># Object variables.</span>
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;fitness_func&quot;</span><span class="p">,</span> <span class="s2">&quot;_select_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_cross_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_mutate_op&quot;</span><span class="p">,</span>
-                 <span class="s2">&quot;_stats&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_pop</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span> <span class="n">fit_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">select_op</span><span class="p">:</span> <span class="n">SelectionOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">mutate_op</span><span class="p">:</span> <span class="n">MutationOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cross_op</span><span class="p">:</span> <span class="n">CrossoverOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
@@ -127,53 +118,11 @@
 
 <span class="sd">        :return: a new GA object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Call the super constructor with all the input parameters.</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">initial_pop</span><span class="p">,</span> <span class="n">fit_func</span><span class="p">,</span> <span class="n">select_op</span><span class="p">,</span> <span class="n">mutate_op</span><span class="p">,</span> <span class="n">cross_op</span><span class="p">)</span>
 
-        <span class="c1"># Copy the reference of the population.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">initial_pop</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-        <span class="c1"># Make sure the fitness function is indeed callable.</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">fit_func</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: Fitness function is not callable.&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Get the fitness function.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fitness_func</span> <span class="o">=</span> <span class="n">fit_func</span>
-        <span class="c1"># _end_if_</span>
-
-        <span class="c1"># Get Selection Operator.</span>
-        <span class="k">if</span> <span class="n">select_op</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: Selection operator is missing.&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_select_op</span> <span class="o">=</span> <span class="n">select_op</span>
-        <span class="c1"># _end_if_</span>
-
-        <span class="c1"># Get Mutation Operator.</span>
-        <span class="k">if</span> <span class="n">mutate_op</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: Mutation operator is missing.&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span> <span class="o">=</span> <span class="n">mutate_op</span>
-        <span class="c1"># _end_if_</span>
-
-        <span class="c1"># Get Crossover Operator.</span>
-        <span class="k">if</span> <span class="n">cross_op</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: Crossover operator is missing.&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_cross_op</span> <span class="o">=</span> <span class="n">cross_op</span>
-        <span class="c1"># _end_if_</span>
-
-        <span class="c1"># Dictionary with stats.</span>
+        <span class="c1"># Dictionary with statistics.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-
-    <span class="c1"># _end_def_</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Accessor method that returns the &#39;stats&#39; dictionary.</span>
-
-<span class="sd">        :return: the dictionary with the statistics from the run.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span>
-
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="StandardGA.update_stats">
@@ -201,33 +150,6 @@
                                <span class="sa">f</span><span class="s2">&quot;population. Mean=</span><span class="si">{</span><span class="n">avg_fitness</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, Std=</span><span class="si">{</span><span class="n">std_fitness</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
 
         <span class="c1"># _end_if_</span>
-
-    <span class="c1"># _end_def_</span>
-
-<div class="viewcode-block" id="StandardGA.individual_fitness">
-<a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.individual_fitness">[docs]</a>
-    <span class="k">def</span> <span class="nf">individual_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the fitness value of an individual member of the population.</span>
-
-<span class="sd">        :param index: Position of the individual in the population.</span>
-
-<span class="sd">        :return: The fitness value (float).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">fitness</span></div>
-
-
-    <span class="c1"># _end_def_</span>
-
-<div class="viewcode-block" id="StandardGA.population_fitness">
-<a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.population_fitness">[docs]</a>
-    <span class="k">def</span> <span class="nf">population_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the fitness of all the population.</span>
-
-<span class="sd">        :return: A list with all the fitness values.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">]</span></div>
 
     <span class="c1"># _end_def_</span>
 
@@ -264,29 +186,15 @@
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Attach the fitness to each chromosome.</span>
-        <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">fit_eval</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">input_population</span><span class="p">,</span> <span class="n">fitness_i</span><span class="p">):</span>
-            <span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fit_eval</span>
+        <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">fit_value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">input_population</span><span class="p">,</span> <span class="n">fitness_i</span><span class="p">):</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fit_value</span>
         <span class="c1"># _end_for_</span>
 
         <span class="c1"># Convert list to numpy array.</span>
-        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fitness_i</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fitness_i</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Return the mean and std of the fitness values.</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
-
-    <span class="c1"># _end_def_</span>
-
-<div class="viewcode-block" id="StandardGA.best_chromosome">
-<a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.best_chromosome">[docs]</a>
-    <span class="k">def</span> <span class="nf">best_chromosome</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Chromosome</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Auxiliary method.</span>
-
-<span class="sd">        :return: Return the chromosome with the highest fitness.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Return the chromosome with the highest fitness.</span>
-        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span></div>
-
 
     <span class="c1"># _end_def_</span>
 
@@ -426,15 +334,6 @@
 
         <span class="c1"># Print final duration in seconds.</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Elapsed time: </span><span class="si">{</span><span class="p">(</span><span class="n">time_tf</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">time_t0</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds.&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
-
-    <span class="c1"># _end_def_</span>
-
-    <span class="c1"># Auxiliary.</span>
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This is only a wrapper of the &quot;run&quot; method.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="c1"># _end_def_</span>
 
