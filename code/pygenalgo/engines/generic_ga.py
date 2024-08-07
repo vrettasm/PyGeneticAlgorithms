@@ -124,7 +124,8 @@ class GenericGA(object):
 
     def best_chromosome(self) -> Chromosome:
         """
-        Auxiliary method.
+        Auxiliary method that returns the chromosome with the
+        highest fitness value.
 
         :return: Return the chromosome with the highest fitness.
         """
@@ -164,7 +165,7 @@ class GenericGA(object):
 
     def population_fitness(self) -> list[float]:
         """
-        Get the fitness of all the population.
+        Get the fitness values of all the population.
 
         :return: A list with all the fitness values.
         """
@@ -184,10 +185,10 @@ class GenericGA(object):
 
     def evaluate_fitness(self, *args, **kwargs):
         """
-        Evaluate all the chromosomes of the input population list with the
-        custom fitness  function. After updating all  the chromosomes with
-        their fitness, the method should return the average statistics of
-        mean and std.
+        This method evaluates all the chromosomes' of an input population
+        with a custom fitness function. After updating all the chromosomes
+        with their fitness, the method should return the average statistics
+        of mean and std of the population fitness.
         """
         raise NotImplementedError(f"{self.__class__.__name__}: "
                                   f"You should implement this method!")
@@ -203,7 +204,7 @@ class GenericGA(object):
 
     def __call__(self, *args, **kwargs):
         """
-        This is only a wrapper of the "run" method.
+        This method is only a wrapper of the "run" method.
         """
         return self.run(*args, **kwargs)
     # _end_def_
