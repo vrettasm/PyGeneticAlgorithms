@@ -32,7 +32,7 @@ class IslandModelGA(GenericGA):
                  select_op: SelectionOperator = None, mutate_op: MutationOperator = None,
                  cross_op: CrossoverOperator = None, migrate_op: ClockwiseMigration = None):
         """
-        Default constructor of StandardGA object.
+        Default constructor of IslandModelGA object.
 
         :param initial_pop: (list) of the initial population of (randomized) chromosomes.
 
@@ -215,7 +215,7 @@ class IslandModelGA(GenericGA):
             f_tol: float = 1.0e-6, allow_migration: bool = False, n_periods: int = 10,
             verbose: bool = False):
         """
-        Main method of the StandardGA class, that implements the evolutionary routine.
+        Main method of the IslandModelGA class, that implements the evolutionary routine.
 
         :param epochs: (int) maximum number of iterations in the evolution process.
 

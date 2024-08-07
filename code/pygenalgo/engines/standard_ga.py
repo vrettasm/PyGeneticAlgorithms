@@ -131,8 +131,8 @@ class StandardGA(GenericGA):
         the population (at the gene level) and attempt to correct the genome by calling
         the random() method of the flawed gene.
 
-        :param f_tol: (float) tolerance in the difference between the average values of
-        two consecutive populations. It is used to determine the convergence of the population.
+        :param f_tol: (float) tolerance in the difference between the average values of two
+        consecutive populations. It is used to determine the convergence of the population.
 
         :param parallel: (bool) Flag that enables parallel computation of the fitness function.
 
