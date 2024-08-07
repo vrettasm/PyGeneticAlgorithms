@@ -90,19 +90,19 @@ class IslandModelGA(GenericGA):
         # Get a local copy of the fitness function.
         fit_func = self.fitness_func
 
-        # Evaluate the chromosomes.
-        for p in in_population:
+        # Evaluate the fitness of all chromosomes.
+        fit_list = [fit_func(p) for p in in_population]
 
-            # Assign the chromosome its fitness value.
-            p.fitness = fit_func(p)
-
+        # Assign each chromosome its fitness value.
+        for p, fit_value in zip(in_population, fit_list):
+            p.fitness = fit_value
         # _end_for_
 
-        # Get all the fitness values in a numpy array.
-        arr = np.array([p.fitness for p in in_population], copy=False)
+        # Convert the fitness values in a numpy array.
+        fit_arr = np.array(fit_list, copy=False)
 
         # Return the mean and std values of the fitness.
-        return np.mean(arr, dtype=float), np.std(arr, dtype=float)
+        return np.mean(fit_arr, dtype=float), np.std(fit_arr, dtype=float)
     # _end_def_
 
     @staticmethod
