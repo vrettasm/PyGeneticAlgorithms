@@ -132,6 +132,36 @@ class GenericGA(object):
         return max(self.population, key=lambda c: c.fitness)
     # _end_def_
 
+    def crossover_mutate(self, input_population: list[Chromosome]) -> None:
+        """
+        This is an auxiliary method that combines the crossover and mutation
+        operations in one call. Since these operations happen in place the
+        'input_population' will be modified directly.
+
+        This method should be called AFTER the selection of the parents that
+        have been selected for breeding.
+
+        :param input_population: this is the population that we will apply
+        the two genetic operators.
+        """
+
+        # Get the size of the input population.
+        N = len(input_population)
+
+        # CROSSOVER and MUTATE to produce the new offsprings.
+        for j in range(0, N - 1, 2):
+            # Replace directly the OLD parents with the NEW offsprings.
+            input_population[j], input_population[j+1] = self._cross_op(input_population[j],
+                                                                        input_population[j+1])
+            # MUTATE in place the 1st offspring.
+            self._mutate_op(input_population[j])
+
+            # MUTATE in place the 2nd offspring.
+            self._mutate_op(input_population[j+1])
+        # _end_for_
+
+    # _end_def_
+
     def population_fitness(self) -> list[float]:
         """
         Get the fitness of all the population.
