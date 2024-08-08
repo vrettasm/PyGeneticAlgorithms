@@ -118,6 +118,7 @@ Some optimization examples on how to use this algorithm:
    2. [Maximization](examples/rastrigin.ipynb)
    3. [Minimization with constraints](examples/rosenbrock_on_a_disk.ipynb)
    4. [Multi-objective with constraints](examples/binh_and_korn_multiobjective.ipynb)
+   5. [Traveling Salesman Problem](examples/tsp.ipynb)
 2. IslandModelGA
    1. [Sphere Function](examples/sphere_in_parallel.ipynb)
    2. [Easom Function](examples/easom_in_parallel.ipynb)
