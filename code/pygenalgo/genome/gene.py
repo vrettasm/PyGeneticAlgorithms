@@ -99,6 +99,25 @@ class Gene(object):
 
     # _end_def_
 
+    def __eq__(self, other) -> bool:
+        """
+        When we compare two Genes we care only about the data they hold.
+
+        :param other: the second object we want to compare to.
+
+        :return: true or false.
+        """
+
+        # Make sure both items are of type 'Gene'.
+        if isinstance(other, Gene):
+            return self._datum == other._datum
+        # _end_def_
+
+        return False
+        # _end_if_
+
+    # _end_def_
+
     def random(self) -> None:
         """
         This method should be different for each type of Gene. It describes
