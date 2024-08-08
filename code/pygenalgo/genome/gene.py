@@ -111,11 +111,9 @@ class Gene(object):
         # Make sure both items are of type 'Gene'.
         if isinstance(other, Gene):
             return self._datum == other._datum
-        # _end_def_
-
-        return False
         # _end_if_
 
+        return False
     # _end_def_
 
     def random(self) -> None:
