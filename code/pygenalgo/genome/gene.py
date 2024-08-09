@@ -125,7 +125,7 @@ class Gene(object):
         have its own way to perform random mutation.
 
         This way by calling on the random() method, each Gene will know how
-        to mutate itself without breaking ay rules/constraints.
+        to mutate itself without breaking any rules/constraints.
 
         :return: None.
         """
