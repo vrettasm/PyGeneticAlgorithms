@@ -65,7 +65,7 @@ class TournamentSelector(SelectionOperator):
                          key=lambda p: p.fitness)
 
             # Copy the best individual in the new list.
-            new_parents_append(winner.clone())
+            new_parents_append(winner)
         # _end_for_
 
         # Increase the selection counter.

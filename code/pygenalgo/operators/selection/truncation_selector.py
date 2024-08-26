@@ -51,7 +51,7 @@ class TruncationSelector(SelectionOperator):
         self.inc_counter()
 
         # Return the (new) selected individuals.
-        return [sorted_population[i].clone() for i in index]
+        return [sorted_population[i] for i in index]
     # _end_def_
 
 # _end_class_

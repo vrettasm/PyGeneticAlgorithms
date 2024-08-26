@@ -43,5 +43,5 @@ class RandomSelector(SelectionOperator):
         index = self.rng.choice(N, size=N, replace=True, shuffle=False)
 
         # Return the (new) selected individuals.
-        return [population[i].clone() for i in index]
+        return [population[i] for i in index]
 # _end_class_

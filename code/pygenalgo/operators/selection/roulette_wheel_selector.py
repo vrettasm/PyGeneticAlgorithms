@@ -59,7 +59,7 @@ class RouletteWheelSelector(SelectionOperator):
         self.inc_counter()
 
         # Return the (new) selected individuals.
-        return [population[i].clone() for i in index]
+        return [population[i] for i in index]
 
     # _end_def_
 
