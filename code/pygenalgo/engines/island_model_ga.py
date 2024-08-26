@@ -143,6 +143,9 @@ class IslandModelGA(GenericGA):
             # SELECT the parents.
             population_i = sel_op(island.population)
 
+            # Shuffle the selected parents.
+            rnd_gen.shuffle(population_i)
+
             # CROSSOVER/MUTATE to produce offsprings.
             for j in range(0, N - 1, 2):
                 # Replace directly the OLD parents with the NEW offsprings.

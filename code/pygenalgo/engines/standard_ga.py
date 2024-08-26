@@ -170,8 +170,10 @@ class StandardGA(GenericGA):
         for i in range(epochs):
 
             # SELECT the parents.
-            # This will create a NEW copy of the population.
             population_i = self._select_op(self.population)
+
+            # Shuffle the selected parents.
+            self.rng_GA.shuffle(population_i)
 
             # CROSSOVER/MUTATE to produce offsprings.
             for j in range(0, N - 1, 2):
