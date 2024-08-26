@@ -50,8 +50,8 @@ allows for easy additions of numerous new genetic operators that some researcher
 
 The current implementation provides a standard genetic algorithm model (class StandardGA), where the whole population of
 individual solutions (i.e. chromosomes) is replaced by another one of offsprings, at the end of each epoch. Additionally,
-the toolkit offers an IslandModelGA class, where a parallel island model [@Whitley1999] is implemented, with or without
-the use of a migration operator. Some of the features that both models provide can be found in the table below:
+the toolkit offers an IslandModelGA class, where a parallel island model [@Whitley1999, @Izzo2012] is implemented, with
+or without the use of a migration operator. Some of the features that both models provide can be found in the table below:
 
 |                    | **StandardGA**              | **IslandModelGA**           |
 |:-------------------|:----------------------------|:----------------------------|
