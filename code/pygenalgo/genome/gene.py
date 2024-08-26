@@ -116,6 +116,15 @@ class Gene(object):
         return False
     # _end_def_
 
+    def __hash__(self):
+        """
+        Auxiliary method to hash the Gene object.
+
+        :return: the hash value of the datum.
+        """
+        return hash(self._datum)
+    # _end_def_
+
     def random(self) -> None:
         """
         This method should be different for each type of Gene. It describes
