@@ -1,20 +1,20 @@
 import unittest
-from pygenalgo.genome.gene import Gene
+from pygenalgo.genome import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.crossover.super_crossover import SuperCrossover
+from pygenalgo.operators import UniformCrossover
 
 
-class TestSuperCrossover(unittest.TestCase):
+class TestUniformCrossover(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(">> TestSuperCrossover - START -")
+        print(">> TestUniformCrossover - START -")
 
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(">> TestSuperCrossover - FINISH -", end='\n\n')
+        print(">> TestUniformCrossover - FINISH -", end='\n\n')
     # _end_def_
 
     def setUp(self) -> None:
@@ -24,7 +24,7 @@ class TestSuperCrossover(unittest.TestCase):
         :return: None.
         """
         # Create an object with a crossover probability of 1.0.
-        self.cross_op = SuperCrossover(crossover_probability=1.0)
+        self.cross_op = UniformCrossover(crossover_probability=1.0)
     # _end_def_
 
     def test_crossover(self):
@@ -58,45 +58,14 @@ class TestSuperCrossover(unittest.TestCase):
         # Print parents BEFORE crossover.
         print("Parent-1: ", " ".join([xi.datum for xi in parent1]))
         print("Parent-2: ", " ".join([xi.datum for xi in parent2]))
+
+        # Perform the crossover.
+        child1, child2 = self.cross_op(parent1, parent2)
         print("---------")
-
-        # Initialize placeholders for the offsprings.
-        child1, child2 = None, None
-
-        # Perform the crossover n=10 times.
-        for i in range(10):
-            child1, child2 = self.cross_op(parent1, parent2)
-        # _end_for_
 
         # Print offsprings AFTER crossover.
         print("Child-1: ", " ".join([xi.datum for xi in child1]))
         print("Child-2: ", " ".join([xi.datum for xi in child2]))
-
-        # Get the counter values.
-        all_counters = 0
-        for _, counter in self.cross_op.all_counters.items():
-            all_counters += counter
-        # _end_for_
-
-        # Make sure the counters add-up.
-        self.assertEqual(all_counters, self.cross_op.counter,
-                         "Operator counters do not add up.")
-
-        # Reset the counters.
-        self.cross_op.reset_counter()
-
-        # Make sure the self.counter is zero.
-        self.assertEqual(0, self.cross_op.counter)
-
-        # Get the counter values.
-        all_counters = 0
-        for _, counter in self.cross_op.all_counters.items():
-            all_counters += counter
-        # _end_for_
-
-        # Make sure the counters are '0'.
-        self.assertEqual(0, all_counters)
-
     # _end_def_
 
 # _end_class_

@@ -1,5 +1,5 @@
 import unittest
-from pygenalgo.operators.selection.select_operator import SelectionOperator
+from pygenalgo.operators import SelectionOperator
 
 
 class TestSelectionOperator(unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
+from pygenalgo.operators import CrossoverOperator
 
 
 class TestCrossoverOperator(unittest.TestCase):

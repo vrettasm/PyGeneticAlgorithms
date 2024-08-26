@@ -1,20 +1,20 @@
 import unittest
-from pygenalgo.genome.gene import Gene
+from pygenalgo.genome import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.mutation.random_mutator import RandomMutator
+from pygenalgo.operators import ShuffleMutator
 
 
-class TestRandomMutator(unittest.TestCase):
+class TestShuffleMutator(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(">> TestRandomMutator - START -")
+        print(">> TestShuffleMutator - START -")
 
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(">> TestRandomMutator - FINISH -", end='\n\n')
+        print(">> TestShuffleMutator - FINISH -", end='\n\n')
     # _end_def_
 
     def setUp(self) -> None:
@@ -24,7 +24,7 @@ class TestRandomMutator(unittest.TestCase):
         :return: None.
         """
         # Create an object with a mutation probability of 1.0.
-        self.mut_op = RandomMutator(mutate_probability=1.0)
+        self.mut_op = ShuffleMutator(mutate_probability=1.0)
     # _end_def_
 
     def test_mutate(self):
@@ -43,7 +43,9 @@ class TestRandomMutator(unittest.TestCase):
                              Gene('f', lambda: str('_')),
                              Gene('g', lambda: str('_')),
                              Gene('h', lambda: str('_')),
-                             Gene('i', lambda: str('_'))])
+                             Gene('i', lambda: str('_')),
+                             Gene('j', lambda: str('_')),
+                             Gene('k', lambda: str('_'))])
 
         # Print chromosome BEFORE mutation.
         print("Before: ", " ".join([xi.datum for xi in chromo]))
@@ -54,10 +56,6 @@ class TestRandomMutator(unittest.TestCase):
 
         # Print chromosome AFTER mutation.
         print("After : ", " ".join([xi.datum for xi in chromo]))
-
-        # The test is successful if the mutation value "_", exists
-        # in the chromosome.
-        self.assertIn("_", " ".join([xi.datum for xi in chromo]))
     # _end_def_
 
 # _end_class_
