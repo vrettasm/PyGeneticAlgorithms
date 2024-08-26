@@ -1,5 +1,5 @@
 import unittest
-from pygenalgo.operators.genetic_operator import GeneticOperator
+from pygenalgo.operators import GeneticOperator
 
 
 class TestGeneticOperator(unittest.TestCase):

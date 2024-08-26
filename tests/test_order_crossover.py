@@ -1,8 +1,8 @@
 import unittest
 from numpy.random import default_rng
-from pygenalgo.genome.gene import Gene
+from pygenalgo.genome import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.crossover.order_crossover import OrderCrossover
+from pygenalgo.operators import OrderCrossover
 
 
 class TestOrderCrossover(unittest.TestCase):

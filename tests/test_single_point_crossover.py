@@ -1,20 +1,20 @@
 import unittest
-from pygenalgo.genome.gene import Gene
+from pygenalgo.genome import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.crossover.uniform_crossover import UniformCrossover
+from pygenalgo.operators import SinglePointCrossover
 
 
-class TestUniformCrossover(unittest.TestCase):
+class TestSinglePointCrossover(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(">> TestUniformCrossover - START -")
+        print(">> TestSinglePointCrossover - START -")
 
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(">> TestUniformCrossover - FINISH -", end='\n\n')
+        print(">> TestSinglePointCrossover - FINISH -", end='\n\n')
     # _end_def_
 
     def setUp(self) -> None:
@@ -24,7 +24,7 @@ class TestUniformCrossover(unittest.TestCase):
         :return: None.
         """
         # Create an object with a crossover probability of 1.0.
-        self.cross_op = UniformCrossover(crossover_probability=1.0)
+        self.cross_op = SinglePointCrossover(crossover_probability=1.0)
     # _end_def_
 
     def test_crossover(self):

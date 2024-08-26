@@ -1,20 +1,20 @@
 import unittest
-from pygenalgo.genome.gene import Gene
+from pygenalgo.genome import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.crossover.single_point_crossover import SinglePointCrossover
+from pygenalgo.operators.crossover.mutli_point_crossover import MultiPointCrossover
 
 
-class TestSinglePointCrossover(unittest.TestCase):
+class TestMultiPointCrossover(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(">> TestSinglePointCrossover - START -")
+        print(">> TestMultiPointCrossover - START -")
 
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(">> TestSinglePointCrossover - FINISH -", end='\n\n')
+        print(">> TestMultiPointCrossover - FINISH -", end='\n\n')
     # _end_def_
 
     def setUp(self) -> None:
@@ -24,7 +24,7 @@ class TestSinglePointCrossover(unittest.TestCase):
         :return: None.
         """
         # Create an object with a crossover probability of 1.0.
-        self.cross_op = SinglePointCrossover(crossover_probability=1.0)
+        self.cross_op = MultiPointCrossover(crossover_probability=1.0)
     # _end_def_
 
     def test_crossover(self):
@@ -60,7 +60,7 @@ class TestSinglePointCrossover(unittest.TestCase):
         print("Parent-2: ", " ".join([xi.datum for xi in parent2]))
 
         # Perform the crossover.
-        child1, child2 = self.cross_op(parent1, parent2)
+        child1, child2 = self.cross_op(parent1, parent2, num_loci=3)
         print("---------")
 
         # Print offsprings AFTER crossover.

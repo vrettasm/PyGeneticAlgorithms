@@ -1,6 +1,6 @@
 import unittest
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.mutation.mutate_operator import MutationOperator
+from pygenalgo.operators import MutationOperator
 
 
 class TestMutationOperator(unittest.TestCase):

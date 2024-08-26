@@ -28,34 +28,34 @@ parallel mode by definition.
 The current implementation offers a variety of genetic operators including:
 
 - **Selection operators**:
-  - [Linear Rank Selector](code/pygenalgo/operators/selection/linear_rank_selector.py)
-  - [Random Selector](code/pygenalgo/operators/selection/random_selector.py)
-  - [Roulette Wheel Selector](code/pygenalgo/operators/selection/roulette_wheel_selector.py)
-  - [Stochastic Universal Selector](code/pygenalgo/operators/selection/stochastic_universal_selector.py)
-  - [Tournament Selector](code/pygenalgo/operators/selection/tournament_selector.py)
-  - [Truncation Selector](code/pygenalgo/operators/selection/truncation_selector.py)
+  - [Linear Rank Selector](pygenalgo/operators/selection/linear_rank_selector.py)
+  - [Random Selector](pygenalgo/operators/selection/random_selector.py)
+  - [Roulette Wheel Selector](pygenalgo/operators/selection/roulette_wheel_selector.py)
+  - [Stochastic Universal Selector](pygenalgo/operators/selection/stochastic_universal_selector.py)
+  - [Tournament Selector](pygenalgo/operators/selection/tournament_selector.py)
+  - [Truncation Selector](pygenalgo/operators/selection/truncation_selector.py)
 
 - **Crossover operators**:
-  - [Single-Point Crossover](code/pygenalgo/operators/crossover/single_point_crossover.py)
-  - [Multi-Point Crossover](code/pygenalgo/operators/crossover/mutli_point_crossover.py)
-  - [Uniform Crossover](code/pygenalgo/operators/crossover/uniform_crossover.py)
-  - [Order Crossover](code/pygenalgo/operators/crossover/order_crossover.py)
-  - [Super Crossover](code/pygenalgo/operators/crossover/super_crossover.py)
+  - [Single-Point Crossover](pygenalgo/operators/crossover/single_point_crossover.py)
+  - [Multi-Point Crossover](pygenalgo/operators/crossover/mutli_point_crossover.py)
+  - [Uniform Crossover](pygenalgo/operators/crossover/uniform_crossover.py)
+  - [Order Crossover](pygenalgo/operators/crossover/order_crossover.py)
+  - [Super Crossover](pygenalgo/operators/crossover/super_crossover.py)
 
 - **Mutation operators**:
-  - [Random Mutator](code/pygenalgo/operators/mutation/random_mutator.py)
-  - [Shuffle Mutator](code/pygenalgo/operators/mutation/shuffle_mutator.py)
-  - [Swap Mutator](code/pygenalgo/operators/mutation/swap_mutator.py)
-  - [Super Mutator](code/pygenalgo/operators/mutation/super_mutator.py)
+  - [Random Mutator](pygenalgo/operators/mutation/random_mutator.py)
+  - [Shuffle Mutator](pygenalgo/operators/mutation/shuffle_mutator.py)
+  - [Swap Mutator](pygenalgo/operators/mutation/swap_mutator.py)
+  - [Super Mutator](pygenalgo/operators/mutation/super_mutator.py)
 
 - **Migration operators**
-  - [Clockwise Migrator](code/pygenalgo/operators/migration/clockwise_migration.py)
+  - [Clockwise Migrator](pygenalgo/operators/migration/clockwise_migration.py)
 
 Note that incorporating additional genetic operators is easily facilitated by inheriting from the base classes:
-- [SelectionOperator](code/pygenalgo/operators/selection/select_operator.py)
-- [CrossoverOperator](code/pygenalgo/operators/crossover/crossover_operator.py)
-- [MutationOperator](code/pygenalgo/operators/mutation/mutate_operator.py)
-- [MigrationOperator](code/pygenalgo/operators/migration/migration_operator.py)
+- [SelectionOperator](pygenalgo/operators/selection/select_operator.py)
+- [CrossoverOperator](pygenalgo/operators/crossover/crossover_operator.py)
+- [MutationOperator](pygenalgo/operators/mutation/mutate_operator.py)
+- [MigrationOperator](pygenalgo/operators/migration/migration_operator.py)
 
 and implementing the basic interface as described therein. In the examples that follow I show how one can use this code
 to run a GA for optimization problems (maximization/minimization) with and without constraints. The project is ongoing
@@ -83,8 +83,9 @@ The recommended version is Python 3.10 (and above). To simplify the required pac
 
 The most important thing the user has to do is to define the "fitness function". A template is provided here,
 in addition to the examples below.
+
 ```python
-from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo import Chromosome
 
 # Fitness function <template>.
 def fitness_func(individual: Chromosome, f_min: bool = False):

@@ -1,6 +1,6 @@
 import unittest
 from numpy.random import randint
-from pygenalgo.genome.gene import Gene
+from pygenalgo.genome import Gene
 from pygenalgo.genome.chromosome import Chromosome
 
 
