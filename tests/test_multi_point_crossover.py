@@ -1,5 +1,5 @@
 import unittest
-from pygenalgo.genome import Gene
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.mutli_point_crossover import MultiPointCrossover
 

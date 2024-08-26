@@ -1,7 +1,7 @@
 import unittest
-from pygenalgo.genome import Gene
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.engines import apply_corrections
+from pygenalgo.engines.auxiliary import apply_corrections
 
 
 class TestAuxiliary(unittest.TestCase):

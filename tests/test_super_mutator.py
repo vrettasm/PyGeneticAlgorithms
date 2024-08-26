@@ -1,7 +1,7 @@
 import unittest
-from pygenalgo.genome import Gene
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators import SuperMutator
+from pygenalgo.operators.mutation.super_mutator import SuperMutator
 
 
 class TestSuperMutator(unittest.TestCase):

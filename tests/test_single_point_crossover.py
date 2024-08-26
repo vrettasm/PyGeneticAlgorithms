@@ -1,7 +1,7 @@
 import unittest
-from pygenalgo.genome import Gene
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators import SinglePointCrossover
+from pygenalgo.operators.crossover.single_point_crossover import SinglePointCrossover
 
 
 class TestSinglePointCrossover(unittest.TestCase):
