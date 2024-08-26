@@ -1,7 +1,7 @@
 import unittest
-from pygenalgo.genome import Gene
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators import RandomMutator
+from pygenalgo.operators.mutation.random_mutator import RandomMutator
 
 
 class TestRandomMutator(unittest.TestCase):

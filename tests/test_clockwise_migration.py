@@ -1,8 +1,8 @@
 import unittest
-from pygenalgo.genome import Gene
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.engines import SubPopulation
-from pygenalgo.operators import ClockwiseMigration
+from pygenalgo.engines.auxiliary import SubPopulation
+from pygenalgo.operators.migration.clockwise_migration import ClockwiseMigration
 
 
 class TestClockwiseMigration(unittest.TestCase):
