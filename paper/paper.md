@@ -15,6 +15,7 @@ affiliations:
    index: 1
 date: 26 August 2024
 bibliography: paper.bib
+status: Rejected (from the pre-review stage)
 ---
 
 # Summary
