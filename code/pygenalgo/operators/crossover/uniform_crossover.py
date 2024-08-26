@@ -38,10 +38,6 @@ class UniformCrossover(CrossoverOperator):
         :return: child1 and child2 (as Chromosomes).
         """
 
-        # Get the number of genes from the first parent (chromosome).
-        # N.B.: It is assumed that both parents have the same size.
-        N = len(parent1)
-
         # Initially each child points to a clone of a single parent.
         child1 = parent1.clone()
         child2 = parent2.clone()
@@ -49,6 +45,10 @@ class UniformCrossover(CrossoverOperator):
         # If the crossover probability is higher than
         # a uniformly random value, make the changes.
         if self.probability > self.rng.random():
+
+            # Get the number of genes from the first parent (chromosome).
+            # N.B.: It is assumed that both parents have the same size.
+            N = len(parent1)
 
             # Swap flag.
             swap_flag = False
