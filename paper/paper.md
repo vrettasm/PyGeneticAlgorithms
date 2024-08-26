@@ -11,14 +11,14 @@ authors:
     orcid: 0000-0002-5456-3226
     affiliation: "1"
 affiliations:
- - name: Institute of Computing and High Performance Networks (ICAR-CNR), Italy
+ - name: Institute of High Performance Computing and Networking (ICAR-CNR), Italy
    index: 1
 date: 30 July 2024
 bibliography: paper.bib
 ---
 
 # Summary
-Genetic algorithms [@Holland1975, @Mitchel1998] (GAs) are metaheuristic algorithms that are used for solving constrained
+Genetic algorithms (GAs) [@Holland1975, @Mitchel1998], are metaheuristic algorithms that are used for solving constrained
 and unconstrained optimization problems, mimicking the process of natural selection in biological evolution. Due to the
 fact that GAs do not require the optimization function to be differentiable, they are suitable for application in cases
 where the derivative of the objective function is either unavailable or impractical to obtain numerically.
@@ -73,14 +73,14 @@ that if a gene gets an invalid value, this mechanism will replace it with valid 
 
 A variety of selection, crossover, mutation and migration operators are offered, as follows:
 
-| **Selection**        | **Crossover**          | **Mutation** | **Migration** |
-|:---------------------|:-----------------------|:-------------|:--------------|
-| Linear Rank          | Single-Point           | Random       | Clockwise     | 
-| Random               | Multi-Point            | Shuffle      | -             |
-| Roulette Wheel       | Uniform                | Swap         | -             |
-| Stochastic Universal | Super                  | Super        | -             |
-| Tournament           | -                      | -            | -             |
-| Truncation           | -                      | -            | -             |
+| **Selection**        | **Crossover** | **Mutation** | **Migration** |
+|:---------------------|:--------------|:-------------|:--------------|
+| Linear Rank          | Single-Point  | Random       | Clockwise     | 
+| Random               | Multi-Point   | Shuffle      | -             |
+| Roulette Wheel       | Order (OX1)   | Swap         | -             |
+| Stochastic Universal | Uniform       | Super        | -             |
+| Tournament           | Super         | -            | -             |
+| Truncation           | -             | -            | -             |
 
 Due to its flexible implementation it further allows the addition of new operators, after inheriting from the base
 classes of each genetic operator, and implementing their interface:
