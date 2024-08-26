@@ -1,0 +1,32 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: PyGenAlgo
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Michail
+    family-names: Vrettas
+    email: vrettasm@gmail.com
+    orcid: 'https://orcid.org/0000-0002-5456-3226'
+    affiliation: ICAR-CNR
+repository-code: 'https://github.com/vrettasm/PyGeneticAlgorithms'
+abstract: >-
+  'PyGenAlgo' is a research toolkit for genetic algorithms
+  (GA). Using a fully object-oriented paradigm it provides a
+  set of classes that can be used to solve optimization
+  problems (constrained and unconstrained). Its clear and
+  simple design, makes it useful for someone that just want
+  to use GAs as a black-box. At the same time, its
+  object-oriented structure allows for easy additions of
+  numerous new genetic operators that some researcher would
+  like to incorporate.
+keywords:
+  - python3
+  - genetic algorithms
+  - island model
+  - optimization problems
+license: GPL-3.0
