@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.engines.standard_ga &mdash; PyGenAlgo 0.1.0 documentation</title>
+  <title>pygenalgo.engines.standard_ga &mdash; PyGenAlgo 00.00.01 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+        <script src="../../../_static/documentation_options.js?v=d7bb8d4d"></script>
         <script src="../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -214,8 +214,8 @@
 <span class="sd">        the population (at the gene level) and attempt to correct the genome by calling</span>
 <span class="sd">        the random() method of the flawed gene.</span>
 
-<span class="sd">        :param f_tol: (float) tolerance in the difference between the average values of</span>
-<span class="sd">        two consecutive populations. It is used to determine the convergence of the population.</span>
+<span class="sd">        :param f_tol: (float) tolerance in the difference between the average values of two</span>
+<span class="sd">        consecutive populations. It is used to determine the convergence of the population.</span>
 
 <span class="sd">        :param parallel: (bool) Flag that enables parallel computation of the fitness function.</span>
 
@@ -253,8 +253,10 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
 
             <span class="c1"># SELECT the parents.</span>
-            <span class="c1"># This will create a NEW copy of the population.</span>
             <span class="n">population_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_select_op</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+
+            <span class="c1"># Shuffle the selected parents.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span>
 
             <span class="c1"># CROSSOVER/MUTATE to produce offsprings.</span>
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>

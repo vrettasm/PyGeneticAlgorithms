@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; PyGenAlgo 0.1.0 documentation</title>
+  <title>Index &mdash; PyGenAlgo 00.00.01 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=01f34227"></script>
+        <script src="_static/documentation_options.js?v=d7bb8d4d"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -84,6 +84,7 @@
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
@@ -131,12 +132,12 @@
       </ul></li>
       <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.counter">counter (pygenalgo.operators.genetic_operator.GeneticOperator property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.crossover_operator.CrossoverOperator.crossover">crossover() (pygenalgo.operators.crossover.crossover_operator.CrossoverOperator method)</a>
 
       <ul>
         <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.mutli_point_crossover.MultiPointCrossover.crossover">(pygenalgo.operators.crossover.mutli_point_crossover.MultiPointCrossover method)</a>
+</li>
+        <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.order_crossover.OrderCrossover.crossover">(pygenalgo.operators.crossover.order_crossover.OrderCrossover method)</a>
 </li>
         <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.single_point_crossover.SinglePointCrossover.crossover">(pygenalgo.operators.crossover.single_point_crossover.SinglePointCrossover method)</a>
 </li>
@@ -145,6 +146,12 @@
         <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.uniform_crossover.UniformCrossover.crossover">(pygenalgo.operators.crossover.uniform_crossover.UniformCrossover method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.crossover_mutate">crossover_mutate() (pygenalgo.engines.generic_ga.GenericGA method)</a>
+</li>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.crossover_op">crossover_op (pygenalgo.engines.generic_ga.GenericGA property)</a>
+</li>
       <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.crossover_operator.CrossoverOperator">CrossoverOperator (class in pygenalgo.operators.crossover.crossover_operator)</a>
 </li>
   </ul></td>
@@ -287,6 +294,8 @@
 </li>
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.mutli_point_crossover">pygenalgo.operators.crossover.mutli_point_crossover</a>
 </li>
+        <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.order_crossover">pygenalgo.operators.crossover.order_crossover</a>
+</li>
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.single_point_crossover">pygenalgo.operators.crossover.single_point_crossover</a>
 </li>
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.super_crossover">pygenalgo.operators.crossover.super_crossover</a>
@@ -349,6 +358,8 @@
 </li>
         <li><a href="tests.html#module-tests.test_mutation_operator">tests.test_mutation_operator</a>
 </li>
+        <li><a href="tests.html#module-tests.test_order_crossover">tests.test_order_crossover</a>
+</li>
         <li><a href="tests.html#module-tests.test_random_mutator">tests.test_random_mutator</a>
 </li>
         <li><a href="tests.html#module-tests.test_selection_operator">tests.test_selection_operator</a>
@@ -382,6 +393,8 @@
         <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.swap_mutator.SwapMutator.mutate">(pygenalgo.operators.mutation.swap_mutator.SwapMutator method)</a>
 </li>
       </ul></li>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.mutate_op">mutate_op (pygenalgo.engines.generic_ga.GenericGA property)</a>
+</li>
       <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.mutate_operator.MutationOperator">MutationOperator (class in pygenalgo.operators.mutation.mutate_operator)</a>
 </li>
   </ul></td>
@@ -391,6 +404,14 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.num_islands">num_islands (pygenalgo.engines.island_model_ga.IslandModelGA attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.order_crossover.OrderCrossover">OrderCrossover (class in pygenalgo.operators.crossover.order_crossover)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -503,6 +524,13 @@
 
       <ul>
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.mutli_point_crossover">module</a>
+</li>
+      </ul></li>
+      <li>
+    pygenalgo.operators.crossover.order_crossover
+
+      <ul>
+        <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.order_crossover">module</a>
 </li>
       </ul></li>
       <li>
@@ -718,6 +746,8 @@
         <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.truncation_selector.TruncationSelector.select">(pygenalgo.operators.selection.truncation_selector.TruncationSelector method)</a>
 </li>
       </ul></li>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.select_op">select_op (pygenalgo.engines.generic_ga.GenericGA property)</a>
+</li>
       <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.select_operator.SelectionOperator">SelectionOperator (class in pygenalgo.operators.selection.select_operator)</a>
 </li>
       <li><a href="tests.html#tests.test_clockwise_migration.TestClockwiseMigration.setUp">setUp() (tests.test_clockwise_migration.TestClockwiseMigration method)</a>
@@ -732,6 +762,8 @@
         <li><a href="tests.html#tests.test_multi_point_crossover.TestMultiPointCrossover.setUp">(tests.test_multi_point_crossover.TestMultiPointCrossover method)</a>
 </li>
         <li><a href="tests.html#tests.test_mutation_operator.TestMutationOperator.setUp">(tests.test_mutation_operator.TestMutationOperator method)</a>
+</li>
+        <li><a href="tests.html#tests.test_order_crossover.TestOrderCrossover.setUp">(tests.test_order_crossover.TestOrderCrossover method)</a>
 </li>
         <li><a href="tests.html#tests.test_random_mutator.TestRandomMutator.setUp">(tests.test_random_mutator.TestRandomMutator method)</a>
 </li>
@@ -768,6 +800,8 @@
         <li><a href="tests.html#tests.test_multi_point_crossover.TestMultiPointCrossover.setUpClass">(tests.test_multi_point_crossover.TestMultiPointCrossover class method)</a>
 </li>
         <li><a href="tests.html#tests.test_mutation_operator.TestMutationOperator.setUpClass">(tests.test_mutation_operator.TestMutationOperator class method)</a>
+</li>
+        <li><a href="tests.html#tests.test_order_crossover.TestOrderCrossover.setUpClass">(tests.test_order_crossover.TestOrderCrossover class method)</a>
 </li>
         <li><a href="tests.html#tests.test_random_mutator.TestRandomMutator.setUpClass">(tests.test_random_mutator.TestRandomMutator class method)</a>
 </li>
@@ -831,6 +865,8 @@
 </li>
         <li><a href="tests.html#tests.test_mutation_operator.TestMutationOperator.tearDownClass">(tests.test_mutation_operator.TestMutationOperator class method)</a>
 </li>
+        <li><a href="tests.html#tests.test_order_crossover.TestOrderCrossover.tearDownClass">(tests.test_order_crossover.TestOrderCrossover class method)</a>
+</li>
         <li><a href="tests.html#tests.test_random_mutator.TestRandomMutator.tearDownClass">(tests.test_random_mutator.TestRandomMutator class method)</a>
 </li>
         <li><a href="tests.html#tests.test_selection_operator.TestSelectionOperator.tearDownClass">(tests.test_selection_operator.TestSelectionOperator class method)</a>
@@ -858,6 +894,8 @@
 
       <ul>
         <li><a href="tests.html#tests.test_multi_point_crossover.TestMultiPointCrossover.test_crossover">(tests.test_multi_point_crossover.TestMultiPointCrossover method)</a>
+</li>
+        <li><a href="tests.html#tests.test_order_crossover.TestOrderCrossover.test_crossover">(tests.test_order_crossover.TestOrderCrossover method)</a>
 </li>
         <li><a href="tests.html#tests.test_single_point_crossover.TestSinglePointCrossover.test_crossover">(tests.test_single_point_crossover.TestSinglePointCrossover method)</a>
 </li>
@@ -917,6 +955,8 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="tests.html#tests.test_mutation_operator.TestMutationOperator">TestMutationOperator (class in tests.test_mutation_operator)</a>
+</li>
+      <li><a href="tests.html#tests.test_order_crossover.TestOrderCrossover">TestOrderCrossover (class in tests.test_order_crossover)</a>
 </li>
       <li><a href="tests.html#tests.test_random_mutator.TestRandomMutator">TestRandomMutator (class in tests.test_random_mutator)</a>
 </li>
@@ -988,6 +1028,13 @@
 
       <ul>
         <li><a href="tests.html#module-tests.test_mutation_operator">module</a>
+</li>
+      </ul></li>
+      <li>
+    tests.test_order_crossover
+
+      <ul>
+        <li><a href="tests.html#module-tests.test_order_crossover">module</a>
 </li>
       </ul></li>
       <li>

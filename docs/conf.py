@@ -19,7 +19,9 @@ sys.path.insert(0, os.path.abspath('../code'))
 project = 'PyGenAlgo'
 copyright = '2024, Michalis Vrettas, PhD'
 author = 'Michalis Vrettas, PhD'
-release = '0.1.0'
+
+# The full version, including alpha/beta/rc tags
+release = '00.00.01'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -32,6 +34,8 @@ extensions = [
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

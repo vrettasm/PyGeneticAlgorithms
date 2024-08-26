@@ -76,6 +76,14 @@ tests.test\_mutation\_operator module
    :undoc-members:
    :show-inheritance:
 
+tests.test\_order\_crossover module
+-----------------------------------
+
+.. automodule:: tests.test_order_crossover
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tests.test\_random\_mutator module
 ----------------------------------
 
