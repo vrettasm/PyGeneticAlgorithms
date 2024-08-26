@@ -11,9 +11,9 @@ authors:
     orcid: 0000-0002-5456-3226
     affiliation: "1"
 affiliations:
- - name: Institute of High Performance Computing and Networking (ICAR-CNR), Italy
+ - name: Institute of High Performance Computing and Networking (ICAR-CNR), Naples, Italy
    index: 1
-date: 30 July 2024
+date: 26 August 2024
 bibliography: paper.bib
 ---
 
