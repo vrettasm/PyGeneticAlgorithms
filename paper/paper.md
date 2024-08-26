@@ -31,7 +31,8 @@ population of solutions with end goal to maximize their fitness [@DeJong2006].
 
 This paper proposes a general purpose genetic algorithm, implemented in Python3 programming language, having only
 minimum dependencies in **NumPy** [@Harris2020] and **Joblib**, that handle some numerical and parallel execution
-details. The code is freely available on GitHub at [@PyGenAlgo] and distributed under the GPL3.0 license.
+details. The code is freely available on GitHub at https://github.com/vrettasm/PyGeneticAlgorithms and distributed under
+the GPL3.0 license.
 
 # Statement of need
 
