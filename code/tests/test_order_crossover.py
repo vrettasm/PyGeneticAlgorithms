@@ -55,11 +55,11 @@ class TestOrderCrossover(unittest.TestCase):
         # Make a clone of parent1.
         parent2 = parent1.clone()
 
-        # Get the number of 'unique' genes BEFORE crossover.
-        N2 = len(set(parent2.genome))
-
         # Shuffle its genome.
         self.rng.shuffle(parent2.genome)
+
+        # Get the number of 'unique' genes BEFORE crossover.
+        N2 = len(set(parent2.genome))
 
         # Print parents BEFORE crossover.
         print("Parent-1: ", " ".join([xi.datum for xi in parent1]))
@@ -79,11 +79,11 @@ class TestOrderCrossover(unittest.TestCase):
         # Get the number of 'unique' genes AFTER crossover.
         M2 = len(set(child2.genome))
 
-        self.assertEqual(N1, N2, msg="Parents genome does not match.")
-        self.assertEqual(N1, M1, msg="Parent1 genome does not match after crossover.")
+        self.assertEqual(N1, N2, msg="Parents1/2 genome does not match.")
+        self.assertEqual(N1, M1, msg="Parent1/Offspring1 genome does not match after crossover.")
 
-        self.assertEqual(M1, M2, msg="Offsprings genome does not match.")
-        self.assertEqual(N2, M2, msg="Parent2 genome does not match after crossover.")
+        self.assertEqual(M1, M2, msg="Offsprings1/2 genome does not match.")
+        self.assertEqual(N2, M2, msg="Parent2/Offspring2 genome does not match after crossover.")
     # _end_def_
 
 # _end_class_
