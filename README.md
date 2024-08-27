@@ -128,6 +128,7 @@ Some optimization examples on how to use this algorithm:
 3. Fun Puzzles
    1. [Traveling Salesman Problem](examples/tsp.ipynb)
    2. [N-Queens puzzle](examples/queens_puzzle.ipynb)
+   3. [OneMax](examples/one_max.ipynb)
 
 Constraint optimization problems can be easily addressed using the
 [Penalty Method](https://en.wikipedia.org/wiki/Penalty_method) as shown in the example (1.III) above.
