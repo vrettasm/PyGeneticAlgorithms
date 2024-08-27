@@ -45,6 +45,7 @@ The current implementation offers a variety of genetic operators including:
 - **Mutation operators**:
   - [Random Mutator](pygenalgo/operators/mutation/random_mutator.py)
   - [Shuffle Mutator](pygenalgo/operators/mutation/shuffle_mutator.py)
+  - [Inverse Mutator](pygenalgo/operators/mutation/inverse_mutator.py)
   - [Swap Mutator](pygenalgo/operators/mutation/swap_mutator.py)
   - [Super Mutator](pygenalgo/operators/mutation/super_mutator.py)
 
