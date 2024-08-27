@@ -15,11 +15,10 @@ class ClockwiseMigration(MigrationOperator):
         """
         Construct a 'SinglePointCrossover' object with a given probability value.
 
-        :param migration_probability: (float).
+        :param migration_probability: (float) in [0, 1].
         """
 
-        # Call the super constructor with the provided
-        # probability value.
+        # Call the super constructor with the provided probability value.
         super().__init__(migration_probability)
     # _end_def_
 
@@ -32,8 +31,7 @@ class ClockwiseMigration(MigrationOperator):
         :return: None.
         """
 
-        # If we have only one active population
-        # exit without migration.
+        # If we have only one active population exit without migration.
         if len(island) == 1:
             return None
         # _end_if_
