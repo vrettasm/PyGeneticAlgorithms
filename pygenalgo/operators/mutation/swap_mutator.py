@@ -7,8 +7,8 @@ class SwapMutator(MutationOperator):
     """
     Description:
 
-        Swap mutator mutates the chromosome by swapping the
-        gene values between two randomly selected gene positions.
+        Swap mutator mutates the chromosome by swapping the gene values
+        between two randomly selected gene positions.
     """
 
     def __init__(self, mutate_probability: float = 0.1):
@@ -18,16 +18,14 @@ class SwapMutator(MutationOperator):
         :param mutate_probability: (float).
         """
 
-        # Call the super constructor with the provided
-        # probability value.
+        # Call the super constructor with the provided probability value.
         super().__init__(mutate_probability)
 
     # _end_def_
 
     def mutate(self, individual: Chromosome) -> None:
         """
-        Perform the mutation operation by swapping
-        the genes at two random positions.
+        Perform the mutation operation by swapping the genes at two random positions.
 
         :param individual: (Chromosome).
 
