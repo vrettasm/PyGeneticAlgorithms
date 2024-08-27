@@ -9,8 +9,9 @@ class Chromosome(object):
     """
     Description:
 
-        Implements a dataclass for the Chromosome entity. This class is responsible for holding
-        the individual solutions, of the optimization problem, during the evolution process.
+        Implements a dataclass for the Chromosome entity. This class is responsible
+        for holding the individual solution(s), of the optimization problem, during
+        the evolution process.
     """
 
     # Define the genome as a list of genes. This list
