@@ -2,6 +2,7 @@ from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.swap_mutator import SwapMutator
 from pygenalgo.operators.mutation.random_mutator import RandomMutator
 from pygenalgo.operators.mutation.shuffle_mutator import ShuffleMutator
+from pygenalgo.operators.mutation.inverse_mutator import InverseMutator
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
 
@@ -26,8 +27,8 @@ class SuperMutator(MutationOperator):
         super().__init__(mutate_probability)
 
         # NOTE: In here the mutation probabilities for each mutator are set to 1.0.
-        self._mutator = (SwapMutator(1.0), RandomMutator(1.0), ShuffleMutator(1.0))
-
+        self._mutator = (SwapMutator(1.0), RandomMutator(1.0), ShuffleMutator(1.0),
+                         InverseMutator(1.0))
     # _end_def_
 
     @property
