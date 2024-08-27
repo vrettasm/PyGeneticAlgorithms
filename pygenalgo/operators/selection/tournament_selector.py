@@ -6,16 +6,16 @@ class TournamentSelector(SelectionOperator):
     """
     Description:
 
-        Tournament Selector implements an object that performs selection by choosing the individual
-        from the set of individuals. The winner of each tournament i.e. (the one with the highest
-        fitness value) is selected to perform crossover and mutation.
+        Tournament Selector implements an object that performs selection by choosing an individual
+        from a set of individuals. The winner of each tournament i.e. (the one with the highest
+        fitness value) is selected as new parent to perform crossover and mutation.
     """
 
     def __init__(self, select_probability: float = 1.0, k: int = 5):
         """
         Construct a 'TournamentSelector' object with a given probability value.
 
-        :param select_probability: (float).
+        :param select_probability: (float) in [0, 1].
 
         :param k: the number of participants in the tournament (int).
         """
@@ -32,12 +32,12 @@ class TournamentSelector(SelectionOperator):
 
     def select(self, population: list[Chromosome]):
         """
-        Select the new individuals from the population that will be passed on to the next
+        Select the individuals, from the input population, that will be passed on to the next
         genetic operations of crossover and mutation to form the new population of solutions.
 
-        :param population:
+        :param population: a list of chromosomes to select the parents from.
 
-        :return: a new population (list of chromosomes).
+        :return: the selected parents population (as list of chromosomes).
         """
         # Get the length of the population list.
         N = len(population)
@@ -64,14 +64,14 @@ class TournamentSelector(SelectionOperator):
             winner = max([population[j] for j in index],
                          key=lambda p: p.fitness)
 
-            # Copy the best individual in the new list.
+            # Add the best individual in the new list.
             new_parents_append(winner)
         # _end_for_
 
         # Increase the selection counter.
         self.inc_counter()
 
-        # Return the (new) selected individuals.
+        # Return the new parents (individuals).
         return new_parents
     # _end_def_
 

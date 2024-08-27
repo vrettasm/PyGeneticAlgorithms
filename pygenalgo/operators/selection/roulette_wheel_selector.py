@@ -19,22 +19,21 @@ class RouletteWheelSelector(SelectionOperator):
         """
         Construct a 'RouletteWheelSelector' object with a given probability value.
 
-        :param select_probability: (float).
+        :param select_probability: (float) in [0, 1].
         """
 
-        # Call the super constructor with the provided
-        # probability value.
+        # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
     # _end_def_
 
     def select(self, population: list[Chromosome]):
         """
-        Select the new individuals from the population that will be passed on to the next
+        Select the individuals, from the input population, that will be passed on to the next
         genetic operations of crossover and mutation to form the new population of solutions.
 
-        :param population:
+        :param population: a list of chromosomes to select the parents from.
 
-        :return: a new population (list of chromosomes).
+        :return: the selected parents population (as list of chromosomes).
         """
 
         # Get the length of the population list.
@@ -58,9 +57,8 @@ class RouletteWheelSelector(SelectionOperator):
         # Increase the selection counter.
         self.inc_counter()
 
-        # Return the (new) selected individuals.
+        # Return the new parents (individuals).
         return [population[i] for i in index]
-
     # _end_def_
 
 # _end_class_

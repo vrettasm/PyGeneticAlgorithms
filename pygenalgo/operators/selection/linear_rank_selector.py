@@ -17,22 +17,21 @@ class LinearRankSelector(SelectionOperator):
         """
         Construct a 'LinearRankSelector' object with a given probability value.
 
-        :param select_probability: (float).
+        :param select_probability: (float) in [0, 1].
         """
 
-        # Call the super constructor with the provided
-        # probability value.
+        # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
     # _end_def_
 
     def select(self, population: list[Chromosome]):
         """
-        Select the new individuals from the population that will be passed on to the next
+        Select the individuals, from the input population, that will be passed on to the next
         genetic operations of crossover and mutation to form the new population of solutions.
 
-        :param population:
+        :param population: a list of chromosomes to select the parents from.
 
-        :return: a new population (list of chromosomes).
+        :return: the selected parents population (as list of chromosomes).
         """
 
         # Sort the population in ascending order using their fitness value.
@@ -42,10 +41,10 @@ class LinearRankSelector(SelectionOperator):
         N = len(sorted_population)
 
         # Calculate sum of all the ranked fitness values: "1 + 2 + 3 + ... + N".
-        sum_ranked_values = float(0.5 * N * (N+1))
+        sum_ranked_values = float(0.5 * N * (N + 1))
 
         # Calculate the "selection probabilities", of each member in the population.
-        selection_probs = [n / sum_ranked_values for n in range(1, N+1)]
+        selection_probs = [n / sum_ranked_values for n in range(1, N + 1)]
 
         # Increase the selection counter.
         self.inc_counter()
@@ -53,7 +52,7 @@ class LinearRankSelector(SelectionOperator):
         # Select 'N' new individuals (indexes).
         index = self.rng.choice(N, size=N, p=selection_probs, replace=True, shuffle=False)
 
-        # Return the (new) selected individuals.
+        # Return the new parents (individuals).
         return [sorted_population[i] for i in index]
     # _end_def_
 
