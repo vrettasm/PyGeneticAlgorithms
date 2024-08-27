@@ -143,6 +143,19 @@ class Gene(object):
         self._datum = self._func()
     # _end_def_
 
+    def flip(self) -> None:
+        """
+        This method flips the value of the gene data.
+
+         i)  1 -> 0
+        ii)  0 -> 1
+
+        :return: None.
+        """
+
+        self._datum = int(not self._datum)
+    # _end_def_
+
     # Auxiliary.
     def __str__(self) -> str:
         """
