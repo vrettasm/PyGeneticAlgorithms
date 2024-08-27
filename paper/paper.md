@@ -79,10 +79,10 @@ A variety of selection, crossover, mutation and migration operators are offered,
 |:---------------------|:--------------|:-------------|:--------------|
 | Linear Rank          | Single-Point  | Random       | Clockwise     | 
 | Random               | Multi-Point   | Shuffle      | -             |
-| Roulette Wheel       | Order (OX1)   | Swap         | -             |
-| Stochastic Universal | Uniform       | Super        | -             |
-| Tournament           | Super         | -            | -             |
-| Truncation           | -             | -            | -             |
+| Roulette Wheel       | Order (OX1)   | Inverse      | -             |
+| Stochastic Universal | Uniform       | Flip         | -             |
+| Tournament           | Super         | Swap         | -             |
+| Truncation           | -             | Super        | -             |
 
 Due to its flexible implementation it further allows the addition of new operators, after inheriting from the base
 classes of each genetic operator, and implementing their interface:
