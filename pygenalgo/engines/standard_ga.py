@@ -27,7 +27,7 @@ class StandardGA(GenericGA):
     """
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, select_op: SelectionOperator = None,
-                 mutate_op: MutationOperator = None, cross_op: CrossoverOperator = None) -> object:
+                 mutate_op: MutationOperator = None, cross_op: CrossoverOperator = None):
         """
         Default constructor of StandardGA object.
 
@@ -40,8 +40,6 @@ class StandardGA(GenericGA):
         :param mutate_op: mutation operator (must inherit from class MutationOperator).
 
         :param cross_op: crossover operator (must inherit from class CrossoverOperator).
-
-        :return: a new GA object.
         """
         # Call the super constructor with all the input parameters.
         super().__init__(initial_pop, fit_func, select_op, mutate_op, cross_op)
@@ -252,7 +250,7 @@ class StandardGA(GenericGA):
         print(f"Final   Avg. Fitness = {avg_fitness_0:.4f}")
 
         # Print final duration in seconds.
-        print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.", end='\n')
+        print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
     # _end_def_
 
     def print_operator_stats(self) -> None:
@@ -270,6 +268,7 @@ class StandardGA(GenericGA):
 
         # Check if we used the SuperCrossover.
         if isinstance(self._cross_op, SuperCrossover):
+
             # Call internally all operators.
             for op in self._cross_op.list_all:
                 print(op)
@@ -281,6 +280,7 @@ class StandardGA(GenericGA):
 
         # Check if we used the SuperMutator.
         if isinstance(self._mutate_op, SuperMutator):
+
             # Call internally all operators.
             for op in self._mutate_op.list_all:
                 print(op)

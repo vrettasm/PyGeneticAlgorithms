@@ -407,7 +407,7 @@ class IslandModelGA(GenericGA):
               f"Spread = {std_fitness_final:.4f}")
 
         # Print final duration in seconds.
-        print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.", end='\n')
+        print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
 
     # _end_def_
 
