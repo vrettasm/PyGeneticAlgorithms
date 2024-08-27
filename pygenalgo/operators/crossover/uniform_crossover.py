@@ -1,3 +1,4 @@
+from numpy import any as np_any
 from numpy import nan as np_nan
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
@@ -50,9 +51,6 @@ class UniformCrossover(CrossoverOperator):
             # N.B.: It is assumed that both parents have the same size.
             N = len(parent1)
 
-            # Swap flag.
-            swap_flag = False
-
             # Generate 'N' random numbers in one call.
             swap_prob = self.rng.random(N)
 
@@ -64,22 +62,18 @@ class UniformCrossover(CrossoverOperator):
 
                     # Swap in place between the two positions.
                     child1[i], child2[i] = child2[i], child1[i]
-
-                    # Set the swap to true.
-                    swap_flag = True
                 # _end_if_
 
             # _end_for_
 
             # Even if one gene has swapped the fitness will not be accurate.
-            if swap_flag:
+            if np_any(swap_prob > 0.5):
                 child1.fitness = np_nan
                 child2.fitness = np_nan
             # _end_if_
 
             # Increase the crossover counter.
             self.inc_counter()
-
         # _end_if_
 
         # Return the two offsprings.
