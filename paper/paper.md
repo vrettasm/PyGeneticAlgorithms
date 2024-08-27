@@ -40,8 +40,8 @@ the GPL3.0 license.
 Since genetic algorithms are not a new concept in computer science a few implementations, in Python programming language,
 have already been introduced such as: 1) DEAP [@DEAPFortin2012], 2) LEAP [@LEAPColetti2020], 3) EasyGA [@EasyGA],
 4)PyGAD [@PyGAD2023] and 5) pymoo [@pymoo2020]. All these frameworks come with their merits and their disadvantages. Our
-goal was not to propose a new framework that will outperform all these approaches, but rather provide a simpler alternative,
-focused only on GAs, that for some users would be easier to understand and apply, without the steep learning curve that
+goal was not to propose a new framework that will outperform all these approaches, but rather provide a fresh and simpler
+alternative, focused only on GAs, that it would be easier to understand and apply, without the steep learning curve that
 some of the aforementioned implementations require, whilst offering the means to extend it and customize it to match the
 requirements of a wide range of problem setups.
 
