@@ -35,7 +35,7 @@ class GeneticOperator(object):
         Construct a 'GeneticOperator' object with a given
         probability value.
 
-        :param _probability: (float).
+        :param _probability: (float) in [0, 1].
         """
 
         # Ensure the default entry value is within range [0, 1].
