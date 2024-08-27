@@ -81,16 +81,16 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Tournament Selector implements an object that performs selection by choosing the individual</span>
-<span class="sd">        from the set of individuals. The winner of each tournament i.e. (the one with the highest</span>
-<span class="sd">        fitness value) is selected to perform crossover and mutation.</span>
+<span class="sd">        Tournament Selector implements an object that performs selection by choosing an individual</span>
+<span class="sd">        from a set of individuals. The winner of each tournament i.e. (the one with the highest</span>
+<span class="sd">        fitness value) is selected as new parent to perform crossover and mutation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a &#39;TournamentSelector&#39; object with a given probability value.</span>
 
-<span class="sd">        :param select_probability: (float).</span>
+<span class="sd">        :param select_probability: (float) in [0, 1].</span>
 
 <span class="sd">        :param k: the number of participants in the tournament (int).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -109,12 +109,12 @@
 <a class="viewcode-back" href="../../../../pygenalgo.operators.selection.html#pygenalgo.operators.selection.tournament_selector.TournamentSelector.select">[docs]</a>
     <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Select the new individuals from the population that will be passed on to the next</span>
+<span class="sd">        Select the individuals, from the input population, that will be passed on to the next</span>
 <span class="sd">        genetic operations of crossover and mutation to form the new population of solutions.</span>
 
-<span class="sd">        :param population:</span>
+<span class="sd">        :param population: a list of chromosomes to select the parents from.</span>
 
-<span class="sd">        :return: a new population (list of chromosomes).</span>
+<span class="sd">        :return: the selected parents population (as list of chromosomes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get the length of the population list.</span>
         <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
@@ -141,14 +141,14 @@
             <span class="n">winner</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">population</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">index</span><span class="p">],</span>
                          <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
 
-            <span class="c1"># Copy the best individual in the new list.</span>
+            <span class="c1"># Add the best individual in the new list.</span>
             <span class="n">new_parents_append</span><span class="p">(</span><span class="n">winner</span><span class="p">)</span>
         <span class="c1"># _end_for_</span>
 
         <span class="c1"># Increase the selection counter.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span>
 
-        <span class="c1"># Return the (new) selected individuals.</span>
+        <span class="c1"># Return the new parents (individuals).</span>
         <span class="k">return</span> <span class="n">new_parents</span></div>
 </div>
 

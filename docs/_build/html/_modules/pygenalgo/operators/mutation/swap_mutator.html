@@ -82,8 +82,8 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Swap mutator mutates the chromosome by swapping the</span>
-<span class="sd">        gene values between two randomly selected gene positions.</span>
+<span class="sd">        Swap mutator mutates the chromosome by swapping the gene values</span>
+<span class="sd">        between two randomly selected gene positions.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutate_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">):</span>
@@ -93,8 +93,7 @@
 <span class="sd">        :param mutate_probability: (float).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># Call the super constructor with the provided</span>
-        <span class="c1"># probability value.</span>
+        <span class="c1"># Call the super constructor with the provided probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mutate_probability</span><span class="p">)</span>
 
     <span class="c1"># _end_def_</span>
@@ -103,8 +102,7 @@
 <a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.swap_mutator.SwapMutator.mutate">[docs]</a>
     <span class="k">def</span> <span class="nf">mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Perform the mutation operation by swapping</span>
-<span class="sd">        the genes at two random positions.</span>
+<span class="sd">        Perform the mutation operation by swapping the genes at two random positions.</span>
 
 <span class="sd">        :param individual: (Chromosome).</span>
 
