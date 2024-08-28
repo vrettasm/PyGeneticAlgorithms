@@ -168,6 +168,11 @@ class Chromosome(object):
         # Check for the correct type.
         if isinstance(other, Chromosome):
 
+            # Quick exit if the object is itself.
+            if self == other:
+                return 0
+            # _end_if_
+
             # Compute the dissimilarities in their genomes.
             return sum([k != l for k, l in zip(self._genome, other._genome, strict=True)])
         else:
