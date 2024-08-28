@@ -154,6 +154,28 @@ class Chromosome(object):
         return item in self._genome
     # _end_if_
 
+    def hamming_distance(self, other) -> float:
+        """
+        Compute the "Hamming distance" of the "self" object with the
+        "other" chromosome. In practise it's the number of positions
+        at which the corresponding genes are different.
+
+        :param other: (Chromosome) to compare the Hamming distance.
+
+        :return: (float) the distance between the two chromosomes.
+        """
+
+        # Check for the correct type.
+        if isinstance(other, Chromosome):
+
+            # Compute the dissimilarities in their genomes.
+            return sum([k != l for k, l in zip(self._genome, other._genome, strict=True)])
+        else:
+            raise NotImplemented
+        # _end_if_
+
+    # _end_def_
+
     def clone(self):
         """
         Makes a duplicate of the self object.
