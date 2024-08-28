@@ -3,8 +3,53 @@ from pygenalgo.genome.chromosome import Chromosome
 
 
 # Public interface.
-__all__ = ["apply_corrections", "SubPopulation"]
+__all__ = ["avg_hamming_dist", "apply_corrections", "SubPopulation"]
 
+
+def avg_hamming_dist(input_population: list[Chromosome]) -> float:
+    """
+    Computes the average Hamming distance of a population. We use
+    this to measure the similarity in the population of chromosomes.
+
+    :param input_population: List(Chromosome) the population we want
+    to compute the average Hamming distance.
+
+    :return: (float) the total number of differences, in the genes,
+    divided by the total number of genes compared.
+    """
+
+    # Initialize the counters.
+    total_diffs, total_genes = 0, 0
+
+    # Iterate through all the population.
+    for i, p1 in enumerate(input_population[:-1]):
+
+        # Get the size of the chromosome. It is
+        # assumed that all chromosomes have the
+        # same size.
+        N = len(p1)
+
+        # Compare the i-th chromosome with the rest of the population.
+        # NOTE: Since the distances are symmetrical we don't check the
+        # same pair of chromosomes twice.
+        for p2 in input_population[i+1:]:
+
+            # Get the total number of different genes.
+            total_diffs += sum([k != l for k, l in zip(p1.genome, p2.genome)])
+
+            # We add the number of genes we test.
+            total_genes += N
+        # _end_for_
+
+    # _end_for_
+
+    # Sanity check.
+    if total_genes == 0:
+        raise RuntimeError("Average Humming Distance: Total number of Genes is zero.")
+    # _end_if_
+
+    return float(total_diffs / total_genes)
+# _end_def_
 
 def apply_corrections(input_population: list[Chromosome]) -> int:
     """
