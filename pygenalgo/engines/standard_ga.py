@@ -6,7 +6,7 @@ from joblib import (Parallel, delayed)
 
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.engines.generic_ga import GenericGA
-from pygenalgo.engines.auxiliary import apply_corrections
+from pygenalgo.engines.auxiliary import apply_corrections, avg_hamming_dist
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
@@ -114,7 +114,7 @@ class StandardGA(GenericGA):
     # _end_def_
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
-            f_tol: float = 1.0e-8, parallel: bool = False, verbose: bool = False):
+            f_tol: float = None, parallel: bool = False, verbose: bool = False):
         """
         Main method of the StandardGA class, that implements the evolutionary routine.
 
@@ -129,6 +129,7 @@ class StandardGA(GenericGA):
 
         :param f_tol: (float) tolerance in the difference between the average values of two
         consecutive populations. It is used to determine the convergence of the population.
+        If this value is None (default) the algorithm will terminate using the epochs value.
 
         :param parallel: (bool) Flag that enables parallel computation of the fitness function.
 
@@ -223,10 +224,8 @@ class StandardGA(GenericGA):
             # _end_if_
 
             # Check for convergence.
-            # Here we don't only check the average performance, but we also check the
-            # spread of the population. If all the chromosomes are similar the spread
-            # should be small (very close to zero).
-            if np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and std_fitness_i < 1.0E-1:
+            if f_tol and np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and\
+                    avg_hamming_dist(population_i) < 0.025:
                 # Display a warning message.
                 print(f"{self.__class__.__name__} finished in {i + 1} iterations.")
 

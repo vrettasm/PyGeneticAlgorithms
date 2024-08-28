@@ -6,7 +6,9 @@ from joblib import (Parallel, delayed)
 
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.engines.generic_ga import GenericGA
-from pygenalgo.engines.auxiliary import apply_corrections, SubPopulation
+from pygenalgo.engines.auxiliary import (apply_corrections,
+                                         SubPopulation,
+                                         avg_hamming_dist)
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
@@ -107,10 +109,10 @@ class IslandModelGA(GenericGA):
 
     @staticmethod
     def evolve_population(island: SubPopulation, eval_fitness: Callable, epochs: int, crs_op: CrossoverOperator,
-                          mut_op: MutationOperator, sel_op: SelectionOperator, rnd_gen, f_tol: float = 1.0e-6,
+                          mut_op: MutationOperator, sel_op: SelectionOperator, rnd_gen, f_tol: float = None,
                           correction: bool = False, elitism: bool = True):
         """
-        This method is called to evolve each subpopulation independently. It is declared 'static' to avoid problems
+        This method is called to evolve each subpopulation independently. It is declared static to avoid problems
         when passed in the Parallel pool. The input parameters have identical meaning with the ones from the run().
         """
 
@@ -192,7 +194,8 @@ class IslandModelGA(GenericGA):
             # _end_if_
 
             # Check for convergence.
-            if np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and std_fitness_i < 1.0E-1:
+            if f_tol and np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and\
+                    avg_hamming_dist(population_i) < 0.025:
 
                 # Switch the convergence flag and track the current iteration.
                 has_converged = (True, i+1)
@@ -215,7 +218,7 @@ class IslandModelGA(GenericGA):
     # _end_def_
 
     def run(self, epochs: int = 1000, correction: bool = False, elitism: bool = True,
-            f_tol: float = 1.0e-6, allow_migration: bool = False, n_periods: int = 10,
+            f_tol: float = None, allow_migration: bool = False, n_periods: int = 10,
             verbose: bool = False):
         """
         Main method of the IslandModelGA class, that implements the evolutionary routine.
@@ -231,6 +234,7 @@ class IslandModelGA(GenericGA):
 
         :param f_tol: (float) tolerance in the difference between the average values of two
         consecutive populations. It is used to determine the convergence of the population.
+        If this value is None (default) the algorithm will terminate using the epochs value.
 
         :param allow_migration: (bool) flag that if set to 'True' will allow the migration
         of the best individuals among the different islands.
