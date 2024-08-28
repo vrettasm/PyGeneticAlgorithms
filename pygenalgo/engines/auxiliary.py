@@ -35,7 +35,7 @@ def avg_hamming_dist(input_population: list[Chromosome]) -> float:
         for p2 in input_population[i+1:]:
 
             # Get the total number of different genes.
-            total_diffs += sum([k != l for k, l in zip(p1.genome, p2.genome)])
+            total_diffs += p1.hamming_distance(p2)
 
             # We add the number of genes we test.
             total_genes += N
