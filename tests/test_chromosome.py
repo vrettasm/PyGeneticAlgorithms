@@ -67,7 +67,8 @@ class TestChromosome(unittest.TestCase):
 
     def test_humming_distance(self):
         """
-        ...
+        Check the Hamming distances of two identical
+        and two completely different chromosomes.
 
         :return: None.
         """
