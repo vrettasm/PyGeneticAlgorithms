@@ -92,15 +92,13 @@ class StandardGA(GenericGA):
         if parallel:
 
             # Evaluate the chromosomes in parallel mode.
-            fitness_i = Parallel(n_jobs=self.MAX_CPUs,
-                                 backend="threading")(
+            fitness_i = Parallel(n_jobs=self.MAX_CPUs, backend="threading")(
                 delayed(fit_func)(p) for p in input_population
             )
         else:
 
             # Evaluate the chromosomes in serial mode.
             fitness_i = [fit_func(p) for p in input_population]
-
         # _end_if_
 
         # Attach the fitness to each chromosome.
