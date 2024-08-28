@@ -154,7 +154,7 @@ class Chromosome(object):
         return item in self._genome
     # _end_if_
 
-    def hamming_distance(self, other) -> float:
+    def hamming_distance(self, other) -> int:
         """
         Compute the "Hamming distance" of the "self" object with the
         "other" chromosome. In practise it's the number of positions
@@ -162,7 +162,7 @@ class Chromosome(object):
 
         :param other: (Chromosome) to compare the Hamming distance.
 
-        :return: (float) the distance between the two chromosomes.
+        :return: (int) the distance between the two chromosomes.
         """
 
         # Check for the correct type.
