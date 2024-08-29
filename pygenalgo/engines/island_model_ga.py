@@ -107,13 +107,14 @@ class IslandModelGA(GenericGA):
         return np.mean(fit_arr, dtype=float), np.std(fit_arr, dtype=float)
     # _end_def_
 
-    @staticmethod
-    def evolve_population(island: SubPopulation, eval_fitness: Callable, epochs: int, crs_op: CrossoverOperator,
-                          mut_op: MutationOperator, sel_op: SelectionOperator, rnd_gen, f_tol: float = None,
-                          correction: bool = False, elitism: bool = True):
+    @classmethod
+    def evolve_population(cls, island: SubPopulation, eval_fitness: Callable, epochs: int,
+                          crs_op: CrossoverOperator, mut_op: MutationOperator, sel_op: SelectionOperator,
+                          rnd_gen, f_tol: float = None, correction: bool = False, elitism: bool = True):
         """
-        This method is called to evolve each subpopulation independently. It is declared static to avoid problems
-        when passed in the Parallel pool. The input parameters have identical meaning with the ones from the run().
+        This method is called to evolve each subpopulation independently.  It is defined as 'classmethod'
+        because we need access to the fitness function of the object. The input parameters have identical
+        meaning with the ones from run().
         """
 
         # Keeps track of the convergence of the population,
@@ -162,7 +163,7 @@ class IslandModelGA(GenericGA):
 
             # Check if 'corrections' are enabled.
             if correction:
-                _ = apply_corrections(population_i)
+                _ = apply_corrections(population_i, cls.fitness_func)
             # _end_if_
 
             # Check if 'elitism' is enabled.
