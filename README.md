@@ -20,7 +20,7 @@ parallel mode by definition.
 
   > **NEWS**:
   > Three new genetic operators have been added (**OrderCrossover (OX1)**, **InverseMutator** and **FlipMutator**).
-  > These operators were added to address combinatorial problems where the genome can become invalid by the appliaction
+  > These operators were added to address combinatorial problems where the genome can become invalid by the application
   > of the other standard operators.
   >
 
