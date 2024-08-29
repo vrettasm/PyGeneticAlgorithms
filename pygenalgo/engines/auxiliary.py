@@ -71,8 +71,7 @@ def apply_corrections(input_population: list[Chromosome],
     # Holds the number of the corrected chromosomes.
     corrections_counter = 0
 
-    # Go through all the chromosome members
-    # of the input population.
+    # Go through all the chromosomes of the input population.
     for chromosome in input_population:
 
         # Holds the corrected genes.
@@ -87,6 +86,9 @@ def apply_corrections(input_population: list[Chromosome],
                 # Call the gene's random function.
                 gene.random()
 
+                # Update the status of the gene.
+                gene.is_valid = True
+
                 # Update the counter.
                 genes_corrected += 1
         # _end_for_
@@ -94,7 +96,7 @@ def apply_corrections(input_population: list[Chromosome],
         # Check if there were any gene corrections.
         if genes_corrected:
 
-            # Update the corrections counter.
+            # Update the total corrections counter.
             corrections_counter += genes_corrected
 
             # Re-evaluate the fitness of the chromosome.
