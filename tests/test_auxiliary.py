@@ -26,20 +26,36 @@ class TestAuxiliary(unittest.TestCase):
         :return: None.
         """
 
+        def rand_func():
+            """
+            Dummy random function.
+            """
+            return 0
+        # _end_def_
+
+        def fit_func(individual):
+            """
+            Dummy fitness function.
+            """
+            return sum([xi.datum for xi in individual])
+        # _end_def_
+
         # Create a test population.
-        test_population = [Chromosome([Gene('0', lambda: str('x')),
-                                       Gene('1', lambda: str('x')),
-                                       Gene('2', lambda: str('x'))]),
-                           Chromosome([Gene('a', lambda: str('x')),
-                                       Gene('b', lambda: str('x')),
-                                       Gene('c', lambda: str('x'))]),
-                           Chromosome([Gene('3', lambda: str('x')),
-                                       Gene('4', lambda: str('x')),
-                                       Gene('5', lambda: str('x'))])
+        test_population = [Chromosome([Gene(0, rand_func),
+                                       Gene(1, rand_func),
+                                       Gene(2, rand_func)]),
+
+                           Chromosome([Gene(3, rand_func),
+                                       Gene(4, rand_func),
+                                       Gene(5, rand_func)]),
+
+                           Chromosome([Gene(6, rand_func),
+                                       Gene(7, rand_func),
+                                       Gene(8, rand_func)])
                            ]
 
         # Run the corrections algorithms.
-        t0_corrections = apply_corrections(test_population)
+        t0_corrections = apply_corrections(test_population, fit_func)
 
         # There should be exactly '0' corrected Genes.
         self.assertEqual(0, t0_corrections)
@@ -50,12 +66,12 @@ class TestAuxiliary(unittest.TestCase):
 
         # Here we set a new Chromosome in the population, where a Gene datum is not
         # initialized. When the datum field is 'None', the gene is assumed 'invalid'.
-        test_population[2] = Chromosome([Gene('a0', lambda: str('x')),
-                                         Gene('b0', lambda: str('x')),
-                                         Gene(None, lambda: str('x'))])
+        test_population[2] = Chromosome([Gene(0, rand_func),
+                                         Gene(1, rand_func),
+                                         Gene(None, rand_func)])
 
         # Run the corrections algorithms.
-        t3_corrections = apply_corrections(test_population)
+        t3_corrections = apply_corrections(test_population, fit_func)
 
         # There should be exactly '3' corrected Genes.
         self.assertEqual(3, t3_corrections)
