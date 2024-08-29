@@ -1,3 +1,4 @@
+from typing import Callable
 from dataclasses import dataclass, field
 from pygenalgo.genome.chromosome import Chromosome
 
@@ -51,14 +52,18 @@ def avg_hamming_dist(input_population: list[Chromosome]) -> float:
     return float(total_diffs / total_genes)
 # _end_def_
 
-def apply_corrections(input_population: list[Chromosome]) -> int:
+def apply_corrections(input_population: list[Chromosome],
+                      fit_func: Callable = None) -> int:
     """
-    Check the population for invalid genes and correct them by applying
-    directly the random method. It is assumed that the random method of
-    the Gene is always returning a 'valid' value for the Gene.
+    Check the population  for invalid genes and correct them by applying directly
+    the random method. It is assumed that the random method of the Gene is always
+    returning a 'valid' value for the Gene. After that, we need to reevaluate the
+    chromosome to update its fitness.
 
-    :param input_population: List(Chromosome) the population we want to
-    apply corrections (if applicable).
+    :param input_population: List(Chromosome) the population
+    we want to apply corrections (if applicable).
+
+    :param fit_func: callable fitness function.
 
     :return: the total number of corrected genes in the population.
     """
@@ -88,7 +93,12 @@ def apply_corrections(input_population: list[Chromosome]) -> int:
 
         # Check if there were any gene corrections.
         if genes_corrected:
+
+            # Update the corrections counter.
             corrections_counter += genes_corrected
+
+            # Re-evaluate the fitness of the chromosome.
+            chromosome.fitness = fit_func(chromosome)
         # _end_if_
 
     # _end_for_
