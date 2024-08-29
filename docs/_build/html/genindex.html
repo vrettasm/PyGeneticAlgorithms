@@ -43,7 +43,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">PyGeneticAlgorithms</a></li>
 </ul>
 
         </div>
@@ -80,6 +80,7 @@
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
@@ -105,6 +106,8 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.auxiliary.apply_corrections">apply_corrections() (in module pygenalgo.engines.auxiliary)</a>
+</li>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.auxiliary.avg_hamming_dist">avg_hamming_dist() (in module pygenalgo.engines.auxiliary)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -188,14 +191,18 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.fitness">fitness (pygenalgo.genome.chromosome.Chromosome property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.fitness_func">fitness_func (pygenalgo.engines.generic_ga.GenericGA attribute)</a>
 
       <ul>
         <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.fitness_func">(pygenalgo.engines.standard_ga.StandardGA attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pygenalgo.genome.html#pygenalgo.genome.gene.Gene.flip">flip() (pygenalgo.genome.gene.Gene method)</a>
+</li>
+      <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.flip_mutator.FlipMutator">FlipMutator (class in pygenalgo.operators.mutation.flip_mutator)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -215,6 +222,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.hamming_distance">hamming_distance() (pygenalgo.genome.chromosome.Chromosome method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -226,6 +241,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.inverse_mutator.InverseMutator">InverseMutator (class in pygenalgo.operators.mutation.inverse_mutator)</a>
+</li>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.is_genome_valid">is_genome_valid() (pygenalgo.genome.chromosome.Chromosome method)</a>
 </li>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.gene.Gene.is_valid">is_valid (pygenalgo.genome.gene.Gene property)</a>
@@ -312,6 +329,10 @@
 </li>
         <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation">pygenalgo.operators.mutation</a>
 </li>
+        <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.flip_mutator">pygenalgo.operators.mutation.flip_mutator</a>
+</li>
+        <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.inverse_mutator">pygenalgo.operators.mutation.inverse_mutator</a>
+</li>
         <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.mutate_operator">pygenalgo.operators.mutation.mutate_operator</a>
 </li>
         <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.random_mutator">pygenalgo.operators.mutation.random_mutator</a>
@@ -348,9 +369,13 @@
 </li>
         <li><a href="tests.html#module-tests.test_crossover_operator">tests.test_crossover_operator</a>
 </li>
+        <li><a href="tests.html#module-tests.test_flip_mutator">tests.test_flip_mutator</a>
+</li>
         <li><a href="tests.html#module-tests.test_gene">tests.test_gene</a>
 </li>
         <li><a href="tests.html#module-tests.test_genetic_operator">tests.test_genetic_operator</a>
+</li>
+        <li><a href="tests.html#module-tests.test_inverse_mutator">tests.test_inverse_mutator</a>
 </li>
         <li><a href="tests.html#module-tests.test_migration_operator">tests.test_migration_operator</a>
 </li>
@@ -381,9 +406,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.mutli_point_crossover.MultiPointCrossover">MultiPointCrossover (class in pygenalgo.operators.crossover.mutli_point_crossover)</a>
 </li>
-      <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.mutate_operator.MutationOperator.mutate">mutate() (pygenalgo.operators.mutation.mutate_operator.MutationOperator method)</a>
+      <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.flip_mutator.FlipMutator.mutate">mutate() (pygenalgo.operators.mutation.flip_mutator.FlipMutator method)</a>
 
       <ul>
+        <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.inverse_mutator.InverseMutator.mutate">(pygenalgo.operators.mutation.inverse_mutator.InverseMutator method)</a>
+</li>
+        <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.mutate_operator.MutationOperator.mutate">(pygenalgo.operators.mutation.mutate_operator.MutationOperator method)</a>
+</li>
         <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.random_mutator.RandomMutator.mutate">(pygenalgo.operators.mutation.random_mutator.RandomMutator method)</a>
 </li>
         <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.shuffle_mutator.ShuffleMutator.mutate">(pygenalgo.operators.mutation.shuffle_mutator.ShuffleMutator method)</a>
@@ -547,8 +576,6 @@
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.super_crossover">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pygenalgo.operators.crossover.uniform_crossover
 
@@ -556,6 +583,8 @@
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.uniform_crossover">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pygenalgo.operators.genetic_operator
 
@@ -589,6 +618,20 @@
 
       <ul>
         <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation">module</a>
+</li>
+      </ul></li>
+      <li>
+    pygenalgo.operators.mutation.flip_mutator
+
+      <ul>
+        <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.flip_mutator">module</a>
+</li>
+      </ul></li>
+      <li>
+    pygenalgo.operators.mutation.inverse_mutator
+
+      <ul>
+        <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.inverse_mutator">module</a>
 </li>
       </ul></li>
       <li>
@@ -755,7 +798,11 @@
       <ul>
         <li><a href="tests.html#tests.test_crossover_operator.TestCrossoverOperator.setUp">(tests.test_crossover_operator.TestCrossoverOperator method)</a>
 </li>
+        <li><a href="tests.html#tests.test_flip_mutator.TestFlipMutator.setUp">(tests.test_flip_mutator.TestFlipMutator method)</a>
+</li>
         <li><a href="tests.html#tests.test_genetic_operator.TestGeneticOperator.setUp">(tests.test_genetic_operator.TestGeneticOperator method)</a>
+</li>
+        <li><a href="tests.html#tests.test_inverse_mutator.TestInverseMutator.setUp">(tests.test_inverse_mutator.TestInverseMutator method)</a>
 </li>
         <li><a href="tests.html#tests.test_migration_operator.TestMigrationOperator.setUp">(tests.test_migration_operator.TestMigrationOperator method)</a>
 </li>
@@ -791,9 +838,13 @@
 </li>
         <li><a href="tests.html#tests.test_crossover_operator.TestCrossoverOperator.setUpClass">(tests.test_crossover_operator.TestCrossoverOperator class method)</a>
 </li>
+        <li><a href="tests.html#tests.test_flip_mutator.TestFlipMutator.setUpClass">(tests.test_flip_mutator.TestFlipMutator class method)</a>
+</li>
         <li><a href="tests.html#tests.test_gene.TestGene.setUpClass">(tests.test_gene.TestGene class method)</a>
 </li>
         <li><a href="tests.html#tests.test_genetic_operator.TestGeneticOperator.setUpClass">(tests.test_genetic_operator.TestGeneticOperator class method)</a>
+</li>
+        <li><a href="tests.html#tests.test_inverse_mutator.TestInverseMutator.setUpClass">(tests.test_inverse_mutator.TestInverseMutator class method)</a>
 </li>
         <li><a href="tests.html#tests.test_migration_operator.TestMigrationOperator.setUpClass">(tests.test_migration_operator.TestMigrationOperator class method)</a>
 </li>
@@ -855,9 +906,13 @@
 </li>
         <li><a href="tests.html#tests.test_crossover_operator.TestCrossoverOperator.tearDownClass">(tests.test_crossover_operator.TestCrossoverOperator class method)</a>
 </li>
+        <li><a href="tests.html#tests.test_flip_mutator.TestFlipMutator.tearDownClass">(tests.test_flip_mutator.TestFlipMutator class method)</a>
+</li>
         <li><a href="tests.html#tests.test_gene.TestGene.tearDownClass">(tests.test_gene.TestGene class method)</a>
 </li>
         <li><a href="tests.html#tests.test_genetic_operator.TestGeneticOperator.tearDownClass">(tests.test_genetic_operator.TestGeneticOperator class method)</a>
+</li>
+        <li><a href="tests.html#tests.test_inverse_mutator.TestInverseMutator.tearDownClass">(tests.test_inverse_mutator.TestInverseMutator class method)</a>
 </li>
         <li><a href="tests.html#tests.test_migration_operator.TestMigrationOperator.tearDownClass">(tests.test_migration_operator.TestMigrationOperator class method)</a>
 </li>
@@ -888,6 +943,8 @@
 </li>
       <li><a href="tests.html#tests.test_auxiliary.TestAuxiliary.test_apply_corrections">test_apply_corrections() (tests.test_auxiliary.TestAuxiliary method)</a>
 </li>
+      <li><a href="tests.html#tests.test_auxiliary.TestAuxiliary.test_avg_hamming_dist">test_avg_hamming_dist() (tests.test_auxiliary.TestAuxiliary method)</a>
+</li>
       <li><a href="tests.html#tests.test_genetic_operator.TestGeneticOperator.test_counter">test_counter() (tests.test_genetic_operator.TestGeneticOperator method)</a>
 </li>
       <li><a href="tests.html#tests.test_crossover_operator.TestCrossoverOperator.test_crossover">test_crossover() (tests.test_crossover_operator.TestCrossoverOperator method)</a>
@@ -908,6 +965,8 @@
 </li>
       <li><a href="tests.html#tests.test_chromosome.TestChromosome.test_genome_validity">test_genome_validity() (tests.test_chromosome.TestChromosome method)</a>
 </li>
+      <li><a href="tests.html#tests.test_chromosome.TestChromosome.test_humming_distance">test_humming_distance() (tests.test_chromosome.TestChromosome method)</a>
+</li>
       <li><a href="tests.html#tests.test_gene.TestGene.test_init">test_init() (tests.test_gene.TestGene method)</a>
 </li>
       <li><a href="tests.html#tests.test_clockwise_migration.TestClockwiseMigration.test_migrate">test_migrate() (tests.test_clockwise_migration.TestClockwiseMigration method)</a>
@@ -916,9 +975,13 @@
         <li><a href="tests.html#tests.test_migration_operator.TestMigrationOperator.test_migrate">(tests.test_migration_operator.TestMigrationOperator method)</a>
 </li>
       </ul></li>
-      <li><a href="tests.html#tests.test_mutation_operator.TestMutationOperator.test_mutate">test_mutate() (tests.test_mutation_operator.TestMutationOperator method)</a>
+      <li><a href="tests.html#tests.test_flip_mutator.TestFlipMutator.test_mutate">test_mutate() (tests.test_flip_mutator.TestFlipMutator method)</a>
 
       <ul>
+        <li><a href="tests.html#tests.test_inverse_mutator.TestInverseMutator.test_mutate">(tests.test_inverse_mutator.TestInverseMutator method)</a>
+</li>
+        <li><a href="tests.html#tests.test_mutation_operator.TestMutationOperator.test_mutate">(tests.test_mutation_operator.TestMutationOperator method)</a>
+</li>
         <li><a href="tests.html#tests.test_random_mutator.TestRandomMutator.test_mutate">(tests.test_random_mutator.TestRandomMutator method)</a>
 </li>
         <li><a href="tests.html#tests.test_shuffle_mutator.TestShuffleMutator.test_mutate">(tests.test_shuffle_mutator.TestShuffleMutator method)</a>
@@ -944,16 +1007,20 @@
 </li>
       <li><a href="tests.html#tests.test_crossover_operator.TestCrossoverOperator">TestCrossoverOperator (class in tests.test_crossover_operator)</a>
 </li>
+      <li><a href="tests.html#tests.test_flip_mutator.TestFlipMutator">TestFlipMutator (class in tests.test_flip_mutator)</a>
+</li>
       <li><a href="tests.html#tests.test_gene.TestGene">TestGene (class in tests.test_gene)</a>
 </li>
       <li><a href="tests.html#tests.test_genetic_operator.TestGeneticOperator">TestGeneticOperator (class in tests.test_genetic_operator)</a>
 </li>
+      <li><a href="tests.html#tests.test_inverse_mutator.TestInverseMutator">TestInverseMutator (class in tests.test_inverse_mutator)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="tests.html#tests.test_migration_operator.TestMigrationOperator">TestMigrationOperator (class in tests.test_migration_operator)</a>
 </li>
       <li><a href="tests.html#tests.test_multi_point_crossover.TestMultiPointCrossover">TestMultiPointCrossover (class in tests.test_multi_point_crossover)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="tests.html#tests.test_mutation_operator.TestMutationOperator">TestMutationOperator (class in tests.test_mutation_operator)</a>
 </li>
       <li><a href="tests.html#tests.test_order_crossover.TestOrderCrossover">TestOrderCrossover (class in tests.test_order_crossover)</a>
@@ -996,6 +1063,13 @@
 </li>
       </ul></li>
       <li>
+    tests.test_flip_mutator
+
+      <ul>
+        <li><a href="tests.html#module-tests.test_flip_mutator">module</a>
+</li>
+      </ul></li>
+      <li>
     tests.test_gene
 
       <ul>
@@ -1007,6 +1081,13 @@
 
       <ul>
         <li><a href="tests.html#module-tests.test_genetic_operator">module</a>
+</li>
+      </ul></li>
+      <li>
+    tests.test_inverse_mutator
+
+      <ul>
+        <li><a href="tests.html#module-tests.test_inverse_mutator">module</a>
 </li>
       </ul></li>
       <li>
@@ -1147,7 +1228,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Michalis Vrettas, PhD.</p>
+    <p>&#169; Copyright 2024, Michail D. Vrettas, PhD.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

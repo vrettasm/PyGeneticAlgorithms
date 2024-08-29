@@ -4,6 +4,22 @@ pygenalgo.operators.mutation package
 Submodules
 ----------
 
+pygenalgo.operators.mutation.flip\_mutator module
+-------------------------------------------------
+
+.. automodule:: pygenalgo.operators.mutation.flip_mutator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pygenalgo.operators.mutation.inverse\_mutator module
+----------------------------------------------------
+
+.. automodule:: pygenalgo.operators.mutation.inverse_mutator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pygenalgo.operators.mutation.mutate\_operator module
 ----------------------------------------------------
 

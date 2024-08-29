@@ -43,7 +43,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">PyGeneticAlgorithms</a></li>
 </ul>
 
         </div>
@@ -75,6 +75,7 @@
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.swap_mutator</span> <span class="kn">import</span> <span class="n">SwapMutator</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.random_mutator</span> <span class="kn">import</span> <span class="n">RandomMutator</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.shuffle_mutator</span> <span class="kn">import</span> <span class="n">ShuffleMutator</span>
+<span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.inverse_mutator</span> <span class="kn">import</span> <span class="n">InverseMutator</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.mutate_operator</span> <span class="kn">import</span> <span class="n">MutationOperator</span>
 
 
@@ -101,8 +102,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mutate_probability</span><span class="p">)</span>
 
         <span class="c1"># NOTE: In here the mutation probabilities for each mutator are set to 1.0.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_mutator</span> <span class="o">=</span> <span class="p">(</span><span class="n">SwapMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">RandomMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">ShuffleMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mutator</span> <span class="o">=</span> <span class="p">(</span><span class="n">SwapMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">RandomMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">ShuffleMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+                         <span class="n">InverseMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -186,7 +187,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Michalis Vrettas, PhD.</p>
+    <p>&#169; Copyright 2024, Michail D. Vrettas, PhD.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

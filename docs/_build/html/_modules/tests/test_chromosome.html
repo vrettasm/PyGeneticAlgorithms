@@ -43,7 +43,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">PyGeneticAlgorithms</a></li>
 </ul>
 
         </div>
@@ -129,10 +129,16 @@
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="c1"># Create a &#39;dummy&#39; random function.</span>
+        <span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="c1"># _end_def_</span>
+
         <span class="c1"># Create a &#39;dummy&#39; chromosome with 3 &#39;genes&#39;.</span>
-        <span class="n">ch_1</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">_genome</span><span class="o">=</span><span class="p">[</span><span class="n">Gene</span><span class="p">(</span><span class="n">_datum</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">_func</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">valid</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-                                   <span class="n">Gene</span><span class="p">(</span><span class="n">_datum</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">_func</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">valid</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-                                   <span class="n">Gene</span><span class="p">(</span><span class="n">_datum</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">_func</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">valid</span><span class="o">=</span><span class="kc">True</span><span class="p">)],</span>
+        <span class="n">ch_1</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">_genome</span><span class="o">=</span><span class="p">[</span><span class="n">Gene</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">func</span><span class="p">),</span>
+                                   <span class="n">Gene</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">func</span><span class="p">),</span>
+                                   <span class="n">Gene</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">func</span><span class="p">)],</span>
                           <span class="n">_fitness</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">_valid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1"># This genome SHOULD be valid.</span>
@@ -143,10 +149,45 @@
 
         <span class="c1"># This genome SHOULD NOT be valid.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">ch_1</span><span class="o">.</span><span class="n">is_genome_valid</span><span class="p">())</span></div>
-</div>
 
     <span class="c1"># _end_def_</span>
 
+<div class="viewcode-block" id="TestChromosome.test_humming_distance">
+<a class="viewcode-back" href="../../tests.html#tests.test_chromosome.TestChromosome.test_humming_distance">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_humming_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check the Hamming distances of two identical</span>
+<span class="sd">        and two completely different chromosomes.</span>
+
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Create a &#39;dummy&#39; random function.</span>
+        <span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="c1"># _end_def_</span>
+
+        <span class="c1"># Create a &#39;dummy&#39; chromosome with 3 &#39;genes&#39;.</span>
+        <span class="n">ch_1</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">_genome</span><span class="o">=</span><span class="p">[</span><span class="n">Gene</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">func</span><span class="p">),</span>
+                                   <span class="n">Gene</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">func</span><span class="p">),</span>
+                                   <span class="n">Gene</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">func</span><span class="p">)],</span>
+                          <span class="n">_fitness</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">_valid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># There are &#39;0&#39; dissimilarities when we compare</span>
+        <span class="c1"># the same chromosome(s).</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ch_1</span><span class="o">.</span><span class="n">hamming_distance</span><span class="p">(</span><span class="n">ch_1</span><span class="p">))</span>
+
+        <span class="c1"># Create a &#39;dummy&#39; chromosome with 3 &#39;genes&#39;.</span>
+        <span class="n">ch_2</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">_genome</span><span class="o">=</span><span class="p">[</span><span class="n">Gene</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">func</span><span class="p">),</span>
+                                   <span class="n">Gene</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">func</span><span class="p">),</span>
+                                   <span class="n">Gene</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">func</span><span class="p">)],</span>
+                          <span class="n">_fitness</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">_valid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># All the genes are different here.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">ch_1</span><span class="o">.</span><span class="n">hamming_distance</span><span class="p">(</span><span class="n">ch_2</span><span class="p">))</span></div>
+</div>
+
+    <span class="c1"># _end_def_</span>
 
 <span class="c1"># _end_class_</span>
 
@@ -162,7 +203,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Michalis Vrettas, PhD.</p>
+    <p>&#169; Copyright 2024, Michail D. Vrettas, PhD.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

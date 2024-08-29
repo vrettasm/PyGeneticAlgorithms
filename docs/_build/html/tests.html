@@ -45,7 +45,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">code</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">PyGeneticAlgorithms</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="pygenalgo.html">pygenalgo package</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">tests package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
@@ -66,6 +66,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#tests.test_crossover_operator.TestCrossoverOperator"><code class="docutils literal notranslate"><span class="pre">TestCrossoverOperator</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tests.test_flip_mutator">tests.test_flip_mutator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tests.test_flip_mutator.TestFlipMutator"><code class="docutils literal notranslate"><span class="pre">TestFlipMutator</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-tests.test_gene">tests.test_gene module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#tests.test_gene.TestGene"><code class="docutils literal notranslate"><span class="pre">TestGene</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tests.test_gene.randint"><code class="docutils literal notranslate"><span class="pre">randint()</span></code></a></li>
@@ -73,6 +77,10 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-tests.test_genetic_operator">tests.test_genetic_operator module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#tests.test_genetic_operator.TestGeneticOperator"><code class="docutils literal notranslate"><span class="pre">TestGeneticOperator</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tests.test_inverse_mutator">tests.test_inverse_mutator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tests.test_inverse_mutator.TestInverseMutator"><code class="docutils literal notranslate"><span class="pre">TestInverseMutator</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-tests.test_migration_operator">tests.test_migration_operator module</a><ul>
@@ -144,7 +152,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">code</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">PyGeneticAlgorithms</a></li>
       <li class="breadcrumb-item active">tests package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/tests.rst.txt" rel="nofollow"> View page source</a>
@@ -190,6 +198,23 @@ some of the Genes.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_auxiliary.TestAuxiliary.test_avg_hamming_dist">
+<span class="sig-name descname"><span class="pre">test_avg_hamming_dist</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_auxiliary.html#TestAuxiliary.test_avg_hamming_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_auxiliary.TestAuxiliary.test_avg_hamming_dist" title="Link to this definition"></a></dt>
+<dd><p>Tests the average Humming distance at the two extreme cases:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>when all the chromosomes are the same (dist = 0.0)</p></li>
+<li><p>when all the chromosomes are different (dist = 1.0)</p></li>
+</ol>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -226,6 +251,18 @@ some of the Genes.</p>
 <dt class="sig sig-object py" id="tests.test_chromosome.TestChromosome.test_genome_validity">
 <span class="sig-name descname"><span class="pre">test_genome_validity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_chromosome.html#TestChromosome.test_genome_validity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_chromosome.TestChromosome.test_genome_validity" title="Link to this definition"></a></dt>
 <dd><p>Check if the genome is valid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_chromosome.TestChromosome.test_humming_distance">
+<span class="sig-name descname"><span class="pre">test_humming_distance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_chromosome.html#TestChromosome.test_humming_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_chromosome.TestChromosome.test_humming_distance" title="Link to this definition"></a></dt>
+<dd><p>Check the Hamming distances of two identical
+and two completely different chromosomes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None.</p>
@@ -392,6 +429,49 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 <dt class="sig sig-object py" id="tests.test_crossover_operator.TestCrossoverOperator.test_crossover">
 <span class="sig-name descname"><span class="pre">test_crossover</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_crossover_operator.html#TestCrossoverOperator.test_crossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_crossover_operator.TestCrossoverOperator.test_crossover" title="Link to this definition"></a></dt>
 <dd><p>The crossover method should be implemented.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tests.test_flip_mutator">
+<span id="tests-test-flip-mutator-module"></span><h2>tests.test_flip_mutator module<a class="headerlink" href="#module-tests.test_flip_mutator" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_flip_mutator.TestFlipMutator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_flip_mutator.</span></span><span class="sig-name descname"><span class="pre">TestFlipMutator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_flip_mutator.html#TestFlipMutator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_flip_mutator.TestFlipMutator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_flip_mutator.TestFlipMutator.setUp">
+<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tests/test_flip_mutator.html#TestFlipMutator.setUp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_flip_mutator.TestFlipMutator.setUp" title="Link to this definition"></a></dt>
+<dd><p>Creates the test object with default settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_flip_mutator.TestFlipMutator.setUpClass">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setUpClass</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tests/test_flip_mutator.html#TestFlipMutator.setUpClass"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_flip_mutator.TestFlipMutator.setUpClass" title="Link to this definition"></a></dt>
+<dd><p>Hook method for setting up class fixture before running tests in the class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_flip_mutator.TestFlipMutator.tearDownClass">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tearDownClass</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tests/test_flip_mutator.html#TestFlipMutator.tearDownClass"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_flip_mutator.TestFlipMutator.tearDownClass" title="Link to this definition"></a></dt>
+<dd><p>Hook method for deconstructing the class fixture after running all tests in the class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_flip_mutator.TestFlipMutator.test_mutate">
+<span class="sig-name descname"><span class="pre">test_mutate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_flip_mutator.html#TestFlipMutator.test_mutate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_flip_mutator.TestFlipMutator.test_mutate" title="Link to this definition"></a></dt>
+<dd><p>The mutation method should be implemented.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None.</p>
@@ -591,6 +671,49 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 <dt class="sig sig-object py" id="tests.test_genetic_operator.TestGeneticOperator.test_probability_range">
 <span class="sig-name descname"><span class="pre">test_probability_range</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_genetic_operator.html#TestGeneticOperator.test_probability_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_genetic_operator.TestGeneticOperator.test_probability_range" title="Link to this definition"></a></dt>
 <dd><p>The probability should be range [0.0, 1.0].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tests.test_inverse_mutator">
+<span id="tests-test-inverse-mutator-module"></span><h2>tests.test_inverse_mutator module<a class="headerlink" href="#module-tests.test_inverse_mutator" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_inverse_mutator.TestInverseMutator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_inverse_mutator.</span></span><span class="sig-name descname"><span class="pre">TestInverseMutator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_inverse_mutator.html#TestInverseMutator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_inverse_mutator.TestInverseMutator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_inverse_mutator.TestInverseMutator.setUp">
+<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tests/test_inverse_mutator.html#TestInverseMutator.setUp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_inverse_mutator.TestInverseMutator.setUp" title="Link to this definition"></a></dt>
+<dd><p>Creates the test object with default settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_inverse_mutator.TestInverseMutator.setUpClass">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setUpClass</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tests/test_inverse_mutator.html#TestInverseMutator.setUpClass"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_inverse_mutator.TestInverseMutator.setUpClass" title="Link to this definition"></a></dt>
+<dd><p>Hook method for setting up class fixture before running tests in the class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_inverse_mutator.TestInverseMutator.tearDownClass">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tearDownClass</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/tests/test_inverse_mutator.html#TestInverseMutator.tearDownClass"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_inverse_mutator.TestInverseMutator.tearDownClass" title="Link to this definition"></a></dt>
+<dd><p>Hook method for deconstructing the class fixture after running all tests in the class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_inverse_mutator.TestInverseMutator.test_mutate">
+<span class="sig-name descname"><span class="pre">test_mutate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_inverse_mutator.html#TestInverseMutator.test_mutate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_inverse_mutator.TestInverseMutator.test_mutate" title="Link to this definition"></a></dt>
+<dd><p>The mutation method should be implemented.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None.</p>
@@ -1132,7 +1255,7 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Michalis Vrettas, PhD.</p>
+    <p>&#169; Copyright 2024, Michail D. Vrettas, PhD.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

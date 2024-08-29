@@ -43,7 +43,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">PyGeneticAlgorithms</a></li>
 </ul>
 
         </div>
@@ -79,7 +79,7 @@
 
 <span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.engines.generic_ga</span> <span class="kn">import</span> <span class="n">GenericGA</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.engines.auxiliary</span> <span class="kn">import</span> <span class="n">apply_corrections</span>
+<span class="kn">from</span> <span class="nn">pygenalgo.engines.auxiliary</span> <span class="kn">import</span> <span class="n">apply_corrections</span><span class="p">,</span> <span class="n">avg_hamming_dist</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.mutate_operator</span> <span class="kn">import</span> <span class="n">MutationOperator</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.selection.select_operator</span> <span class="kn">import</span> <span class="n">SelectionOperator</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.crossover.crossover_operator</span> <span class="kn">import</span> <span class="n">CrossoverOperator</span>
@@ -172,15 +172,13 @@
         <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
 
             <span class="c1"># Evaluate the chromosomes in parallel mode.</span>
-            <span class="n">fitness_i</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">MAX_CPUs</span><span class="p">,</span>
-                                 <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;threading&quot;</span><span class="p">)(</span>
+            <span class="n">fitness_i</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">MAX_CPUs</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;threading&quot;</span><span class="p">)(</span>
                 <span class="n">delayed</span><span class="p">(</span><span class="n">fit_func</span><span class="p">)(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">input_population</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
 
             <span class="c1"># Evaluate the chromosomes in serial mode.</span>
             <span class="n">fitness_i</span> <span class="o">=</span> <span class="p">[</span><span class="n">fit_func</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">input_population</span><span class="p">]</span>
-
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Attach the fitness to each chromosome.</span>
@@ -199,7 +197,7 @@
 <div class="viewcode-block" id="StandardGA.run">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.run">[docs]</a>
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">f_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">,</span> <span class="n">parallel</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="n">f_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parallel</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Main method of the StandardGA class, that implements the evolutionary routine.</span>
 
@@ -214,6 +212,7 @@
 
 <span class="sd">        :param f_tol: (float) tolerance in the difference between the average values of two</span>
 <span class="sd">        consecutive populations. It is used to determine the convergence of the population.</span>
+<span class="sd">        If this value is None (default) the algorithm will terminate using the epochs value.</span>
 
 <span class="sd">        :param parallel: (bool) Flag that enables parallel computation of the fitness function.</span>
 
@@ -308,10 +307,8 @@
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Check for convergence.</span>
-            <span class="c1"># Here we don&#39;t only check the average performance, but we also check the</span>
-            <span class="c1"># spread of the population. If all the chromosomes are similar the spread</span>
-            <span class="c1"># should be small (very close to zero).</span>
-            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">avg_fitness_i</span> <span class="o">-</span> <span class="n">avg_fitness_0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">f_tol</span> <span class="ow">and</span> <span class="n">std_fitness_i</span> <span class="o">&lt;</span> <span class="mf">1.0E-1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">f_tol</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">avg_fitness_i</span> <span class="o">-</span> <span class="n">avg_fitness_0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">f_tol</span> <span class="ow">and</span>\
+                    <span class="n">avg_hamming_dist</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.025</span><span class="p">:</span>
                 <span class="c1"># Display a warning message.</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> finished in </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> iterations.&quot;</span><span class="p">)</span>
 
@@ -387,7 +384,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Michalis Vrettas, PhD.</p>
+    <p>&#169; Copyright 2024, Michail D. Vrettas, PhD.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

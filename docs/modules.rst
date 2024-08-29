@@ -1,5 +1,5 @@
-code
-====
+PyGeneticAlgorithms
+===================
 
 .. toctree::
    :maxdepth: 4

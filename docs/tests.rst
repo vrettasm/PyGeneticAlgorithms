@@ -36,6 +36,14 @@ tests.test\_crossover\_operator module
    :undoc-members:
    :show-inheritance:
 
+tests.test\_flip\_mutator module
+--------------------------------
+
+.. automodule:: tests.test_flip_mutator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tests.test\_gene module
 -----------------------
 
@@ -48,6 +56,14 @@ tests.test\_genetic\_operator module
 ------------------------------------
 
 .. automodule:: tests.test_genetic_operator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+tests.test\_inverse\_mutator module
+-----------------------------------
+
+.. automodule:: tests.test_inverse_mutator
    :members:
    :undoc-members:
    :show-inheritance:

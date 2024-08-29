@@ -17,8 +17,8 @@ sys.path.insert(0, os.path.abspath('..'))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'PyGenAlgo'
-copyright = '2024, Michalis Vrettas, PhD'
-author = 'Michalis Vrettas, PhD'
+copyright = '2024, Michail D. Vrettas, PhD'
+author = 'Michail D. Vrettas, PhD'
 
 # The full version, including alpha/beta/rc tags
 release = '00.00.01'
