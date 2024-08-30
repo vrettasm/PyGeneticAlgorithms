@@ -116,7 +116,7 @@ class Gene(object):
         return False
     # _end_def_
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         """
         Auxiliary method to hash the Gene object.
 
@@ -145,9 +145,11 @@ class Gene(object):
 
     def flip(self) -> None:
         """
-        This method flips the value of the gene data.
+        This method flips the value of the gene data. It is used only dy the
+        FlipMutator operator for problems where the chromosome is represented
+        by a list of bits.
 
-         i)  1 -> 0
+        i)   1 -> 0
         ii)  0 -> 1
 
         :return: None.
