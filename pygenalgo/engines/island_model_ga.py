@@ -12,6 +12,7 @@ from pygenalgo.engines.auxiliary import (apply_corrections,
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
+from pygenalgo.operators.migration.migration_operator import MigrationOperator
 from pygenalgo.operators.migration.clockwise_migration import ClockwiseMigration
 
 # Public interface.
@@ -75,6 +76,16 @@ class IslandModelGA(GenericGA):
 
         # Dictionary with statistics.
         self._stats = defaultdict(dict)
+    # _end_def_
+
+    @property
+    def migrate_op(self) -> MigrationOperator:
+        """
+        Accessor method that returns the migration operator reference.
+
+        :return: the MigrationOperator.
+        """
+        return self._migrate_op
     # _end_def_
 
     def evaluate_fitness(self, in_population: list[Chromosome]):
