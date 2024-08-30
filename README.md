@@ -51,6 +51,7 @@ The current implementation offers a variety of genetic operators including:
 
 - **Migration operators**
   - [Clockwise Migrator](pygenalgo/operators/migration/clockwise_migration.py)
+  - [Random Migrator](pygenalgo/operators/migration/random_migration.py)
 
 Note that incorporating additional genetic operators is easily facilitated by inheriting from the base classes:
 - [SelectionOperator](pygenalgo/operators/selection/select_operator.py)
