@@ -12,6 +12,14 @@ pygenalgo.operators.migration.clockwise\_migration module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.migration.random\_migration module
+---------------------------------------------------------
+
+.. automodule:: pygenalgo.operators.migration.random_migration
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pygenalgo.operators.migration.migration\_operator module
 --------------------------------------------------------
 

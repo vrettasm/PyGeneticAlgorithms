@@ -71,7 +71,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.engines.auxiliary</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
 
 
@@ -129,14 +130,18 @@
 
 <div class="viewcode-block" id="apply_corrections">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.auxiliary.apply_corrections">[docs]</a>
-<span class="k">def</span> <span class="nf">apply_corrections</span><span class="p">(</span><span class="n">input_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">apply_corrections</span><span class="p">(</span><span class="n">input_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span>
+                      <span class="n">fit_func</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Check the population for invalid genes and correct them by applying</span>
-<span class="sd">    directly the random method. It is assumed that the random method of</span>
-<span class="sd">    the Gene is always returning a &#39;valid&#39; value for the Gene.</span>
+<span class="sd">    Check the population  for invalid genes and correct them by applying directly</span>
+<span class="sd">    the random method. It is assumed that the random method of the Gene is always</span>
+<span class="sd">    returning a &#39;valid&#39; value for the Gene. After that, we need to reevaluate the</span>
+<span class="sd">    chromosome to update its fitness.</span>
 
-<span class="sd">    :param input_population: List(Chromosome) the population we want to</span>
-<span class="sd">    apply corrections (if applicable).</span>
+<span class="sd">    :param input_population: List(Chromosome) the population</span>
+<span class="sd">    we want to apply corrections (if applicable).</span>
+
+<span class="sd">    :param fit_func: callable fitness function.</span>
 
 <span class="sd">    :return: the total number of corrected genes in the population.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -144,8 +149,7 @@
     <span class="c1"># Holds the number of the corrected chromosomes.</span>
     <span class="n">corrections_counter</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="c1"># Go through all the chromosome members</span>
-    <span class="c1"># of the input population.</span>
+    <span class="c1"># Go through all the chromosomes of the input population.</span>
     <span class="k">for</span> <span class="n">chromosome</span> <span class="ow">in</span> <span class="n">input_population</span><span class="p">:</span>
 
         <span class="c1"># Holds the corrected genes.</span>
@@ -160,13 +164,21 @@
                 <span class="c1"># Call the gene&#39;s random function.</span>
                 <span class="n">gene</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
 
+                <span class="c1"># Update the status of the gene.</span>
+                <span class="n">gene</span><span class="o">.</span><span class="n">is_valid</span> <span class="o">=</span> <span class="kc">True</span>
+
                 <span class="c1"># Update the counter.</span>
                 <span class="n">genes_corrected</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="c1"># _end_for_</span>
 
         <span class="c1"># Check if there were any gene corrections.</span>
         <span class="k">if</span> <span class="n">genes_corrected</span><span class="p">:</span>
+
+            <span class="c1"># Update the total corrections counter.</span>
             <span class="n">corrections_counter</span> <span class="o">+=</span> <span class="n">genes_corrected</span>
+
+            <span class="c1"># Re-evaluate the fitness of the chromosome.</span>
+            <span class="n">chromosome</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fit_func</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
     <span class="c1"># _end_for_</span>

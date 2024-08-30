@@ -100,6 +100,14 @@ tests.test\_order\_crossover module
    :undoc-members:
    :show-inheritance:
 
+tests.test\_random\_migration module
+---------------------------------------
+
+.. automodule:: tests.test_random_migration
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tests.test\_random\_mutator module
 ----------------------------------
 

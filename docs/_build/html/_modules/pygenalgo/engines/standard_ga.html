@@ -270,7 +270,7 @@
             <span class="c1"># Check if &#39;corrections&#39; are enabled.</span>
             <span class="k">if</span> <span class="n">correction</span><span class="p">:</span>
                 <span class="c1"># Apply the function.</span>
-                <span class="n">total_corrections</span> <span class="o">=</span> <span class="n">apply_corrections</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span>
+                <span class="n">total_corrections</span> <span class="o">=</span> <span class="n">apply_corrections</span><span class="p">(</span><span class="n">population_i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_func</span><span class="p">)</span>
 
                 <span class="c1"># Print only if there were corrections,</span>
                 <span class="c1"># to avoid cluttering the screen.</span>

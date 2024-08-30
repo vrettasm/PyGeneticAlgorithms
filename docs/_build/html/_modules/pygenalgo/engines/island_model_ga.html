@@ -187,13 +187,14 @@
 
 <div class="viewcode-block" id="IslandModelGA.evolve_population">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.evolve_population">[docs]</a>
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">evolve_population</span><span class="p">(</span><span class="n">island</span><span class="p">:</span> <span class="n">SubPopulation</span><span class="p">,</span> <span class="n">eval_fitness</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">crs_op</span><span class="p">:</span> <span class="n">CrossoverOperator</span><span class="p">,</span>
-                          <span class="n">mut_op</span><span class="p">:</span> <span class="n">MutationOperator</span><span class="p">,</span> <span class="n">sel_op</span><span class="p">:</span> <span class="n">SelectionOperator</span><span class="p">,</span> <span class="n">rnd_gen</span><span class="p">,</span> <span class="n">f_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                          <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">evolve_population</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">island</span><span class="p">:</span> <span class="n">SubPopulation</span><span class="p">,</span> <span class="n">eval_fitness</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                          <span class="n">crs_op</span><span class="p">:</span> <span class="n">CrossoverOperator</span><span class="p">,</span> <span class="n">mut_op</span><span class="p">:</span> <span class="n">MutationOperator</span><span class="p">,</span> <span class="n">sel_op</span><span class="p">:</span> <span class="n">SelectionOperator</span><span class="p">,</span>
+                          <span class="n">rnd_gen</span><span class="p">,</span> <span class="n">f_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method is called to evolve each subpopulation independently. It is declared static to avoid problems</span>
-<span class="sd">        when passed in the Parallel pool. The input parameters have identical meaning with the ones from the run().</span>
+<span class="sd">        This method is called to evolve each subpopulation independently.  It is defined as &#39;classmethod&#39;</span>
+<span class="sd">        because we need access to the fitness function of the object. The input parameters have identical</span>
+<span class="sd">        meaning with the ones from run().</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Keeps track of the convergence of the population,</span>
@@ -242,7 +243,7 @@
 
             <span class="c1"># Check if &#39;corrections&#39; are enabled.</span>
             <span class="k">if</span> <span class="n">correction</span><span class="p">:</span>
-                <span class="n">_</span> <span class="o">=</span> <span class="n">apply_corrections</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">apply_corrections</span><span class="p">(</span><span class="n">population_i</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">fitness_func</span><span class="p">)</span>
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Check if &#39;elitism&#39; is enabled.</span>

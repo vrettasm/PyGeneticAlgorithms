@@ -109,20 +109,36 @@
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="k">def</span> <span class="nf">rand_func</span><span class="p">():</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Dummy random function.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="c1"># _end_def_</span>
+
+        <span class="k">def</span> <span class="nf">fit_func</span><span class="p">(</span><span class="n">individual</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Dummy fitness function.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">xi</span><span class="o">.</span><span class="n">datum</span> <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="n">individual</span><span class="p">])</span>
+        <span class="c1"># _end_def_</span>
+
         <span class="c1"># Create a test population.</span>
-        <span class="n">test_population</span> <span class="o">=</span> <span class="p">[</span><span class="n">Chromosome</span><span class="p">([</span><span class="n">Gene</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)),</span>
-                                       <span class="n">Gene</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)),</span>
-                                       <span class="n">Gene</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">))]),</span>
-                           <span class="n">Chromosome</span><span class="p">([</span><span class="n">Gene</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)),</span>
-                                       <span class="n">Gene</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)),</span>
-                                       <span class="n">Gene</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">))]),</span>
-                           <span class="n">Chromosome</span><span class="p">([</span><span class="n">Gene</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)),</span>
-                                       <span class="n">Gene</span><span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)),</span>
-                                       <span class="n">Gene</span><span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">))])</span>
+        <span class="n">test_population</span> <span class="o">=</span> <span class="p">[</span><span class="n">Chromosome</span><span class="p">([</span><span class="n">Gene</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">rand_func</span><span class="p">),</span>
+                                       <span class="n">Gene</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rand_func</span><span class="p">),</span>
+                                       <span class="n">Gene</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">rand_func</span><span class="p">)]),</span>
+
+                           <span class="n">Chromosome</span><span class="p">([</span><span class="n">Gene</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">rand_func</span><span class="p">),</span>
+                                       <span class="n">Gene</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">rand_func</span><span class="p">),</span>
+                                       <span class="n">Gene</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">rand_func</span><span class="p">)]),</span>
+
+                           <span class="n">Chromosome</span><span class="p">([</span><span class="n">Gene</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">rand_func</span><span class="p">),</span>
+                                       <span class="n">Gene</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">rand_func</span><span class="p">),</span>
+                                       <span class="n">Gene</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">rand_func</span><span class="p">)])</span>
                            <span class="p">]</span>
 
         <span class="c1"># Run the corrections algorithms.</span>
-        <span class="n">t0_corrections</span> <span class="o">=</span> <span class="n">apply_corrections</span><span class="p">(</span><span class="n">test_population</span><span class="p">)</span>
+        <span class="n">t0_corrections</span> <span class="o">=</span> <span class="n">apply_corrections</span><span class="p">(</span><span class="n">test_population</span><span class="p">,</span> <span class="n">fit_func</span><span class="p">)</span>
 
         <span class="c1"># There should be exactly &#39;0&#39; corrected Genes.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">t0_corrections</span><span class="p">)</span>
@@ -133,12 +149,12 @@
 
         <span class="c1"># Here we set a new Chromosome in the population, where a Gene datum is not</span>
         <span class="c1"># initialized. When the datum field is &#39;None&#39;, the gene is assumed &#39;invalid&#39;.</span>
-        <span class="n">test_population</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">([</span><span class="n">Gene</span><span class="p">(</span><span class="s1">&#39;a0&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)),</span>
-                                         <span class="n">Gene</span><span class="p">(</span><span class="s1">&#39;b0&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)),</span>
-                                         <span class="n">Gene</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">))])</span>
+        <span class="n">test_population</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">([</span><span class="n">Gene</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">rand_func</span><span class="p">),</span>
+                                         <span class="n">Gene</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rand_func</span><span class="p">),</span>
+                                         <span class="n">Gene</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">rand_func</span><span class="p">)])</span>
 
         <span class="c1"># Run the corrections algorithms.</span>
-        <span class="n">t3_corrections</span> <span class="o">=</span> <span class="n">apply_corrections</span><span class="p">(</span><span class="n">test_population</span><span class="p">)</span>
+        <span class="n">t3_corrections</span> <span class="o">=</span> <span class="n">apply_corrections</span><span class="p">(</span><span class="n">test_population</span><span class="p">,</span> <span class="n">fit_func</span><span class="p">)</span>
 
         <span class="c1"># There should be exactly &#39;3&#39; corrected Genes.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">t3_corrections</span><span class="p">)</span></div>

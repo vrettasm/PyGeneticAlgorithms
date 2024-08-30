@@ -123,6 +123,34 @@ following a “clockwise” rotation movement.</p>
 </dd></dl>
 
 </section>
+<section id="module-pygenalgo.operators.migration.random_migration">
+<span id="pygenalgo-operators-migration-random-migration-module"></span><h2>pygenalgo.operators.migration.random_migration module<a class="headerlink" href="#module-pygenalgo.operators.migration.random_migration" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pygenalgo.operators.migration.random_migration.RandomMigration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.migration.random_migration.</span></span><span class="sig-name descname"><span class="pre">RandomMigration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">migration_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/migration/random_migration.html#RandomMigration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.migration.random_migration.RandomMigration" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.migration.migration_operator.MigrationOperator" title="pygenalgo.operators.migration.migration_operator.MigrationOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">MigrationOperator</span></code></a></p>
+<p>Description:</p>
+<blockquote>
+<div><p>Random Migration implements a “very basic” migration policy in which
+each island migrates its best chromosome to a randomly selected population.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.operators.migration.random_migration.RandomMigration.migrate">
+<span class="sig-name descname"><span class="pre">migrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">island</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.auxiliary.SubPopulation" title="pygenalgo.engines.auxiliary.SubPopulation"><span class="pre">SubPopulation</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/migration/random_migration.html#RandomMigration.migrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.migration.random_migration.RandomMigration.migrate" title="Link to this definition"></a></dt>
+<dd><p>Perform the migration operation on the list of SubPopulations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>island</strong> – list[SubPopulation].</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-pygenalgo.operators.migration.migration_operator">
 <span id="pygenalgo-operators-migration-migration-operator-module"></span><h2>pygenalgo.operators.migration.migration_operator module<a class="headerlink" href="#module-pygenalgo.operators.migration.migration_operator" title="Link to this heading"></a></h2>
 <dl class="py class">
