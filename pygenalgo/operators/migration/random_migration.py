@@ -52,7 +52,7 @@ class RandomMigration(MigrationOperator):
                 locus = self.rng.integers(0, len(pop_i.population))
 
                 # Replace the chromosome with the randomly
-                # selected best one from its left.
+                # selected best one from the list above.
                 pop_i.population[locus] = best_j.clone()
             # _end_if_
 
