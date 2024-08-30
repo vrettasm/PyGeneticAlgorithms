@@ -13,7 +13,7 @@ class ClockwiseMigration(MigrationOperator):
 
     def __init__(self, migration_probability: float = 0.95):
         """
-        Construct a 'SinglePointCrossover' object with a given probability value.
+        Construct a 'ClockwiseMigration' object with a given probability value.
 
         :param migration_probability: (float) in [0, 1].
         """
