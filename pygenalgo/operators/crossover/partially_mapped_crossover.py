@@ -48,7 +48,12 @@ class PartiallyMappedCrossover(CrossoverOperator):
             M = len(parent1)
 
             # Select randomly the two crossover points.
-            i, j = sorted(self.rng.choice(range(M), size=2, replace=False, shuffle=False))
+            i, j = self.rng.choice(range(M), size=2, replace=False, shuffle=False)
+
+            # Swap indices (if necessary).
+            if i > j:
+                i, j = j, i
+            # _end_if_
 
             # Make a set of indices for the middle segment.
             segment = set(range(i, j))
@@ -66,15 +71,15 @@ class PartiallyMappedCrossover(CrossoverOperator):
             # _end_for_
 
             # Start building the 1st offspring.
-            for k, gene_k in enumerate(parent2.genome[i:j], start=i):
+            for x, gene_x in enumerate(parent2.genome[i:j], start=i):
 
-                # Check if the k-th gene exist in child1.
-                if gene_k in child1.genome[i:j]:
+                # Check if the 'gene_x' exist in child1.
+                if gene_x in child1.genome[i:j]:
                     continue
                 # _end_if_
 
                 # Initialize the local search variables.
-                idx, found = k, False
+                idx, found = x, False
 
                 # Repeat until you find the right position.
                 while not found:
@@ -89,7 +94,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
                     else:
 
                         # Copy the gene.
-                        child1.genome[x_pos] = gene_k
+                        child1.genome[x_pos] = gene_x
 
                         # Break the loop.
                         found = True
@@ -100,30 +105,30 @@ class PartiallyMappedCrossover(CrossoverOperator):
             # _end_for_
 
             # Start building the 2nd offspring.
-            for f, gene_f in enumerate(parent1.genome[i:j], start=i):
+            for y, gene_y in enumerate(parent1.genome[i:j], start=i):
 
                 # Check if the f-th gene exist in child2.
-                if gene_f in child2.genome[i:j]:
+                if gene_y in child2.genome[i:j]:
                     continue
                 # _end_if_
 
                 # Initialize the local search variables.
-                idx, found = f, False
+                idy, found = y, False
 
                 # Repeat until you find the right position.
                 while not found:
 
                     # Look for the position of gene[idx] in parent1.
-                    y_pos = parent1.genome.index(child2.genome[idx])
+                    y_pos = parent1.genome.index(child2.genome[idy])
 
                     # If the position is inside the segment update
                     # the index and repeat the process.
                     if y_pos in segment:
-                        idx = y_pos
+                        idy = y_pos
                     else:
 
                         # Copy the gene.
-                        child2.genome[y_pos] = gene_f
+                        child2.genome[y_pos] = gene_y
 
                         # Break the loop.
                         found = True
@@ -134,16 +139,16 @@ class PartiallyMappedCrossover(CrossoverOperator):
             # _end_for_
 
             # Final step to fill child1/2 genomes.
-            for x, (gene_a, gene_b) in enumerate(zip(parent1.genome,
+            for k, (gene_a, gene_b) in enumerate(zip(parent1.genome,
                                                      parent2.genome)):
                 # Check if the gene exists.
                 if gene_a not in child2.genome:
-                    child2.genome[x] = gene_a
+                    child2.genome[k] = gene_a
                 # _end_if_
 
                 # Check if the gene exists.
                 if gene_b not in child1.genome:
-                    child1.genome[x] = gene_b
+                    child1.genome[k] = gene_b
                 # _end_if_
 
             # _end_for_
