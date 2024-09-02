@@ -38,7 +38,8 @@ The current implementation offers a variety of genetic operators including:
   - [Single-Point Crossover](pygenalgo/operators/crossover/single_point_crossover.py)
   - [Multi-Point Crossover](pygenalgo/operators/crossover/mutli_point_crossover.py)
   - [Uniform Crossover](pygenalgo/operators/crossover/uniform_crossover.py)
-  - [Order Crossover](pygenalgo/operators/crossover/order_crossover.py)
+  - [Order Crossover (OX1)](pygenalgo/operators/crossover/order_crossover.py)
+  - [Partially Mapped Crossover (PMX)](pygenalgo/operators/crossover/partially_mapped_crossover.py)
   - [Super Crossover](pygenalgo/operators/crossover/super_crossover.py)
 
 - **Mutation operators**:
