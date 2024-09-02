@@ -7,7 +7,7 @@ class OrderCrossover(CrossoverOperator):
     """
     Description:
 
-        Order crossover creates two children chromosomes, by ensuring that the original
+        Order crossover (OX1) creates two children chromosomes, by ensuring that the original
         genome (from both parents) isn't repeated, thus creating invalid offsprings.
 
         It is used predominantly in combinatorial problems.
