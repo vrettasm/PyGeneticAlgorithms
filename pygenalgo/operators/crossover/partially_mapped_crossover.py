@@ -107,7 +107,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
             # Start building the 2nd offspring.
             for y, gene_y in enumerate(parent1.genome[i:j], start=i):
 
-                # Check if the f-th gene exist in child2.
+                # Check if the 'gene_y' exist in child2.
                 if gene_y in child2.genome[i:j]:
                     continue
                 # _end_if_
