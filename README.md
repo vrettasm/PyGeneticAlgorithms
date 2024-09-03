@@ -19,9 +19,9 @@ parallel pool). So the default setting here is "parallel=False". Regarding the I
 parallel mode by definition.
 
   > **NEWS**:
-  > Three new genetic operators have been added (**OrderCrossover (OX1)**, **InverseMutator** and **FlipMutator**).
-  > These operators were added to address combinatorial problems where the genome can become invalid by the application
-  > of the other standard operators.
+  > Four new genetic operators have been added (**PartiallyMappedCrossover (PMX)**, **OrderCrossover (OX1)**,
+  > **InverseMutator** and **FlipMutator**). These operators were added to address combinatorial problems where
+  > the genome can become invalid by the application of the other standard operators.
   >
 
 The current implementation offers a variety of genetic operators including:
