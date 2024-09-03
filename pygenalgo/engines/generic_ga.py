@@ -26,7 +26,7 @@ class GenericGA(object):
     MAX_CPUs = 1 if not cpu_count() else cpu_count()
 
     # Object variables.
-    __slots__ = ("population", "fitness_func", "_select_op", "_cross_op", "_mutate_op", "_stats")
+    __slots__ = ("population", "fitness_func", "_select_op", "_crossx_op", "_mutate_op", "_stats")
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, select_op: SelectionOperator = None,
                  mutate_op: MutationOperator = None, cross_op: CrossoverOperator = None):
@@ -73,7 +73,7 @@ class GenericGA(object):
         if cross_op is None:
             raise ValueError(f"{self.__class__.__name__}: Crossover operator is missing.")
         else:
-            self._cross_op = cross_op
+            self._crossx_op = cross_op
         # _end_if_
 
         # Placeholder for the stats.
@@ -107,7 +107,7 @@ class GenericGA(object):
 
         :return: the CrossoverOperator.
         """
-        return self._cross_op
+        return self._crossx_op
     # _end_def_
 
     @property
@@ -150,8 +150,8 @@ class GenericGA(object):
         # CROSSOVER and MUTATE to produce the new offsprings.
         for j in range(0, N - 1, 2):
             # Replace directly the OLD parents with the NEW offsprings.
-            input_population[j], input_population[j+1] = self._cross_op(input_population[j],
-                                                                        input_population[j+1])
+            input_population[j], input_population[j+1] = self._crossx_op(input_population[j],
+                                                                         input_population[j+1])
             # MUTATE in place the 1st offspring.
             self._mutate_op(input_population[j])
 

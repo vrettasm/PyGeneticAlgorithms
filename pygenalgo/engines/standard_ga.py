@@ -140,7 +140,7 @@ class StandardGA(GenericGA):
         """
 
         # Make sure the genetic operator counters are reset before each run().
-        self._cross_op.reset_counter()
+        self._crossx_op.reset_counter()
         self._mutate_op.reset_counter()
         self._select_op.reset_counter()
 
@@ -175,8 +175,8 @@ class StandardGA(GenericGA):
             # CROSSOVER/MUTATE to produce offsprings.
             for j in range(0, N - 1, 2):
                 # Replace directly the OLD parents with the NEW offsprings.
-                population_i[j], population_i[j + 1] = self._cross_op(population_i[j],
-                                                                      population_i[j + 1])
+                population_i[j], population_i[j + 1] = self._crossx_op(population_i[j],
+                                                                       population_i[j + 1])
                 # MUTATE in place the 1st offspring.
                 self._mutate_op(population_i[j])
 
@@ -261,13 +261,13 @@ class StandardGA(GenericGA):
         print(self._select_op)
 
         # Second print the crossover operator.
-        print(self._cross_op)
+        print(self._crossx_op)
 
         # Check if we used the SuperCrossover.
-        if isinstance(self._cross_op, SuperCrossover):
+        if isinstance(self._crossx_op, SuperCrossover):
 
             # Call internally all operators.
-            for op in self._cross_op.list_all:
+            for op in self._crossx_op.list_all:
                 print(op)
             # _end_for_
         # _end_if_
