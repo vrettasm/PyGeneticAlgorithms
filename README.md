@@ -99,7 +99,7 @@ def fitness_func(individual: Chromosome, f_min: bool = False):
     
     :param individual: Individual chromosome to be evaluated.
     
-    :param f_min: Boolean flag indicating whether we are dealing
+    :param f_min: Bool flag indicating whether we are dealing
     with a minimization or maximization problem.
     """
     
