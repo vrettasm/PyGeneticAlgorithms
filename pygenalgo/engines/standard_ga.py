@@ -110,7 +110,7 @@ class StandardGA(GenericGA):
         arr = np.array(fitness_i, copy=False)
 
         # Return the mean and std of the fitness values.
-        return np.mean(arr, dtype=float), np.std(arr, dtype=float)
+        return np.nanmean(arr, dtype=float), np.nanstd(arr, dtype=float)
     # _end_def_
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
