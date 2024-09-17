@@ -1,5 +1,6 @@
 import time
 import numpy as np
+from math import isnan
 from typing import Callable
 from collections import defaultdict
 from joblib import (Parallel, delayed)
@@ -182,7 +183,8 @@ class IslandModelGA(GenericGA):
 
                 # Find the individual chromosome with the highest fitness value
                 # (from the old population).
-                best_chromosome = max(island.population, key=lambda c: c.fitness)
+                best_chromosome = max((p for p in island.population if not isnan(p.fitness)),
+                                      key=lambda c: c.fitness, default=None)
 
                 # Select randomly a position.
                 locus = rnd_gen.integers(0, N)
@@ -333,7 +335,8 @@ class IslandModelGA(GenericGA):
                     if verbose:
 
                         # Find the current highest fitness.
-                        best_fitness = max([p.fitness for p in island.population])
+                        best_fitness = max((p.fitness for p in island.population
+                                            if not isnan(p.fitness)))
 
                         # Print a message to the screen.
                         print(f"Best Fitness in island {island.id} is:= {best_fitness:.5f}")
