@@ -143,9 +143,13 @@ class IslandModelGA(GenericGA):
         avg_fitness_0, std_fitness_0 = eval_fitness(island.population)
 
         # Check for initial errors.
-        if not all(np.isfinite([avg_fitness_0, std_fitness_0])):
+        if all(np.isfinite([avg_fitness_0, std_fitness_0])):
 
-            # Raise an error if this happens.
+            # Store them in the dictionary.
+            local_stats["avg"].append(avg_fitness_0)
+            local_stats["std"].append(std_fitness_0)
+        else:
+
             raise RuntimeError(f"0: Mean={avg_fitness_0:.5f}, Std={std_fitness_0:.5f}.")
         # _end_if_
 
@@ -427,7 +431,6 @@ class IslandModelGA(GenericGA):
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
-
     # _end_def_
 
 # _end_class_
