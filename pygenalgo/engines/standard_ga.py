@@ -199,9 +199,9 @@ class StandardGA(GenericGA):
 
             # Check if 'elitism' is enabled.
             if elitism:
-                # Find the individual chromosome with the highest fitness value
-                # (from the old population).
-                best_chromosome = max(self.population, key=lambda c: c.fitness)
+                # Find the individual chromosome with the highest
+                # fitness value (from the previous population).
+                best_chromosome = self.best_chromosome()
 
                 # Select randomly a position.
                 locus = self.rng_GA.integers(0, N)
