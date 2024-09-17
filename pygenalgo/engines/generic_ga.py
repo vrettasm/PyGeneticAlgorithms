@@ -1,5 +1,6 @@
 from os import cpu_count
 from typing import Callable
+from math import isnan
 from numpy.random import default_rng
 
 from pygenalgo.genome.chromosome import Chromosome
@@ -123,12 +124,13 @@ class GenericGA(object):
     def best_chromosome(self) -> Chromosome:
         """
         Auxiliary method that returns the chromosome with the
-        highest fitness value.
+        highest fitness value. Safegurded with ignoring NaNs.
 
         :return: Return the chromosome with the highest fitness.
         """
         # Return the chromosome with the highest fitness.
-        return max(self.population, key=lambda c: c.fitness)
+        return max((p for p in self.population if not isnan(p.fitness)),
+                   key=lambda c: c.fitness, default=None)
     # _end_def_
 
     def crossover_mutate(self, input_population: list[Chromosome]) -> None:
@@ -158,7 +160,6 @@ class GenericGA(object):
             # MUTATE in place the 2nd offspring.
             self._mutate_op(input_population[j+1])
         # _end_for_
-
     # _end_def_
 
     def population_fitness(self) -> list[float]:
