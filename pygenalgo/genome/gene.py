@@ -96,7 +96,6 @@ class Gene(object):
         else:
             raise NotImplemented
         # _end_if_
-
     # _end_def_
 
     def __eq__(self, other) -> bool:
