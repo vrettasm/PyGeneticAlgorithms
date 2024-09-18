@@ -1,5 +1,6 @@
 import time
 import numpy as np
+from math import fabs
 from typing import Callable
 from collections import defaultdict
 from joblib import (Parallel, delayed)
@@ -193,7 +194,6 @@ class StandardGA(GenericGA):
                 if total_corrections:
                     print(f"> {total_corrections} correction(s) took place at epoch: {i}.")
                 # _end_if_
-
             # _end_if_
 
             # Check if 'elitism' is enabled.
@@ -223,7 +223,7 @@ class StandardGA(GenericGA):
             # _end_if_
 
             # Check for convergence.
-            if f_tol and np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and\
+            if f_tol and fabs(avg_fitness_i - avg_fitness_0) < f_tol and\
                     avg_hamming_dist(population_i) < 0.025:
                 # Display a warning message.
                 print(f"{self.__class__.__name__} finished in {i + 1} iterations.")

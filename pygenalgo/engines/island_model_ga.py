@@ -1,7 +1,7 @@
 import time
 import numpy as np
-from math import isnan
 from typing import Callable
+from math import isnan, fabs
 from collections import defaultdict
 from joblib import (Parallel, delayed)
 
@@ -212,7 +212,7 @@ class IslandModelGA(GenericGA):
             # _end_if_
 
             # Check for convergence.
-            if f_tol and np.fabs(avg_fitness_i - avg_fitness_0) < f_tol and\
+            if f_tol and fabs(avg_fitness_i - avg_fitness_0) < f_tol and\
                     avg_hamming_dist(population_i) < 0.025:
 
                 # Switch the convergence flag and track the current iteration.
