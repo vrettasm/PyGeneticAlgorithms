@@ -1,5 +1,5 @@
 from math import fsum
-from numpy import cumsum
+from itertools import accumulate
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
@@ -60,7 +60,7 @@ class StochasticUniversalSelector(SelectionOperator):
         new_parents_append = new_parents.append
 
         # Compute the cumulative sum of the fitness values.
-        cum_sum_fit = cumsum(all_fitness)
+        cum_sum_fit = list(accumulate(all_fitness))
 
         # Collect the new parents.
         for p in pointers:
