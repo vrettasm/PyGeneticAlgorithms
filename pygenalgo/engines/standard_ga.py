@@ -70,7 +70,6 @@ class StandardGA(GenericGA):
             raise RuntimeError(f"{self.__class__.__name__}: Something went wrong with current "
                                f"population. Mean={avg_fitness:.5f}, Std={std_fitness:.5f}.")
         # _end_if_
-
     # _end_def_
 
     def evaluate_fitness(self, input_population: list[Chromosome], parallel: bool = False):
@@ -217,7 +216,7 @@ class StandardGA(GenericGA):
             self.update_stats(avg_fitness_i, std_fitness_i)
 
             # Check if we want to print output.
-            if verbose and np.mod(i, 10) == 0:
+            if verbose and (i % 10) == 0:
                 # Display an information message.
                 print(f"Epoch: {i + 1:>5} -> Avg. Fitness = {avg_fitness_i:.4f}, "
                       f"Spread = {std_fitness_i:.4f}")
@@ -283,7 +282,6 @@ class StandardGA(GenericGA):
                 print(op)
             # _end_for_
         # _end_if_
-
     # _end_def_
 
 # _end_class_
