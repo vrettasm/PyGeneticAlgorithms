@@ -157,7 +157,6 @@ class Gene(object):
         self._datum = int(not self._datum)
     # _end_def_
 
-    # Auxiliary.
     def __str__(self) -> str:
         """
         Override to print a readable string presentation of the object.
@@ -167,7 +166,6 @@ class Gene(object):
         return f"{self.__class__.__name__}: datum={self._datum}"
     # _end_def_
 
-    # Auxiliary.
     def __repr__(self) -> str:
         """
         Repr operator is called when a string representation is needed that can be evaluated.
