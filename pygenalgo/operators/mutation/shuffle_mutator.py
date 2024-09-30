@@ -39,8 +39,13 @@ class ShuffleMutator(MutationOperator):
         if self.probability > self.rng.random():
 
             # Select randomly two mutation end-points.
-            i, j = sorted(self.rng.choice(range(0, len(individual)), size=2,
-                                          replace=False, shuffle=False))
+            i, j = self.rng.choice(range(0, len(individual)), size=2,
+                                   replace=False, shuffle=False)
+
+            # Swap indices (if necessary).
+            if i > j:
+                i, j = j, i
+            # _end_if_
 
             # Make a slice list of the genes
             # we want to shuffle: i -> j.
