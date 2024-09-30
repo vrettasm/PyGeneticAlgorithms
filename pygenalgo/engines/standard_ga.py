@@ -49,19 +49,24 @@ class StandardGA(GenericGA):
         self._stats = defaultdict(list)
     # _end_def_
 
-    def update_stats(self, avg_fitness: float, std_fitness: float) -> None:
+    def update_stats(self, fit_list: list[float]) -> (float, float):
         """
-        Update the stats dictionary with the input mean/std values
-        of the fitness.
+        Update the stats dictionary with the mean/std values of the
+        population fitness values.
 
-        :param avg_fitness: (float) mean fitness value of the population.
+        :param fit_list: (float) mean fitness value of the population.
 
-        :param std_fitness: (float) std fitness value of the population.
-
-        :return: None.
+        :return: the mean and std of the fitness values.
         """
 
-        # Make sure the input values are finite.
+        # Convert the fitness list in a numpy array.
+        arr = np.array(fit_list, copy=False)
+
+        # Get the mean and std values.
+        avg_fitness = np.nanmean(arr, dtype=float)
+        std_fitness = np.nanstd(arr, dtype=float)
+
+        # Make sure the stat values are finite.
         if all(np.isfinite([avg_fitness, std_fitness])):
 
             # Store them in the dictionary.
@@ -71,18 +76,22 @@ class StandardGA(GenericGA):
             raise RuntimeError(f"{self.__class__.__name__}: Something went wrong with current "
                                f"population. Mean={avg_fitness:.5f}, Std={std_fitness:.5f}.")
         # _end_if_
+
+        # Return the average statistics.
+        return avg_fitness, std_fitness
     # _end_def_
 
-    def evaluate_fitness(self, input_population: list[Chromosome], parallel: bool = False):
+    def evaluate_fitness(self, input_population: list[Chromosome],
+                         parallel: bool = False) -> list[float]:
         """
         Evaluate all the chromosomes of the input list with the custom fitness function.
 
-        :param input_population: (list) The population of Chromosomes that we want to evaluate
-        their fitness.
+        :param input_population: (list) The population of Chromosomes that we want to
+        evaluate their fitness.
 
         :param parallel: (bool) Flag that enables parallel computation of the fitness function.
 
-        :return: the mean and std of the fitness values.
+        :return: a list of the fitness values.
         """
 
         # Get a local copy of the fitness function.
@@ -106,11 +115,8 @@ class StandardGA(GenericGA):
             p.fitness = fit_value
         # _end_for_
 
-        # Convert list to numpy array.
-        arr = np.array(fitness_i, copy=False)
-
-        # Return the mean and std of the fitness values.
-        return np.nanmean(arr, dtype=float), np.nanstd(arr, dtype=float)
+        # Return the fitness values.
+        return fitness_i
     # _end_def_
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
@@ -151,11 +157,11 @@ class StandardGA(GenericGA):
         # Get the size of the population.
         N = len(self.population)
 
-        # Get the average/std fitness before optimisation.
-        avg_fitness_0, std_fitness_0 = self.evaluate_fitness(self.population, parallel)
+        # Get the fitness values before optimisation.
+        fit_list_0 = self.evaluate_fitness(self.population, parallel)
 
-        # Update the mean/std in the dictionary.
-        self.update_stats(avg_fitness_0, std_fitness_0)
+        # Update the average stats (mean/std) in the dictionary.
+        avg_fitness_0, std_fitness_0 = self.update_stats(fit_list_0)
 
         # Display an information message.
         print(f"Initial Avg. Fitness = {avg_fitness_0:.4f}")
@@ -209,11 +215,11 @@ class StandardGA(GenericGA):
                 population_i[locus] = best_chromosome.clone()
             # _end_if_
 
-            # Calculate the (new) average/std of the fitness.
-            avg_fitness_i, std_fitness_i = self.evaluate_fitness(population_i, parallel)
+            # Calculate the new fitness values.
+            fit_list_i = self.evaluate_fitness(population_i, parallel)
 
             # Update the mean/std in the dictionary.
-            self.update_stats(avg_fitness_i, std_fitness_i)
+            avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i)
 
             # Check if we want to print output.
             if verbose and (i % 10) == 0:
