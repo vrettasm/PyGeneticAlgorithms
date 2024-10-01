@@ -89,7 +89,7 @@ class IslandModelGA(GenericGA):
         return self._migrate_op
     # _end_def_
 
-    def evaluate_fitness(self, in_population: list[Chromosome]):
+    def evaluate_fitness(self, in_population: list[Chromosome]) -> (float, float):
         """
         Evaluate all the chromosomes of the input population list with the
         custom fitness  function. After updating all  the chromosomes with
@@ -168,13 +168,13 @@ class IslandModelGA(GenericGA):
             # CROSSOVER/MUTATE to produce offsprings.
             for j in range(0, N - 1, 2):
                 # Replace directly the OLD parents with the NEW offsprings.
-                population_i[j], population_i[j+1] = crs_op(population_i[j],
-                                                            population_i[j+1])
+                population_i[j], population_i[j + 1] = crs_op(population_i[j],
+                                                              population_i[j + 1])
                 # MUTATE in place the 1st offspring.
                 mut_op(population_i[j])
 
                 # MUTATE in place the 2nd offspring.
-                mut_op(population_i[j+1])
+                mut_op(population_i[j + 1])
             # _end_for_
 
             # Check if 'corrections' are enabled.
@@ -195,7 +195,6 @@ class IslandModelGA(GenericGA):
 
                 # Replace the chromosome with the previous best.
                 population_i[locus] = best_chromosome.clone()
-
             # _end_if_
 
             # EVALUATE the i-th population.
@@ -237,7 +236,7 @@ class IslandModelGA(GenericGA):
 
     def run(self, epochs: int = 1000, correction: bool = False, elitism: bool = True,
             f_tol: float = None, allow_migration: bool = False, n_periods: int = 10,
-            verbose: bool = False):
+            verbose: bool = False) -> None:
         """
         Main method of the IslandModelGA class, that implements the evolutionary routine.
 
@@ -343,7 +342,7 @@ class IslandModelGA(GenericGA):
                                             if not isnan(p.fitness)))
 
                         # Print a message to the screen.
-                        print(f"Best Fitness in island {island.id} is:= {best_fitness:.5f}")
+                        print(f"Best Fitness in island {island.id} is:= {best_fitness:.5f}.")
                     # _end_if_
 
                     # First check if the island has converged.
@@ -427,7 +426,7 @@ class IslandModelGA(GenericGA):
 
         # Print message.
         print(f"Final Avg. Fitness = {avg_fitness_final:.4f}, "
-              f"Spread = {std_fitness_final:.4f}")
+              f"Spread = {std_fitness_final:.4f}.")
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")

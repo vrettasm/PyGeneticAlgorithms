@@ -120,7 +120,7 @@ class StandardGA(GenericGA):
     # _end_def_
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
-            f_tol: float = None, parallel: bool = False, verbose: bool = False):
+            f_tol: float = None, parallel: bool = False, verbose: bool = False) -> None:
         """
         Main method of the StandardGA class, that implements the evolutionary routine.
 
@@ -164,7 +164,7 @@ class StandardGA(GenericGA):
         avg_fitness_0, std_fitness_0 = self.update_stats(fit_list_0)
 
         # Display an information message.
-        print(f"Initial Avg. Fitness = {avg_fitness_0:.4f}")
+        print(f"Initial Avg. Fitness = {avg_fitness_0:.4f}.")
 
         # Initial time instant.
         time_t0 = time.perf_counter()
@@ -225,7 +225,7 @@ class StandardGA(GenericGA):
             if verbose and (i % 10) == 0:
                 # Display an information message.
                 print(f"Epoch: {i + 1:>5} -> Avg. Fitness = {avg_fitness_i:.4f}, "
-                      f"Spread = {std_fitness_i:.4f}")
+                      f"Spread = {std_fitness_i:.4f}.")
             # _end_if_
 
             # Check for convergence.
@@ -249,7 +249,7 @@ class StandardGA(GenericGA):
         time_tf = time.perf_counter()
 
         # Display the final average fitness value.
-        print(f"Final   Avg. Fitness = {avg_fitness_0:.4f}")
+        print(f"Final   Avg. Fitness = {avg_fitness_0:.4f}.")
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
