@@ -116,25 +116,26 @@ Once the fitness function is defined correctly the next steps are straightforwar
 
 ### Examples
 
-Some optimization examples on how to use this algorithm:
+Some optimization examples on how to use these algorithms:
 
-1. StandardGA
-   1. [Minimization](examples/sphere.ipynb)
-   2. [Maximization](examples/rastrigin.ipynb)
-   3. [Minimization with constraints](examples/rosenbrock_on_a_disk.ipynb)
-   4. [Multi-objective with constraints](examples/binh_and_korn_multiobjective.ipynb)
-2. IslandModelGA
-   1. [Sphere Function](examples/sphere_in_parallel.ipynb)
-   2. [Easom Function](examples/easom_in_parallel.ipynb)
-3. Fun Puzzles
-   1. [Traveling Salesman Problem](examples/tsp.ipynb)
-   2. [N-Queens puzzle](examples/queens_puzzle.ipynb)
-   3. [OneMax](examples/one_max.ipynb)
+| Problem (function)                                         | Variables | Objectives | Constraints | Description |
+|:-----------------------------------------------------------|:---------:|:----------:|:-----------:|:-----------:|
+| [Sphere](examples/sphere.ipynb)                            |  M (=10)  |     1      |     no      |   serial    |
+| [Rastrigin](examples/rastrigin.ipynb)                      |  M (=5)   |     1      |     no      |   serial    |
+| [Rosenbrock](examples/rosenbrock_on_a_disk.ipynb)          |  M (=2)   |     1      |      1      |   serial    |
+| [Binh & Korn](examples/binh_and_korn_multiobjective.ipynb) |  M (=2)   |     2      |      2      |   serial    |
+| [Sphere](examples/sphere_in_parallel.ipynb)                |  M (=10)  |     1      |     no      |  parallel   |
+| [Easom](examples/easom_in_parallel.ipynb)                  |  M (=2)   |     1      |     no      |  parallel   |
+| [Traveling Salesman Problem](examples/tsp.ipynb)           |  M (=10)  |     1      |     yes     |   serial    |
+| [N-Queens puzzle](examples/queens_puzzle.ipynb)            |  M (=8)   |     1      |     yes     |  parallel   |
+| [OneMax](examples/one_max.ipynb)                           |  M (=50)  |     1      |     no      |   serial    |
+| [Tanaka](examples/tanaka_multiobjective.ipynb)             |  M (=2)   |     2      |      2      |  serial     |
+| [Zakharov](examples/zakharov.ipynb)                        |  M (=8)   |     1      |     no      |   serial    |
+| [Osyczka](examples/osyczka_kundu_multiobjective.ipynb)     |     6     |     2      |      6      |  parallel   |
 
 Constraint optimization problems can be easily addressed using the
-[Penalty Method](https://en.wikipedia.org/wiki/Penalty_method) as shown in the example (1.III) above.
-Moreover, multi-objective optimizations (with or without constraints) can also be solved as shown in
-the example (1.IV), using the _weighted sum_ method.
+[Penalty Method](https://en.wikipedia.org/wiki/Penalty_method). Moreover, multi-objective optimizations (with or without
+constraints) can also be solved, using the _weighted sum method_, as shown in the examples above.
 
 ### Contact
 
