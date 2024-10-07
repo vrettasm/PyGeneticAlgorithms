@@ -52,13 +52,13 @@ class UniformCrossover(CrossoverOperator):
             N = len(parent1)
 
             # Generate 'N' random numbers in one call.
-            swap_prob = self.rng.random(N)
+            swap_probs = self.rng.random(N)
 
             # Go through all the children's genome.
-            for i in range(0, N):
+            for i, prob_i in enumerate(swap_probs):
 
                 # The two genes will swap with 50% probability.
-                if swap_prob[i] > 0.5:
+                if prob_i > 0.5:
 
                     # Swap in place between the two positions.
                     child1[i], child2[i] = child2[i], child1[i]
@@ -67,7 +67,7 @@ class UniformCrossover(CrossoverOperator):
             # _end_for_
 
             # Even if one gene has swapped the fitness will not be accurate.
-            if np_any(swap_prob > 0.5):
+            if np_any(swap_probs > 0.5):
                 child1.fitness = np_nan
                 child2.fitness = np_nan
             # _end_if_
