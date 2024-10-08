@@ -69,19 +69,20 @@ class MultiPointCrossover(CrossoverOperator):
 
             # Initialize an array with True values
             # with the same size as the chromosome.
-            index = np.ones(num_genes, dtype=bool)
+            flags = np.ones(num_genes, dtype=bool)
 
             # Use the loci positions to invert the
             # bool values between two loci positions.
             for j in loci:
-                index[:j] = ~index[:j]
+                flags[:j] = ~flags[:j]
             # _end_for_
 
             # Go through all the children's genes and
-            # swap them when the index flag is true.
-            for i in range(0, num_genes):
+            # swap them when the flags' are true.
+            for i, flags_i in enumerate(flags):
 
-                if index[i]:
+                if flags_i:
+
                     # Swap in place between the two positions.
                     child1[i], child2[i] = child2[i], child1[i]
                 # _end_if_
@@ -94,7 +95,6 @@ class MultiPointCrossover(CrossoverOperator):
 
             # Increase the crossover counter.
             self.inc_counter()
-
         # _end_if_
 
         # Return the two offsprings.
