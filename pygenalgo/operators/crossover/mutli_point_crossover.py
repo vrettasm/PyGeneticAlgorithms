@@ -90,8 +90,10 @@ class MultiPointCrossover(CrossoverOperator):
             # _end_for_
 
             # After the crossover neither offspring has accurate fitness.
-            child1.fitness = np.nan
-            child2.fitness = np.nan
+            if np.any(flags):
+                child1.fitness = np.nan
+                child2.fitness = np.nan
+            # _end_if_
 
             # Increase the crossover counter.
             self.inc_counter()
