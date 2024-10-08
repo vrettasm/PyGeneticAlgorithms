@@ -56,8 +56,8 @@ class TestSuperCrossover(unittest.TestCase):
                               Gene('9', lambda: str(0))])
 
         # Print parents BEFORE crossover.
-        print("Parent-1: ", " ".join([xi.datum for xi in parent1]))
-        print("Parent-2: ", " ".join([xi.datum for xi in parent2]))
+        print("Parent-1: ", " ".join([xi.value for xi in parent1]))
+        print("Parent-2: ", " ".join([xi.value for xi in parent2]))
         print("---------")
 
         # Initialize placeholders for the offsprings.
@@ -69,8 +69,8 @@ class TestSuperCrossover(unittest.TestCase):
         # _end_for_
 
         # Print offsprings AFTER crossover.
-        print("Child-1: ", " ".join([xi.datum for xi in child1]))
-        print("Child-2: ", " ".join([xi.datum for xi in child2]))
+        print("Child-1: ", " ".join([xi.value for xi in child1]))
+        print("Child-2: ", " ".join([xi.value for xi in child2]))
 
         # Get the counter values.
         all_counters = 0

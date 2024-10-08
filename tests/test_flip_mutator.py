@@ -60,7 +60,7 @@ class TestFlipMutator(unittest.TestCase):
                              Gene(0, func)], _fitness=0.0)
 
         # Print chromosome BEFORE mutation.
-        list_before = [xi.datum for xi in chromo]
+        list_before = [xi.value for xi in chromo]
         print("Before: ", list_before)
 
         # Perform the mutation (in place).
@@ -68,7 +68,7 @@ class TestFlipMutator(unittest.TestCase):
         print("-------")
 
         # Print chromosome AFTER mutation.
-        list_after = [xi.datum for xi in chromo]
+        list_after = [xi.value for xi in chromo]
         print("After : ", list_after)
 
         # Get the absolute difference from both lists.

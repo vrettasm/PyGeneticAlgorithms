@@ -65,16 +65,16 @@ class TestPartiallyMappedCrossover(unittest.TestCase):
         N2 = len(set(parent2.genome))
 
         # Print parents BEFORE crossover.
-        print("Parent-1: ", " ".join([xi.datum for xi in parent1]))
-        print("Parent-2: ", " ".join([xi.datum for xi in parent2]))
+        print("Parent-1: ", " ".join([xi.value for xi in parent1]))
+        print("Parent-2: ", " ".join([xi.value for xi in parent2]))
 
         # Perform the crossover.
         child1, child2 = self.cross_op(parent1, parent2)
         print("---------")
 
         # Print offsprings AFTER crossover.
-        print("Child--1: ", " ".join([xi.datum for xi in child1]))
-        print("Child--2: ", " ".join([xi.datum for xi in child2]))
+        print("Child--1: ", " ".join([xi.value for xi in child1]))
+        print("Child--2: ", " ".join([xi.value for xi in child2]))
 
         # Get the number of 'unique' genes AFTER crossover.
         M1 = len(set(child1.genome))

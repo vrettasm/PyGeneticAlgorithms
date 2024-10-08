@@ -48,14 +48,14 @@ class TestSwapMutator(unittest.TestCase):
                              Gene('k', lambda: str('_'))])
 
         # Print chromosome BEFORE mutation.
-        print("Before: ", " ".join([xi.datum for xi in chromo]))
+        print("Before: ", " ".join([xi.value for xi in chromo]))
 
         # Perform the mutation (in place).
         self.mut_op(chromo)
         print("-------")
 
         # Print chromosome AFTER mutation.
-        print("After : ", " ".join([xi.datum for xi in chromo]))
+        print("After : ", " ".join([xi.value for xi in chromo]))
     # _end_def_
 
 # _end_class_

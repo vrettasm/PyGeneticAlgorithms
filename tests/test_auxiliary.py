@@ -37,7 +37,7 @@ class TestAuxiliary(unittest.TestCase):
             """
             Dummy fitness function.
             """
-            return sum([xi.datum for xi in individual])
+            return sum([xi.value for xi in individual])
         # _end_def_
 
         # Create a test population.

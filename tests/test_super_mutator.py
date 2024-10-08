@@ -47,7 +47,7 @@ class TestSuperMutator(unittest.TestCase):
                              Gene('j', lambda: str('_'))])
 
         # Print chromosome BEFORE mutation.
-        print("Before: ", " ".join([xi.datum for xi in chromo]))
+        print("Before: ", " ".join([xi.value for xi in chromo]))
 
         # Perform the mutation 10 times.
         for i in range(10):
@@ -59,7 +59,7 @@ class TestSuperMutator(unittest.TestCase):
         print("-------")
 
         # Print chromosome AFTER mutation.
-        print("After : ", " ".join([xi.datum for xi in chromo]))
+        print("After : ", " ".join([xi.value for xi in chromo]))
 
         # Get the counter values.
         all_counters = 0
