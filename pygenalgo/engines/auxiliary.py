@@ -81,7 +81,7 @@ def apply_corrections(input_population: list[Chromosome],
         for gene in chromosome:
 
             # Check for validity.
-            if not gene.is_valid or gene.datum is None:
+            if not gene.is_valid or gene.value is None:
 
                 # Call the gene's random function.
                 gene.random()

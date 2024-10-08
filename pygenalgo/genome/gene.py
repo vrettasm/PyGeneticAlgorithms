@@ -44,7 +44,7 @@ class Gene(object):
     # _end_def_
 
     @property
-    def datum(self) -> Any:
+    def value(self) -> Any:
         """
         Accessor (getter) of the data reference.
 
