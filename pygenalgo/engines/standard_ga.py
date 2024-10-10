@@ -1,19 +1,16 @@
 import time
 import numpy as np
 from math import fabs
-from typing import Callable
 from collections import defaultdict
 from joblib import (Parallel, delayed)
 
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.engines.generic_ga import GenericGA
-from pygenalgo.engines.auxiliary import apply_corrections, avg_hamming_dist
-from pygenalgo.operators.mutation.mutate_operator import MutationOperator
-from pygenalgo.operators.selection.select_operator import SelectionOperator
-from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
 from pygenalgo.operators.mutation.super_mutator import SuperMutator
 from pygenalgo.operators.crossover.super_crossover import SuperCrossover
+
+from pygenalgo.engines.auxiliary import apply_corrections, avg_hamming_dist
 
 # Public interface.
 __all__ = ["StandardGA"]
@@ -23,27 +20,17 @@ class StandardGA(GenericGA):
     """
     Description:
 
-        Standard GA model that at each iteration replaces the whole population using
+        StandardGA model provides a basic implementation of the "GenericGA",
+        which at each iteration (epoch) replaces the whole population using
         the genetic operators (crossover and mutation).
     """
 
-    def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, select_op: SelectionOperator = None,
-                 mutate_op: MutationOperator = None, cross_op: CrossoverOperator = None):
+    def __init__(self, **kwargs):
         """
         Default constructor of StandardGA object.
-
-        :param initial_pop: list of the initial population of (randomized) chromosomes.
-
-        :param fit_func: callable fitness function.
-
-        :param select_op: selection operator (must inherit from class SelectionOperator).
-
-        :param mutate_op: mutation operator (must inherit from class MutationOperator).
-
-        :param cross_op: crossover operator (must inherit from class CrossoverOperator).
         """
         # Call the super constructor with all the input parameters.
-        super().__init__(initial_pop, fit_func, select_op, mutate_op, cross_op)
+        super().__init__(**kwargs)
 
         # Dictionary with statistics.
         self._stats = defaultdict(list)

@@ -29,26 +29,14 @@ class IslandModelGA(GenericGA):
         each island.
     """
 
-    # Object variables.
+    # Object variables (specific for the IslandModel).
     __slots__ = ("num_islands", "_migrate_op")
 
-    def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, num_islands: int,
-                 select_op: SelectionOperator = None, mutate_op: MutationOperator = None,
-                 cross_op: CrossoverOperator = None, migrate_op: ClockwiseMigration = None):
+    def __init__(self, num_islands: int, migrate_op: ClockwiseMigration = None, **kwargs):
         """
         Default constructor of IslandModelGA object.
 
-        :param initial_pop: (list) of the initial population of (randomized) chromosomes.
-
-        :param fit_func: (callable) fitness function.
-
         :param num_islands: (int) number of parallel evolving islands.
-
-        :param select_op: selection operator (must inherit from class SelectionOperator).
-
-        :param mutate_op: mutation operator (must inherit from class MutationOperator).
-
-        :param cross_op: crossover operator (must inherit from class CrossoverOperator).
 
         :param migrate_op: migration operator (must inherit from class MigrationOperator).
 
@@ -56,10 +44,10 @@ class IslandModelGA(GenericGA):
         """
 
         # Call the super constructor with all the input parameters.
-        super().__init__(initial_pop, fit_func, select_op, mutate_op, cross_op)
+        super().__init__(**kwargs)
 
         # Sanity check.
-        if num_islands < len(initial_pop):
+        if num_islands < len(self.population):
             # Assign the number of islands.
             self.num_islands = num_islands
         else:
