@@ -26,7 +26,6 @@ class SuperCrossover(CrossoverOperator):
 
         # NOTE: In here the crossover probabilities for each operator are set to 1.0.
         self._cross = (UniformCrossover(1.0), MultiPointCrossover(1.0), SinglePointCrossover(1.0))
-
     # _end_def_
 
     @property
@@ -69,7 +68,6 @@ class SuperCrossover(CrossoverOperator):
 
         # Return the two offsprings.
         return child1, child2
-
     # _end_def_
 
     @property
@@ -101,6 +99,5 @@ class SuperCrossover(CrossoverOperator):
         # _end_for_
 
     # _end_def_
-
 
 # _end_class_
