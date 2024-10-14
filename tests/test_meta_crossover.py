@@ -1,20 +1,20 @@
 import unittest
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.crossover.super_crossover import SuperCrossover
+from pygenalgo.operators.crossover.meta_crossover import MetaCrossover
 
 
-class TestSuperCrossover(unittest.TestCase):
+class TestMetaCrossover(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(">> TestSuperCrossover - START -")
+        print(">> TestMetaCrossover - START -")
 
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(">> TestSuperCrossover - FINISH -", end='\n\n')
+        print(">> TestMetaCrossover - FINISH -", end='\n\n')
     # _end_def_
 
     def setUp(self) -> None:
@@ -24,7 +24,7 @@ class TestSuperCrossover(unittest.TestCase):
         :return: None.
         """
         # Create an object with a crossover probability of 1.0.
-        self.cross_op = SuperCrossover(crossover_probability=1.0)
+        self.cross_op = MetaCrossover(crossover_probability=1.0)
     # _end_def_
 
     def test_crossover(self):
@@ -96,7 +96,6 @@ class TestSuperCrossover(unittest.TestCase):
 
         # Make sure the counters are '0'.
         self.assertEqual(0, all_counters)
-
     # _end_def_
 
 # _end_class_

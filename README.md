@@ -40,7 +40,6 @@ The current implementation offers a variety of genetic operators including:
   - [Uniform Crossover](pygenalgo/operators/crossover/uniform_crossover.py)
   - [Order Crossover (OX1)](pygenalgo/operators/crossover/order_crossover.py)
   - [Partially Mapped Crossover (PMX)](pygenalgo/operators/crossover/partially_mapped_crossover.py)
-  - [Super Crossover](pygenalgo/operators/crossover/super_crossover.py)
 
 - **Mutation operators**:
   - [Random Mutator](pygenalgo/operators/mutation/random_mutator.py)
@@ -48,13 +47,19 @@ The current implementation offers a variety of genetic operators including:
   - [Inverse Mutator](pygenalgo/operators/mutation/inverse_mutator.py)
   - [Swap Mutator](pygenalgo/operators/mutation/swap_mutator.py)
   - [Flip Mutator](pygenalgo/operators/mutation/flip_mutator.py)
-  - [Super Mutator](pygenalgo/operators/mutation/super_mutator.py)
 
 - **Migration operators**
   - [Clockwise Migrator](pygenalgo/operators/migration/clockwise_migration.py)
   - [Random Migrator](pygenalgo/operators/migration/random_migration.py)
 
-Note that incorporating additional genetic operators is easily facilitated by inheriting from the base classes:
+- **Meta operators**
+  - [Meta Crossover](pygenalgo/operators/crossover/meta_crossover.py)
+  - [Meta Mutator](pygenalgo/operators/mutation/meta_mutator.py)
+
+(**NOTE:** Meta operators call randomly the other operators (crossover/mutation) from a predefined set,
+with equal probability.)
+
+Incorporating additional genetic operators is easily facilitated by inheriting from the base classes:
 - [SelectionOperator](pygenalgo/operators/selection/select_operator.py)
 - [CrossoverOperator](pygenalgo/operators/crossover/crossover_operator.py)
 - [MutationOperator](pygenalgo/operators/mutation/mutate_operator.py)

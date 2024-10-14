@@ -1,20 +1,20 @@
 import unittest
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.mutation.super_mutator import SuperMutator
+from pygenalgo.operators.mutation.meta_mutator import MetaMutator
 
 
-class TestSuperMutator(unittest.TestCase):
+class TestMetaMutator(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        print(">> TestSuperMutator - START -")
+        print(">> TestMetaMutator - START -")
 
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
-        print(">> TestSuperMutator - FINISH -", end='\n\n')
+        print(">> TestMetaMutator - FINISH -", end='\n\n')
     # _end_def_
 
     def setUp(self) -> None:
@@ -24,7 +24,7 @@ class TestSuperMutator(unittest.TestCase):
         :return: None.
         """
         # Create an object with a mutation probability of 1.0.
-        self.mut_op = SuperMutator(mutate_probability=1.0)
+        self.mut_op = MetaMutator(mutate_probability=1.0)
     # _end_def_
 
     def test_mutate(self):
@@ -85,7 +85,6 @@ class TestSuperMutator(unittest.TestCase):
 
         # Make sure the counters are '0'.
         self.assertEqual(0, all_counters)
-
     # _end_def_
 
 # _end_class_

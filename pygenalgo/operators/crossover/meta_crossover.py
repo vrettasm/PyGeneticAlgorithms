@@ -5,17 +5,17 @@ from pygenalgo.operators.crossover.mutli_point_crossover import MultiPointCrosso
 from pygenalgo.operators.crossover.single_point_crossover import SinglePointCrossover
 
 
-class SuperCrossover(CrossoverOperator):
+class MetaCrossover(CrossoverOperator):
     """
     Description:
 
-        Super crossover, crosses the chromosomes by applying randomly
+        Meta-crossover, crosses the chromosomes by applying randomly
         all other crossovers (one at a time), with equal probability.
     """
 
     def __init__(self, crossover_probability: float = 0.9):
         """
-        Construct a 'SuperCrossover' object with a given probability value.
+        Construct a 'MetaCrossover' object with a given probability value.
 
         :param crossover_probability: (float).
         """
@@ -61,7 +61,7 @@ class SuperCrossover(CrossoverOperator):
     # _end_def_
 
     @property
-    def all_counters(self):
+    def all_counters(self) -> dict:
         """
         Accessor (getter) of the application counter from all the internal crossovers.
         This is mostly to verify that everything is working as expected.
@@ -71,7 +71,7 @@ class SuperCrossover(CrossoverOperator):
         return {cross_op.__class__.__name__: cross_op.counter for cross_op in self.items}
     # _end_def_
 
-    def reset_counter(self):
+    def reset_counter(self) -> None:
         """
         Sets ALL the counters to 'zero'. We have to override the super().reset_counter()
         method, because we have to call explicitly the reset_counter on all the internal

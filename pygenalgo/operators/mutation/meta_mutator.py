@@ -6,11 +6,11 @@ from pygenalgo.operators.mutation.inverse_mutator import InverseMutator
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
 
-class SuperMutator(MutationOperator):
+class MetaMutator(MutationOperator):
     """
     Description:
 
-        Super mutator, mutates the chromosome by applying randomly
+        Meta-mutator, mutates the chromosome by applying randomly
         all other mutators (one at a time), with equal probability.
 
         NOTE: In the future the equal probabilities can be amended.
@@ -18,7 +18,7 @@ class SuperMutator(MutationOperator):
 
     def __init__(self, mutate_probability: float = 0.1):
         """
-        Construct a 'SuperMutator' object with a predefined probability value.
+        Construct a 'MetaMutator' object with a predefined probability value.
 
         :param mutate_probability: (float).
         """
