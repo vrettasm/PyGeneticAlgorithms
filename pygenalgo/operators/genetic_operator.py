@@ -28,7 +28,7 @@ class GeneticOperator(object):
     _rng = default_rng()
 
     # Object variables.
-    __slots__ = ("_probability", "_counter", "_lock")
+    __slots__ = ("_probability", "_counter", "_lock", "_items")
 
     def __init__(self, _probability: float) -> None:
         """
@@ -46,6 +46,19 @@ class GeneticOperator(object):
 
         # Initialize a thread lock.
         self._lock = Lock()
+
+        # Place holder.
+        self._items = None
+    # _end_def_
+
+    @property
+    def items(self) -> list | tuple:
+        """
+        Accessor (getter) of the _items container.
+
+        :return: _items (if any).
+        """
+        return self._items
     # _end_def_
 
     @property

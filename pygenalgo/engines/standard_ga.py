@@ -250,31 +250,30 @@ class StandardGA(GenericGA):
         """
 
         # First print the selection operator.
-        print(self._select_op)
+        print(self.select_op)
 
         # Second print the crossover operator.
-        print(self._crossx_op)
+        print(self.select_op)
 
         # Check if we used the SuperCrossover.
-        if isinstance(self._crossx_op, SuperCrossover):
-
+        if isinstance(self.select_op, SuperCrossover):
             # Call internally all operators.
-            for op in self._crossx_op.list_all:
+            for op in self.select_op.items:
                 print(op)
             # _end_for_
         # _end_if_
 
         # Lastly print the mutation operator.
-        print(self._mutate_op)
+        print(self.mutate_op)
 
         # Check if we used the SuperMutator.
-        if isinstance(self._mutate_op, SuperMutator):
-
+        if isinstance(self.mutate_op, SuperMutator):
             # Call internally all operators.
-            for op in self._mutate_op.list_all:
+            for op in self.mutate_op.items:
                 print(op)
             # _end_for_
         # _end_if_
+
     # _end_def_
 
 # _end_class_

@@ -25,17 +25,7 @@ class SuperCrossover(CrossoverOperator):
         super().__init__(crossover_probability)
 
         # NOTE: In here the crossover probabilities for each operator are set to 1.0.
-        self._cross = (UniformCrossover(1.0), MultiPointCrossover(1.0), SinglePointCrossover(1.0))
-    # _end_def_
-
-    @property
-    def list_all(self):
-        """
-        Provides access to the internal operators.
-
-        :return: The reference of the tuple with all the crossover operators.
-        """
-        return self._cross
+        self._items = [UniformCrossover(1.0), MultiPointCrossover(1.0), SinglePointCrossover(1.0)]
     # _end_def_
 
     def crossover(self, parent1: Chromosome, parent2: Chromosome):
@@ -56,7 +46,7 @@ class SuperCrossover(CrossoverOperator):
 
             # Select randomly, with equal probability (but this can be changed),
             # a crossover operator and call its crossover method.
-            child1, child2 = self.rng.choice(self._cross).crossover(parent1, parent2)
+            child1, child2 = self.rng.choice(self.items).crossover(parent1, parent2)
 
             # Increase the crossover counter.
             self.inc_counter()
@@ -78,7 +68,7 @@ class SuperCrossover(CrossoverOperator):
 
         :return: a dictionary with the counter calls for all crossover methods.
         """
-        return {cross_op.__class__.__name__: cross_op.counter for cross_op in self._cross}
+        return {cross_op.__class__.__name__: cross_op.counter for cross_op in self.items}
     # _end_def_
 
     def reset_counter(self):
@@ -94,7 +84,7 @@ class SuperCrossover(CrossoverOperator):
         super().reset_counter()
 
         # Here call explicitly the reset on each of the internal cross operators.
-        for op in self._cross:
+        for op in self.items:
             op.reset_counter()
         # _end_for_
 

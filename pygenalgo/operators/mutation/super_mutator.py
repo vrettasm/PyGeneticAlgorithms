@@ -27,18 +27,7 @@ class SuperMutator(MutationOperator):
         super().__init__(mutate_probability)
 
         # NOTE: In here the mutation probabilities for each mutator are set to 1.0.
-        self._mutator = (SwapMutator(1.0), RandomMutator(1.0), ShuffleMutator(1.0),
-                         InverseMutator(1.0))
-    # _end_def_
-
-    @property
-    def list_all(self) -> tuple:
-        """
-        Provides access to the internal operators.
-
-        :return: The reference of the tuple with all the mutators.
-        """
-        return self._mutator
+        self._items = (SwapMutator(1.0), RandomMutator(1.0), ShuffleMutator(1.0), InverseMutator(1.0))
     # _end_def_
 
     def mutate(self, individual: Chromosome) -> None:
@@ -57,7 +46,7 @@ class SuperMutator(MutationOperator):
             # Select randomly, with equal probability
             # (but this can be changed) a mutator and
             # call its mutation method.
-            self.rng.choice(self._mutator).mutate(individual)
+            self.rng.choice(self.items).mutate(individual)
 
             # Increase the mutator counter.
             self.inc_counter()
@@ -73,7 +62,7 @@ class SuperMutator(MutationOperator):
 
         :return: a dictionary with the counter calls for all mutator methods.
         """
-        return {mut_op.__class__.__name__: mut_op.counter for mut_op in self._mutator}
+        return {mut_op.__class__.__name__: mut_op.counter for mut_op in self.items}
     # _end_def_
 
     def reset_counter(self) -> None:
@@ -89,7 +78,7 @@ class SuperMutator(MutationOperator):
         super().reset_counter()
 
         # Here call explicitly the reset on each of the internal mutators.
-        for op in self._mutator:
+        for op in self.items:
             op.reset_counter()
         # _end_for_
 
