@@ -7,8 +7,8 @@ from joblib import (Parallel, delayed)
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.engines.generic_ga import GenericGA
 
-from pygenalgo.operators.mutation.super_mutator import SuperMutator
-from pygenalgo.operators.crossover.super_crossover import SuperCrossover
+from pygenalgo.operators.mutation.meta_mutator import MetaMutator
+from pygenalgo.operators.crossover.meta_crossover import MetaCrossover
 
 from pygenalgo.engines.auxiliary import apply_corrections, avg_hamming_dist
 
@@ -256,7 +256,7 @@ class StandardGA(GenericGA):
         print(self.select_op)
 
         # Check if we used the SuperCrossover.
-        if isinstance(self.select_op, SuperCrossover):
+        if isinstance(self.select_op, MetaCrossover):
             # Call internally all operators.
             for op in self.select_op.items:
                 print(op)
@@ -267,7 +267,7 @@ class StandardGA(GenericGA):
         print(self.mutate_op)
 
         # Check if we used the SuperMutator.
-        if isinstance(self.mutate_op, SuperMutator):
+        if isinstance(self.mutate_op, MetaMutator):
             # Call internally all operators.
             for op in self.mutate_op.items:
                 print(op)
