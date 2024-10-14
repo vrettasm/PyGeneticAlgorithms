@@ -253,12 +253,12 @@ class StandardGA(GenericGA):
         print(self.select_op)
 
         # Second print the crossover operator.
-        print(self.select_op)
+        print(self.crossover_op)
 
         # Check if we used the SuperCrossover.
-        if isinstance(self.select_op, MetaCrossover):
+        if isinstance(self.crossover_op, MetaCrossover):
             # Call internally all operators.
-            for op in self.select_op.items:
+            for op in self.crossover_op.items:
                 print(op)
             # _end_for_
         # _end_if_
