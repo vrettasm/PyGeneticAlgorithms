@@ -13,6 +13,8 @@ from pygenalgo.engines.auxiliary import (apply_corrections,
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
+
+from pygenalgo.operators.migration.meta_migration import MetaMigration
 from pygenalgo.operators.migration.migration_operator import MigrationOperator
 from pygenalgo.operators.migration.clockwise_migration import ClockwiseMigration
 
@@ -418,6 +420,26 @@ class IslandModelGA(GenericGA):
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
+    # _end_def_
+
+    def print_migration_stats(self) -> None:
+        """
+        Print the migration operators stats.
+
+        :return: None.
+        """
+
+        # First print the migration operator.
+        print(self.migrate_op)
+
+        # Check if we used the MetaMigration.
+        if isinstance(self.migrate_op, MetaMigration):
+            # Call internally all operators.
+            for op in self.migrate_op.items:
+                print(op)
+            # _end_for_
+        # _end_if_
+
     # _end_def_
 
 # _end_class_
