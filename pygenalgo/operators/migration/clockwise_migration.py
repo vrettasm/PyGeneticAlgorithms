@@ -37,20 +37,20 @@ class ClockwiseMigration(MigrationOperator):
         # _end_if_
 
         # First find the best individual chromosome FROM EACH island.
-        best_chromosome = [max(pop_i.population,
-                               key=lambda c: c.fitness) for pop_i in islands]
+        best_chromosomes = [max(island_i.population, key=lambda c: c.fitness)
+                            for island_i in islands]
 
         # Go through all the islands.
-        for i, pop_i in enumerate(islands):
+        for i, island_i in enumerate(islands):
 
             # Perform the migration with a predefined probability.
             if self.probability > self.rng.random():
 
                 # Select randomly one individual chromosome.
-                locus = self.rng.integers(0, len(pop_i.population))
+                idx = self.rng.integers(0, len(island_i.population))
 
                 # Replace the chromosome with the best one from its left.
-                pop_i.population[locus] = best_chromosome[i-1].clone()
+                island_i.population[idx] = best_chromosomes[i-1].clone()
             # _end_if_
 
         # _end_for_
