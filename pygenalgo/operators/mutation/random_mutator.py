@@ -21,7 +21,6 @@ class RandomMutator(MutationOperator):
         # Call the super constructor with the provided
         # probability value.
         super().__init__(mutate_probability)
-
     # _end_def_
 
     def mutate(self, individual: Chromosome) -> None:
@@ -50,7 +49,6 @@ class RandomMutator(MutationOperator):
             # Increase the mutator counter.
             self.inc_counter()
         # _end_if_
-
     # _end_def_
 
 # _end_class_

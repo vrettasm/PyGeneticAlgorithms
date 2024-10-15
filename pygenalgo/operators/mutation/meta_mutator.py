@@ -51,7 +51,6 @@ class MetaMutator(MutationOperator):
             # Increase the mutator counter.
             self.inc_counter()
         # _end_if_
-
     # _end_def_
 
     @property
@@ -81,7 +80,6 @@ class MetaMutator(MutationOperator):
         for op in self.items:
             op.reset_counter()
         # _end_for_
-
     # _end_def_
 
 # _end_class_
