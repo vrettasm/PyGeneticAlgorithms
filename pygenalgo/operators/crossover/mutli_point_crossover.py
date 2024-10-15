@@ -82,7 +82,6 @@ class MultiPointCrossover(CrossoverOperator):
             for i, flags_i in enumerate(flags):
 
                 if flags_i:
-
                     # Swap in place between the two positions.
                     child1[i], child2[i] = child2[i], child1[i]
                 # _end_if_

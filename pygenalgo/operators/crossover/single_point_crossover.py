@@ -43,7 +43,7 @@ class SinglePointCrossover(CrossoverOperator):
         if self.probability > self.rng.random():
 
             # Select randomly the crossover point.
-            locus = self.rng.integers(0, len(parent1))
+            locus = self.rng.integers(1, high=len(parent1))
 
             # Create the two NEW offsprings at locus.
             # At this point the two new offsprings do not have
@@ -63,6 +63,5 @@ class SinglePointCrossover(CrossoverOperator):
         # Return the two offsprings.
         return child1, child2
     # _end_def_
-
 
 # _end_class_

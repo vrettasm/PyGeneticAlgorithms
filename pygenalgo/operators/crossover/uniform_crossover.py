@@ -47,12 +47,9 @@ class UniformCrossover(CrossoverOperator):
         # a uniformly random value, make the changes.
         if self.probability > self.rng.random():
 
-            # Get the number of genes from the first parent (chromosome).
-            # N.B.: It is assumed that both parents have the same size.
-            N = len(parent1)
-
-            # Generate 'N' random numbers in one call.
-            swap_probs = self.rng.random(N)
+            # Generate 'len(parent1)' random numbers in one call.
+            # It is assumed that both parents have the same size.
+            swap_probs = self.rng.random(size=len(parent1))
 
             # Go through all the children's genome.
             for i, prob_i in enumerate(swap_probs):
