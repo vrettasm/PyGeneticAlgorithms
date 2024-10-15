@@ -21,29 +21,29 @@ class RandomMigration(MigrationOperator):
         super().__init__(migration_probability)
     # _end_def_
 
-    def migrate(self, island: list[SubPopulation]) -> None:
+    def migrate(self, islands: list[SubPopulation]) -> None:
         """
         Perform the migration operation on the list of SubPopulations.
 
-        :param island: list[SubPopulation].
+        :param islands: list[SubPopulation].
 
         :return: None.
         """
 
         # If we have only one active population exit without migration.
-        if len(island) == 1:
+        if len(islands) == 1:
             return None
         # _end_if_
 
         # First find the best individual chromosome FROM EACH island.
         best_chromosome = [max(pop_i.population,
-                               key=lambda c: c.fitness) for pop_i in island]
+                               key=lambda c: c.fitness) for pop_i in islands]
 
         # Shuffle the order of the best chromosomes list.
         self.rng.shuffle(best_chromosome)
 
         # Go through all the islands.
-        for i, (pop_i, best_j) in enumerate(zip(island, best_chromosome)):
+        for i, (pop_i, best_j) in enumerate(zip(islands, best_chromosome)):
 
             # Perform the migration with a predefined probability.
             if self.probability > self.rng.random():
