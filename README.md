@@ -55,8 +55,9 @@ The current implementation offers a variety of genetic operators including:
 - **Meta operators**
   - [Meta Crossover](pygenalgo/operators/crossover/meta_crossover.py)
   - [Meta Mutator](pygenalgo/operators/mutation/meta_mutator.py)
+  - [Meta Migration](pygenalgo/operators/migration/meta_migration.py)
 
-(**NOTE:** Meta operators call randomly the other operators (crossover/mutation) from a predefined set,
+(**NOTE:** Meta operators call randomly the other operators (crossover/mutation/migration) from a predefined set,
 with equal probability.)
 
 Incorporating additional genetic operators is easily facilitated by inheriting from the base classes:
