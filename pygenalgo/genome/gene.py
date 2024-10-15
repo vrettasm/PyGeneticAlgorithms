@@ -1,5 +1,6 @@
 from typing import Any, Callable
 from copy import deepcopy
+from numpy.random import default_rng
 
 
 class Gene(object):
@@ -12,6 +13,8 @@ class Gene(object):
         image. This way provides us with flexibility to parameterize the chromosome with
         different "kinds of genes" each one responsible for a specific function.
     """
+    # Random number generator.
+    _rng = default_rng()
 
     # Object variables.
     __slots__ = ("_datum", "_func", "valid")
@@ -148,13 +151,27 @@ class Gene(object):
         FlipMutator operator for problems where the chromosome is represented
         by a list of bits.
 
-        i)   1 -> 0
+         i)  1 -> 0
         ii)  0 -> 1
 
         :return: None.
         """
 
+        # Flip the current gene value.
         self._datum = int(not self._datum)
+    # _end_def_
+
+    def gaussian(self) -> None:
+        """
+        This method adds a random value, drawn from a standard normal
+        distribution x ~ N(0,1) to the current gene data value. It is
+        used mostly from the GaussianMutator method.
+
+        :return: None.
+        """
+
+        # Add N(0,1) to the current gene value.
+        self._datum += self._rng.normal()
     # _end_def_
 
     def __str__(self) -> str:
