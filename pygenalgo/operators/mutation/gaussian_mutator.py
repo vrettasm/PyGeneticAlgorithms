@@ -40,7 +40,7 @@ class GaussianMutator(MutationOperator):
             # Select randomly the mutation point.
             idx = self.rng.integers(0, len(individual))
 
-            # Replace the old gene with a new one.
+            # Update the gene value.
             individual[idx].gaussian()
 
             # Invalidate the fitness of the chromosome.
