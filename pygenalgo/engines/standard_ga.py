@@ -255,7 +255,7 @@ class StandardGA(GenericGA):
         # Second print the crossover operator.
         print(self.crossover_op)
 
-        # Check if we used the SuperCrossover.
+        # Check if we used the MetaCrossover.
         if isinstance(self.crossover_op, MetaCrossover):
             # Call internally all operators.
             for op in self.crossover_op.items:
@@ -266,7 +266,7 @@ class StandardGA(GenericGA):
         # Lastly print the mutation operator.
         print(self.mutate_op)
 
-        # Check if we used the SuperMutator.
+        # Check if we used the MetaMutator.
         if isinstance(self.mutate_op, MetaMutator):
             # Call internally all operators.
             for op in self.mutate_op.items:
