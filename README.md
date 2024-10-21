@@ -33,6 +33,7 @@ The current implementation offers a variety of genetic operators including:
   - [Stochastic Universal Selector](pygenalgo/operators/selection/stochastic_universal_selector.py)
   - [Tournament Selector](pygenalgo/operators/selection/tournament_selector.py)
   - [Truncation Selector](pygenalgo/operators/selection/truncation_selector.py)
+  - [Boltzmann Selector](pygenalgo/operators/selection/boltzmann_selector.py)
 
 - **Crossover operators**:
   - [Single-Point Crossover](pygenalgo/operators/crossover/single_point_crossover.py)
