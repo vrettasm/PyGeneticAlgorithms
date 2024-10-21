@@ -159,6 +159,10 @@ class StandardGA(GenericGA):
         # Repeat 'epoch' times.
         for i in range(epochs):
 
+            # Update current iteration in the selection operator.
+            # Currently this is used only from Boltzmann Selector.
+            self._select_op.iter = i
+
             # SELECT the parents.
             population_i = self._select_op(self.population)
 
