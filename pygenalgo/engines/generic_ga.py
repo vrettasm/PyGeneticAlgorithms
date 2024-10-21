@@ -30,7 +30,7 @@ class GenericGA(object):
     __slots__ = ("population", "fitness_func", "_select_op", "_crossx_op", "_mutate_op", "_stats")
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, select_op: SelectionOperator = None,
-                 mutate_op: MutationOperator = None, cross_op: CrossoverOperator = None):
+                 mutate_op: MutationOperator = None, crossx_op: CrossoverOperator = None):
         """
         Default constructor of GenericGA object.
 
@@ -42,7 +42,7 @@ class GenericGA(object):
 
         :param mutate_op: mutation operator (must inherit from class MutationOperator).
 
-        :param cross_op: crossover operator (must inherit from class CrossoverOperator).
+        :param crossx_op: crossover operator (must inherit from class CrossoverOperator).
         """
 
         # Copy the reference of the population.
@@ -71,10 +71,10 @@ class GenericGA(object):
         # _end_if_
 
         # Get Crossover Operator.
-        if cross_op is None:
+        if crossx_op is None:
             raise ValueError(f"{self.__class__.__name__}: Crossover operator is missing.")
         else:
-            self._crossx_op = cross_op
+            self._crossx_op = crossx_op
         # _end_if_
 
         # Placeholder for the stats.
