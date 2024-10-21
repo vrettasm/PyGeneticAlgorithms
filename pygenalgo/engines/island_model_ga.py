@@ -148,9 +148,6 @@ class IslandModelGA(GenericGA):
 
         # Repeat 'epoch' times.
         for i in range(epochs):
-            # Update current iteration in the selection operator.
-            # Currently this is used only from Boltzmann Selector.
-            sel_op.iter = i
 
             # SELECT the parents.
             population_i = sel_op(island.population)
