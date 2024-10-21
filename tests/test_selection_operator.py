@@ -41,6 +41,28 @@ class TestSelectionOperator(unittest.TestCase):
 
     # _end_def_
 
+    def test_iter(self):
+        """
+        The iteration value monitors the current epoch
+        (iteration) of the evolution process.
+
+        :return: None.
+        """
+
+        # Upon creation the iterarion value should be zero.
+        self.assertAlmostEqual(0, self.select_op.iter)
+
+        # Update with a new value.
+        self.select_op.iter = 10
+        self.assertAlmostEqual(10, self.select_op.iter)
+
+        # Update with a wrong type.
+        with self.assertRaises(TypeError):
+            self.select_op.iter = 10.9
+        # _end_with_
+
+    # _end_def_
+
 # _end_class_
 
 
