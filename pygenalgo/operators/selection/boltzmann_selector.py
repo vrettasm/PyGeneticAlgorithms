@@ -47,7 +47,7 @@ class BoltzmannSelector(SelectionOperator):
         # Extract the fitness value of each chromosome.
         # This assumes that the fitness values are all
         # positive.
-        exp_fitness = [np.exp(p.fitness/T) for p in population]
+        exp_fitness = [np.exp(-p.fitness/T) for p in population]
 
         # Calculate sum of all fitness.
         sum_fitness = fsum(exp_fitness)
