@@ -71,26 +71,20 @@ class PositionBasedCrossover(CrossoverOperator):
 
                 # Check if 'gene1' exists in 1st offspring.
                 if gene1 not in child1:
+                    # Find the first 'None' entry.
+                    idx = child1.genome.index(None)
 
-                    for n in range(M):
-                        if child1[n] is None:
-                            child1[n] = gene1
-                            break
-                        # _end_if_
-                    # _end_for_
-
+                    # Assign the current gene value.
+                    child1[idx] = gene1
                 # _end_if_
 
                 # Check if 'gene2' exists in 2nd offspring.
                 if gene2 not in child2:
+                    # Find the first 'None' entry.
+                    idz = child2.genome.index(None)
 
-                    for n in range(M):
-                        if child2[n] is None:
-                            child2[n] = gene2
-                            break
-                        # _end_if_
-                    # _end_for_
-
+                    # Assign the current gene value.
+                    child2[idz] = gene2
                 # _end_if_
 
             # _end_for_
