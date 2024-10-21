@@ -28,7 +28,7 @@ class GeneticOperator(object):
     _rng = default_rng()
 
     # Object variables.
-    __slots__ = ("_probability", "_counter", "_lock", "_items")
+    __slots__ = ("_probability", "_counter", "_lock", "_items", "_iteration")
 
     def __init__(self, _probability: float) -> None:
         """
@@ -49,6 +49,37 @@ class GeneticOperator(object):
 
         # Place holder.
         self._items = None
+
+        # Initialize the iteration value.
+        self._iteration = 0
+    # _end_def_
+
+    @property
+    def iter(self) -> int:
+        """
+        Accessor (getter) of the iteration parameter.
+
+        :return: the iteration value.
+        """
+        return self._iteration
+    # _end_def_
+
+    @iter.setter
+    def iter(self, value: int):
+        """
+        Accessor (setter) of the iteration value.
+
+        :param value: (int).
+        """
+        # Check for correct type.
+        if isinstance(value, int):
+
+            # Update the iteration value.
+            self._iteration = value
+        else:
+            raise TypeError(f"{self.__class__.__name__}: "
+                            f"Iteration value flag should be int: {type(value)}.")
+        # _end_if_
     # _end_def_
 
     @property
