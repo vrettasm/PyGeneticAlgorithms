@@ -40,8 +40,8 @@ class OrderCrossover(CrossoverOperator):
         # a uniformly random value, make the changes.
         if self.probability > self.rng.random():
 
-            # Select randomly the crossover point.
-            locus = self.rng.integers(1, high=len(parent1))
+            # Select randomly the crossover point from [1, M-1].
+            locus = self.rng.integers(1, high=len(parent1)-1)
 
             # Create the two NEW offsprings at locus.
             child1 = Chromosome(parent1[:locus] + [x for x in parent2 if x not in parent1[:locus]],
