@@ -11,6 +11,9 @@ class SelectionOperator(GeneticOperator):
         is applied with 100% probability.
     """
 
+    # Object variables.
+    __slots__ = ("_iteration",)
+
     def __init__(self, selection_probability: float):
         """
         Construct a 'SelectionOperator' object with a
@@ -22,6 +25,37 @@ class SelectionOperator(GeneticOperator):
         # Call the super constructor with the provided
         # probability value.
         super().__init__(selection_probability)
+
+        # Initialize the iteration value.
+        self._iteration = 0
+    # _end_def_
+
+    @property
+    def iter(self) -> int:
+        """
+        Accessor (getter) of the iteration parameter.
+
+        :return: the iteration value.
+        """
+        return self._iteration
+    # _end_def_
+
+    @iter.setter
+    def iter(self, value: int):
+        """
+        Accessor (setter) of the iteration value.
+
+        :param value: (int).
+        """
+        # Check for correct type.
+        if isinstance(value, int):
+
+            # Update the iteration value.
+            self._iteration = value
+        else:
+            raise TypeError(f"{self.__class__.__name__}: "
+                            f"Iteration value flag should be int: {type(value)}.")
+        # _end_if_
     # _end_def_
 
     def select(self, population: list[Chromosome]):
