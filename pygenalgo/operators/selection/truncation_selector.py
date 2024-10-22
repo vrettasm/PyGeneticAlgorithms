@@ -24,7 +24,7 @@ class TruncationSelector(SelectionOperator):
         super().__init__(select_probability)
 
         # The proportion value should be in [0.1, 0.9].
-        self._p = max(min(float(p), 0.9), 0.1)
+        self._items = max(min(float(p), 0.9), 0.1)
     # _end_def_
 
     def select(self, population: list[Chromosome]):
@@ -44,7 +44,7 @@ class TruncationSelector(SelectionOperator):
         sorted_population = sorted(population, key=lambda p: p.fitness, reverse=True)
 
         # Select 'N' using only the higher 'p%' of the (old) population (indexes).
-        index = self.rng.choice(int(N*self._p), size=N, replace=True, shuffle=True)
+        index = self.rng.choice(int(N*self._items), size=N, replace=True, shuffle=True)
 
         # Increase the selection counter.
         self.inc_counter()

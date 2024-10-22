@@ -26,7 +26,7 @@ class BoltzmannSelector(SelectionOperator):
         super().__init__(select_probability)
 
         # Make sure 'k' is float and at least 50.
-        self._k = float(k) if k > 50.0 else 50.0
+        self._items = float(k) if k > 50.0 else 50.0
     # _end_def_
 
     def select(self, population: list[Chromosome]):
@@ -39,7 +39,7 @@ class BoltzmannSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Compute the 'T'emperature.
-        T = max(0.1, np.exp(-self.iter/self._k))
+        T = max(0.1, np.exp(-self.iter/self._items))
 
         # Get the length of the population list.
         N = len(population)
