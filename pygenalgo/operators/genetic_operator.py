@@ -65,7 +65,7 @@ class GeneticOperator(object):
     # _end_def_
 
     @iter.setter
-    def iter(self, value: int):
+    def iter(self, value: int) -> None:
         """
         Accessor (setter) of the iteration value.
 
@@ -73,12 +73,14 @@ class GeneticOperator(object):
         """
         # Check for correct type.
         if isinstance(value, int):
-
-            # Update the iteration value.
-            self._iteration = value
+            # Protect value assignment.
+            with self._lock:
+                # Update the iteration value.
+                self._iteration = value
+            # _end_with_
         else:
             raise TypeError(f"{self.__class__.__name__}: "
-                            f"Iteration value flag should be int: {type(value)}.")
+                            f"Iteration value should be int: {type(value)}.")
         # _end_if_
     # _end_def_
 
