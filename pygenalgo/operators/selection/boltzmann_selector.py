@@ -45,16 +45,15 @@ class BoltzmannSelector(SelectionOperator):
         N = len(population)
 
         # Extract the fitness value of each chromosome.
-        # This assumes that the fitness values are all
-        # positive.
-        exp_fitness = [np.exp(-p.fitness/T) for p in population]
+        # This assumes that the fitness values are all positive.
+        exp_fitness = np.exp([-p.fitness/T for p in population]).tolist()
 
         # Calculate sum of all fitness.
         sum_fitness = fsum(exp_fitness)
 
-        # Calculate the "selection probabilities", of each member
-        # in the population.
-        selection_probs = [f / sum_fitness for f in exp_fitness]
+        # Calculate the selection probabilities of each member
+        # in the population (Boltzmann distribution).
+        selection_probs = [f/sum_fitness for f in exp_fitness]
 
         # Select 'N' new individuals (indexes).
         index = self.rng.choice(N, size=N, p=selection_probs, replace=True, shuffle=False)
