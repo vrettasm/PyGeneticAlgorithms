@@ -19,10 +19,12 @@ parallel pool). So the default setting here is "parallel=False". Regarding the I
 parallel mode by definition.
 
   > **NEWS**:
-  > Four new genetic operators have been added (**PartiallyMappedCrossover (PMX)**, **OrderCrossover (OX1)**,
-  > **InverseMutator** and **FlipMutator**). These operators were added to address combinatorial problems where
-  > the genome can become invalid by the application of the other standard operators.
-  >
+  > Several new genetic operators have been added, such as: **PositionBasedCrossover(POS)**,
+  > **PartiallyMappedCrossover (PMX)** and **OrderCrossover (OX1)**. These operators were added to address combinatorial
+  > problems where the genome can become invalid by the application of the other standard operators. Additionally, the
+  > **Boltzmann Selector** has been implemented where the individuals, that will form the new population, are selected
+  > using a temperature controlled Boltzmann distribution.
+  > 
 
 The current implementation offers a variety of genetic operators including:
 
