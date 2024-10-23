@@ -71,21 +71,31 @@ class MultiPointCrossover(CrossoverOperator):
             loci = sorted(self.rng.choice(num_genes, size=self._items,
                                           replace=False, shuffle=False))
 
-            # Initialize an array with True values
-            # with the same size as the chromosome.
-            flags = np.array(num_genes * [True], dtype=bool)
+            # Initialize a set of hyper-parameters.
+            reset_flag, upper_lim, j = True, loci[0], 0
 
-            # Use the loci positions to invert the
-            # bool values between two loci positions.
-            for j in loci:
-                flags[:j] = np.logical_not(flags[:j])
-            # _end_for_
+            # Scan the whole list of genes.
+            for i in range(num_genes):
 
-            # Go through all the children's genes and
-            # swap them when the flags' are true.
-            for i, flags_i in enumerate(flags):
+                # Once we surpass the upper limit (in loci)
+                # we reset the  flag value to allow changes
+                # to take place within that range.
+                if i >= upper_lim:
 
-                if flags_i:
+                    # Swap the reset flag.
+                    reset_flag = not reset_flag
+
+                    # Increase the index of the loci.
+                    j += 1
+
+                    # We make sure the upper limit value does not exceed
+                    # the number of genes. Also, this avoids the out of
+                    # bound IndexError.
+                    upper_lim = loci[j] if j < len(loci) else num_genes
+                # _end_if_
+
+                # Check the flag value.
+                if not reset_flag:
                     # Swap in place between the two positions.
                     child1[i], child2[i] = child2[i], child1[i]
                 # _end_if_
@@ -93,10 +103,8 @@ class MultiPointCrossover(CrossoverOperator):
             # _end_for_
 
             # After the crossover neither offspring has accurate fitness.
-            if np.any(flags):
-                child1.fitness = np.nan
-                child2.fitness = np.nan
-            # _end_if_
+            child1.fitness = np.nan
+            child2.fitness = np.nan
 
             # Increase the crossover counter.
             self.inc_counter()
