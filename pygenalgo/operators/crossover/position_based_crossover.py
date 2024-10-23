@@ -1,4 +1,4 @@
-import numpy as np
+from numpy import nan as np_nan
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -36,10 +36,6 @@ class PositionBasedCrossover(CrossoverOperator):
         :return: child1 and child2 (as Chromosomes).
         """
 
-        # Initially each child points to a clone of a single parent.
-        child1 = parent2.clone()
-        child2 = parent1.clone()
-
         # If the crossover probability is higher than
         # a uniformly random value, make the changes.
         if self.probability > self.rng.random():
@@ -53,48 +49,50 @@ class PositionBasedCrossover(CrossoverOperator):
             # Select randomly the 'K' crossover points.
             C = sorted(self.rng.choice(range(M), size=K, replace=False, shuffle=False))
 
-            # Clean up the entries (on both children)
-            # outside the selected positions.
-            for i in range(M):
+            # Initialize the genome of the two new chromosomes to None.
+            genome_1 = M*[None]
+            genome_2 = M*[None]
 
-                # Skip the preselected positions.
-                if i in C:
-                    continue
-                # _end_if_
-
-                child1[i] = None
-                child2[i] = None
+            # Copy the genes of the parents at
+            # the preselected gene C positions.
+            for i in C:
+                genome_1[i] = parent2[i]
+                genome_2[i] = parent1[i]
             # _end_for_
 
             # Fill the rest of the positions in both offsprings.
             for gene1, gene2 in zip(parent1.genome, parent2.genome):
 
                 # Check if 'gene1' exists in 1st offspring.
-                if gene1 not in child1:
+                if gene1 not in genome_1:
                     # Find the first 'None' entry.
-                    idx = child1.genome.index(None)
+                    j = genome_1.index(None)
 
                     # Assign the current gene value.
-                    child1[idx] = gene1
+                    genome_1[j] = gene1
                 # _end_if_
 
                 # Check if 'gene2' exists in 2nd offspring.
-                if gene2 not in child2:
+                if gene2 not in genome_2:
                     # Find the first 'None' entry.
-                    idz = child2.genome.index(None)
+                    k = genome_2.index(None)
 
                     # Assign the current gene value.
-                    child2[idz] = gene2
+                    genome_2[k] = gene2
                 # _end_if_
 
             # _end_for_
 
             # After the crossover neither offspring has accurate fitness.
-            child1.fitness = np.nan
-            child2.fitness = np.nan
+            child1 = Chromosome(_genome=genome_1, _fitness=np_nan)
+            child2 = Chromosome(_genome=genome_2, _fitness=np_nan)
 
             # Increase the crossover counter.
             self.inc_counter()
+        else:
+            # Each child points to a clone of a single parent.
+            child1 = parent1.clone()
+            child2 = parent2.clone()
         # _end_if_
 
         # Return the two offsprings.
