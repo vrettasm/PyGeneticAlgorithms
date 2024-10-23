@@ -35,25 +35,27 @@ class TestUniformCrossover(unittest.TestCase):
         """
 
         # Create two dummy test parents.
-        parent1 = Chromosome([Gene('a', lambda: str('x')),
-                              Gene('b', lambda: str('x')),
-                              Gene('c', lambda: str('x')),
-                              Gene('d', lambda: str('x')),
-                              Gene('e', lambda: str('x')),
-                              Gene('f', lambda: str('x')),
-                              Gene('g', lambda: str('x')),
-                              Gene('h', lambda: str('x')),
-                              Gene('i', lambda: str('x'))])
+        parent1 = Chromosome([Gene('a', lambda: str('!')),
+                              Gene('b', lambda: str('!')),
+                              Gene('c', lambda: str('!')),
+                              Gene('d', lambda: str('!')),
+                              Gene('e', lambda: str('!')),
+                              Gene('f', lambda: str('!')),
+                              Gene('g', lambda: str('!')),
+                              Gene('h', lambda: str('!')),
+                              Gene('i', lambda: str('!')),
+                              Gene('k', lambda: str('!'))])
 
-        parent2 = Chromosome([Gene('1', lambda: str(0)),
-                              Gene('2', lambda: str(0)),
-                              Gene('3', lambda: str(0)),
-                              Gene('4', lambda: str(0)),
-                              Gene('5', lambda: str(0)),
-                              Gene('6', lambda: str(0)),
-                              Gene('7', lambda: str(0)),
-                              Gene('8', lambda: str(0)),
-                              Gene('9', lambda: str(0))])
+        parent2 = Chromosome([Gene('0', lambda: str('!')),
+                              Gene('1', lambda: str('!')),
+                              Gene('2', lambda: str('!')),
+                              Gene('3', lambda: str('!')),
+                              Gene('4', lambda: str('!')),
+                              Gene('5', lambda: str('!')),
+                              Gene('6', lambda: str('!')),
+                              Gene('7', lambda: str('!')),
+                              Gene('8', lambda: str('!')),
+                              Gene('9', lambda: str('!'))])
 
         # Print parents BEFORE crossover.
         print("Parent-1: ", " ".join([xi.value for xi in parent1]))
