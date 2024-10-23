@@ -15,30 +15,34 @@ class MultiPointCrossover(CrossoverOperator):
         It produces faster mixing, compared with single-point crossover.
     """
 
-    def __init__(self, crossover_probability: float = 0.9):
+    def __init__(self, crossover_probability: float = 0.9, num_loci: int = 2):
         """
         Construct a 'MultiPointCrossover' object with a given
         probability value.
 
         :param crossover_probability: (float).
+
+        :param num_loci: (int).
         """
 
         # Call the super constructor with the provided
         # probability value.
         super().__init__(crossover_probability)
+
+        # Make sure number of loci are at least 2.
+        self._items = max(int(num_loci), 2)
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome,
-                  num_loci: int = 2):
+    def crossover(self, parent1: Chromosome, parent2: Chromosome):
         """
         Perform the crossover operation on the two input parent
         chromosomes, using multiple cutting points (num_loci).
 
+        NOTE: the number of loci is held in the '_items' variable.
+
         :param parent1: (Chromosome).
 
         :param parent2: (Chromosome).
-
-        :param num_loci: (int).
 
         :return: child1 and child2 (as Chromosomes).
         """
@@ -49,7 +53,7 @@ class MultiPointCrossover(CrossoverOperator):
 
         # Ensure the number of requested cutting points
         # do not exceed the length of the chromosomes.
-        if num_loci >= num_genes:
+        if self._items >= num_genes:
             raise ValueError(f"{self.__class__.__name__}:"
                              " Number of requested crossover points"
                              " exceeds the length of the chromosome.")
@@ -64,7 +68,7 @@ class MultiPointCrossover(CrossoverOperator):
         if self.probability > self.rng.random():
 
             # Select randomly the crossover points and sort them.
-            loci = sorted(self.rng.choice(num_genes, size=num_loci,
+            loci = sorted(self.rng.choice(num_genes, size=self._items,
                                           replace=False, shuffle=False))
 
             # Initialize an array with True values
