@@ -26,13 +26,15 @@ class BoltzmannSelector(SelectionOperator):
         super().__init__(select_probability)
 
         # Make sure 'k' is float and at least 50.
-        self._items = float(k) if k > 50.0 else 50.0
+        self._items = max(float(k), 50.0)
     # _end_def_
 
     def select(self, population: list[Chromosome]):
         """
         Select the individuals, from the input population, that will be passed on to the next
         genetic operations of crossover and mutation to form the new population of solutions.
+
+        NOTE: the Boltzmann constant is held in the '_items' variable.
 
         :param population: a list of chromosomes to select the parents from.
 
