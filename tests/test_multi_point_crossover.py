@@ -24,7 +24,8 @@ class TestMultiPointCrossover(unittest.TestCase):
         :return: None.
         """
         # Create an object with a crossover probability of 1.0.
-        self.cross_op = MultiPointCrossover(crossover_probability=1.0)
+        self.cross_op = MultiPointCrossover(crossover_probability=1.0,
+                                            num_loci=3)
     # _end_def_
 
     def test_crossover(self):
@@ -60,7 +61,7 @@ class TestMultiPointCrossover(unittest.TestCase):
         print("Parent-2: ", " ".join([xi.value for xi in parent2]))
 
         # Perform the crossover.
-        child1, child2 = self.cross_op(parent1, parent2, num_loci=3)
+        child1, child2 = self.cross_op(parent1, parent2)
         print("---------")
 
         # Print offsprings AFTER crossover.
