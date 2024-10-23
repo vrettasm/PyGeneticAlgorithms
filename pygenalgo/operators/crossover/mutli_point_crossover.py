@@ -73,12 +73,12 @@ class MultiPointCrossover(CrossoverOperator):
 
             # Initialize an array with True values
             # with the same size as the chromosome.
-            flags = np.ones(num_genes, dtype=bool)
+            flags = np.array(num_genes * [True], dtype=bool)
 
             # Use the loci positions to invert the
             # bool values between two loci positions.
             for j in loci:
-                flags[:j] = ~flags[:j]
+                flags[:j] = np.logical_not(flags[:j])
             # _end_for_
 
             # Go through all the children's genes and
