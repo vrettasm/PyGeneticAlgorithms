@@ -1,4 +1,3 @@
-from numpy import any as np_any
 from numpy import nan as np_nan
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
@@ -39,38 +38,45 @@ class UniformCrossover(CrossoverOperator):
         :return: child1 and child2 (as Chromosomes).
         """
 
-        # Initially each child points to a clone of a single parent.
-        child1 = parent1.clone()
-        child2 = parent2.clone()
-
         # If the crossover probability is higher than
         # a uniformly random value, make the changes.
         if self.probability > self.rng.random():
 
+            # Get the length of the chromosome.
+            M = len(parent1)
+
             # Generate 'len(parent1)' random numbers in one call.
             # It is assumed that both parents have the same size.
-            swap_probs = self.rng.random(size=len(parent1))
+            swap_probs = self.rng.random(size=M)
+
+            # Initializze the offspring genomes to None.
+            genome_1 = M * [None]
+            genome_2 = M * [None]
 
             # Go through all the children's genome.
             for i, prob_i in enumerate(swap_probs):
 
                 # The two genes will swap with 50% probability.
                 if prob_i > 0.5:
-
-                    # Swap in place between the two positions.
-                    child1[i], child2[i] = child2[i], child1[i]
+                    genome_1[i] = parent2[i]
+                    genome_2[i] = parent1[i]
+                else:
+                    genome_1[i] = parent1[i]
+                    genome_2[i] = parent2[i]
                 # _end_if_
 
             # _end_for_
 
-            # Even if one gene has swapped the fitness will not be accurate.
-            if np_any(swap_probs > 0.5):
-                child1.fitness = np_nan
-                child2.fitness = np_nan
-            # _end_if_
+            # Create the two NEW offsprings.
+            child1 = Chromosome(genome_1, _fitness=np_nan)
+            child2 = Chromosome(genome_2, _fitness=np_nan)
 
             # Increase the crossover counter.
             self.inc_counter()
+        else:
+            # Each child points to a clone of a single parent.
+            child1 = parent1.clone()
+            child2 = parent2.clone()
         # _end_if_
 
         # Return the two offsprings.

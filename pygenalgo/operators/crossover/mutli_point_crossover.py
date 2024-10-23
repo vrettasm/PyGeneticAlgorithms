@@ -59,10 +59,6 @@ class MultiPointCrossover(CrossoverOperator):
                              " exceeds the length of the chromosome.")
         # _end_def_
 
-        # Initially each child points to a clone of a single parent.
-        child1 = parent1.clone()
-        child2 = parent2.clone()
-
         # If the crossover probability is higher than
         # a uniformly random value, make the changes.
         if self.probability > self.rng.random():
@@ -70,6 +66,10 @@ class MultiPointCrossover(CrossoverOperator):
             # Select randomly the crossover points and sort them.
             loci = sorted(self.rng.choice(num_genes, size=self._items,
                                           replace=False, shuffle=False))
+
+            # Initializze the offspring genomes to None.
+            genome_1 = num_genes * [None]
+            genome_2 = num_genes * [None]
 
             # Initialize a set of hyper-parameters.
             reset_flag, upper_lim, j = True, loci[0], 0
@@ -95,19 +95,26 @@ class MultiPointCrossover(CrossoverOperator):
                 # _end_if_
 
                 # Check the flag value.
-                if not reset_flag:
-                    # Swap in place between the two positions.
-                    child1[i], child2[i] = child2[i], child1[i]
+                if reset_flag:
+                    genome_1[i] = parent1[i]
+                    genome_2[i] = parent2[i]
+                else:
+                    genome_1[i] = parent2[i]
+                    genome_2[i] = parent1[i]
                 # _end_if_
 
             # _end_for_
 
-            # After the crossover neither offspring has accurate fitness.
-            child1.fitness = np.nan
-            child2.fitness = np.nan
+            # Create the two NEW offsprings.
+            child1 = Chromosome(genome_1, _fitness=np.nan)
+            child2 = Chromosome(genome_2, _fitness=np.nan)
 
             # Increase the crossover counter.
             self.inc_counter()
+        else:
+            # Each child points to a clone of a single parent.
+            child1 = parent1.clone()
+            child2 = parent2.clone()
         # _end_if_
 
         # Return the two offsprings.
