@@ -7,8 +7,8 @@ class SwapMutator(MutationOperator):
     """
     Description:
 
-        Swap mutator mutates the chromosome by swapping the gene values
-        between two randomly selected gene positions.
+        Swap mutator mutates the chromosome by swapping the gene
+        values between two randomly selected gene positions.
     """
 
     def __init__(self, mutate_probability: float = 0.1):

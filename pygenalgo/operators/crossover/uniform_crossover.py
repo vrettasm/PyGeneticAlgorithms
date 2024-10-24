@@ -49,7 +49,7 @@ class UniformCrossover(CrossoverOperator):
             # It is assumed that both parents have the same size.
             swap_probs = self.rng.random(size=M)
 
-            # Initializze the offspring genomes to None.
+            # Initialize the offspring genomes to None.
             genome_1 = M * [None]
             genome_2 = M * [None]
 

@@ -7,8 +7,8 @@ class ShuffleMutator(MutationOperator):
     """
     Description:
 
-        Shuffle mutator mutates the chromosome by shuffling the gene values
-        between two randomly selected gene end-positions.
+        Shuffle mutator mutates the chromosome by shuffling the gene
+        values between two randomly selected gene end-positions.
     """
 
     def __init__(self, mutate_probability: float = 0.1):

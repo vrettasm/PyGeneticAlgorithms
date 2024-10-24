@@ -7,8 +7,8 @@ class InverseMutator(MutationOperator):
     """
     Description:
 
-        Inverse mutator mutates the chromosome by inverting the order of the gene values
-        between two randomly selected gene end-positions.
+        Inverse mutator mutates the chromosome by inverting the order of
+        the gene values between two randomly selected gene end-positions.
     """
 
     def __init__(self, mutate_probability: float = 0.1):

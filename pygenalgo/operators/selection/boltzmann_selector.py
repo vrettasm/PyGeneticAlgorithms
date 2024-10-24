@@ -10,7 +10,7 @@ class BoltzmannSelector(SelectionOperator):
 
         Boltzmann Selector implements an object that performs selection by choosing an individual
         from a set of individuals by sampling solutions from a Boltzmann distribution depending on
-        their fitnesses.
+        their fitness's.
     """
 
     def __init__(self, select_probability: float = 1.0, k: float = 100.0):
@@ -40,7 +40,7 @@ class BoltzmannSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
-        # Compute the 'T'emperature.
+        # Compute the Temperature.
         T = max(0.1, np.exp(-self.iter/self._items))
 
         # Get the length of the population list.

@@ -67,11 +67,11 @@ class MultiPointCrossover(CrossoverOperator):
             loci = sorted(self.rng.choice(num_genes, size=self._items,
                                           replace=False, shuffle=False))
 
-            # Initializze the offspring genomes to None.
+            # Initialize the offspring genomes to None.
             genome_1 = num_genes * [None]
             genome_2 = num_genes * [None]
 
-            # Initialize a set of hyper-parameters.
+            # Initialize a set of hyperparameters.
             reset_flag, upper_lim, j = True, loci[0], 0
 
             # Scan the whole list of genes.
