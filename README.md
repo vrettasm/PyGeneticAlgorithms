@@ -1,4 +1,4 @@
-# PyGenAlgo:  A simple toolkit for genetic algorithms.
+# PyGenAlgo:  A simple and powerful toolkit for genetic algorithms.
 
 "Genetic Algorithms [(GA)](https://en.wikipedia.org/wiki/Genetic_algorithm), are meta heuristic algorithms
 inspired by the process of natural selection and belong to a larger class of evolutionary algorithms (EA)."
