@@ -1,4 +1,4 @@
-import numpy as np
+from numpy import nan as np_nan
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -154,8 +154,8 @@ class PartiallyMappedCrossover(CrossoverOperator):
             # _end_for_
 
             # After the crossover neither offspring has accurate fitness.
-            child1.fitness = np.nan
-            child2.fitness = np.nan
+            child1.fitness = np_nan
+            child2.fitness = np_nan
 
             # Increase the crossover counter.
             self.inc_counter()
