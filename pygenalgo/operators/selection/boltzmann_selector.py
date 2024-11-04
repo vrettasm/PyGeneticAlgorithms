@@ -1,5 +1,5 @@
-import numpy as np
 from math import fsum
+from numpy import exp as np_exp
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
@@ -41,14 +41,14 @@ class BoltzmannSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Compute the Temperature.
-        T = max(0.1, np.exp(-self.iter/self._items))
+        T = max(0.1, np_exp(-self.iter/self._items))
 
         # Get the length of the population list.
         N = len(population)
 
         # Extract the fitness value of each chromosome.
         # This assumes that the fitness values are all positive.
-        exp_fitness = np.exp([-p.fitness/T for p in population]).tolist()
+        exp_fitness = np_exp([-p.fitness/T for p in population]).tolist()
 
         # Calculate sum of all fitness.
         sum_fitness = fsum(exp_fitness)
