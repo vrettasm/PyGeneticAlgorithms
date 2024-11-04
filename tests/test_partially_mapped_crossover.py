@@ -39,27 +39,29 @@ class TestPartiallyMappedCrossover(unittest.TestCase):
         """
 
         # Create two dummy test parents.
-        parent1 = Chromosome([Gene('A', lambda: str('x')),
-                              Gene('B', lambda: str('x')),
-                              Gene('C', lambda: str('x')),
-                              Gene('D', lambda: str('x')),
-                              Gene('E', lambda: str('x')),
-                              Gene('F', lambda: str('x')),
-                              Gene('G', lambda: str('x')),
-                              Gene('H', lambda: str('x'))])
+        parent1 = Chromosome([Gene('1', lambda: str('x')),
+                              Gene('2', lambda: str('x')),
+                              Gene('3', lambda: str('x')),
+                              Gene('4', lambda: str('x')),
+                              Gene('5', lambda: str('x')),
+                              Gene('6', lambda: str('x')),
+                              Gene('7', lambda: str('x')),
+                              Gene('8', lambda: str('x')),
+                              Gene('9', lambda: str('x'))])
 
         # Get the number of 'unique' genes BEFORE crossover.
         N1 = len(set(parent1.genome))
 
         # Make a second of parent.
-        parent2 = Chromosome([Gene('C', lambda: str('x')),
-                              Gene('G', lambda: str('x')),
-                              Gene('E', lambda: str('x')),
-                              Gene('A', lambda: str('x')),
-                              Gene('F', lambda: str('x')),
-                              Gene('H', lambda: str('x')),
-                              Gene('B', lambda: str('x')),
-                              Gene('D', lambda: str('x'))])
+        parent2 = Chromosome([Gene('5', lambda: str('x')),
+                              Gene('4', lambda: str('x')),
+                              Gene('6', lambda: str('x')),
+                              Gene('9', lambda: str('x')),
+                              Gene('2', lambda: str('x')),
+                              Gene('1', lambda: str('x')),
+                              Gene('7', lambda: str('x')),
+                              Gene('8', lambda: str('x')),
+                              Gene('3', lambda: str('x'))])
 
         # Get the number of 'unique' genes BEFORE crossover.
         N2 = len(set(parent2.genome))
