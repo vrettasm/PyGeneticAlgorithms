@@ -54,15 +54,16 @@ class UniformCrossover(CrossoverOperator):
             genome_2 = M * [None]
 
             # Go through all the children's genome.
-            for i, prob_i in enumerate(swap_probs):
-
-                # The two genes will swap with 50% probability.
+            for i, (prob_i, gene_a, gene_b) in enumerate(zip(swap_probs,
+                                                             parent1.genome,
+                                                             parent2.genome)):
+                # Swap genes with 50% probability.
                 if prob_i > 0.5:
-                    genome_1[i] = parent2[i]
-                    genome_2[i] = parent1[i]
+                    genome_1[i] = gene_b
+                    genome_2[i] = gene_a
                 else:
-                    genome_1[i] = parent1[i]
-                    genome_2[i] = parent2[i]
+                    genome_1[i] = gene_a
+                    genome_2[i] = gene_b
                 # _end_if_
 
             # _end_for_
