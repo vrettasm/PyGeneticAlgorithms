@@ -50,9 +50,12 @@ class MultiPointCrossover(CrossoverOperator):
         # N.B.: It is assumed that both parents have the same size.
         num_genes = len(parent1)
 
+        # Extract the numboer of cut points.
+        num_points = self._items
+
         # Ensure the number of requested cutting points
         # do not exceed the length of the chromosomes.
-        if self._items >= num_genes:
+        if num_points >= num_genes:
             raise ValueError(f"{self.__class__.__name__}:"
                              " Number of requested crossover points"
                              " exceeds the length of the chromosome.")
@@ -63,7 +66,7 @@ class MultiPointCrossover(CrossoverOperator):
         if self.probability > self.rng.random():
 
             # Select randomly the crossover points and sort them.
-            loci = sorted(self.rng.choice(num_genes, size=self._items,
+            loci = sorted(self.rng.choice(num_genes, size=num_points,
                                           replace=False, shuffle=False))
 
             # Initialize the offspring genomes to None.
@@ -90,7 +93,7 @@ class MultiPointCrossover(CrossoverOperator):
                     # We make sure the upper limit value does not exceed
                     # the number of genes. Also, this avoids the out of
                     # bound IndexError.
-                    upper_lim = loci[j] if j < len(loci) else num_genes
+                    upper_lim = loci[j] if j < num_points else num_genes
                 # _end_if_
 
                 # Check the flag value.

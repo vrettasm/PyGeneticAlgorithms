@@ -50,8 +50,8 @@ class PositionBasedCrossover(CrossoverOperator):
             C = sorted(self.rng.choice(range(M), size=K, replace=False, shuffle=False))
 
             # Initialize the genome of the two new chromosomes to None.
-            genome_1 = M*[None]
-            genome_2 = M*[None]
+            genome_1 = M * [None]
+            genome_2 = M * [None]
 
             # Copy the genes of the parents at
             # the preselected gene C positions.
@@ -84,8 +84,8 @@ class PositionBasedCrossover(CrossoverOperator):
             # _end_for_
 
             # After the crossover neither offspring has accurate fitness.
-            child1 = Chromosome(_genome=genome_1, _fitness=np_nan)
-            child2 = Chromosome(_genome=genome_2, _fitness=np_nan)
+            child1 = Chromosome(genome_1, _fitness=np_nan)
+            child2 = Chromosome(genome_2, _fitness=np_nan)
 
             # Increase the crossover counter.
             self.inc_counter()
