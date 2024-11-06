@@ -9,13 +9,11 @@ class TestChromosome(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         print(">> TestChromosome - START -")
-
     # _end_def_
 
     @classmethod
     def tearDownClass(cls) -> None:
         print(">> TestChromosome - FINISH -", end='\n\n')
-
     # _end_def_
 
     def test_fitness(self):
@@ -30,6 +28,7 @@ class TestChromosome(unittest.TestCase):
 
         # Check if "fitness" is float/int.
         with self.assertRaises(TypeError):
+
             # We allow only float/int.
             ch1.fitness = '0.98'
         # _end_with_
@@ -46,7 +45,6 @@ class TestChromosome(unittest.TestCase):
         # Create a 'dummy' random function.
         def func():
             return randint(5)
-
         # _end_def_
 
         # Create a 'dummy' chromosome with 3 'genes'.
@@ -96,6 +94,29 @@ class TestChromosome(unittest.TestCase):
 
         # All the genes are different here.
         self.assertEqual(3, ch_1.hamming_distance(ch_2))
+    # _end_def_
+
+    def test_clone(self):
+        """
+        Make sure the clone method is working as intended.
+
+        :return:
+        """
+
+        # Number of Genes.
+        M = 10
+
+        # Create a "test" chromosome.
+        chromo_1 = Chromosome(_genome=[Gene(i, lambda: randint(M)) for i in range(M)], _fitness=0.0)
+
+        # Make a "clone" of the first chromosome.
+        chromo_2 = chromo_1.clone()
+
+        # Check if the objects are equal.
+        self.assertEqual(chromo_1, chromo_2)
+
+        # Check if the objects are the same.
+        self.assertTrue(chromo_1 is not chromo_2)
     # _end_def_
 
 # _end_class_

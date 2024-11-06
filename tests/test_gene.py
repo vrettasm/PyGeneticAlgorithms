@@ -22,20 +22,12 @@ class TestGene(unittest.TestCase):
         :return: None.
         """
 
-        # Check for required arguments.
-        with self.assertRaises(TypeError):
-
-            # Fields '_datum' and '_func' should be passed explicitly.
-            _ = Gene()
-        # _end_with_
-
         # Check if "_func" is callable.
         with self.assertRaises(TypeError):
 
             # '0' is not a callable function.
-            _ = Gene(_datum=[1, 0], _func=0, valid=True)
+            _ = Gene(_datum=[1, 0], _func=0)
         # _end_with_
-
     # _end_def_
 
     def test_valid(self):
@@ -46,7 +38,7 @@ class TestGene(unittest.TestCase):
         """
 
         # Make a new test Gene, with _datum='None'.
-        gene_1 = Gene(None, _func=lambda: randint(5), valid=True)
+        gene_1 = Gene(None, _func=lambda: randint(5))
 
         # Even though we have set the 'valid=True', because
         # of the 'datum=None' the Gene will be invalidated.
@@ -61,10 +53,10 @@ class TestGene(unittest.TestCase):
         """
 
         # Create a 'dummy' gene.
-        gene_1 = Gene(_datum=0, _func=lambda: randint(5), valid=True)
+        gene_1 = Gene(_datum=0, _func=lambda: randint(5))
 
         # Create a 'dummy' gene.
-        gene_2 = Gene(_datum=1, _func=lambda: randint(5), valid=True)
+        gene_2 = Gene(_datum=1, _func=lambda: randint(5))
 
         # Add the two genes, should create a list.
         genome_list = gene_1 + gene_2
@@ -85,6 +77,29 @@ class TestGene(unittest.TestCase):
             _ = gene_1 + gene_1
         # _end_with_
 
+    # _end_def_
+
+    def test_clone(self):
+        """
+        Make sure the clone method is working as intended.
+
+        :return:
+        """
+
+        # Number of Genes.
+        M = 5
+
+        # Create a "test gene".
+        gene_1 = Gene([i for i in range(M)], lambda: randint(M))
+
+        # Make a "clone" of the first gene.
+        gene_2 = gene_1.clone()
+
+        # Check if the objects are equal.
+        self.assertEqual(gene_1, gene_2)
+
+        # Check if the objects are the same.
+        self.assertTrue(gene_1 is not gene_2)
     # _end_def_
 
 # _end_class_
