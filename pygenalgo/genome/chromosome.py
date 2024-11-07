@@ -173,7 +173,8 @@ class Chromosome(object):
             # _end_if_
 
             # Compute the dissimilarities in their genomes.
-            return sum([k != l for k, l in zip(self._genome, other._genome, strict=True)])
+            return [k != l for k, l in zip(self._genome, other._genome,
+                                           strict=True)].count(True)
         else:
             raise NotImplemented
         # _end_if_
