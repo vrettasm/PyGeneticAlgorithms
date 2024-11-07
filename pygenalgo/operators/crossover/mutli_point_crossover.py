@@ -50,7 +50,7 @@ class MultiPointCrossover(CrossoverOperator):
         # N.B.: It is assumed that both parents have the same size.
         num_genes = len(parent1)
 
-        # Extract the numboer of cut points.
+        # Extract the number of cut points.
         num_points = self._items
 
         # Ensure the number of requested cutting points

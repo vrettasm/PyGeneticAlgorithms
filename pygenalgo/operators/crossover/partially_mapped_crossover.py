@@ -59,7 +59,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
             segment = set(range(i, j))
 
             # Copy the relevant part of the segment
-            # in both offsprings genome.
+            # in both offsprings' genome.
             for cid in segment:
                 genome_1[cid] = parent1[cid]
                 genome_2[cid] = parent2[cid]
