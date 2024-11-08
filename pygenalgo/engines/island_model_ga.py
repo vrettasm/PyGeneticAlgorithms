@@ -179,8 +179,8 @@ class IslandModelGA(GenericGA):
             # Check if 'elitism' is enabled.
             if elitism:
 
-                # Find the individual chromosome with the highest fitness value
-                # (from the old population).
+                # Find the individual chromosome with the highest fitness
+                # value (from the old subpopulation of the current island).
                 best_chromosome = max((p for p in island.population if not isnan(p.fitness)),
                                       key=lambda c: c.fitness, default=None)
 
@@ -188,7 +188,7 @@ class IslandModelGA(GenericGA):
                 locus = rnd_gen.integers(0, N)
 
                 # Replace the chromosome with the previous best.
-                population_i[locus] = best_chromosome.clone()
+                population_i[locus] = best_chromosome
             # _end_if_
 
             # EVALUATE the i-th population.
