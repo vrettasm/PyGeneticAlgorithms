@@ -189,7 +189,7 @@ class Gene(object):
 
         :return: Gene().
         """
-        return f"{self.__class__.__name__}(datum={self._datum}, _func={self._func}, valid={self._valid})"
+        return f"{self.__class__.__name__}(datum={self._datum}, func={self._func}, valid={self._valid})"
     # _end_def_
 
     def __deepcopy__(self, memo):
