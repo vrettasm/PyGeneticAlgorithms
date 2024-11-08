@@ -189,7 +189,7 @@ class Chromosome(object):
         :param memo: dictionary of objects already copied during
         the current copying pass.
 
-        :return: a new identical "clone° of the self object.
+        :return: a new identical "clone" of the self object.
         """
         # Get the class of the object.
         cls = self.__class__
@@ -218,7 +218,7 @@ class Chromosome(object):
         """
         Makes a duplicate of the self object.
 
-        :return: a 'deep-copy' of the object.
+        :return: a "deep-copy" of the object.
         """
         return deepcopy(self)
     # _end_def_
