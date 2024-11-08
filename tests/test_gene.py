@@ -26,7 +26,7 @@ class TestGene(unittest.TestCase):
         with self.assertRaises(TypeError):
 
             # '0' is not a callable function.
-            _ = Gene(_datum=[1, 0], _func=0)
+            _ = Gene(datum=[1, 0], func=0)
         # _end_with_
     # _end_def_
 
@@ -38,11 +38,11 @@ class TestGene(unittest.TestCase):
         """
 
         # Make a new test Gene, with _datum='None'.
-        gene_1 = Gene(None, _func=lambda: randint(5))
+        gene_1 = Gene(None, func=lambda: randint(5))
 
         # Even though we have set the 'valid=True', because
         # of the 'datum=None' the Gene will be invalidated.
-        self.assertFalse(gene_1.valid)
+        self.assertFalse(gene_1._valid)
     # _end_def__
 
     def test_add(self):
@@ -53,10 +53,10 @@ class TestGene(unittest.TestCase):
         """
 
         # Create a 'dummy' gene.
-        gene_1 = Gene(_datum=0, _func=lambda: randint(5))
+        gene_1 = Gene(datum=0, func=lambda: randint(5))
 
         # Create a 'dummy' gene.
-        gene_2 = Gene(_datum=1, _func=lambda: randint(5))
+        gene_2 = Gene(datum=1, func=lambda: randint(5))
 
         # Add the two genes, should create a list.
         genome_list = gene_1 + gene_2

@@ -61,8 +61,8 @@ class TestAuxiliary(unittest.TestCase):
         self.assertEqual(0, t0_corrections)
 
         # Now invalidate manually '2' Genes.
-        test_population[0][0].valid = False
-        test_population[1][1].valid = False
+        test_population[0][0].is_valid = False
+        test_population[1][1].is_valid = False
 
         # Here we set a new Chromosome in the population, where a Gene datum is not
         # initialized. When the datum field is 'None', the gene is assumed 'invalid'.
