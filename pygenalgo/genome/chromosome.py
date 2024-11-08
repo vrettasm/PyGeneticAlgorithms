@@ -181,6 +181,39 @@ class Chromosome(object):
 
     # _end_def_
 
+    def __deepcopy__(self, memo):
+        """
+        This custom method overrides the default deepcopy method
+        and is used when we call the "clone" method of the class.
+
+        :param memo: dictionary of objects already copied during
+        the current copying pass.
+
+        :return: a new identical "clone° of the self object.
+        """
+        # Get the class of the object.
+        cls = self.__class__
+
+        # Create a new instance.
+        new_object = cls.__new__(cls)
+
+        # Don't copy self reference.
+        memo[id(self)] = new_object
+
+        # Don't copy the cache.
+        if hasattr(self, "_cache"):
+            memo[id(self._cache)] = self._cache.__new__(dict)
+        # _end_if_
+
+        # Deep copy all other attributes.
+        for key, value in self.__dict__.items():
+            setattr(new_object, key, deepcopy(value, memo))
+        # _end_for_
+
+        # Return identical instance.
+        return new_object
+    # _end_def_
+
     def clone(self):
         """
         Makes a duplicate of the self object.
