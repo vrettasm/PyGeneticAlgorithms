@@ -102,13 +102,14 @@
 <blockquote>
 <div><p>Boltzmann Selector implements an object that performs selection by choosing an individual
 from a set of individuals by sampling solutions from a Boltzmann distribution depending on
-their fitnesses.</p>
+their fitness’s.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.boltzmann_selector.BoltzmannSelector.select">
 <span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/selection/boltzmann_selector.html#BoltzmannSelector.select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.boltzmann_selector.BoltzmannSelector.select" title="Link to this definition"></a></dt>
 <dd><p>Select the individuals, from the input population, that will be passed on to the next
 genetic operations of crossover and mutation to form the new population of solutions.</p>
+<p>NOTE: the Boltzmann constant is held in the ‘_items’ variable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>population</strong> – a list of chromosomes to select the parents from.</p>
@@ -288,9 +289,10 @@ genetic operations of crossover and mutation to form the new population of solut
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Tournament Selector implements an object that performs selection by choosing an individual
-from a set of individuals. The winner of each tournament i.e. (the one with the highest
-fitness value) is selected as new parent to perform crossover and mutation.</p>
+<div><p>Tournament Selector implements an object that performs selection by choosing
+an individual from a set of individuals. The winner of each tournament i.e.
+(the one with the highest fitness value) is selected as new parent to perform
+crossover and mutation.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.tournament_selector.TournamentSelector.select">
