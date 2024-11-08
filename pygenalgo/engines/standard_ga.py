@@ -188,7 +188,7 @@ class StandardGA(GenericGA):
 
                 # Print only if there were corrections,
                 # to avoid cluttering the screen.
-                if total_corrections:
+                if verbose and total_corrections:
                     print(f"> {total_corrections} correction(s) took place at epoch: {i}.")
                 # _end_if_
             # _end_if_
