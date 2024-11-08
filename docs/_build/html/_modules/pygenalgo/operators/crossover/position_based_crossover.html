@@ -71,7 +71,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.crossover.position_based_crossover</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">nan</span> <span class="k">as</span> <span class="n">np_nan</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.crossover.crossover_operator</span> <span class="kn">import</span> <span class="n">CrossoverOperator</span>
 
@@ -113,10 +113,6 @@
 <span class="sd">        :return: child1 and child2 (as Chromosomes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># Initially each child points to a clone of a single parent.</span>
-        <span class="n">child1</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
-        <span class="n">child2</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
-
         <span class="c1"># If the crossover probability is higher than</span>
         <span class="c1"># a uniformly random value, make the changes.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">():</span>
@@ -130,48 +126,50 @@
             <span class="c1"># Select randomly the &#39;K&#39; crossover points.</span>
             <span class="n">C</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">K</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
 
-            <span class="c1"># Clean up the entries (on both children)</span>
-            <span class="c1"># outside the selected positions.</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+            <span class="c1"># Initialize the genome of the two new chromosomes to None.</span>
+            <span class="n">genome_1</span> <span class="o">=</span> <span class="n">M</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+            <span class="n">genome_2</span> <span class="o">=</span> <span class="n">M</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
 
-                <span class="c1"># Skip the preselected positions.</span>
-                <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">C</span><span class="p">:</span>
-                    <span class="k">continue</span>
-                <span class="c1"># _end_if_</span>
-
-                <span class="n">child1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="n">child2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="c1"># Copy the genes of the parents at</span>
+            <span class="c1"># the preselected gene C positions.</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">C</span><span class="p">:</span>
+                <span class="n">genome_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">genome_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="c1"># _end_for_</span>
 
             <span class="c1"># Fill the rest of the positions in both offsprings.</span>
             <span class="k">for</span> <span class="n">gene1</span><span class="p">,</span> <span class="n">gene2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">,</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">):</span>
 
                 <span class="c1"># Check if &#39;gene1&#39; exists in 1st offspring.</span>
-                <span class="k">if</span> <span class="n">gene1</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">child1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">gene1</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">genome_1</span><span class="p">:</span>
                     <span class="c1"># Find the first &#39;None&#39; entry.</span>
-                    <span class="n">idx</span> <span class="o">=</span> <span class="n">child1</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+                    <span class="n">j</span> <span class="o">=</span> <span class="n">genome_1</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 
                     <span class="c1"># Assign the current gene value.</span>
-                    <span class="n">child1</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene1</span>
+                    <span class="n">genome_1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene1</span>
                 <span class="c1"># _end_if_</span>
 
                 <span class="c1"># Check if &#39;gene2&#39; exists in 2nd offspring.</span>
-                <span class="k">if</span> <span class="n">gene2</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">child2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">gene2</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">genome_2</span><span class="p">:</span>
                     <span class="c1"># Find the first &#39;None&#39; entry.</span>
-                    <span class="n">idz</span> <span class="o">=</span> <span class="n">child2</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="n">genome_2</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 
                     <span class="c1"># Assign the current gene value.</span>
-                    <span class="n">child2</span><span class="p">[</span><span class="n">idz</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene2</span>
+                    <span class="n">genome_2</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene2</span>
                 <span class="c1"># _end_if_</span>
 
             <span class="c1"># _end_for_</span>
 
             <span class="c1"># After the crossover neither offspring has accurate fitness.</span>
-            <span class="n">child1</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-            <span class="n">child2</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">child1</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">genome_1</span><span class="p">,</span> <span class="n">_fitness</span><span class="o">=</span><span class="n">np_nan</span><span class="p">)</span>
+            <span class="n">child2</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">genome_2</span><span class="p">,</span> <span class="n">_fitness</span><span class="o">=</span><span class="n">np_nan</span><span class="p">)</span>
 
             <span class="c1"># Increase the crossover counter.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Each child points to a clone of a single parent.</span>
+            <span class="n">child1</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+            <span class="n">child2</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Return the two offsprings.</span>

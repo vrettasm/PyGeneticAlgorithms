@@ -92,33 +92,33 @@
     <span class="n">_rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span>
 
     <span class="c1"># Object variables.</span>
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_datum&quot;</span><span class="p">,</span> <span class="s2">&quot;_func&quot;</span><span class="p">,</span> <span class="s2">&quot;valid&quot;</span><span class="p">)</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_datum&quot;</span><span class="p">,</span> <span class="s2">&quot;_func&quot;</span><span class="p">,</span> <span class="s2">&quot;_valid&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_datum</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">valid</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datum</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">valid</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize a Gene object.</span>
 <span class="sd">        </span>
-<span class="sd">        :param _datum: Datum holds a reference of the gene-data structure.</span>
+<span class="sd">        :param datum: Datum holds a reference of the gene-data structure.</span>
 <span class="sd">        </span>
-<span class="sd">        :param _func: This &#39;private&#39; function is used in the &#39;random()&#39; method to be used by the mutation operators.</span>
+<span class="sd">        :param func: This &#39;private&#39; function is used in the &#39;random()&#39; method to be used by the mutation operators.</span>
 <span class="sd">        </span>
 <span class="sd">        :param valid: This flag is used to set the Gene as valid (True) or invalid (False).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="c1"># Copy the data reference.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="n">_datum</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="n">datum</span>
         
         <span class="c1"># Make sure the random function is callable.</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">_func</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: Random function is not callable.&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Get the random function.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_func</span> <span class="o">=</span> <span class="n">_func</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_func</span> <span class="o">=</span> <span class="n">func</span>
         <span class="c1"># _end_if_</span>
         
-        <span class="c1"># Copy the valid flag. Note that if the &#39;_datum&#39; field is set to None,</span>
-        <span class="c1"># the Gene is automatically invalid.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">valid</span>
+        <span class="c1"># Copy the valid flag. Note that if the _datum field</span>
+        <span class="c1"># is set to None, the Gene is automatically invalid.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">valid</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -138,7 +138,7 @@
 
 <span class="sd">        :return: the valid value.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@is_valid</span><span class="o">.</span><span class="n">setter</span>
@@ -152,7 +152,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
 
             <span class="c1"># Update the flag value.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="n">new_value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span> <span class="o">=</span> <span class="n">new_value</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                             <span class="sa">f</span><span class="s2">&quot;Validity flag should be bool: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
@@ -273,7 +273,42 @@
 
 <span class="sd">        :return: Gene().</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(datum=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="si">}</span><span class="s2">, _func=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="si">}</span><span class="s2">, valid=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">valid</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(datum=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="si">}</span><span class="s2">, _func=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="si">}</span><span class="s2">, valid=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="c1"># _end_def_</span>
+
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This custom method overrides the default deepcopy method</span>
+<span class="sd">        and is used when we call the &quot;clone&quot; method of the class.</span>
+
+<span class="sd">        :param memo: dictionary of objects already copied during</span>
+<span class="sd">        the current copying pass.</span>
+
+<span class="sd">        :return: a new identical &quot;clone&quot; of the self object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Get the class of the object.</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
+
+        <span class="c1"># Create a new instance.</span>
+        <span class="n">new_object</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+
+        <span class="c1"># Don&#39;t copy self reference.</span>
+        <span class="n">memo</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)]</span> <span class="o">=</span> <span class="n">new_object</span>
+
+        <span class="c1"># Don&#39;t copy the cache.</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_cache&quot;</span><span class="p">):</span>
+            <span class="n">memo</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Deep copy all other attributes.</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">new_object</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span>
+                    <span class="n">deepcopy</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">),</span> <span class="n">memo</span><span class="p">))</span>
+        <span class="c1"># _end_for_</span>
+
+        <span class="c1"># Return identical instance.</span>
+        <span class="k">return</span> <span class="n">new_object</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="Gene.clone">
@@ -282,7 +317,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Makes a duplicate of the self object.</span>
 
-<span class="sd">        :return: a &#39;deep-copy&#39; of the object.</span>
+<span class="sd">        :return: a &quot;deep-copy&quot; of the object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 </div>

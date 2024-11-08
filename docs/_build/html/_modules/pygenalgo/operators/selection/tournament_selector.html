@@ -81,9 +81,10 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Tournament Selector implements an object that performs selection by choosing an individual</span>
-<span class="sd">        from a set of individuals. The winner of each tournament i.e. (the one with the highest</span>
-<span class="sd">        fitness value) is selected as new parent to perform crossover and mutation.</span>
+<span class="sd">        Tournament Selector implements an object that performs selection by choosing</span>
+<span class="sd">        an individual from a set of individuals. The winner of each tournament i.e.</span>
+<span class="sd">        (the one with the highest fitness value) is selected as new parent to perform</span>
+<span class="sd">        crossover and mutation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
@@ -98,11 +99,8 @@
         <span class="c1"># Call the super constructor with the provided probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">select_probability</span><span class="p">)</span>
 
-        <span class="c1"># Make sure &#39;k&#39; is integer.</span>
-        <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-
         <span class="c1"># Number of &#39;participants&#39; of the tournament should be more than 2.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_k</span> <span class="o">=</span> <span class="n">k</span> <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="mi">5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="mi">5</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="TournamentSelector.select">
@@ -127,7 +125,7 @@
 
         <span class="c1"># Define locally the choose(N,k) function.</span>
         <span class="k">def</span> <span class="nf">choose_k</span><span class="p">():</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_k</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="c1"># _end_def_</span>
 
         <span class="c1"># Repeat the &#39;tournament&#39; N times.</span>

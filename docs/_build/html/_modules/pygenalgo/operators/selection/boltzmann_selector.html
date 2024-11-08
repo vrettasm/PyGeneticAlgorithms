@@ -71,8 +71,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.selection.boltzmann_selector</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">fsum</span>
+<span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">fsum</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">exp</span> <span class="k">as</span> <span class="n">np_exp</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.selection.select_operator</span> <span class="kn">import</span> <span class="n">SelectionOperator</span>
 
@@ -85,7 +85,7 @@
 
 <span class="sd">        Boltzmann Selector implements an object that performs selection by choosing an individual</span>
 <span class="sd">        from a set of individuals by sampling solutions from a Boltzmann distribution depending on</span>
-<span class="sd">        their fitnesses.</span>
+<span class="sd">        their fitness&#39;s.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">100.0</span><span class="p">):</span>
@@ -101,7 +101,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">select_probability</span><span class="p">)</span>
 
         <span class="c1"># Make sure &#39;k&#39; is float and at least 50.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_k</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mf">50.0</span> <span class="k">else</span> <span class="mf">50.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="mf">50.0</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="BoltzmannSelector.select">
@@ -111,27 +111,28 @@
 <span class="sd">        Select the individuals, from the input population, that will be passed on to the next</span>
 <span class="sd">        genetic operations of crossover and mutation to form the new population of solutions.</span>
 
+<span class="sd">        NOTE: the Boltzmann constant is held in the &#39;_items&#39; variable.</span>
+
 <span class="sd">        :param population: a list of chromosomes to select the parents from.</span>
 
 <span class="sd">        :return: the selected parents population (as list of chromosomes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Compute the &#39;T&#39;emperature.</span>
-        <span class="n">T</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">iter</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_k</span><span class="p">))</span>
+        <span class="c1"># Compute the Temperature.</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">np_exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">iter</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">))</span>
 
         <span class="c1"># Get the length of the population list.</span>
         <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
 
         <span class="c1"># Extract the fitness value of each chromosome.</span>
-        <span class="c1"># This assumes that the fitness values are all</span>
-        <span class="c1"># positive.</span>
-        <span class="n">exp_fitness</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="o">/</span><span class="n">T</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">population</span><span class="p">]</span>
+        <span class="c1"># This assumes that the fitness values are all positive.</span>
+        <span class="n">exp_fitness</span> <span class="o">=</span> <span class="n">np_exp</span><span class="p">([</span><span class="o">-</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="o">/</span><span class="n">T</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">population</span><span class="p">])</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
         <span class="c1"># Calculate sum of all fitness.</span>
         <span class="n">sum_fitness</span> <span class="o">=</span> <span class="n">fsum</span><span class="p">(</span><span class="n">exp_fitness</span><span class="p">)</span>
 
-        <span class="c1"># Calculate the &quot;selection probabilities&quot;, of each member</span>
-        <span class="c1"># in the population.</span>
-        <span class="n">selection_probs</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="o">/</span> <span class="n">sum_fitness</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">exp_fitness</span><span class="p">]</span>
+        <span class="c1"># Calculate the selection probabilities of each member</span>
+        <span class="c1"># in the population (Boltzmann distribution).</span>
+        <span class="n">selection_probs</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">/</span><span class="n">sum_fitness</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">exp_fitness</span><span class="p">]</span>
 
         <span class="c1"># Select &#39;N&#39; new individuals (indexes).</span>
         <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">selection_probs</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>

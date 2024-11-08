@@ -243,7 +243,7 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
 
             <span class="c1"># Update current iteration in the selection operator.</span>
-            <span class="c1"># Currently this is used only from Boltzmann Selector.</span>
+            <span class="c1"># Currently, this is used only from Boltzmann Selector.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_select_op</span><span class="o">.</span><span class="n">iter</span> <span class="o">=</span> <span class="n">i</span>
 
             <span class="c1"># SELECT the parents.</span>
@@ -271,22 +271,18 @@
 
                 <span class="c1"># Print only if there were corrections,</span>
                 <span class="c1"># to avoid cluttering the screen.</span>
-                <span class="k">if</span> <span class="n">total_corrections</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">verbose</span> <span class="ow">and</span> <span class="n">total_corrections</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; </span><span class="si">{</span><span class="n">total_corrections</span><span class="si">}</span><span class="s2"> correction(s) took place at epoch: </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
                 <span class="c1"># _end_if_</span>
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Check if &#39;elitism&#39; is enabled.</span>
             <span class="k">if</span> <span class="n">elitism</span><span class="p">:</span>
-                <span class="c1"># Find the individual chromosome with the highest</span>
-                <span class="c1"># fitness value (from the previous population).</span>
-                <span class="n">best_chromosome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_chromosome</span><span class="p">()</span>
-
                 <span class="c1"># Select randomly a position.</span>
                 <span class="n">locus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
 
                 <span class="c1"># Replace the chromosome with the previous best.</span>
-                <span class="n">population_i</span><span class="p">[</span><span class="n">locus</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_chromosome</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+                <span class="n">population_i</span><span class="p">[</span><span class="n">locus</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_chromosome</span><span class="p">()</span>
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Calculate the new fitness values.</span>
