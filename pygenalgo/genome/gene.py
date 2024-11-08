@@ -17,33 +17,33 @@ class Gene(object):
     _rng = default_rng()
 
     # Object variables.
-    __slots__ = ("_datum", "_func", "valid")
+    __slots__ = ("_datum", "_func", "_valid")
 
-    def __init__(self, _datum: Any, _func: Callable, valid: bool = True):
+    def __init__(self, datum: Any, func: Callable, valid: bool = True):
         """
         Initialize a Gene object.
         
-        :param _datum: Datum holds a reference of the gene-data structure.
+        :param datum: Datum holds a reference of the gene-data structure.
         
-        :param _func: This 'private' function is used in the 'random()' method to be used by the mutation operators.
+        :param func: This 'private' function is used in the 'random()' method to be used by the mutation operators.
         
         :param valid: This flag is used to set the Gene as valid (True) or invalid (False).
         """
         
         # Copy the data reference.
-        self._datum = _datum
+        self._datum = datum
         
         # Make sure the random function is callable.
-        if not callable(_func):
+        if not callable(func):
             raise TypeError(f"{self.__class__.__name__}: Random function is not callable.")
         else:
             # Get the random function.
-            self._func = _func
+            self._func = func
         # _end_if_
         
-        # Copy the valid flag. Note that if the '_datum' field is set to None,
-        # the Gene is automatically invalid.
-        self.valid = False if self._datum is None else valid
+        # Copy the valid flag. Note that if the _datum field
+        # is set to None, the Gene is automatically invalid.
+        self._valid = False if self._datum is None else valid
     # _end_def_
 
     @property
@@ -63,7 +63,7 @@ class Gene(object):
 
         :return: the valid value.
         """
-        return self.valid
+        return self._valid
     # _end_def_
 
     @is_valid.setter
@@ -77,7 +77,7 @@ class Gene(object):
         if isinstance(new_value, bool):
 
             # Update the flag value.
-            self.valid = new_value
+            self._valid = new_value
         else:
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Validity flag should be bool: {type(new_value)}.")
@@ -189,7 +189,7 @@ class Gene(object):
 
         :return: Gene().
         """
-        return f"{self.__class__.__name__}(datum={self._datum}, _func={self._func}, valid={self.valid})"
+        return f"{self.__class__.__name__}(datum={self._datum}, _func={self._func}, valid={self._valid})"
     # _end_def_
 
     def __deepcopy__(self, memo):
