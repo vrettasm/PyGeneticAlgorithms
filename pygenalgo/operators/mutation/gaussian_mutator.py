@@ -38,7 +38,7 @@ class GaussianMutator(MutationOperator):
         if self.probability > self.rng.random():
 
             # Select randomly the mutation point.
-            idx = self.rng.integers(0, len(individual))
+            idx = self.rng.integers(low=0, high=len(individual))
 
             # Update the gene value.
             individual[idx].gaussian()

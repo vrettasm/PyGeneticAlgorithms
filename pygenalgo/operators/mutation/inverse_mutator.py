@@ -37,7 +37,7 @@ class InverseMutator(MutationOperator):
         if self.probability > self.rng.random():
 
             # Select randomly two mutation end-points.
-            i, j = sorted(self.rng.choice(range(0, len(individual)), size=2,
+            i, j = sorted(self.rng.choice(len(individual), size=2,
                                           replace=False, shuffle=False))
 
             # Make a slice list of the genes

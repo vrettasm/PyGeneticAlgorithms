@@ -38,7 +38,7 @@ class RandomMutator(MutationOperator):
         if self.probability > self.rng.random():
 
             # Select randomly the mutation point.
-            locus = self.rng.integers(0, len(individual))
+            locus = self.rng.integers(low=0, high=len(individual))
 
             # Replace the old gene with a new one.
             individual[locus].random()

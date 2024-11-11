@@ -38,7 +38,7 @@ class FlipMutator(MutationOperator):
         if self.probability > self.rng.random():
 
             # Select randomly the mutation point.
-            locus = self.rng.integers(0, len(individual))
+            locus = self.rng.integers(low=0, high=len(individual))
 
             # Flip the old gene value.
             individual[locus].flip()

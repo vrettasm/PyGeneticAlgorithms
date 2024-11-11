@@ -38,8 +38,8 @@ class ShuffleMutator(MutationOperator):
         if self.probability > self.rng.random():
 
             # Select randomly two mutation end-points.
-            i, j = self.rng.choice(range(0, len(individual)), size=2,
-                                   replace=False, shuffle=False)
+            i, j = self.rng.choice(len(individual), size=2, replace=False,
+                                   shuffle=False)
 
             # Swap indices (if necessary).
             if i > j:
