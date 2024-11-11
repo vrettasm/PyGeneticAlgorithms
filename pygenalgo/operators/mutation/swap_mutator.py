@@ -36,8 +36,8 @@ class SwapMutator(MutationOperator):
         if self.probability > self.rng.random():
 
             # Select randomly the two mutation points.
-            i, j = self.rng.choice(range(0, len(individual)), size=2,
-                                   replace=False, shuffle=False)
+            i, j = self.rng.choice(len(individual), size=2, replace=False,
+                                   shuffle=False)
 
             # Swap in place between the two positions.
             individual[i], individual[j] = individual[j], individual[i]
