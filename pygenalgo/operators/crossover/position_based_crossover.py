@@ -47,7 +47,7 @@ class PositionBasedCrossover(CrossoverOperator):
             K = self.rng.integers(low=1, high=M-1, size=1).item()
 
             # Select randomly the 'K' crossover points.
-            C = sorted(self.rng.choice(range(M), size=K, replace=False, shuffle=False))
+            C = sorted(self.rng.choice(M, size=K, replace=False, shuffle=False))
 
             # Initialize the genome of the two new chromosomes to None.
             genome_1 = M * [None]
