@@ -48,7 +48,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
             genome_2 = M * [None]
 
             # Select randomly the two crossover points.
-            i, j = self.rng.choice(range(M), size=2, replace=False, shuffle=False)
+            i, j = self.rng.choice(M, size=2, replace=False, shuffle=False)
 
             # Swap indices (if necessary).
             if i > j:
