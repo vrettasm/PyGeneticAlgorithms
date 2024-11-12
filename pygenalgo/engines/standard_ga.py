@@ -170,16 +170,7 @@ class StandardGA(GenericGA):
             self.rng_GA.shuffle(population_i)
 
             # CROSSOVER/MUTATE to produce offsprings.
-            for j in range(0, N - 1, 2):
-                # Replace directly the OLD parents with the NEW offsprings.
-                population_i[j], population_i[j + 1] = self._crossx_op(population_i[j],
-                                                                       population_i[j + 1])
-                # MUTATE in place the 1st offspring.
-                self._mutate_op(population_i[j])
-
-                # MUTATE in place the 2nd offspring.
-                self._mutate_op(population_i[j + 1])
-            # _end_for_
+            self.crossover_mutate(population_i)
 
             # Check if 'corrections' are enabled.
             if correction:
