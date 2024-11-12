@@ -42,11 +42,13 @@ class MetaMutator(MutationOperator):
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
         if self.probability > self.rng.random():
+            # Get the number of available mutators.
+            L = len(self.items)
 
             # Select randomly, with equal probability
             # (but this can be changed) a mutator and
             # call its mutation method.
-            self.rng.choice(self.items).mutate(individual)
+            self.items[self.rng.integers(L)].mutate(individual)
 
             # Increase the mutator counter.
             self.inc_counter()
