@@ -44,7 +44,7 @@ class PositionBasedCrossover(CrossoverOperator):
             M = len(parent1)
 
             # Select randomly 'K' number of crossover points.
-            K = self.rng.integers(low=1, high=M-1, size=1).item()
+            K = self.rng.integers(1, high=M-1)
 
             # Select randomly the 'K' crossover points.
             C = sorted(self.rng.choice(M, size=K, replace=False, shuffle=False))
