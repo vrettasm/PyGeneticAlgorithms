@@ -45,10 +45,12 @@ class MetaMigration(MigrationOperator):
         # If the migration probability is higher than
         # a uniformly random value, make the transfer.
         if self.probability > self.rng.random():
+            # Get the number of available migrators.
+            L = len(self.items)
 
             # Select randomly with equal probability
             # a method and call its migrate method.
-            self.rng.choice(self.items).migrate(islands)
+            self.items[self.rng.integers(L)].migrate(islands)
 
             # Increase the mutator counter.
             self.inc_counter()
