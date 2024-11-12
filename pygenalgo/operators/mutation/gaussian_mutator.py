@@ -36,12 +36,12 @@ class GaussianMutator(MutationOperator):
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
         if self.probability > self.rng.random():
+            # Get the size of the chromosome.
+            M = len(individual)
 
-            # Select randomly the mutation point.
-            idx = self.rng.integers(low=0, high=len(individual))
-
-            # Update the gene value.
-            individual[idx].gaussian()
+            # Select randomly the mutation point
+            # and update the gene value.
+            individual[self.rng.integers(M)].gaussian()
 
             # Invalidate the fitness of the chromosome.
             individual.fitness = np_nan
@@ -49,6 +49,7 @@ class GaussianMutator(MutationOperator):
             # Increase the mutator counter.
             self.inc_counter()
         # _end_if_
+
     # _end_def_
 
 # _end_class_
