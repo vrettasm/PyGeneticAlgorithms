@@ -154,8 +154,9 @@ as shown in the examples above.
 
 This work is described in:
 
-- Michail D. Vrettas and Stefano Silvestri (2024)(Submitted for publication at SoftwareX / under review).
-"PyGenAlgo: a simple and powerful toolkit for genetic algorithms".
+- Michail D. Vrettas and Stefano Silvestri (2024). "PyGenAlgo: a simple and powerful toolkit for genetic algorithms".
+(Submitted for publication at Journal SoftwareX / under review).
+
 
 ### Contact
 
