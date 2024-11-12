@@ -43,10 +43,12 @@ class MetaCrossover(CrossoverOperator):
         # If the crossover probability is higher than
         # a uniformly random value, make the changes.
         if self.probability > self.rng.random():
+            # Get the number of available crossovers.
+            L = len(self.items)
 
             # Select randomly, with equal probability (but this can be changed),
             # a crossover operator and call its crossover method.
-            child1, child2 = self.rng.choice(self.items).crossover(parent1, parent2)
+            child1, child2 = self.items[self.rng.integers(L)].crossover(parent1, parent2)
 
             # Increase the crossover counter.
             self.inc_counter()
