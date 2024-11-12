@@ -131,24 +131,31 @@ Once the fitness function is defined correctly the next steps are straightforwar
 
 Some optimization examples on how to use these algorithms:
 
-| **Problem**                                                 | **Variables** | **Objectives** | **Constraints** | **Description** |
-|:------------------------------------------------------------|:-------------:|:--------------:|:---------------:|:---------------:|
-| [Sphere](examples/sphere.ipynb)                             |   M (=5)      |     1          |       no        |     serial      |
-| [Rastrigin](examples/rastrigin.ipynb)                       |    M (=5)     |       1        |       no        |     serial      |
-| [Rosenbrock](examples/rosenbrock_on_a_disk.ipynb)           |    M (=2)     |       1        |        1        |     serial      |
-| [Binh & Korn](examples/binh_and_korn_multiobjective.ipynb)  |    M (=2)     |       2        |        2        |     serial      |
-| [Sphere](examples/sphere_in_parallel.ipynb)                 |    M (=10)    |       1        |       no        |    parallel     |
-| [Easom](examples/easom_in_parallel.ipynb)                   |    M (=2)     |       1        |       no        |    parallel     |
-| [Traveling Salesman Problem](examples/tsp.ipynb)            |    M (=10)    |       1        |       yes       |     serial      |
-| [N-Queens puzzle](examples/queens_puzzle.ipynb)             |    M (=8)     |       1        |       yes       |    parallel     |
-| [OneMax](examples/one_max.ipynb)                            |    M (=50)    |       1        |       no        |     serial      |
-| [Tanaka](examples/tanaka_multiobjective.ipynb)              |    M (=2)     |       2        |        2        |     serial      |
-| [Zakharov](examples/zakharov.ipynb)                         |    M (=8)     |       1        |       no        |     serial      |
-| [Osyczka](examples/osyczka_kundu_multiobjective.ipynb)      |       6       |       2        |        6        |    parallel     |
+| **Problem**                                                | **Variables** | **Objectives** | **Constraints** | **Description** |
+|:-----------------------------------------------------------|:-------------:|:--------------:|:---------------:|:---------------:|
+| [Sphere](examples/sphere.ipynb)                            |   M (=5)      |     1          |       no        |     serial      |
+| [Rastrigin](examples/rastrigin.ipynb)                      |    M (=5)     |       1        |       no        |     serial      |
+| [Rosenbrock](examples/rosenbrock_on_a_disk.ipynb)          |    M (=2)     |       1        |        1        |     serial      |
+| [Binh & Korn](examples/binh_and_korn_multiobjective.ipynb) |    M (=2)     |       2        |        2        |     serial      |
+| [Sphere](examples/sphere_in_parallel.ipynb)                |    M (=10)    |       1        |       no        |    parallel     |
+| [Easom](examples/easom_in_parallel.ipynb)                  |    M (=2)     |       1        |       no        |    parallel     |
+| [Traveling Salesman Problem](examples/tsp.ipynb)           |    M (=10)    |       1        |       yes       |     serial      |
+| [N-Queens puzzle](examples/queens_puzzle.ipynb)            |    M (=8)     |       1        |       yes       |    parallel     |
+| [OneMax](examples/one_max.ipynb)                           |    M (=50)    |       1        |       no        |     serial      |
+| [Tanaka](examples/tanaka_multiobjective.ipynb)             |    M (=2)     |       2        |        2        |     serial      |
+| [Zakharov](examples/zakharov.ipynb)                        |    M (=8)     |       1        |       no        |     serial      |
+| [Osyczka](examples/osyczka_kundu_multiobjective.ipynb)     |       6       |       2        |        6        |    parallel     |
 
-Constraint optimization problems can be easily addressed using the
-[Penalty Method](https://en.wikipedia.org/wiki/Penalty_method). Moreover, multi-objective optimizations (with or without
-constraints) can also be solved, using the _weighted sum method_, as shown in the examples above.
+Constraint optimization problems can be easily addressed using the [Penalty Method](https://en.wikipedia.org/wiki/Penalty_method).
+Moreover, multi-objective optimizations (with or without constraints) can also be solved, using the _weighted sum method_,
+as shown in the examples above.
+
+## References
+
+This work is described in:
+
+- Michail D. Vrettas and Stefano Silvestri (2024)(Submitted for publication at SoftwareX / under review).
+"PyGenAlgo: a simple and powerful toolkit for genetic algorithms".
 
 ### Contact
 
