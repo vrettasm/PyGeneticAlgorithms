@@ -36,12 +36,12 @@ class RandomMutator(MutationOperator):
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
         if self.probability > self.rng.random():
+            # Get the size of the chromosome.
+            M = len(individual)
 
-            # Select randomly the mutation point.
-            locus = self.rng.integers(low=0, high=len(individual))
-
-            # Replace the old gene with a new one.
-            individual[locus].random()
+            # Select randomly the mutation point and
+            # replace the old gene with a new one.
+            individual[self.rng.integers(M)].random()
 
             # Invalidate the fitness of the chromosome.
             individual.fitness = np_nan
@@ -49,6 +49,7 @@ class RandomMutator(MutationOperator):
             # Increase the mutator counter.
             self.inc_counter()
         # _end_if_
+
     # _end_def_
 
 # _end_class_
