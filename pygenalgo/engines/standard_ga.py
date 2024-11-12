@@ -187,7 +187,7 @@ class StandardGA(GenericGA):
             # Check if 'elitism' is enabled.
             if elitism:
                 # Select randomly a position.
-                locus = self.rng_GA.integers(0, N)
+                locus = self.rng_GA.integers(N)
 
                 # Replace the chromosome with the previous best.
                 population_i[locus] = self.best_chromosome()
@@ -206,9 +206,13 @@ class StandardGA(GenericGA):
                       f"Spread = {std_fitness_i:.4f}.")
             # _end_if_
 
+            # Update the old population with the new chromosomes.
+            self.population = population_i
+
             # Check for convergence.
             if f_tol and fabs(avg_fitness_i - avg_fitness_0) < f_tol and\
                     avg_hamming_dist(population_i) < 0.025:
+
                 # Display a warning message.
                 print(f"{self.__class__.__name__} finished in {i + 1} iterations.")
 
@@ -218,9 +222,6 @@ class StandardGA(GenericGA):
 
             # Update the average value for the next iteration.
             avg_fitness_0 = avg_fitness_i
-
-            # Update the old population with the new chromosomes.
-            self.population = population_i
         # _end_for_
 
         # Final time instant.

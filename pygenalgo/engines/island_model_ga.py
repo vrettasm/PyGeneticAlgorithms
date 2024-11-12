@@ -204,6 +204,9 @@ class IslandModelGA(GenericGA):
                 raise RuntimeError(f"{i+1}: Mean={avg_fitness_i:.5f}, Std={std_fitness_i:.5f}.")
             # _end_if_
 
+            # Update the old population with the new chromosomes.
+            island.population = population_i
+
             # Check for convergence.
             if f_tol and fabs(avg_fitness_i - avg_fitness_0) < f_tol and\
                     avg_hamming_dist(population_i) < 0.025:
@@ -217,9 +220,6 @@ class IslandModelGA(GenericGA):
 
             # Update the average value for the next iteration.
             avg_fitness_0 = avg_fitness_i
-
-            # Update the old population with the new chromosomes.
-            island.population = population_i
         # _end_for_
 
         # Compute the elapsed time (in seconds).
