@@ -56,8 +56,8 @@ class PositionBasedCrossover(CrossoverOperator):
             # Copy the genes of the parents at
             # the preselected gene C positions.
             for i in C:
-                genome_1[i] = parent2[i]
-                genome_2[i] = parent1[i]
+                genome_1[i] = parent2.genome[i]
+                genome_2[i] = parent1.genome[i]
             # _end_for_
 
             # Fill the rest of the positions in both offsprings.

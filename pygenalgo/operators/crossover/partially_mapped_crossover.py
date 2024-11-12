@@ -61,8 +61,8 @@ class PartiallyMappedCrossover(CrossoverOperator):
             # Copy the relevant part of the segment
             # in both offsprings' genome.
             for cid in segment:
-                genome_1[cid] = parent1[cid]
-                genome_2[cid] = parent2[cid]
+                genome_1[cid] = parent1.genome[cid]
+                genome_2[cid] = parent2.genome[cid]
             # _end_for_
 
             # Start building the 1st offspring.
