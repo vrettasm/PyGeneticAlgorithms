@@ -36,12 +36,12 @@ class FlipMutator(MutationOperator):
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
         if self.probability > self.rng.random():
+            # Get the size of the chromosome.
+            M = len(individual)
 
-            # Select randomly the mutation point.
-            locus = self.rng.integers(low=0, high=len(individual))
-
-            # Flip the old gene value.
-            individual[locus].flip()
+            # Select randomly the mutation point and
+            # flip the old gene value.
+            individual[self.rng.integers(M)].flip()
 
             # Invalidate the fitness of the chromosome.
             individual.fitness = np_nan
