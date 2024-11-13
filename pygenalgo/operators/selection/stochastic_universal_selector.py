@@ -51,7 +51,7 @@ class StochasticUniversalSelector(SelectionOperator):
 
         # Calculate the pointers at equal distances 'dist_p'
         # starting from 'start_0'.
-        pointers = [start_0 + i*dist_p for i in range(0, N)]
+        pointers = (start_0 + i*dist_p for i in range(0, N))
 
         # Create a list that will contain the new parents.
         new_parents = []
