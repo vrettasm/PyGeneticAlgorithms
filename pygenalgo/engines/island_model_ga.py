@@ -103,7 +103,7 @@ class IslandModelGA(GenericGA):
         # _end_for_
 
         # Convert the fitness values in a numpy array.
-        fit_arr = np.array(fit_list, copy=False)
+        fit_arr = np.array(fit_list)
 
         # Return the mean and std values of the fitness.
         return np.nanmean(fit_arr, dtype=float), np.nanstd(fit_arr, dtype=float)
