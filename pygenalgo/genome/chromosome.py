@@ -181,6 +181,28 @@ class Chromosome(object):
 
     # _end_def_
 
+    def __copy__(self):
+        """
+        This custom method overrides the default copy method
+        and is used when we call the copy() method on a class
+        object.
+
+        :return: a (shallow) copy of the self object.
+        """
+
+        # Get the class of the self object.
+        cls = self.__class__
+
+        # Create a new (copy) object.
+        result = cls.__new__(cls)
+
+        # Copy all the attributes.
+        result.__dict__.update(self.__dict__)
+
+        # Return the new copy.
+        return result
+    # _end_copy_
+
     def __deepcopy__(self, memo):
         """
         This custom method overrides the default deepcopy method

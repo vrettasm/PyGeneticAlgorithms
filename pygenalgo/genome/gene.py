@@ -192,6 +192,30 @@ class Gene(object):
         return f"{self.__class__.__name__}(datum={self._datum}, func={self._func}, valid={self._valid})"
     # _end_def_
 
+    def __copy__(self):
+        """
+        This custom method overrides the default copy method
+        and is used when we call the copy() method on a class
+        object.
+
+        :return: a (shallow) copy of the self object.
+        """
+        
+        # Get the class of the self object.
+        cls = self.__class__
+
+        # Create a new (copy) object.
+        copy_gene = cls.__new__(cls)
+
+        # Copy all the attributes.
+        for attr in self.__slots__:
+            setattr(copy_gene, attr, getattr(self, attr))
+        # _end_for_
+        
+        # Return the new copy.
+        return copy_gene
+    # _end_def_
+
     def __deepcopy__(self, memo):
         """
         This custom method overrides the default deepcopy method
