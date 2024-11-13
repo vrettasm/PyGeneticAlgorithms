@@ -51,9 +51,9 @@ class TestGenericGA(unittest.TestCase):
                Chromosome(_genome=[Gene('j', lambda: str('x')),
                                    Gene('k', lambda: str('x'))], _fitness=19.0)
                ]
-        # Create an object with a migration probability of 1.0.
-        self.ga = GenericGA(pop, lambda x: 0.0, SelectionOperator(1.0),
-                            MutationOperator(0.0), CrossoverOperator(1.0))
+        # Create an object with a genetic probabilities of 1.0.
+        self.ga = GenericGA(pop, lambda x: 0.0, SelectionOperator(1.0), MutationOperator(1.0),
+                            CrossoverOperator(1.0))
     # _end_def_
 
     def test_best_chromosome(self):
@@ -68,7 +68,7 @@ class TestGenericGA(unittest.TestCase):
         best_p = self.ga.best_chromosome()
         self.assertEqual(19.0, best_p.fitness)
 
-        # Reverese the entries by subtracting the max value.
+        # Reverse the entries by subtracting the max value.
         for i in self.ga.population:
             i.fitness -= 19.0
         # _end_for_
