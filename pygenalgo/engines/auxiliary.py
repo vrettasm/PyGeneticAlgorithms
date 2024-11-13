@@ -75,7 +75,7 @@ def apply_corrections(input_population: list[Chromosome],
     for chromosome in input_population:
 
         # Holds the corrected genes.
-        genes_corrected = 0
+        corrected_genes = 0
 
         # Go through every Gene in the chromosome.
         for gene in chromosome:
@@ -90,14 +90,16 @@ def apply_corrections(input_population: list[Chromosome],
                 gene.is_valid = True
 
                 # Update the counter.
-                genes_corrected += 1
+                corrected_genes += 1
+            # _end_if_
+
         # _end_for_
 
         # Check if there were any gene corrections.
-        if genes_corrected:
+        if corrected_genes:
 
             # Update the total corrections counter.
-            corrections_counter += genes_corrected
+            corrections_counter += corrected_genes
 
             # Re-evaluate the fitness of the chromosome.
             chromosome.fitness = fit_func(chromosome)
