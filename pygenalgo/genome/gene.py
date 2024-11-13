@@ -200,20 +200,9 @@ class Gene(object):
 
         :return: a (shallow) copy of the self object.
         """
-        
-        # Get the class of the self object.
-        cls = self.__class__
 
-        # Create a new (copy) object.
-        copy_gene = cls.__new__(cls)
-
-        # Copy all the attributes.
-        for attr in self.__slots__:
-            setattr(copy_gene, attr, getattr(self, attr))
-        # _end_for_
-        
         # Return the new copy.
-        return copy_gene
+        return Gene(self._datum, self._func, self._valid)
     # _end_def_
 
     def __deepcopy__(self, memo):
@@ -227,11 +216,8 @@ class Gene(object):
         :return: a new identical "clone" of the self object.
         """
 
-        # Get the class of the object.
-        cls = self.__class__
-
         # Create a new instance.
-        new_object = cls.__new__(cls)
+        new_object = Gene.__new__(Gene)
 
         # Don't copy self reference.
         memo[id(self)] = new_object

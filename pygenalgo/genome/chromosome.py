@@ -190,17 +190,8 @@ class Chromosome(object):
         :return: a (shallow) copy of the self object.
         """
 
-        # Get the class of the self object.
-        cls = self.__class__
-
-        # Create a new (copy) object.
-        result = cls.__new__(cls)
-
-        # Copy all the attributes.
-        result.__dict__.update(self.__dict__)
-
         # Return the new copy.
-        return result
+        return Chromosome(self._genome, self._fitness, self._valid)
     # _end_copy_
 
     def __deepcopy__(self, memo):
@@ -213,11 +204,9 @@ class Chromosome(object):
 
         :return: a new identical "clone" of the self object.
         """
-        # Get the class of the object.
-        cls = self.__class__
 
         # Create a new instance.
-        new_object = cls.__new__(cls)
+        new_object = Chromosome.__new__(Chromosome)
 
         # Don't copy self reference.
         memo[id(self)] = new_object
