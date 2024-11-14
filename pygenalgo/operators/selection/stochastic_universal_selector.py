@@ -8,10 +8,12 @@ class StochasticUniversalSelector(SelectionOperator):
     """
     Description:
 
-        Stochastic Universal Selector is an extension of fitness proportionate selection (i.e. RouletteWheelSelection)
-        which exhibits no bias and minimal spread. Where RWS chooses several solutions from the population by repeated
-        random sampling, SUS uses a single random value to sample all the solutions by choosing them at evenly spaced
-        intervals. This gives weaker members of the population (according to their fitness) a chance to be chosen.
+        Stochastic Universal Selector is an extension of fitness proportionate selection
+        (i.e. RouletteWheelSelection) which exhibits no bias and minimal spread. Where RWS
+        chooses several solutions from the population by repeated random sampling, SUS uses
+        a single random value to sample all the solutions by choosing them at evenly spaced
+        intervals. This gives weaker members of the population (according to their fitness)
+        a chance to be chosen.
     """
 
     def __init__(self, select_probability: float = 1.0):

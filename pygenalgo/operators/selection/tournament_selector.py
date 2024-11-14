@@ -30,8 +30,9 @@ class TournamentSelector(SelectionOperator):
 
     def select(self, population: list[Chromosome]):
         """
-        Select the individuals, from the input population, that will be passed on to the next
-        genetic operations of crossover and mutation to form the new population of solutions.
+        Select the individuals, from the input population that will be passed on
+        to the next genetic operations of crossover and mutation to form the new
+        population of solutions.
 
         :param population: a list of chromosomes to select the parents from.
 

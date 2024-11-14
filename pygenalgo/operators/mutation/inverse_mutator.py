@@ -47,7 +47,7 @@ class InverseMutator(MutationOperator):
             # Invert the copied slice in place.
             sliced_chromosome.reverse()
 
-            # Put back the inversed items.
+            # Put back the inverse items.
             individual.genome[i:j] = sliced_chromosome
 
             # Invalidate the fitness of the chromosome.
