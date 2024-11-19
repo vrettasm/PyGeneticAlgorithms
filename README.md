@@ -133,7 +133,7 @@ Some optimization examples on how to use these algorithms:
 
 | **Problem**                                                | **Variables** | **Objectives** | **Constraints** | **Description** |
 |:-----------------------------------------------------------|:-------------:|:--------------:|:---------------:|:---------------:|
-| [Sphere](examples/sphere.ipynb)                            |   M (=5)      |     1          |       no        |     serial      |
+| [Sphere](examples/sphere.ipynb)                            |    M (=5)     |       1        |       no        |     serial      |
 | [Rastrigin](examples/rastrigin.ipynb)                      |    M (=5)     |       1        |       no        |     serial      |
 | [Rosenbrock](examples/rosenbrock_on_a_disk.ipynb)          |    M (=2)     |       1        |        1        |     serial      |
 | [Binh & Korn](examples/binh_and_korn_multiobjective.ipynb) |    M (=2)     |       2        |        2        |     serial      |
