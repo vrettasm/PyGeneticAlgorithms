@@ -56,16 +56,13 @@ class StochasticUniversalSelector(SelectionOperator):
         pointers = (start_0 + i*dist_p for i in range(0, N))
 
         # Create a list that will contain the new parents.
-        new_parents = []
-
-        # Get the list append method locally.
-        new_parents_append = new_parents.append
+        new_parents = N * [None]
 
         # Compute the cumulative sum of the fitness values.
         cum_sum_fit = list(accumulate(all_fitness))
 
         # Collect the new parents.
-        for p in pointers:
+        for n, p in enumerate(pointers):
 
             # Reset the index to '0'.
             i = 0
@@ -76,7 +73,7 @@ class StochasticUniversalSelector(SelectionOperator):
             # _end_while_
 
             # Add the individual at position 'i' in the new parents pool.
-            new_parents_append(population[i])
+            new_parents[n] = population[i]
         # _end_for_
 
         # Increase the selection counter.

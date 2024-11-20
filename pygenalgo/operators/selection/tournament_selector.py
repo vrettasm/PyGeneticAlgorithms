@@ -42,10 +42,7 @@ class TournamentSelector(SelectionOperator):
         N = len(population)
 
         # Create a list that will contain the new parents.
-        new_parents = []
-
-        # Get the list append method locally.
-        new_parents_append = new_parents.append
+        new_parents = N * [None]
 
         # Define locally the choose(N,k) function.
         def choose_k():
@@ -64,7 +61,7 @@ class TournamentSelector(SelectionOperator):
                          key=lambda p: p.fitness)
 
             # Add the best individual in the new list.
-            new_parents_append(winner)
+            new_parents[i] = winner
         # _end_for_
 
         # Increase the selection counter.
