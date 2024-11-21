@@ -44,17 +44,13 @@ class TournamentSelector(SelectionOperator):
         # Create a list that will contain the new parents.
         new_parents = N * [None]
 
-        # Define locally the choose(N,k) function.
-        def choose_k():
-            return self.rng.choice(N, size=self._items, replace=False, shuffle=False)
-        # _end_def_
-
         # Repeat the 'tournament' N times.
         for i in range(N):
 
             # Select randomly 'k' individuals (indexes)
             # from the initial population.
-            index = choose_k()
+            index = self.rng.choice(N, size=self._items,
+                                    replace=False, shuffle=False)
 
             # Find the individual with the highest fitness value.
             winner = max([population[j] for j in index],
