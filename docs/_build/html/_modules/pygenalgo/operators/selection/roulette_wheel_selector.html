@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.operators.selection.roulette_wheel_selector &mdash; PyGenAlgo 00.00.01 documentation</title>
+  <title>pygenalgo.operators.selection.roulette_wheel_selector &mdash; PyGenAlgo 01.60.50 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../../_static/documentation_options.js?v=d7bb8d4d"></script>
+        <script src="../../../../_static/documentation_options.js?v=2db42fd8"></script>
         <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -82,12 +82,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Roulette Wheel Selector implements &#39;fitness proportional selection&#39;. Each member of the population</span>
-<span class="sd">        is assigned a probability value that is directly proportional to its fitness value (compared to the</span>
-<span class="sd">        rest of the population).</span>
+<span class="sd">        Roulette Wheel Selector implements &#39;fitness proportional selection&#39;. Each member</span>
+<span class="sd">        of the population is assigned a probability value that is directly proportional</span>
+<span class="sd">        to its fitness value (compared to the rest of the population).</span>
 
-<span class="sd">        Individuals with higher fitness value are more likely to be selected for parents when forming the</span>
-<span class="sd">        new generation of individuals (offsprings).</span>
+<span class="sd">        Individuals with higher fitness value are more likely to be selected for parents</span>
+<span class="sd">        when forming the new generation of individuals (offsprings).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
@@ -105,8 +105,9 @@
 <a class="viewcode-back" href="../../../../pygenalgo.operators.selection.html#pygenalgo.operators.selection.roulette_wheel_selector.RouletteWheelSelector.select">[docs]</a>
     <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Select the individuals, from the input population, that will be passed on to the next</span>
-<span class="sd">        genetic operations of crossover and mutation to form the new population of solutions.</span>
+<span class="sd">        Select the individuals, from the input population, that will be passed on</span>
+<span class="sd">        to the next genetic operations of crossover and mutation to form the new</span>
+<span class="sd">        population of solutions.</span>
 
 <span class="sd">        :param population: a list of chromosomes to select the parents from.</span>
 

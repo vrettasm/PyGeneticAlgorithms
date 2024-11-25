@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.operators.selection.stochastic_universal_selector &mdash; PyGenAlgo 00.00.01 documentation</title>
+  <title>pygenalgo.operators.selection.stochastic_universal_selector &mdash; PyGenAlgo 01.60.50 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../../_static/documentation_options.js?v=d7bb8d4d"></script>
+        <script src="../../../../_static/documentation_options.js?v=2db42fd8"></script>
         <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -83,10 +83,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Stochastic Universal Selector is an extension of fitness proportionate selection (i.e. RouletteWheelSelection)</span>
-<span class="sd">        which exhibits no bias and minimal spread. Where RWS chooses several solutions from the population by repeated</span>
-<span class="sd">        random sampling, SUS uses a single random value to sample all the solutions by choosing them at evenly spaced</span>
-<span class="sd">        intervals. This gives weaker members of the population (according to their fitness) a chance to be chosen.</span>
+<span class="sd">        Stochastic Universal Selector is an extension of fitness proportionate selection</span>
+<span class="sd">        (i.e. RouletteWheelSelection) which exhibits no bias and minimal spread. Where RWS</span>
+<span class="sd">        chooses several solutions from the population by repeated random sampling, SUS uses</span>
+<span class="sd">        a single random value to sample all the solutions by choosing them at evenly spaced</span>
+<span class="sd">        intervals. This gives weaker members of the population (according to their fitness)</span>
+<span class="sd">        a chance to be chosen.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
@@ -128,19 +130,16 @@
 
         <span class="c1"># Calculate the pointers at equal distances &#39;dist_p&#39;</span>
         <span class="c1"># starting from &#39;start_0&#39;.</span>
-        <span class="n">pointers</span> <span class="o">=</span> <span class="p">[</span><span class="n">start_0</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">dist_p</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">)]</span>
+        <span class="n">pointers</span> <span class="o">=</span> <span class="p">(</span><span class="n">start_0</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">dist_p</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
 
         <span class="c1"># Create a list that will contain the new parents.</span>
-        <span class="n">new_parents</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="c1"># Get the list append method locally.</span>
-        <span class="n">new_parents_append</span> <span class="o">=</span> <span class="n">new_parents</span><span class="o">.</span><span class="n">append</span>
+        <span class="n">new_parents</span> <span class="o">=</span> <span class="n">N</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
 
         <span class="c1"># Compute the cumulative sum of the fitness values.</span>
         <span class="n">cum_sum_fit</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">accumulate</span><span class="p">(</span><span class="n">all_fitness</span><span class="p">))</span>
 
         <span class="c1"># Collect the new parents.</span>
-        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pointers</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pointers</span><span class="p">):</span>
 
             <span class="c1"># Reset the index to &#39;0&#39;.</span>
             <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
@@ -151,7 +150,7 @@
             <span class="c1"># _end_while_</span>
 
             <span class="c1"># Add the individual at position &#39;i&#39; in the new parents pool.</span>
-            <span class="n">new_parents_append</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">new_parents</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="c1"># _end_for_</span>
 
         <span class="c1"># Increase the selection counter.</span>

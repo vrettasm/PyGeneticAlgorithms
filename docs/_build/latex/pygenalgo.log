@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.8.27)  8 NOV 2024 16:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.8.27)  25 NOV 2024 16:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -927,32 +927,32 @@ Overfull \hbox (4.52385pt too wide) in paragraph at lines 1834--1834
  []
 
 [13] [14] [15] [16] [17]
-Overfull \hbox (4.04381pt too wide) in paragraph at lines 2415--2415
+Overfull \hbox (4.04381pt too wide) in paragraph at lines 2416--2416
 []\T1/qtm/m/it/10 select_probability: 
  []
 
 [18]
-Overfull \hbox (35.54372pt too wide) in paragraph at lines 2516--2516
+Overfull \hbox (35.54372pt too wide) in paragraph at lines 2520--2520
 []\T1/qtm/m/it/10 select_probability: 
  []
 
 [19]
-Overfull \hbox (98.54353pt too wide) in paragraph at lines 2622--2622
+Overfull \hbox (98.54353pt too wide) in paragraph at lines 2627--2627
 []\T1/qtm/m/it/10 select_probability: 
  []
 
 
-Overfull \hbox (41.52354pt too wide) in paragraph at lines 2622--2622
+Overfull \hbox (41.52354pt too wide) in paragraph at lines 2627--2627
 \T1/qtm/m/it/10 float 
  []
 
 
-Overfull \hbox (30.49355pt too wide) in paragraph at lines 2622--2622
+Overfull \hbox (30.49355pt too wide) in paragraph at lines 2627--2627
 \T1/qtm/m/it/10 = 
  []
 
 
-Overfull \hbox (41.74852pt too wide) in paragraph at lines 2622--2622
+Overfull \hbox (41.74852pt too wide) in paragraph at lines 2627--2627
 \T1/qtm/m/it/10 1.0\T1/txtt/m/n/10 )|  
  []
 
@@ -963,145 +963,145 @@ Chapter 2.
 ] [24
 
 ]
-Overfull \hbox (24.62177pt too wide) in paragraph at lines 2961--2962
+Overfull \hbox (24.62177pt too wide) in paragraph at lines 2969--2970
 []\T1/txtt/m/n/10 pygenalgo.operators.crossover.crossover_operator\T1/qtm/m/n/1
 0 ,
  []
 
 
-Overfull \hbox (3.62183pt too wide) in paragraph at lines 2962--2963
+Overfull \hbox (3.62183pt too wide) in paragraph at lines 2970--2971
 []\T1/txtt/m/n/10 pygenalgo.operators.crossover.meta_crossover\T1/qtm/m/n/10 ,
  []
 
 
-Overfull \hbox (40.37172pt too wide) in paragraph at lines 2963--2964
+Overfull \hbox (40.37172pt too wide) in paragraph at lines 2971--2972
 []\T1/txtt/m/n/10 pygenalgo.operators.crossover.mutli_point_crossover\T1/qtm/m/
 n/10 ,
  []
 
 
-Overfull \hbox (8.87181pt too wide) in paragraph at lines 2964--2965
+Overfull \hbox (8.87181pt too wide) in paragraph at lines 2972--2973
 []\T1/txtt/m/n/10 pygenalgo.operators.crossover.order_crossover\T1/qtm/m/n/10 ,
 
  []
 
 
-Overfull \hbox (66.62164pt too wide) in paragraph at lines 2965--2966
+Overfull \hbox (66.62164pt too wide) in paragraph at lines 2973--2974
 []\T1/txtt/m/n/10 pygenalgo.operators.crossover.partially_mapped_crossover\T1/q
 tm/m/n/10 ,
  []
 
 
-Overfull \hbox (56.12167pt too wide) in paragraph at lines 2966--2967
+Overfull \hbox (56.12167pt too wide) in paragraph at lines 2974--2975
 []\T1/txtt/m/n/10 pygenalgo.operators.crossover.position_based_crossover\T1/qtm
 /m/n/10 ,
  []
 
 
-Overfull \hbox (45.6217pt too wide) in paragraph at lines 2967--2968
+Overfull \hbox (45.6217pt too wide) in paragraph at lines 2975--2976
 []\T1/txtt/m/n/10 pygenalgo.operators.crossover.single_point_crossover\T1/qtm/m
 /n/10 ,
  []
 
 
-Overfull \hbox (19.37178pt too wide) in paragraph at lines 2968--2969
+Overfull \hbox (19.37178pt too wide) in paragraph at lines 2976--2977
 []\T1/txtt/m/n/10 pygenalgo.operators.crossover.uniform_crossover\T1/qtm/m/n/10
  ,
  []
 
 
-Overfull \hbox (29.87175pt too wide) in paragraph at lines 2971--2972
+Overfull \hbox (29.87175pt too wide) in paragraph at lines 2979--2980
 []\T1/txtt/m/n/10 pygenalgo.operators.migration.clockwise_migration\T1/qtm/m/n/
 10 ,
  []
 
 
-Overfull \hbox (3.62183pt too wide) in paragraph at lines 2972--2973
+Overfull \hbox (3.62183pt too wide) in paragraph at lines 2980--2981
 []\T1/txtt/m/n/10 pygenalgo.operators.migration.meta_migration\T1/qtm/m/n/10 ,
  []
 
 
-Overfull \hbox (24.62177pt too wide) in paragraph at lines 2973--2974
+Overfull \hbox (24.62177pt too wide) in paragraph at lines 2981--2982
 []\T1/txtt/m/n/10 pygenalgo.operators.migration.migration_operator\T1/qtm/m/n/1
 0 ,
  []
 
 
-Overfull \hbox (14.1218pt too wide) in paragraph at lines 2974--2975
+Overfull \hbox (14.1218pt too wide) in paragraph at lines 2982--2983
 []\T1/txtt/m/n/10 pygenalgo.operators.migration.random_migration\T1/qtm/m/n/10 
 ,
  []
 
 
-Overfull \hbox (8.87181pt too wide) in paragraph at lines 2977--2978
+Overfull \hbox (8.87181pt too wide) in paragraph at lines 2985--2986
 []\T1/txtt/m/n/10 pygenalgo.operators.mutation.gaussian_mutator\T1/qtm/m/n/10 ,
 
  []
 
 
-Overfull \hbox (3.62183pt too wide) in paragraph at lines 2978--2979
+Overfull \hbox (3.62183pt too wide) in paragraph at lines 2986--2987
 []\T1/txtt/m/n/10 pygenalgo.operators.mutation.inverse_mutator\T1/qtm/m/n/10 ,
  []
 
 
-Overfull \hbox (3.62183pt too wide) in paragraph at lines 2980--2981
+Overfull \hbox (3.62183pt too wide) in paragraph at lines 2988--2989
 []\T1/txtt/m/n/10 pygenalgo.operators.mutation.mutate_operator\T1/qtm/m/n/10 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2981--2982
+Underfull \hbox (badness 10000) in paragraph at lines 2989--2990
 []\T1/txtt/m/n/10 pygenalgo.operators.mutation.random_mutator\T1/qtm/m/n/10 ,
  []
 
 
-Overfull \hbox (3.62183pt too wide) in paragraph at lines 2982--2983
+Overfull \hbox (3.62183pt too wide) in paragraph at lines 2990--2991
 []\T1/txtt/m/n/10 pygenalgo.operators.mutation.shuffle_mutator\T1/qtm/m/n/10 ,
  []
 
 
-Overfull \hbox (24.62177pt too wide) in paragraph at lines 2985--2986
+Overfull \hbox (24.62177pt too wide) in paragraph at lines 2993--2994
 []\T1/txtt/m/n/10 pygenalgo.operators.selection.boltzmann_selector\T1/qtm/m/n/1
 0 ,
  []
 
 
-Overfull \hbox (35.12173pt too wide) in paragraph at lines 2986--2987
+Overfull \hbox (35.12173pt too wide) in paragraph at lines 2994--2995
 []\T1/txtt/m/n/10 pygenalgo.operators.selection.linear_rank_selector\T1/qtm/m/n
 /10 ,
  []
 
 
-Overfull \hbox (8.87181pt too wide) in paragraph at lines 2987--2988
+Overfull \hbox (8.87181pt too wide) in paragraph at lines 2995--2996
 []\T1/txtt/m/n/10 pygenalgo.operators.selection.random_selector\T1/qtm/m/n/10 ,
 
  []
 
 
-Overfull \hbox (50.87169pt too wide) in paragraph at lines 2988--2989
+Overfull \hbox (50.87169pt too wide) in paragraph at lines 2996--2997
 []\T1/txtt/m/n/10 pygenalgo.operators.selection.roulette_wheel_selector\T1/qtm/
 m/n/10 ,
  []
 
 
-Overfull \hbox (8.87181pt too wide) in paragraph at lines 2989--2990
+Overfull \hbox (8.87181pt too wide) in paragraph at lines 2997--2998
 []\T1/txtt/m/n/10 pygenalgo.operators.selection.select_operator\T1/qtm/m/n/10 ,
 
  []
 
 
-Overfull \hbox (82.3716pt too wide) in paragraph at lines 2990--2991
+Overfull \hbox (82.3716pt too wide) in paragraph at lines 2998--2999
 []\T1/txtt/m/n/10 pygenalgo.operators.selection.stochastic_universal_selector\T
 1/qtm/m/n/10 ,
  []
 
 
-Overfull \hbox (29.87175pt too wide) in paragraph at lines 2991--2992
+Overfull \hbox (29.87175pt too wide) in paragraph at lines 2999--3000
 []\T1/txtt/m/n/10 pygenalgo.operators.selection.tournament_selector\T1/qtm/m/n/
 10 ,
  []
 
 
-Overfull \hbox (29.87175pt too wide) in paragraph at lines 2992--2993
+Overfull \hbox (29.87175pt too wide) in paragraph at lines 3000--3001
 []\T1/txtt/m/n/10 pygenalgo.operators.selection.truncation_selector\T1/qtm/m/n/
 10 ,
  []
@@ -2237,7 +2237,7 @@ st/fonts/type1/public/txfonts/t1xbtt.pfb></usr/local/texlive/2024/texmf-dist/fo
 nts/type1/public/txfonts/t1xbtt.pfb></usr/local/texlive/2024/texmf-dist/fonts/t
 ype1/public/txfonts/t1xtt.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/p
 ublic/txfonts/t1xtt.pfb>
-Output written on pygenalgo.pdf (35 pages, 250010 bytes).
+Output written on pygenalgo.pdf (35 pages, 250284 bytes).
 PDF statistics:
  983 PDF objects out of 1000 (max. 8388607)
  918 compressed objects within 10 object streams

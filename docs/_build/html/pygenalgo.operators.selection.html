@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.operators.selection package &mdash; PyGenAlgo 00.00.01 documentation</title>
+  <title>pygenalgo.operators.selection package &mdash; PyGenAlgo 01.60.50 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -15,7 +15,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=d7bb8d4d"></script>
+        <script src="_static/documentation_options.js?v=2db42fd8"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -100,15 +100,16 @@
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Boltzmann Selector implements an object that performs selection by choosing an individual
-from a set of individuals by sampling solutions from a Boltzmann distribution depending on
-their fitness’s.</p>
+<div><p>Boltzmann Selector implements an object that performs selection by choosing an
+individual from a set of individuals by sampling solutions from a Boltzmann
+distribution depending on their fitness’s.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.boltzmann_selector.BoltzmannSelector.select">
 <span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/selection/boltzmann_selector.html#BoltzmannSelector.select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.boltzmann_selector.BoltzmannSelector.select" title="Link to this definition"></a></dt>
-<dd><p>Select the individuals, from the input population, that will be passed on to the next
-genetic operations of crossover and mutation to form the new population of solutions.</p>
+<dd><p>Select the individuals, from the input population, that will be passed on
+to the next genetic operations of crossover and mutation to form the new
+population of solutions.</p>
 <p>NOTE: the Boltzmann constant is held in the ‘_items’ variable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -132,15 +133,16 @@ genetic operations of crossover and mutation to form the new population of solut
 <p>Description:</p>
 <blockquote>
 <div><p>Linear Rank Selector implements an object that performs selection using ranking.
-The individuals first are sorted according to their fitness values. The rank N
+The individuals first are sorted according to their fitness values. The rank ‘N’
 is assigned to the best individual and the rank 1 to the worst individual.</p>
 <p>After that the selection process is similar to the one of RouletteWheelSelector.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.select">
 <span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/selection/linear_rank_selector.html#LinearRankSelector.select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.select" title="Link to this definition"></a></dt>
-<dd><p>Select the individuals, from the input population, that will be passed on to the next
-genetic operations of crossover and mutation to form the new population of solutions.</p>
+<dd><p>Select the individuals, from the input population, that will be passed on
+to the next genetic operations of crossover and mutation to form the new
+population of solutions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>population</strong> – a list of chromosomes to select the parents from.</p>
@@ -162,15 +164,17 @@ genetic operations of crossover and mutation to form the new population of solut
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Random Selector implements selection assuming that all members of the population have the
-same probability to be selected as parents 1/N, effectively assuming a uniform probability.</p>
+<div><p>Random Selector implements selection assuming that all members of the population
+have the same probability to be selected as parents 1/N, effectively assuming a
+uniform probability.</p>
 <p>It does not favour the fit individuals therefore the mixing will be very slow.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.random_selector.RandomSelector.select">
 <span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/selection/random_selector.html#RandomSelector.select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.random_selector.RandomSelector.select" title="Link to this definition"></a></dt>
-<dd><p>Select the individuals, from the input population, that will be passed on to the next
-genetic operations of crossover and mutation to form the new population of solutions.</p>
+<dd><p>Select the individuals, from the input population, that will be passed on
+to the next genetic operations of crossover and mutation to form the new
+population of solutions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>population</strong> – a list of chromosomes to select the parents from.</p>
@@ -192,17 +196,18 @@ genetic operations of crossover and mutation to form the new population of solut
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Roulette Wheel Selector implements ‘fitness proportional selection’. Each member of the population
-is assigned a probability value that is directly proportional to its fitness value (compared to the
-rest of the population).</p>
-<p>Individuals with higher fitness value are more likely to be selected for parents when forming the
-new generation of individuals (offsprings).</p>
+<div><p>Roulette Wheel Selector implements ‘fitness proportional selection’. Each member
+of the population is assigned a probability value that is directly proportional
+to its fitness value (compared to the rest of the population).</p>
+<p>Individuals with higher fitness value are more likely to be selected for parents
+when forming the new generation of individuals (offsprings).</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.roulette_wheel_selector.RouletteWheelSelector.select">
 <span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/selection/roulette_wheel_selector.html#RouletteWheelSelector.select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.roulette_wheel_selector.RouletteWheelSelector.select" title="Link to this definition"></a></dt>
-<dd><p>Select the individuals, from the input population, that will be passed on to the next
-genetic operations of crossover and mutation to form the new population of solutions.</p>
+<dd><p>Select the individuals, from the input population, that will be passed on
+to the next genetic operations of crossover and mutation to form the new
+population of solutions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>population</strong> – a list of chromosomes to select the parents from.</p>
@@ -258,10 +263,12 @@ implement a select method.</p>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Stochastic Universal Selector is an extension of fitness proportionate selection (i.e. RouletteWheelSelection)
-which exhibits no bias and minimal spread. Where RWS chooses several solutions from the population by repeated
-random sampling, SUS uses a single random value to sample all the solutions by choosing them at evenly spaced
-intervals. This gives weaker members of the population (according to their fitness) a chance to be chosen.</p>
+<div><p>Stochastic Universal Selector is an extension of fitness proportionate selection
+(i.e. RouletteWheelSelection) which exhibits no bias and minimal spread. Where RWS
+chooses several solutions from the population by repeated random sampling, SUS uses
+a single random value to sample all the solutions by choosing them at evenly spaced
+intervals. This gives weaker members of the population (according to their fitness)
+a chance to be chosen.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.stochastic_universal_selector.StochasticUniversalSelector.select">
@@ -297,8 +304,9 @@ crossover and mutation.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.tournament_selector.TournamentSelector.select">
 <span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/selection/tournament_selector.html#TournamentSelector.select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.tournament_selector.TournamentSelector.select" title="Link to this definition"></a></dt>
-<dd><p>Select the individuals, from the input population, that will be passed on to the next
-genetic operations of crossover and mutation to form the new population of solutions.</p>
+<dd><p>Select the individuals, from the input population that will be passed on
+to the next genetic operations of crossover and mutation to form the new
+population of solutions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>population</strong> – a list of chromosomes to select the parents from.</p>

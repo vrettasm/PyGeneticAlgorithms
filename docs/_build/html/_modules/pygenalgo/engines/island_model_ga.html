@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.engines.island_model_ga &mdash; PyGenAlgo 00.00.01 documentation</title>
+  <title>pygenalgo.engines.island_model_ga &mdash; PyGenAlgo 01.60.50 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=d7bb8d4d"></script>
+        <script src="../../../_static/documentation_options.js?v=2db42fd8"></script>
         <script src="../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -180,7 +180,7 @@
         <span class="c1"># _end_for_</span>
 
         <span class="c1"># Convert the fitness values in a numpy array.</span>
-        <span class="n">fit_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fit_list</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">fit_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fit_list</span><span class="p">)</span>
 
         <span class="c1"># Return the mean and std values of the fitness.</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">fit_arr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">fit_arr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
@@ -284,6 +284,9 @@
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: Mean=</span><span class="si">{</span><span class="n">avg_fitness_i</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, Std=</span><span class="si">{</span><span class="n">std_fitness_i</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
             <span class="c1"># _end_if_</span>
 
+            <span class="c1"># Update the old population with the new chromosomes.</span>
+            <span class="n">island</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">population_i</span>
+
             <span class="c1"># Check for convergence.</span>
             <span class="k">if</span> <span class="n">f_tol</span> <span class="ow">and</span> <span class="n">fabs</span><span class="p">(</span><span class="n">avg_fitness_i</span> <span class="o">-</span> <span class="n">avg_fitness_0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">f_tol</span> <span class="ow">and</span>\
                     <span class="n">avg_hamming_dist</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.025</span><span class="p">:</span>
@@ -297,9 +300,6 @@
 
             <span class="c1"># Update the average value for the next iteration.</span>
             <span class="n">avg_fitness_0</span> <span class="o">=</span> <span class="n">avg_fitness_i</span>
-
-            <span class="c1"># Update the old population with the new chromosomes.</span>
-            <span class="n">island</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">population_i</span>
         <span class="c1"># _end_for_</span>
 
         <span class="c1"># Compute the elapsed time (in seconds).</span>

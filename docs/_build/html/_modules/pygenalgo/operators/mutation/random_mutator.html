@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.operators.mutation.random_mutator &mdash; PyGenAlgo 00.00.01 documentation</title>
+  <title>pygenalgo.operators.mutation.random_mutator &mdash; PyGenAlgo 01.60.50 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../../_static/documentation_options.js?v=d7bb8d4d"></script>
+        <script src="../../../../_static/documentation_options.js?v=2db42fd8"></script>
         <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -113,12 +113,12 @@
         <span class="c1"># If the mutation probability is higher than</span>
         <span class="c1"># a uniformly random value, make the changes.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">():</span>
+            <span class="c1"># Get the size of the chromosome.</span>
+            <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
 
-            <span class="c1"># Select randomly the mutation point.</span>
-            <span class="n">locus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">))</span>
-
-            <span class="c1"># Replace the old gene with a new one.</span>
-            <span class="n">individual</span><span class="p">[</span><span class="n">locus</span><span class="p">]</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+            <span class="c1"># Select randomly the mutation point and</span>
+            <span class="c1"># replace the old gene with a new one.</span>
+            <span class="n">individual</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">M</span><span class="p">)]</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
 
             <span class="c1"># Invalidate the fitness of the chromosome.</span>
             <span class="n">individual</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">np_nan</span>
@@ -128,6 +128,7 @@
 </div>
 
         <span class="c1"># _end_if_</span>
+
     <span class="c1"># _end_def_</span>
 
 <span class="c1"># _end_class_</span>

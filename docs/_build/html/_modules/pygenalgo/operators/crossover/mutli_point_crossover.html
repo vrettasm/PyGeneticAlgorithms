@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.operators.crossover.mutli_point_crossover &mdash; PyGenAlgo 00.00.01 documentation</title>
+  <title>pygenalgo.operators.crossover.mutli_point_crossover &mdash; PyGenAlgo 01.60.50 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../../_static/documentation_options.js?v=d7bb8d4d"></script>
+        <script src="../../../../_static/documentation_options.js?v=2db42fd8"></script>
         <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -175,11 +175,11 @@
 
                 <span class="c1"># Check the flag value.</span>
                 <span class="k">if</span> <span class="n">reset_flag</span><span class="p">:</span>
-                    <span class="n">genome_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                    <span class="n">genome_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">genome_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">genome_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">genome_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                    <span class="n">genome_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">genome_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">genome_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                 <span class="c1"># _end_if_</span>
 
             <span class="c1"># _end_for_</span>

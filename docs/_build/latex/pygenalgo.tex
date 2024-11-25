@@ -64,8 +64,8 @@
 
 
 \title{PyGenAlgo}
-\date{Nov 08, 2024}
-\release{00.00.01}
+\date{Nov 25, 2024}
+\release{01.60.50}
 \author{Michalis Vrettas, PhD}
 \newcommand{\sphinxlogo}{\vbox{}}
 \renewcommand{\releasename}{Release}
@@ -415,7 +415,7 @@ A list with all the fitness values.
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{pygenalgo.engines:pygenalgo.engines.generic_ga.GenericGA.rng_GA}}
 \pysigstartsignatures
-\pysigline{\sphinxbfcode{\sphinxupquote{rng\_GA}}\sphinxbfcode{\sphinxupquote{\DUrole{w}{ }\DUrole{p}{=}\DUrole{w}{ }Generator(PCG64) at 0x7FB7AE9804A0}}}
+\pysigline{\sphinxbfcode{\sphinxupquote{rng\_GA}}\sphinxbfcode{\sphinxupquote{\DUrole{w}{ }\DUrole{p}{=}\DUrole{w}{ }Generator(PCG64) at 0x7FB2C5B884A0}}}
 \pysigstopsignatures
 \end{fulllineitems}
 
@@ -2371,9 +2371,9 @@ Description:
 \begin{quote}
 
 \sphinxAtStartPar
-Boltzmann Selector implements an object that performs selection by choosing an individual
-from a set of individuals by sampling solutions from a Boltzmann distribution depending on
-their fitness’s.
+Boltzmann Selector implements an object that performs selection by choosing an
+individual from a set of individuals by sampling solutions from a Boltzmann
+distribution depending on their fitness’s.
 \end{quote}
 \index{select() (pygenalgo.operators.selection.boltzmann\_selector.BoltzmannSelector method)@\spxentry{select()}\spxextra{pygenalgo.operators.selection.boltzmann\_selector.BoltzmannSelector method}}
 
@@ -2383,8 +2383,9 @@ their fitness’s.
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{select}}}{\sphinxparam{\DUrole{n}{population}\DUrole{p}{:}\DUrole{w}{ }\DUrole{n}{list\DUrole{p}{{[}}{\hyperref[\detokenize{pygenalgo.genome:pygenalgo.genome.chromosome.Chromosome}]{\sphinxcrossref{Chromosome}}}\DUrole{p}{{]}}}}}{}
 \pysigstopsignatures
 \sphinxAtStartPar
-Select the individuals, from the input population, that will be passed on to the next
-genetic operations of crossover and mutation to form the new population of solutions.
+Select the individuals, from the input population, that will be passed on
+to the next genetic operations of crossover and mutation to form the new
+population of solutions.
 
 \sphinxAtStartPar
 NOTE: the Boltzmann constant is held in the ‘\_items’ variable.
@@ -2423,7 +2424,7 @@ Description:
 
 \sphinxAtStartPar
 Linear Rank Selector implements an object that performs selection using ranking.
-The individuals first are sorted according to their fitness values. The rank N
+The individuals first are sorted according to their fitness values. The rank ‘N’
 is assigned to the best individual and the rank 1 to the worst individual.
 
 \sphinxAtStartPar
@@ -2437,8 +2438,9 @@ After that the selection process is similar to the one of RouletteWheelSelector.
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{select}}}{\sphinxparam{\DUrole{n}{population}\DUrole{p}{:}\DUrole{w}{ }\DUrole{n}{list\DUrole{p}{{[}}{\hyperref[\detokenize{pygenalgo.genome:pygenalgo.genome.chromosome.Chromosome}]{\sphinxcrossref{Chromosome}}}\DUrole{p}{{]}}}}}{}
 \pysigstopsignatures
 \sphinxAtStartPar
-Select the individuals, from the input population, that will be passed on to the next
-genetic operations of crossover and mutation to form the new population of solutions.
+Select the individuals, from the input population, that will be passed on
+to the next genetic operations of crossover and mutation to form the new
+population of solutions.
 \begin{quote}\begin{description}
 \sphinxlineitem{Parameters}
 \sphinxAtStartPar
@@ -2473,8 +2475,9 @@ Description:
 \begin{quote}
 
 \sphinxAtStartPar
-Random Selector implements selection assuming that all members of the population have the
-same probability to be selected as parents 1/N, effectively assuming a uniform probability.
+Random Selector implements selection assuming that all members of the population
+have the same probability to be selected as parents 1/N, effectively assuming a
+uniform probability.
 
 \sphinxAtStartPar
 It does not favour the fit individuals therefore the mixing will be very slow.
@@ -2487,8 +2490,9 @@ It does not favour the fit individuals therefore the mixing will be very slow.
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{select}}}{\sphinxparam{\DUrole{n}{population}\DUrole{p}{:}\DUrole{w}{ }\DUrole{n}{list\DUrole{p}{{[}}{\hyperref[\detokenize{pygenalgo.genome:pygenalgo.genome.chromosome.Chromosome}]{\sphinxcrossref{Chromosome}}}\DUrole{p}{{]}}}}}{}
 \pysigstopsignatures
 \sphinxAtStartPar
-Select the individuals, from the input population, that will be passed on to the next
-genetic operations of crossover and mutation to form the new population of solutions.
+Select the individuals, from the input population, that will be passed on
+to the next genetic operations of crossover and mutation to form the new
+population of solutions.
 \begin{quote}\begin{description}
 \sphinxlineitem{Parameters}
 \sphinxAtStartPar
@@ -2523,13 +2527,13 @@ Description:
 \begin{quote}
 
 \sphinxAtStartPar
-Roulette Wheel Selector implements ‘fitness proportional selection’. Each member of the population
-is assigned a probability value that is directly proportional to its fitness value (compared to the
-rest of the population).
+Roulette Wheel Selector implements ‘fitness proportional selection’. Each member
+of the population is assigned a probability value that is directly proportional
+to its fitness value (compared to the rest of the population).
 
 \sphinxAtStartPar
-Individuals with higher fitness value are more likely to be selected for parents when forming the
-new generation of individuals (offsprings).
+Individuals with higher fitness value are more likely to be selected for parents
+when forming the new generation of individuals (offsprings).
 \end{quote}
 \index{select() (pygenalgo.operators.selection.roulette\_wheel\_selector.RouletteWheelSelector method)@\spxentry{select()}\spxextra{pygenalgo.operators.selection.roulette\_wheel\_selector.RouletteWheelSelector method}}
 
@@ -2539,8 +2543,9 @@ new generation of individuals (offsprings).
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{select}}}{\sphinxparam{\DUrole{n}{population}\DUrole{p}{:}\DUrole{w}{ }\DUrole{n}{list\DUrole{p}{{[}}{\hyperref[\detokenize{pygenalgo.genome:pygenalgo.genome.chromosome.Chromosome}]{\sphinxcrossref{Chromosome}}}\DUrole{p}{{]}}}}}{}
 \pysigstopsignatures
 \sphinxAtStartPar
-Select the individuals, from the input population, that will be passed on to the next
-genetic operations of crossover and mutation to form the new population of solutions.
+Select the individuals, from the input population, that will be passed on
+to the next genetic operations of crossover and mutation to form the new
+population of solutions.
 \begin{quote}\begin{description}
 \sphinxlineitem{Parameters}
 \sphinxAtStartPar
@@ -2629,10 +2634,12 @@ Description:
 \begin{quote}
 
 \sphinxAtStartPar
-Stochastic Universal Selector is an extension of fitness proportionate selection (i.e. RouletteWheelSelection)
-which exhibits no bias and minimal spread. Where RWS chooses several solutions from the population by repeated
-random sampling, SUS uses a single random value to sample all the solutions by choosing them at evenly spaced
-intervals. This gives weaker members of the population (according to their fitness) a chance to be chosen.
+Stochastic Universal Selector is an extension of fitness proportionate selection
+(i.e. RouletteWheelSelection) which exhibits no bias and minimal spread. Where RWS
+chooses several solutions from the population by repeated random sampling, SUS uses
+a single random value to sample all the solutions by choosing them at evenly spaced
+intervals. This gives weaker members of the population (according to their fitness)
+a chance to be chosen.
 \end{quote}
 \index{select() (pygenalgo.operators.selection.stochastic\_universal\_selector.StochasticUniversalSelector method)@\spxentry{select()}\spxextra{pygenalgo.operators.selection.stochastic\_universal\_selector.StochasticUniversalSelector method}}
 
@@ -2691,8 +2698,9 @@ crossover and mutation.
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{select}}}{\sphinxparam{\DUrole{n}{population}\DUrole{p}{:}\DUrole{w}{ }\DUrole{n}{list\DUrole{p}{{[}}{\hyperref[\detokenize{pygenalgo.genome:pygenalgo.genome.chromosome.Chromosome}]{\sphinxcrossref{Chromosome}}}\DUrole{p}{{]}}}}}{}
 \pysigstopsignatures
 \sphinxAtStartPar
-Select the individuals, from the input population, that will be passed on to the next
-genetic operations of crossover and mutation to form the new population of solutions.
+Select the individuals, from the input population that will be passed on
+to the next genetic operations of crossover and mutation to form the new
+population of solutions.
 \begin{quote}\begin{description}
 \sphinxlineitem{Parameters}
 \sphinxAtStartPar
