@@ -150,13 +150,14 @@ Constraint optimization problems can be easily addressed using the [Penalty Meth
 Moreover, multi-objective optimizations (with or without constraints) can also be solved, using the _weighted sum method_,
 as shown in the examples above.
 
-## References
+## References and Documentation
 
 This work is described in:
 
 - Michail D. Vrettas and Stefano Silvestri (2024). "PyGenAlgo: a simple and powerful toolkit for genetic algorithms".
 (Submitted for publication at Journal SoftwareX / under review).
 
+The full documentation (in pdf) can be downloaded from [here](./docs/pygenalgo.pdf).
 
 ### Contact
 
