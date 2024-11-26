@@ -27,7 +27,8 @@ release = "01.60.50"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
-    "sphinx.ext.napoleon"
+    "sphinx.ext.napoleon",
+    "python_docs_theme"
 ]
 
 templates_path = ["_templates"]
@@ -46,6 +47,6 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-# html_theme = "alabaster"
-html_theme = "sphinx_rtd_theme"
+# html_theme = "alabaster", "sphinx_rtd_theme"
+html_theme = "python_docs_theme"
 html_static_path = ["_static"]
