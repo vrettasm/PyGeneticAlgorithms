@@ -31,6 +31,16 @@ extensions = [
 ]
 
 templates_path = ['_templates']
+
+# The suffix of source filenames.
+source_suffix = '.rst'
+
+# The encoding of source files.
+source_encoding = 'utf-8'
+
+# The master toctree document.
+master_doc = 'index'
+
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # -- Options for HTML output -------------------------------------------------

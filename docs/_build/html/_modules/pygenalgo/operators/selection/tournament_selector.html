@@ -121,17 +121,13 @@
         <span class="c1"># Create a list that will contain the new parents.</span>
         <span class="n">new_parents</span> <span class="o">=</span> <span class="n">N</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
 
-        <span class="c1"># Define locally the choose(N,k) function.</span>
-        <span class="k">def</span> <span class="nf">choose_k</span><span class="p">():</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="c1"># _end_def_</span>
-
         <span class="c1"># Repeat the &#39;tournament&#39; N times.</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
 
             <span class="c1"># Select randomly &#39;k&#39; individuals (indexes)</span>
             <span class="c1"># from the initial population.</span>
-            <span class="n">index</span> <span class="o">=</span> <span class="n">choose_k</span><span class="p">()</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">,</span>
+                                    <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
             <span class="c1"># Find the individual with the highest fitness value.</span>
             <span class="n">winner</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">population</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">index</span><span class="p">],</span>
