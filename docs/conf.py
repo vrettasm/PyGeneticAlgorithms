@@ -16,36 +16,37 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'PyGenAlgo'
-copyright = '2024, Michalis Vrettas, PhD'
-author = 'Michalis Vrettas, PhD'
-release = '01.60.50'
+project = "PyGenAlgo"
+copyright = "2024, Michalis Vrettas, PhD"
+author = "Michalis Vrettas, PhD"
+release = "01.60.50"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.napoleon'
+    "sphinx.ext.autodoc",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.napoleon"
 ]
 
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # The suffix of source filenames.
-source_suffix = '.rst'
+source_suffix = {".rst": "restructuredtext"}
 
 # The encoding of source files.
-source_encoding = 'utf-8'
+source_encoding = "utf-8"
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = "index"
 
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-# html_theme = 'alabaster'
-html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+# html_theme = "alabaster"
+html_theme = "sphinx_rtd_theme"
+html_static_path = ["_static"]
+
