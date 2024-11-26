@@ -19,47 +19,47 @@
 \contentsline {subparagraph}{pygenalgo.operators.crossover package}{8}{subparagraph*.66}%
 \contentsline {subparagraph}{Submodules}{8}{subparagraph*.67}%
 \contentsline {subparagraph}{pygenalgo.operators.crossover.crossover\_operator module}{8}{subparagraph*.68}%
-\contentsline {subparagraph}{pygenalgo.operators.crossover.meta\_crossover module}{8}{subparagraph*.71}%
+\contentsline {subparagraph}{pygenalgo.operators.crossover.meta\_crossover module}{9}{subparagraph*.71}%
 \contentsline {subparagraph}{pygenalgo.operators.crossover.mutli\_point\_crossover module}{9}{subparagraph*.76}%
 \contentsline {subparagraph}{pygenalgo.operators.crossover.order\_crossover module}{10}{subparagraph*.79}%
 \contentsline {subparagraph}{pygenalgo.operators.crossover.partially\_mapped\_crossover module}{10}{subparagraph*.82}%
-\contentsline {subparagraph}{pygenalgo.operators.crossover.position\_based\_crossover module}{10}{subparagraph*.85}%
+\contentsline {subparagraph}{pygenalgo.operators.crossover.position\_based\_crossover module}{11}{subparagraph*.85}%
 \contentsline {subparagraph}{pygenalgo.operators.crossover.single\_point\_crossover module}{11}{subparagraph*.88}%
-\contentsline {subparagraph}{pygenalgo.operators.crossover.uniform\_crossover module}{11}{subparagraph*.91}%
+\contentsline {subparagraph}{pygenalgo.operators.crossover.uniform\_crossover module}{12}{subparagraph*.91}%
 \contentsline {subparagraph}{Module contents}{12}{subparagraph*.94}%
 \contentsline {subparagraph}{pygenalgo.operators.migration package}{12}{subparagraph*.95}%
 \contentsline {subparagraph}{Submodules}{12}{subparagraph*.96}%
 \contentsline {subparagraph}{pygenalgo.operators.migration.clockwise\_migration module}{12}{subparagraph*.97}%
-\contentsline {subparagraph}{pygenalgo.operators.migration.meta\_migration module}{12}{subparagraph*.100}%
+\contentsline {subparagraph}{pygenalgo.operators.migration.meta\_migration module}{13}{subparagraph*.100}%
 \contentsline {subparagraph}{pygenalgo.operators.migration.migration\_operator module}{13}{subparagraph*.105}%
-\contentsline {subparagraph}{pygenalgo.operators.migration.random\_migration module}{13}{subparagraph*.108}%
-\contentsline {subparagraph}{Module contents}{13}{subparagraph*.111}%
-\contentsline {subparagraph}{pygenalgo.operators.mutation package}{13}{subparagraph*.112}%
-\contentsline {subparagraph}{Submodules}{13}{subparagraph*.113}%
-\contentsline {subparagraph}{pygenalgo.operators.mutation.flip\_mutator module}{13}{subparagraph*.114}%
+\contentsline {subparagraph}{pygenalgo.operators.migration.random\_migration module}{14}{subparagraph*.108}%
+\contentsline {subparagraph}{Module contents}{14}{subparagraph*.111}%
+\contentsline {subparagraph}{pygenalgo.operators.mutation package}{14}{subparagraph*.112}%
+\contentsline {subparagraph}{Submodules}{14}{subparagraph*.113}%
+\contentsline {subparagraph}{pygenalgo.operators.mutation.flip\_mutator module}{14}{subparagraph*.114}%
 \contentsline {subparagraph}{pygenalgo.operators.mutation.gaussian\_mutator module}{14}{subparagraph*.117}%
-\contentsline {subparagraph}{pygenalgo.operators.mutation.inverse\_mutator module}{14}{subparagraph*.120}%
-\contentsline {subparagraph}{pygenalgo.operators.mutation.meta\_mutator module}{14}{subparagraph*.123}%
-\contentsline {subparagraph}{pygenalgo.operators.mutation.mutate\_operator module}{15}{subparagraph*.128}%
-\contentsline {subparagraph}{pygenalgo.operators.mutation.random\_mutator module}{15}{subparagraph*.131}%
-\contentsline {subparagraph}{pygenalgo.operators.mutation.shuffle\_mutator module}{16}{subparagraph*.134}%
-\contentsline {subparagraph}{pygenalgo.operators.mutation.swap\_mutator module}{16}{subparagraph*.137}%
-\contentsline {subparagraph}{Module contents}{16}{subparagraph*.140}%
-\contentsline {subparagraph}{pygenalgo.operators.selection package}{16}{subparagraph*.141}%
-\contentsline {subparagraph}{Submodules}{16}{subparagraph*.142}%
-\contentsline {subparagraph}{pygenalgo.operators.selection.boltzmann\_selector module}{16}{subparagraph*.143}%
-\contentsline {subparagraph}{pygenalgo.operators.selection.linear\_rank\_selector module}{17}{subparagraph*.146}%
-\contentsline {subparagraph}{pygenalgo.operators.selection.random\_selector module}{17}{subparagraph*.149}%
-\contentsline {subparagraph}{pygenalgo.operators.selection.roulette\_wheel\_selector module}{18}{subparagraph*.152}%
-\contentsline {subparagraph}{pygenalgo.operators.selection.select\_operator module}{18}{subparagraph*.155}%
-\contentsline {subparagraph}{pygenalgo.operators.selection.stochastic\_universal\_selector module}{19}{subparagraph*.158}%
-\contentsline {subparagraph}{pygenalgo.operators.selection.tournament\_selector module}{19}{subparagraph*.161}%
-\contentsline {subparagraph}{pygenalgo.operators.selection.truncation\_selector module}{19}{subparagraph*.164}%
-\contentsline {subparagraph}{Module contents}{20}{subparagraph*.167}%
-\contentsline {paragraph}{Submodules}{20}{paragraph*.168}%
-\contentsline {paragraph}{pygenalgo.operators.genetic\_operator module}{20}{paragraph*.169}%
-\contentsline {paragraph}{Module contents}{21}{paragraph*.178}%
-\contentsline {subsection}{\numberline {1.1.2}Module contents}{21}{subsection.1.1.2}%
+\contentsline {subparagraph}{pygenalgo.operators.mutation.inverse\_mutator module}{15}{subparagraph*.120}%
+\contentsline {subparagraph}{pygenalgo.operators.mutation.meta\_mutator module}{15}{subparagraph*.123}%
+\contentsline {subparagraph}{pygenalgo.operators.mutation.mutate\_operator module}{16}{subparagraph*.128}%
+\contentsline {subparagraph}{pygenalgo.operators.mutation.random\_mutator module}{16}{subparagraph*.131}%
+\contentsline {subparagraph}{pygenalgo.operators.mutation.shuffle\_mutator module}{17}{subparagraph*.134}%
+\contentsline {subparagraph}{pygenalgo.operators.mutation.swap\_mutator module}{17}{subparagraph*.137}%
+\contentsline {subparagraph}{Module contents}{17}{subparagraph*.140}%
+\contentsline {subparagraph}{pygenalgo.operators.selection package}{17}{subparagraph*.141}%
+\contentsline {subparagraph}{Submodules}{17}{subparagraph*.142}%
+\contentsline {subparagraph}{pygenalgo.operators.selection.boltzmann\_selector module}{17}{subparagraph*.143}%
+\contentsline {subparagraph}{pygenalgo.operators.selection.linear\_rank\_selector module}{18}{subparagraph*.146}%
+\contentsline {subparagraph}{pygenalgo.operators.selection.random\_selector module}{18}{subparagraph*.149}%
+\contentsline {subparagraph}{pygenalgo.operators.selection.roulette\_wheel\_selector module}{19}{subparagraph*.152}%
+\contentsline {subparagraph}{pygenalgo.operators.selection.select\_operator module}{19}{subparagraph*.155}%
+\contentsline {subparagraph}{pygenalgo.operators.selection.stochastic\_universal\_selector module}{20}{subparagraph*.158}%
+\contentsline {subparagraph}{pygenalgo.operators.selection.tournament\_selector module}{20}{subparagraph*.161}%
+\contentsline {subparagraph}{pygenalgo.operators.selection.truncation\_selector module}{21}{subparagraph*.164}%
+\contentsline {subparagraph}{Module contents}{21}{subparagraph*.167}%
+\contentsline {paragraph}{Submodules}{21}{paragraph*.168}%
+\contentsline {paragraph}{pygenalgo.operators.genetic\_operator module}{21}{paragraph*.169}%
+\contentsline {paragraph}{Module contents}{22}{paragraph*.178}%
+\contentsline {subsection}{\numberline {1.1.2}Module contents}{22}{subsection.1.1.2}%
 \contentsline {chapter}{\numberline {2}Indices and tables}{23}{chapter.2}%
 \contentsline {chapter}{Python Module Index}{25}{section*.179}%
 \contentsline {chapter}{Index}{27}{section*.180}%

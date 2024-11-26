@@ -6,9 +6,9 @@
 
   \bigletter A
   \item \spxentry{all\_counters}\spxextra{pygenalgo.operators.crossover.meta\_crossover.MetaCrossover property}, 
-		\hyperpage{8}
+		\hyperpage{9}
   \item \spxentry{all\_counters}\spxextra{pygenalgo.operators.migration.meta\_migration.MetaMigration property}, 
-		\hyperpage{12}
+		\hyperpage{13}
   \item \spxentry{all\_counters}\spxextra{pygenalgo.operators.mutation.meta\_mutator.MetaMutator property}, 
 		\hyperpage{15}
   \item \spxentry{apply\_corrections()}\spxextra{in module pygenalgo.engines.auxiliary}, 
@@ -21,7 +21,7 @@
   \item \spxentry{best\_chromosome()}\spxextra{pygenalgo.engines.generic\_ga.GenericGA method}, 
 		\hyperpage{2}
   \item \spxentry{BoltzmannSelector}\spxextra{class in pygenalgo.operators.selection.boltzmann\_selector}, 
-		\hyperpage{16}
+		\hyperpage{17}
 
   \indexspace
   \bigletter C
@@ -31,7 +31,7 @@
   \item \spxentry{clone()}\spxextra{pygenalgo.genome.chromosome.Chromosome method}, \hyperpage{6}
   \item \spxentry{clone()}\spxextra{pygenalgo.genome.gene.Gene method}, \hyperpage{7}
   \item \spxentry{counter}\spxextra{pygenalgo.operators.genetic\_operator.GeneticOperator property}, 
-		\hyperpage{20}
+		\hyperpage{21}
   \item \spxentry{crossover()}\spxextra{pygenalgo.operators.crossover.crossover\_operator.CrossoverOperator method}, 
 		\hyperpage{8}
   \item \spxentry{crossover()}\spxextra{pygenalgo.operators.crossover.meta\_crossover.MetaCrossover method}, 
@@ -47,7 +47,7 @@
   \item \spxentry{crossover()}\spxextra{pygenalgo.operators.crossover.single\_point\_crossover.SinglePointCrossover method}, 
 		\hyperpage{11}
   \item \spxentry{crossover()}\spxextra{pygenalgo.operators.crossover.uniform\_crossover.UniformCrossover method}, 
-		\hyperpage{11}
+		\hyperpage{12}
   \item \spxentry{crossover\_mutate()}\spxextra{pygenalgo.engines.generic\_ga.GenericGA method}, 
 		\hyperpage{2}
   \item \spxentry{crossover\_op}\spxextra{pygenalgo.engines.generic\_ga.GenericGA property}, 
@@ -64,7 +64,7 @@
   \item \spxentry{evaluate\_fitness()}\spxextra{pygenalgo.engines.standard\_ga.StandardGA method}, 
 		\hyperpage{5}
   \item \spxentry{evolve\_population()}\spxextra{pygenalgo.engines.island\_model\_ga.IslandModelGA class method}, 
-		\hyperpage{3}
+		\hyperpage{4}
 
   \indexspace
   \bigletter F
@@ -75,7 +75,7 @@
 		\hyperpage{5}
   \item \spxentry{flip()}\spxextra{pygenalgo.genome.gene.Gene method}, \hyperpage{7}
   \item \spxentry{FlipMutator}\spxextra{class in pygenalgo.operators.mutation.flip\_mutator}, 
-		\hyperpage{13}
+		\hyperpage{14}
 
   \indexspace
   \bigletter G
@@ -85,62 +85,62 @@
   \item \spxentry{Gene}\spxextra{class in pygenalgo.genome.gene}, \hyperpage{7}
   \item \spxentry{GenericGA}\spxextra{class in pygenalgo.engines.generic\_ga}, \hyperpage{2}
   \item \spxentry{GeneticOperator}\spxextra{class in pygenalgo.operators.genetic\_operator}, 
-		\hyperpage{20}
+		\hyperpage{21}
   \item \spxentry{genome}\spxextra{pygenalgo.genome.chromosome.Chromosome property}, \hyperpage{6}
 
   \indexspace
   \bigletter H
   \item \spxentry{hamming\_distance()}\spxextra{pygenalgo.genome.chromosome.Chromosome method}, 
-		\hyperpage{6}
+		\hyperpage{7}
 
   \indexspace
   \bigletter I
   \item \spxentry{id}\spxextra{pygenalgo.engines.auxiliary.SubPopulation property}, \hyperpage{1}
   \item \spxentry{inc\_counter()}\spxextra{pygenalgo.operators.genetic\_operator.GeneticOperator method}, 
-		\hyperpage{20}
+		\hyperpage{21}
   \item \spxentry{individual\_fitness()}\spxextra{pygenalgo.engines.generic\_ga.GenericGA method}, 
 		\hyperpage{2}
   \item \spxentry{InverseMutator}\spxextra{class in pygenalgo.operators.mutation.inverse\_mutator}, 
-		\hyperpage{14}
+		\hyperpage{15}
   \item \spxentry{is\_genome\_valid()}\spxextra{pygenalgo.genome.chromosome.Chromosome method}, 
-		\hyperpage{6}
-  \item \spxentry{is\_valid}\spxextra{pygenalgo.genome.gene.Gene property}, \hyperpage{7}
+		\hyperpage{7}
+  \item \spxentry{is\_valid}\spxextra{pygenalgo.genome.gene.Gene property}, \hyperpage{8}
   \item \spxentry{IslandModelGA}\spxextra{class in pygenalgo.engines.island\_model\_ga}, 
 		\hyperpage{3}
   \item \spxentry{items}\spxextra{pygenalgo.operators.genetic\_operator.GeneticOperator property}, 
-		\hyperpage{20}
+		\hyperpage{21}
   \item \spxentry{iter}\spxextra{pygenalgo.operators.genetic\_operator.GeneticOperator property}, 
-		\hyperpage{20}
+		\hyperpage{21}
 
   \indexspace
   \bigletter L
   \item \spxentry{LinearRankSelector}\spxextra{class in pygenalgo.operators.selection.linear\_rank\_selector}, 
-		\hyperpage{17}
+		\hyperpage{18}
 
   \indexspace
   \bigletter M
   \item \spxentry{MAX\_CPUs}\spxextra{pygenalgo.engines.generic\_ga.GenericGA attribute}, 
 		\hyperpage{2}
   \item \spxentry{MetaCrossover}\spxextra{class in pygenalgo.operators.crossover.meta\_crossover}, 
-		\hyperpage{8}
+		\hyperpage{9}
   \item \spxentry{MetaMigration}\spxextra{class in pygenalgo.operators.migration.meta\_migration}, 
-		\hyperpage{12}
+		\hyperpage{13}
   \item \spxentry{MetaMutator}\spxextra{class in pygenalgo.operators.mutation.meta\_mutator}, 
-		\hyperpage{14}
+		\hyperpage{15}
   \item \spxentry{migrate()}\spxextra{pygenalgo.operators.migration.clockwise\_migration.ClockwiseMigration method}, 
 		\hyperpage{12}
   \item \spxentry{migrate()}\spxextra{pygenalgo.operators.migration.meta\_migration.MetaMigration method}, 
-		\hyperpage{12}
+		\hyperpage{13}
   \item \spxentry{migrate()}\spxextra{pygenalgo.operators.migration.migration\_operator.MigrationOperator method}, 
 		\hyperpage{13}
   \item \spxentry{migrate()}\spxextra{pygenalgo.operators.migration.random\_migration.RandomMigration method}, 
-		\hyperpage{13}
+		\hyperpage{14}
   \item \spxentry{migrate\_op}\spxextra{pygenalgo.engines.island\_model\_ga.IslandModelGA property}, 
 		\hyperpage{4}
   \item \spxentry{MigrationOperator}\spxextra{class in pygenalgo.operators.migration.migration\_operator}, 
 		\hyperpage{13}
   \item \spxentry{module}
-    \subitem \spxentry{pygenalgo}, \hyperpage{21}
+    \subitem \spxentry{pygenalgo}, \hyperpage{22}
     \subitem \spxentry{pygenalgo.engines}, \hyperpage{6}
     \subitem \spxentry{pygenalgo.engines.auxiliary}, \hyperpage{1}
     \subitem \spxentry{pygenalgo.engines.generic\_ga}, \hyperpage{2}
@@ -149,41 +149,41 @@
     \subitem \spxentry{pygenalgo.genome}, \hyperpage{8}
     \subitem \spxentry{pygenalgo.genome.chromosome}, \hyperpage{6}
     \subitem \spxentry{pygenalgo.genome.gene}, \hyperpage{7}
-    \subitem \spxentry{pygenalgo.operators}, \hyperpage{21}
+    \subitem \spxentry{pygenalgo.operators}, \hyperpage{22}
     \subitem \spxentry{pygenalgo.operators.crossover}, \hyperpage{12}
     \subitem \spxentry{pygenalgo.operators.crossover.crossover\_operator}, \hyperpage{8}
-    \subitem \spxentry{pygenalgo.operators.crossover.meta\_crossover}, \hyperpage{8}
+    \subitem \spxentry{pygenalgo.operators.crossover.meta\_crossover}, \hyperpage{9}
     \subitem \spxentry{pygenalgo.operators.crossover.mutli\_point\_crossover}, \hyperpage{9}
     \subitem \spxentry{pygenalgo.operators.crossover.order\_crossover}, \hyperpage{10}
     \subitem \spxentry{pygenalgo.operators.crossover.partially\_mapped\_crossover}, \hyperpage{10}
-    \subitem \spxentry{pygenalgo.operators.crossover.position\_based\_crossover}, \hyperpage{10}
+    \subitem \spxentry{pygenalgo.operators.crossover.position\_based\_crossover}, \hyperpage{11}
     \subitem \spxentry{pygenalgo.operators.crossover.single\_point\_crossover}, \hyperpage{11}
-    \subitem \spxentry{pygenalgo.operators.crossover.uniform\_crossover}, \hyperpage{11}
-    \subitem \spxentry{pygenalgo.operators.genetic\_operator}, \hyperpage{20}
-    \subitem \spxentry{pygenalgo.operators.migration}, \hyperpage{13}
+    \subitem \spxentry{pygenalgo.operators.crossover.uniform\_crossover}, \hyperpage{12}
+    \subitem \spxentry{pygenalgo.operators.genetic\_operator}, \hyperpage{21}
+    \subitem \spxentry{pygenalgo.operators.migration}, \hyperpage{14}
     \subitem \spxentry{pygenalgo.operators.migration.clockwise\_migration}, \hyperpage{12}
-    \subitem \spxentry{pygenalgo.operators.migration.meta\_migration}, \hyperpage{12}
+    \subitem \spxentry{pygenalgo.operators.migration.meta\_migration}, \hyperpage{13}
     \subitem \spxentry{pygenalgo.operators.migration.migration\_operator}, \hyperpage{13}
-    \subitem \spxentry{pygenalgo.operators.migration.random\_migration}, \hyperpage{13}
-    \subitem \spxentry{pygenalgo.operators.mutation}, \hyperpage{16}
-    \subitem \spxentry{pygenalgo.operators.mutation.flip\_mutator}, \hyperpage{13}
+    \subitem \spxentry{pygenalgo.operators.migration.random\_migration}, \hyperpage{14}
+    \subitem \spxentry{pygenalgo.operators.mutation}, \hyperpage{17}
+    \subitem \spxentry{pygenalgo.operators.mutation.flip\_mutator}, \hyperpage{14}
     \subitem \spxentry{pygenalgo.operators.mutation.gaussian\_mutator}, \hyperpage{14}
-    \subitem \spxentry{pygenalgo.operators.mutation.inverse\_mutator}, \hyperpage{14}
-    \subitem \spxentry{pygenalgo.operators.mutation.meta\_mutator}, \hyperpage{14}
-    \subitem \spxentry{pygenalgo.operators.mutation.mutate\_operator}, \hyperpage{15}
-    \subitem \spxentry{pygenalgo.operators.mutation.random\_mutator}, \hyperpage{15}
-    \subitem \spxentry{pygenalgo.operators.mutation.shuffle\_mutator}, \hyperpage{16}
-    \subitem \spxentry{pygenalgo.operators.mutation.swap\_mutator}, \hyperpage{16}
-    \subitem \spxentry{pygenalgo.operators.selection}, \hyperpage{20}
-    \subitem \spxentry{pygenalgo.operators.selection.boltzmann\_selector}, \hyperpage{16}
-    \subitem \spxentry{pygenalgo.operators.selection.linear\_rank\_selector}, \hyperpage{17}
-    \subitem \spxentry{pygenalgo.operators.selection.random\_selector}, \hyperpage{17}
-    \subitem \spxentry{pygenalgo.operators.selection.roulette\_wheel\_selector}, \hyperpage{18}
-    \subitem \spxentry{pygenalgo.operators.selection.select\_operator}, \hyperpage{18}
+    \subitem \spxentry{pygenalgo.operators.mutation.inverse\_mutator}, \hyperpage{15}
+    \subitem \spxentry{pygenalgo.operators.mutation.meta\_mutator}, \hyperpage{15}
+    \subitem \spxentry{pygenalgo.operators.mutation.mutate\_operator}, \hyperpage{16}
+    \subitem \spxentry{pygenalgo.operators.mutation.random\_mutator}, \hyperpage{16}
+    \subitem \spxentry{pygenalgo.operators.mutation.shuffle\_mutator}, \hyperpage{17}
+    \subitem \spxentry{pygenalgo.operators.mutation.swap\_mutator}, \hyperpage{17}
+    \subitem \spxentry{pygenalgo.operators.selection}, \hyperpage{21}
+    \subitem \spxentry{pygenalgo.operators.selection.boltzmann\_selector}, \hyperpage{17}
+    \subitem \spxentry{pygenalgo.operators.selection.linear\_rank\_selector}, \hyperpage{18}
+    \subitem \spxentry{pygenalgo.operators.selection.random\_selector}, \hyperpage{18}
+    \subitem \spxentry{pygenalgo.operators.selection.roulette\_wheel\_selector}, \hyperpage{19}
+    \subitem \spxentry{pygenalgo.operators.selection.select\_operator}, \hyperpage{19}
     \subitem \spxentry{pygenalgo.operators.selection.stochastic\_universal\_selector}, 
-		\hyperpage{19}
-    \subitem \spxentry{pygenalgo.operators.selection.tournament\_selector}, \hyperpage{19}
-    \subitem \spxentry{pygenalgo.operators.selection.truncation\_selector}, \hyperpage{19}
+		\hyperpage{20}
+    \subitem \spxentry{pygenalgo.operators.selection.tournament\_selector}, \hyperpage{20}
+    \subitem \spxentry{pygenalgo.operators.selection.truncation\_selector}, \hyperpage{21}
   \item \spxentry{MultiPointCrossover}\spxextra{class in pygenalgo.operators.crossover.mutli\_point\_crossover}, 
 		\hyperpage{9}
   \item \spxentry{mutate()}\spxextra{pygenalgo.operators.mutation.flip\_mutator.FlipMutator method}, 
@@ -191,21 +191,21 @@
   \item \spxentry{mutate()}\spxextra{pygenalgo.operators.mutation.gaussian\_mutator.GaussianMutator method}, 
 		\hyperpage{14}
   \item \spxentry{mutate()}\spxextra{pygenalgo.operators.mutation.inverse\_mutator.InverseMutator method}, 
-		\hyperpage{14}
+		\hyperpage{15}
   \item \spxentry{mutate()}\spxextra{pygenalgo.operators.mutation.meta\_mutator.MetaMutator method}, 
 		\hyperpage{15}
   \item \spxentry{mutate()}\spxextra{pygenalgo.operators.mutation.mutate\_operator.MutationOperator method}, 
-		\hyperpage{15}
+		\hyperpage{16}
   \item \spxentry{mutate()}\spxextra{pygenalgo.operators.mutation.random\_mutator.RandomMutator method}, 
-		\hyperpage{15}
+		\hyperpage{16}
   \item \spxentry{mutate()}\spxextra{pygenalgo.operators.mutation.shuffle\_mutator.ShuffleMutator method}, 
-		\hyperpage{16}
+		\hyperpage{17}
   \item \spxentry{mutate()}\spxextra{pygenalgo.operators.mutation.swap\_mutator.SwapMutator method}, 
-		\hyperpage{16}
+		\hyperpage{17}
   \item \spxentry{mutate\_op}\spxextra{pygenalgo.engines.generic\_ga.GenericGA property}, 
 		\hyperpage{3}
   \item \spxentry{MutationOperator}\spxextra{class in pygenalgo.operators.mutation.mutate\_operator}, 
-		\hyperpage{15}
+		\hyperpage{16}
 
   \indexspace
   \bigletter N
@@ -232,15 +232,15 @@
   \item \spxentry{population\_fitness()}\spxextra{pygenalgo.engines.generic\_ga.GenericGA method}, 
 		\hyperpage{3}
   \item \spxentry{PositionBasedCrossover}\spxextra{class in pygenalgo.operators.crossover.position\_based\_crossover}, 
-		\hyperpage{10}
+		\hyperpage{11}
   \item \spxentry{print\_migration\_stats()}\spxextra{pygenalgo.engines.island\_model\_ga.IslandModelGA method}, 
 		\hyperpage{4}
   \item \spxentry{print\_operator\_stats()}\spxextra{pygenalgo.engines.standard\_ga.StandardGA method}, 
 		\hyperpage{5}
   \item \spxentry{probability}\spxextra{pygenalgo.operators.genetic\_operator.GeneticOperator property}, 
-		\hyperpage{20}
+		\hyperpage{22}
   \item \spxentry{pygenalgo}
-    \subitem \spxentry{module}, \hyperpage{21}
+    \subitem \spxentry{module}, \hyperpage{22}
   \item \spxentry{pygenalgo.engines}
     \subitem \spxentry{module}, \hyperpage{6}
   \item \spxentry{pygenalgo.engines.auxiliary}
@@ -258,13 +258,13 @@
   \item \spxentry{pygenalgo.genome.gene}
     \subitem \spxentry{module}, \hyperpage{7}
   \item \spxentry{pygenalgo.operators}
-    \subitem \spxentry{module}, \hyperpage{21}
+    \subitem \spxentry{module}, \hyperpage{22}
   \item \spxentry{pygenalgo.operators.crossover}
     \subitem \spxentry{module}, \hyperpage{12}
   \item \spxentry{pygenalgo.operators.crossover.crossover\_operator}
     \subitem \spxentry{module}, \hyperpage{8}
   \item \spxentry{pygenalgo.operators.crossover.meta\_crossover}
-    \subitem \spxentry{module}, \hyperpage{8}
+    \subitem \spxentry{module}, \hyperpage{9}
   \item \spxentry{pygenalgo.operators.crossover.mutli\_point\_crossover}
     \subitem \spxentry{module}, \hyperpage{9}
   \item \spxentry{pygenalgo.operators.crossover.order\_crossover}
@@ -272,83 +272,83 @@
   \item \spxentry{pygenalgo.operators.crossover.partially\_mapped\_crossover}
     \subitem \spxentry{module}, \hyperpage{10}
   \item \spxentry{pygenalgo.operators.crossover.position\_based\_crossover}
-    \subitem \spxentry{module}, \hyperpage{10}
+    \subitem \spxentry{module}, \hyperpage{11}
   \item \spxentry{pygenalgo.operators.crossover.single\_point\_crossover}
     \subitem \spxentry{module}, \hyperpage{11}
   \item \spxentry{pygenalgo.operators.crossover.uniform\_crossover}
-    \subitem \spxentry{module}, \hyperpage{11}
+    \subitem \spxentry{module}, \hyperpage{12}
   \item \spxentry{pygenalgo.operators.genetic\_operator}
-    \subitem \spxentry{module}, \hyperpage{20}
+    \subitem \spxentry{module}, \hyperpage{21}
   \item \spxentry{pygenalgo.operators.migration}
-    \subitem \spxentry{module}, \hyperpage{13}
+    \subitem \spxentry{module}, \hyperpage{14}
   \item \spxentry{pygenalgo.operators.migration.clockwise\_migration}
     \subitem \spxentry{module}, \hyperpage{12}
   \item \spxentry{pygenalgo.operators.migration.meta\_migration}
-    \subitem \spxentry{module}, \hyperpage{12}
+    \subitem \spxentry{module}, \hyperpage{13}
   \item \spxentry{pygenalgo.operators.migration.migration\_operator}
     \subitem \spxentry{module}, \hyperpage{13}
   \item \spxentry{pygenalgo.operators.migration.random\_migration}
-    \subitem \spxentry{module}, \hyperpage{13}
+    \subitem \spxentry{module}, \hyperpage{14}
   \item \spxentry{pygenalgo.operators.mutation}
-    \subitem \spxentry{module}, \hyperpage{16}
+    \subitem \spxentry{module}, \hyperpage{17}
   \item \spxentry{pygenalgo.operators.mutation.flip\_mutator}
-    \subitem \spxentry{module}, \hyperpage{13}
+    \subitem \spxentry{module}, \hyperpage{14}
   \item \spxentry{pygenalgo.operators.mutation.gaussian\_mutator}
     \subitem \spxentry{module}, \hyperpage{14}
   \item \spxentry{pygenalgo.operators.mutation.inverse\_mutator}
-    \subitem \spxentry{module}, \hyperpage{14}
+    \subitem \spxentry{module}, \hyperpage{15}
   \item \spxentry{pygenalgo.operators.mutation.meta\_mutator}
-    \subitem \spxentry{module}, \hyperpage{14}
+    \subitem \spxentry{module}, \hyperpage{15}
   \item \spxentry{pygenalgo.operators.mutation.mutate\_operator}
-    \subitem \spxentry{module}, \hyperpage{15}
+    \subitem \spxentry{module}, \hyperpage{16}
   \item \spxentry{pygenalgo.operators.mutation.random\_mutator}
-    \subitem \spxentry{module}, \hyperpage{15}
+    \subitem \spxentry{module}, \hyperpage{16}
   \item \spxentry{pygenalgo.operators.mutation.shuffle\_mutator}
-    \subitem \spxentry{module}, \hyperpage{16}
+    \subitem \spxentry{module}, \hyperpage{17}
   \item \spxentry{pygenalgo.operators.mutation.swap\_mutator}
-    \subitem \spxentry{module}, \hyperpage{16}
+    \subitem \spxentry{module}, \hyperpage{17}
   \item \spxentry{pygenalgo.operators.selection}
-    \subitem \spxentry{module}, \hyperpage{20}
+    \subitem \spxentry{module}, \hyperpage{21}
   \item \spxentry{pygenalgo.operators.selection.boltzmann\_selector}
-    \subitem \spxentry{module}, \hyperpage{16}
+    \subitem \spxentry{module}, \hyperpage{17}
   \item \spxentry{pygenalgo.operators.selection.linear\_rank\_selector}
-    \subitem \spxentry{module}, \hyperpage{17}
+    \subitem \spxentry{module}, \hyperpage{18}
   \item \spxentry{pygenalgo.operators.selection.random\_selector}
-    \subitem \spxentry{module}, \hyperpage{17}
+    \subitem \spxentry{module}, \hyperpage{18}
   \item \spxentry{pygenalgo.operators.selection.roulette\_wheel\_selector}
-    \subitem \spxentry{module}, \hyperpage{18}
+    \subitem \spxentry{module}, \hyperpage{19}
   \item \spxentry{pygenalgo.operators.selection.select\_operator}
-    \subitem \spxentry{module}, \hyperpage{18}
+    \subitem \spxentry{module}, \hyperpage{19}
   \item \spxentry{pygenalgo.operators.selection.stochastic\_universal\_selector}
-    \subitem \spxentry{module}, \hyperpage{19}
+    \subitem \spxentry{module}, \hyperpage{20}
   \item \spxentry{pygenalgo.operators.selection.tournament\_selector}
-    \subitem \spxentry{module}, \hyperpage{19}
+    \subitem \spxentry{module}, \hyperpage{20}
   \item \spxentry{pygenalgo.operators.selection.truncation\_selector}
-    \subitem \spxentry{module}, \hyperpage{19}
+    \subitem \spxentry{module}, \hyperpage{21}
 
   \indexspace
   \bigletter R
-  \item \spxentry{random()}\spxextra{pygenalgo.genome.gene.Gene method}, \hyperpage{7}
+  \item \spxentry{random()}\spxextra{pygenalgo.genome.gene.Gene method}, \hyperpage{8}
   \item \spxentry{RandomMigration}\spxextra{class in pygenalgo.operators.migration.random\_migration}, 
-		\hyperpage{13}
+		\hyperpage{14}
   \item \spxentry{RandomMutator}\spxextra{class in pygenalgo.operators.mutation.random\_mutator}, 
-		\hyperpage{15}
+		\hyperpage{16}
   \item \spxentry{RandomSelector}\spxextra{class in pygenalgo.operators.selection.random\_selector}, 
-		\hyperpage{17}
+		\hyperpage{18}
   \item \spxentry{reset\_counter()}\spxextra{pygenalgo.operators.crossover.meta\_crossover.MetaCrossover method}, 
 		\hyperpage{9}
   \item \spxentry{reset\_counter()}\spxextra{pygenalgo.operators.genetic\_operator.GeneticOperator method}, 
-		\hyperpage{20}
+		\hyperpage{22}
   \item \spxentry{reset\_counter()}\spxextra{pygenalgo.operators.migration.meta\_migration.MetaMigration method}, 
-		\hyperpage{12}
+		\hyperpage{13}
   \item \spxentry{reset\_counter()}\spxextra{pygenalgo.operators.mutation.meta\_mutator.MetaMutator method}, 
 		\hyperpage{15}
   \item \spxentry{rng}\spxextra{pygenalgo.operators.genetic\_operator.GeneticOperator property}, 
-		\hyperpage{21}
+		\hyperpage{22}
   \item \spxentry{rng\_GA}\spxextra{pygenalgo.engines.generic\_ga.GenericGA attribute}, 
 		\hyperpage{3}
   \item \spxentry{RouletteWheelSelector}\spxextra{class in pygenalgo.operators.selection.roulette\_wheel\_selector}, 
-		\hyperpage{18}
+		\hyperpage{19}
   \item \spxentry{run()}\spxextra{pygenalgo.engines.generic\_ga.GenericGA method}, \hyperpage{3}
   \item \spxentry{run()}\spxextra{pygenalgo.engines.island\_model\_ga.IslandModelGA method}, 
 		\hyperpage{4}
@@ -357,48 +357,48 @@
   \indexspace
   \bigletter S
   \item \spxentry{select()}\spxextra{pygenalgo.operators.selection.boltzmann\_selector.BoltzmannSelector method}, 
-		\hyperpage{17}
+		\hyperpage{18}
   \item \spxentry{select()}\spxextra{pygenalgo.operators.selection.linear\_rank\_selector.LinearRankSelector method}, 
-		\hyperpage{17}
+		\hyperpage{18}
   \item \spxentry{select()}\spxextra{pygenalgo.operators.selection.random\_selector.RandomSelector method}, 
-		\hyperpage{17}
+		\hyperpage{18}
   \item \spxentry{select()}\spxextra{pygenalgo.operators.selection.roulette\_wheel\_selector.RouletteWheelSelector method}, 
-		\hyperpage{18}
+		\hyperpage{19}
   \item \spxentry{select()}\spxextra{pygenalgo.operators.selection.select\_operator.SelectionOperator method}, 
-		\hyperpage{18}
+		\hyperpage{19}
   \item \spxentry{select()}\spxextra{pygenalgo.operators.selection.stochastic\_universal\_selector.StochasticUniversalSelector method}, 
-		\hyperpage{19}
-  \item \spxentry{select()}\spxextra{pygenalgo.operators.selection.tournament\_selector.TournamentSelector method}, 
-		\hyperpage{19}
-  \item \spxentry{select()}\spxextra{pygenalgo.operators.selection.truncation\_selector.TruncationSelector method}, 
 		\hyperpage{20}
+  \item \spxentry{select()}\spxextra{pygenalgo.operators.selection.tournament\_selector.TournamentSelector method}, 
+		\hyperpage{20}
+  \item \spxentry{select()}\spxextra{pygenalgo.operators.selection.truncation\_selector.TruncationSelector method}, 
+		\hyperpage{21}
   \item \spxentry{select\_op}\spxextra{pygenalgo.engines.generic\_ga.GenericGA property}, 
 		\hyperpage{3}
   \item \spxentry{SelectionOperator}\spxextra{class in pygenalgo.operators.selection.select\_operator}, 
-		\hyperpage{18}
+		\hyperpage{19}
   \item \spxentry{ShuffleMutator}\spxextra{class in pygenalgo.operators.mutation.shuffle\_mutator}, 
-		\hyperpage{16}
+		\hyperpage{17}
   \item \spxentry{SinglePointCrossover}\spxextra{class in pygenalgo.operators.crossover.single\_point\_crossover}, 
 		\hyperpage{11}
   \item \spxentry{StandardGA}\spxextra{class in pygenalgo.engines.standard\_ga}, \hyperpage{5}
   \item \spxentry{stats}\spxextra{pygenalgo.engines.generic\_ga.GenericGA property}, \hyperpage{3}
   \item \spxentry{StochasticUniversalSelector}\spxextra{class in pygenalgo.operators.selection.stochastic\_universal\_selector}, 
-		\hyperpage{19}
+		\hyperpage{20}
   \item \spxentry{SubPopulation}\spxextra{class in pygenalgo.engines.auxiliary}, \hyperpage{1}
   \item \spxentry{SwapMutator}\spxextra{class in pygenalgo.operators.mutation.swap\_mutator}, 
-		\hyperpage{16}
+		\hyperpage{17}
 
   \indexspace
   \bigletter T
   \item \spxentry{TournamentSelector}\spxextra{class in pygenalgo.operators.selection.tournament\_selector}, 
-		\hyperpage{19}
+		\hyperpage{20}
   \item \spxentry{TruncationSelector}\spxextra{class in pygenalgo.operators.selection.truncation\_selector}, 
-		\hyperpage{19}
+		\hyperpage{21}
 
   \indexspace
   \bigletter U
   \item \spxentry{UniformCrossover}\spxextra{class in pygenalgo.operators.crossover.uniform\_crossover}, 
-		\hyperpage{11}
+		\hyperpage{12}
   \item \spxentry{update\_stats()}\spxextra{pygenalgo.engines.standard\_ga.StandardGA method}, 
 		\hyperpage{6}
 
