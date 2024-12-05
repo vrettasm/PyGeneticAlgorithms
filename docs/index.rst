@@ -18,9 +18,6 @@ to solve general purpose optimization problems (constrained and unconstrained).
 * **Python version(s):** 3.10+
 * **Python dependencies(s):** NumPy, JobLib
 
-Launching pad
--------------
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
