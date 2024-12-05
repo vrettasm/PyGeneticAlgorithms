@@ -3,8 +3,23 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. image:: ./logo/pga_logo.png
+        :alt: PyGenAlgo Logo
+        :align: center
+
 Welcome to PyGenAlgo's documentation!
 =====================================
+PyGenAlgo is a research toolkit for genetic algorithms. Using a fully
+object-oriented paradigm it provides a set of classes that can be used
+to solve general purpose optimization problems (constrained and unconstrained).
+
+* **Free software:** GNU GPL Version 3
+* **Github repository:** https://github.com/vrettasm/pygeneticalgorithms
+* **Python version(s):** 3.10+
+* **Python dependencies(s):** NumPy, JobLib
+
+Launching pad
+-------------
 
 .. toctree::
    :maxdepth: 2
