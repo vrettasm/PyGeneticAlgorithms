@@ -3,9 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. image:: ./logo/pga_logo.png
-        :alt: PyGenAlgo Logo
-        :align: center
+.. image:: pga_logo_header.png
+   :alt: PyGenAlgo Logo
+   :align: center
 
 Welcome to PyGenAlgo's documentation!
 =====================================
