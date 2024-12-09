@@ -16,7 +16,7 @@ to solve general purpose optimization problems (constrained and unconstrained).
 * **Free software:** GNU GPL Version 3
 * **Github repository:** https://github.com/vrettasm/pygeneticalgorithms
 * **Python version(s):** 3.10+
-* **Python dependencies(s):** NumPy, JobLib
+* **Python dependencies:** NumPy, JobLib
 
 .. toctree::
    :maxdepth: 2
