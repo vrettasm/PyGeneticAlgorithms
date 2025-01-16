@@ -102,7 +102,7 @@ def apply_corrections(input_population: list[Chromosome],
             corrections_counter += corrected_genes
 
             # Re-evaluate the fitness of the chromosome.
-            chromosome.fitness = fit_func(chromosome)
+            chromosome.fitness, _ = fit_func(chromosome)
         # _end_if_
 
     # _end_for_
