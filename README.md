@@ -157,7 +157,7 @@ This work is described in:
 - Michail D. Vrettas and Stefano Silvestri (2024). "PyGenAlgo: a simple and powerful toolkit for genetic algorithms".
 (Submitted for publication at Journal SoftwareX / under review).
 
-The full documentation (in pdf) can be downloaded from [here](./docs/pygenalgo.pdf).
+You can find the latest documentation [here](https://pygeneticalgorithms.readthedocs.io/en/latest/).
 
 ### Contact
 
