@@ -79,7 +79,7 @@ class IslandModelGA(GenericGA):
         return self._migrate_op
     # _end_def_
 
-    def evaluate_fitness(self, in_population: list[Chromosome]) -> (float, float):
+    def evaluate_fitness(self, in_population: list[Chromosome]) -> (float, float, bool):
         """
         Evaluate all the chromosomes of the input population list with the
         custom fitness  function. After updating all  the chromosomes with
@@ -88,7 +88,7 @@ class IslandModelGA(GenericGA):
         :param in_population: (list) The population of Chromosomes that we
         want to evaluate their fitness.
 
-        :return: mean(fitness), std(fitness).
+        :return: mean(fitness), std(fitness), found_solution flag.
         """
 
         # Get a local copy of the fitness function.
@@ -97,16 +97,33 @@ class IslandModelGA(GenericGA):
         # Evaluate the fitness of all chromosomes.
         fit_list = [fit_func(p) for p in in_population]
 
-        # Assign each chromosome its fitness value.
-        for p, fit_value in zip(in_population, fit_list):
-            p.fitness = fit_value
+        # Preallocate the fitness list.
+        fitness_values = len(fit_list) * [None]
+
+        # Flag to indicate if a solution has been found.
+        found_solution = False
+
+        # Update all chromosomes with their fitness and check if a solution
+        # has been found.
+        for n, (p, fit_tuple) in enumerate(zip(in_population, fit_list)):
+            # Attach the fitness to each chromosome.
+            p.fitness = fit_tuple[0]
+
+            # Collect the fitness in a separate list.
+            fitness_values[n] = fit_tuple[0]
+
+            # Update the "found solution".
+            found_solution |= fit_tuple[1]
         # _end_for_
 
         # Convert the fitness values in a numpy array.
-        fit_arr = np.array(fit_list)
+        fit_arr = np.array(fitness_values)
 
-        # Return the mean and std values of the fitness.
-        return np.nanmean(fit_arr, dtype=float), np.nanstd(fit_arr, dtype=float)
+        # Return the mean, the std values of the fitness and
+        # the flag to indicate if a solution hass been found.
+        return (np.nanmean(fit_arr, dtype=float),
+                np.nanstd(fit_arr, dtype=float),
+                found_solution)
     # _end_def_
 
     @classmethod
@@ -119,8 +136,8 @@ class IslandModelGA(GenericGA):
         meaning with the ones from run().
         """
 
-        # Keeps track of the convergence of the population,
-        # along with the iteration that terminated.
+        # Keeps track of the convergence/termination of the
+        # population, along with the iteration that happened.
         has_converged = (False, epochs)
 
         # Get the size of the population.
@@ -130,7 +147,7 @@ class IslandModelGA(GenericGA):
         local_stats = {"avg": [], "std": []}
 
         # Initial evaluation of the population.
-        avg_fitness_0, std_fitness_0 = eval_fitness(island.population)
+        avg_fitness_0, std_fitness_0, _ = eval_fitness(island.population)
 
         # Check for initial errors.
         if all(np.isfinite([avg_fitness_0, std_fitness_0])):
@@ -192,7 +209,7 @@ class IslandModelGA(GenericGA):
             # _end_if_
 
             # EVALUATE the i-th population.
-            avg_fitness_i, std_fitness_i = eval_fitness(population_i)
+            avg_fitness_i, std_fitness_i, found_solution = eval_fitness(population_i)
 
             # Update the i-th population mean/std.
             if all(np.isfinite([avg_fitness_i, std_fitness_i])):
@@ -206,6 +223,15 @@ class IslandModelGA(GenericGA):
 
             # Update the old population with the new chromosomes.
             island.population = population_i
+
+            # Check for termination.
+            if found_solution:
+                # Switch the convergence flag and track the current iteration.
+                has_converged = (True, i + 1)
+
+                # Exit from the loop.
+                break
+            # _end_if_
 
             # Check for convergence.
             if f_tol and fabs(avg_fitness_i - avg_fitness_0) < f_tol and\
@@ -416,7 +442,7 @@ class IslandModelGA(GenericGA):
         self.population = final_population
 
         # Final fitness evaluation.
-        avg_fitness_final, std_fitness_final = self.evaluate_fitness(self.population)
+        avg_fitness_final, std_fitness_final, _ = self.evaluate_fitness(self.population)
 
         # Print message.
         print(f"Final Avg. Fitness = {avg_fitness_final:.4f}, "
