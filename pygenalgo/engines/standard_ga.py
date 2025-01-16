@@ -69,16 +69,18 @@ class StandardGA(GenericGA):
     # _end_def_
 
     def evaluate_fitness(self, input_population: list[Chromosome],
-                         parallel: bool = False) -> list[float]:
+                         parallel: bool = False) -> (list[float], bool):
         """
-        Evaluate all the chromosomes of the input list with the custom fitness function.
+        Evaluate all the chromosomes of the input list with the custom
+        fitness function.
 
-        :param input_population: (list) The population of Chromosomes that we want to
-        evaluate their fitness.
+        :param input_population: (list) The population of Chromosomes that
+        we want to evaluate their fitness.
 
-        :param parallel: (bool) Flag that enables parallel computation of the fitness function.
+        :param parallel: (bool) Flag that enables parallel computation of
+        the fitness function.
 
-        :return: a list of the fitness values.
+        :return: a list with the fitness values and the found solution flag.
         """
 
         # Get a local copy of the fitness function.
@@ -97,13 +99,27 @@ class StandardGA(GenericGA):
             fitness_i = [fit_func(p) for p in input_population]
         # _end_if_
 
-        # Attach the fitness to each chromosome.
-        for p, fit_value in zip(input_population, fitness_i):
-            p.fitness = fit_value
+        # Preallocate the fitness list.
+        fitness_values = len(fitness_i) * [None]
+
+        # Flag to indicate if a solution has been found.
+        found_solution = False
+
+        # Update all chromosomes with their fitness and check if a solution
+        # has been found.
+        for n, (p, fit_tuple) in enumerate(zip(input_population, fitness_i)):
+            # Attach the fitness to each chromosome.
+            p.fitness = fit_tuple[0]
+
+            # Collect the fitness in a separate list.
+            fitness_values[n] = fit_tuple[0]
+
+            # Update the "found solution".
+            found_solution |= fit_tuple[1]
         # _end_for_
 
         # Return the fitness values.
-        return fitness_i
+        return fitness_values, found_solution
     # _end_def_
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
@@ -145,7 +161,7 @@ class StandardGA(GenericGA):
         N = len(self.population)
 
         # Get the fitness values before optimisation.
-        fit_list_0 = self.evaluate_fitness(self.population, parallel)
+        fit_list_0, _ = self.evaluate_fitness(self.population, parallel)
 
         # Update the average stats (mean/std) in the dictionary.
         avg_fitness_0, std_fitness_0 = self.update_stats(fit_list_0)
@@ -194,7 +210,7 @@ class StandardGA(GenericGA):
             # _end_if_
 
             # Calculate the new fitness values.
-            fit_list_i = self.evaluate_fitness(population_i, parallel)
+            fit_list_i, found_solution = self.evaluate_fitness(population_i, parallel)
 
             # Update the mean/std in the dictionary.
             avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i)
@@ -209,12 +225,21 @@ class StandardGA(GenericGA):
             # Update the old population with the new chromosomes.
             self.population = population_i
 
+            # Check for termination.
+            if found_solution:
+                # Display a warning message.
+                print(f"{self.__class__.__name__} finished in {i + 1} iterations.")
+
+                # Exit from the loop.
+                break
+            # _end_if_
+
             # Check for convergence.
             if f_tol and fabs(avg_fitness_i - avg_fitness_0) < f_tol and\
                     avg_hamming_dist(population_i) < 0.025:
 
                 # Display a warning message.
-                print(f"{self.__class__.__name__} finished in {i + 1} iterations.")
+                print(f"{self.__class__.__name__} converged in {i + 1} iterations.")
 
                 # Exit from the loop.
                 break
