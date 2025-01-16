@@ -118,11 +118,18 @@ def fitness_func(individual: Chromosome, f_min: bool = False):
     
     # CODE TO IMPLEMENT.
     
-    # Assign the estimated value.
+    # Condition for termination.
+    # We set it to True / False.
+    solution_found = ...
+    
+    # Compute the function value.
     f_val = ...
     
-    # If we want minimization we return the negative.
-    return -f_val if f_min else f_val
+    # Assign the fitness value (check for minimization).
+    fit_value = -f_val if f_min else f_val
+    
+    # Return the solution tuple.
+    return fit_value, solution_found
 # _end_def_
 ```
 Once the fitness function is defined correctly the next steps are straightforward as described in the examples.
