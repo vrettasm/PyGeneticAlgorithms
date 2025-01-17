@@ -11,16 +11,21 @@ class GaussianMutator(MutationOperator):
         and add a Gaussian random value to the current gene value.
     """
 
-    def __init__(self, mutate_probability: float = 0.1):
+    def __init__(self, mutate_probability: float = 0.1, sigma: float = 1.0):
         """
         Construct a 'GaussianMutator' object with a given probability value.
 
         :param mutate_probability: (float).
+
+        :param sigma: (float) standard deviation of the Gaussian.
         """
 
         # Call the super constructor with the provided
         # probability value.
         super().__init__(mutate_probability)
+
+        # Standard deviation (scale) of the Gaussian sample.
+        self._items = max(min(float(sigma), 1.0), 0.0)
     # _end_def_
 
     def mutate(self, individual: Chromosome) -> None:
@@ -39,9 +44,8 @@ class GaussianMutator(MutationOperator):
             # Get the size of the chromosome.
             M = len(individual)
 
-            # Select randomly the mutation point
-            # and update the gene value.
-            individual[self.rng.integers(M)].gaussian()
+            # Select randomly the mutation point and update its value.
+            individual[self.rng.integers(M)].gaussian(sigma=self._items)
 
             # Invalidate the fitness of the chromosome.
             individual.fitness = np_nan
