@@ -1,12 +1,15 @@
 from os import cpu_count
 from typing import Callable
 from math import isnan
+
 from numpy.random import default_rng
 
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
+
+from pygenalgo.engines.auxiliary import avg_hamming_dist
 
 # Public interface.
 __all__ = ["GenericGA"]
@@ -160,6 +163,47 @@ class GenericGA(object):
             # MUTATE in place the 2nd offspring.
             self._mutate_op(input_population[j+1])
         # _end_for_
+    # _end_def_
+
+    def adapt_probabilities(self, threshold: float = None) -> None:
+        """
+        This method is used (optionally) to adjust simultaneously the crossover
+        and mutation parameters of the GenericGA object.
+
+        :param threshold: (float) This parameter is used to determine whether we
+        are going to increase or decrease the crossover and mutation parameters.
+        In case of absense (None) then we are going to calculate the average
+        Hamming distance of the current population.
+        """
+
+        # Check if  threshold value has been given.
+        if threshold is None:
+
+            # Compute the threshold value.
+            threshold = avg_hamming_dist(self.population)
+        # _end_if_
+
+        # Initialize the trial values with the current
+        # probabilities to avoid going out of limits.
+        trial_pc = self._crossx_op.probability
+        trial_pm = self._mutate_op.probability
+
+        # Use the threshold value to adjust
+        # the probabilities accordingly.
+        if threshold < 0.1:
+
+            trial_pc *= 0.9
+            trial_pm *= 1.1
+
+        elif threshold > 0.8:
+
+            trial_pc *= 1.1
+            trial_pm *= 0.9
+        # _end_if_
+
+        # Ensure the probabilities stay within the range [0, 1].
+        self._crossx_op.probability = min(max(trial_pc, 0.0), 1.0)
+        self._mutate_op.probability = min(max(trial_pm, 0.0), 1.0)
     # _end_def_
 
     def population_fitness(self) -> list[float]:
