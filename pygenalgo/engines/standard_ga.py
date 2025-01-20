@@ -123,7 +123,8 @@ class StandardGA(GenericGA):
     # _end_def_
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
-            f_tol: float = None, parallel: bool = False, verbose: bool = False) -> None:
+            f_tol: float = None, parallel: bool = False, adapt_probs: bool = False,
+            verbose: bool = False) -> None:
         """
         Main method of the StandardGA class, that implements the evolutionary routine.
 
@@ -142,8 +143,12 @@ class StandardGA(GenericGA):
 
         :param parallel: (bool) Flag that enables parallel computation of the fitness function.
 
-        :param verbose: (bool) if 'True' it will display periodically information about
-        the current average fitness and spread of the population.
+        :param adapt_probs: (bool) If enabled (set to True), it will allow the crossover and
+        mutation probabilities to adapt according to the convergence of the fitness values.
+        Default is set to False.
+
+        :param verbose: (bool) if 'True' it will display periodically information about the
+        current average fitness and spread of the population.
 
         :return: None.
         """
@@ -234,9 +239,11 @@ class StandardGA(GenericGA):
                 break
             # _end_if_
 
+            # Compute the current average Hamming distance.
+            d_avg = avg_hamming_dist(population_i)
+
             # Check for convergence.
-            if f_tol and fabs(avg_fitness_i - avg_fitness_0) < f_tol and\
-                    avg_hamming_dist(population_i) < 0.025:
+            if f_tol and fabs(avg_fitness_i - avg_fitness_0) < f_tol and d_avg < 0.025:
 
                 # Display a warning message.
                 print(f"{self.__class__.__name__} converged in {i + 1} iterations.")
@@ -247,6 +254,13 @@ class StandardGA(GenericGA):
 
             # Update the average value for the next iteration.
             avg_fitness_0 = avg_fitness_i
+
+            # Adap probabilities for the next generation. For "threshold"
+            # we use the mean Hamming distance of the current population.
+            if adapt_probs:
+                self.adapt_probabilities(threshold=d_avg)
+            # _end_if_
+
         # _end_for_
 
         # Final time instant.
