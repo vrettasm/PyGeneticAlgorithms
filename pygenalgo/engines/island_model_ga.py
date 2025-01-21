@@ -133,7 +133,7 @@ class IslandModelGA(GenericGA):
                           correction: bool = False, elitism: bool = True):
         """
         This method is called to evolve each subpopulation independently.
-        The input parameters have identical meaning with the ones from run().
+        The input parameters have identical meaning with those from run().
         """
 
         # Keeps track of the convergence/termination of the
@@ -347,9 +347,10 @@ class IslandModelGA(GenericGA):
 
                 # Evolve the subpopulations in parallel for n_epochs.
                 results_i = Parallel(n_jobs=self.MAX_CPUs, backend="loky")(
-                    delayed(self.evolve_population)(p, self.fitness_func, self.evaluate_fitness, n_epochs,
-                                                    self._crossx_op, self._mutate_op, self._select_op, self.rng_GA,
-                                                    f_tol, correction, elitism) for p in active_population
+                    delayed(IslandModelGA.evolve_population)(p, self.fitness_func, self.evaluate_fitness,
+                                                             n_epochs, self._crossx_op, self._mutate_op,
+                                                             self._select_op, self.rng_GA, f_tol, correction,
+                                                             elitism) for p in active_population
                 )
 
                 # Empty the list of active populations.
@@ -416,9 +417,10 @@ class IslandModelGA(GenericGA):
 
             # Evolve the subpopulations in parallel for 'epoch' iterations.
             results = Parallel(n_jobs=self.MAX_CPUs, backend="loky")(
-                delayed(self.evolve_population)(p, self.fitness_func, self.evaluate_fitness, epochs,
-                                                self._crossx_op, self._mutate_op, self._select_op, self.rng_GA,
-                                                f_tol, correction, elitism) for p in active_population
+                delayed(IslandModelGA.evolve_population)(p, self.fitness_func, self.evaluate_fitness, epochs,
+                                                         self._crossx_op, self._mutate_op, self._select_op,
+                                                         self.rng_GA, f_tol, correction,
+                                                         elitism) for p in active_population
             )
 
             # Process the final results.
