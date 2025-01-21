@@ -132,9 +132,8 @@ class IslandModelGA(GenericGA):
                           sel_op: SelectionOperator, rnd_gen, f_tol: float = None,
                           correction: bool = False, elitism: bool = True):
         """
-        This method is called to evolve each subpopulation independently.  It is defined as 'classmethod'
-        because we need access to the fitness function of the object. The input parameters have identical
-        meaning with the ones from run().
+        This method is called to evolve each subpopulation independently.
+        The input parameters have identical meaning with the ones from run().
         """
 
         # Keeps track of the convergence/termination of the
