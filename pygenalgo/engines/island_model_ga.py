@@ -126,10 +126,11 @@ class IslandModelGA(GenericGA):
                 found_solution)
     # _end_def_
 
-    @classmethod
-    def evolve_population(cls, island: SubPopulation, eval_fitness: Callable, epochs: int,
-                          crs_op: CrossoverOperator, mut_op: MutationOperator, sel_op: SelectionOperator,
-                          rnd_gen, f_tol: float = None, correction: bool = False, elitism: bool = True):
+    @staticmethod
+    def evolve_population(island: SubPopulation, fitness_func: Callable, eval_fitness: Callable,
+                          epochs: int, crs_op: CrossoverOperator, mut_op: MutationOperator,
+                          sel_op: SelectionOperator, rnd_gen, f_tol: float = None,
+                          correction: bool = False, elitism: bool = True):
         """
         This method is called to evolve each subpopulation independently.  It is defined as 'classmethod'
         because we need access to the fitness function of the object. The input parameters have identical
@@ -146,19 +147,8 @@ class IslandModelGA(GenericGA):
         # Define local dictionary to hold the statistics.
         local_stats = {"avg": [], "std": []}
 
-        # Initial evaluation of the population.
-        avg_fitness_0, std_fitness_0, _ = eval_fitness(island.population)
-
-        # Check for initial errors.
-        if all(np.isfinite([avg_fitness_0, std_fitness_0])):
-
-            # Store them in the dictionary.
-            local_stats["avg"].append(avg_fitness_0)
-            local_stats["std"].append(std_fitness_0)
-        else:
-
-            raise RuntimeError(f"0: Mean={avg_fitness_0:.5f}, Std={std_fitness_0:.5f}.")
-        # _end_if_
+        # Initialize this auxiliary parameter to a small number.
+        avg_fitness_0 = 1.0E-16
 
         # Start timing the loop.
         time_t0 = time.perf_counter()
@@ -190,7 +180,7 @@ class IslandModelGA(GenericGA):
 
             # Check if 'corrections' are enabled.
             if correction:
-                _ = apply_corrections(population_i, cls.fitness_func)
+                _ = apply_corrections(population_i, fitness_func)
             # _end_if_
 
             # Check if 'elitism' is enabled.
@@ -297,6 +287,29 @@ class IslandModelGA(GenericGA):
         # Active here means 'still evolving'.
         active_population = [SubPopulation(i, self.population[i::self.num_islands])
                              for i in range(self.num_islands)]
+
+        # Initial evaluation of the subpopulations.
+        for pop_n in active_population:
+
+            # Initialize the statistics dictionary.
+            self._stats[pop_n.id] = {"avg": [], "std": []}
+
+            # Initial evaluation of the population.
+            avg_fitness_0, std_fitness_0, _ = self.evaluate_fitness(pop_n.population)
+
+            # Check for initial errors.
+            if all(np.isfinite([avg_fitness_0, std_fitness_0])):
+
+                # Store them in the dictionary.
+                self._stats[pop_n.id]["avg"].append(avg_fitness_0)
+                self._stats[pop_n.id]["std"].append(std_fitness_0)
+            else:
+
+                raise RuntimeError(f"{pop_n.id}: Mean={avg_fitness_0:.5f}, Std={std_fitness_0:.5f}.")
+            # _end_if_
+
+        # _end_def_
+
         # Final population.
         final_population = []
 
@@ -305,11 +318,6 @@ class IslandModelGA(GenericGA):
 
         # Check if we allow migration among the populations.
         if allow_migration:
-
-            # Initialize the statistics dictionary.
-            for pop_n in active_population:
-                self._stats[pop_n.id] = {"avg": [], "std": []}
-            # _end_def_
 
             # Make sure 'n_periods' is integer.
             n_periods = int(n_periods)
@@ -340,8 +348,8 @@ class IslandModelGA(GenericGA):
 
                 # Evolve the subpopulations in parallel for n_epochs.
                 results_i = Parallel(n_jobs=self.MAX_CPUs, backend="loky")(
-                    delayed(self.evolve_population)(p, self.evaluate_fitness, n_epochs, self._crossx_op,
-                                                    self._mutate_op, self._select_op, self.rng_GA,
+                    delayed(self.evolve_population)(p, self.fitness_func, self.evaluate_fitness, n_epochs,
+                                                    self._crossx_op, self._mutate_op, self._select_op, self.rng_GA,
                                                     f_tol, correction, elitism) for p in active_population
                 )
 
@@ -409,8 +417,8 @@ class IslandModelGA(GenericGA):
 
             # Evolve the subpopulations in parallel for 'epoch' iterations.
             results = Parallel(n_jobs=self.MAX_CPUs, backend="loky")(
-                delayed(self.evolve_population)(p, self.evaluate_fitness, epochs, self._crossx_op,
-                                                self._mutate_op, self._select_op, self.rng_GA,
+                delayed(self.evolve_population)(p, self.fitness_func, self.evaluate_fitness, epochs,
+                                                self._crossx_op, self._mutate_op, self._select_op, self.rng_GA,
                                                 f_tol, correction, elitism) for p in active_population
             )
 
@@ -430,7 +438,8 @@ class IslandModelGA(GenericGA):
                 final_population.extend(island.population)
 
                 # Update the statistics.
-                self._stats[island.id] = local_stats
+                self._stats[island.id]["avg"].extend(local_stats["avg"])
+                self._stats[island.id]["std"].extend(local_stats["std"])
             # _end_for_
 
         # _end_if_
