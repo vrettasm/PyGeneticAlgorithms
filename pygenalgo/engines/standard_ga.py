@@ -1,7 +1,7 @@
 import time
 import numpy as np
 from math import fabs
-from collections import defaultdict
+
 from joblib import (Parallel, delayed)
 
 from pygenalgo.genome.chromosome import Chromosome
@@ -31,9 +31,6 @@ class StandardGA(GenericGA):
         """
         # Call the super constructor with all the input parameters.
         super().__init__(**kwargs)
-
-        # Dictionary with statistics.
-        self._stats = defaultdict(list)
     # _end_def_
 
     def update_stats(self, fit_list: list[float]) -> (float, float):
@@ -159,8 +156,7 @@ class StandardGA(GenericGA):
         self._select_op.reset_counter()
 
         # Reset stats dictionary.
-        self._stats["avg"].clear()
-        self._stats["std"].clear()
+        self._stats.clear()
 
         # Get the size of the population.
         N = len(self.population)
@@ -170,6 +166,10 @@ class StandardGA(GenericGA):
 
         # Update the average stats (mean/std) in the dictionary.
         avg_fitness_0, std_fitness_0 = self.update_stats(fit_list_0)
+
+        # Store the initial crossover and mutation probabilities.
+        self._stats["prob_crossx"].append(self._crossx_op.probability)
+        self._stats["prob_mutate"].append(self._mutate_op.probability)
 
         # Display an information message.
         print(f"Initial Avg. Fitness = {avg_fitness_0:.4f}.")
@@ -255,9 +255,11 @@ class StandardGA(GenericGA):
             # Update the average value for the next iteration.
             avg_fitness_0 = avg_fitness_i
 
-            # Adap probabilities for the next generation. For "threshold"
-            # we use the mean Hamming distance of the current population.
+            # Adap probabilities for the next generation.
             if adapt_probs:
+
+                # For threshold we use the mean Hamming
+                # distance of the current population.
                 self.adapt_probabilities(threshold=d_avg)
             # _end_if_
 
