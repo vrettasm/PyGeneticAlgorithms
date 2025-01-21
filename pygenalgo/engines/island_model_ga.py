@@ -65,8 +65,6 @@ class IslandModelGA(GenericGA):
             self._migrate_op = migrate_op
         # _end_if_
 
-        # Dictionary with statistics.
-        self._stats = defaultdict(dict)
     # _end_def_
 
     @property
