@@ -1,7 +1,7 @@
 from os import cpu_count
 from typing import Callable
 from math import isnan
-
+from collections import defaultdict
 from numpy.random import default_rng
 
 from pygenalgo.genome.chromosome import Chromosome
@@ -80,8 +80,8 @@ class GenericGA(object):
             self._crossx_op = crossx_op
         # _end_if_
 
-        # Placeholder for the stats.
-        self._stats = None
+        # Dictionary with statistics.
+        self._stats = defaultdict(list)
     # _end_def_
 
     @property
@@ -204,6 +204,10 @@ class GenericGA(object):
         # Ensure the probabilities stay within the range [0, 1].
         self._crossx_op.probability = min(max(trial_pc, 0.0), 1.0)
         self._mutate_op.probability = min(max(trial_pm, 0.0), 1.0)
+
+        # Store the updated crossover and mutation probabilities.
+        self._stats["prob_crossx"].append(self._crossx_op.probability)
+        self._stats["prob_mutate"].append(self._mutate_op.probability)
     # _end_def_
 
     def population_fitness(self) -> list[float]:
