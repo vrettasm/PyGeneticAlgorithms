@@ -1,7 +1,7 @@
 from typing import Any, Callable
 from copy import deepcopy
 from numpy.random import default_rng
-
+from numpy.random import Generator
 
 class Gene(object):
     """
@@ -13,8 +13,9 @@ class Gene(object):
         image. This way provides us with flexibility to parameterize the chromosome with
         different "kinds of genes" each one responsible for a specific function.
     """
+
     # Random number generator.
-    _rng = default_rng()
+    _rng: Generator = default_rng()
 
     # Object variables.
     __slots__ = ("_datum", "_func", "_valid")
