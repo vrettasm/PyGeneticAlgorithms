@@ -2,7 +2,7 @@ from os import cpu_count
 from typing import Callable
 from math import isnan
 from collections import defaultdict
-from numpy.random import default_rng
+from numpy.random import default_rng, Generator
 
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
@@ -24,7 +24,7 @@ class GenericGA(object):
     """
 
     # Make a random number generator.
-    rng_GA = default_rng()
+    rng_GA: Generator = default_rng()
 
     # Get the maximum number of CPUs (at least one).
     MAX_CPUs = 1 if not cpu_count() else cpu_count()
