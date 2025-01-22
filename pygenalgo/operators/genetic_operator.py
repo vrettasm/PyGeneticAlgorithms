@@ -1,5 +1,5 @@
 from threading import Lock
-from numpy.random import default_rng
+from numpy.random import default_rng, Generator
 
 # Public interface.
 __all__ = ["GeneticOperator"]
@@ -25,7 +25,7 @@ class GeneticOperator(object):
     """
 
     # Create a random number generator.
-    _rng = default_rng()
+    _rng: Generator = default_rng()
 
     # Object variables.
     __slots__ = ("_probability", "_counter", "_lock", "_items", "_iteration")

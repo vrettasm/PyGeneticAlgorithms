@@ -1,7 +1,7 @@
 from typing import Any, Callable
 from copy import deepcopy
-from numpy.random import default_rng
-from numpy.random import Generator
+from numpy.random import default_rng, Generator
+
 
 class Gene(object):
     """
