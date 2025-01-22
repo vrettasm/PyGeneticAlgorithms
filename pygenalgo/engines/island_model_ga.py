@@ -88,6 +88,14 @@ class HelperEvoParamGroup(object):
         (initial) values every time is called.
         """
 
+        # Get the BitGenerator used by default_rng.
+        bit_Gen = type(self.rng_ga.bit_generator)
+
+        # Use the state from a fresh bit generator to re-seed rng_ga.
+        # This uses the current system time (in nanoseconds) to avoid
+        # using the same seed value among different Parallel workers.
+        self.rng_ga.bit_generator.state = bit_Gen(seed=time.time_ns()).state
+
         # Keeps track of the convergence /termination of the
         # population, along with the iteration that happened.
         has_converged = (False, self.epochs)
