@@ -153,8 +153,8 @@ class IslandModelGA(GenericGA):
         # Define local dictionary to hold the statistics.
         local_stats = {"avg": [], "std": [], "prob_crossx": [], "prob_mutate": []}
 
-        # Initialize this auxiliary parameter to a small number.
-        avg_fitness_0 = 1.0e-100
+        # Initialize this auxiliary parameter to a large number.
+        avg_fitness_0 = 1.0e+100
 
         # Check if initial probabilities have been given.
         if adapt_probs and initial_probs:
