@@ -442,6 +442,20 @@ class IslandModelGA(GenericGA):
             # Compute the remainder epochs (if any).
             rem_epochs = int(epochs % n_periods)
 
+            # Setup evolution helper object. Here we group all the parameters
+            # and subsequently we pass only this object to the delayed function.
+            # NOTE: This helper object will run for 'n_epochs' at a time!
+            evolve_population = HelperEvoParamGroup(fitness_func=self.fitness_func,
+                                                    eval_fitness=self.evaluate_fitness,
+                                                    sel_op=self._select_op,
+                                                    crs_op=self._crossx_op,
+                                                    mut_op=self._mutate_op,
+                                                    rng_ga=self.rng_GA,
+                                                    epochs=n_epochs,
+                                                    f_tol=f_tol,
+                                                    correction=correction,
+                                                    elitism=elitism)
+
             # Break the total 'epochs' in n_periods.
             for i in range(n_periods):
 
@@ -460,20 +474,7 @@ class IslandModelGA(GenericGA):
                     n_epochs += rem_epochs
                 # _end_if_
 
-                # Setup evolution helper object. Here we group all the parameters
-                # and subsequently we pass only this object to the delayed function.
-                evolve_population = HelperEvoParamGroup(fitness_func=self.fitness_func,
-                                                        eval_fitness=self.evaluate_fitness,
-                                                        sel_op=self._select_op,
-                                                        crs_op=self._crossx_op,
-                                                        mut_op=self._mutate_op,
-                                                        rng_ga=self.rng_GA,
-                                                        epochs=n_epochs,
-                                                        f_tol=f_tol,
-                                                        correction=correction,
-                                                        elitism=elitism)
-
-                # Evolve the subpopulations in parallel for n_epochs.
+                # Evolve the subpopulations in parallel for 'n_epochs'.
                 results_i = Parallel(n_jobs=self.MAX_CPUs, backend="loky")(
                     delayed(evolve_population)(island=pop_i, adapt_probs=adapt_probs,
                                                initial_probs=genetic_probs[pop_i.id])
@@ -562,6 +563,8 @@ class IslandModelGA(GenericGA):
 
             # Setup evolution helper object. Here we group all the parameters
             # and subsequently we pass only this object to the delayed function.
+            # NOTE: The difference in this helper object with the one above is
+            # in the 'epochs' vs 'n_epochs'!
             evolve_population = HelperEvoParamGroup(fitness_func=self.fitness_func,
                                                     eval_fitness=self.evaluate_fitness,
                                                     sel_op=self._select_op,
