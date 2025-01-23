@@ -258,7 +258,7 @@ class StandardGA(GenericGA):
             # Adap probabilities for the next generation.
             if adapt_probs:
 
-                # For threshold we use the mean Hamming
+                # For threshold, we use the mean Hamming
                 # distance of the current population.
                 self.adapt_probabilities(threshold=d_avg)
             # _end_if_

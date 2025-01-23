@@ -81,7 +81,7 @@ class HelperEvoParamGroup(object):
         the crossover and mutation probabilities to adapt according to the
         convergence of the fitness values. Default is set to False.
 
-        :param initial_probs: (dict) This oprional dictionary contains the
+        :param initial_probs: (dict) This optional dictionary contains the
         initial probability values for the crossover / mutation operators.
         It is used in the migration period to ensure the continuity of the
         values. If this is not set then the algorithm will use the original
@@ -338,7 +338,7 @@ class IslandModelGA(GenericGA):
         fit_arr = np.array(fitness_values)
 
         # Return the mean, the std values of the fitness and
-        # the flag to indicate if a solution hass been found.
+        # the flag to indicate if a solution has been found.
         return (np.nanmean(fit_arr, dtype=float),
                 np.nanstd(fit_arr, dtype=float),
                 found_solution)
@@ -430,10 +430,10 @@ class IslandModelGA(GenericGA):
         if allow_migration:
 
             # Initial values for the crossover and mutation operators will be used
-            # to ensure continutity in the case of adaptable probabilities.
+            # to ensure continuity in the case of adaptable probabilities.
             genetic_probs = defaultdict(dict)
 
-            # Initial assignment of the genetic probabilites.
+            # Initial assignment of the genetic probabilities.
             for pop_n in active_population:
 
                 # Use the values of the object operators itself.
@@ -468,7 +468,7 @@ class IslandModelGA(GenericGA):
                     n_epochs += rem_epochs
                 # _end_if_
 
-                # Setup evolution helper object. Here we group all the parameters
+                # Setup evolution helper object. Here we group all the parameters,
                 # and subsequently we pass only this object to the delayed function.
                 evolve_population = HelperEvoParamGroup(fitness_func=self.fitness_func,
                                                         eval_fitness=self.evaluate_fitness,
@@ -568,7 +568,7 @@ class IslandModelGA(GenericGA):
 
         else:
 
-            # Setup evolution helper object. Here we group all the parameters
+            # Setup evolution helper object. Here we group all the parameters,
             # and subsequently we pass only this object to the delayed function.
             evolve_population = HelperEvoParamGroup(fitness_func=self.fitness_func,
                                                     eval_fitness=self.evaluate_fitness,
