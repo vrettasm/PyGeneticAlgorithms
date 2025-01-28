@@ -86,16 +86,21 @@
 <span class="sd">        and add a Gaussian random value to the current gene value.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutate_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutate_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a &#39;GaussianMutator&#39; object with a given probability value.</span>
 
 <span class="sd">        :param mutate_probability: (float).</span>
+
+<span class="sd">        :param sigma: (float) standard deviation of the Gaussian.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Call the super constructor with the provided</span>
         <span class="c1"># probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mutate_probability</span><span class="p">)</span>
+
+        <span class="c1"># Standard deviation (scale) of the Gaussian sample.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">sigma</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="GaussianMutator.mutate">
@@ -116,9 +121,8 @@
             <span class="c1"># Get the size of the chromosome.</span>
             <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
 
-            <span class="c1"># Select randomly the mutation point</span>
-            <span class="c1"># and update the gene value.</span>
-            <span class="n">individual</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">M</span><span class="p">)]</span><span class="o">.</span><span class="n">gaussian</span><span class="p">()</span>
+            <span class="c1"># Select randomly the mutation point and update its value.</span>
+            <span class="n">individual</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">M</span><span class="p">)]</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">)</span>
 
             <span class="c1"># Invalidate the fitness of the chromosome.</span>
             <span class="n">individual</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">np_nan</span>

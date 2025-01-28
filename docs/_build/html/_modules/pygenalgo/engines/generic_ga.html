@@ -74,12 +74,15 @@
 <span></span><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">cpu_count</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">isnan</span>
-<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">default_rng</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">default_rng</span><span class="p">,</span> <span class="n">Generator</span>
 
 <span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.mutate_operator</span> <span class="kn">import</span> <span class="n">MutationOperator</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.selection.select_operator</span> <span class="kn">import</span> <span class="n">SelectionOperator</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.crossover.crossover_operator</span> <span class="kn">import</span> <span class="n">CrossoverOperator</span>
+
+<span class="kn">from</span> <span class="nn">pygenalgo.engines.auxiliary</span> <span class="kn">import</span> <span class="n">avg_hamming_dist</span>
 
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GenericGA&quot;</span><span class="p">]</span>
@@ -96,7 +99,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Make a random number generator.</span>
-    <span class="n">rng_GA</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span>
+    <span class="n">rng_GA</span><span class="p">:</span> <span class="n">Generator</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span>
 
     <span class="c1"># Get the maximum number of CPUs (at least one).</span>
     <span class="n">MAX_CPUs</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">cpu_count</span><span class="p">()</span> <span class="k">else</span> <span class="n">cpu_count</span><span class="p">()</span>
@@ -152,8 +155,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span> <span class="o">=</span> <span class="n">crossx_op</span>
         <span class="c1"># _end_if_</span>
 
-        <span class="c1"># Placeholder for the stats.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Dictionary with statistics.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -241,6 +244,54 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="p">(</span><span class="n">input_population</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span></div>
 
         <span class="c1"># _end_for_</span>
+    <span class="c1"># _end_def_</span>
+
+<div class="viewcode-block" id="GenericGA.adapt_probabilities">
+<a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.adapt_probabilities">[docs]</a>
+    <span class="k">def</span> <span class="nf">adapt_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method is used (optionally) to adjust simultaneously the crossover</span>
+<span class="sd">        and mutation parameters of the GenericGA object.</span>
+
+<span class="sd">        :param threshold: (float) This parameter is used to determine whether we</span>
+<span class="sd">        are going to increase or decrease the crossover and mutation parameters.</span>
+<span class="sd">        In case of absense (None) then we are going to calculate the average</span>
+<span class="sd">        Hamming distance of the current population.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check if  threshold value has been given.</span>
+        <span class="k">if</span> <span class="n">threshold</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="c1"># Compute the threshold value.</span>
+            <span class="n">threshold</span> <span class="o">=</span> <span class="n">avg_hamming_dist</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Initialize the trial values with the current</span>
+        <span class="c1"># probabilities to avoid going out of limits.</span>
+        <span class="n">trial_pc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span>
+        <span class="n">trial_pm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span>
+
+        <span class="c1"># Use the threshold value to adjust</span>
+        <span class="c1"># the probabilities accordingly.</span>
+        <span class="k">if</span> <span class="n">threshold</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
+
+            <span class="n">trial_pc</span> <span class="o">*=</span> <span class="mf">0.9</span>
+            <span class="n">trial_pm</span> <span class="o">*=</span> <span class="mf">1.1</span>
+
+        <span class="k">elif</span> <span class="n">threshold</span> <span class="o">&gt;</span> <span class="mf">0.8</span><span class="p">:</span>
+
+            <span class="n">trial_pc</span> <span class="o">*=</span> <span class="mf">1.1</span>
+            <span class="n">trial_pm</span> <span class="o">*=</span> <span class="mf">0.9</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Ensure the probabilities stay within the range [0, 1].</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">trial_pc</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">trial_pm</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+
+        <span class="c1"># Store the updated crossover and mutation probabilities.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span></div>
+
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="GenericGA.population_fitness">

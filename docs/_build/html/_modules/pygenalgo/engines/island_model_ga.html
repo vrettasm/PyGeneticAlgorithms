@@ -72,28 +72,249 @@
              
   <h1>Source code for pygenalgo.engines.island_model_ga</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">isnan</span><span class="p">,</span> <span class="n">fabs</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">isnan</span><span class="p">,</span> <span class="n">fabs</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">Generator</span>
 
-<span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.engines.generic_ga</span> <span class="kn">import</span> <span class="n">GenericGA</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.engines.auxiliary</span> <span class="kn">import</span> <span class="p">(</span><span class="n">apply_corrections</span><span class="p">,</span>
-                                         <span class="n">SubPopulation</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">pygenalgo.engines.auxiliary</span> <span class="kn">import</span> <span class="p">(</span><span class="n">apply_corrections</span><span class="p">,</span> <span class="n">SubPopulation</span><span class="p">,</span>
                                          <span class="n">avg_hamming_dist</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.mutate_operator</span> <span class="kn">import</span> <span class="n">MutationOperator</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.selection.select_operator</span> <span class="kn">import</span> <span class="n">SelectionOperator</span>
+<span class="kn">from</span> <span class="nn">pygenalgo.engines.generic_ga</span> <span class="kn">import</span> <span class="n">GenericGA</span>
+<span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.crossover.crossover_operator</span> <span class="kn">import</span> <span class="n">CrossoverOperator</span>
-
+<span class="kn">from</span> <span class="nn">pygenalgo.operators.migration.clockwise_migration</span> <span class="kn">import</span> <span class="n">ClockwiseMigration</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.migration.meta_migration</span> <span class="kn">import</span> <span class="n">MetaMigration</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.migration.migration_operator</span> <span class="kn">import</span> <span class="n">MigrationOperator</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.migration.clockwise_migration</span> <span class="kn">import</span> <span class="n">ClockwiseMigration</span>
+<span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.mutate_operator</span> <span class="kn">import</span> <span class="n">MutationOperator</span>
+<span class="kn">from</span> <span class="nn">pygenalgo.operators.selection.select_operator</span> <span class="kn">import</span> <span class="n">SelectionOperator</span>
 
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;IslandModelGA&quot;</span><span class="p">]</span>
 
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">HelperEvoParamGroup</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Description:</span>
+
+<span class="sd">        Implements a dataclass for the grouping the evolution parameters.</span>
+<span class="sd">        This helper class is used to create a single object with all the</span>
+<span class="sd">        required parameters to evolve a single population in the Parallel</span>
+<span class="sd">        process.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Fitness function of the class.</span>
+    <span class="n">fitness_func</span><span class="p">:</span> <span class="n">Callable</span>
+
+    <span class="c1"># Evaluates the fitness of the input island population.</span>
+    <span class="n">eval_fitness</span><span class="p">:</span> <span class="n">Callable</span>
+
+    <span class="c1"># Reference of a selection operator object.</span>
+    <span class="n">sel_op</span><span class="p">:</span> <span class="n">SelectionOperator</span>
+
+    <span class="c1"># Reference of a crossover operator object.</span>
+    <span class="n">crs_op</span><span class="p">:</span> <span class="n">CrossoverOperator</span>
+
+    <span class="c1"># Reference of a mutation operator object.</span>
+    <span class="n">mut_op</span><span class="p">:</span> <span class="n">MutationOperator</span>
+
+    <span class="c1"># Random number generator. This is a copy from the GenericGA.</span>
+    <span class="n">rng_ga</span><span class="p">:</span> <span class="n">Generator</span>
+
+    <span class="c1"># (int) maximum number of iterations in the evolution process.</span>
+    <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="c1"># (float) tolerance in the difference between the average values</span>
+    <span class="c1"># of two consecutive populations (in terms of fitness).</span>
+    <span class="n">f_tol</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="c1"># (bool) flag that if set to True will check the validity of the</span>
+    <span class="c1"># population, at the gene level and attempt to correct the genome</span>
+    <span class="c1"># by calling the random() method of the flawed gene.</span>
+    <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># (bool) flag that defines elitism. If &#39;True&#39; then the chromosome</span>
+    <span class="c1"># with the higher fitness value will always be copied to the next</span>
+    <span class="c1"># generation (unaltered).</span>
+    <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">island</span><span class="p">:</span> <span class="n">SubPopulation</span><span class="p">,</span> <span class="n">adapt_probs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">initial_probs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method is called to evolve each subpopulation independently</span>
+<span class="sd">        inside the Parallel loop.</span>
+
+<span class="sd">        :param island: (SubPopulation) contains a single evolving population.</span>
+
+<span class="sd">        :param adapt_probs: (bool) If enabled (set to True), it will allow</span>
+<span class="sd">        the crossover and mutation probabilities to adapt according to the</span>
+<span class="sd">        convergence of the fitness values. Default is set to False.</span>
+
+<span class="sd">        :param initial_probs: (dict) This optional dictionary contains the</span>
+<span class="sd">        initial probability values for the crossover / mutation operators.</span>
+<span class="sd">        It is used in the migration period to ensure the continuity of the</span>
+<span class="sd">        values. If this is not set then the algorithm will use the original</span>
+<span class="sd">        (initial) values every time is called.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Get the BitGenerator used by default_rng.</span>
+        <span class="n">bit_Gen</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng_ga</span><span class="o">.</span><span class="n">bit_generator</span><span class="p">)</span>
+
+        <span class="c1"># Use the state from a fresh bit generator to re-seed rng_ga.</span>
+        <span class="c1"># This uses the current system time (in nanoseconds) to avoid</span>
+        <span class="c1"># using the same seed value among different Parallel workers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rng_ga</span><span class="o">.</span><span class="n">bit_generator</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">bit_Gen</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time_ns</span><span class="p">())</span><span class="o">.</span><span class="n">state</span>
+
+        <span class="c1"># Keeps track of the convergence /termination of the</span>
+        <span class="c1"># population, along with the iteration that happened.</span>
+        <span class="n">has_converged</span> <span class="o">=</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">)</span>
+
+        <span class="c1"># Get the size of the population.</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+
+        <span class="c1"># Define local dictionary to hold the statistics.</span>
+        <span class="n">local_stats</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;avg&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_crossx&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_mutate&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+
+        <span class="c1"># Initialize this auxiliary parameter to a large number.</span>
+        <span class="n">avg_fitness_0</span> <span class="o">=</span> <span class="mf">1.0e+100</span>
+
+        <span class="c1"># Check if initial probabilities have been given.</span>
+        <span class="k">if</span> <span class="n">adapt_probs</span> <span class="ow">and</span> <span class="n">initial_probs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">crs_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="n">initial_probs</span><span class="p">[</span><span class="s2">&quot;crossx&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mut_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="n">initial_probs</span><span class="p">[</span><span class="s2">&quot;mutate&quot;</span><span class="p">]</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Start timing the loop.</span>
+        <span class="n">time_t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+        <span class="c1"># Repeat &#39;epoch&#39; times.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">):</span>
+
+            <span class="c1"># Update current iteration in the selection operator.</span>
+            <span class="c1"># Currently, this is used only from Boltzmann Selector.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sel_op</span><span class="o">.</span><span class="n">iter</span> <span class="o">=</span> <span class="n">i</span>
+
+            <span class="c1"># SELECT the parents.</span>
+            <span class="n">population_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sel_op</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+
+            <span class="c1"># Shuffle the selected parents.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rng_ga</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span>
+
+            <span class="c1"># CROSSOVER/MUTATE to produce offsprings.</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="c1"># Replace directly the OLD parents with the NEW offsprings.</span>
+                <span class="n">population_i</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">population_i</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crs_op</span><span class="p">(</span><span class="n">population_i</span><span class="p">[</span><span class="n">j</span><span class="p">],</span>
+                                                                   <span class="n">population_i</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+                <span class="c1"># MUTATE in place the 1st offspring.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mut_op</span><span class="p">(</span><span class="n">population_i</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+
+                <span class="c1"># MUTATE in place the 2nd offspring.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mut_op</span><span class="p">(</span><span class="n">population_i</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="c1"># _end_for_</span>
+
+            <span class="c1"># Check if &#39;corrections&#39; are enabled.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">correction</span><span class="p">:</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">apply_corrections</span><span class="p">(</span><span class="n">population_i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_func</span><span class="p">)</span>
+            <span class="c1"># _end_if_</span>
+
+            <span class="c1"># Check if &#39;elitism&#39; is enabled.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">elitism</span><span class="p">:</span>
+
+                <span class="c1"># Find the individual chromosome with the highest fitness</span>
+                <span class="c1"># value (from the old subpopulation of the current island).</span>
+                <span class="n">best_chromosome</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">island</span><span class="o">.</span><span class="n">population</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">isnan</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)),</span>
+                                      <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">fitness</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+                <span class="c1"># Select randomly a position.</span>
+                <span class="n">locus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng_ga</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+
+                <span class="c1"># Replace the chromosome with the previous best.</span>
+                <span class="n">population_i</span><span class="p">[</span><span class="n">locus</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_chromosome</span>
+            <span class="c1"># _end_if_</span>
+
+            <span class="c1"># EVALUATE the i-th population.</span>
+            <span class="n">avg_fitness_i</span><span class="p">,</span> <span class="n">std_fitness_i</span><span class="p">,</span> <span class="n">found_solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_fitness</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span>
+
+            <span class="c1"># Update the i-th population mean/std.</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">([</span><span class="n">avg_fitness_i</span><span class="p">,</span> <span class="n">std_fitness_i</span><span class="p">])):</span>
+
+                <span class="c1"># Store them in the dictionary.</span>
+                <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_fitness_i</span><span class="p">)</span>
+                <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_fitness_i</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: Mean=</span><span class="si">{</span><span class="n">avg_fitness_i</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, Std=</span><span class="si">{</span><span class="n">std_fitness_i</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="c1"># _end_if_</span>
+
+            <span class="c1"># Update the old population with the new chromosomes.</span>
+            <span class="n">island</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">population_i</span>
+
+            <span class="c1"># Check for termination.</span>
+            <span class="k">if</span> <span class="n">found_solution</span><span class="p">:</span>
+                <span class="c1"># Switch the convergence flag and track the current iteration.</span>
+                <span class="n">has_converged</span> <span class="o">=</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+                <span class="c1"># Exit from the loop.</span>
+                <span class="k">break</span>
+            <span class="c1"># _end_if_</span>
+
+            <span class="c1"># Compute the current average Hamming distance.</span>
+            <span class="n">d_avg</span> <span class="o">=</span> <span class="n">avg_hamming_dist</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span>
+
+            <span class="c1"># Check for convergence.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_tol</span> <span class="ow">and</span> <span class="n">fabs</span><span class="p">(</span><span class="n">avg_fitness_i</span> <span class="o">-</span> <span class="n">avg_fitness_0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_tol</span> <span class="ow">and</span> <span class="n">d_avg</span> <span class="o">&lt;</span> <span class="mf">0.025</span><span class="p">:</span>
+
+                <span class="c1"># Switch the convergence flag and track the current iteration.</span>
+                <span class="n">has_converged</span> <span class="o">=</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="c1"># Exit from the loop.</span>
+                <span class="k">break</span>
+            <span class="c1"># _end_if_</span>
+
+            <span class="c1"># Check for adaptive probabilities.</span>
+            <span class="k">if</span> <span class="n">adapt_probs</span><span class="p">:</span>
+
+                <span class="c1"># Initialize the trial values with</span>
+                <span class="c1"># the current probabilities.</span>
+                <span class="n">trial_pc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crs_op</span><span class="o">.</span><span class="n">probability</span>
+                <span class="n">trial_pm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mut_op</span><span class="o">.</span><span class="n">probability</span>
+
+                <span class="c1"># Use the average Hamming distance as threshold.</span>
+                <span class="c1"># The 10% and 80% values are set empirically.</span>
+                <span class="k">if</span> <span class="n">d_avg</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
+
+                    <span class="n">trial_pc</span> <span class="o">*=</span> <span class="mf">0.9</span>
+                    <span class="n">trial_pm</span> <span class="o">*=</span> <span class="mf">1.1</span>
+
+                <span class="k">elif</span> <span class="n">d_avg</span> <span class="o">&gt;</span> <span class="mf">0.8</span><span class="p">:</span>
+
+                    <span class="n">trial_pc</span> <span class="o">*=</span> <span class="mf">1.1</span>
+                    <span class="n">trial_pm</span> <span class="o">*=</span> <span class="mf">0.9</span>
+                <span class="c1"># _end_if_</span>
+
+                <span class="c1"># Ensure the probabilities stay within the range [0, 1].</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">crs_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">trial_pc</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mut_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">trial_pm</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+
+                <span class="c1"># Store the updated crossover and mutation probabilities.</span>
+                <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">crs_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
+                <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mut_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
+            <span class="c1"># _end_if_</span>
+
+            <span class="c1"># Update the average value for the next iteration.</span>
+            <span class="n">avg_fitness_0</span> <span class="o">=</span> <span class="n">avg_fitness_i</span>
+        <span class="c1"># _end_for_</span>
+
+        <span class="c1"># Compute the elapsed time (in seconds).</span>
+        <span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">time_t0</span>
+
+        <span class="k">return</span> <span class="n">island</span><span class="p">,</span> <span class="n">has_converged</span><span class="p">,</span> <span class="n">local_stats</span><span class="p">,</span> <span class="n">elapsed_time</span>
+    <span class="c1"># _end_def_</span>
+
+<span class="c1"># _end_class_</span>
 
 <div class="viewcode-block" id="IslandModelGA">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA">[docs]</a>
@@ -139,9 +360,6 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_migrate_op</span> <span class="o">=</span> <span class="n">migrate_op</span>
         <span class="c1"># _end_if_</span>
-
-        <span class="c1"># Dictionary with statistics.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -156,7 +374,7 @@
 
 <div class="viewcode-block" id="IslandModelGA.evaluate_fitness">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.evaluate_fitness">[docs]</a>
-    <span class="k">def</span> <span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Evaluate all the chromosomes of the input population list with the</span>
 <span class="sd">        custom fitness  function. After updating all  the chromosomes with</span>
@@ -165,7 +383,7 @@
 <span class="sd">        :param in_population: (list) The population of Chromosomes that we</span>
 <span class="sd">        want to evaluate their fitness.</span>
 
-<span class="sd">        :return: mean(fitness), std(fitness).</span>
+<span class="sd">        :return: mean(fitness), std(fitness), found_solution flag.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Get a local copy of the fitness function.</span>
@@ -174,138 +392,33 @@
         <span class="c1"># Evaluate the fitness of all chromosomes.</span>
         <span class="n">fit_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">fit_func</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">in_population</span><span class="p">]</span>
 
-        <span class="c1"># Assign each chromosome its fitness value.</span>
-        <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">fit_value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">in_population</span><span class="p">,</span> <span class="n">fit_list</span><span class="p">):</span>
-            <span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fit_value</span>
+        <span class="c1"># Preallocate the fitness list.</span>
+        <span class="n">fitness_values</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fit_list</span><span class="p">)</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+
+        <span class="c1"># Flag to indicate if a solution has been found.</span>
+        <span class="n">found_solution</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Update all chromosomes with their fitness and check if a solution</span>
+        <span class="c1"># has been found.</span>
+        <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">fit_tuple</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">in_population</span><span class="p">,</span> <span class="n">fit_list</span><span class="p">)):</span>
+            <span class="c1"># Attach the fitness to each chromosome.</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fit_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># Collect the fitness in a separate list.</span>
+            <span class="n">fitness_values</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">fit_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># Update the &quot;found solution&quot;.</span>
+            <span class="n">found_solution</span> <span class="o">|=</span> <span class="n">fit_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="c1"># _end_for_</span>
 
         <span class="c1"># Convert the fitness values in a numpy array.</span>
-        <span class="n">fit_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fit_list</span><span class="p">)</span>
+        <span class="n">fit_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fitness_values</span><span class="p">)</span>
 
-        <span class="c1"># Return the mean and std values of the fitness.</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">fit_arr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">fit_arr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
-
-    <span class="c1"># _end_def_</span>
-
-<div class="viewcode-block" id="IslandModelGA.evolve_population">
-<a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.evolve_population">[docs]</a>
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">evolve_population</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">island</span><span class="p">:</span> <span class="n">SubPopulation</span><span class="p">,</span> <span class="n">eval_fitness</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                          <span class="n">crs_op</span><span class="p">:</span> <span class="n">CrossoverOperator</span><span class="p">,</span> <span class="n">mut_op</span><span class="p">:</span> <span class="n">MutationOperator</span><span class="p">,</span> <span class="n">sel_op</span><span class="p">:</span> <span class="n">SelectionOperator</span><span class="p">,</span>
-                          <span class="n">rnd_gen</span><span class="p">,</span> <span class="n">f_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method is called to evolve each subpopulation independently.  It is defined as &#39;classmethod&#39;</span>
-<span class="sd">        because we need access to the fitness function of the object. The input parameters have identical</span>
-<span class="sd">        meaning with the ones from run().</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># Keeps track of the convergence of the population,</span>
-        <span class="c1"># along with the iteration that terminated.</span>
-        <span class="n">has_converged</span> <span class="o">=</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
-
-        <span class="c1"># Get the size of the population.</span>
-        <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
-
-        <span class="c1"># Define local dictionary to hold the statistics.</span>
-        <span class="n">local_stats</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;avg&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="p">[]}</span>
-
-        <span class="c1"># Initial evaluation of the population.</span>
-        <span class="n">avg_fitness_0</span><span class="p">,</span> <span class="n">std_fitness_0</span> <span class="o">=</span> <span class="n">eval_fitness</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
-
-        <span class="c1"># Check for initial errors.</span>
-        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">([</span><span class="n">avg_fitness_0</span><span class="p">,</span> <span class="n">std_fitness_0</span><span class="p">])):</span>
-
-            <span class="c1"># Store them in the dictionary.</span>
-            <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_fitness_0</span><span class="p">)</span>
-            <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_fitness_0</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;0: Mean=</span><span class="si">{</span><span class="n">avg_fitness_0</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, Std=</span><span class="si">{</span><span class="n">std_fitness_0</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="c1"># _end_if_</span>
-
-        <span class="c1"># Start timing the loop.</span>
-        <span class="n">time_t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-
-        <span class="c1"># Repeat &#39;epoch&#39; times.</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
-
-            <span class="c1"># Update current iteration in the selection operator.</span>
-            <span class="c1"># Currently, this is used only from Boltzmann Selector.</span>
-            <span class="n">sel_op</span><span class="o">.</span><span class="n">iter</span> <span class="o">=</span> <span class="n">i</span>
-
-            <span class="c1"># SELECT the parents.</span>
-            <span class="n">population_i</span> <span class="o">=</span> <span class="n">sel_op</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
-
-            <span class="c1"># Shuffle the selected parents.</span>
-            <span class="n">rnd_gen</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span>
-
-            <span class="c1"># CROSSOVER/MUTATE to produce offsprings.</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
-                <span class="c1"># Replace directly the OLD parents with the NEW offsprings.</span>
-                <span class="n">population_i</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">population_i</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">crs_op</span><span class="p">(</span><span class="n">population_i</span><span class="p">[</span><span class="n">j</span><span class="p">],</span>
-                                                              <span class="n">population_i</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
-                <span class="c1"># MUTATE in place the 1st offspring.</span>
-                <span class="n">mut_op</span><span class="p">(</span><span class="n">population_i</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
-
-                <span class="c1"># MUTATE in place the 2nd offspring.</span>
-                <span class="n">mut_op</span><span class="p">(</span><span class="n">population_i</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
-            <span class="c1"># _end_for_</span>
-
-            <span class="c1"># Check if &#39;corrections&#39; are enabled.</span>
-            <span class="k">if</span> <span class="n">correction</span><span class="p">:</span>
-                <span class="n">_</span> <span class="o">=</span> <span class="n">apply_corrections</span><span class="p">(</span><span class="n">population_i</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">fitness_func</span><span class="p">)</span>
-            <span class="c1"># _end_if_</span>
-
-            <span class="c1"># Check if &#39;elitism&#39; is enabled.</span>
-            <span class="k">if</span> <span class="n">elitism</span><span class="p">:</span>
-
-                <span class="c1"># Find the individual chromosome with the highest fitness</span>
-                <span class="c1"># value (from the old subpopulation of the current island).</span>
-                <span class="n">best_chromosome</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">island</span><span class="o">.</span><span class="n">population</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">isnan</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)),</span>
-                                      <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">fitness</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-
-                <span class="c1"># Select randomly a position.</span>
-                <span class="n">locus</span> <span class="o">=</span> <span class="n">rnd_gen</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
-
-                <span class="c1"># Replace the chromosome with the previous best.</span>
-                <span class="n">population_i</span><span class="p">[</span><span class="n">locus</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_chromosome</span>
-            <span class="c1"># _end_if_</span>
-
-            <span class="c1"># EVALUATE the i-th population.</span>
-            <span class="n">avg_fitness_i</span><span class="p">,</span> <span class="n">std_fitness_i</span> <span class="o">=</span> <span class="n">eval_fitness</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span>
-
-            <span class="c1"># Update the i-th population mean/std.</span>
-            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">([</span><span class="n">avg_fitness_i</span><span class="p">,</span> <span class="n">std_fitness_i</span><span class="p">])):</span>
-
-                <span class="c1"># Store them in the dictionary.</span>
-                <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_fitness_i</span><span class="p">)</span>
-                <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_fitness_i</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: Mean=</span><span class="si">{</span><span class="n">avg_fitness_i</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, Std=</span><span class="si">{</span><span class="n">std_fitness_i</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-            <span class="c1"># _end_if_</span>
-
-            <span class="c1"># Update the old population with the new chromosomes.</span>
-            <span class="n">island</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">population_i</span>
-
-            <span class="c1"># Check for convergence.</span>
-            <span class="k">if</span> <span class="n">f_tol</span> <span class="ow">and</span> <span class="n">fabs</span><span class="p">(</span><span class="n">avg_fitness_i</span> <span class="o">-</span> <span class="n">avg_fitness_0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">f_tol</span> <span class="ow">and</span>\
-                    <span class="n">avg_hamming_dist</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.025</span><span class="p">:</span>
-
-                <span class="c1"># Switch the convergence flag and track the current iteration.</span>
-                <span class="n">has_converged</span> <span class="o">=</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-
-                <span class="c1"># Exit from the loop.</span>
-                <span class="k">break</span>
-            <span class="c1"># _end_if_</span>
-
-            <span class="c1"># Update the average value for the next iteration.</span>
-            <span class="n">avg_fitness_0</span> <span class="o">=</span> <span class="n">avg_fitness_i</span>
-        <span class="c1"># _end_for_</span>
-
-        <span class="c1"># Compute the elapsed time (in seconds).</span>
-        <span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">time_t0</span>
-
-        <span class="k">return</span> <span class="n">island</span><span class="p">,</span> <span class="n">has_converged</span><span class="p">,</span> <span class="n">local_stats</span><span class="p">,</span> <span class="n">elapsed_time</span></div>
+        <span class="c1"># Return the mean, the std values of the fitness and</span>
+        <span class="c1"># the flag to indicate if a solution has been found.</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">fit_arr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">fit_arr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="n">found_solution</span><span class="p">)</span></div>
 
     <span class="c1"># _end_def_</span>
 
@@ -313,7 +426,7 @@
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.run">[docs]</a>
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
             <span class="n">f_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allow_migration</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">n_periods</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-            <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">adapt_probs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Main method of the IslandModelGA class, that implements the evolutionary routine.</span>
 
@@ -337,6 +450,10 @@
 <span class="sd">        to allow for chromosomes to migrate. NB: This setting is active only when the option</span>
 <span class="sd">        allow_migration == True. Otherwise, is ignored.</span>
 
+<span class="sd">        :param adapt_probs: (bool) If enabled (set to True), it will allow the crossover and</span>
+<span class="sd">        mutation probabilities to adapt according to the convergence of the fitness values.</span>
+<span class="sd">        Default is set to False.</span>
+
 <span class="sd">        :param verbose: (bool) if &#39;True&#39; it will display periodically information about the</span>
 <span class="sd">        current stats of the subpopulations. NB: This setting is active only when the option</span>
 <span class="sd">        allow_migration == True. Otherwise, is ignored.</span>
@@ -354,6 +471,35 @@
         <span class="c1"># Active here means &#39;still evolving&#39;.</span>
         <span class="n">active_population</span> <span class="o">=</span> <span class="p">[</span><span class="n">SubPopulation</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="bp">self</span><span class="o">.</span><span class="n">num_islands</span><span class="p">])</span>
                              <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_islands</span><span class="p">)]</span>
+
+        <span class="c1"># Initial evaluation of the subpopulations.</span>
+        <span class="k">for</span> <span class="n">pop_n</span> <span class="ow">in</span> <span class="n">active_population</span><span class="p">:</span>
+
+            <span class="c1"># Initialize the statistics dictionary.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;avg&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_crossx&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_mutate&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+
+            <span class="c1"># Initial evaluation of the population.</span>
+            <span class="n">avg_fitness_0</span><span class="p">,</span> <span class="n">std_fitness_0</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">(</span><span class="n">pop_n</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+
+            <span class="c1"># Check for initial errors.</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">([</span><span class="n">avg_fitness_0</span><span class="p">,</span> <span class="n">std_fitness_0</span><span class="p">])):</span>
+
+                <span class="c1"># Store them in the dictionary.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_fitness_0</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_fitness_0</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">: Mean=</span><span class="si">{</span><span class="n">avg_fitness_0</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, Std=</span><span class="si">{</span><span class="n">std_fitness_0</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="c1"># _end_if_</span>
+
+            <span class="c1"># Store the initial crossover and mutation probabilities.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
+        <span class="c1"># _end_for_</span>
+
+        <span class="c1"># Display an information message.</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parallel evolution in progress with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_islands</span><span class="si">}</span><span class="s2"> islands ...&quot;</span><span class="p">)</span>
+
         <span class="c1"># Final population.</span>
         <span class="n">final_population</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -363,10 +509,17 @@
         <span class="c1"># Check if we allow migration among the populations.</span>
         <span class="k">if</span> <span class="n">allow_migration</span><span class="p">:</span>
 
-            <span class="c1"># Initialize the statistics dictionary.</span>
+            <span class="c1"># Initial values for the crossover and mutation operators will be used</span>
+            <span class="c1"># to ensure continuity in the case of adaptable probabilities.</span>
+            <span class="n">genetic_probs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+
+            <span class="c1"># Initial assignment of the genetic probabilities.</span>
             <span class="k">for</span> <span class="n">pop_n</span> <span class="ow">in</span> <span class="n">active_population</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;avg&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="p">[]}</span>
-            <span class="c1"># _end_def_</span>
+
+                <span class="c1"># Use the values of the object operators itself.</span>
+                <span class="n">genetic_probs</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;crossx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span>
+                <span class="n">genetic_probs</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;mutate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span>
+            <span class="c1"># _end_for_</span>
 
             <span class="c1"># Make sure &#39;n_periods&#39; is integer.</span>
             <span class="n">n_periods</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_periods</span><span class="p">)</span>
@@ -395,11 +548,24 @@
                     <span class="n">n_epochs</span> <span class="o">+=</span> <span class="n">rem_epochs</span>
                 <span class="c1"># _end_if_</span>
 
-                <span class="c1"># Evolve the subpopulations in parallel for n_epochs.</span>
+                <span class="c1"># Setup evolution helper object. Here we group all the parameters,</span>
+                <span class="c1"># and subsequently we pass only this object to the delayed function.</span>
+                <span class="n">evolve_population</span> <span class="o">=</span> <span class="n">HelperEvoParamGroup</span><span class="p">(</span><span class="n">fitness_func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fitness_func</span><span class="p">,</span>
+                                                        <span class="n">eval_fitness</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">,</span>
+                                                        <span class="n">sel_op</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_select_op</span><span class="p">,</span>
+                                                        <span class="n">crs_op</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="p">,</span>
+                                                        <span class="n">mut_op</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="p">,</span>
+                                                        <span class="n">rng_ga</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="p">,</span>
+                                                        <span class="n">epochs</span><span class="o">=</span><span class="n">n_epochs</span><span class="p">,</span>
+                                                        <span class="n">f_tol</span><span class="o">=</span><span class="n">f_tol</span><span class="p">,</span>
+                                                        <span class="n">correction</span><span class="o">=</span><span class="n">correction</span><span class="p">,</span>
+                                                        <span class="n">elitism</span><span class="o">=</span><span class="n">elitism</span><span class="p">)</span>
+
+                <span class="c1"># Evolve the subpopulations in parallel for &#39;n_epochs&#39;.</span>
                 <span class="n">results_i</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">MAX_CPUs</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;loky&quot;</span><span class="p">)(</span>
-                    <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evolve_population</span><span class="p">)(</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">,</span> <span class="n">n_epochs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="p">,</span>
-                                                    <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_select_op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="p">,</span>
-                                                    <span class="n">f_tol</span><span class="p">,</span> <span class="n">correction</span><span class="p">,</span> <span class="n">elitism</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">active_population</span>
+                    <span class="n">delayed</span><span class="p">(</span><span class="n">evolve_population</span><span class="p">)(</span><span class="n">island</span><span class="o">=</span><span class="n">pop_i</span><span class="p">,</span> <span class="n">adapt_probs</span><span class="o">=</span><span class="n">adapt_probs</span><span class="p">,</span>
+                                               <span class="n">initial_probs</span><span class="o">=</span><span class="n">genetic_probs</span><span class="p">[</span><span class="n">pop_i</span><span class="o">.</span><span class="n">id</span><span class="p">])</span>
+                    <span class="k">for</span> <span class="n">pop_i</span> <span class="ow">in</span> <span class="n">active_population</span>
                 <span class="p">)</span>
 
                 <span class="c1"># Empty the list of active populations.</span>
@@ -446,6 +612,24 @@
                     <span class="c1"># Update statistics.</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">])</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">])</span>
+
+                    <span class="c1"># Check if we were adapting the probabilities.</span>
+                    <span class="k">if</span> <span class="n">adapt_probs</span><span class="p">:</span>
+
+                        <span class="c1"># Make sure there is at least one entry</span>
+                        <span class="c1"># to avoid &quot;index out of bound&quot; errors.</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+                            <span class="c1"># Update the values for the next interval.</span>
+                            <span class="n">genetic_probs</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;crossx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                            <span class="n">genetic_probs</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;mutate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="c1"># _end_if_</span>
+
+                        <span class="c1"># Store the updated crossover and mutation values.</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">])</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">])</span>
+                    <span class="c1"># _end_if_</span>
+
                 <span class="c1"># _end_for_</span>
 
                 <span class="c1"># Check for early termination.</span>
@@ -464,18 +648,30 @@
 
         <span class="k">else</span><span class="p">:</span>
 
+            <span class="c1"># Setup evolution helper object. Here we group all the parameters,</span>
+            <span class="c1"># and subsequently we pass only this object to the delayed function.</span>
+            <span class="n">evolve_population</span> <span class="o">=</span> <span class="n">HelperEvoParamGroup</span><span class="p">(</span><span class="n">fitness_func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fitness_func</span><span class="p">,</span>
+                                                    <span class="n">eval_fitness</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">,</span>
+                                                    <span class="n">sel_op</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_select_op</span><span class="p">,</span>
+                                                    <span class="n">crs_op</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="p">,</span>
+                                                    <span class="n">mut_op</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="p">,</span>
+                                                    <span class="n">rng_ga</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="p">,</span>
+                                                    <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+                                                    <span class="n">f_tol</span><span class="o">=</span><span class="n">f_tol</span><span class="p">,</span>
+                                                    <span class="n">correction</span><span class="o">=</span><span class="n">correction</span><span class="p">,</span>
+                                                    <span class="n">elitism</span><span class="o">=</span><span class="n">elitism</span><span class="p">)</span>
+
             <span class="c1"># Evolve the subpopulations in parallel for &#39;epoch&#39; iterations.</span>
             <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">MAX_CPUs</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;loky&quot;</span><span class="p">)(</span>
-                <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evolve_population</span><span class="p">)(</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="p">,</span>
-                                                <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_select_op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="p">,</span>
-                                                <span class="n">f_tol</span><span class="p">,</span> <span class="n">correction</span><span class="p">,</span> <span class="n">elitism</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">active_population</span>
+                <span class="n">delayed</span><span class="p">(</span><span class="n">evolve_population</span><span class="p">)(</span><span class="n">island</span><span class="o">=</span><span class="n">pop_n</span><span class="p">,</span> <span class="n">adapt_probs</span><span class="o">=</span><span class="n">adapt_probs</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">pop_n</span> <span class="ow">in</span> <span class="n">active_population</span>
             <span class="p">)</span>
 
             <span class="c1"># Process the final results.</span>
-            <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">res_n</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
 
                 <span class="c1"># Extract the results.</span>
-                <span class="n">island</span><span class="p">,</span> <span class="n">has_converged</span><span class="p">,</span> <span class="n">local_stats</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">res</span>
+                <span class="n">island</span><span class="p">,</span> <span class="n">has_converged</span><span class="p">,</span> <span class="n">local_stats</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">res_n</span>
 
                 <span class="c1"># Check if the island has converged early.</span>
                 <span class="k">if</span> <span class="n">verbose</span> <span class="ow">and</span> <span class="n">has_converged</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
@@ -487,7 +683,17 @@
                 <span class="n">final_population</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
 
                 <span class="c1"># Update the statistics.</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_stats</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">])</span>
+
+                <span class="c1"># Check if we were adapting the probabilities.</span>
+                <span class="k">if</span> <span class="n">adapt_probs</span><span class="p">:</span>
+
+                    <span class="c1"># Store the updated crossover and mutation values.</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">])</span>
+                <span class="c1"># _end_if_</span>
+
             <span class="c1"># _end_for_</span>
 
         <span class="c1"># _end_if_</span>
@@ -498,8 +704,8 @@
         <span class="c1"># Update the population in the class.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">final_population</span>
 
-        <span class="c1"># Final fitness evaluation.</span>
-        <span class="n">avg_fitness_final</span><span class="p">,</span> <span class="n">std_fitness_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+        <span class="c1"># Make a final fitness evaluation (to ensure consistency).</span>
+        <span class="n">avg_fitness_final</span><span class="p">,</span> <span class="n">std_fitness_final</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
 
         <span class="c1"># Print message.</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final Avg. Fitness = </span><span class="si">{</span><span class="n">avg_fitness_final</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, &quot;</span>
@@ -531,7 +737,6 @@
 
             <span class="c1"># _end_for_</span>
         <span class="c1"># _end_if_</span>
-
     <span class="c1"># _end_def_</span>
 
 <span class="c1"># _end_class_</span>

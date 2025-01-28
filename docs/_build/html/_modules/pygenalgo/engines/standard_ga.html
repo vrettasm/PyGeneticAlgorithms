@@ -74,7 +74,7 @@
 <span></span><span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">fabs</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
 <span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
@@ -106,9 +106,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Call the super constructor with all the input parameters.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-        <span class="c1"># Dictionary with statistics.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="StandardGA.update_stats">
@@ -149,16 +146,18 @@
 <div class="viewcode-block" id="StandardGA.evaluate_fitness">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.evaluate_fitness">[docs]</a>
     <span class="k">def</span> <span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span>
-                         <span class="n">parallel</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+                         <span class="n">parallel</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">bool</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Evaluate all the chromosomes of the input list with the custom fitness function.</span>
+<span class="sd">        Evaluate all the chromosomes of the input list with the custom</span>
+<span class="sd">        fitness function.</span>
 
-<span class="sd">        :param input_population: (list) The population of Chromosomes that we want to</span>
-<span class="sd">        evaluate their fitness.</span>
+<span class="sd">        :param input_population: (list) The population of Chromosomes that</span>
+<span class="sd">        we want to evaluate their fitness.</span>
 
-<span class="sd">        :param parallel: (bool) Flag that enables parallel computation of the fitness function.</span>
+<span class="sd">        :param parallel: (bool) Flag that enables parallel computation of</span>
+<span class="sd">        the fitness function.</span>
 
-<span class="sd">        :return: a list of the fitness values.</span>
+<span class="sd">        :return: a list with the fitness values and the found solution flag.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Get a local copy of the fitness function.</span>
@@ -177,20 +176,35 @@
             <span class="n">fitness_i</span> <span class="o">=</span> <span class="p">[</span><span class="n">fit_func</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">input_population</span><span class="p">]</span>
         <span class="c1"># _end_if_</span>
 
-        <span class="c1"># Attach the fitness to each chromosome.</span>
-        <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">fit_value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">input_population</span><span class="p">,</span> <span class="n">fitness_i</span><span class="p">):</span>
-            <span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fit_value</span>
+        <span class="c1"># Preallocate the fitness list.</span>
+        <span class="n">fitness_values</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fitness_i</span><span class="p">)</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+
+        <span class="c1"># Flag to indicate if a solution has been found.</span>
+        <span class="n">found_solution</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Update all chromosomes with their fitness and check if a solution</span>
+        <span class="c1"># has been found.</span>
+        <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">fit_tuple</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">input_population</span><span class="p">,</span> <span class="n">fitness_i</span><span class="p">)):</span>
+            <span class="c1"># Attach the fitness to each chromosome.</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fit_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># Collect the fitness in a separate list.</span>
+            <span class="n">fitness_values</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">fit_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># Update the &quot;found solution&quot;.</span>
+            <span class="n">found_solution</span> <span class="o">|=</span> <span class="n">fit_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="c1"># _end_for_</span>
 
         <span class="c1"># Return the fitness values.</span>
-        <span class="k">return</span> <span class="n">fitness_i</span></div>
+        <span class="k">return</span> <span class="n">fitness_values</span><span class="p">,</span> <span class="n">found_solution</span></div>
 
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="StandardGA.run">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.run">[docs]</a>
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">f_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parallel</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">f_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parallel</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">adapt_probs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Main method of the StandardGA class, that implements the evolutionary routine.</span>
 
@@ -209,8 +223,12 @@
 
 <span class="sd">        :param parallel: (bool) Flag that enables parallel computation of the fitness function.</span>
 
-<span class="sd">        :param verbose: (bool) if &#39;True&#39; it will display periodically information about</span>
-<span class="sd">        the current average fitness and spread of the population.</span>
+<span class="sd">        :param adapt_probs: (bool) If enabled (set to True), it will allow the crossover and</span>
+<span class="sd">        mutation probabilities to adapt according to the convergence of the fitness values.</span>
+<span class="sd">        Default is set to False.</span>
+
+<span class="sd">        :param verbose: (bool) if &#39;True&#39; it will display periodically information about the</span>
+<span class="sd">        current average fitness and spread of the population.</span>
 
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -221,17 +239,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_select_op</span><span class="o">.</span><span class="n">reset_counter</span><span class="p">()</span>
 
         <span class="c1"># Reset stats dictionary.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
         <span class="c1"># Get the size of the population.</span>
         <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
 
         <span class="c1"># Get the fitness values before optimisation.</span>
-        <span class="n">fit_list_0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="n">parallel</span><span class="p">)</span>
+        <span class="n">fit_list_0</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="n">parallel</span><span class="p">)</span>
 
         <span class="c1"># Update the average stats (mean/std) in the dictionary.</span>
         <span class="n">avg_fitness_0</span><span class="p">,</span> <span class="n">std_fitness_0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_stats</span><span class="p">(</span><span class="n">fit_list_0</span><span class="p">)</span>
+
+        <span class="c1"># Store the initial crossover and mutation probabilities.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
 
         <span class="c1"># Display an information message.</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initial Avg. Fitness = </span><span class="si">{</span><span class="n">avg_fitness_0</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
@@ -277,7 +298,7 @@
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Calculate the new fitness values.</span>
-            <span class="n">fit_list_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">(</span><span class="n">population_i</span><span class="p">,</span> <span class="n">parallel</span><span class="p">)</span>
+            <span class="n">fit_list_i</span><span class="p">,</span> <span class="n">found_solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">(</span><span class="n">population_i</span><span class="p">,</span> <span class="n">parallel</span><span class="p">)</span>
 
             <span class="c1"># Update the mean/std in the dictionary.</span>
             <span class="n">avg_fitness_i</span><span class="p">,</span> <span class="n">std_fitness_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_stats</span><span class="p">(</span><span class="n">fit_list_i</span><span class="p">)</span>
@@ -292,10 +313,8 @@
             <span class="c1"># Update the old population with the new chromosomes.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">population_i</span>
 
-            <span class="c1"># Check for convergence.</span>
-            <span class="k">if</span> <span class="n">f_tol</span> <span class="ow">and</span> <span class="n">fabs</span><span class="p">(</span><span class="n">avg_fitness_i</span> <span class="o">-</span> <span class="n">avg_fitness_0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">f_tol</span> <span class="ow">and</span>\
-                    <span class="n">avg_hamming_dist</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.025</span><span class="p">:</span>
-
+            <span class="c1"># Check for termination.</span>
+            <span class="k">if</span> <span class="n">found_solution</span><span class="p">:</span>
                 <span class="c1"># Display a warning message.</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> finished in </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> iterations.&quot;</span><span class="p">)</span>
 
@@ -303,8 +322,30 @@
                 <span class="k">break</span>
             <span class="c1"># _end_if_</span>
 
+            <span class="c1"># Compute the current average Hamming distance.</span>
+            <span class="n">d_avg</span> <span class="o">=</span> <span class="n">avg_hamming_dist</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span>
+
+            <span class="c1"># Check for convergence.</span>
+            <span class="k">if</span> <span class="n">f_tol</span> <span class="ow">and</span> <span class="n">fabs</span><span class="p">(</span><span class="n">avg_fitness_i</span> <span class="o">-</span> <span class="n">avg_fitness_0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">f_tol</span> <span class="ow">and</span> <span class="n">d_avg</span> <span class="o">&lt;</span> <span class="mf">0.025</span><span class="p">:</span>
+
+                <span class="c1"># Display a warning message.</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> converged in </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> iterations.&quot;</span><span class="p">)</span>
+
+                <span class="c1"># Exit from the loop.</span>
+                <span class="k">break</span>
+            <span class="c1"># _end_if_</span>
+
             <span class="c1"># Update the average value for the next iteration.</span>
             <span class="n">avg_fitness_0</span> <span class="o">=</span> <span class="n">avg_fitness_i</span>
+
+            <span class="c1"># Adap probabilities for the next generation.</span>
+            <span class="k">if</span> <span class="n">adapt_probs</span><span class="p">:</span>
+
+                <span class="c1"># For threshold, we use the mean Hamming</span>
+                <span class="c1"># distance of the current population.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">adapt_probabilities</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="n">d_avg</span><span class="p">)</span>
+            <span class="c1"># _end_if_</span>
+
         <span class="c1"># _end_for_</span>
 
         <span class="c1"># Final time instant.</span>
