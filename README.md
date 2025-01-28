@@ -9,9 +9,9 @@ inspired by the process of natural selection and belong to a larger class of evo
 
 This repository implements a genetic algorithm (GA) in Python3 programming language, using only **Numpy** and **Joblib**
 as additional libraries. The basic approach offers a "StandardGA" class, where the whole population of chromosomes is
-replaced by a new one at the end of each iteration (or epoch). More recently, the new "IslandModelGA" class was added
-that offers a new genetic operator (MigrationOperator), that allows for periodic migration of the best individuals,
-among the different island populations.
+replaced by a new one at the end of each iteration (or epoch). More recently, a new computational model was added named
+"IslandModelGA" class that offers a new genetic operator (MigrationOperator), that allows for periodic migration of the
+best individuals, among the (co-evolving) different island populations.
   
 **NOTE**:
 For computationally expensive fitness functions the StandardGA class provides the option of parallel evaluation
@@ -21,11 +21,10 @@ parallel pool). So the default setting here is "parallel=False". Regarding the I
 parallel mode by definition.
 
   > **NEWS**:
-  > Several new genetic operators have been added, such as: **PositionBasedCrossover(POS)**,
-  > **PartiallyMappedCrossover (PMX)** and **OrderCrossover (OX1)**. These operators were added to address combinatorial
-  > problems where the genome can become invalid by the application of the other standard operators. Additionally, the
-  > **Boltzmann Selector** has been implemented where the individuals, that will form the new population, are selected
-  > using a temperature controlled Boltzmann distribution.
+  > Recently a new feature was added "adapt_probs: (bool)". This option if enabled, will allow the crossover and
+  > mutation probabilities to adapt according to the convergence of the population to a single solution. This uses
+  > the average Hamming distance to set a threshold value and either increase or decrease the genetic probabilities
+  > by a pre-defined amount.
   > 
 
 The current implementation offers a variety of genetic operators including:
