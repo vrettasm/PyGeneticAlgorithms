@@ -371,8 +371,8 @@ class IslandModelGA(GenericGA):
         allow_migration == True. Otherwise, is ignored.
 
         :param adapt_probs: (bool) If enabled (set to True), it will allow the crossover and
-        mutation probabilities to adapt according to the convergence of the fitness values.
-        Default is set to False.
+        mutation probabilities to adapt according to the convergence of the population to a
+        single solution. Default is set to False.
 
         :param verbose: (bool) if 'True' it will display periodically information about the
         current stats of the subpopulations. NB: This setting is active only when the option

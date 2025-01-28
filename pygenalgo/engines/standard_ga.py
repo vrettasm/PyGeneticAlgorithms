@@ -141,8 +141,8 @@ class StandardGA(GenericGA):
         :param parallel: (bool) Flag that enables parallel computation of the fitness function.
 
         :param adapt_probs: (bool) If enabled (set to True), it will allow the crossover and
-        mutation probabilities to adapt according to the convergence of the fitness values.
-        Default is set to False.
+        mutation probabilities to adapt according to the convergence of the population to a
+        single solution. Default is set to False.
 
         :param verbose: (bool) if 'True' it will display periodically information about the
         current average fitness and spread of the population.
