@@ -26,14 +26,15 @@ class GenericGA(object):
     # Make a random number generator.
     rng_GA: Generator = default_rng()
 
-    # Get the maximum number of CPUs (at least one).
-    MAX_CPUs = 1 if not cpu_count() else cpu_count()
+    # Set the maximum number of CPUs (at least one).
+    MAX_CPUs: int = 1 if not cpu_count() else cpu_count()
 
     # Object variables.
-    __slots__ = ("population", "fitness_func", "_select_op", "_crossx_op", "_mutate_op", "_stats")
+    __slots__ = ("population", "fitness_func", "_select_op", "_crossx_op", "_mutate_op",
+                 "_stats", "_n_cpus")
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, select_op: SelectionOperator = None,
-                 mutate_op: MutationOperator = None, crossx_op: CrossoverOperator = None):
+                 mutate_op: MutationOperator = None, crossx_op: CrossoverOperator = None, n_cpus: int = None):
         """
         Default constructor of GenericGA object.
 
@@ -46,6 +47,8 @@ class GenericGA(object):
         :param mutate_op: mutation operator (must inherit from class MutationOperator).
 
         :param crossx_op: crossover operator (must inherit from class CrossoverOperator).
+
+        :param n_cpus: Number of requested CPUs for the evolution process (Default=Max_CPU).
         """
 
         # Copy the reference of the population.
@@ -78,6 +81,19 @@ class GenericGA(object):
             raise ValueError(f"{self.__class__.__name__}: Crossover operator is missing.")
         else:
             self._crossx_op = crossx_op
+        # _end_if_
+
+        # Get the number of requested CPUs.
+        if n_cpus is None:
+
+            # This is the default option.
+            self._n_cpus = GenericGA.MAX_CPUs
+        else:
+
+            # Assign the  requested number, making sure we have
+            # enough CPUs and the value entered has the correct
+            # type.
+            self._n_cpus = max(1, min(GenericGA.MAX_CPUs, int(n_cpus)))
         # _end_if_
 
         # Dictionary with statistics.
@@ -122,6 +138,16 @@ class GenericGA(object):
         :return: the MutationOperator.
         """
         return self._mutate_op
+    # _end_def_
+
+    @property
+    def n_cpus(self) -> int:
+        """
+        Accessor method that returns the number of CPUs.
+
+        :return: the n_cpus.
+        """
+        return self._n_cpus
     # _end_def_
 
     def best_chromosome(self) -> Chromosome:

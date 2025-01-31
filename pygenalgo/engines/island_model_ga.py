@@ -482,7 +482,7 @@ class IslandModelGA(GenericGA):
                                                         elitism=elitism)
 
                 # Evolve the subpopulations in parallel for 'n_epochs'.
-                results_i = Parallel(n_jobs=self.MAX_CPUs, backend="loky")(
+                results_i = Parallel(n_jobs=self.n_cpus, backend="loky")(
                     delayed(evolve_population)(island=pop_i, adapt_probs=adapt_probs,
                                                initial_probs=genetic_probs[pop_i.id])
                     for pop_i in active_population
@@ -582,7 +582,7 @@ class IslandModelGA(GenericGA):
                                                     elitism=elitism)
 
             # Evolve the subpopulations in parallel for 'epoch' iterations.
-            results = Parallel(n_jobs=self.MAX_CPUs, backend="loky")(
+            results = Parallel(n_jobs=self.n_cpus, backend="loky")(
                 delayed(evolve_population)(island=pop_n, adapt_probs=adapt_probs)
                 for pop_n in active_population
             )
