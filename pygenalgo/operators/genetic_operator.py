@@ -4,9 +4,6 @@ from numpy.random import default_rng, Generator
 # Public interface.
 __all__ = ["GeneticOperator"]
 
-# Current version.
-__version__ = "1.0.0"
-
 # Author.
 __author__ = "Michalis Vrettas, PhD"
 
@@ -52,6 +49,19 @@ class GeneticOperator(object):
 
         # Initialize the iteration value.
         self._iteration = 0
+    # _end_def_
+
+    @classmethod
+    def set_seed(cls, new_seed=None) -> None:
+        """
+        Sets a new seed for the random number generator.
+
+        :param new_seed: New seed value (default=None).
+
+        :return: None.
+        """
+        # Re-initialize the class variable.
+        cls._rng = default_rng(seed=new_seed)
     # _end_def_
 
     @property

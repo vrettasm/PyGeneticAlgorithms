@@ -100,6 +100,19 @@ class GenericGA(object):
         self._stats = defaultdict(list)
     # _end_def_
 
+    @classmethod
+    def set_seed(cls, new_seed=None) -> None:
+        """
+        Sets a new seed for the random number generator.
+
+        :param new_seed: New seed value (default=None).
+
+        :return: None.
+        """
+        # Re-initialize the class variable.
+        cls.rng_GA = default_rng(seed=new_seed)
+    # _end_def_
+
     @property
     def stats(self) -> dict:
         """
