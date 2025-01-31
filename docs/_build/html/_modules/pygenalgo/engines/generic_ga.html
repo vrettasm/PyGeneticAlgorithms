@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.engines.generic_ga &mdash; PyGenAlgo 01.60.50 documentation</title>
+  <title>pygenalgo.engines.generic_ga &mdash; PyGenAlgo 01.70.00 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=2db42fd8"></script>
+        <script src="../../../_static/documentation_options.js?v=fc45878b"></script>
         <script src="../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -101,14 +101,15 @@
     <span class="c1"># Make a random number generator.</span>
     <span class="n">rng_GA</span><span class="p">:</span> <span class="n">Generator</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span>
 
-    <span class="c1"># Get the maximum number of CPUs (at least one).</span>
-    <span class="n">MAX_CPUs</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">cpu_count</span><span class="p">()</span> <span class="k">else</span> <span class="n">cpu_count</span><span class="p">()</span>
+    <span class="c1"># Set the maximum number of CPUs (at least one).</span>
+    <span class="n">MAX_CPUs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">cpu_count</span><span class="p">()</span> <span class="k">else</span> <span class="n">cpu_count</span><span class="p">()</span>
 
     <span class="c1"># Object variables.</span>
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;fitness_func&quot;</span><span class="p">,</span> <span class="s2">&quot;_select_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_crossx_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_mutate_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_stats&quot;</span><span class="p">)</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;fitness_func&quot;</span><span class="p">,</span> <span class="s2">&quot;_select_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_crossx_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_mutate_op&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;_stats&quot;</span><span class="p">,</span> <span class="s2">&quot;_n_cpus&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_pop</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span> <span class="n">fit_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">select_op</span><span class="p">:</span> <span class="n">SelectionOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">mutate_op</span><span class="p">:</span> <span class="n">MutationOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">crossx_op</span><span class="p">:</span> <span class="n">CrossoverOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+                 <span class="n">mutate_op</span><span class="p">:</span> <span class="n">MutationOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">crossx_op</span><span class="p">:</span> <span class="n">CrossoverOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">n_cpus</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Default constructor of GenericGA object.</span>
 
@@ -121,6 +122,8 @@
 <span class="sd">        :param mutate_op: mutation operator (must inherit from class MutationOperator).</span>
 
 <span class="sd">        :param crossx_op: crossover operator (must inherit from class CrossoverOperator).</span>
+
+<span class="sd">        :param n_cpus: Number of requested CPUs for the evolution process (Default=Max_CPU).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Copy the reference of the population.</span>
@@ -155,8 +158,37 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span> <span class="o">=</span> <span class="n">crossx_op</span>
         <span class="c1"># _end_if_</span>
 
+        <span class="c1"># Get the number of requested CPUs.</span>
+        <span class="k">if</span> <span class="n">n_cpus</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="c1"># This is the default option.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span> <span class="o">=</span> <span class="n">GenericGA</span><span class="o">.</span><span class="n">MAX_CPUs</span>
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="c1"># Assign the  requested number, making sure we have</span>
+            <span class="c1"># enough CPUs and the value entered has the correct</span>
+            <span class="c1"># type.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">GenericGA</span><span class="o">.</span><span class="n">MAX_CPUs</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_cpus</span><span class="p">)))</span>
+        <span class="c1"># _end_if_</span>
+
         <span class="c1"># Dictionary with statistics.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="c1"># _end_def_</span>
+
+<div class="viewcode-block" id="GenericGA.set_seed">
+<a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.set_seed">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_seed</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets a new seed for the random number generator.</span>
+
+<span class="sd">        :param new_seed: New seed value (default=None).</span>
+
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Re-initialize the class variable.</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">rng_GA</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">new_seed</span><span class="p">)</span></div>
+
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -197,6 +229,16 @@
 <span class="sd">        :return: the MutationOperator.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span>
+    <span class="c1"># _end_def_</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_cpus</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Accessor method that returns the number of CPUs.</span>
+
+<span class="sd">        :return: the n_cpus.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="GenericGA.best_chromosome">

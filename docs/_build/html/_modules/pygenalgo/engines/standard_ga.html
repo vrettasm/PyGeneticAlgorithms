@@ -167,7 +167,7 @@
         <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
 
             <span class="c1"># Evaluate the chromosomes in parallel mode.</span>
-            <span class="n">fitness_i</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">MAX_CPUs</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;threading&quot;</span><span class="p">)(</span>
+            <span class="n">fitness_i</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_cpus</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;threading&quot;</span><span class="p">)(</span>
                 <span class="n">delayed</span><span class="p">(</span><span class="n">fit_func</span><span class="p">)(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">input_population</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
