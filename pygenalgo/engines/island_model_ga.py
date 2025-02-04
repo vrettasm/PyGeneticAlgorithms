@@ -13,7 +13,6 @@ from pygenalgo.engines.auxiliary import (apply_corrections, SubPopulation,
 from pygenalgo.engines.generic_ga import GenericGA
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
-from pygenalgo.operators.migration.clockwise_migration import ClockwiseMigration
 from pygenalgo.operators.migration.meta_migration import MetaMigration
 from pygenalgo.operators.migration.migration_operator import MigrationOperator
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
@@ -255,7 +254,7 @@ class IslandModelGA(GenericGA):
     # Object variables (specific for the IslandModel).
     __slots__ = ("num_islands", "_migrate_op")
 
-    def __init__(self, num_islands: int, migrate_op: ClockwiseMigration = None, **kwargs):
+    def __init__(self, num_islands: int, migrate_op: MigrationOperator = None, **kwargs):
         """
         Default constructor of IslandModelGA object.
 
