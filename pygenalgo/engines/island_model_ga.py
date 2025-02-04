@@ -297,7 +297,8 @@ class IslandModelGA(GenericGA):
         return self._migrate_op
     # _end_def_
 
-    def evaluate_fitness(self, in_population: list[Chromosome]) -> (float, float, bool):
+    def evaluate_fitness(self, in_population: list[Chromosome],
+                         parallel: bool = False) -> (float, float, bool):
         """
         Evaluate all the chromosomes of the input population list with the
         custom fitness  function. After updating all  the chromosomes with
@@ -306,14 +307,27 @@ class IslandModelGA(GenericGA):
         :param in_population: (list) The population of Chromosomes that we
         want to evaluate their fitness.
 
+        :param parallel: (bool) Flag that enables parallel computation of
+        the fitness function.
+
         :return: mean(fitness), std(fitness), found_solution flag.
         """
 
         # Get a local copy of the fitness function.
         fit_func = self.fitness_func
 
-        # Evaluate the fitness of all chromosomes.
-        fit_list = [fit_func(p) for p in in_population]
+        # Check the 'parallel' flag.
+        if parallel:
+
+            # Evaluate the chromosomes in parallel mode.
+            fit_list = Parallel(n_jobs=self.n_cpus, backend="loky")(
+                delayed(fit_func)(p) for p in in_population
+            )
+        else:
+
+            # Evaluate the fitness of all chromosomes.
+            fit_list = [fit_func(p) for p in in_population]
+        # _end_if_
 
         # Preallocate the fitness list.
         fitness_values = len(fit_list) * [None]
@@ -321,8 +335,8 @@ class IslandModelGA(GenericGA):
         # Flag to indicate if a solution has been found.
         found_solution = False
 
-        # Update all chromosomes with their fitness and check if a solution
-        # has been found.
+        # Update all chromosomes with their fitness and check
+        # if a solution has been found.
         for n, (p, fit_tuple) in enumerate(zip(in_population, fit_list)):
             # Attach the fitness to each chromosome.
             p.fitness = fit_tuple[0]
@@ -398,9 +412,9 @@ class IslandModelGA(GenericGA):
             # Initialize the statistics dictionary.
             self._stats[pop_n.id] = {"avg": [], "std": [], "prob_crossx": [], "prob_mutate": []}
 
-            # Initial evaluation of the population.
-            avg_fitness_0, std_fitness_0, _ = self.evaluate_fitness(pop_n.population)
-
+            # Initial evaluation of the population. This can run also in parallel.
+            avg_fitness_0, std_fitness_0, _ = self.evaluate_fitness(pop_n.population,
+                                                                    parallel=True)
             # Check for initial errors.
             if all(np.isfinite([avg_fitness_0, std_fitness_0])):
 
@@ -625,8 +639,9 @@ class IslandModelGA(GenericGA):
         self.population = final_population
 
         # Make a final fitness evaluation (to ensure consistency).
-        avg_fitness_final, std_fitness_final, _ = self.evaluate_fitness(self.population)
-
+        # This can run also in parallel.
+        avg_fitness_final, std_fitness_final, _ = self.evaluate_fitness(self.population,
+                                                                        parallel=True)
         # Print message.
         print(f"Final Avg. Fitness = {avg_fitness_final:.4f}, "
               f"Spread = {std_fitness_final:.4f}.")
