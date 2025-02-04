@@ -43,8 +43,8 @@ class ClockwiseMigration(MigrationOperator):
         # Go through all the islands.
         for i, island_i in enumerate(islands):
 
-            # Perform the migration with a predefined probability.
-            if self.probability > self.rng.random():
+            # Perform the migration.
+            if self.is_operator_applicable():
 
                 # Select randomly one individual chromosome.
                 idx = self.rng.integers(0, len(island_i.population))

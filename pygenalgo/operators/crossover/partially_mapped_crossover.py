@@ -38,7 +38,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
 
         # If the crossover probability is higher than
         # a uniformly random value, make the changes.
-        if self.probability > self.rng.random():
+        if self.is_operator_applicable():
 
             # Get the size of the chromosomes.
             M = len(parent1)

@@ -185,6 +185,21 @@ class GeneticOperator(object):
         return self._rng
     # _end_def_
 
+    def is_operator_applicable(self) -> bool:
+        """
+        Since to apply a genetic operator we have to check
+        it probabilistically, we set the condition in here
+        so that the objects inheriting from this class can
+        call only this function.
+
+        If the genetic probability is higher than a uniformly
+        random value, apply the operator's changes.
+
+        :return: (bool) the output of the: probability > U(0,1).
+        """
+        return self._probability > self._rng.random()
+    # _end_def_
+
     def __str__(self) -> str:
         """
         Description:

@@ -41,7 +41,8 @@ class MetaMutator(MutationOperator):
 
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
-        if self.probability > self.rng.random():
+        if self.is_operator_applicable():
+
             # Get the number of available mutators.
             L = len(self.items)
 

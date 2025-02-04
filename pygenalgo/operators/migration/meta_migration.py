@@ -44,7 +44,8 @@ class MetaMigration(MigrationOperator):
 
         # If the migration probability is higher than
         # a uniformly random value, make the transfer.
-        if self.probability > self.rng.random():
+        if self.is_operator_applicable():
+
             # Get the number of available migrators.
             L = len(self.items)
 

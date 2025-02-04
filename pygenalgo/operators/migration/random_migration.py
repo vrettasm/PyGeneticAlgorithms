@@ -46,7 +46,7 @@ class RandomMigration(MigrationOperator):
         for island_i, best_j in zip(islands, best_chromosomes):
 
             # Perform the migration with a predefined probability.
-            if self.probability > self.rng.random():
+            if self.is_operator_applicable():
 
                 # Select randomly one individual chromosome.
                 idx = self.rng.integers(0, len(island_i.population))

@@ -35,7 +35,7 @@ class ShuffleMutator(MutationOperator):
 
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
-        if self.probability > self.rng.random():
+        if self.is_operator_applicable():
 
             # Select randomly two mutation end-points.
             i, j = self.rng.choice(len(individual), size=2, replace=False,
