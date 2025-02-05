@@ -121,7 +121,7 @@ class StandardGA(GenericGA):
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
             f_tol: float = None, parallel: bool = False, adapt_probs: bool = False,
-            verbose: bool = False) -> None:
+            shuffle: bool = True, verbose: bool = False) -> None:
         """
         Main method of the StandardGA class, that implements the evolutionary routine.
 
@@ -143,6 +143,9 @@ class StandardGA(GenericGA):
         :param adapt_probs: (bool) If enabled (set to True), it will allow the crossover and
         mutation probabilities to adapt according to the convergence of the population to a
         single solution. Default is set to False.
+
+        :param shuffle: (bool) If enabled (set to True), it will shuffle the population before
+        the application of the crossover and mutation operations. Default is set to True.
 
         :param verbose: (bool) if 'True' it will display periodically information about the
         current average fitness and spread of the population.
@@ -188,7 +191,9 @@ class StandardGA(GenericGA):
             population_i = self._select_op(self.population)
 
             # Shuffle the selected parents.
-            self.rng_GA.shuffle(population_i)
+            if shuffle:
+                self.rng_GA.shuffle(population_i)
+            # _end_def_
 
             # CROSSOVER/MUTATE to produce offsprings.
             self.crossover_mutate(population_i)

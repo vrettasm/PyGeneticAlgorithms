@@ -22,7 +22,7 @@ from pygenalgo.operators.selection.select_operator import SelectionOperator
 __all__ = ["IslandModelGA"]
 
 
-@dataclass(init=True, repr=False, eq=False)
+@dataclass(init=True, repr=False, eq=False, frozen=True)
 class HelperEvoParamGroup(object):
     """
     Description:
@@ -58,10 +58,14 @@ class HelperEvoParamGroup(object):
     # of two consecutive populations (in terms of fitness).
     f_tol: float
 
-    # (bool) flag that if set to True will check the validity of the
-    # population, at the gene level and attempt to correct the genome
-    # by calling the random() method of the flawed gene.
+    # (bool) flag that enables the self-correction of the population,
+    # at the gene level and attempt to correct the genome by calling
+    # the random() method of the flawed gene.
     correction: bool = False
+
+    # (bool) flag to allow (or not) the shuffle the population before
+    # the application of the crossover and mutation operations.
+    shuffle: bool = True
 
     # (bool) flag that defines elitism. If 'True' then the chromosome
     # with the higher fitness value will always be copied to the next
@@ -128,7 +132,9 @@ class HelperEvoParamGroup(object):
             population_i = self.sel_op(island.population)
 
             # Shuffle the selected parents.
-            self.rng_ga.shuffle(population_i)
+            if self.shuffle:
+                self.rng_ga.shuffle(population_i)
+            # _end_if_
 
             # CROSSOVER/MUTATE to produce offsprings.
             for j in range(0, N - 1, 2):
@@ -359,7 +365,7 @@ class IslandModelGA(GenericGA):
 
     def run(self, epochs: int = 1000, correction: bool = False, elitism: bool = True,
             f_tol: float = None, allow_migration: bool = False, n_periods: int = 10,
-            adapt_probs: bool = False, verbose: bool = False) -> None:
+            adapt_probs: bool = False, shuffle: bool = True, verbose: bool = False) -> None:
         """
         Main method of the IslandModelGA class, that implements the evolutionary routine.
 
@@ -387,6 +393,9 @@ class IslandModelGA(GenericGA):
         mutation probabilities to adapt according to the convergence of the population to a
         single solution. Default is set to False.
 
+        :param shuffle: (bool) If enabled (set to True), it will shuffle the population before
+        the application of the crossover and mutation operations. Default is set to True.
+
         :param verbose: (bool) if 'True' it will display periodically information about the
         current stats of the subpopulations. NB: This setting is active only when the option
         allow_migration == True. Otherwise, is ignored.
@@ -398,7 +407,9 @@ class IslandModelGA(GenericGA):
         self._stats.clear()
 
         # Randomly shuffle (in place) the original population.
-        self.rng_GA.shuffle(self.population)
+        if shuffle:
+            self.rng_GA.shuffle(self.population)
+        # _end_if_
 
         # Initial random split of the total population in (active) subpopulations.
         # Active here means 'still evolving'.
@@ -492,6 +503,7 @@ class IslandModelGA(GenericGA):
                                                         epochs=n_epochs,
                                                         f_tol=f_tol,
                                                         correction=correction,
+                                                        shuffle=shuffle,
                                                         elitism=elitism)
 
                 # Evolve the subpopulations in parallel for 'n_epochs'.
@@ -592,6 +604,7 @@ class IslandModelGA(GenericGA):
                                                     epochs=epochs,
                                                     f_tol=f_tol,
                                                     correction=correction,
+                                                    shuffle=shuffle,
                                                     elitism=elitism)
 
             # Evolve the subpopulations in parallel for 'epoch' iterations.
