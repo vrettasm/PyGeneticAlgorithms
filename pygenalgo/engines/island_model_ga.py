@@ -8,8 +8,10 @@ import numpy as np
 from joblib import (Parallel, delayed)
 from numpy.random import Generator
 
-from pygenalgo.engines.auxiliary import (apply_corrections, SubPopulation,
-                                         avg_hamming_dist)
+from pygenalgo.engines.auxiliary import (SubPopulation,
+                                         apply_corrections,
+                                         average_hamming_distance)
+
 from pygenalgo.engines.generic_ga import GenericGA
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
@@ -194,7 +196,7 @@ class HelperEvoParamGroup(object):
             # _end_if_
 
             # Compute the current average Hamming distance.
-            d_avg = avg_hamming_dist(population_i)
+            d_avg = average_hamming_distance(population_i)
 
             # Check for convergence.
             if self.f_tol and fabs(avg_fitness_i - avg_fitness_0) < self.f_tol and d_avg < 0.025:

@@ -7,10 +7,12 @@ from joblib import (Parallel, delayed)
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.engines.generic_ga import GenericGA
 
+from pygenalgo.engines.auxiliary import (apply_corrections,
+                                         average_hamming_distance)
+
 from pygenalgo.operators.mutation.meta_mutator import MetaMutator
 from pygenalgo.operators.crossover.meta_crossover import MetaCrossover
 
-from pygenalgo.engines.auxiliary import apply_corrections, avg_hamming_dist
 
 # Public interface.
 __all__ = ["StandardGA"]
@@ -245,7 +247,7 @@ class StandardGA(GenericGA):
             # _end_if_
 
             # Compute the current average Hamming distance.
-            d_avg = avg_hamming_dist(population_i)
+            d_avg = average_hamming_distance(population_i)
 
             # Check for convergence.
             if f_tol and fabs(avg_fitness_i - avg_fitness_0) < f_tol and d_avg < 0.025:

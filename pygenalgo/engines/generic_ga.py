@@ -9,7 +9,7 @@ from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
-from pygenalgo.engines.auxiliary import avg_hamming_dist
+from pygenalgo.engines.auxiliary import average_hamming_distance
 
 # Public interface.
 __all__ = ["GenericGA"]
@@ -219,7 +219,7 @@ class GenericGA(object):
         if threshold is None:
 
             # Compute the threshold value.
-            threshold = avg_hamming_dist(self.population)
+            threshold = average_hamming_distance(self.population)
         # _end_if_
 
         # Initialize the trial values with the current
