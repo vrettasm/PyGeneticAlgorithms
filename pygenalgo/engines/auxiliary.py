@@ -213,6 +213,6 @@ class SubPopulation(object):
         :return: true if the 'item' belongs in the population.
         """
         return item in self.population
-    # _end_if_
+    # _end_def_
 
 # _end_class_
