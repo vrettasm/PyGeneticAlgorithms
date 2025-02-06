@@ -2,7 +2,6 @@ from typing import Callable
 from dataclasses import dataclass, field
 from pygenalgo.genome.chromosome import Chromosome
 
-
 # Public interface.
 __all__ = ["hamming_distance", "average_hamming_distance",
            "apply_corrections", "SubPopulation"]
@@ -61,7 +60,7 @@ def average_hamming_distance(population: list[Chromosome]) -> float:
     total_diffs, total_genes = 0, 0
 
     # Iterate through all the population.
-    for i, item1 in enumerate(population[:-1]):
+    for i, item1 in enumerate(population):
 
         # Get the size of the chromosome. It is
         # assumed that all chromosomes have the
