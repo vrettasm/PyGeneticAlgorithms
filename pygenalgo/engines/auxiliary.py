@@ -4,13 +4,44 @@ from pygenalgo.genome.chromosome import Chromosome
 
 
 # Public interface.
-__all__ = ["avg_hamming_dist", "apply_corrections", "SubPopulation"]
+__all__ = ["hamming_distance", "average_hamming_distance",
+           "apply_corrections", "SubPopulation"]
 
 
-def avg_hamming_dist(input_population: list[Chromosome]) -> float:
+def hamming_distance(item1: Chromosome, item2: Chromosome) -> int:
     """
-    Computes the average Hamming distance of a population. We use
-    this to measure the similarity in the population of chromosomes.
+    Compute the Hamming distance of the "item1" object, with the
+    "item2" chromosome. In practise it's the number of positions
+    at which the corresponding genes are different.
+
+    :param item1: (Chromosome) to compare the Hamming distance.
+
+    :param item2: (Chromosome) to compare the Hamming distance.
+
+    :return: (int) the number of dissimilarities between the two
+    input chromosomes.
+    """
+
+    # Check for identical types.
+    if type(item1) is type(item2):
+
+        # Quick exit if both objects are the same.
+        if item1 == item2:
+            return 0
+        # _end_if_
+
+        # Compute the dissimilarities in their genomes.
+        return sum(k != l for k, l in zip(item1._genome, item2._genome))
+    else:
+        raise RuntimeError(f"Can't compute Hamming distance in different type objects.")
+    # _end_if_
+
+# _end_def_
+
+def average_hamming_distance(input_population: list[Chromosome]) -> float:
+    """
+    Computes the average Hamming distance of a population. We use this
+    to measure the similarity in the whole population of chromosomes.
 
     :param input_population: List(Chromosome) the population we want
     to compute the average Hamming distance.
@@ -36,7 +67,7 @@ def avg_hamming_dist(input_population: list[Chromosome]) -> float:
         for p2 in input_population[i+1:]:
 
             # Get the total number of different genes.
-            total_diffs += p1.hamming_distance(p2)
+            total_diffs += hamming_distance(p1, p2)
 
             # We add the number of genes we test.
             total_genes += N

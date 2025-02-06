@@ -153,34 +153,6 @@ class Chromosome(object):
         return item in self._genome
     # _end_if_
 
-    def hamming_distance(self, other) -> int:
-        """
-        Compute the "Hamming distance" of the "self" object with the
-        "other" chromosome. In practise it's the number of positions
-        at which the corresponding genes are different.
-
-        :param other: (Chromosome) to compare the Hamming distance.
-
-        :return: (int) the distance between the two chromosomes.
-        """
-
-        # Check for the correct type.
-        if isinstance(other, Chromosome):
-
-            # Quick exit if the object is itself.
-            if self == other:
-                return 0
-            # _end_if_
-
-            # Compute the dissimilarities in their genomes.
-            return [k != l for k, l in zip(self._genome, other._genome)].count(True)
-        else:
-            raise NotImplementedError(f"{self.__class__.__name__}: "
-                                      f"Can't compute Hamming distance in different class objects.")
-        # _end_if_
-
-    # _end_def_
-
     def __copy__(self):
         """
         This custom method overrides the default copy method
