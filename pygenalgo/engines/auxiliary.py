@@ -25,26 +25,33 @@ def hamming_distance(item1: Chromosome, item2: Chromosome) -> int:
     # Check for identical types.
     if type(item1) is type(item2):
 
-        # Quick exit if both objects are the same.
-        if item1 == item2:
+        # Quick exit if both objects are the
+        # same or equal.
+        if item1 is item2 or item1 == item2:
             return 0
         # _end_if_
 
+        # Exit with an error if both objects
+        # are not the same length.
+        if len(item1) != len(item2):
+            raise ValueError(f"Input chromosomes must be of the same length.")
+        # _end_if_
+
         # Compute the dissimilarities in their genomes.
-        return sum(k != l for k, l in zip(item1._genome, item2._genome))
+        return [k != l for k, l in zip(item1._genome, item2._genome)].count(True)
     else:
         raise RuntimeError(f"Can't compute Hamming distance in different type objects.")
     # _end_if_
 
 # _end_def_
 
-def average_hamming_distance(input_population: list[Chromosome]) -> float:
+def average_hamming_distance(population: list[Chromosome]) -> float:
     """
     Computes the average Hamming distance of a population. We use this
     to measure the similarity in the whole population of chromosomes.
 
-    :param input_population: List(Chromosome) the population we want
-    to compute the average Hamming distance.
+    :param population: List(Chromosome) the population we want to compute
+    the average Hamming distance.
 
     :return: (float) the total number of differences, in the genes,
     divided by the total number of genes compared.
@@ -54,20 +61,20 @@ def average_hamming_distance(input_population: list[Chromosome]) -> float:
     total_diffs, total_genes = 0, 0
 
     # Iterate through all the population.
-    for i, p1 in enumerate(input_population[:-1]):
+    for i, item1 in enumerate(population[:-1]):
 
         # Get the size of the chromosome. It is
         # assumed that all chromosomes have the
         # same size.
-        N = len(p1)
+        N = len(item1)
 
         # Compare the i-th chromosome with the rest of the population.
         # NOTE: Since the distances are symmetrical we don't check the
         # same pair of chromosomes twice.
-        for p2 in input_population[i+1:]:
+        for item2 in population[i+1:]:
 
             # Get the total number of different genes.
-            total_diffs += hamming_distance(p1, p2)
+            total_diffs += hamming_distance(item1, item2)
 
             # We add the number of genes we test.
             total_genes += N
