@@ -175,7 +175,8 @@ class Chromosome(object):
             # Compute the dissimilarities in their genomes.
             return [k != l for k, l in zip(self._genome, other._genome)].count(True)
         else:
-            raise NotImplemented
+            raise NotImplementedError(f"{self.__class__.__name__}: "
+                                      f"Can't compute Hamming distance in different class objects.")
         # _end_if_
 
     # _end_def_
