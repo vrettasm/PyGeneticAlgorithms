@@ -1,6 +1,5 @@
 import time
 from collections import defaultdict
-from dataclasses import dataclass
 from math import isnan, fabs
 from typing import Callable
 
@@ -24,55 +23,79 @@ from pygenalgo.operators.selection.select_operator import SelectionOperator
 __all__ = ["IslandModelGA"]
 
 
-@dataclass(init=True, repr=False, eq=False, frozen=True)
 class HelperEvoParamGroup(object):
     """
     Description:
 
-        Implements a dataclass for the grouping the evolution parameters.
-        This helper class is used to create a single object with all the
-        required parameters to evolve a single population in the Parallel
-        process.
+        Implements a helper class for the grouping the evolution parameters.
+        This class is used to create a single object with all the required
+        parameters to evolve a single population in the Parallel process.
+
     """
 
-    # Fitness function of the class.
-    fitness_func: Callable
+    # Object variables.
+    __slots__ = ("fitness_func", "eval_fitness", "sel_op", "crs_op", "mut_op",
+                 "rng_ga", "epochs", "f_tol", "correction", "shuffle", "elitism")
 
-    # Evaluates the fitness of the input island population.
-    eval_fitness: Callable
+    def __init__(self, fitness_func: Callable, eval_fitness: Callable, sel_op: SelectionOperator,
+                 crs_op: CrossoverOperator, mut_op: MutationOperator, rng_ga: Generator, epochs: int,
+                 f_tol: float, correction: bool = False, shuffle: bool = True, elitism: bool = False):
+        """
+            The definition of all parameters is identical to the one in IslandModelGA.run().
+        """
 
-    # Reference of a selection operator object.
-    sel_op: SelectionOperator
+        self.fitness_func = fitness_func
+        self.eval_fitness = eval_fitness
 
-    # Reference of a crossover operator object.
-    crs_op: CrossoverOperator
+        self.sel_op = sel_op
+        self.crs_op = crs_op
+        self.mut_op = mut_op
+        self.rng_ga = rng_ga
 
-    # Reference of a mutation operator object.
-    mut_op: MutationOperator
+        self.epochs = epochs
+        self.f_tol = f_tol
 
-    # Random number generator. This is a copy from the GenericGA.
-    rng_ga: Generator
+        self.correction = correction
+        self.shuffle = shuffle
+        self.elitism = elitism
+    # _end_def_
 
-    # (int) maximum number of iterations in the evolution process.
-    epochs: int
+    @property
+    def num_epochs(self) -> int:
+        """
+        Accessor (getter) of the epochs' parameter.
 
-    # (float) tolerance in the difference between the average values
-    # of two consecutive populations (in terms of fitness).
-    f_tol: float
+        :return: the epochs value.
+        """
+        return self.epochs
+    # _end_def_
 
-    # (bool) flag that enables the self-correction of the population,
-    # at the gene level and attempt to correct the genome by calling
-    # the random() method of the flawed gene.
-    correction: bool = False
+    @num_epochs.setter
+    def num_epochs(self, new_value: int):
+        """
+        Update the value of epochs in the helper class.
 
-    # (bool) flag to allow (or not) the shuffle the population before
-    # the application of the crossover and mutation operations.
-    shuffle: bool = True
+        :param new_value: (int) new value of epochs.
 
-    # (bool) flag that defines elitism. If 'True' then the chromosome
-    # with the higher fitness value will always be copied to the next
-    # generation (unaltered).
-    elitism: bool = False
+        :return: None.
+        """
+        # Check for the correct type.
+        if isinstance(new_value, int):
+
+            # Ensure the correct range of values.
+            if new_value > 1:
+
+                # Update the epochs value.
+                self.epochs = new_value
+            else:
+                raise ValueError(f"{self.__class__.__name__}: "
+                                 f"Number of epochs should be > 1.")
+                # _end_if_
+        else:
+            raise TypeError(f"{self.__class__.__name__}: "
+                            f"Number of epochs should be int: {type(new_value)}.")
+        # _end_if_
+    # _end_def_
 
     def __call__(self, island: SubPopulation, adapt_probs: bool = False,
                  initial_probs: dict = None):
@@ -443,6 +466,19 @@ class IslandModelGA(GenericGA):
             self._stats[pop_n.id]["prob_mutate"].append(self._mutate_op.probability)
         # _end_for_
 
+        # Set up the evolution helper object. Here we group all the parameters,
+        # and subsequently we pass only this object to the delayed function.
+        evolve_population = HelperEvoParamGroup(fitness_func=self.fitness_func,
+                                                eval_fitness=self.evaluate_fitness,
+                                                sel_op=self._select_op,
+                                                crs_op=self._crossx_op,
+                                                mut_op=self._mutate_op,
+                                                rng_ga=self.rng_GA,
+                                                epochs=epochs,
+                                                f_tol=f_tol,
+                                                correction=correction,
+                                                shuffle=shuffle,
+                                                elitism=elitism)
         # Display an information message.
         print(f"Parallel evolution in progress with {self.num_islands} islands ...")
 
@@ -494,19 +530,8 @@ class IslandModelGA(GenericGA):
                     n_epochs += rem_epochs
                 # _end_if_
 
-                # Setup evolution helper object. Here we group all the parameters,
-                # and subsequently we pass only this object to the delayed function.
-                evolve_population = HelperEvoParamGroup(fitness_func=self.fitness_func,
-                                                        eval_fitness=self.evaluate_fitness,
-                                                        sel_op=self._select_op,
-                                                        crs_op=self._crossx_op,
-                                                        mut_op=self._mutate_op,
-                                                        rng_ga=self.rng_GA,
-                                                        epochs=n_epochs,
-                                                        f_tol=f_tol,
-                                                        correction=correction,
-                                                        shuffle=shuffle,
-                                                        elitism=elitism)
+                # Update the n_epochs in the helper object.
+                evolve_population.num_epochs = n_epochs
 
                 # Evolve the subpopulations in parallel for 'n_epochs'.
                 results_i = Parallel(n_jobs=self.n_cpus, backend="loky")(
@@ -594,20 +619,6 @@ class IslandModelGA(GenericGA):
             # _end_for_
 
         else:
-
-            # Setup evolution helper object. Here we group all the parameters,
-            # and subsequently we pass only this object to the delayed function.
-            evolve_population = HelperEvoParamGroup(fitness_func=self.fitness_func,
-                                                    eval_fitness=self.evaluate_fitness,
-                                                    sel_op=self._select_op,
-                                                    crs_op=self._crossx_op,
-                                                    mut_op=self._mutate_op,
-                                                    rng_ga=self.rng_GA,
-                                                    epochs=epochs,
-                                                    f_tol=f_tol,
-                                                    correction=correction,
-                                                    shuffle=shuffle,
-                                                    elitism=elitism)
 
             # Evolve the subpopulations in parallel for 'epoch' iterations.
             results = Parallel(n_jobs=self.n_cpus, backend="loky")(
