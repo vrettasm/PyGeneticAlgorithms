@@ -227,22 +227,31 @@ class GenericGA(object):
         trial_pc = self._crossx_op.probability
         trial_pm = self._mutate_op.probability
 
+        # Initialize the flag with "False"
+        # to avoid unnecessary assignments.
+        have_changed = False
+
         # Use the threshold value to adjust
         # the probabilities accordingly.
         if threshold < 0.1:
 
             trial_pc *= 0.9
             trial_pm *= 1.1
+            have_changed = True
 
         elif threshold > 0.8:
 
             trial_pc *= 1.1
             trial_pm *= 0.9
+            have_changed = True
         # _end_if_
 
-        # Ensure the probabilities stay within the range [0, 1].
-        self._crossx_op.probability = min(max(trial_pc, 0.0), 1.0)
-        self._mutate_op.probability = min(max(trial_pm, 0.0), 1.0)
+        # Check if the probabilities have changed.
+        if have_changed:
+            # Ensure the probabilities stay within the range [0, 1].
+            self._crossx_op.probability = min(max(trial_pc, 0.0), 1.0)
+            self._mutate_op.probability = min(max(trial_pm, 0.0), 1.0)
+        # _end_if_
 
         # Store the updated crossover and mutation probabilities.
         self._stats["prob_crossx"].append(self._crossx_op.probability)

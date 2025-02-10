@@ -28,9 +28,9 @@ class HelperEvoParamGroup(object):
     """
     Description:
 
-        Implements a helper class for the grouping the evolution parameters.
-        This class is used to  create a single object with all the required
-        parameters  to evolve a single  population in  the Parallel process.
+        Implements a helper class for grouping the evolution parameters.
+        This class is used to create a single object with all the required
+        parameters to evolve a single population in the Parallel process.
 
     """
 
@@ -117,22 +117,31 @@ class HelperEvoParamGroup(object):
         trial_pc = self.crs_op.probability
         trial_pm = self.mut_op.probability
 
+        # Initialize the flag with "False"
+        # to avoid unnecessary assignments.
+        have_changed = False
+
         # Use the threshold value to adjust
         # the probabilities accordingly.
         if threshold < 0.1:
 
             trial_pc *= 0.9
             trial_pm *= 1.1
+            have_changed = True
 
         elif threshold > 0.8:
 
             trial_pc *= 1.1
             trial_pm *= 0.9
+            have_changed = True
         # _end_if_
 
-        # Ensure the probabilities stay within the range [0, 1].
-        self.crs_op.probability = min(max(trial_pc, 0.0), 1.0)
-        self.mut_op.probability = min(max(trial_pm, 0.0), 1.0)
+        # Check if the probabilities have changed.
+        if have_changed:
+            # Ensure the probabilities stay within the range [0, 1].
+            self.crs_op.probability = min(max(trial_pc, 0.0), 1.0)
+            self.mut_op.probability = min(max(trial_pm, 0.0), 1.0)
+        # _end_if_
     # _end_def_
 
     def __call__(self, island: SubPopulation, adapt_probs: bool = False,
