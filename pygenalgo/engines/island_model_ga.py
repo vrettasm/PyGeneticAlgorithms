@@ -4,8 +4,9 @@ from math import isnan, fabs
 from typing import Callable
 
 import numpy as np
-from joblib import (Parallel, delayed)
 from numpy.random import Generator
+
+from joblib import (Parallel, delayed)
 
 from pygenalgo.engines.auxiliary import (SubPopulation,
                                          apply_corrections,
@@ -28,8 +29,8 @@ class HelperEvoParamGroup(object):
     Description:
 
         Implements a helper class for the grouping the evolution parameters.
-        This class is used to create a single object with all the required
-        parameters to evolve a single population in the Parallel process.
+        This class is used to  create a single object with all the required
+        parameters  to evolve a single  population in  the Parallel process.
 
     """
 
@@ -44,20 +45,22 @@ class HelperEvoParamGroup(object):
             The definition of all parameters is identical to the one in IslandModelGA.run().
         """
 
+        # Functions.
         self.fitness_func = fitness_func
         self.eval_fitness = eval_fitness
 
+        # Genetic operators.
         self.sel_op = sel_op
         self.crs_op = crs_op
         self.mut_op = mut_op
         self.rng_ga = rng_ga
 
-        self.epochs = epochs
+        # Boolean flags.
         self.f_tol = f_tol
-
-        self.correction = correction
+        self.epochs = epochs
         self.shuffle = shuffle
         self.elitism = elitism
+        self.correction = correction
     # _end_def_
 
     @property
@@ -95,6 +98,41 @@ class HelperEvoParamGroup(object):
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Number of epochs should be int: {type(new_value)}.")
         # _end_if_
+    # _end_def_
+
+    def _adapt_local_probabilities(self, threshold: float) -> None:
+        """
+        This method is used to adjust simultaneously the crossover
+        and mutation parameters of the HelperEvoParamGroup object.
+
+        :param threshold: (float) This parameter is used to determine
+        whether we are going to increase / decrease the crossover and
+        mutation parameters.
+
+        :return: None.
+        """
+
+        # Initialize the trial values with the current
+        # probabilities to avoid going out of limits.
+        trial_pc = self.crs_op.probability
+        trial_pm = self.mut_op.probability
+
+        # Use the threshold value to adjust
+        # the probabilities accordingly.
+        if threshold < 0.1:
+
+            trial_pc *= 0.9
+            trial_pm *= 1.1
+
+        elif threshold > 0.8:
+
+            trial_pc *= 1.1
+            trial_pm *= 0.9
+        # _end_if_
+
+        # Ensure the probabilities stay within the range [0, 1].
+        self.crs_op.probability = min(max(trial_pc, 0.0), 1.0)
+        self.mut_op.probability = min(max(trial_pm, 0.0), 1.0)
     # _end_def_
 
     def __call__(self, island: SubPopulation, adapt_probs: bool = False,
@@ -175,7 +213,7 @@ class HelperEvoParamGroup(object):
 
             # Check if 'corrections' are enabled.
             if self.correction:
-                _ = apply_corrections(population_i, self.fitness_func)
+                apply_corrections(population_i, self.fitness_func)
             # _end_if_
 
             # Check if 'elitism' is enabled.
@@ -231,30 +269,11 @@ class HelperEvoParamGroup(object):
                 break
             # _end_if_
 
-            # Check for adaptive probabilities.
+            # Check the adaptive flag.
             if adapt_probs:
 
-                # Initialize the trial values with
-                # the current probabilities.
-                trial_pc = self.crs_op.probability
-                trial_pm = self.mut_op.probability
-
-                # Use the average Hamming distance as threshold.
-                # The 10% and 80% values are set empirically.
-                if d_avg < 0.1:
-
-                    trial_pc *= 0.9
-                    trial_pm *= 1.1
-
-                elif d_avg > 0.8:
-
-                    trial_pc *= 1.1
-                    trial_pm *= 0.9
-                # _end_if_
-
-                # Ensure the probabilities stay within the range [0, 1].
-                self.crs_op.probability = min(max(trial_pc, 0.0), 1.0)
-                self.mut_op.probability = min(max(trial_pm, 0.0), 1.0)
+                # Update the genetic probabilities.
+                self._adapt_local_probabilities(threshold=d_avg)
 
                 # Store the updated crossover and mutation probabilities.
                 local_stats["prob_crossx"].append(self.crs_op.probability)
@@ -269,6 +288,25 @@ class HelperEvoParamGroup(object):
         elapsed_time = time.perf_counter() - time_t0
 
         return island, has_converged, local_stats, elapsed_time
+    # _end_def_
+
+    def __getstate__(self) -> dict:
+        """
+        This method is used when pickling the
+        object during the parallel execution.
+        """
+        return {
+            attr: getattr(self, attr) for attr in self.__slots__
+        }
+    # _end_def_
+
+    def __setstate__(self, state: dict) -> None:
+        """
+        This method works in tandem with the __getstate__()
+        and used to unpickle the object.
+        """
+        for attr, value in state.items():
+            setattr(self, attr, value)
     # _end_def_
 
 # _end_class_
@@ -512,106 +550,111 @@ class IslandModelGA(GenericGA):
             # Compute the remainder epochs (if any).
             rem_epochs = int(epochs % n_periods)
 
-            # Break the total 'epochs' in n_periods.
-            for i in range(n_periods):
+            # Reuse the pool of workers.
+            with Parallel(n_jobs=self.n_cpus, backend="loky") as parallel:
 
-                # Check if we want information on the screen.
-                if verbose:
-
-                    # Print a message to the screen.
-                    print(f"\nCurrent period {i+1} / {n_periods}:\n")
-                # _end_if_
-
-                # If the remainder epochs is not zero, add them in the
-                # last iteration to complete the total number of epochs.
-                if rem_epochs and i == n_periods-1:
-
-                    # Update the n_epochs ONLY in the last period.
-                    n_epochs += rem_epochs
-                # _end_if_
-
-                # Update the n_epochs in the helper object.
-                evolve_population.num_epochs = n_epochs
-
-                # Evolve the subpopulations in parallel for 'n_epochs'.
-                results_i = Parallel(n_jobs=self.n_cpus, backend="loky")(
-                    delayed(evolve_population)(island=pop_i, adapt_probs=adapt_probs,
-                                               initial_probs=genetic_probs[pop_i.id])
-                    for pop_i in active_population
-                )
-
-                # Empty the list of active populations.
-                active_population = []
-
-                # Process the results if the i-th period.
-                for res in results_i:
-
-                    # Extract the results.
-                    island, has_converged, local_stats, elapsed_time = res
+                # Break the total 'epochs' in n_periods.
+                for i in range(n_periods):
 
                     # Check if we want information on the screen.
                     if verbose:
 
-                        # Find the current highest fitness.
-                        best_fitness = max((p.fitness for p in island.population
-                                            if not isnan(p.fitness)))
-
                         # Print a message to the screen.
-                        print(f"Best Fitness in island {island.id} is:= {best_fitness:.5f}.")
+                        print(f"\nCurrent period {i+1} / {n_periods}:\n")
                     # _end_if_
 
-                    # First check if the island has converged.
-                    if has_converged[0]:
+                    # If the remainder epochs is not zero, add them in the
+                    # last iteration to complete the total number of epochs.
+                    if rem_epochs and i == n_periods-1:
 
-                        # Copy the population in the final list.
-                        final_population.extend(island.population)
+                        # Update the n_epochs ONLY in the last period.
+                        n_epochs += rem_epochs
+                    # _end_if_
 
-                        # Check for verbosity.
+                    # Update the n_epochs in the helper object.
+                    evolve_population.num_epochs = n_epochs
+
+                    # Evolve the subpopulations in parallel for 'n_epochs'.
+                    results_i = parallel(
+                        delayed(evolve_population)(island=pop_i, adapt_probs=adapt_probs,
+                                                   initial_probs=genetic_probs[pop_i.id])
+                        for pop_i in active_population
+                    )
+
+                    # Empty the list of active populations.
+                    active_population = []
+
+                    # Process the results if the i-th period.
+                    for res in results_i:
+
+                        # Extract the results.
+                        island, has_converged, local_stats, elapsed_time = res
+
+                        # Check if we want information on the screen.
                         if verbose:
-                            # Compute the total number of iterations.
-                            itr = int(i*n_epochs + has_converged[1])
+
+                            # Find the current highest fitness.
+                            best_fitness = max((p.fitness for p in island.population
+                                                if not isnan(p.fitness)))
 
                             # Print a message to the screen.
-                            print(f"Island population {island.id}, finished in {itr} iterations.")
+                            print(f"Best Fitness in island {island.id} is:= {best_fitness:.5f}.")
                         # _end_if_
 
-                    else:
+                        # First check if the island has converged.
+                        if has_converged[0]:
 
-                        # Add the island population to the new active list.
-                        active_population.append(island)
-                    # _end_if_
+                            # Copy the population in the final list.
+                            final_population.extend(island.population)
 
-                    # Update statistics.
-                    self._stats[island.id]["avg"].extend(local_stats["avg"])
-                    self._stats[island.id]["std"].extend(local_stats["std"])
+                            # Check for verbosity.
+                            if verbose:
+                                # Compute the total number of iterations.
+                                itr = int(i*n_epochs + has_converged[1])
 
-                    # Check if we were adapting the probabilities.
-                    if adapt_probs:
+                                # Print a message to the screen.
+                                print(f"Island population {island.id}, finished in {itr} iterations.")
+                            # _end_if_
 
-                        # Make sure there is at least one entry
-                        # to avoid "index out of bound" errors.
-                        if len(local_stats["prob_crossx"]) > 0:
+                        else:
 
-                            # Update the values for the next interval.
-                            genetic_probs[island.id]["crossx"] = local_stats["prob_crossx"][-1]
-                            genetic_probs[island.id]["mutate"] = local_stats["prob_mutate"][-1]
+                            # Add the island population to the new active list.
+                            active_population.append(island)
                         # _end_if_
 
-                        # Store the updated crossover and mutation values.
-                        self._stats[island.id]["prob_crossx"].extend(local_stats["prob_crossx"])
-                        self._stats[island.id]["prob_mutate"].extend(local_stats["prob_mutate"])
+                        # Update statistics.
+                        self._stats[island.id]["avg"].extend(local_stats["avg"])
+                        self._stats[island.id]["std"].extend(local_stats["std"])
+
+                        # Check if we were adapting the probabilities.
+                        if adapt_probs:
+
+                            # Make sure there is at least one entry
+                            # to avoid "index out of bound" errors.
+                            if len(local_stats["prob_crossx"]) > 0:
+
+                                # Update the values for the next interval.
+                                genetic_probs[island.id]["crossx"] = local_stats["prob_crossx"][-1]
+                                genetic_probs[island.id]["mutate"] = local_stats["prob_mutate"][-1]
+                            # _end_if_
+
+                            # Store the updated crossover and mutation values.
+                            self._stats[island.id]["prob_crossx"].extend(local_stats["prob_crossx"])
+                            self._stats[island.id]["prob_mutate"].extend(local_stats["prob_mutate"])
+                        # _end_if_
+
+                    # _end_for_
+
+                    # Check for early termination.
+                    if len(active_population) == 0:
+                        break
                     # _end_if_
 
+                    # Here we call the migration policy.
+                    self._migrate_op(active_population)
                 # _end_for_
 
-                # Check for early termination.
-                if len(active_population) == 0:
-                    break
-                # _end_if_
-
-                # Here we call the migration policy.
-                self._migrate_op(active_population)
-            # _end_for_
+            # _end_parallel_with_
 
             # Get the rest of the populations that have not yet converged.
             for pop_n in active_population:
