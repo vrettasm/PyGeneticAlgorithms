@@ -268,6 +268,10 @@ class StandardGA(GenericGA):
                 # For threshold, we use the mean Hamming
                 # distance of the current population.
                 self.adapt_probabilities(threshold=d_avg)
+
+                # Store the updated crossover and mutation probabilities.
+                self._stats["prob_crossx"].append(self._crossx_op.probability)
+                self._stats["prob_mutate"].append(self._mutate_op.probability)
             # _end_if_
 
         # _end_for_

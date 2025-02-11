@@ -253,9 +253,6 @@ class GenericGA(object):
             self._mutate_op.probability = min(max(trial_pm, 0.0), 1.0)
         # _end_if_
 
-        # Store the updated crossover and mutation probabilities.
-        self._stats["prob_crossx"].append(self._crossx_op.probability)
-        self._stats["prob_mutate"].append(self._mutate_op.probability)
     # _end_def_
 
     def population_fitness(self) -> list[float]:
