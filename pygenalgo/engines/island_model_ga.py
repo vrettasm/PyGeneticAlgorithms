@@ -1,11 +1,8 @@
 import time
-from collections import defaultdict
 from math import isnan, fabs
-from typing import Callable
+from collections import defaultdict
 
 import numpy as np
-from numpy.random import Generator
-
 from joblib import (Parallel, delayed)
 
 from pygenalgo.engines.auxiliary import (SubPopulation,
@@ -14,311 +11,12 @@ from pygenalgo.engines.auxiliary import (SubPopulation,
 
 from pygenalgo.engines.generic_ga import GenericGA
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 from pygenalgo.operators.migration.meta_migration import MetaMigration
 from pygenalgo.operators.migration.migration_operator import MigrationOperator
-from pygenalgo.operators.mutation.mutate_operator import MutationOperator
-from pygenalgo.operators.selection.select_operator import SelectionOperator
 
 # Public interface.
 __all__ = ["IslandModelGA"]
 
-
-class HelperEvoParamGroup(object):
-    """
-    Description:
-
-        Implements a helper class for grouping the evolution parameters.
-        This class is used to create a single object with all the required
-        parameters to evolve a single population in the Parallel process.
-
-    """
-
-    # Object variables.
-    __slots__ = ("fitness_func", "eval_fitness", "sel_op", "crs_op", "mut_op",
-                 "rng_ga", "epochs", "f_tol", "correction", "shuffle", "elitism")
-
-    def __init__(self, fitness_func: Callable, eval_fitness: Callable, sel_op: SelectionOperator,
-                 crs_op: CrossoverOperator, mut_op: MutationOperator, rng_ga: Generator, epochs: int,
-                 f_tol: float, correction: bool = False, shuffle: bool = True, elitism: bool = False):
-        """
-            The definition of all parameters is identical to the one in IslandModelGA.run().
-        """
-
-        # Functions.
-        self.fitness_func = fitness_func
-        self.eval_fitness = eval_fitness
-
-        # Genetic operators.
-        self.sel_op = sel_op
-        self.crs_op = crs_op
-        self.mut_op = mut_op
-        self.rng_ga = rng_ga
-
-        # Boolean flags.
-        self.f_tol = f_tol
-        self.epochs = epochs
-        self.shuffle = shuffle
-        self.elitism = elitism
-        self.correction = correction
-    # _end_def_
-
-    @property
-    def num_epochs(self) -> int:
-        """
-        Accessor (getter) of the epochs' parameter.
-
-        :return: the epochs value.
-        """
-        return self.epochs
-    # _end_def_
-
-    @num_epochs.setter
-    def num_epochs(self, new_value: int):
-        """
-        Update the value of epochs in the helper class.
-
-        :param new_value: (int) new value of epochs.
-
-        :return: None.
-        """
-        # Check for the correct type.
-        if isinstance(new_value, int):
-
-            # Ensure the correct range of values.
-            if new_value > 1:
-
-                # Update the epochs value.
-                self.epochs = new_value
-            else:
-                raise ValueError(f"{self.__class__.__name__}: "
-                                 f"Number of epochs should be > 1.")
-                # _end_if_
-        else:
-            raise TypeError(f"{self.__class__.__name__}: "
-                            f"Number of epochs should be int: {type(new_value)}.")
-        # _end_if_
-    # _end_def_
-
-    def _adapt_local_probabilities(self, threshold: float) -> None:
-        """
-        This method is used to adjust simultaneously the crossover
-        and mutation parameters of the HelperEvoParamGroup object.
-
-        :param threshold: (float) This parameter is used to determine
-        whether we are going to increase / decrease the crossover and
-        mutation parameters.
-
-        :return: None.
-        """
-
-        # Initialize the trial values with the current
-        # probabilities to avoid going out of limits.
-        trial_pc = self.crs_op.probability
-        trial_pm = self.mut_op.probability
-
-        # Initialize the flag with "False"
-        # to avoid unnecessary assignments.
-        have_changed = False
-
-        # Use the threshold value to adjust
-        # the probabilities accordingly.
-        if threshold < 0.1:
-
-            trial_pc *= 0.9
-            trial_pm *= 1.1
-            have_changed = True
-
-        elif threshold > 0.8:
-
-            trial_pc *= 1.1
-            trial_pm *= 0.9
-            have_changed = True
-        # _end_if_
-
-        # Check if the probabilities have changed.
-        if have_changed:
-            # Ensure the probabilities stay within the range [0, 1].
-            self.crs_op.probability = min(max(trial_pc, 0.0), 1.0)
-            self.mut_op.probability = min(max(trial_pm, 0.0), 1.0)
-        # _end_if_
-    # _end_def_
-
-    def __call__(self, island: SubPopulation, adapt_probs: bool = False,
-                 initial_probs: dict = None):
-        """
-        This method is called to evolve each subpopulation independently
-        inside the Parallel loop.
-
-        :param island: (SubPopulation) contains a single evolving population.
-
-        :param adapt_probs: (bool) If enabled (set to True), it will allow
-        the crossover and mutation probabilities to adapt according to the
-        convergence of the fitness values. Default is set to False.
-
-        :param initial_probs: (dict) This optional dictionary contains the
-        initial probability values for the crossover / mutation operators.
-        It is used in the migration period to ensure the continuity of the
-        values. If this is not set then the algorithm will use the original
-        (initial) values every time is called.
-        """
-
-        # Get the BitGenerator used by default_rng.
-        bit_Gen = type(self.rng_ga.bit_generator)
-
-        # Use the state from a fresh bit generator to re-seed rng_ga.
-        # This uses the current system time (in nanoseconds) to avoid
-        # using the same seed value among different Parallel workers.
-        self.rng_ga.bit_generator.state = bit_Gen(seed=time.time_ns()).state
-
-        # Keeps track of the convergence /termination of the
-        # population, along with the iteration that happened.
-        has_converged = (False, self.epochs)
-
-        # Get the size of the population.
-        N = len(island.population)
-
-        # Define local dictionary to hold the statistics.
-        local_stats = {"avg": [], "std": [], "prob_crossx": [], "prob_mutate": []}
-
-        # Initialize this auxiliary parameter to a large number.
-        avg_fitness_0 = 1.0e+100
-
-        # Check if initial probabilities have been given.
-        if adapt_probs and initial_probs:
-            self.crs_op.probability = initial_probs["crossx"]
-            self.mut_op.probability = initial_probs["mutate"]
-        # _end_if_
-
-        # Start timing the loop.
-        time_t0 = time.perf_counter()
-
-        # Repeat 'epoch' times.
-        for i in range(self.epochs):
-
-            # Update current iteration in the selection operator.
-            # Currently, this is used only from Boltzmann Selector.
-            self.sel_op.iter = i
-
-            # SELECT the parents.
-            population_i = self.sel_op(island.population)
-
-            # Shuffle the selected parents.
-            if self.shuffle:
-                self.rng_ga.shuffle(population_i)
-            # _end_if_
-
-            # CROSSOVER/MUTATE to produce offsprings.
-            for j in range(0, N - 1, 2):
-                # Replace directly the OLD parents with the NEW offsprings.
-                population_i[j], population_i[j + 1] = self.crs_op(population_i[j],
-                                                                   population_i[j + 1])
-                # MUTATE in place the 1st offspring.
-                self.mut_op(population_i[j])
-
-                # MUTATE in place the 2nd offspring.
-                self.mut_op(population_i[j + 1])
-            # _end_for_
-
-            # Check if 'corrections' are enabled.
-            if self.correction:
-                apply_corrections(population_i, self.fitness_func)
-            # _end_if_
-
-            # Check if 'elitism' is enabled.
-            if self.elitism:
-
-                # Find the individual chromosome with the highest fitness
-                # value (from the old subpopulation of the current island).
-                best_chromosome = max((p for p in island.population if not isnan(p.fitness)),
-                                      key=lambda c: c.fitness, default=None)
-
-                # Select randomly a position.
-                locus = self.rng_ga.integers(0, N)
-
-                # Replace the chromosome with the previous best.
-                population_i[locus] = best_chromosome
-            # _end_if_
-
-            # EVALUATE the i-th population.
-            avg_fitness_i, std_fitness_i, found_solution = self.eval_fitness(population_i)
-
-            # Update the i-th population mean/std.
-            if all(np.isfinite([avg_fitness_i, std_fitness_i])):
-
-                # Store them in the dictionary.
-                local_stats["avg"].append(avg_fitness_i)
-                local_stats["std"].append(std_fitness_i)
-            else:
-                raise RuntimeError(f"{i+1}: Mean={avg_fitness_i:.5f}, Std={std_fitness_i:.5f}.")
-            # _end_if_
-
-            # Update the old population with the new chromosomes.
-            island.population = population_i
-
-            # Check for termination.
-            if found_solution:
-                # Switch the convergence flag and track the current iteration.
-                has_converged = (True, i + 1)
-
-                # Exit from the loop.
-                break
-            # _end_if_
-
-            # Compute the current average Hamming distance.
-            d_avg = average_hamming_distance(population_i)
-
-            # Check for convergence.
-            if self.f_tol and fabs(avg_fitness_i - avg_fitness_0) < self.f_tol and d_avg < 0.025:
-
-                # Switch the convergence flag and track the current iteration.
-                has_converged = (True, i+1)
-
-                # Exit from the loop.
-                break
-            # _end_if_
-
-            # Check the adaptive flag.
-            if adapt_probs:
-
-                # Update the genetic probabilities.
-                self._adapt_local_probabilities(threshold=d_avg)
-
-                # Store the updated crossover and mutation probabilities.
-                local_stats["prob_crossx"].append(self.crs_op.probability)
-                local_stats["prob_mutate"].append(self.mut_op.probability)
-            # _end_if_
-
-            # Update the average value for the next iteration.
-            avg_fitness_0 = avg_fitness_i
-        # _end_for_
-
-        # Compute the elapsed time (in seconds).
-        elapsed_time = time.perf_counter() - time_t0
-
-        return island, has_converged, local_stats, elapsed_time
-    # _end_def_
-
-    def __getstate__(self) -> dict:
-        """
-        This method is used when pickling the
-        object during the parallel execution.
-        """
-        return {
-            attr: getattr(self, attr) for attr in self.__slots__
-        }
-    # _end_def_
-
-    def __setstate__(self, state: dict) -> None:
-        """
-        This method works in tandem with the __getstate__()
-        and used to unpickle the object.
-        """
-        for attr, value in state.items():
-            setattr(self, attr, value)
-    # _end_def_
-
-# _end_class_
 
 class IslandModelGA(GenericGA):
     """
@@ -362,6 +60,7 @@ class IslandModelGA(GenericGA):
         else:
             self._migrate_op = migrate_op
         # _end_if_
+
     # _end_def_
 
     @property
@@ -433,6 +132,142 @@ class IslandModelGA(GenericGA):
         return (np.nanmean(fit_arr, dtype=float),
                 np.nanstd(fit_arr, dtype=float),
                 found_solution)
+    # _end_def_
+
+    def _evolve_population(self, island: SubPopulation, epochs: int, shuffle: bool,
+                           correction: bool, elitism: bool, f_tol: float,
+                           adapt_probs: bool = None, initial_probs: dict = None):
+        """
+        This is a helper method to be  used inside theParallel delayed
+        method. It is responsible for running the evolution of a single
+        population (island).
+
+        :return: a tuple (island, has_converged, local_stats, elapsed_time)
+        """
+
+        # Get the BitGenerator used by default_rng.
+        bit_Gen = type(self.rng_GA.bit_generator)
+
+        # Use the state from a fresh bit generator to re-seed rng_GA.
+        # This uses the current system time (in nanoseconds) to avoid
+        # using the same seed value among different Parallel workers.
+        self.rng_GA.bit_generator.state = bit_Gen(seed=time.time_ns()).state
+
+        # Keeps track of the convergence /termination of the
+        # population, along with the iteration that happened.
+        has_converged = (False, epochs)
+
+        # Get the size of the population.
+        N = len(island.population)
+
+        # Define local dictionary to hold the statistics.
+        local_stats = {"avg": [], "std": [], "prob_crossx": [], "prob_mutate": []}
+
+        # Initialize this auxiliary parameter to a large number.
+        avg_fitness_0 = 1.0e+100
+
+        # Check if initial probabilities have been given.
+        if adapt_probs and initial_probs:
+            self.crossover_op.probability = initial_probs["crossx"]
+            self.mutate_op.probability = initial_probs["mutate"]
+        # _end_if_
+
+        # Start timing the loop.
+        time_t0 = time.perf_counter()
+
+        # Repeat 'epoch' times.
+        for i in range(epochs):
+
+            # Update current iteration in the selection operator.
+            # Currently, this is used only from Boltzmann Selector.
+            self.select_op.iter = i
+
+            # SELECT the parents.
+            population_i = self.select_op(island.population)
+
+            # Shuffle the selected parents.
+            if shuffle:
+                self.rng_GA.shuffle(population_i)
+            # _end_if_
+
+            # CROSSOVER/MUTATE to produce offsprings.
+            self.crossover_mutate(population_i)
+
+            # Check if 'corrections' are enabled.
+            if correction:
+                apply_corrections(population_i, self.fitness_func)
+            # _end_if_
+
+            # Check if 'elitism' is enabled.
+            if elitism:
+                # Find the individual chromosome with the highest fitness
+                # value (from the old subpopulation of the current island).
+                best_chromosome = max((p for p in island.population if not isnan(p.fitness)),
+                                      key=lambda c: c.fitness, default=None)
+
+                # Select randomly a position.
+                locus = self.rng_GA.integers(0, N)
+
+                # Replace the chromosome with the previous best.
+                population_i[locus] = best_chromosome
+            # _end_if_
+
+            # EVALUATE the i-th population.
+            avg_fitness_i, std_fitness_i, found_solution = self.evaluate_fitness(population_i)
+
+            # Update the i-th population mean/std.
+            if all(np.isfinite([avg_fitness_i, std_fitness_i])):
+
+                # Store them in the dictionary.
+                local_stats["avg"].append(avg_fitness_i)
+                local_stats["std"].append(std_fitness_i)
+            else:
+                raise RuntimeError(f"{i + 1}: Mean={avg_fitness_i:.5f}, Std={std_fitness_i:.5f}.")
+            # _end_if_
+
+            # Update the old population with the new chromosomes.
+            island.population = population_i
+
+            # Check for termination.
+            if found_solution:
+                # Switch the convergence flag and track the current iteration.
+                has_converged = (True, i + 1)
+
+                # Exit from the loop.
+                break
+            # _end_if_
+
+            # Compute the current average Hamming distance.
+            d_avg = average_hamming_distance(population_i)
+
+            # Check for convergence.
+            if f_tol and fabs(avg_fitness_i - avg_fitness_0) < f_tol and d_avg < 0.025:
+                # Switch the convergence flag and track the current iteration.
+                has_converged = (True, i + 1)
+
+                # Exit from the loop.
+                break
+            # _end_if_
+
+            # Check the adaptive flag.
+            if adapt_probs:
+
+                # Update the genetic probabilities.
+                self.adapt_probabilities(threshold=d_avg)
+
+                # Store the updated crossover and mutation probabilities.
+                local_stats["prob_crossx"].append(self._crossx_op.probability)
+                local_stats["prob_mutate"].append(self._mutate_op.probability)
+            # _end_if_
+
+            # Update the average value for the next iteration.
+            avg_fitness_0 = avg_fitness_i
+        # _end_for_
+
+        # Compute the elapsed time (in seconds).
+        elapsed_time = time.perf_counter() - time_t0
+
+        return island, has_converged, local_stats, elapsed_time
     # _end_def_
 
     def run(self, epochs: int = 1000, correction: bool = False, elitism: bool = True,
@@ -513,19 +348,6 @@ class IslandModelGA(GenericGA):
             self._stats[pop_n.id]["prob_mutate"].append(self._mutate_op.probability)
         # _end_for_
 
-        # Set up the evolution helper object. Here we group all the parameters,
-        # and subsequently we pass only this object to the delayed function.
-        evolve_population = HelperEvoParamGroup(fitness_func=self.fitness_func,
-                                                eval_fitness=self.evaluate_fitness,
-                                                sel_op=self._select_op,
-                                                crs_op=self._crossx_op,
-                                                mut_op=self._mutate_op,
-                                                rng_ga=self.rng_GA,
-                                                epochs=epochs,
-                                                f_tol=f_tol,
-                                                correction=correction,
-                                                shuffle=shuffle,
-                                                elitism=elitism)
         # Display an information message.
         print(f"Parallel evolution in progress with {self.num_islands} islands ...")
 
@@ -580,13 +402,16 @@ class IslandModelGA(GenericGA):
                         n_epochs += rem_epochs
                     # _end_if_
 
-                    # Update the n_epochs in the helper object.
-                    evolve_population.num_epochs = n_epochs
-
                     # Evolve the subpopulations in parallel for 'n_epochs'.
                     results_i = parallel(
-                        delayed(evolve_population)(island=pop_i, adapt_probs=adapt_probs,
-                                                   initial_probs=genetic_probs[pop_i.id])
+                        delayed(self._evolve_population)(island=pop_i,
+                                                         epochs=n_epochs,
+                                                         shuffle=shuffle,
+                                                         elitism=elitism,
+                                                         correction=correction,
+                                                         f_tol=f_tol,
+                                                         adapt_probs=adapt_probs,
+                                                         initial_probs=genetic_probs[pop_i.id])
                         for pop_i in active_population
                     )
 
@@ -674,7 +499,13 @@ class IslandModelGA(GenericGA):
 
             # Evolve the subpopulations in parallel for 'epoch' iterations.
             results = Parallel(n_jobs=self.n_cpus, backend="loky")(
-                delayed(evolve_population)(island=pop_n, adapt_probs=adapt_probs)
+                delayed(self._evolve_population)(island=pop_n,
+                                                 epochs=epochs,
+                                                 shuffle=shuffle,
+                                                 elitism=elitism,
+                                                 correction=correction,
+                                                 f_tol=f_tol,
+                                                 adapt_probs=adapt_probs)
                 for pop_n in active_population
             )
 
