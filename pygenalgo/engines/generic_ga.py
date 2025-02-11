@@ -9,8 +9,6 @@ from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
-from pygenalgo.engines.auxiliary import average_hamming_distance
-
 # Public interface.
 __all__ = ["GenericGA"]
 
@@ -215,11 +213,10 @@ class GenericGA(object):
         Hamming distance of the current population.
         """
 
-        # Check if  threshold value has been given.
+        # Check if the threshold value is missing.
         if threshold is None:
-
-            # Compute the threshold value.
-            threshold = average_hamming_distance(self.population)
+            raise RuntimeError(f"{self.__class__.__name__}: "
+                               f"Threshold parameter is missing.")
         # _end_if_
 
         # Initialize the trial values with the current
