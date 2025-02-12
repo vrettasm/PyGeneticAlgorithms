@@ -37,7 +37,7 @@ def hamming_distance(item1: Chromosome, item2: Chromosome) -> int:
         # _end_if_
 
         # Compute the dissimilarities in their genomes.
-        return [k != l for k, l in zip(item1._genome, item2._genome)].count(True)
+        return [k != l for k, l in zip(item1.genome, item2.genome)].count(True)
     else:
         raise RuntimeError(f"Can't compute Hamming distance in different type objects.")
     # _end_if_
