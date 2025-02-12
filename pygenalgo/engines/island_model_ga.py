@@ -135,12 +135,11 @@ class IslandModelGA(GenericGA):
     # _end_def_
 
     def _evolve_population(self, island: SubPopulation, epochs: int, shuffle: bool,
-                           correction: bool, elitism: bool, f_tol: float,
-                           adapt_probs: bool = None, initial_probs: dict = None):
+                           correction: bool, elitism: bool, f_tol: float, adapt_probs: bool = None,
+                           prob_crossx: float = None, prob_mutate: float = None) -> tuple:
         """
-        This is a helper method to be  used inside theParallel delayed
-        method. It is responsible for running the evolution of a single
-        population (island).
+        This is a helper method to be used inside the Parallel delayed method.
+        It is responsible for running the evolution of a single population (island).
 
         :return: a tuple (island, has_converged, local_stats, elapsed_time)
         """
@@ -167,9 +166,9 @@ class IslandModelGA(GenericGA):
         avg_fitness_0 = 1.0e+100
 
         # Check if initial probabilities have been given.
-        if adapt_probs and initial_probs:
-            self.crossover_op.probability = initial_probs["crossx"]
-            self.mutate_op.probability = initial_probs["mutate"]
+        if prob_crossx and prob_mutate:
+            self._crossx_op.probability = prob_crossx
+            self._mutate_op.probability = prob_mutate
         # _end_if_
 
         # Start timing the loop.
@@ -411,7 +410,8 @@ class IslandModelGA(GenericGA):
                                                          correction=correction,
                                                          f_tol=f_tol,
                                                          adapt_probs=adapt_probs,
-                                                         initial_probs=genetic_probs[pop_i.id])
+                                                         prob_crossx=genetic_probs[pop_i.id]["crossx"],
+                                                         prob_mutate=genetic_probs[pop_i.id]["mutate"])
                         for pop_i in active_population
                     )
 
