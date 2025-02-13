@@ -209,8 +209,6 @@ class GenericGA(object):
 
         :param threshold: (float) This parameter is used to determine whether we
         are going to increase or decrease the crossover and mutation parameters.
-        In case of absense (None) then we are going to calculate the average
-        Hamming distance of the current population.
         """
 
         # Check if the threshold value is missing.
