@@ -214,8 +214,9 @@ class StandardGA(GenericGA):
 
             # Check if 'elitism' is enabled.
             if elitism:
-                # Select randomly a position.
-                locus = self.rng_GA.integers(N)
+                # If the size of the population is even select randomly
+                # a position, otherwise set the locus to the last index.
+                locus = self.rng_GA.integers(N) if N % 2 == 0 else -1
 
                 # Replace the chromosome with the previous best.
                 population_i[locus] = self.best_chromosome()
