@@ -2,11 +2,7 @@ import time
 import numpy as np
 from math import fabs
 
-from joblib import (Parallel, delayed)
-
-from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.engines.generic_ga import GenericGA
-
 from pygenalgo.engines.auxiliary import (apply_corrections,
                                          average_hamming_distance)
 
@@ -65,60 +61,6 @@ class StandardGA(GenericGA):
 
         # Return the average statistics.
         return avg_fitness, std_fitness
-    # _end_def_
-
-    def evaluate_fitness(self, input_population: list[Chromosome],
-                         parallel: bool = False) -> (list[float], bool):
-        """
-        Evaluate all the chromosomes of the input list with the custom
-        fitness function.
-
-        :param input_population: (list) The population of Chromosomes that
-        we want to evaluate their fitness.
-
-        :param parallel: (bool) Flag that enables parallel computation of
-        the fitness function.
-
-        :return: a list with the fitness values and the found solution flag.
-        """
-
-        # Get a local copy of the fitness function.
-        fit_func = self.fitness_func
-
-        # Check the 'parallel' flag.
-        if parallel:
-
-            # Evaluate the chromosomes in parallel mode.
-            fitness_i = Parallel(n_jobs=self.n_cpus, backend="threading")(
-                delayed(fit_func)(p) for p in input_population
-            )
-        else:
-
-            # Evaluate the chromosomes in serial mode.
-            fitness_i = [fit_func(p) for p in input_population]
-        # _end_if_
-
-        # Preallocate the fitness list.
-        fitness_values = len(fitness_i) * [None]
-
-        # Flag to indicate if a solution has been found.
-        found_solution = False
-
-        # Update all chromosomes with their fitness and check if a solution
-        # has been found.
-        for n, (p, fit_tuple) in enumerate(zip(input_population, fitness_i)):
-            # Attach the fitness to each chromosome.
-            p.fitness = fit_tuple[0]
-
-            # Collect the fitness in a separate list.
-            fitness_values[n] = fit_tuple[0]
-
-            # Update the "found solution".
-            found_solution |= fit_tuple[1]
-        # _end_for_
-
-        # Return the fitness values.
-        return fitness_values, found_solution
     # _end_def_
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
@@ -321,7 +263,6 @@ class StandardGA(GenericGA):
                 print(op)
             # _end_for_
         # _end_if_
-
     # _end_def_
 
 # _end_class_

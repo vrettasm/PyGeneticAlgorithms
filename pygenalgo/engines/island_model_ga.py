@@ -10,7 +10,6 @@ from pygenalgo.engines.auxiliary import (SubPopulation,
                                          average_hamming_distance)
 
 from pygenalgo.engines.generic_ga import GenericGA
-from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.migration.meta_migration import MetaMigration
 from pygenalgo.operators.migration.migration_operator import MigrationOperator
 
@@ -73,67 +72,6 @@ class IslandModelGA(GenericGA):
         return self._migrate_op
     # _end_def_
 
-    def evaluate_fitness(self, in_population: list[Chromosome],
-                         parallel: bool = False) -> (float, float, bool):
-        """
-        Evaluate all the chromosomes of the input population list with the
-        custom fitness  function. After updating all  the chromosomes with
-        their fitness, the method returns the average statistics mean/std.
-
-        :param in_population: (list) The population of Chromosomes that we
-        want to evaluate their fitness.
-
-        :param parallel: (bool) Flag that enables parallel computation of
-        the fitness function.
-
-        :return: mean(fitness), std(fitness), found_solution flag.
-        """
-
-        # Get a local copy of the fitness function.
-        fit_func = self.fitness_func
-
-        # Check the 'parallel' flag.
-        if parallel:
-
-            # Evaluate the chromosomes in parallel mode.
-            fit_list = Parallel(n_jobs=self.n_cpus, backend="loky")(
-                delayed(fit_func)(p) for p in in_population
-            )
-        else:
-
-            # Evaluate the fitness of all chromosomes.
-            fit_list = [fit_func(p) for p in in_population]
-        # _end_if_
-
-        # Preallocate the fitness list.
-        fitness_values = len(fit_list) * [None]
-
-        # Flag to indicate if a solution has been found.
-        found_solution = False
-
-        # Update all chromosomes with their fitness and check
-        # if a solution has been found.
-        for n, (p, fit_tuple) in enumerate(zip(in_population, fit_list)):
-            # Attach the fitness to each chromosome.
-            p.fitness = fit_tuple[0]
-
-            # Collect the fitness in a separate list.
-            fitness_values[n] = fit_tuple[0]
-
-            # Update the "found solution".
-            found_solution |= fit_tuple[1]
-        # _end_for_
-
-        # Convert the fitness values in a numpy array.
-        fit_arr = np.array(fitness_values, dtype=float)
-
-        # Return the mean, the std values of the fitness and
-        # the flag to indicate if a solution has been found.
-        return (np.nanmean(fit_arr, dtype=float),
-                np.nanstd(fit_arr, dtype=float),
-                found_solution)
-    # _end_def_
-
     def _evolve_population(self, island: SubPopulation, epochs: int, shuffle: bool,
                            correction: bool, elitism: bool, f_tol: float, adapt_probs: bool = None,
                            prob_crossx: float = None, prob_mutate: float = None) -> tuple:
@@ -192,6 +130,9 @@ class IslandModelGA(GenericGA):
             # CROSSOVER/MUTATE to produce offsprings.
             self.crossover_mutate(population_i)
 
+            # EVALUATE the i-th population.
+            fit_list_i, found_solution = self.evaluate_fitness(population_i)
+
             # Check if 'corrections' are enabled.
             if correction:
                 apply_corrections(population_i, self.fitness_func)
@@ -210,10 +151,16 @@ class IslandModelGA(GenericGA):
 
                 # Replace the chromosome with the previous best.
                 population_i[locus] = best_chromosome
+
+                # Update the list of fitness values to reflect the update.
+                fit_list_i[locus] = population_i[locus].fitness
             # _end_if_
 
-            # EVALUATE the i-th population.
-            avg_fitness_i, std_fitness_i, found_solution = self.evaluate_fitness(population_i)
+            # Compute the mean value.
+            avg_fitness_i = np.nanmean(fit_list_i, dtype=float)
+
+            # Compute the standard deviation value.
+            std_fitness_i = np.nanstd(fit_list_i, dtype=float)
 
             # Update the i-th population mean/std.
             if all(np.isfinite([avg_fitness_i, std_fitness_i])):
@@ -330,8 +277,15 @@ class IslandModelGA(GenericGA):
             self._stats[pop_n.id] = {"avg": [], "std": [], "prob_crossx": [], "prob_mutate": []}
 
             # Initial evaluation of the population. This can run also in parallel.
-            avg_fitness_0, std_fitness_0, _ = self.evaluate_fitness(pop_n.population,
-                                                                    parallel=True)
+            fit_list_0, _ = self.evaluate_fitness(pop_n.population, parallel_mode=True,
+                                                  backend="loky")
+
+            # Compute the mean value.
+            avg_fitness_0 = np.nanmean(fit_list_0, dtype=float)
+
+            # Compute the standard deviation value.
+            std_fitness_0 = np.nanstd(fit_list_0, dtype=float)
+
             # Check for initial errors.
             if all(np.isfinite([avg_fitness_0, std_fitness_0])):
 
@@ -541,19 +495,20 @@ class IslandModelGA(GenericGA):
 
         # _end_if_
 
-        # Final time instant.
-        time_tf = time.perf_counter()
-
         # Update the population in the class.
         self.population = final_population
 
         # Make a final fitness evaluation (to ensure consistency).
-        # This can run also in parallel.
-        avg_fitness_final, std_fitness_final, _ = self.evaluate_fitness(self.population,
-                                                                        parallel=True)
+        fit_list_final, _ = self.evaluate_fitness(self.population,
+                                                  parallel_mode=True, backend="loky")
+        # Compute the mean value.
+        avg_fitness_final = np.nanmean(fit_list_final, dtype=float)
+
+        # Final time instant.
+        time_tf = time.perf_counter()
+
         # Print message.
-        print(f"Final Avg. Fitness = {avg_fitness_final:.4f}, "
-              f"Spread = {std_fitness_final:.4f}.")
+        print(f"Final Avg. Fitness = {avg_fitness_final:.4f}.")
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
