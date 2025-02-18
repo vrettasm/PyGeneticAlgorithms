@@ -2,8 +2,10 @@ from os import cpu_count
 from typing import Callable
 from math import isnan
 from collections import defaultdict
-from numpy.random import default_rng, Generator
 
+from joblib import (Parallel, delayed)
+
+from numpy.random import default_rng, Generator
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
@@ -247,7 +249,6 @@ class GenericGA(object):
             self._crossx_op.probability = min(max(trial_pc, 0.0), 1.0)
             self._mutate_op.probability = min(max(trial_pm, 0.0), 1.0)
         # _end_if_
-
     # _end_def_
 
     def population_fitness(self) -> list[float]:
@@ -270,15 +271,63 @@ class GenericGA(object):
         return self.population[index].fitness
     # _end_def_
 
-    def evaluate_fitness(self, *args, **kwargs):
+    def evaluate_fitness(self, input_population: list[Chromosome],
+                         parallel_mode: bool = False,
+                         backend: str = "threading") -> (list[float], bool):
         """
-        This method evaluates all the chromosomes' of an input population
-        with a custom fitness function. After updating all the chromosomes
-        with their fitness, the method should return the average statistics
-        of mean and std of the population fitness.
+        Evaluate all the chromosomes of the input list with the custom
+        fitness function. The parallel_mode is optional. Moreover, the
+        default backend is "threading", but in the IslandModelGA it is
+        better to select "loky".
+
+        :param input_population: (list) The population of Chromosomes
+        that we want to evaluate their fitness.
+
+        :param parallel_mode: (bool) Enables parallel computation of
+        the fitness function.
+
+        :param backend: Backend for the parallel Joblib framework.
+
+        :return: a list with the fitness values and the found solution flag.
         """
-        raise NotImplementedError(f"{self.__class__.__name__}: "
-                                  f"You should implement this method!")
+
+        # Get a local copy of the fitness function.
+        fit_func = self.fitness_func
+
+        # Check the 'parallel_mode' flag.
+        if parallel_mode:
+
+            # Evaluate the chromosomes in parallel mode.
+            fitness_i = Parallel(n_jobs=self._n_cpus, backend=backend)(
+                delayed(fit_func)(p) for p in input_population
+            )
+        else:
+
+            # Evaluate the chromosomes in serial mode.
+            fitness_i = [fit_func(p) for p in input_population]
+        # _end_if_
+
+        # Preallocate the fitness list.
+        fitness_values = len(fitness_i) * [None]
+
+        # Flag to indicate if a solution has been found.
+        found_solution = False
+
+        # Update all chromosomes with their fitness and check if a solution
+        # has been found.
+        for n, (p, fit_tuple) in enumerate(zip(input_population, fitness_i)):
+            # Attach the fitness to each chromosome.
+            p.fitness = fit_tuple[0]
+
+            # Collect the fitness in a separate list.
+            fitness_values[n] = fit_tuple[0]
+
+            # Update the "found solution".
+            found_solution |= fit_tuple[1]
+        # _end_for_
+
+        # Return the fitness values.
+        return fitness_values, found_solution
     # _end_def_
 
     def run(self, *args, **kwargs):
