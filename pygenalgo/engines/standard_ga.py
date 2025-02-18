@@ -36,7 +36,7 @@ class StandardGA(GenericGA):
         Update the stats dictionary with the mean/std values of the
         population fitness values.
 
-        :param fit_list: (float) mean fitness value of the population.
+        :param fit_list: (list) fitness values of the population.
 
         :return: the mean and std of the fitness values.
         """
