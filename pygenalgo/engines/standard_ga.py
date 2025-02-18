@@ -200,6 +200,9 @@ class StandardGA(GenericGA):
             # CROSSOVER/MUTATE to produce offsprings.
             self.crossover_mutate(population_i)
 
+            # Calculate the new fitness values.
+            fit_list_i, found_solution = self.evaluate_fitness(population_i, parallel)
+
             # Check if 'corrections' are enabled.
             if correction:
                 # Apply the function.
@@ -220,10 +223,10 @@ class StandardGA(GenericGA):
 
                 # Replace the chromosome with the previous best.
                 population_i[locus] = self.best_chromosome()
-            # _end_if_
 
-            # Calculate the new fitness values.
-            fit_list_i, found_solution = self.evaluate_fitness(population_i, parallel)
+                # Update the list of fitness values to reflect the update.
+                fit_list_i[locus] = population_i[locus].fitness
+            # _end_if_
 
             # Update the mean/std in the dictionary.
             avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i)
