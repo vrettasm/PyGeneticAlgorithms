@@ -111,8 +111,8 @@ class StandardGA(GenericGA):
         # Get the fitness values before optimisation.
         fit_list_0, _ = self.evaluate_fitness(self.population, parallel)
 
-        # Update the average stats (mean/std) in the dictionary.
-        avg_fitness_0, std_fitness_0 = self.update_stats(fit_list_0)
+        # Update the average statistics in the dictionary.
+        avg_fitness_0, _ = self.update_stats(fit_list_0)
 
         # Store the initial crossover and mutation probabilities.
         self._stats["prob_crossx"].append(self._crossx_op.probability)
