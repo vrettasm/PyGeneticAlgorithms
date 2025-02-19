@@ -279,7 +279,6 @@ class IslandModelGA(GenericGA):
             # Initial evaluation of the population. This can run also in parallel.
             fit_list_0, _ = self.evaluate_fitness(pop_n.population, parallel_mode=True,
                                                   backend="loky")
-
             # Compute the mean value.
             avg_fitness_0 = np.nanmean(fit_list_0, dtype=float)
 
