@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
@@ -5,18 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pygenalgo.engines.generic_ga &mdash; PyGenAlgo 01.70.00 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=fc45878b"></script>
-        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=fc45878b"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -75,14 +73,14 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">isnan</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">default_rng</span><span class="p">,</span> <span class="n">Generator</span>
 
+<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">default_rng</span><span class="p">,</span> <span class="n">Generator</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.mutate_operator</span> <span class="kn">import</span> <span class="n">MutationOperator</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.selection.select_operator</span> <span class="kn">import</span> <span class="n">SelectionOperator</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.crossover.crossover_operator</span> <span class="kn">import</span> <span class="n">CrossoverOperator</span>
-
-<span class="kn">from</span> <span class="nn">pygenalgo.engines.auxiliary</span> <span class="kn">import</span> <span class="n">avg_hamming_dist</span>
 
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GenericGA&quot;</span><span class="p">]</span>
@@ -297,15 +295,12 @@
 
 <span class="sd">        :param threshold: (float) This parameter is used to determine whether we</span>
 <span class="sd">        are going to increase or decrease the crossover and mutation parameters.</span>
-<span class="sd">        In case of absense (None) then we are going to calculate the average</span>
-<span class="sd">        Hamming distance of the current population.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># Check if  threshold value has been given.</span>
+        <span class="c1"># Check if the threshold value is missing.</span>
         <span class="k">if</span> <span class="n">threshold</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-
-            <span class="c1"># Compute the threshold value.</span>
-            <span class="n">threshold</span> <span class="o">=</span> <span class="n">avg_hamming_dist</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+                               <span class="sa">f</span><span class="s2">&quot;Threshold parameter is missing.&quot;</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Initialize the trial values with the current</span>
@@ -313,27 +308,32 @@
         <span class="n">trial_pc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span>
         <span class="n">trial_pm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span>
 
+        <span class="c1"># Initialize the flag with &quot;False&quot;</span>
+        <span class="c1"># to avoid unnecessary assignments.</span>
+        <span class="n">have_changed</span> <span class="o">=</span> <span class="kc">False</span>
+
         <span class="c1"># Use the threshold value to adjust</span>
         <span class="c1"># the probabilities accordingly.</span>
         <span class="k">if</span> <span class="n">threshold</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
 
             <span class="n">trial_pc</span> <span class="o">*=</span> <span class="mf">0.9</span>
             <span class="n">trial_pm</span> <span class="o">*=</span> <span class="mf">1.1</span>
+            <span class="n">have_changed</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="k">elif</span> <span class="n">threshold</span> <span class="o">&gt;</span> <span class="mf">0.8</span><span class="p">:</span>
 
             <span class="n">trial_pc</span> <span class="o">*=</span> <span class="mf">1.1</span>
             <span class="n">trial_pm</span> <span class="o">*=</span> <span class="mf">0.9</span>
+            <span class="n">have_changed</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="c1"># _end_if_</span>
 
-        <span class="c1"># Ensure the probabilities stay within the range [0, 1].</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">trial_pc</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">trial_pm</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="c1"># Check if the probabilities have changed.</span>
+        <span class="k">if</span> <span class="n">have_changed</span><span class="p">:</span>
+            <span class="c1"># Ensure the probabilities stay within the range [0, 1].</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">trial_pc</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">trial_pm</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span></div>
 
-        <span class="c1"># Store the updated crossover and mutation probabilities.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span></div>
-
+        <span class="c1"># _end_if_</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="GenericGA.population_fitness">
@@ -364,15 +364,63 @@
 
 <div class="viewcode-block" id="GenericGA.evaluate_fitness">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.evaluate_fitness">[docs]</a>
-    <span class="k">def</span> <span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span>
+                         <span class="n">parallel_mode</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                         <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;threading&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">bool</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method evaluates all the chromosomes&#39; of an input population</span>
-<span class="sd">        with a custom fitness function. After updating all the chromosomes</span>
-<span class="sd">        with their fitness, the method should return the average statistics</span>
-<span class="sd">        of mean and std of the population fitness.</span>
+<span class="sd">        Evaluate all the chromosomes of the input list with the custom</span>
+<span class="sd">        fitness function. The parallel_mode is optional. Moreover, the</span>
+<span class="sd">        default backend is &quot;threading&quot;, but in the IslandModelGA it is</span>
+<span class="sd">        better to select &quot;loky&quot;.</span>
+
+<span class="sd">        :param input_population: (list) The population of Chromosomes</span>
+<span class="sd">        that we want to evaluate their fitness.</span>
+
+<span class="sd">        :param parallel_mode: (bool) Enables parallel computation of</span>
+<span class="sd">        the fitness function.</span>
+
+<span class="sd">        :param backend: Backend for the parallel Joblib framework.</span>
+
+<span class="sd">        :return: a list with the fitness values and the found solution flag.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
-                                  <span class="sa">f</span><span class="s2">&quot;You should implement this method!&quot;</span><span class="p">)</span></div>
+
+        <span class="c1"># Get a local copy of the fitness function.</span>
+        <span class="n">fit_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_func</span>
+
+        <span class="c1"># Check the &#39;parallel_mode&#39; flag.</span>
+        <span class="k">if</span> <span class="n">parallel_mode</span><span class="p">:</span>
+
+            <span class="c1"># Evaluate the chromosomes in parallel mode.</span>
+            <span class="n">fitness_i</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">)(</span>
+                <span class="n">delayed</span><span class="p">(</span><span class="n">fit_func</span><span class="p">)(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">input_population</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="c1"># Evaluate the chromosomes in serial mode.</span>
+            <span class="n">fitness_i</span> <span class="o">=</span> <span class="p">[</span><span class="n">fit_func</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">input_population</span><span class="p">]</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Preallocate the fitness list.</span>
+        <span class="n">fitness_values</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fitness_i</span><span class="p">)</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+
+        <span class="c1"># Flag to indicate if a solution has been found.</span>
+        <span class="n">found_solution</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Update all chromosomes with their fitness and check if a solution</span>
+        <span class="c1"># has been found.</span>
+        <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">fit_tuple</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">input_population</span><span class="p">,</span> <span class="n">fitness_i</span><span class="p">)):</span>
+            <span class="c1"># Attach the fitness to each chromosome.</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fit_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># Collect the fitness in a separate list.</span>
+            <span class="n">fitness_values</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">fit_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># Update the &quot;found solution&quot;.</span>
+            <span class="n">found_solution</span> <span class="o">|=</span> <span class="n">fit_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># _end_for_</span>
+
+        <span class="c1"># Return the fitness values.</span>
+        <span class="k">return</span> <span class="n">fitness_values</span><span class="p">,</span> <span class="n">found_solution</span></div>
 
     <span class="c1"># _end_def_</span>
 

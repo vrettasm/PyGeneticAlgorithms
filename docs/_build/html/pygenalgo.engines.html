@@ -1,23 +1,21 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pygenalgo.engines package &mdash; PyGenAlgo 01.70.00 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=fc45878b"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=fc45878b"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -147,22 +145,42 @@ chromosome to update its fitness.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pygenalgo.engines.auxiliary.avg_hamming_dist">
-<span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.auxiliary.</span></span><span class="sig-name descname"><span class="pre">avg_hamming_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/auxiliary.html#avg_hamming_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.auxiliary.avg_hamming_dist" title="Link to this definition"></a></dt>
-<dd><p>Computes the average Hamming distance of a population. We use
-this to measure the similarity in the population of chromosomes.</p>
+<dt class="sig sig-object py" id="pygenalgo.engines.auxiliary.average_hamming_distance">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.auxiliary.</span></span><span class="sig-name descname"><span class="pre">average_hamming_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/auxiliary.html#average_hamming_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.auxiliary.average_hamming_distance" title="Link to this definition"></a></dt>
+<dd><p>Computes the average Hamming distance of a population. We use this
+to measure the similarity in the whole population of chromosomes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>input_population</strong> – List(Chromosome) the population we want</p>
+<dd class="field-odd"><p><strong>population</strong> – List(Chromosome) the population we want to compute</p>
 </dd>
 </dl>
-<p>to compute the average Hamming distance.</p>
+<p>the average Hamming distance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>(float) the total number of differences, in the genes,</p>
 </dd>
 </dl>
 <p>divided by the total number of genes compared.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygenalgo.engines.auxiliary.hamming_distance">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.auxiliary.</span></span><span class="sig-name descname"><span class="pre">hamming_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">item2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/auxiliary.html#hamming_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.auxiliary.hamming_distance" title="Link to this definition"></a></dt>
+<dd><p>Compute the Hamming distance of the “item1” object, with the
+“item2” chromosome. In practise it’s the number of positions
+at which the corresponding genes are different.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item1</strong> – (Chromosome) to compare the Hamming distance.</p></li>
+<li><p><strong>item2</strong> – (Chromosome) to compare the Hamming distance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(int) the number of dissimilarities between the two</p>
+</dd>
+</dl>
+<p>input chromosomes.</p>
 </dd></dl>
 
 </section>
@@ -179,7 +197,7 @@ It provides the common variables and functionality that all GA models should sha
 </div></blockquote>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.MAX_CPUs">
-<span class="sig-name descname"><span class="pre">MAX_CPUs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.MAX_CPUs" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">MAX_CPUs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.MAX_CPUs" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -192,9 +210,7 @@ and mutation parameters of the GenericGA object.</p>
 <dd class="field-odd"><p><strong>threshold</strong> – (float) This parameter is used to determine whether we</p>
 </dd>
 </dl>
-<p>are going to increase or decrease the crossover and mutation parameters.
-In case of absense (None) then we are going to calculate the average
-Hamming distance of the current population.</p>
+<p>are going to increase or decrease the crossover and mutation parameters.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -238,11 +254,31 @@ have been selected for breeding.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.evaluate_fitness">
-<span class="sig-name descname"><span class="pre">evaluate_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#GenericGA.evaluate_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.evaluate_fitness" title="Link to this definition"></a></dt>
-<dd><p>This method evaluates all the chromosomes’ of an input population
-with a custom fitness function. After updating all the chromosomes
-with their fitness, the method should return the average statistics
-of mean and std of the population fitness.</p>
+<span class="sig-name descname"><span class="pre">evaluate_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">input_population:</span> <span class="pre">list[~pygenalgo.genome.chromosome.Chromosome],</span> <span class="pre">parallel_mode:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">backend:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'threading')</span> <span class="pre">-&gt;</span> <span class="pre">(list[float],</span> <span class="pre">&lt;class</span> <span class="pre">'bool'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#GenericGA.evaluate_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.evaluate_fitness" title="Link to this definition"></a></dt>
+<dd><p>Evaluate all the chromosomes of the input list with the custom
+fitness function. The parallel_mode is optional. Moreover, the
+default backend is “threading”, but in the IslandModelGA it is
+better to select “loky”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_population</strong> – (list) The population of Chromosomes</p>
+</dd>
+</dl>
+<p>that we want to evaluate their fitness.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parallel_mode</strong> – (bool) Enables parallel computation of</p>
+</dd>
+</dl>
+<p>the fitness function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>backend</strong> – Backend for the parallel Joblib framework.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a list with the fitness values and the found solution flag.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -304,7 +340,7 @@ of mean and std of the population fitness.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.rng_GA">
-<span class="sig-name descname"><span class="pre">rng_GA</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Generator(PCG64)</span> <span class="pre">at</span> <span class="pre">0x117B38F20</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.rng_GA" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rng_GA</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Generator(PCG64)</span> <span class="pre">at</span> <span class="pre">0x7FEC2885C820</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.rng_GA" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -356,7 +392,7 @@ of mean and std of the population fitness.</p>
 <span id="pygenalgo-engines-island-model-ga-module"></span><h2>pygenalgo.engines.island_model_ga module<a class="headerlink" href="#module-pygenalgo.engines.island_model_ga" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.island_model_ga.</span></span><span class="sig-name descname"><span class="pre">IslandModelGA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_islands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">migrate_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.clockwise_migration.ClockwiseMigration" title="pygenalgo.operators.migration.clockwise_migration.ClockwiseMigration"><span class="pre">ClockwiseMigration</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/island_model_ga.html#IslandModelGA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.island_model_ga.</span></span><span class="sig-name descname"><span class="pre">IslandModelGA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_islands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">migrate_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.migration_operator.MigrationOperator" title="pygenalgo.operators.migration.migration_operator.MigrationOperator"><span class="pre">MigrationOperator</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/island_model_ga.html#IslandModelGA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA" title="pygenalgo.engines.generic_ga.GenericGA"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGA</span></code></a></p>
 <p>Description:</p>
 <blockquote>
@@ -364,25 +400,6 @@ of mean and std of the population fitness.</p>
 (sub)-population. Optionally we can allow “migration”, among the best individuals from
 each island.</p>
 </div></blockquote>
-<dl class="py method">
-<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA.evaluate_fitness">
-<span class="sig-name descname"><span class="pre">evaluate_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_population:</span> <span class="pre">list[~pygenalgo.genome.chromosome.Chromosome])</span> <span class="pre">-&gt;</span> <span class="pre">(&lt;class</span> <span class="pre">'float'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'float'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'bool'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/island_model_ga.html#IslandModelGA.evaluate_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.evaluate_fitness" title="Link to this definition"></a></dt>
-<dd><p>Evaluate all the chromosomes of the input population list with the
-custom fitness  function. After updating all  the chromosomes with
-their fitness, the method returns the average statistics mean/std.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>in_population</strong> – (list) The population of Chromosomes that we</p>
-</dd>
-</dl>
-<p>want to evaluate their fitness.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>mean(fitness), std(fitness), found_solution flag.</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA.migrate_op">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">migrate_op</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.migration_operator.MigrationOperator" title="pygenalgo.operators.migration.migration_operator.MigrationOperator"><span class="pre">MigrationOperator</span></a></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.migrate_op" title="Link to this definition"></a></dt>
@@ -412,7 +429,7 @@ their fitness, the method returns the average statistics mean/std.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_migration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_periods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapt_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/island_model_ga.html#IslandModelGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.run" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_migration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_periods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapt_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/island_model_ga.html#IslandModelGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.run" title="Link to this definition"></a></dt>
 <dd><p>Main method of the IslandModelGA class, that implements the evolutionary routine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -459,6 +476,12 @@ allow_migration == True. Otherwise, is ignored.</p>
 single solution. Default is set to False.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shuffle</strong> – (bool) If enabled (set to True), it will shuffle the population before</p>
+</dd>
+</dl>
+<p>the application of the crossover and mutation operations. Default is set to True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>verbose</strong> – (bool) if ‘True’ it will display periodically information about the</p>
 </dd>
 </dl>
@@ -486,30 +509,6 @@ allow_migration == True. Otherwise, is ignored.</p>
 which at each iteration (epoch) replaces the whole population using
 the genetic operators (crossover and mutation).</p>
 </div></blockquote>
-<dl class="py method">
-<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.evaluate_fitness">
-<span class="sig-name descname"><span class="pre">evaluate_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">input_population:</span> <span class="pre">list[~pygenalgo.genome.chromosome.Chromosome],</span> <span class="pre">parallel:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False)</span> <span class="pre">-&gt;</span> <span class="pre">(list[float],</span> <span class="pre">&lt;class</span> <span class="pre">'bool'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/standard_ga.html#StandardGA.evaluate_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.evaluate_fitness" title="Link to this definition"></a></dt>
-<dd><p>Evaluate all the chromosomes of the input list with the custom
-fitness function.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>input_population</strong> – (list) The population of Chromosomes that</p>
-</dd>
-</dl>
-<p>we want to evaluate their fitness.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>parallel</strong> – (bool) Flag that enables parallel computation of</p>
-</dd>
-</dl>
-<p>the fitness function.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>a list with the fitness values and the found solution flag.</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.fitness_func">
 <span class="sig-name descname"><span class="pre">fitness_func</span></span><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.fitness_func" title="Link to this definition"></a></dt>
@@ -533,7 +532,7 @@ fitness function.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapt_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/standard_ga.html#StandardGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.run" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapt_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/standard_ga.html#StandardGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.run" title="Link to this definition"></a></dt>
 <dd><p>Main method of the StandardGA class, that implements the evolutionary routine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -570,6 +569,12 @@ If this value is None (default) the algorithm will terminate using the epochs va
 single solution. Default is set to False.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shuffle</strong> – (bool) If enabled (set to True), it will shuffle the population before</p>
+</dd>
+</dl>
+<p>the application of the crossover and mutation operations. Default is set to True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>verbose</strong> – (bool) if ‘True’ it will display periodically information about the</p>
 </dd>
 </dl>
@@ -588,7 +593,7 @@ single solution. Default is set to False.</p>
 population fitness values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>fit_list</strong> – (float) mean fitness value of the population.</p>
+<dd class="field-odd"><p><strong>fit_list</strong> – (list) fitness values of the population.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the mean and std of the fitness values.</p>
