@@ -145,9 +145,8 @@ class IslandModelGA(GenericGA):
                 best_chromosome = max((p for p in island.population if not isnan(p.fitness)),
                                       key=lambda c: c.fitness, default=None)
 
-                # If the size of the population is even select randomly
-                # a position, otherwise set the locus to the last index.
-                locus = self.rng_GA.integers(N) if N % 2 == 0 else -1
+                # Select a position at random.
+                locus = self.rng_GA.integers(N)
 
                 # Replace the chromosome with the previous best.
                 population_i[locus] = best_chromosome
