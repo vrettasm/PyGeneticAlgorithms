@@ -192,7 +192,18 @@ class GenericGA(object):
         N = len(input_population)
 
         # CROSSOVER and MUTATE to produce the new offsprings.
-        for j in range(0, N - 1, 2):
+        for j in range(0, N, 2):
+
+            # In case of 'odd sized' populations.
+            if j == N-1:
+
+                # MUTATE in place the last offspring.
+                self._mutate_op(input_population[j])
+
+                # Exit the loop.
+                break
+            # _end_if_
+
             # Replace directly the OLD parents with the NEW offsprings.
             input_population[j], input_population[j+1] = self._crossx_op(input_population[j],
                                                                          input_population[j+1])
