@@ -1,6 +1,7 @@
 import time
 import numpy as np
 from math import fabs
+from typing import Tuple
 
 from pygenalgo.engines.generic_ga import GenericGA
 from pygenalgo.engines.auxiliary import (apply_corrections,
@@ -31,7 +32,7 @@ class StandardGA(GenericGA):
         super().__init__(**kwargs)
     # _end_def_
 
-    def update_stats(self, fit_list: list[float]) -> (float, float):
+    def update_stats(self, fit_list: list[float]) -> Tuple[float, float]:
         """
         Update the stats dictionary with the mean/std values of the
         population fitness values.
