@@ -46,26 +46,15 @@ class UniformCrossover(CrossoverOperator):
 
             # Generate 'len(parent1)' random numbers in one call.
             # It is assumed that both parents have the same size.
-            swap_probs = self.rng.random(size=number_of_genes)
+            swap_probs = self.rng.random(size=number_of_genes) > 0.5
 
-            # Initialize the offspring genomes to None.
-            genome_1 = number_of_genes * [None]
-            genome_2 = number_of_genes * [None]
+            # Create 1st genome.
+            genome_1 = [parent2[i] if swap_probs[i] else parent1[i]
+                        for i in range(number_of_genes)]
 
-            # Go through all the children's genome.
-            for i, (prob_i, gene_a, gene_b) in enumerate(zip(swap_probs,
-                                                             parent1.genome,
-                                                             parent2.genome)):
-                # Swap genes with 50% probability.
-                if prob_i > 0.5:
-                    genome_1[i] = gene_b
-                    genome_2[i] = gene_a
-                else:
-                    genome_1[i] = gene_a
-                    genome_2[i] = gene_b
-                # _end_if_
-
-            # _end_for_
+            # Create 2nd genome.
+            genome_2 = [parent1[i] if swap_probs[i] else parent2[i]
+                        for i in range(number_of_genes)]
 
             # Create the two NEW offsprings.
             child1 = Chromosome(genome_1)
