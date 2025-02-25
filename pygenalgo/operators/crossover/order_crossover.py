@@ -1,4 +1,3 @@
-from numpy import nan as np_nan
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -44,10 +43,8 @@ class OrderCrossover(CrossoverOperator):
             locus = self.rng.integers(1, high=len(parent1)-1)
 
             # Create the two NEW offsprings at locus.
-            child1 = Chromosome(parent1[:locus] + [x for x in parent2 if x not in parent1[:locus]],
-                                _fitness=np_nan)
-            child2 = Chromosome(parent2[:locus] + [y for y in parent1 if y not in parent2[:locus]],
-                                _fitness=np_nan)
+            child1 = Chromosome(parent1[:locus] + [x for x in parent2 if x not in parent1[:locus]])
+            child2 = Chromosome(parent2[:locus] + [y for y in parent1 if y not in parent2[:locus]])
 
             # Increase the crossover counter.
             self.inc_counter()

@@ -1,4 +1,3 @@
-from numpy import nan as np_nan
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -41,21 +40,22 @@ class PositionBasedCrossover(CrossoverOperator):
         if self.is_operator_applicable():
 
             # Get the size of the chromosomes.
-            M = len(parent1)
+            number_of_genes = len(parent1)
 
-            # Select randomly 'K' number of crossover points.
-            K = self.rng.integers(1, high=M-1)
+            # Select randomly a number of crossover points.
+            number_of_points = self.rng.integers(1, high=number_of_genes-1)
 
-            # Select randomly the 'K' crossover points.
-            C = sorted(self.rng.choice(M, size=K, replace=False, shuffle=False))
+            # Select randomly the crossover points.
+            cross_points = sorted(self.rng.choice(number_of_genes, size=number_of_points,
+                                                  replace=False, shuffle=False))
 
-            # Initialize the genome of the two new chromosomes to None.
-            genome_1 = M * [None]
-            genome_2 = M * [None]
+            # Initialize the genome of the new chromosomes to 'None'.
+            genome_1 = number_of_genes * [None]
+            genome_2 = number_of_genes * [None]
 
             # Copy the genes of the parents at
-            # the preselected gene C positions.
-            for i in C:
+            # the preselected gene cross points.
+            for i in cross_points:
                 genome_1[i] = parent2.genome[i]
                 genome_2[i] = parent1.genome[i]
             # _end_for_
@@ -83,9 +83,9 @@ class PositionBasedCrossover(CrossoverOperator):
 
             # _end_for_
 
-            # After the crossover neither offspring has accurate fitness.
-            child1 = Chromosome(genome_1, _fitness=np_nan)
-            child2 = Chromosome(genome_2, _fitness=np_nan)
+            # Create the two NEW offsprings.
+            child1 = Chromosome(genome_1)
+            child2 = Chromosome(genome_2)
 
             # Increase the crossover counter.
             self.inc_counter()

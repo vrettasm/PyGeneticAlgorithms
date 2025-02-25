@@ -1,4 +1,3 @@
-from numpy import nan as np_nan
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -108,8 +107,8 @@ class MultiPointCrossover(CrossoverOperator):
             # _end_for_
 
             # Create the two NEW offsprings.
-            child1 = Chromosome(genome_1, _fitness=np_nan)
-            child2 = Chromosome(genome_2, _fitness=np_nan)
+            child1 = Chromosome(genome_1)
+            child2 = Chromosome(genome_2)
 
             # Increase the crossover counter.
             self.inc_counter()

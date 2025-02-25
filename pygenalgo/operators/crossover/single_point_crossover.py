@@ -1,4 +1,3 @@
-from numpy import nan as np_nan
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -46,9 +45,8 @@ class SinglePointCrossover(CrossoverOperator):
             locus = self.rng.integers(1, high=len(parent1))
 
             # Create the two NEW offsprings at locus.
-            # After the crossover neither offspring has accurate fitness.
-            child1 = Chromosome(parent1[:locus] + parent2[locus:], _fitness=np_nan)
-            child2 = Chromosome(parent2[:locus] + parent1[locus:], _fitness=np_nan)
+            child1 = Chromosome(parent1[:locus] + parent2[locus:])
+            child2 = Chromosome(parent2[:locus] + parent1[locus:])
 
             # Increase the crossover counter.
             self.inc_counter()

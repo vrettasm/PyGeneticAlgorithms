@@ -1,4 +1,3 @@
-from numpy import nan as np_nan
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -41,14 +40,15 @@ class PartiallyMappedCrossover(CrossoverOperator):
         if self.is_operator_applicable():
 
             # Get the size of the chromosomes.
-            M = len(parent1)
+            number_of_genes = len(parent1)
 
             # Initialize the genome of the two new chromosomes to None.
-            genome_1 = M * [None]
-            genome_2 = M * [None]
+            genome_1 = number_of_genes * [None]
+            genome_2 = number_of_genes * [None]
 
             # Select randomly the two crossover points.
-            i, j = self.rng.choice(M, size=2, replace=False, shuffle=False)
+            i, j = self.rng.choice(number_of_genes, size=2,
+                                   replace=False, shuffle=False)
 
             # Swap indices (if necessary).
             if i > j:
@@ -148,9 +148,9 @@ class PartiallyMappedCrossover(CrossoverOperator):
 
             # _end_for_
 
-            # After the crossover neither offspring has accurate fitness.
-            child1 = Chromosome(genome_1, _fitness=np_nan)
-            child2 = Chromosome(genome_2, _fitness=np_nan)
+            # Create the two NEW offsprings.
+            child1 = Chromosome(genome_1)
+            child2 = Chromosome(genome_2)
 
             # Increase the crossover counter.
             self.inc_counter()
