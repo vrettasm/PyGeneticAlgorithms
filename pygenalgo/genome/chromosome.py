@@ -1,4 +1,5 @@
 from copy import deepcopy
+from numpy import nan as np_nan
 from dataclasses import dataclass, field
 
 from pygenalgo.genome.gene import Gene
@@ -21,7 +22,7 @@ class Chromosome(object):
     # The fitness value will correspond to how well the
     # chromosome fits in its environment, as defined by
     # the fitness function.
-    _fitness: float = 0.0
+    _fitness: float = np_nan
 
     # Define a boolean flag. This flag here can be used
     # to include hard/soft constraints to the chromosome.
