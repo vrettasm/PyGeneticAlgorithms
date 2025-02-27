@@ -42,9 +42,17 @@ class OrderCrossover(CrossoverOperator):
             # Select randomly the crossover point from [1, M-1].
             locus = self.rng.integers(1, high=len(parent1)-1)
 
-            # Create the two NEW offsprings at locus.
-            child1 = Chromosome(parent1[:locus] + [x for x in parent2 if x not in parent1[:locus]])
-            child2 = Chromosome(parent2[:locus] + [y for y in parent1 if y not in parent2[:locus]])
+            # Create auxiliary Sets for faster membership check.
+            used_parent1 = set(parent1.genome[:locus])
+            used_parent2 = set(parent2.genome[:locus])
+
+            # Create the 1st NEW offspring at locus.
+            child1 = Chromosome(parent1[:locus] +
+                                [x for x in parent2 if x not in used_parent1])
+
+            # Create the 2nd NEW offspring at locus.
+            child2 = Chromosome(parent2[:locus] +
+                                [y for y in parent1 if y not in used_parent2])
 
             # Increase the crossover counter.
             self.inc_counter()
