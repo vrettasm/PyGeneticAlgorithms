@@ -56,20 +56,23 @@ class PartiallyMappedCrossover(CrossoverOperator):
             # _end_if_
 
             # Make a set of indices for the middle segment.
-            segment = set(range(i, j))
+            id_segment = set(range(i, j))
 
-            # Copy the relevant part of the segment
-            # in both offsprings' genome.
-            for cid in segment:
-                genome_1[cid] = parent1.genome[cid]
-                genome_2[cid] = parent2.genome[cid]
+            # Copy the relevant part of the segment.
+            for k in id_segment:
+                genome_1[k] = parent1.genome[k]
+                genome_2[k] = parent2.genome[k]
             # _end_for_
+
+            # Create auxiliary Sets for faster membership check.
+            segment_of_genome_1 = set(genome_1[i:j])
+            segment_of_genome_2 = set(genome_2[i:j])
 
             # Start building the 1st offspring.
             for x, gene_x in enumerate(parent2.genome[i:j], start=i):
 
-                # Check if the 'gene_x' exist in child1.
-                if gene_x in genome_1[i:j]:
+                # Check if the 'gene_x' exists in child1 genome.
+                if gene_x in segment_of_genome_1:
                     continue
                 # _end_if_
 
@@ -84,7 +87,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
 
                     # If the position is inside the segment update
                     # the index and repeat the process.
-                    if x_pos in segment:
+                    if x_pos in id_segment:
                         idx = x_pos
                     else:
 
@@ -102,8 +105,8 @@ class PartiallyMappedCrossover(CrossoverOperator):
             # Start building the 2nd offspring.
             for y, gene_y in enumerate(parent1.genome[i:j], start=i):
 
-                # Check if the 'gene_y' exist in child2.
-                if gene_y in genome_2[i:j]:
+                # Check if the 'gene_y' exists in child2 genome.
+                if gene_y in segment_of_genome_2:
                     continue
                 # _end_if_
 
@@ -118,7 +121,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
 
                     # If the position is inside the segment update
                     # the index and repeat the process.
-                    if y_pos in segment:
+                    if y_pos in id_segment:
                         idy = y_pos
                     else:
 
