@@ -1,3 +1,4 @@
+from operator import attrgetter
 from pygenalgo.engines.auxiliary import SubPopulation
 from pygenalgo.operators.migration.migration_operator import MigrationOperator
 
@@ -37,7 +38,7 @@ class ClockwiseMigration(MigrationOperator):
         # _end_if_
 
         # First find the best individual chromosome FROM EACH island.
-        best_chromosomes = [max(island_i.population, key=lambda c: c.fitness)
+        best_chromosomes = [max(island_i.population, key=attrgetter("fitness"))
                             for island_i in islands]
 
         # Go through all the islands.

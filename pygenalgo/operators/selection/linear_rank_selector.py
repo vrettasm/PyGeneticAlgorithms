@@ -1,3 +1,4 @@
+from operator import attrgetter
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
@@ -36,7 +37,7 @@ class LinearRankSelector(SelectionOperator):
         """
 
         # Sort the population in ascending order using their fitness value.
-        sorted_population = sorted(population, key=lambda p: p.fitness)
+        sorted_population = sorted(population, key=attrgetter("fitness"))
 
         # Get the length of the population list.
         N = len(sorted_population)

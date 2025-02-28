@@ -1,3 +1,4 @@
+from operator import attrgetter
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
@@ -54,7 +55,7 @@ class TournamentSelector(SelectionOperator):
 
             # Find the individual with the highest fitness value.
             winner = max([population[j] for j in index],
-                         key=lambda p: p.fitness)
+                         key=attrgetter("fitness"))
 
             # Add the best individual in the new list.
             new_parents[i] = winner

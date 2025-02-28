@@ -1,3 +1,4 @@
+from operator import attrgetter
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
@@ -41,7 +42,7 @@ class TruncationSelector(SelectionOperator):
         N = len(population)
 
         # Sort the population in descending order using their fitness value.
-        sorted_population = sorted(population, key=lambda p: p.fitness, reverse=True)
+        sorted_population = sorted(population, key=attrgetter("fitness"), reverse=True)
 
         # Select 'N' using only the higher 'p%' of the (old) population (indexes).
         index = self.rng.choice(int(N*self._items), size=N, replace=True, shuffle=True)

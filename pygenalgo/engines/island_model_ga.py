@@ -1,5 +1,6 @@
 import time
 from math import isnan, fabs
+from operator import attrgetter
 from collections import defaultdict
 
 import numpy as np
@@ -142,8 +143,8 @@ class IslandModelGA(GenericGA):
             if elitism:
                 # Find the individual chromosome with the highest fitness
                 # value (from the old subpopulation of the current island).
-                best_chromosome = max((p for p in island.population if not isnan(p.fitness)),
-                                      key=lambda c: c.fitness, default=None)
+                best_chromosome = max([p for p in island.population if not isnan(p.fitness)],
+                                      key=attrgetter("fitness"), default=None)
 
                 # Select a position at random.
                 locus = self.rng_GA.integers(N)

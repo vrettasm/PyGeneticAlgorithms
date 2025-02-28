@@ -1,11 +1,12 @@
-from os import cpu_count
-from typing import Callable, Tuple
 from math import isnan
+from os import cpu_count
+from operator import attrgetter
+from typing import Callable, Tuple
 from collections import defaultdict
 
 from joblib import (Parallel, delayed)
-
 from numpy.random import default_rng, Generator
+
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
@@ -172,7 +173,7 @@ class GenericGA(object):
         """
         # Return the chromosome with the highest fitness.
         return max((p for p in self.population if not isnan(p.fitness)),
-                   key=lambda c: c.fitness, default=None)
+                   key=attrgetter("fitness"), default=None)
     # _end_def_
 
     def crossover_mutate(self, input_population: list[Chromosome]) -> None:
