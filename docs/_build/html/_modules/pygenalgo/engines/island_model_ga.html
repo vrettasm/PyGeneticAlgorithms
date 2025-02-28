@@ -71,6 +71,7 @@
   <h1>Source code for pygenalgo.engines.island_model_ga</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">isnan</span><span class="p">,</span> <span class="n">fabs</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">attrgetter</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -215,8 +216,8 @@
             <span class="k">if</span> <span class="n">elitism</span><span class="p">:</span>
                 <span class="c1"># Find the individual chromosome with the highest fitness</span>
                 <span class="c1"># value (from the old subpopulation of the current island).</span>
-                <span class="n">best_chromosome</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">island</span><span class="o">.</span><span class="n">population</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">isnan</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)),</span>
-                                      <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">fitness</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+                <span class="n">best_chromosome</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">island</span><span class="o">.</span><span class="n">population</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">isnan</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)],</span>
+                                      <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
                 <span class="c1"># Select a position at random.</span>
                 <span class="n">locus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>

@@ -69,7 +69,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.selection.linear_rank_selector</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
+<span></span><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">attrgetter</span>
+<span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.selection.select_operator</span> <span class="kn">import</span> <span class="n">SelectionOperator</span>
 
 
@@ -111,7 +112,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Sort the population in ascending order using their fitness value.</span>
-        <span class="n">sorted_population</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
+        <span class="n">sorted_population</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">))</span>
 
         <span class="c1"># Get the length of the population list.</span>
         <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_population</span><span class="p">)</span>

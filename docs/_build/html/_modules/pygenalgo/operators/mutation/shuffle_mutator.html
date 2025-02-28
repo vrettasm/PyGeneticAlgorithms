@@ -112,9 +112,11 @@
         <span class="c1"># a uniformly random value, make the changes.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
+            <span class="c1"># Get the size of the chromosome.</span>
+            <span class="n">n_genes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+
             <span class="c1"># Select randomly two mutation end-points.</span>
-            <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                   <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">n_genes</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
             <span class="c1"># Swap indices (if necessary).</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">j</span><span class="p">:</span>

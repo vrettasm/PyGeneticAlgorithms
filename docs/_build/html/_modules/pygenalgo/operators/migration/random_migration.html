@@ -69,7 +69,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.migration.random_migration</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pygenalgo.engines.auxiliary</span> <span class="kn">import</span> <span class="n">SubPopulation</span>
+<span></span><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">attrgetter</span>
+<span class="kn">from</span> <span class="nn">pygenalgo.engines.auxiliary</span> <span class="kn">import</span> <span class="n">SubPopulation</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.migration.migration_operator</span> <span class="kn">import</span> <span class="n">MigrationOperator</span>
 
 
@@ -111,7 +112,7 @@
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># First find the best individual chromosome FROM EACH island.</span>
-        <span class="n">best_chromosomes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">island_i</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
+        <span class="n">best_chromosomes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">island_i</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">))</span>
                             <span class="k">for</span> <span class="n">island_i</span> <span class="ow">in</span> <span class="n">islands</span><span class="p">]</span>
 
         <span class="c1"># Shuffle the order of the best chromosomes list.</span>

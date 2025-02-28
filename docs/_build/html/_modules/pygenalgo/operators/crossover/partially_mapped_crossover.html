@@ -69,8 +69,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.crossover.partially_mapped_crossover</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">nan</span> <span class="k">as</span> <span class="n">np_nan</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
+<span></span><span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.crossover.crossover_operator</span> <span class="kn">import</span> <span class="n">CrossoverOperator</span>
 
 
@@ -116,14 +115,15 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
             <span class="c1"># Get the size of the chromosomes.</span>
-            <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span>
+            <span class="n">number_of_genes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span>
 
             <span class="c1"># Initialize the genome of the two new chromosomes to None.</span>
-            <span class="n">genome_1</span> <span class="o">=</span> <span class="n">M</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
-            <span class="n">genome_2</span> <span class="o">=</span> <span class="n">M</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+            <span class="n">genome_1</span> <span class="o">=</span> <span class="n">number_of_genes</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+            <span class="n">genome_2</span> <span class="o">=</span> <span class="n">number_of_genes</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
 
             <span class="c1"># Select randomly the two crossover points.</span>
-            <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">number_of_genes</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                                   <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
             <span class="c1"># Swap indices (if necessary).</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">j</span><span class="p">:</span>
@@ -131,20 +131,23 @@
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Make a set of indices for the middle segment.</span>
-            <span class="n">segment</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+            <span class="n">id_segment</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
 
-            <span class="c1"># Copy the relevant part of the segment</span>
-            <span class="c1"># in both offsprings&#39; genome.</span>
-            <span class="k">for</span> <span class="n">cid</span> <span class="ow">in</span> <span class="n">segment</span><span class="p">:</span>
-                <span class="n">genome_1</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span>
-                <span class="n">genome_2</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span>
+            <span class="c1"># Copy the relevant part of the segment.</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">id_segment</span><span class="p">:</span>
+                <span class="n">genome_1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                <span class="n">genome_2</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
             <span class="c1"># _end_for_</span>
+
+            <span class="c1"># Create auxiliary Sets for faster membership check.</span>
+            <span class="n">segment_of_genome_1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">genome_1</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">segment_of_genome_2</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">genome_2</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">])</span>
 
             <span class="c1"># Start building the 1st offspring.</span>
             <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">gene_x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="n">i</span><span class="p">):</span>
 
-                <span class="c1"># Check if the &#39;gene_x&#39; exist in child1.</span>
-                <span class="k">if</span> <span class="n">gene_x</span> <span class="ow">in</span> <span class="n">genome_1</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]:</span>
+                <span class="c1"># Check if the &#39;gene_x&#39; exists in child1 genome.</span>
+                <span class="k">if</span> <span class="n">gene_x</span> <span class="ow">in</span> <span class="n">segment_of_genome_1</span><span class="p">:</span>
                     <span class="k">continue</span>
                 <span class="c1"># _end_if_</span>
 
@@ -159,7 +162,7 @@
 
                     <span class="c1"># If the position is inside the segment update</span>
                     <span class="c1"># the index and repeat the process.</span>
-                    <span class="k">if</span> <span class="n">x_pos</span> <span class="ow">in</span> <span class="n">segment</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">x_pos</span> <span class="ow">in</span> <span class="n">id_segment</span><span class="p">:</span>
                         <span class="n">idx</span> <span class="o">=</span> <span class="n">x_pos</span>
                     <span class="k">else</span><span class="p">:</span>
 
@@ -177,8 +180,8 @@
             <span class="c1"># Start building the 2nd offspring.</span>
             <span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="n">gene_y</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="n">i</span><span class="p">):</span>
 
-                <span class="c1"># Check if the &#39;gene_y&#39; exist in child2.</span>
-                <span class="k">if</span> <span class="n">gene_y</span> <span class="ow">in</span> <span class="n">genome_2</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]:</span>
+                <span class="c1"># Check if the &#39;gene_y&#39; exists in child2 genome.</span>
+                <span class="k">if</span> <span class="n">gene_y</span> <span class="ow">in</span> <span class="n">segment_of_genome_2</span><span class="p">:</span>
                     <span class="k">continue</span>
                 <span class="c1"># _end_if_</span>
 
@@ -193,7 +196,7 @@
 
                     <span class="c1"># If the position is inside the segment update</span>
                     <span class="c1"># the index and repeat the process.</span>
-                    <span class="k">if</span> <span class="n">y_pos</span> <span class="ow">in</span> <span class="n">segment</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">y_pos</span> <span class="ow">in</span> <span class="n">id_segment</span><span class="p">:</span>
                         <span class="n">idy</span> <span class="o">=</span> <span class="n">y_pos</span>
                     <span class="k">else</span><span class="p">:</span>
 
@@ -223,9 +226,9 @@
 
             <span class="c1"># _end_for_</span>
 
-            <span class="c1"># After the crossover neither offspring has accurate fitness.</span>
-            <span class="n">child1</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">genome_1</span><span class="p">,</span> <span class="n">_fitness</span><span class="o">=</span><span class="n">np_nan</span><span class="p">)</span>
-            <span class="n">child2</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">genome_2</span><span class="p">,</span> <span class="n">_fitness</span><span class="o">=</span><span class="n">np_nan</span><span class="p">)</span>
+            <span class="c1"># Create the two NEW offsprings.</span>
+            <span class="n">child1</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">genome_1</span><span class="p">)</span>
+            <span class="n">child2</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">genome_2</span><span class="p">)</span>
 
             <span class="c1"># Increase the crossover counter.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span>

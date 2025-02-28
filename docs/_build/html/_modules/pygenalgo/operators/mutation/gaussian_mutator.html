@@ -118,10 +118,10 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
             <span class="c1"># Get the size of the chromosome.</span>
-            <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+            <span class="n">n_genes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
 
             <span class="c1"># Select randomly the mutation point and update its value.</span>
-            <span class="n">individual</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">M</span><span class="p">)]</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">)</span>
+            <span class="n">individual</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_genes</span><span class="p">)]</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">)</span>
 
             <span class="c1"># Invalidate the fitness of the chromosome.</span>
             <span class="n">individual</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">np_nan</span>

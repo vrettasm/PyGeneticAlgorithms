@@ -69,8 +69,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.crossover.single_point_crossover</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">nan</span> <span class="k">as</span> <span class="n">np_nan</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
+<span></span><span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.crossover.crossover_operator</span> <span class="kn">import</span> <span class="n">CrossoverOperator</span>
 
 
@@ -121,9 +120,8 @@
             <span class="n">locus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">))</span>
 
             <span class="c1"># Create the two NEW offsprings at locus.</span>
-            <span class="c1"># After the crossover neither offspring has accurate fitness.</span>
-            <span class="n">child1</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">parent1</span><span class="p">[:</span><span class="n">locus</span><span class="p">]</span> <span class="o">+</span> <span class="n">parent2</span><span class="p">[</span><span class="n">locus</span><span class="p">:],</span> <span class="n">_fitness</span><span class="o">=</span><span class="n">np_nan</span><span class="p">)</span>
-            <span class="n">child2</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">parent2</span><span class="p">[:</span><span class="n">locus</span><span class="p">]</span> <span class="o">+</span> <span class="n">parent1</span><span class="p">[</span><span class="n">locus</span><span class="p">:],</span> <span class="n">_fitness</span><span class="o">=</span><span class="n">np_nan</span><span class="p">)</span>
+            <span class="n">child1</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">parent1</span><span class="p">[:</span><span class="n">locus</span><span class="p">]</span> <span class="o">+</span> <span class="n">parent2</span><span class="p">[</span><span class="n">locus</span><span class="p">:])</span>
+            <span class="n">child2</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">parent2</span><span class="p">[:</span><span class="n">locus</span><span class="p">]</span> <span class="o">+</span> <span class="n">parent1</span><span class="p">[</span><span class="n">locus</span><span class="p">:])</span>
 
             <span class="c1"># Increase the crossover counter.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span>

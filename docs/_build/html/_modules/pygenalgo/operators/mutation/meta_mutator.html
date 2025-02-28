@@ -119,12 +119,11 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
             <span class="c1"># Get the number of available mutators.</span>
-            <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
+            <span class="n">n_operators</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
 
-            <span class="c1"># Select randomly, with equal probability</span>
-            <span class="c1"># (but this can be changed) a mutator and</span>
-            <span class="c1"># call its mutation method.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">L</span><span class="p">)]</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+            <span class="c1"># Select randomly with equal probability</span>
+            <span class="c1"># a mutator and call its mutation method.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_operators</span><span class="p">)]</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
 
             <span class="c1"># Increase the mutator counter.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span></div>
