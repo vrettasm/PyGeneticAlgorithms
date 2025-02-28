@@ -13,7 +13,7 @@ class TournamentSelector(SelectionOperator):
         crossover and mutation.
     """
 
-    def __init__(self, select_probability: float = 1.0, k: int = 5):
+    def __init__(self, select_probability: float = 1.0, k: int = 2):
         """
         Construct a 'TournamentSelector' object with a given probability value.
 
@@ -25,8 +25,8 @@ class TournamentSelector(SelectionOperator):
         # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
 
-        # Number of 'participants' of the tournament should be more than 2.
-        self._items = int(k) if k > 2 else 5
+        # Number of participants of the tournament should be more than 2.
+        self._items = max(2, int(k))
     # _end_def_
 
     def select(self, population: list[Chromosome]):
