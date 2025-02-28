@@ -2,13 +2,34 @@ from threading import Lock
 from numpy.random import default_rng, Generator
 
 # Public interface.
-__all__ = ["GeneticOperator"]
+__all__ = ["GeneticOperator", "increase_counter"]
 
 # Author.
 __author__ = "Michalis Vrettas, PhD"
 
 # Email.
 __email__ = "michail.vrettas@gmail.com"
+
+
+def increase_counter(method):
+    """
+    Decorator function that is used in the derived
+    classes main operation to increase the counter
+    by one.
+
+    :param method: that we wrapp its functionality.
+
+    :return: the wrapper function.
+    """
+    def wrapper(self, *args, **kwargs):
+        # Increase the counter.
+        self.inc_counter()
+
+        # Return the output of the wrapped method.
+        return method(self, *args, **kwargs)
+    # _end_def_
+    return wrapper
+# _end_def_
 
 
 class GeneticOperator(object):
