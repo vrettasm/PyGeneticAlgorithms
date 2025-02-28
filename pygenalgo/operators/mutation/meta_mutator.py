@@ -44,12 +44,11 @@ class MetaMutator(MutationOperator):
         if self.is_operator_applicable():
 
             # Get the number of available mutators.
-            L = len(self.items)
+            n_operators = len(self.items)
 
-            # Select randomly, with equal probability
-            # (but this can be changed) a mutator and
-            # call its mutation method.
-            self.items[self.rng.integers(L)].mutate(individual)
+            # Select randomly with equal probability
+            # a mutator and call its mutation method.
+            self.items[self.rng.integers(n_operators)].mutate(individual)
 
             # Increase the mutator counter.
             self.inc_counter()

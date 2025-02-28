@@ -35,8 +35,11 @@ class SwapMutator(MutationOperator):
         # a uniformly random value, make the changes.
         if self.is_operator_applicable():
 
+            # Get the size of the chromosome.
+            n_genes = len(individual)
+
             # Select randomly the two mutation points.
-            i, j = self.rng.choice(len(individual), size=2, replace=False,
+            i, j = self.rng.choice(n_genes, size=2, replace=False,
                                    shuffle=False)
 
             # Swap in place between the two positions.

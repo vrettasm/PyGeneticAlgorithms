@@ -37,9 +37,11 @@ class ShuffleMutator(MutationOperator):
         # a uniformly random value, make the changes.
         if self.is_operator_applicable():
 
+            # Get the size of the chromosome.
+            n_genes = len(individual)
+
             # Select randomly two mutation end-points.
-            i, j = self.rng.choice(len(individual), size=2, replace=False,
-                                   shuffle=False)
+            i, j = self.rng.choice(n_genes, size=2, replace=False)
 
             # Swap indices (if necessary).
             if i > j:

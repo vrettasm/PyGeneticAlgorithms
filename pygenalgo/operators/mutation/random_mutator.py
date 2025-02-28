@@ -13,7 +13,8 @@ class RandomMutator(MutationOperator):
 
     def __init__(self, mutate_probability: float = 0.1):
         """
-        Construct a 'RandomMutator' object with a given probability value.
+        Construct a 'RandomMutator' object with a given
+        probability value.
 
         :param mutate_probability: (float).
         """
@@ -25,8 +26,8 @@ class RandomMutator(MutationOperator):
 
     def mutate(self, individual: Chromosome) -> None:
         """
-        Perform the mutation operation by randomly replacing a gene
-        with a new one that has been generated randomly.
+        Perform the mutation operation by randomly replacing
+        a gene with a new one that has been generated randomly.
 
         :param individual: (Chromosome).
 
@@ -38,11 +39,11 @@ class RandomMutator(MutationOperator):
         if self.is_operator_applicable():
 
             # Get the size of the chromosome.
-            M = len(individual)
+            n_genes = len(individual)
 
             # Select randomly the mutation point and
             # replace the old gene with a new one.
-            individual[self.rng.integers(M)].random()
+            individual[self.rng.integers(n_genes)].random()
 
             # Invalidate the fitness of the chromosome.
             individual.fitness = np_nan

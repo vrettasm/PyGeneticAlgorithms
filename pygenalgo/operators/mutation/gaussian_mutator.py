@@ -43,10 +43,10 @@ class GaussianMutator(MutationOperator):
         if self.is_operator_applicable():
 
             # Get the size of the chromosome.
-            M = len(individual)
+            n_genes = len(individual)
 
             # Select randomly the mutation point and update its value.
-            individual[self.rng.integers(M)].gaussian(sigma=self._items)
+            individual[self.rng.integers(n_genes)].gaussian(sigma=self._items)
 
             # Invalidate the fitness of the chromosome.
             individual.fitness = np_nan

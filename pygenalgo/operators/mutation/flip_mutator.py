@@ -38,11 +38,11 @@ class FlipMutator(MutationOperator):
         if self.is_operator_applicable():
 
             # Get the size of the chromosome.
-            M = len(individual)
+            n_genes = len(individual)
 
             # Select randomly the mutation point and
             # flip the old gene value.
-            individual[self.rng.integers(M)].flip()
+            individual[self.rng.integers(n_genes)].flip()
 
             # Invalidate the fitness of the chromosome.
             individual.fitness = np_nan
