@@ -1,6 +1,7 @@
 from math import fsum
 from itertools import accumulate
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
 
@@ -27,6 +28,7 @@ class StochasticUniversalSelector(SelectionOperator):
         super().__init__(select_probability)
     # _end_def_
 
+    @increase_counter
     def select(self, population: list[Chromosome]):
         """
         Select the individuals, from the input population, that will be passed on to the next
@@ -42,21 +44,21 @@ class StochasticUniversalSelector(SelectionOperator):
         # positive.
         all_fitness = [p.fitness for p in population]
 
-        # Get the size of the population.
-        N = len(population)
+        # Get the population size.
+        pop_size = len(population)
 
         # Compute the distance between pointers.
-        dist_p = fsum(all_fitness) / N
+        dist_p = fsum(all_fitness) / pop_size
 
         # Get a random number between 0 and dist_p.
         start_0 = dist_p * self.rng.random()
 
         # Calculate the pointers at equal distances 'dist_p'
         # starting from 'start_0'.
-        pointers = (start_0 + i*dist_p for i in range(0, N))
+        pointers = (start_0 + i*dist_p for i in range(pop_size))
 
         # Create a list that will contain the new parents.
-        new_parents = N * [None]
+        new_parents = pop_size * [None]
 
         # Compute the cumulative sum of the fitness values.
         cum_sum_fit = list(accumulate(all_fitness))
@@ -75,9 +77,6 @@ class StochasticUniversalSelector(SelectionOperator):
             # Add the individual at position 'i' in the new parents pool.
             new_parents[n] = population[i]
         # _end_for_
-
-        # Increase the selection counter.
-        self.inc_counter()
 
         # Return the new parents (individuals).
         return new_parents

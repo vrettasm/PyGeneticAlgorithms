@@ -1,4 +1,5 @@
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
 
@@ -24,6 +25,7 @@ class RandomSelector(SelectionOperator):
         super().__init__(select_probability)
     # _end_def_
 
+    @increase_counter
     def select(self, population: list[Chromosome]):
         """
         Select the individuals, from the input population, that will be passed on
@@ -34,14 +36,11 @@ class RandomSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
-        # Get the length of the population list.
-        N = len(population)
+        # Get the population size.
+        pop_size = len(population)
 
-        # Increase the selection counter.
-        self.inc_counter()
-
-        # Select 'N' new individuals (indexes).
-        index = self.rng.choice(N, size=N, replace=True, shuffle=False)
+        # Select the new individuals indexes.
+        index = self.rng.choice(pop_size, size=pop_size, replace=True, shuffle=False)
 
         # Return the new parents (individuals).
         return [population[i] for i in index]

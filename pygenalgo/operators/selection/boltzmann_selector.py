@@ -1,6 +1,7 @@
 from math import fsum
 from numpy import exp as np_exp
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
 
@@ -29,6 +30,7 @@ class BoltzmannSelector(SelectionOperator):
         self._items = max(float(k), 50.0)
     # _end_def_
 
+    @increase_counter
     def select(self, population: list[Chromosome]):
         """
         Select the individuals, from the input population, that will be passed on
@@ -44,8 +46,8 @@ class BoltzmannSelector(SelectionOperator):
         # Compute the Temperature.
         T = max(0.1, np_exp(-self.iter/self._items))
 
-        # Get the length of the population list.
-        N = len(population)
+        # Get the population size.
+        pop_size = len(population)
 
         # Extract the fitness value of each chromosome.
         # This assumes that the fitness values are all positive.
@@ -58,11 +60,9 @@ class BoltzmannSelector(SelectionOperator):
         # in the population (Boltzmann distribution).
         selection_probs = [f/sum_fitness for f in exp_fitness]
 
-        # Select 'N' new individuals (indexes).
-        index = self.rng.choice(N, size=N, p=selection_probs, replace=True, shuffle=False)
-
-        # Increase the selection counter.
-        self.inc_counter()
+        # Select the new individuals indexes.
+        index = self.rng.choice(pop_size, size=pop_size, p=selection_probs,
+                                replace=True, shuffle=False)
 
         # Return the new parents (individuals).
         return [population[i] for i in index]

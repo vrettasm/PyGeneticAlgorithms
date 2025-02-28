@@ -1,5 +1,6 @@
 from operator import attrgetter
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
 class TruncationSelector(SelectionOperator):
@@ -28,6 +29,7 @@ class TruncationSelector(SelectionOperator):
         self._items = max(min(float(p), 0.9), 0.1)
     # _end_def_
 
+    @increase_counter
     def select(self, population: list[Chromosome]):
         """
         Select the individuals, from the input population, that will be passed on to the next
@@ -38,17 +40,16 @@ class TruncationSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
 
-        # Get the length of the population list.
-        N = len(population)
+        # Get the population size.
+        pop_size = len(population)
 
         # Sort the population in descending order using their fitness value.
         sorted_population = sorted(population, key=attrgetter("fitness"), reverse=True)
 
-        # Select 'N' using only the higher 'p%' of the (old) population (indexes).
-        index = self.rng.choice(int(N*self._items), size=N, replace=True, shuffle=True)
-
-        # Increase the selection counter.
-        self.inc_counter()
+        # Select tne new parents using only the higher percentage '%' of
+        # the old population (indexes).
+        index = self.rng.choice(int(pop_size*self._items), size=pop_size,
+                                replace=True, shuffle=True)
 
         # Return the new parents (individuals).
         return [sorted_population[i] for i in index]

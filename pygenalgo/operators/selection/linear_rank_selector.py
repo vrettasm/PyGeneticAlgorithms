@@ -1,5 +1,7 @@
 from operator import attrgetter
+
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
 
@@ -25,6 +27,7 @@ class LinearRankSelector(SelectionOperator):
         super().__init__(select_probability)
     # _end_def_
 
+    @increase_counter
     def select(self, population: list[Chromosome]):
         """
         Select the individuals, from the input population, that will be passed on
@@ -39,20 +42,18 @@ class LinearRankSelector(SelectionOperator):
         # Sort the population in ascending order using their fitness value.
         sorted_population = sorted(population, key=attrgetter("fitness"))
 
-        # Get the length of the population list.
-        N = len(sorted_population)
+        # Get the population size.
+        pop_size = len(population)
 
         # Calculate sum of all the ranked fitness values: "1 + 2 + 3 + ... + N".
-        sum_ranked_values = float(0.5 * N * (N + 1))
+        sum_ranked_values = float(0.5 * pop_size * (pop_size + 1))
 
         # Calculate the "selection probabilities", of each member in the population.
-        selection_probs = [n / sum_ranked_values for n in range(1, N + 1)]
-
-        # Increase the selection counter.
-        self.inc_counter()
+        selection_probs = [n / sum_ranked_values for n in range(1, pop_size + 1)]
 
         # Select 'N' new individuals (indexes).
-        index = self.rng.choice(N, size=N, p=selection_probs, replace=True, shuffle=False)
+        index = self.rng.choice(pop_size, size=pop_size, p=selection_probs,
+                                replace=True, shuffle=False)
 
         # Return the new parents (individuals).
         return [sorted_population[i] for i in index]
