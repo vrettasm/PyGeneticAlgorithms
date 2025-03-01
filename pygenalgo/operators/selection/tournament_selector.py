@@ -1,4 +1,5 @@
 from operator import attrgetter
+from numpy import array as np_array
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
@@ -45,27 +46,13 @@ class TournamentSelector(SelectionOperator):
         # Get the population size.
         pop_size = len(population)
 
-        # Create a list that will contain the new parents.
-        new_parents = pop_size * [None]
-
-        # Repeat the 'tournament' N times.
-        for i in range(pop_size):
-
-            # Select randomly 'k' individuals (indexes)
-            # from the initial population.
-            index = self.rng.choice(pop_size, size=self._items,
-                                    replace=False, shuffle=False)
-
-            # Find the individual with the highest fitness value.
-            winner = max([population[j] for j in index],
-                         key=attrgetter("fitness"))
-
-            # Add the best individual in the new list.
-            new_parents[i] = winner
-        # _end_for_
-
-        # Return the new parents (individuals).
-        return new_parents
+        # Select the contestants for each tournament.
+        contestants = np_array([self.rng.choice(pop_size, size=self._items,
+                                                replace=False, shuffle=False)
+                                for _ in range(pop_size)])
+        # Return the new parents.
+        return [max(population[j] for j in contestants[i],
+                    key=attrgetter("fitness")) for i in range(pop_size)]
     # _end_def_
 
 # _end_class_
