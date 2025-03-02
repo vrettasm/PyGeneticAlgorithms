@@ -15,7 +15,7 @@ class TournamentSelector(SelectionOperator):
         crossover and mutation.
     """
 
-    def __init__(self, select_probability: float = 1.0, k: int = 2):
+    def __init__(self, select_probability: float = 1.0, k: int = 5):
         """
         Construct a 'TournamentSelector' object with a given probability value.
 
