@@ -25,6 +25,11 @@ class LinearRankSelector(SelectionOperator):
 
         # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
+
+        # Initialize auxiliary parameters. These parameters will help us
+        # NOT to recompute the selection probabilities every time unless
+        # the population size changes during evolution.
+        self._items = {"pop_size": 0, "selection_probs": None}
     # _end_def_
 
     @increase_counter
@@ -39,20 +44,30 @@ class LinearRankSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
 
-        # Sort the population in ascending order using their fitness value.
-        sorted_population = sorted(population, key=attrgetter("fitness"))
-
         # Get the population size.
         pop_size = len(population)
 
-        # Calculate sum of all the ranked fitness values: "1 + 2 + 3 + ... + N".
-        sum_ranked_values = float(0.5 * pop_size * (pop_size + 1))
+        # Check if the population size has changed.
+        # This should run only ONE time during the
+        # first iteration.
+        if pop_size != self.items["pop_size"]:
 
-        # Calculate the "selection probabilities", of each member in the population.
-        selection_probs = [n / sum_ranked_values for n in range(1, pop_size + 1)]
+            # Store the new population size.
+            self.items["pop_size"] = pop_size
 
-        # Select 'N' new individuals (indexes).
-        index = self.rng.choice(pop_size, size=pop_size, p=selection_probs,
+            # Calculate the sum of all the ranked fitness values: "1+2+3+...+N".
+            sum_ranked_values = float(0.5 * pop_size * (pop_size + 1))
+
+            # Calculate the "selection probabilities", of each member in the population.
+            self.items["selection_probs"] = [n / sum_ranked_values for n in range(1, pop_size + 1)]
+        # _end_if_
+
+        # Sort the population in ascending order using their fitness value.
+        sorted_population = sorted(population, key=attrgetter("fitness"))
+
+        # Select the new individuals (indexes).
+        index = self.rng.choice(pop_size, size=pop_size,
+                                p=self.items["selection_probs"],
                                 replace=True, shuffle=False)
 
         # Return the new parents (individuals).
