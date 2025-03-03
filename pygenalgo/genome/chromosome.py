@@ -54,7 +54,6 @@ class Chromosome(object):
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Validity flag should be bool: {type(new_value)}.")
         # _end_if_
-
     # _end_def_
 
     @property
@@ -108,6 +107,35 @@ class Chromosome(object):
         """
         return all(isinstance(x, Gene) and x.is_valid
                    for x in self._genome)
+    # _end_def_
+
+    def __eq__(self, other) -> bool:
+        """
+        Compares the genome of self, with the other chromosome
+        and returns True if they are identical otherwise False.
+
+        :param other: chromosome to compare.
+
+        :return: True if the genomes are identical else False.
+        """
+        # Boolean flag.
+        are_equal = True
+
+        # Compare both genomes side by side.
+        for p, q in zip(self._genome, other.genome):
+
+            # Test the two genes.
+            if p != q:
+
+                # Update the flag.
+                are_equal = False
+
+                # Break the loop.
+                break
+            # _end_if_
+
+        # _end_def_
+        return are_equal
     # _end_def_
 
     def __len__(self) -> int:
