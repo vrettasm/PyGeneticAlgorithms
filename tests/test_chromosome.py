@@ -32,7 +32,6 @@ class TestChromosome(unittest.TestCase):
             # We allow only float/int.
             ch1.fitness = '0.98'
         # _end_with_
-
     # _end_def_
 
     def test_genome_validity(self):
@@ -67,14 +66,14 @@ class TestChromosome(unittest.TestCase):
         """
         Make sure the clone method is working as intended.
 
-        :return:
+        :return: None.
         """
 
         # Number of Genes.
         M = 10
 
         # Create a "test" chromosome.
-        chromo_1 = Chromosome(_genome=[Gene(i, lambda: randint(M)) for i in range(M)], _fitness=0.0)
+        chromo_1 = Chromosome(_genome=[Gene(i, lambda: randint(M)) for i in range(M)])
 
         # Make a "clone" of the first chromosome.
         chromo_2 = chromo_1.clone()
@@ -84,6 +83,33 @@ class TestChromosome(unittest.TestCase):
 
         # Check if the objects are the same.
         self.assertTrue(chromo_1 is not chromo_2)
+    # _end_def_
+
+    def test_equal(self):
+        """
+        Make sure the equal method is working as intended.
+
+        :return: None.
+        """
+
+        # Number of Genes.
+        M = 5
+
+        # Create a "test" chromosome.
+        chromo_1 = Chromosome([Gene(i, lambda: randint(M))
+                               for i in range(M)])
+
+        # Make a "clone" of the first chromosome.
+        chromo_2 = chromo_1.clone()
+
+        # Check if the objects are equal.
+        self.assertEqual(chromo_1, chromo_2)
+
+        # Make a change in the second chromosome.
+        chromo_2[0] = Gene(100, lambda: randint(M))
+
+        # Check if the objects are equal.
+        self.assertNotEqual(chromo_1, chromo_2)
     # _end_def_
 
 # _end_class_
