@@ -118,24 +118,32 @@ class Chromosome(object):
 
         :return: True if the genomes are identical else False.
         """
-        # Boolean flag.
-        are_equal = True
 
-        # Compare both genomes side by side.
-        for p, q in zip(self._genome, other.genome):
+        # Make sure both objects are of
+        # type 'Chromosome'.
+        if isinstance(other, Chromosome):
 
-            # Test the two genes.
-            if p != q:
+            # Boolean flag.
+            are_equal = True
 
-                # Update the flag.
-                are_equal = False
+            # Compare both genomes side by side.
+            for p, q in zip(self._genome, other.genome):
 
-                # Break the loop.
-                break
-            # _end_if_
+                # Test the two genes.
+                if p != q:
 
-        # _end_def_
-        return are_equal
+                    # Change the flag.
+                    are_equal = False
+
+                    # Exit the loop.
+                    break
+                # _end_if_
+
+            return are_equal
+            # _end_for_
+
+        # _end_if_
+        return False
     # _end_def_
 
     def __len__(self) -> int:
