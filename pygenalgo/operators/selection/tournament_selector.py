@@ -51,8 +51,8 @@ class TournamentSelector(SelectionOperator):
                                                 replace=False, shuffle=False)
                                 for _ in range(pop_size)])
         # Return the new parents.
-        return [max(population[j] for j in contestants[i],
-                    key=attrgetter("fitness")) for i in range(pop_size)]
+        return [max((population[j] for j in contestants[i]),
+                key=attrgetter("fitness")) for i in range(pop_size)]
     # _end_def_
 
 # _end_class_
