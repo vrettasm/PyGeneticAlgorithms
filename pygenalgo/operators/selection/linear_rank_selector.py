@@ -1,5 +1,4 @@
 from operator import attrgetter
-
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
@@ -58,8 +57,10 @@ class LinearRankSelector(SelectionOperator):
             # Calculate the sum of all the ranked fitness values: "1+2+3+...+N".
             sum_ranked_values = float(0.5 * pop_size * (pop_size + 1))
 
-            # Calculate the "selection probabilities", of each member in the population.
-            self.items["selection_probs"] = [n / sum_ranked_values for n in range(1, pop_size + 1)]
+            # Calculate the selection probabilities of each member
+            # in the population, using their ranking position.
+            self.items["selection_probs"] = [n / sum_ranked_values
+                                             for n in range(1, pop_size + 1)]
         # _end_if_
 
         # Sort the population in ascending order using their fitness value.
