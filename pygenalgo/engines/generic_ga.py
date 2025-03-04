@@ -190,13 +190,13 @@ class GenericGA(object):
         """
 
         # Get the size of the input population.
-        N = len(input_population)
+        pop_size = len(input_population)
 
         # CROSSOVER and MUTATE to produce the new offsprings.
-        for j in range(0, N, 2):
+        for j in range(0, pop_size, 2):
 
             # In case of 'odd sized' populations.
-            if j == N-1:
+            if j == pop_size-1:
 
                 # MUTATE in place the last offspring.
                 self._mutate_op(input_population[j])
