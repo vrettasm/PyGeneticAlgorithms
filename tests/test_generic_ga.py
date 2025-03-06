@@ -94,14 +94,23 @@ class TestGenericGA(unittest.TestCase):
         # These two MUST be the same object.
         self.assertTrue(best_a is best_b)
 
-        # Get the top five chromosomes.
-        best_5 = self.ga.best_n(n=5)
-
         # Extract the top 5 fitness.
-        top_5 = [n.fitness for n in best_5]
+        top_5 = [n.fitness for n in self.ga.best_n(n=5)]
 
         # These two lists should be equal.
         self.assertEqual(top_5, [19.0, 18.0, 9.0, 8.0, 7.0])
+
+        # Check if RuntimeError is raised when
+        # the 'n' exceeds the population size.
+        with self.assertRaises(RuntimeError):
+            _ = self.ga.best_n(n=50)
+        # _end_with_
+
+        # Check if ValueError is raised when
+        # the 'n' is not a positive integer.
+        with self.assertRaises(ValueError):
+            _ = self.ga.best_n(n=5.0)
+        # _end_with_
     # _end_def_
 
 # _end_class_
