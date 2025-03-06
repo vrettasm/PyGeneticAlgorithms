@@ -78,6 +78,32 @@ class TestGenericGA(unittest.TestCase):
         self.assertEqual(0.0, best_k.fitness)
     # _end_def_
 
+    def test_best_n(self):
+        """
+        Ensure the best_n method behaves correctly.
+
+        :return: None.
+        """
+
+        # Find the best chromosome using the 'best_n'.
+        best_a = self.ga.best_n()[0]
+
+        # Find the best chromosome.
+        best_b = self.ga.best_chromosome()
+
+        # These two MUST be the same object.
+        self.assertTrue(best_a is best_b)
+
+        # Get the top five chromosomes.
+        best_5 = self.ga.best_n(n=5)
+
+        # Extract the top 5 fitness.
+        top_5 = [n.fitness for n in best_5]
+
+        # These two lists should be equal.
+        self.assertEqual(top_5, [19.0, 18.0, 9.0, 8.0, 7.0])
+    # _end_def_
+
 # _end_class_
 
 
