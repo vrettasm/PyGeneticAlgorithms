@@ -176,6 +176,37 @@ class GenericGA(object):
                    key=attrgetter("fitness"), default=None)
     # _end_def_
 
+    def best_n(self, n: int = 1) -> list[Chromosome]:
+        """
+        Auxiliary method that returns the best 'n' chromosomes
+        with the highest fitness value.
+
+        :param n: the number of best chromosomes. Default = 1.
+
+        :return: Return the 'n' chromosomes with the highest fitness.
+        """
+
+        # Make sure 'n' is positive integer.
+        if not isinstance(n, int) or n <= 0:
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Input must be a positive integer.")
+        # _end_if_
+
+        # Ensure the number of return chromosome
+        # do not exceed the size of the population.
+        if n > len(self.population):
+            raise RuntimeError(f"{self.__class__.__name__}: "
+                               f"Best 'n' exceed population size.")
+        # _end_if_
+
+        # Sort the population in descending order.
+        sorted_population = sorted([p for p in self.population if not isnan(p.fitness)],
+                                   key=attrgetter("fitness"), reverse=True)
+
+        # Return the best 'n' chromosomes.
+        return sorted_population[0:n]
+    # _end_def_
+
     def crossover_mutate(self, input_population: list[Chromosome]) -> None:
         """
         This is an auxiliary method that combines the crossover and mutation
