@@ -196,7 +196,7 @@ class GenericGA(object):
         # do not exceed the size of the population.
         if n > len(self.population):
             raise RuntimeError(f"{self.__class__.__name__}: "
-                               f"Best 'n' exceed population size.")
+                               f"Best {n} exceeds population size.")
         # _end_if_
 
         # Sort the population in descending order.
