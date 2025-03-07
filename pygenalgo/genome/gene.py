@@ -85,6 +85,23 @@ class Gene(object):
         # _end_if_
     # _end_def_
 
+    def __add__(self, other) -> list:
+        """
+        When two genes are added we return a list with the two genes.
+
+        :param other: the second object we want to 'add' to.
+
+        :return: a list with [self, other].
+        """
+
+        # Make sure both items are of type 'Gene'.
+        if isinstance(other, Gene) and self != other:
+            return [self, other]
+        else:
+            raise NotImplemented
+        # _end_if_
+    # _end_def_
+
     def __eq__(self, other) -> bool:
         """
         When we compare two Genes we care only about the data they hold.
