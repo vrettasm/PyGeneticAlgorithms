@@ -45,6 +45,40 @@ class TestGene(unittest.TestCase):
         self.assertFalse(gene_1._valid)
     # _end_def__
 
+    def test_add(self):
+        """
+        Adding two Genes should return a list with two genes.
+
+        :return: None.
+        """
+
+        # Create a 'dummy' gene.
+        gene_1 = Gene(datum=0, func=lambda: randint(5))
+
+        # Create a 'dummy' gene.
+        gene_2 = Gene(datum=1, func=lambda: randint(5))
+
+        # Add the two genes, should create a list.
+        genome_list = gene_1 + gene_2
+
+        # The result should be of type list.
+        self.assertIsInstance(genome_list, list)
+
+        # The size should be equal to 'two'.
+        self.assertEqual(2, len(genome_list))
+
+        # Adding a 'Gene' with another object should raise an error.
+        with self.assertRaises(TypeError):
+            _ = gene_1 + 0.0
+        # _end_with_
+
+        # An error will be raised if we try to add a gene to itself.
+        with self.assertRaises(TypeError):
+            _ = gene_1 + gene_1
+        # _end_with_
+
+    # _end_def_
+
     def test_clone(self):
         """
         Make sure the clone method is working as intended.
