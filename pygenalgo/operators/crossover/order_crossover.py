@@ -47,11 +47,11 @@ class OrderCrossover(CrossoverOperator):
             used_parent2 = set(parent2.genome[:locus])
 
             # Create the 1st NEW offspring at locus.
-            child1 = Chromosome(parent1[:locus] +
+            child1 = Chromosome(parent1.genome[:locus] +
                                 [x for x in parent2 if x not in used_parent1])
 
             # Create the 2nd NEW offspring at locus.
-            child2 = Chromosome(parent2[:locus] +
+            child2 = Chromosome(parent2.genome[:locus] +
                                 [y for y in parent1 if y not in used_parent2])
 
             # Increase the crossover counter.
