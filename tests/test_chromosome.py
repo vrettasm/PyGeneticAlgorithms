@@ -110,6 +110,15 @@ class TestChromosome(unittest.TestCase):
 
         # Check if the objects are equal.
         self.assertNotEqual(chromo_1, chromo_2)
+
+        # Create a "test" chromosome with different size.
+        chromo_3 = Chromosome([Gene(i, lambda: randint(M))
+                               for i in range(M+1)])
+
+        # The __eq__ must raise an error.
+        with self.assertRaises(ValueError):
+            print(chromo_1 == chromo_3)
+        # _end_with_
     # _end_def_
 
 # _end_class_
