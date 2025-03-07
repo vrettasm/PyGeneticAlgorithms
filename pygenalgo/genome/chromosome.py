@@ -127,8 +127,9 @@ class Chromosome(object):
             are_equal = True
 
             # Compare both genomes side by side.
-            for p, q in zip(self._genome, other.genome):
-
+            # They must have the same length.
+            for p, q in zip(self._genome, other.genome,
+                            strict=True):
                 # Test the two genes.
                 if p != q:
 
