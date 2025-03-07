@@ -45,8 +45,8 @@ class SinglePointCrossover(CrossoverOperator):
             locus = self.rng.integers(1, high=len(parent1))
 
             # Create the two NEW offsprings at locus.
-            child1 = Chromosome(parent1[:locus] + parent2[locus:])
-            child2 = Chromosome(parent2[:locus] + parent1[locus:])
+            child1 = Chromosome(parent1.genome[:locus] + parent2.genome[locus:])
+            child2 = Chromosome(parent2.genome[:locus] + parent1.genome[locus:])
 
             # Increase the crossover counter.
             self.inc_counter()
