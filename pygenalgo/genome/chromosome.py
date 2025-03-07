@@ -120,29 +120,11 @@ class Chromosome(object):
         """
 
         # Make sure both objects are of
-        # type 'Chromosome'.
+        # the same type 'Chromosome'.
         if isinstance(other, Chromosome):
 
-            # Boolean flag.
-            are_equal = True
-
-            # Compare both genomes side by side.
-            # They must have the same length.
-            for p, q in zip(self._genome, other.genome,
-                            strict=True):
-                # Test the two genes.
-                if p != q:
-
-                    # Change the flag.
-                    are_equal = False
-
-                    # Exit the loop.
-                    break
-                # _end_if_
-
-            return are_equal
-            # _end_for_
-
+            # Compare directly the genomes of both objects.
+            return tuple(self._genome) == tuple(other.genome)
         # _end_if_
         return False
     # _end_def_
