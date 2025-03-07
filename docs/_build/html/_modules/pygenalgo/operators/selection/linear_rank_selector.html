@@ -70,7 +70,6 @@
              
   <h1>Source code for pygenalgo.operators.selection.linear_rank_selector</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">attrgetter</span>
-
 <span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.genetic_operator</span> <span class="kn">import</span> <span class="n">increase_counter</span>
 <span class="kn">from</span> <span class="nn">pygenalgo.operators.selection.select_operator</span> <span class="kn">import</span> <span class="n">SelectionOperator</span>
@@ -98,6 +97,11 @@
 
         <span class="c1"># Call the super constructor with the provided probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">select_probability</span><span class="p">)</span>
+
+        <span class="c1"># Initialize auxiliary parameters. These parameters will help us</span>
+        <span class="c1"># NOT to recompute the selection probabilities every time unless</span>
+        <span class="c1"># the population size changes during evolution.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pop_size&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;selection_probs&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@increase_counter</span>
@@ -112,20 +116,32 @@
 <span class="sd">        :return: the selected parents population (as list of chromosomes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># Sort the population in ascending order using their fitness value.</span>
-        <span class="n">sorted_population</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">))</span>
-
         <span class="c1"># Get the population size.</span>
         <span class="n">pop_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
 
-        <span class="c1"># Calculate sum of all the ranked fitness values: &quot;1 + 2 + 3 + ... + N&quot;.</span>
-        <span class="n">sum_ranked_values</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">pop_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">pop_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="c1"># Check if the population size has changed.</span>
+        <span class="c1"># This should run only ONE time during the</span>
+        <span class="c1"># first iteration.</span>
+        <span class="k">if</span> <span class="n">pop_size</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="s2">&quot;pop_size&quot;</span><span class="p">]:</span>
 
-        <span class="c1"># Calculate the &quot;selection probabilities&quot;, of each member in the population.</span>
-        <span class="n">selection_probs</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="o">/</span> <span class="n">sum_ranked_values</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pop_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+            <span class="c1"># Store the new population size.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="s2">&quot;pop_size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pop_size</span>
 
-        <span class="c1"># Select &#39;N&#39; new individuals (indexes).</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pop_size</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">pop_size</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">selection_probs</span><span class="p">,</span>
+            <span class="c1"># Calculate the sum of all the ranked fitness values: &quot;1+2+3+...+N&quot;.</span>
+            <span class="n">sum_ranked_values</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">pop_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">pop_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+
+            <span class="c1"># Calculate the selection probabilities of each member</span>
+            <span class="c1"># in the population, using their ranking position.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="s2">&quot;selection_probs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="o">/</span> <span class="n">sum_ranked_values</span>
+                                             <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pop_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Sort the population in ascending order using their fitness value.</span>
+        <span class="n">sorted_population</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Select the new individuals (indexes).</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pop_size</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">pop_size</span><span class="p">,</span>
+                                <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="s2">&quot;selection_probs&quot;</span><span class="p">],</span>
                                 <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Return the new parents (individuals).</span>
