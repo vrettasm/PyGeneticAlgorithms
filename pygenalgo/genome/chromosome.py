@@ -109,6 +109,16 @@ class Chromosome(object):
                    for x in self._genome)
     # _end_def_
 
+    def values(self) -> list:
+        """
+        Returns the gene values of the chromosome
+        as list.
+
+        :return: the list values of the genome.
+        """
+        return [gene.value for gene in self._genome]
+    # _end_def_
+
     def __eq__(self, other) -> bool:
         """
         Compares the genome of self, with the other chromosome
