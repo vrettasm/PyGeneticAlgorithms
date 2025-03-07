@@ -54,9 +54,8 @@ class UniformCrossover(CrossoverOperator):
             swap_probability = self.rng.random(size=number_of_genes) > 0.5
 
             # Allocate the genes according to the swap probability.
-            for i, (flag, p1, p2) in enumerate(zip(swap_probability,
-                                                   parent1.genome,
-                                                   parent2.genome)):
+            for i, (flag, p1, p2) in enumerate(zip(swap_probability.tolist(),
+                                                   parent1.genome, parent2.genome)):
                 if flag:
                     genome_1[i] = p1
                     genome_2[i] = p2
