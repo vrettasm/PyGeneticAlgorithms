@@ -46,7 +46,8 @@ class PositionBasedCrossover(CrossoverOperator):
             number_of_points = self.rng.integers(1, high=number_of_genes-1)
 
             # Select randomly the crossover points.
-            cross_points = sorted(self.rng.choice(number_of_genes, size=number_of_points,
+            cross_points = sorted(self.rng.choice(number_of_genes,
+                                                  size=number_of_points,
                                                   replace=False, shuffle=False))
 
             # Initialize the genome of the new chromosomes to 'None'.
@@ -56,8 +57,8 @@ class PositionBasedCrossover(CrossoverOperator):
             # Copy the genes of the parents at
             # the preselected gene cross points.
             for i in cross_points:
-                genome_1[i] = parent2.genome[i]
-                genome_2[i] = parent1.genome[i]
+                genome_1[i] = parent2.genome[i].clone()
+                genome_2[i] = parent1.genome[i].clone()
             # _end_for_
 
             # Fill the rest of the positions in both offsprings.
@@ -69,7 +70,7 @@ class PositionBasedCrossover(CrossoverOperator):
                     j = genome_1.index(None)
 
                     # Assign the current gene value.
-                    genome_1[j] = gene1
+                    genome_1[j] = gene1.clone()
                 # _end_if_
 
                 # Check if 'gene2' exists in 2nd offspring.
@@ -78,7 +79,7 @@ class PositionBasedCrossover(CrossoverOperator):
                     k = genome_2.index(None)
 
                     # Assign the current gene value.
-                    genome_2[k] = gene2
+                    genome_2[k] = gene2.clone()
                 # _end_if_
 
             # _end_for_

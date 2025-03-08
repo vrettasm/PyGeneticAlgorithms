@@ -97,11 +97,11 @@ class MultiPointCrossover(CrossoverOperator):
 
                 # Check the flag value.
                 if reset_flag:
-                    genome_1[i] = parent1.genome[i]
-                    genome_2[i] = parent2.genome[i]
+                    genome_1[i] = parent1.genome[i].clone()
+                    genome_2[i] = parent2.genome[i].clone()
                 else:
-                    genome_1[i] = parent2.genome[i]
-                    genome_2[i] = parent1.genome[i]
+                    genome_1[i] = parent2.genome[i].clone()
+                    genome_2[i] = parent1.genome[i].clone()
                 # _end_if_
 
             # _end_for_

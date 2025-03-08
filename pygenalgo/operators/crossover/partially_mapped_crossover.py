@@ -60,8 +60,8 @@ class PartiallyMappedCrossover(CrossoverOperator):
 
             # Copy the relevant part of the segment.
             for k in id_segment:
-                genome_1[k] = parent1.genome[k]
-                genome_2[k] = parent2.genome[k]
+                genome_1[k] = parent1.genome[k].clone()
+                genome_2[k] = parent2.genome[k].clone()
             # _end_for_
 
             # Create auxiliary Sets for faster membership check.
@@ -92,7 +92,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
                     else:
 
                         # Copy the gene.
-                        genome_1[x_pos] = gene_x
+                        genome_1[x_pos] = gene_x.clone()
 
                         # Break the loop.
                         found = True
@@ -126,7 +126,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
                     else:
 
                         # Copy the gene.
-                        genome_2[y_pos] = gene_y
+                        genome_2[y_pos] = gene_y.clone()
 
                         # Break the loop.
                         found = True
@@ -141,12 +141,12 @@ class PartiallyMappedCrossover(CrossoverOperator):
                                                      parent2.genome)):
                 # Check if the gene exists.
                 if gene_a not in genome_2:
-                    genome_2[k] = gene_a
+                    genome_2[k] = gene_a.clone()
                 # _end_if_
 
                 # Check if the gene exists.
                 if gene_b not in genome_1:
-                    genome_1[k] = gene_b
+                    genome_1[k] = gene_b.clone()
                 # _end_if_
 
             # _end_for_

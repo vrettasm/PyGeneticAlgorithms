@@ -57,11 +57,11 @@ class UniformCrossover(CrossoverOperator):
             for i, (flag, p1, p2) in enumerate(zip(swap_probability.tolist(),
                                                    parent1.genome, parent2.genome)):
                 if flag:
-                    genome_1[i] = p1
-                    genome_2[i] = p2
+                    genome_1[i] = p1.clone()
+                    genome_2[i] = p2.clone()
                 else:
-                    genome_1[i] = p2
-                    genome_2[i] = p1
+                    genome_1[i] = p2.clone()
+                    genome_2[i] = p1.clone()
                 # _end_if_
 
             # _end_for_
