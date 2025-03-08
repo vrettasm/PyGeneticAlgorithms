@@ -218,10 +218,16 @@ class Chromosome(object):
             memo[id(self._cache)] = self._cache.__new__(dict)
         # _end_if_
 
-        # Deep copy all other attributes.
-        for key, value in self.__dict__.items():
-            setattr(new_object, key, deepcopy(value, memo))
-        # _end_for_
+        # Deepcopy ONLY the genome because
+        # it is a (mutable) list of Genes.
+        setattr(new_object, "_genome",
+                deepcopy(self._genome, memo))
+
+        # Simply copy the fitness value.
+        setattr(new_object, "_fitness", self._fitness)
+
+        # Simply copy the boolean flag.
+        setattr(new_object, "_valid", self._valid)
 
         # Return identical instance.
         return new_object

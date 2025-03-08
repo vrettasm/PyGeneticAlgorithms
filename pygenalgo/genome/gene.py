@@ -213,11 +213,16 @@ class Gene(object):
             memo[id(self._cache)] = self._cache.__new__(dict)
         # _end_if_
 
-        # Deep copy all other attributes.
-        for attr in self.__slots__:
-            setattr(new_object, attr,
-                    deepcopy(getattr(self, attr), memo))
-        # _end_for_
+        # Deepcopy ONLY the datum because it
+        # might be a complex mutable object.
+        setattr(new_object, "_datum",
+                deepcopy(self._datum, memo))
+
+        # Simply copy the function handle.
+        setattr(new_object, "_func", self._func)
+
+        # Simply copy the boolean flag.
+        setattr(new_object, "_valid", self._valid)
 
         # Return identical instance.
         return new_object
