@@ -208,11 +208,6 @@ class Gene(object):
         # Don't copy self reference.
         memo[id(self)] = new_object
 
-        # Don't copy the cache.
-        if hasattr(self, "_cache"):
-            memo[id(self._cache)] = self._cache.__new__(dict)
-        # _end_if_
-
         # Deepcopy ONLY the datum because it
         # might be a complex mutable object.
         setattr(new_object, "_datum",

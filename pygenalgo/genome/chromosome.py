@@ -213,11 +213,6 @@ class Chromosome(object):
         # Don't copy self reference.
         memo[id(self)] = new_object
 
-        # Don't copy the cache.
-        if hasattr(self, "_cache"):
-            memo[id(self._cache)] = self._cache.__new__(dict)
-        # _end_if_
-
         # Deepcopy ONLY the genome because
         # it is a (mutable) list of Genes.
         setattr(new_object, "_genome",
