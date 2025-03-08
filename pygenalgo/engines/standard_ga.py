@@ -120,7 +120,7 @@ class StandardGA(GenericGA):
         self._stats["prob_mutate"].append(self._mutate_op.probability)
 
         # Display an information message.
-        print(f"Initial Avg. Fitness = {avg_fitness_0:.4f}.")
+        print(f"Initial Avg. Fitness = {avg_fitness_0:.4f}")
 
         # Initial time instant.
         time_t0 = time.perf_counter()
@@ -226,7 +226,7 @@ class StandardGA(GenericGA):
         time_tf = time.perf_counter()
 
         # Display the final average fitness value.
-        print(f"Final   Avg. Fitness = {avg_fitness_0:.4f}.")
+        print(f"Final   Avg. Fitness = {avg_fitness_0:.4f}")
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
