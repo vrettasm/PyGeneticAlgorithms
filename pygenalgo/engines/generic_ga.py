@@ -236,14 +236,17 @@ class GenericGA(object):
                 break
             # _end_if_
 
+            # Get the index of the next chromosome.
+            k = j+1
+
             # Replace directly the OLD parents with the NEW offsprings.
-            input_population[j], input_population[j+1] = self._crossx_op(input_population[j],
-                                                                         input_population[j+1])
+            input_population[j], input_population[k] = self._crossx_op(input_population[j],
+                                                                       input_population[k])
             # MUTATE in place the 1st offspring.
             self._mutate_op(input_population[j])
 
             # MUTATE in place the 2nd offspring.
-            self._mutate_op(input_population[j+1])
+            self._mutate_op(input_population[k])
         # _end_for_
     # _end_def_
 
