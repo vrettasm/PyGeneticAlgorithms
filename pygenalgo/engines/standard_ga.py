@@ -174,9 +174,10 @@ class StandardGA(GenericGA):
             avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i)
 
             # Check if we want to print output.
-            if verbose and (i % 10) == 0:
+            if verbose and (i % (epochs//10)) == 0:
                 # Display an information message.
-                print(f"Epoch: {i + 1:>5} -> Avg. Fitness = {avg_fitness_i:.4f}, "
+                print(f"Epoch: {i + 1:>5} -> "
+                      f"Avg. Fitness = {avg_fitness_i:.4f}, "
                       f"Spread = {std_fitness_i:.4f}.")
             # _end_if_
 
