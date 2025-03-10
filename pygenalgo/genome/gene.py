@@ -26,7 +26,8 @@ class Gene(object):
         
         :param datum: Datum holds a reference of the gene-data structure.
         
-        :param func: This 'private' function is used in the 'random()' method to be used by the mutation operators.
+        :param func: This 'private' function is used in the 'random()' method
+        to be used by the mutation operators.
         
         :param valid: This flag is used to set the Gene as valid (True) or invalid (False).
         """
@@ -131,7 +132,7 @@ class Gene(object):
 
     def flip(self) -> None:
         """
-        This method flips the value of the gene data. It is used only dy the
+        This method flips the value of the gene data. It is used only by the
         FlipMutator operator for problems where the chromosome is represented
         by a list of bits.
 
