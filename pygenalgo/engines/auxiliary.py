@@ -10,7 +10,7 @@ __all__ = ["hamming_distance", "average_hamming_distance",
 def hamming_distance(item1: Chromosome, item2: Chromosome) -> int:
     """
     Compute the Hamming distance of the "item1" object, with the
-    "item2" chromosome. In practice it's the number of positions
+    "item2" chromosome. In practice, it's the number of positions
     at which the corresponding genes are different.
 
     :param item1: (Chromosome) to compare the Hamming distance.
@@ -157,7 +157,7 @@ def pareto_front(points: list) -> list:
     front points from a given input points list.
 
     NOTE: The function is working directly with lists,
-    even though it can optimized using numpy arrays.
+    even though it can be optimized using numpy arrays.
 
     :param points: list of points [(fx1, fx2, ..., fxn),
                                    (fy1, fy2, ..., fyn),
@@ -171,16 +171,16 @@ def pareto_front(points: list) -> list:
     pareto_points = []
 
     # Iterate through every point in the list.
-    for i, fx in enumerate(points):
+    for i, point_i in enumerate(points):
 
         # Set the pareto optimal flag value to True.
         is_pareto_optimal = True
 
         # Compare it against every other point.
-        for j, fy in enumerate(points):
+        for j, point_j in enumerate(points):
 
             # Check if "dominance" condition is satisfied.
-            if i != j and all(p >= q for p, q in zip(fx, fy,
+            if i != j and all(p >= q for p, q in zip(point_i, point_j,
                                                      strict=True)):
                 # We swap the flag value.
                 is_pareto_optimal = False
@@ -193,9 +193,9 @@ def pareto_front(points: list) -> list:
         # _end_for_
 
         # If we get here and the flag hasn't changed
-        # it means the 'fx' point is on the frontier.
+        # it means that 'point_i' is on the frontier.
         if is_pareto_optimal:
-            pareto_points.append(fx)
+            pareto_points.append(point_i)
         # _end_if_
     # _end_for_
 
