@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
@@ -5,18 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pygenalgo.engines.generic_ga &mdash; PyGenAlgo 01.70.50 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=d0c4109e"></script>
-        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d0c4109e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -322,14 +320,17 @@
                 <span class="k">break</span>
             <span class="c1"># _end_if_</span>
 
+            <span class="c1"># Get the index of the next chromosome.</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span>
+
             <span class="c1"># Replace directly the OLD parents with the NEW offsprings.</span>
-            <span class="n">input_population</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">input_population</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="p">(</span><span class="n">input_population</span><span class="p">[</span><span class="n">j</span><span class="p">],</span>
-                                                                         <span class="n">input_population</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">input_population</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">input_population</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="p">(</span><span class="n">input_population</span><span class="p">[</span><span class="n">j</span><span class="p">],</span>
+                                                                       <span class="n">input_population</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
             <span class="c1"># MUTATE in place the 1st offspring.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="p">(</span><span class="n">input_population</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
 
             <span class="c1"># MUTATE in place the 2nd offspring.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="p">(</span><span class="n">input_population</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="p">(</span><span class="n">input_population</span><span class="p">[</span><span class="n">k</span><span class="p">])</span></div>
 
         <span class="c1"># _end_for_</span>
     <span class="c1"># _end_def_</span>
