@@ -181,7 +181,7 @@ class GenericGA(object):
         Auxiliary method that returns the best 'n' chromosomes
         with the highest fitness value.
 
-        :param n: the number of best chromosomes. Default = 1.
+        :param n: the number of the best chromosomes. Default = 1.
 
         :return: Return the 'n' chromosomes with the highest fitness.
         """
