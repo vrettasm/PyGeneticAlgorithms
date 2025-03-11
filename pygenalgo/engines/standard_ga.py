@@ -119,6 +119,11 @@ class StandardGA(GenericGA):
         self._stats["prob_crossx"].append(self._crossx_op.probability)
         self._stats["prob_mutate"].append(self._mutate_op.probability)
 
+        # Local variable to display information on the screen.
+        # To avoid cluttering the screen we print info only 10
+        # times regardless of the total number of epochs.
+        its_time_to_print = (epochs//10)
+
         # Display an information message.
         print(f"Initial Avg. Fitness = {avg_fitness_0:.4f}")
 
@@ -174,7 +179,7 @@ class StandardGA(GenericGA):
             avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i)
 
             # Check if we want to print output.
-            if verbose and (i % (epochs//10)) == 0:
+            if verbose and (i % its_time_to_print) == 0:
                 # Display an information message.
                 print(f"Epoch: {i + 1:>5} -> "
                       f"Avg. Fitness = {avg_fitness_i:.4f}, "
