@@ -17,7 +17,7 @@ def increase_counter(method):
     classes main operation to increase the counter
     by one.
 
-    :param method: that we wrapp its functionality.
+    :param method: that we wrap its functionality.
 
     :return: the wrapper function.
     """

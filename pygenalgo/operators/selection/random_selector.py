@@ -11,7 +11,7 @@ class RandomSelector(SelectionOperator):
         have the same probability to be selected as parents 1/N, effectively assuming a
         uniform probability.
 
-        It does not favour the fit individuals therefore the mixing will be very slow.
+        It does not favor the fit individuals therefore the mixing will be very slow.
     """
 
     def __init__(self, select_probability: float = 1.0):

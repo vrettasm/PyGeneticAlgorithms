@@ -10,7 +10,7 @@ __all__ = ["hamming_distance", "average_hamming_distance",
 def hamming_distance(item1: Chromosome, item2: Chromosome) -> int:
     """
     Compute the Hamming distance of the "item1" object, with the
-    "item2" chromosome. In practise it's the number of positions
+    "item2" chromosome. In practice it's the number of positions
     at which the corresponding genes are different.
 
     :param item1: (Chromosome) to compare the Hamming distance.
