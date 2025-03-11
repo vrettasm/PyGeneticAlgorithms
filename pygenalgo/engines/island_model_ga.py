@@ -146,14 +146,17 @@ class IslandModelGA(GenericGA):
                 best_chromosome = max([p for p in island.population if not isnan(p.fitness)],
                                       key=attrgetter("fitness"), default=None)
 
-                # Select a position at random.
-                locus = self.rng_GA.integers(N)
+                # Check if the chromosome already exists.
+                if best_chromosome not in population_i:
+                    # Select a position at random.
+                    locus = self.rng_GA.integers(N)
 
-                # Replace the chromosome with the previous best.
-                population_i[locus] = best_chromosome
+                    # Replace it with the previous best.
+                    population_i[locus] = best_chromosome
 
-                # Update the list of fitness values to reflect the update.
-                fit_list_i[locus] = population_i[locus].fitness
+                    # Update the list of fitness values to reflect the update.
+                    fit_list_i[locus] = population_i[locus].fitness
+                # _end_if_
             # _end_if_
 
             # Compute the mean value.

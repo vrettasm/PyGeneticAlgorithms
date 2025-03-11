@@ -165,14 +165,24 @@ class StandardGA(GenericGA):
 
             # Check if 'elitism' is enabled.
             if elitism:
-                # Select a position at random.
-                locus = self.rng_GA.integers(N)
+                # Get the reference of best chromosome
+                # from the previous generation.
+                previous_best = self.best_chromosome()
 
-                # Replace the chromosome with the previous best.
-                population_i[locus] = self.best_chromosome()
+                # Check if the chromosome already exists in
+                # the current generation to avoid flooding
+                # the new pool with the same chromosome.
+                if previous_best not in population_i:
 
-                # Update the list of fitness values to reflect the update.
-                fit_list_i[locus] = population_i[locus].fitness
+                    # Select a position at random.
+                    locus = self.rng_GA.integers(N)
+
+                    # Replace it with the previous best.
+                    population_i[locus] = previous_best
+
+                    # Update the list of fitness values to reflect the update.
+                    fit_list_i[locus] = population_i[locus].fitness
+                # _end_if_
             # _end_if_
 
             # Update the mean/std in the dictionary.
