@@ -4,7 +4,7 @@ from pygenalgo.genome.chromosome import Chromosome
 
 # Public interface.
 __all__ = ["hamming_distance", "average_hamming_distance",
-           "apply_corrections", "SubPopulation"]
+           "apply_corrections", "SubPopulation", "pareto_front"]
 
 
 def hamming_distance(item1: Chromosome, item2: Chromosome) -> int:
@@ -149,6 +149,58 @@ def apply_corrections(input_population: list[Chromosome],
 
     # Return the total number of corrected genes.
     return corrections_counter
+# _end_def_
+
+def pareto_front(points: list) -> list:
+    """
+    Simple function that calculates the pareto (optimal)
+    front points from a given input points list.
+
+    NOTE: The function is working directly with lists,
+    even though it can optimized using numpy arrays.
+
+    :param points: list of points [ (fx1, fx2, ..., fxn),
+                                    (fy1, fy2, ..., fyn),
+                                    ....................,
+                                    (fk1, fk2, ..., fkn)]
+
+    :return: List of points that lie on the pareto front.
+    """
+    # Create a list that will hold
+    # ONLY the Pareto front points.
+    pareto_points = []
+
+    # Iterate through every point in the list.
+    for i, fx in enumerate(points):
+
+        # Set the pareto optimal flag value to True.
+        is_pareto_optimal = True
+
+        # Compare it against every other point.
+        for j, fy in enumerate(points):
+
+            # Check if "dominance" condition is satisfied.
+            if i != j and all(p > q for p, q in zip(fx, fy,
+                                                    strict=True)):
+                # We swap the flag value.
+                is_pareto_optimal = False
+
+                # Break the internal loop and
+                # continue to the next point.
+                break
+            # _end_if_
+
+        # _end_for_
+
+        # If we get here and the flag hasn't changed
+        # it means the 'fx' point is on the frontier.
+        if is_pareto_optimal:
+            pareto_points.append(fx)
+        # _end_if_
+    # _end_for_
+
+    # Return the points.
+    return pareto_points
 # _end_def_
 
 
