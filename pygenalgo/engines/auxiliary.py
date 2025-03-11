@@ -159,10 +159,10 @@ def pareto_front(points: list) -> list:
     NOTE: The function is working directly with lists,
     even though it can optimized using numpy arrays.
 
-    :param points: list of points [ (fx1, fx2, ..., fxn),
-                                    (fy1, fy2, ..., fyn),
-                                    ....................,
-                                    (fk1, fk2, ..., fkn)]
+    :param points: list of points [(fx1, fx2, ..., fxn),
+                                   (fy1, fy2, ..., fyn),
+                                   ....................,
+                                   (fk1, fk2, ..., fkn)]
 
     :return: List of points that lie on the pareto front.
     """
