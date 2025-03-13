@@ -3,46 +3,8 @@ from dataclasses import dataclass, field
 from pygenalgo.genome.chromosome import Chromosome
 
 # Public interface.
-__all__ = ["hamming_distance", "average_hamming_distance",
-           "apply_corrections", "SubPopulation", "pareto_front"]
-
-
-def hamming_distance(item1: Chromosome, item2: Chromosome) -> int:
-    """
-    Compute the Hamming distance of the "item1" object, with the
-    "item2" chromosome. In practice, it's the number of positions
-    at which the corresponding genes are different.
-
-    :param item1: (Chromosome) to compare the Hamming distance.
-
-    :param item2: (Chromosome) to compare the Hamming distance.
-
-    :return: (int) the number of dissimilarities between the two
-    input chromosomes.
-    """
-
-    # Check for identical types.
-    if type(item1) is type(item2):
-
-        # Quick exit if both objects are the
-        # same or equal.
-        if item1 is item2 or item1 == item2:
-            return 0
-        # _end_if_
-
-        # Exit with an error if both objects
-        # are not the same length.
-        if len(item1) != len(item2):
-            raise ValueError(f"Input chromosomes must be of the same length.")
-        # _end_if_
-
-        # Compute the dissimilarities in their genomes.
-        return [k != l for k, l in zip(item1.genome, item2.genome)].count(True)
-    else:
-        raise RuntimeError(f"Can't compute Hamming distance in different type objects.")
-    # _end_if_
-
-# _end_def_
+__all__ = ["average_hamming_distance", "pareto_front",
+           "apply_corrections", "SubPopulation"]
 
 def average_hamming_distance(population: list[Chromosome]) -> float:
     """

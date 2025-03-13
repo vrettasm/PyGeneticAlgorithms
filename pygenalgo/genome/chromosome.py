@@ -119,6 +119,37 @@ class Chromosome(object):
         return [gene.value for gene in self._genome]
     # _end_def_
 
+    def hamming_distance(self, other) -> int:
+        """
+        Compute the Hamming distance of the "self" object, with the
+        "other" chromosome. In practice, it's the number of positions
+        at which the corresponding genes are different.
+
+        :param other: (Chromosome) to compare the Hamming distance.
+
+        :return: (int) the number of dissimilarities between the two
+        input chromosomes.
+        """
+
+        # Make sure both objects are of
+        # the same type 'Chromosome'.
+        if isinstance(other, Chromosome):
+
+            # Quick exit if both objects are
+            # the same or equal.
+            if self is other or self == other:
+                return 0
+            # _end_if_
+
+            # Compute the dissimilarities in their genomes.
+            return [k != l for k, l in zip(self._genome, other.genome,
+                                           strict=True)].count(True)
+        else:
+            raise TypeError(f"{self.__class__.__name__}: "
+                            f"Can't compute Hamming distance in different type objects.")
+        # _end_if_
+    # _end_def_
+
     def __eq__(self, other) -> bool:
         """
         Compares the genome of self, with the other chromosome
