@@ -109,7 +109,16 @@ class Gene(object):
 
         :return: the hash value of the datum.
         """
-        return hash(self._datum)
+        try:
+            # Return directly the hash
+            # value of the datum field.
+            return hash(self._datum)
+
+        except TypeError:
+            # If it fails try to convert
+            # it to a tuple first.
+            return hash(tuple(self._datum))
+        # _end_try_
     # _end_def_
 
     def random(self) -> None:
