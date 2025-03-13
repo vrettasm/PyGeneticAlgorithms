@@ -1,6 +1,6 @@
 import time
 import numpy as np
-from math import fabs
+from math import isclose
 from typing import Tuple
 
 from pygenalgo.engines.generic_ga import GenericGA
@@ -209,11 +209,11 @@ class StandardGA(GenericGA):
             # _end_if_
 
             # Compute the current average Hamming distance.
-            d_avg = average_hamming_distance(population_i)
+            avg_distance = average_hamming_distance(population_i)
 
             # Check for convergence.
-            if f_tol and fabs(avg_fitness_i - avg_fitness_0) < f_tol and d_avg < 0.025:
-
+            if f_tol and isclose(avg_fitness_i, avg_fitness_0,
+                                 rel_tol=f_tol) and avg_distance < 0.025:
                 # Display a warning message.
                 print(f"{self.__class__.__name__} converged in {i + 1} iterations.")
 
@@ -227,9 +227,9 @@ class StandardGA(GenericGA):
             # Adap probabilities for the next generation.
             if adapt_probs:
 
-                # For threshold, we use the mean Hamming
-                # distance of the current population.
-                self.adapt_probabilities(threshold=d_avg)
+                # For threshold, we use the average Hamming
+                # distance of the 'current' population.
+                self.adapt_probabilities(threshold=avg_distance)
 
                 # Store the updated crossover and mutation probabilities.
                 self._stats["prob_crossx"].append(self._crossx_op.probability)

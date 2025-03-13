@@ -1,5 +1,5 @@
 import time
-from math import isnan, fabs
+from math import isnan, isclose
 from operator import attrgetter
 from collections import defaultdict
 
@@ -188,10 +188,11 @@ class IslandModelGA(GenericGA):
             # _end_if_
 
             # Compute the current average Hamming distance.
-            d_avg = average_hamming_distance(population_i)
+            avg_distance = average_hamming_distance(population_i)
 
             # Check for convergence.
-            if f_tol and fabs(avg_fitness_i - avg_fitness_0) < f_tol and d_avg < 0.025:
+            if f_tol and isclose(avg_fitness_i, avg_fitness_0,
+                                 rel_tol=f_tol) and avg_distance < 0.025:
                 # Switch the convergence flag and track the current iteration.
                 has_converged = (True, i + 1)
 
@@ -203,7 +204,7 @@ class IslandModelGA(GenericGA):
             if adapt_probs:
 
                 # Update the genetic probabilities.
-                self.adapt_probabilities(threshold=d_avg)
+                self.adapt_probabilities(threshold=avg_distance)
 
                 # Store the updated crossover and mutation probabilities.
                 local_stats["prob_crossx"].append(self._crossx_op.probability)
