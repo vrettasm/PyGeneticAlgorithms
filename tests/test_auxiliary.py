@@ -1,8 +1,7 @@
 import unittest
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.engines.auxiliary import (hamming_distance,
-                                         apply_corrections,
+from pygenalgo.engines.auxiliary import (apply_corrections,
                                          average_hamming_distance)
 
 
@@ -77,50 +76,6 @@ class TestAuxiliary(unittest.TestCase):
 
         # There should be exactly '3' corrected Genes.
         self.assertEqual(3, t3_corrections)
-    # _end_def_
-
-    def test_humming_distance(self):
-        """
-        Check the Hamming distances of two identical
-        and two completely different chromosomes.
-
-        :return: None.
-        """
-
-        # Create a 'dummy' random function.
-        def func():
-            return 0
-        # _end_def_
-
-        # Create a 'dummy' chromosome with 3 'genes'.
-        ch_1 = Chromosome(_genome=[Gene(0, func),
-                                   Gene(1, func),
-                                   Gene(2, func)],
-                          _fitness=0.0, _valid=True)
-
-        # There are '0' dissimilarities when we compare
-        # the same chromosome(s).
-        self.assertEqual(0, hamming_distance(ch_1, ch_1))
-
-        # Create a 'dummy' chromosome with 3 'genes'.
-        ch_2 = Chromosome(_genome=[Gene(3, func),
-                                   Gene(4, func),
-                                   Gene(5, func)],
-                          _fitness=0.0, _valid=True)
-
-        # All the genes are different here.
-        self.assertEqual(3, hamming_distance(ch_1, ch_2))
-
-        # Create a 'dummy' chromosome with 2 'genes'.
-        ch_3 = Chromosome(_genome=[Gene(3, func),
-                                   Gene(4, func)],
-                          _fitness=0.0, _valid=True)
-
-        # Check if the chromosomes have the same length.
-        with self.assertRaises(ValueError):
-            hamming_distance(ch_1, ch_3)
-        # _end_with_
-
     # _end_def_
 
     def test_average_hamming_distance(self):

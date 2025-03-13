@@ -112,6 +112,46 @@ class TestChromosome(unittest.TestCase):
         self.assertNotEqual(chromo_1, chromo_2)
     # _end_def_
 
+    def test_humming_distance(self):
+        """
+        Check the Hamming distances of two identical
+        and two completely different chromosomes.
+
+        :return: None.
+        """
+
+        # Create a 'dummy' random function.
+        def func():
+            return 0
+        # _end_def_
+
+        # Create a 'dummy' chromosome with 3 'genes'.
+        ch_1 = Chromosome(_genome=[Gene(0, func),
+                                   Gene(1, func),
+                                   Gene(2, func)])
+
+        # There are '0' dissimilarities when we compare
+        # the same chromosome(s).
+        self.assertEqual(0, ch_1.hamming_distance(ch_1))
+
+        # Create a 'dummy' chromosome with 3 'genes'.
+        ch_2 = Chromosome(_genome=[Gene(3, func),
+                                   Gene(4, func),
+                                   Gene(5, func)])
+
+        # All the genes are different here.
+        self.assertEqual(3, ch_1.hamming_distance(ch_2))
+
+        # Create a 'dummy' chromosome with 2 'genes'.
+        ch_3 = Chromosome(_genome=[Gene(3, func),
+                                   Gene(4, func)])
+
+        # Check if the chromosomes have the same length.
+        with self.assertRaises(ValueError):
+            ch_1.hamming_distance(ch_3)
+        # _end_with_
+    # _end_def_
+
 # _end_class_
 
 
