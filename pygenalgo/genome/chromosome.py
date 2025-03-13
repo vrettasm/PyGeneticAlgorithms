@@ -164,10 +164,19 @@ class Chromosome(object):
         # the same type 'Chromosome'.
         if isinstance(other, Chromosome):
 
-            # Compare directly the genomes of both objects.
-            return tuple(self._genome) == tuple(other.genome)
+            # Compare directly the two genomes.
+            return self._genome == other.genome
         # _end_if_
         return False
+    # _end_def_
+
+    def __hash__(self) -> int:
+        """
+        Auxiliary method to hash the Chromosome object.
+
+        :return: the hash value of the genome.
+        """
+        return hash(tuple(self._genome))
     # _end_def_
 
     def __len__(self) -> int:
