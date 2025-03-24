@@ -160,8 +160,8 @@ as shown in the examples above.
 
 This work is described in:
 
-- Michail D. Vrettas and Stefano Silvestri (2025). "PyGenAlgo: a simple and powerful toolkit for genetic algorithms".
-SoftwareX, vol. 30. DOI: 10.1016/j.softx.2025.102127.
+- [Michail D. Vrettas and Stefano Silvestri (2025)](https://www.sciencedirect.com/science/article/pii/S2352711025000949)
+"PyGenAlgo: a simple and powerful toolkit for genetic algorithms". SoftwareX, vol. 30. DOI: 10.1016/j.softx.2025.102127.
 
 You can find the latest documentation [here](https://pygeneticalgorithms.readthedocs.io/en/latest/).
 
