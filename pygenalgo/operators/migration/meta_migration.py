@@ -37,24 +37,23 @@ class MetaMigration(MigrationOperator):
         :return: None.
         """
 
-        # If we have only one active population exit without migration.
-        if len(islands) == 1:
-            return None
-        # _end_if_
+        # Perform the migration only if we have more than one
+        # active populations.
+        if len(islands) > 1:
+            # If the migration probability is higher than
+            # a uniformly random value, make the transfer.
+            if self.is_operator_applicable():
 
-        # If the migration probability is higher than
-        # a uniformly random value, make the transfer.
-        if self.is_operator_applicable():
+                # Get the number of available migrators.
+                L = len(self.items)
 
-            # Get the number of available migrators.
-            L = len(self.items)
+                # Select randomly with equal probability
+                # a method and call its migrate method.
+                self.items[self.rng.integers(L)].migrate(islands)
 
-            # Select randomly with equal probability
-            # a method and call its migrate method.
-            self.items[self.rng.integers(L)].migrate(islands)
-
-            # Increase the mutator counter.
-            self.inc_counter()
+                # Increase the mutator counter.
+                self.inc_counter()
+            # _end_if_
         # _end_if_
     # _end_def_
 

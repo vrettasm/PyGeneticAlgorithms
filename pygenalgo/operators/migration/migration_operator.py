@@ -21,7 +21,7 @@ class MigrationOperator(GeneticOperator):
         super().__init__(migration_probability)
     # _end_def_
 
-    def migrate(self, islands: list[SubPopulation]):
+    def migrate(self, islands: list[SubPopulation]) -> None:
         """
         Abstract method that "reminds" the user that if they want to
         create a Migration Class that inherits from here they should
@@ -35,7 +35,7 @@ class MigrationOperator(GeneticOperator):
                                   f"You should implement this method!")
     # _end_def_
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs) -> None:
         """
         This is only a wrapper of the "migrate" method.
         """

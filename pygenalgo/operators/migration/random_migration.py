@@ -31,36 +31,35 @@ class RandomMigration(MigrationOperator):
         :return: None.
         """
 
-        # If we have only one active population exit without migration.
-        if len(islands) == 1:
-            return None
+        # Perform the migration only if we have more than one
+        # active populations.
+        if len(islands) > 1:
+            # First find the best individual chromosome FROM EACH island.
+            best_chromosomes = [max(island_i.population, key=attrgetter("fitness"))
+                                for island_i in islands]
+
+            # Shuffle the order of the best chromosomes list.
+            self.rng.shuffle(best_chromosomes)
+
+            # Go through all the islands.
+            for island_i, best_j in zip(islands, best_chromosomes):
+
+                # Perform the migration with a predefined probability.
+                if self.is_operator_applicable():
+
+                    # Select randomly one individual chromosome.
+                    idx = self.rng.integers(0, len(island_i.population))
+
+                    # Replace the randomly selected chromosome with
+                    # the pre-selected best one from the list above.
+                    island_i.population[idx] = best_j.clone()
+                # _end_if_
+
+            # _end_for_
+
+            # Increase the migration counter.
+            self.inc_counter()
         # _end_if_
-
-        # First find the best individual chromosome FROM EACH island.
-        best_chromosomes = [max(island_i.population, key=attrgetter("fitness"))
-                            for island_i in islands]
-
-        # Shuffle the order of the best chromosomes list.
-        self.rng.shuffle(best_chromosomes)
-
-        # Go through all the islands.
-        for island_i, best_j in zip(islands, best_chromosomes):
-
-            # Perform the migration with a predefined probability.
-            if self.is_operator_applicable():
-
-                # Select randomly one individual chromosome.
-                idx = self.rng.integers(0, len(island_i.population))
-
-                # Replace the randomly selected chromosome with
-                # the selected best one from the list above.
-                island_i.population[idx] = best_j.clone()
-            # _end_if_
-
-        # _end_for_
-
-        # Increase the migration counter.
-        self.inc_counter()
     # _end_def_
 
 # _end_class_
