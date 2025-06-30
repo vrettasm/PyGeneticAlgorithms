@@ -18,13 +18,16 @@ def average_hamming_distance(population: list[Chromosome]) -> float:
     divided by the total number of genes compared.
     """
 
-    # Initialize the counters.
-    total_diffs, total_genes = 0, 0
+    # Initialize the counter.
+    total_diffs = 0
+
+    # Get the number of the chromosomes.
+    n_chromosomes = len(population)
 
     # Get the size of the chromosome. It is
     # assumed that all chromosomes have the
     # same size.
-    number_of_genes = len(population[0])
+    n_genes = len(population[0])
 
     # Iterate through all the population.
     for i, item1 in enumerate(population):
@@ -40,17 +43,12 @@ def average_hamming_distance(population: list[Chromosome]) -> float:
             # Get the total number of different genes.
             total_diffs += [k != l for k, l in zip(item1_genome,
                                                    item2.genome)].count(True)
-            # We add the number of genes we tested.
-            total_genes += number_of_genes
-        # _end_for_
-
     # _end_for_
 
-    # Sanity check.
-    if total_genes == 0:
-        raise RuntimeError("Average Humming Distance: Total number of Genes is zero.")
-    # _end_if_
+    # Compute the total number of counted enes.
+    total_genes = (n_genes * n_chromosomes * (n_chromosomes - 1) / 2.0)
 
+    # Return the averaged value.
     return float(total_diffs / total_genes)
 # _end_def_
 
