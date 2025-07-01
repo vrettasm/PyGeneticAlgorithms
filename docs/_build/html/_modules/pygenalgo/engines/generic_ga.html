@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
@@ -7,14 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pygenalgo.engines.generic_ga &mdash; PyGenAlgo 01.70.50 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
   
-      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=d0c4109e"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=d0c4109e"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -105,7 +107,7 @@
 
     <span class="c1"># Object variables.</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;fitness_func&quot;</span><span class="p">,</span> <span class="s2">&quot;_select_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_crossx_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_mutate_op&quot;</span><span class="p">,</span>
-                 <span class="s2">&quot;_stats&quot;</span><span class="p">,</span> <span class="s2">&quot;_n_cpus&quot;</span><span class="p">)</span>
+                 <span class="s2">&quot;_stats&quot;</span><span class="p">,</span> <span class="s2">&quot;_n_cpus&quot;</span><span class="p">,</span> <span class="s2">&quot;_f_eval&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_pop</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span> <span class="n">fit_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">select_op</span><span class="p">:</span> <span class="n">SelectionOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">mutate_op</span><span class="p">:</span> <span class="n">MutationOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">crossx_op</span><span class="p">:</span> <span class="n">CrossoverOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">n_cpus</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -161,17 +163,20 @@
         <span class="k">if</span> <span class="n">n_cpus</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 
             <span class="c1"># This is the default option.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span> <span class="o">=</span> <span class="n">GenericGA</span><span class="o">.</span><span class="n">MAX_CPUs</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">GenericGA</span><span class="o">.</span><span class="n">MAX_CPUs</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
 
             <span class="c1"># Assign the  requested number, making sure we have</span>
             <span class="c1"># enough CPUs and the value entered has the correct</span>
             <span class="c1"># type.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">GenericGA</span><span class="o">.</span><span class="n">MAX_CPUs</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_cpus</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">GenericGA</span><span class="o">.</span><span class="n">MAX_CPUs</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_cpus</span><span class="p">)))</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Dictionary with statistics.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+        <span class="c1"># Set the function evaluation to zero.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_f_eval</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="GenericGA.set_seed">
@@ -188,6 +193,16 @@
         <span class="c1"># Re-initialize the class variable.</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">rng_GA</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">new_seed</span><span class="p">)</span></div>
 
+    <span class="c1"># _end_def_</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">f_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Accessor method that returns the value of the f_eval.</span>
+
+<span class="sd">        :return: (int) the counted number of function evaluations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_f_eval</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -240,6 +255,28 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span>
     <span class="c1"># _end_def_</span>
 
+<div class="viewcode-block" id="GenericGA.clear_all">
+<a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.clear_all">[docs]</a>
+    <span class="k">def</span> <span class="nf">clear_all</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make sure all the genetic operator counters and the stats</span>
+<span class="sd">        are cleared. This reset everything before each run().</span>
+
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Ensure the genetic operator counters are reset before.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">reset_counter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">reset_counter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_select_op</span><span class="o">.</span><span class="n">reset_counter</span><span class="p">()</span>
+
+        <span class="c1"># Reset stats dictionary.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="c1"># Reset f_eval counter.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_f_eval</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+    <span class="c1"># _end_def_</span>
+
 <div class="viewcode-block" id="GenericGA.best_chromosome">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.best_chromosome">[docs]</a>
     <span class="k">def</span> <span class="nf">best_chromosome</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Chromosome</span><span class="p">:</span>
@@ -262,7 +299,7 @@
 <span class="sd">        Auxiliary method that returns the best &#39;n&#39; chromosomes</span>
 <span class="sd">        with the highest fitness value.</span>
 
-<span class="sd">        :param n: the number of best chromosomes. Default = 1.</span>
+<span class="sd">        :param n: the number of the best chromosomes. Default = 1.</span>
 
 <span class="sd">        :return: Return the &#39;n&#39; chromosomes with the highest fitness.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -449,8 +486,11 @@
             <span class="n">fitness_i</span> <span class="o">=</span> <span class="p">[</span><span class="n">fit_func</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">input_population</span><span class="p">]</span>
         <span class="c1"># _end_if_</span>
 
+        <span class="c1"># Get the size of the population.</span>
+        <span class="n">p_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fitness_i</span><span class="p">)</span>
+
         <span class="c1"># Preallocate the fitness list.</span>
-        <span class="n">fitness_values</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fitness_i</span><span class="p">)</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+        <span class="n">fitness_values</span> <span class="o">=</span> <span class="n">p_size</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
 
         <span class="c1"># Flag to indicate if a solution has been found.</span>
         <span class="n">found_solution</span> <span class="o">=</span> <span class="kc">False</span>
@@ -467,6 +507,9 @@
             <span class="c1"># Update the &quot;found solution&quot;.</span>
             <span class="n">found_solution</span> <span class="o">|=</span> <span class="n">fit_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="c1"># _end_for_</span>
+
+        <span class="c1"># Update the counter of function evaluations.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_f_eval</span> <span class="o">+=</span> <span class="n">p_size</span>
 
         <span class="c1"># Return the fitness values.</span>
         <span class="k">return</span> <span class="n">fitness_values</span><span class="p">,</span> <span class="n">found_solution</span></div>
