@@ -1,5 +1,4 @@
 import time
-import numpy as np
 from math import isclose
 from typing import Tuple
 
@@ -68,7 +67,7 @@ class StandardGA(GenericGA):
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
             f_tol: float = None, parallel: bool = False, adapt_probs: bool = False,
-            shuffle: bool = True, verbose: bool = False) -> None:
+            shuffle: bool = True, f_max_eval: int = None, verbose: bool = False) -> None:
         """
         Main method of the StandardGA class, that implements the evolutionary routine.
 
@@ -94,19 +93,17 @@ class StandardGA(GenericGA):
         :param shuffle: (bool) If enabled (set to True), it will shuffle the population before
         the application of the crossover and mutation operations. Default is set to True.
 
+        :param f_max_eval: (int) it sets an upper limit of function evaluations. If the number
+        is exceeded the genetic algorithm stops.
+
         :param verbose: (bool) if 'True' it will display periodically information about the
         current average fitness and spread of the population.
 
         :return: None.
         """
 
-        # Make sure the genetic operator counters are reset before each run().
-        self._crossx_op.reset_counter()
-        self._mutate_op.reset_counter()
-        self._select_op.reset_counter()
-
-        # Reset stats dictionary.
-        self._stats.clear()
+        # Make sure everything is cleared.
+        self.clear_all()
 
         # Get the size of the population.
         N = len(self.population)
@@ -205,6 +202,17 @@ class StandardGA(GenericGA):
             if found_solution:
                 # Display a warning message.
                 print(f"{self.__class__.__name__} finished in {i + 1} iterations.")
+
+                # Exit from the loop.
+                break
+            # _end_if_
+
+            # Check for the maximum function evaluations.
+            if f_max_eval and self.f_eval >= f_max_eval:
+
+                # Display an information message.
+                print(f"{self.__class__.__name__} "
+                      "Reached the maximum number of function evaluations.")
 
                 # Exit from the loop.
                 break
