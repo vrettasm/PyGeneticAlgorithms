@@ -45,7 +45,7 @@ class StandardGA(GenericGA):
         """
 
         # Convert the fitness list in a numpy array.
-        arr = np.array(fit_list, dtype=float)
+        arr = array(fit_list, dtype=float)
 
         # Get the mean and std values.
         avg_fitness = np.nanmean(arr, dtype=float)
