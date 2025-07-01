@@ -32,7 +32,7 @@ class GenericGA(object):
 
     # Object variables.
     __slots__ = ("population", "fitness_func", "_select_op", "_crossx_op", "_mutate_op",
-                 "_stats", "_n_cpus")
+                 "_stats", "_n_cpus", "_f_eval")
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, select_op: SelectionOperator = None,
                  mutate_op: MutationOperator = None, crossx_op: CrossoverOperator = None, n_cpus: int = None):
@@ -99,6 +99,9 @@ class GenericGA(object):
 
         # Dictionary with statistics.
         self._stats = defaultdict(list)
+
+        # Set the function evaluation to zero.
+        self._f_eval = 0
     # _end_def_
 
     @classmethod
@@ -112,6 +115,16 @@ class GenericGA(object):
         """
         # Re-initialize the class variable.
         cls.rng_GA = default_rng(seed=new_seed)
+    # _end_def_
+
+    @property
+    def f_eval(self) -> int:
+        """
+        Accessor method that returns the value of the f_eval.
+
+        :return: (int) the counted number of function evaluations.
+        """
+        return self._f_eval
     # _end_def_
 
     @property
@@ -162,6 +175,25 @@ class GenericGA(object):
         :return: the n_cpus.
         """
         return self._n_cpus
+    # _end_def_
+
+    def clear_all(self) -> None:
+        """
+        Make sure all the genetic operator counters and the stats
+        are cleared. This reset everything before each run().
+
+        :return: None.
+        """
+        # Ensure the genetic operator counters are reset before.
+        self._crossx_op.reset_counter()
+        self._mutate_op.reset_counter()
+        self._select_op.reset_counter()
+
+        # Reset stats dictionary.
+        self._stats.clear()
+
+        # Reset f_eval counter.
+        self._f_eval = 0
     # _end_def_
 
     def best_chromosome(self) -> Chromosome:
@@ -353,8 +385,11 @@ class GenericGA(object):
             fitness_i = [fit_func(p) for p in input_population]
         # _end_if_
 
+        # Get the size of the population.
+        p_size = len(fitness_i)
+
         # Preallocate the fitness list.
-        fitness_values = len(fitness_i) * [None]
+        fitness_values = p_size * [None]
 
         # Flag to indicate if a solution has been found.
         found_solution = False
@@ -371,6 +406,9 @@ class GenericGA(object):
             # Update the "found solution".
             found_solution |= fit_tuple[1]
         # _end_for_
+
+        # Update the counter of function evaluations.
+        self._f_eval += p_size
 
         # Return the fitness values.
         return fitness_values, found_solution
