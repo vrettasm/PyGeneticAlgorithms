@@ -88,13 +88,13 @@ class GenericGA(object):
         if n_cpus is None:
 
             # This is the default option.
-            self._n_cpus = GenericGA.MAX_CPUs
+            self._n_cpus = max(1, GenericGA.MAX_CPUs-1)
         else:
 
             # Assign the  requested number, making sure we have
             # enough CPUs and the value entered has the correct
             # type.
-            self._n_cpus = max(1, min(GenericGA.MAX_CPUs, int(n_cpus)))
+            self._n_cpus = max(1, min(GenericGA.MAX_CPUs-1, int(n_cpus)))
         # _end_if_
 
         # Dictionary with statistics.
