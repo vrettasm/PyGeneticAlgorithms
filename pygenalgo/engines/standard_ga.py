@@ -48,8 +48,8 @@ class StandardGA(GenericGA):
         arr = array(fit_list, dtype=float)
 
         # Get the mean and std values.
-        avg_fitness = np.nanmean(arr, dtype=float)
-        std_fitness = np.nanstd(arr, dtype=float)
+        avg_fitness = nanmean(arr, dtype=float)
+        std_fitness = nanstd(arr, dtype=float)
 
         # Make sure the stat values are finite.
         if all(np.isfinite([avg_fitness, std_fitness])):
