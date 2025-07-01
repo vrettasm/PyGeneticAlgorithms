@@ -3,8 +3,8 @@ from math import isnan, isclose
 from operator import attrgetter
 from collections import defaultdict
 
-import numpy as np
 from joblib import (Parallel, delayed)
+from numpy import (nanmean, nanstd, isfinite)
 
 from pygenalgo.engines.auxiliary import (SubPopulation,
                                          apply_corrections,
@@ -160,13 +160,13 @@ class IslandModelGA(GenericGA):
             # _end_if_
 
             # Compute the mean value.
-            avg_fitness_i = np.nanmean(fit_list_i, dtype=float)
+            avg_fitness_i = nanmean(fit_list_i, dtype=float)
 
             # Compute the standard deviation value.
-            std_fitness_i = np.nanstd(fit_list_i, dtype=float)
+            std_fitness_i = nanstd(fit_list_i, dtype=float)
 
             # Update the i-th population mean/std.
-            if all(np.isfinite([avg_fitness_i, std_fitness_i])):
+            if all(isfinite([avg_fitness_i, std_fitness_i])):
 
                 # Store them in the dictionary.
                 local_stats["avg"].append(avg_fitness_i)
@@ -284,13 +284,13 @@ class IslandModelGA(GenericGA):
             fit_list_0, _ = self.evaluate_fitness(pop_n.population, parallel_mode=True,
                                                   backend="loky")
             # Compute the mean value.
-            avg_fitness_0 = np.nanmean(fit_list_0, dtype=float)
+            avg_fitness_0 = nanmean(fit_list_0, dtype=float)
 
             # Compute the standard deviation value.
-            std_fitness_0 = np.nanstd(fit_list_0, dtype=float)
+            std_fitness_0 = nanstd(fit_list_0, dtype=float)
 
             # Check for initial errors.
-            if all(np.isfinite([avg_fitness_0, std_fitness_0])):
+            if all(isfinite([avg_fitness_0, std_fitness_0])):
 
                 # Store them in the dictionary.
                 self._stats[pop_n.id]["avg"].append(avg_fitness_0)
@@ -505,7 +505,7 @@ class IslandModelGA(GenericGA):
         fit_list_final, _ = self.evaluate_fitness(self.population,
                                                   parallel_mode=True, backend="loky")
         # Compute the mean value.
-        avg_fitness_final = np.nanmean(fit_list_final, dtype=float)
+        avg_fitness_final = nanmean(fit_list_final, dtype=float)
 
         # Final time instant.
         time_tf = time.perf_counter()
