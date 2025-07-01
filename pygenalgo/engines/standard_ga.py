@@ -52,7 +52,7 @@ class StandardGA(GenericGA):
         std_fitness = nanstd(arr, dtype=float)
 
         # Make sure the stat values are finite.
-        if all(np.isfinite([avg_fitness, std_fitness])):
+        if all(isfinite([avg_fitness, std_fitness])):
 
             # Store them in the dictionary.
             self._stats["avg"].append(avg_fitness)
