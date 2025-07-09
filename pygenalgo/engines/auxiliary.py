@@ -6,13 +6,17 @@ from pygenalgo.genome.chromosome import Chromosome
 __all__ = ["average_hamming_distance", "pareto_front",
            "apply_corrections", "SubPopulation"]
 
-def average_hamming_distance(population: list[Chromosome]) -> float:
+def average_hamming_distance(population: list[Chromosome],
+                             normal: bool = True) -> float:
     """
     Computes the average Hamming distance of a population. We use this
     to measure the similarity in the whole population of chromosomes.
 
     :param population: List(Chromosome) the population we want to compute
     the average Hamming distance.
+
+    :param normal: (bool) flag that requires the return of the normalized
+    average distance.
 
     :return: (float) the total number of differences, in the genes,
     divided by the total number of genes compared.
@@ -45,8 +49,13 @@ def average_hamming_distance(population: list[Chromosome]) -> float:
                                                    item2.genome)].count(True)
     # _end_for_
 
-    # Compute the total number of counted enes.
-    total_genes = (n_genes * n_chromosomes * (n_chromosomes - 1) / 2.0)
+    # Compute the total number of counted genes.
+    total_genes = (n_chromosomes * (n_chromosomes - 1) / 2.0)
+
+    # Check for normalization.
+    if normal and n_genes != 0:
+        total_genes *= n_genes
+    # _end_if_
 
     # Return the averaged value.
     return float(total_diffs / total_genes)
