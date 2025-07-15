@@ -56,7 +56,7 @@ class TestAuxiliary(unittest.TestCase):
                            ]
 
         # Run the corrections algorithms.
-        t0_corrections = apply_corrections(test_population, fit_func)
+        t0_corrections, _ = apply_corrections(test_population, fit_func)
 
         # There should be exactly '0' corrected Genes.
         self.assertEqual(0, t0_corrections)
@@ -72,7 +72,7 @@ class TestAuxiliary(unittest.TestCase):
                                          Gene(None, rand_func)])
 
         # Run the corrections algorithms.
-        t3_corrections = apply_corrections(test_population, fit_func)
+        t3_corrections, _ = apply_corrections(test_population, fit_func)
 
         # There should be exactly '3' corrected Genes.
         self.assertEqual(3, t3_corrections)
