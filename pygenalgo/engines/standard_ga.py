@@ -153,7 +153,10 @@ class StandardGA(GenericGA):
             # Check if 'corrections' are enabled.
             if correction:
                 # Apply the function.
-                total_corrections = apply_corrections(population_i, self.fitness_func)
+                total_corrections, f_counts = apply_corrections(population_i, self.fitness_func)
+
+                # Update the function evaluation counter.
+                self.f_eval_increase_by(f_counts)
 
                 # Print only if there were corrections,
                 # to avoid cluttering the screen.
