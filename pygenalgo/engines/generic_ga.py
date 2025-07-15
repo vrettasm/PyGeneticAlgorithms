@@ -177,6 +177,19 @@ class GenericGA(object):
         return self._n_cpus
     # _end_def_
 
+    def f_eval_increase_by(self, new_counts: int) -> None:
+        """
+        Utility method to allow the '_f_eval' to be updated with new counts
+        outside of the main class. This can happen during gene correction.
+
+        :param new_counts: the new value of counts that we want to add on the
+        current f_eval.
+
+        :return: None.
+        """
+        self._f_eval += new_counts
+    # _end_def_
+
     def clear_all(self) -> None:
         """
         Make sure all the genetic operator counters and the stats
