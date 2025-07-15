@@ -62,23 +62,26 @@ def average_hamming_distance(population: list[Chromosome],
 # _end_def_
 
 def apply_corrections(input_population: list[Chromosome],
-                      fit_func: Callable = None) -> int:
+                      fit_func: Callable = None) -> (int, int):
     """
     Check the population  for invalid genes and correct them by applying directly
     the random method. It is assumed that the random method of the Gene is always
-    returning a 'valid' value for the Gene. After that, we need to reevaluate the
+    returning a 'valid' value for the Gene. After that we need to re-evaluate the
     chromosome to update its fitness.
 
-    :param input_population: List(Chromosome) the population
-    we want to apply corrections (if applicable).
+    :param input_population: List(Chromosome) the population we want to apply
+    corrections (if applicable).
 
     :param fit_func: callable fitness function.
 
-    :return: the total number of corrected genes in the population.
+    :return: total number of corrected genes and the additional function evaluations.
     """
 
     # Holds the number of the corrected chromosomes.
     corrections_counter = 0
+
+    # Counts the additional function evaluations.
+    f_eval_counter = 0
 
     # Go through all the chromosomes of the input population.
     for chromosome in input_population:
@@ -112,12 +115,16 @@ def apply_corrections(input_population: list[Chromosome],
 
             # Re-evaluate the fitness of the chromosome.
             chromosome.fitness, _ = fit_func(chromosome)
+
+            # Increase counter by one.
+            f_eval_counter += 1
         # _end_if_
 
     # _end_for_
 
-    # Return the total number of corrected genes.
-    return corrections_counter
+    # Return the total number of corrected genes along
+    # with the count of additional function evaluations.
+    return corrections_counter, f_eval_counter
 # _end_def_
 
 def pareto_front(points: list) -> list:
