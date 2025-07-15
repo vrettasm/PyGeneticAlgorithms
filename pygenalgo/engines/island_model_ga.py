@@ -223,7 +223,8 @@ class IslandModelGA(GenericGA):
 
     def run(self, epochs: int = 1000, correction: bool = False, elitism: bool = True,
             f_tol: float = None, allow_migration: bool = False, n_periods: int = 10,
-            adapt_probs: bool = False, shuffle: bool = True, verbose: bool = False) -> None:
+            adapt_probs: bool = False, shuffle: bool = True, f_max_eval: int = None,
+            verbose: bool = False) -> None:
         """
         Main method of the IslandModelGA class, that implements the evolutionary routine.
 
@@ -253,6 +254,10 @@ class IslandModelGA(GenericGA):
 
         :param shuffle: (bool) If enabled (set to True), it will shuffle the population before
         the application of the crossover and mutation operations. Default is set to True.
+
+        :param f_max_eval: (int) it sets an upper limit of function evaluations. If the number
+        is exceeded the genetic algorithm stops. If this value is set, the epochs will be
+        ignored and re-adjusted to meet the new requirement.
 
         :param verbose: (bool) if 'True' it will display periodically information about the
         current stats of the subpopulations. NB: This setting is active only when the option
@@ -304,6 +309,22 @@ class IslandModelGA(GenericGA):
             self._stats[pop_n.id]["prob_crossx"].append(self._crossx_op.probability)
             self._stats[pop_n.id]["prob_mutate"].append(self._mutate_op.probability)
         # _end_for_
+
+        # Check if we have set a maximum number on function
+        # evaluations and re-adjust the epochs.
+        if f_max_eval:
+
+            # First remove the counts from the initial
+            # evaluation of the population.
+            total_f_counts = int(f_max_eval) - self.f_eval
+
+            # Assuming each epoch performs N function evaluations.
+            epochs = int(total_f_counts / len(self.population))
+
+            # Display an information message.
+            print(f"INFO: The 'f_max_eval' parameter has been set to: {f_max_eval}. "
+                  f"The 'epochs' value has been re-adjusted to: {epochs}\n")
+        # _end_if_
 
         # Display an information message.
         print(f"Parallel evolution in progress with {self.num_islands} islands ...")
