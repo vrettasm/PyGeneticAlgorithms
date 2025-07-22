@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PyGenAlgo"
+version = "1.7.1"
+description = "This repository implements a genetic algorithm (GA) in Python3 programming language using only Numpy and Joblib as additional libraries."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "GPL-3.0" }
+authors = [
+    { name = "Michalis Vrettas, PhD", email = "michail.vrettas@gmail.com" }
+]
+keywords = ["optimization", "genetic algorithms", "island model"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GPL-3.0 License",
+    "Operating System :: OS Independent",
+]
+
+[project.dependencies]
+numpy = "^1.23.5"
+joblib = "^1.4.2"  # Example dependency
