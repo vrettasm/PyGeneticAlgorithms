@@ -19,6 +19,8 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-[project.dependencies]
-numpy = "^1.23.5"
-joblib = "^1.4.2"  # Example dependency
+[project]
+dependencies = [
+  "numpy",
+  "joblib",
+]
