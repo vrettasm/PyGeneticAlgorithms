@@ -179,11 +179,12 @@ class GenericGA(object):
 
     def f_eval_increase_by(self, new_counts: int) -> None:
         """
-        Utility method to allow the '_f_eval' to be updated with new counts
-        outside of the main class. This can happen during gene correction.
+        Utility method to allow the '_f_eval' to be updated with
+        new counts outside the main class. This can happen during
+        gene correction.
 
-        :param new_counts: the new value of counts that we want to add on the
-        current f_eval.
+        :param new_counts: the new value of 'counts' that we want
+        to add on the current f_eval.
 
         :return: None.
         """
