@@ -410,15 +410,15 @@ class GenericGA(object):
 
         # Update all chromosomes with their fitness and check if a solution
         # has been found.
-        for n, (p, fit_tuple) in enumerate(zip(input_population, fitness_i)):
+        for n, (p, fit_result) in enumerate(zip(input_population, fitness_i)):
             # Attach the fitness to each chromosome.
-            p.fitness = fit_tuple[0]
+            p.fitness = fit_result["f_value"]
 
             # Collect the fitness in a separate list.
-            fitness_values[n] = fit_tuple[0]
+            fitness_values[n] = fit_result["f_value"]
 
             # Update the "found solution".
-            found_solution |= fit_tuple[1]
+            found_solution |= fit_result["solution_is_found"]
         # _end_for_
 
         # Update the counter of function evaluations.

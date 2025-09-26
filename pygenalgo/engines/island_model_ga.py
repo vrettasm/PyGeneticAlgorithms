@@ -96,7 +96,7 @@ class IslandModelGA(GenericGA):
         has_converged = (False, epochs)
 
         # Get the size of the population.
-        N = len(island.population)
+        pop_size = len(island.population)
 
         # Define local dictionary to hold the statistics.
         local_stats = {"avg": [], "std": [], "prob_crossx": [], "prob_mutate": []}
@@ -149,7 +149,7 @@ class IslandModelGA(GenericGA):
                 # Check if the chromosome already exists.
                 if best_chromosome not in population_i:
                     # Select a position at random.
-                    locus = self.rng_GA.integers(N)
+                    locus = self.rng_GA.integers(pop_size)
 
                     # Replace it with the previous best.
                     population_i[locus] = best_chromosome

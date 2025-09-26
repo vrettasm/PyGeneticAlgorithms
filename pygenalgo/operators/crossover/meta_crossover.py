@@ -45,11 +45,11 @@ class MetaCrossover(CrossoverOperator):
         if self.is_operator_applicable():
 
             # Get the number of available crossovers.
-            L = len(self.items)
+            n_operators = len(self.items)
 
             # Select randomly, with equal probability (but this can be changed),
             # a crossover operator and call its crossover method.
-            child1, child2 = self.items[self.rng.integers(L)].crossover(parent1, parent2)
+            child1, child2 = self.items[self.rng.integers(n_operators)].crossover(parent1, parent2)
 
             # Increase the crossover counter.
             self.inc_counter()

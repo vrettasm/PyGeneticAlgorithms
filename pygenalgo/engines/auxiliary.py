@@ -1,4 +1,5 @@
 from typing import Callable
+from functools import wraps, partial
 from dataclasses import dataclass, field
 from pygenalgo.genome.chromosome import Chromosome
 
@@ -179,6 +180,59 @@ def pareto_front(points: list) -> list:
     return pareto_points
 # _end_def_
 
+def cost_function(func: Callable = None, minimize: bool = False):
+    """
+    Decorator for the function that we want to optimize.
+    The default setting is maximization.
+
+    :param func: the function to be optimized.
+
+    :param minimize: if 'True' it will return the negative
+    function value to allow for the minimization.
+    Default is 'False'.
+
+    :return: the 'function_wrapper' method.
+    """
+
+    # This allows the decorator to be called with
+    # parenthesis and using the default parameters.
+    if func is None:
+        return partial(cost_function, minimize=minimize)
+    # _end_if_
+
+    @wraps(func)
+    def function_wrapper(*args, **kwargs):
+        """
+        Internal function wrapper.
+
+        :param args: function positional arguments.
+
+        :param kwargs: function keywords arguments.
+
+        :return: a dictionary with two key-values.
+        """
+
+        # Run the function we want to optimize.
+        result = func(*args, **kwargs)
+
+        # Check if the function returns a tuple (with two values)
+        # or a single output parameter. In the former, the second
+        # value should be boolean to signal that the solution meets
+        # the termination requirements.
+        if isinstance(result, tuple) and len(result) == 2:
+
+            f_value, solution_is_found = result[0], bool(result[1])
+        else:
+
+            f_value, solution_is_found = result, False
+        # _end_if_
+
+        return {"f_value": -f_value if minimize else f_value,
+                "solution_is_found": solution_is_found}
+    # _end_def_
+
+    return function_wrapper
+# _end_def_
 
 @dataclass(init=True, repr=True)
 class SubPopulation(object):
