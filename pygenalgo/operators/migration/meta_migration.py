@@ -45,11 +45,11 @@ class MetaMigration(MigrationOperator):
             if self.is_operator_applicable():
 
                 # Get the number of available migrators.
-                L = len(self.items)
+                n_operators = len(self.items)
 
-                # Select randomly with equal probability
-                # a method and call its migrate method.
-                self.items[self.rng.integers(L)].migrate(islands)
+                # Select randomly with equal probability a method and call
+                # its migrate method.
+                self.items[self.rng.integers(n_operators)].migrate(islands)
 
                 # Increase the mutator counter.
                 self.inc_counter()
