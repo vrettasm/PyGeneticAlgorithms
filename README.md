@@ -97,13 +97,17 @@ The recommended version is Python 3.10 (and above). To simplify the required pac
 ### Fitness function
 
 The most important thing the user has to do is to define the "fitness function". A template is provided here,
-in addition to the examples below.
+in addition to the examples below. The cost_function decorator is used to indicate whether the function will
+be maximized (default), or minimized. The second output parameter ("solution_found") is optional; only in the
+cases where we can evaluate if a termination condition is satisfied.
 
 ```python
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.engines.auxiliary import cost_function
 
 # Fitness function <template>.
-def fitness_func(individual: Chromosome, f_min: bool = False):
+@cost_function(minimize=True)
+def fitness_func(individual: Chromosome):
     """
     This is how a fitness function should look like. The whole
     evaluation should be implemented (or wrapped around) this
@@ -111,8 +115,7 @@ def fitness_func(individual: Chromosome, f_min: bool = False):
     
     :param individual: Individual chromosome to be evaluated.
     
-    :param f_min: Bool flag indicating whether we are dealing
-    with a minimization or maximization problem.
+    :return: the function value evaluated at the individual.
     """
     
     # CODE TO IMPLEMENT.
@@ -122,13 +125,10 @@ def fitness_func(individual: Chromosome, f_min: bool = False):
     solution_found = ...
     
     # Compute the function value.
-    f_val = ...
+    f_value = ...
     
-    # Assign the fitness value (check for minimization).
-    fit_value = -f_val if f_min else f_val
-    
-    # Return the solution tuple.
-    return fit_value, solution_found
+    # Return the solution.
+    return f_value, solution_found
 # _end_def_
 ```
 Once the fitness function is defined correctly the next steps are straightforward as described in the examples.
