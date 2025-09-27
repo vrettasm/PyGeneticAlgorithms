@@ -4,8 +4,8 @@ from dataclasses import dataclass, field
 from pygenalgo.genome.chromosome import Chromosome
 
 # Public interface.
-__all__ = ["average_hamming_distance", "pareto_front",
-           "apply_corrections", "SubPopulation"]
+__all__ = ["average_hamming_distance", "pareto_front", "apply_corrections",
+           "SubPopulation", "cost_function"]
 
 def average_hamming_distance(population: list[Chromosome],
                              normal: bool = True) -> float:
