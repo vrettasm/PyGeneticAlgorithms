@@ -378,7 +378,7 @@ class GenericGA(object):
 
     def evaluate_fitness(self, input_population: list[Chromosome],
                          parallel_mode: bool = False,
-                         backend: str = "threading") -> Tuple[list[float], bool]:
+                         backend: str = "threading") -> tuple[list[float], bool]:
         """
         Evaluate all the chromosomes of the input list with the custom
         fitness function. The parallel_mode is optional. Moreover, the
