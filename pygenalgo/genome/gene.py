@@ -2,6 +2,9 @@ from typing import Any, Callable
 from copy import deepcopy
 from numpy.random import default_rng, Generator
 
+# Public interface.
+__all__ = ["Gene"]
+
 
 class Gene(object):
     """
