@@ -1,5 +1,4 @@
 from copy import deepcopy
-from numpy import nan as np_nan
 from dataclasses import dataclass, field
 
 from pygenalgo.genome.gene import Gene
