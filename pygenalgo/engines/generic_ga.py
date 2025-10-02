@@ -188,6 +188,13 @@ class GenericGA(object):
 
         :return: None.
         """
+
+        # Sanity check.
+        if new_counts < 0:
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"New counts must be positive integer.")
+        # _end_if_
+
         self._f_eval += new_counts
     # _end_def_
 
