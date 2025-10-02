@@ -4,6 +4,9 @@ from dataclasses import dataclass, field
 
 from pygenalgo.genome.gene import Gene
 
+# Public interface.
+__all__ = ["Chromosome"]
+
 
 @dataclass(init=True, repr=True)
 class Chromosome(object):
