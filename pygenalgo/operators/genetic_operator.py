@@ -1,4 +1,5 @@
 from threading import Lock
+from functools import wraps
 from numpy.random import default_rng, Generator
 
 # Public interface.
@@ -21,6 +22,8 @@ def increase_counter(method):
 
     :return: the wrapper function.
     """
+
+    @wraps(method)
     def wrapper(self, *args, **kwargs):
         """
         NOTE: We do not do any kind of error handling in here
