@@ -1,7 +1,8 @@
 import unittest
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.engines.auxiliary import (apply_corrections,
+from pygenalgo.engines.auxiliary import (cost_function,
+                                         apply_corrections,
                                          average_hamming_distance)
 
 
@@ -34,6 +35,7 @@ class TestAuxiliary(unittest.TestCase):
             return 0
         # _end_def_
 
+        @cost_function
         def fit_func(individual):
             """
             Dummy fitness function.
