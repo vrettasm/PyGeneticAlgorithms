@@ -63,7 +63,7 @@ def average_hamming_distance(population: list[Chromosome],
 # _end_def_
 
 def apply_corrections(input_population: list[Chromosome],
-                      fit_func: Callable = None) -> (int, int):
+                      fit_func: Callable = None) -> tuple[int, int]:
     """
     Check the population  for invalid genes and correct them by applying directly
     the random method. It is assumed that the random method of the Gene is always
@@ -201,7 +201,7 @@ def cost_function(func: Callable = None, minimize: bool = False):
     # _end_if_
 
     @wraps(func)
-    def function_wrapper(*args, **kwargs):
+    def function_wrapper(*args, **kwargs) -> dict:
         """
         Internal function wrapper.
 
