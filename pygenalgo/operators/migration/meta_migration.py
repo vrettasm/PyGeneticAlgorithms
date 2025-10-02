@@ -51,7 +51,7 @@ class MetaMigration(MigrationOperator):
                 # its migrate method.
                 self.items[self.rng.integers(n_operators)].migrate(islands)
 
-                # Increase the mutator counter.
+                # Increase the migration counter.
                 self.inc_counter()
             # _end_if_
         # _end_if_
