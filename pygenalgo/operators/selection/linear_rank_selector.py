@@ -1,4 +1,6 @@
+from functools import cache
 from operator import attrgetter
+
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
@@ -24,11 +26,30 @@ class LinearRankSelector(SelectionOperator):
 
         # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
+    # _end_def_
 
-        # Initialize auxiliary parameters. These parameters will help us
-        # NOT to recompute the selection probabilities every time unless
-        # the population size changes during evolution.
-        self._items = {"pop_size": 0, "selection_probs": None}
+    @staticmethod
+    @cache
+    def _linear_rank_probabilities(p_size: int) -> list[float]:
+        """
+        Calculate the rank probability distribution over the population size.
+        The function is cached so repeated calls with the same input should
+        not recompute the same array since the population size of the swarm
+        is not expected to change.
+
+        NOTE: Probabilities are returned in descending order.
+
+        :param p_size: (int) population size.
+
+        :return: (list) rank probability distribution in descending order.
+        """
+
+        # Calculate the sum of '1 + 2 + 3 + ... + N'.
+        # We know that this is equal to: N * (N+1)/2.
+        sum_ranked_values = float(0.5 * p_size * (p_size + 1))
+
+        # Return the probability values (descending order).
+        return [n / sum_ranked_values for n in range(1, p_size + 1)]
     # _end_def_
 
     @increase_counter
@@ -46,29 +67,15 @@ class LinearRankSelector(SelectionOperator):
         # Get the population size.
         pop_size = len(population)
 
-        # Check if the population size has changed.
-        # This should run only ONE time during the
-        # first iteration.
-        if pop_size != self.items["pop_size"]:
-
-            # Store the new population size.
-            self.items["pop_size"] = pop_size
-
-            # Calculate the sum of all the ranked fitness values: "1+2+3+...+N".
-            sum_ranked_values = float(0.5 * pop_size * (pop_size + 1))
-
-            # Calculate the selection probabilities of each member
-            # in the population, using their ranking position.
-            self.items["selection_probs"] = [n / sum_ranked_values
-                                             for n in range(1, pop_size + 1)]
-        # _end_if_
+        # Calculate the selection probabilities of each member
+        # in the population, using their ranking position.
+        selection_probs = self._linear_rank_probabilities(pop_size)
 
         # Sort the population in ascending order using their fitness value.
         sorted_population = sorted(population, key=attrgetter("fitness"))
 
         # Select the new individuals (indexes).
-        index = self.rng.choice(pop_size, size=pop_size,
-                                p=self.items["selection_probs"],
+        index = self.rng.choice(pop_size, size=pop_size, p=selection_probs,
                                 replace=True, shuffle=False)
 
         # Return the new parents (individuals).
