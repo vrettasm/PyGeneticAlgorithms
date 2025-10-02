@@ -25,7 +25,7 @@ class Chromosome(object):
     # The fitness value will correspond to how well the
     # chromosome fits in its environment, as defined by
     # the fitness function.
-    _fitness: float = np_nan
+    _fitness: float = float("NaN")
 
     # Define a boolean flag. This flag here can be used
     # to include hard/soft constraints to the chromosome.
