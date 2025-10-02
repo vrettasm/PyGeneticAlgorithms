@@ -119,13 +119,13 @@ def fitness_func(individual: Chromosome):
     """
     
     # CODE TO IMPLEMENT.
+
+    # Compute the function value.
+    f_value = ...
     
     # Condition for termination.
     # We set it to True / False.
     solution_found = ...
-    
-    # Compute the function value.
-    f_value = ...
     
     # Return the solution.
     return f_value, solution_found
