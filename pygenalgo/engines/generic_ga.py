@@ -2,7 +2,6 @@ from math import isnan
 from os import cpu_count
 from typing import Callable
 from operator import attrgetter
-from typing import Callable, Tuple
 from collections import defaultdict
 
 from joblib import (Parallel, delayed)
