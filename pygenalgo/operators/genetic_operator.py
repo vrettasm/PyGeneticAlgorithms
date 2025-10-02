@@ -22,11 +22,20 @@ def increase_counter(method):
     :return: the wrapper function.
     """
     def wrapper(self, *args, **kwargs):
+        """
+        NOTE: We do not do any kind of error handling in here
+        because if the method fails (exit with an error) then
+        the counter value will be useless.
+        """
+
+        # Run the wrapped method.
+        result = method(self, *args, **kwargs)
+
         # Increase the counter.
         self.inc_counter()
 
-        # Return the output of the wrapped method.
-        return method(self, *args, **kwargs)
+        # Return the output.
+        return result
     # _end_def_
     return wrapper
 # _end_def_
