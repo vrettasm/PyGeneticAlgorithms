@@ -1,6 +1,5 @@
 import time
 from math import isclose
-from typing import Tuple
 
 from numpy import (array, nanmean, nanstd, isfinite)
 
