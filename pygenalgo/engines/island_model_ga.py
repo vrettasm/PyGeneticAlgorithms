@@ -84,12 +84,12 @@ class IslandModelGA(GenericGA):
         """
 
         # Get the BitGenerator used by default_rng.
-        bit_Gen = type(self.rng_GA.bit_generator)
+        bit_gen = type(self.rng_GA.bit_generator)
 
         # Use the state from a fresh bit generator to re-seed rng_GA.
         # This uses the current system time (in nanoseconds) to avoid
         # using the same seed value among different Parallel workers.
-        self.rng_GA.bit_generator.state = bit_Gen(seed=time.time_ns()).state
+        self.rng_GA.bit_generator.state = bit_gen(seed=time.time_ns()).state
 
         # Keeps track of the convergence /termination of the
         # population, along with the iteration that happened.
