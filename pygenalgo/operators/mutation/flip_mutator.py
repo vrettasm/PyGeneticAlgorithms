@@ -45,7 +45,7 @@ class FlipMutator(MutationOperator):
             individual[self.rng.integers(n_genes)].flip()
 
             # Invalidate the fitness of the chromosome.
-            individual.fitness = np_nan
+            individual.fitness = float("NaN")
 
             # Increase the mutator counter.
             self.inc_counter()
