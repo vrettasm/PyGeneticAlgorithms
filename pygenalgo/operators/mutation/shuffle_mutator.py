@@ -1,4 +1,3 @@
-from numpy import nan as np_nan
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
@@ -59,7 +58,7 @@ class ShuffleMutator(MutationOperator):
             individual[i:j] = sliced_chromosome
 
             # Invalidate the fitness of the chromosome.
-            individual.fitness = np_nan
+            individual.fitness = float("NaN")
 
             # Increase the mutator counter.
             self.inc_counter()
