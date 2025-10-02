@@ -32,7 +32,7 @@ class StandardGA(GenericGA):
         super().__init__(**kwargs)
     # _end_def_
 
-    def update_stats(self, fit_list: list[float]) -> Tuple[float, float]:
+    def update_stats(self, fit_list: list[float]) -> tuple[float, float]:
         """
         Update the stats dictionary with the mean/std values of the
         population fitness values.
