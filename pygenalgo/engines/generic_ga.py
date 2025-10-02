@@ -416,7 +416,7 @@ class GenericGA(object):
         p_size = len(fitness_i)
 
         # Preallocate the fitness list.
-        fitness_values = p_size * [None]
+        fitness_values = p_size * [float("NaN")]
 
         # Flag to indicate if a solution has been found.
         found_solution = False
