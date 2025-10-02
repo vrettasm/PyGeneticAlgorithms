@@ -190,7 +190,7 @@ class GenericGA(object):
         """
 
         # Sanity check.
-        if new_counts < 0:
+        if not isinstance(new_counts, int) or new_counts < 0:
             raise ValueError(f"{self.__class__.__name__}: "
                              f"New counts must be positive integer.")
         # _end_if_
