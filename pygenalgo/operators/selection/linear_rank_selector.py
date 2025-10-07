@@ -37,18 +37,18 @@ class LinearRankSelector(SelectionOperator):
         not recompute the same array since the population size of the swarm
         is not expected to change.
 
-        NOTE: Probabilities are returned in descending order.
+        NOTE: Probabilities are returned in ascending order.
 
         :param p_size: (int) population size.
 
-        :return: (list) rank probability distribution in descending order.
+        :return: (list) rank probability distribution in ascending order.
         """
 
         # Calculate the sum of '1 + 2 + 3 + ... + N'.
         # We know that this is equal to: N * (N+1)/2.
         sum_ranked_values = float(0.5 * p_size * (p_size + 1))
 
-        # Return the probability values (descending order).
+        # Return the probability values (ascending order).
         return [n / sum_ranked_values for n in range(1, p_size + 1)]
     # _end_def_
 
