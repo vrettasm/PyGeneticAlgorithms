@@ -23,6 +23,11 @@ def average_hamming_distance(population: list[Chromosome],
     divided by the total number of genes compared.
     """
 
+    # Sanity check 1: This should never happen!
+    if not population:
+        raise RuntimeError("Population list is empty!")
+    # _end_if_
+
     # Get the number of the chromosomes.
     n_chromosomes = len(population)
 
@@ -31,7 +36,7 @@ def average_hamming_distance(population: list[Chromosome],
     # same size.
     n_genes = len(population[0])
 
-    # Sanity check: This should never happen!
+    # Sanity check 2: This should never happen!
     if n_genes == 0:
         raise RuntimeError("The number of genes in the Chromosomes is zero!")
     # _end_if_
