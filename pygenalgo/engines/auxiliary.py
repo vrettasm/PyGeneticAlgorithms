@@ -44,32 +44,30 @@ def average_hamming_distance(population: list[Chromosome],
     # Initialize the counter.
     total_diffs = 0
 
-    # Iterate through all the population.
+    # Here, we sum the Hamming distances for all unique
+    # pairs of chromosomes (to avoid double counting).
     for i, item1 in enumerate(population):
 
         # Local copy of the 1st genome to
         # avoid recalling in the 2nd loop.
         item1_genome = item1.genome
 
-        # Compare the i-th chromosome with the rest of the population.
-        # NOTE: Since the distances are symmetrical we don't check the
-        # same pair of chromosomes twice.
+        # Compare the i-th chromosome with
+        # the rest of the population.
         for item2 in population[i+1:]:
             # Get the total number of different genes.
             total_diffs += [k != l for k, l in zip(item1_genome,
                                                    item2.genome)].count(True)
     # _end_for_
 
-    # Compute the total number of counted genes.
-    total_genes = 0.5 * n_chromosomes * (n_chromosomes - 1)
+    # Compute the total number of unique pairs.
+    unique_pairs = 0.5 * n_chromosomes * (n_chromosomes - 1)
 
-    # Check for normalization.
-    if normal:
-        total_genes *= n_genes
-    # _end_if_
+    # Compute the averaged distance.
+    dist_avg = total_diffs / unique_pairs
 
-    # Return the averaged value.
-    return float(total_diffs / total_genes)
+    # Return the averaged (or the normalized) value.
+    return dist_avg / n_genes if normal else dist_avg
 # _end_def_
 
 def apply_corrections(input_population: list[Chromosome],
