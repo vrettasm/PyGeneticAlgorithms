@@ -1,11 +1,25 @@
 from typing import Callable
-from functools import wraps, partial
 from dataclasses import dataclass, field
+from functools import wraps, partial, cache
 from pygenalgo.genome.chromosome import Chromosome
 
 # Public interface.
 __all__ = ["average_hamming_distance", "pareto_front", "apply_corrections",
-           "SubPopulation", "cost_function"]
+           "SubPopulation", "cost_function", "unique_pairs"]
+
+@cache
+def unique_pairs(n: int) -> int:
+    """
+    Computes the number of unique pairs among 'n' distinct
+    numbers by using the combination formula for choosing 2
+    items from a set of n which is n(n-1)/2.
+
+    :param n: the number of 'distinct' numbers.
+
+    :return: from 'n choose 2', or C(n, 2).
+    """
+    return int(0.5 * n * (n - 1))
+# _end_def_
 
 def average_hamming_distance(population: list[Chromosome],
                              normal: bool = True) -> float:
@@ -60,11 +74,9 @@ def average_hamming_distance(population: list[Chromosome],
                                                    item2.genome)].count(True)
     # _end_for_
 
-    # Compute the total number of unique pairs.
-    unique_pairs = 0.5 * n_chromosomes * (n_chromosomes - 1)
-
-    # Compute the averaged distance.
-    dist_avg = total_diffs / unique_pairs
+    # Compute the averaged distance, using the total
+    # number of 'unique pairs'.
+    dist_avg = total_diffs / unique_pairs(n_chromosomes)
 
     # Return the averaged (or the normalized) value.
     return dist_avg / n_genes if normal else dist_avg
