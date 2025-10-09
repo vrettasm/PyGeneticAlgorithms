@@ -204,11 +204,10 @@ class IslandModelGA(GenericGA):
             if adapt_probs:
 
                 # Update the genetic probabilities.
-                self.adapt_probabilities(threshold=avg_distance)
-
-                # Store the updated crossover and mutation probabilities.
-                local_stats["prob_crossx"].append(self._crossx_op.probability)
-                local_stats["prob_mutate"].append(self._mutate_op.probability)
+                if self.adapt_probabilities(threshold=avg_distance):
+                    # Store the updated crossover and mutation probabilities.
+                    local_stats["prob_crossx"].append(self._crossx_op.probability)
+                    local_stats["prob_mutate"].append(self._mutate_op.probability)
             # _end_if_
 
             # Update the average value for the next iteration.

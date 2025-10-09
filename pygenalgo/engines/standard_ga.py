@@ -236,16 +236,15 @@ class StandardGA(GenericGA):
             # Update the average value for the next iteration.
             avg_fitness_0 = avg_fitness_i
 
-            # Adap probabilities for the next generation.
+            # Check the adaptive flag.
             if adapt_probs:
 
                 # For threshold, we use the average Hamming
                 # distance of the 'current' population.
-                self.adapt_probabilities(threshold=avg_distance)
-
-                # Store the updated crossover and mutation probabilities.
-                self._stats["prob_crossx"].append(self._crossx_op.probability)
-                self._stats["prob_mutate"].append(self._mutate_op.probability)
+                if self.adapt_probabilities(threshold=avg_distance):
+                    # Store the updated crossover and mutation probabilities.
+                    self._stats["prob_crossx"].append(self._crossx_op.probability)
+                    self._stats["prob_mutate"].append(self._mutate_op.probability)
             # _end_if_
 
         # _end_for_
