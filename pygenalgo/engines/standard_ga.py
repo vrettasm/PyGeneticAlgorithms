@@ -133,10 +133,10 @@ class StandardGA(GenericGA):
 
             # Update current iteration in the selection operator.
             # Currently, this is used only from Boltzmann Selector.
-            self._select_op.iter = i
+            self.select_op.iter = i
 
             # SELECT the parents.
-            population_i = self._select_op(self.population)
+            population_i = self.select_op(self.population)
 
             # Shuffle the selected parents.
             if shuffle:
