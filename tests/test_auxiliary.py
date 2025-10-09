@@ -1,7 +1,7 @@
 import unittest
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.engines.auxiliary import (cost_function,
+from pygenalgo.engines.auxiliary import (unique_pairs, cost_function,
                                          apply_corrections,
                                          average_hamming_distance)
 
@@ -18,6 +18,33 @@ class TestAuxiliary(unittest.TestCase):
     def tearDownClass(cls) -> None:
         print(">> TestAuxiliary - FINISH -", end='\n\n')
 
+    # _end_def_
+
+    def test_unique_pairs(self):
+        """
+        Test the functionality of unique_pairs.
+        """
+
+        # Test value.
+        n_size = 10
+
+        # The correct result C(10, 2) is 45.
+        n_result = 45
+
+        # They should be exactly equal.
+        self.assertEqual(unique_pairs(n_size), n_result)
+
+        # Ensure the correct error is raised.
+        with self.assertRaises(ValueError):
+            unique_pairs(-10)
+
+        # Ensure the correct error is raised.
+        with self.assertRaises(ValueError):
+            unique_pairs(1)
+
+        # Ensure the correct error is raised.
+        with self.assertRaises(TypeError):
+            unique_pairs(3.5)
     # _end_def_
 
     def test_apply_corrections(self):
