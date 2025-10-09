@@ -1,24 +1,35 @@
 from typing import Callable
 from dataclasses import dataclass, field
-from functools import wraps, partial, cache
+from functools import wraps, partial, lru_cache
 from pygenalgo.genome.chromosome import Chromosome
 
 # Public interface.
 __all__ = ["average_hamming_distance", "pareto_front", "apply_corrections",
            "SubPopulation", "cost_function", "unique_pairs"]
 
-@cache
-def unique_pairs(n: int) -> int:
+@lru_cache(maxsize=64)
+def unique_pairs(n_size: int) -> int:
     """
-    Computes the number of unique pairs among 'n' distinct
-    numbers by using the combination formula for choosing 2
-    items from a set of n which is n(n-1)/2.
+    Computes the number of unique pairs among 'n_size'
+    distinct numbers by using the combination formula
+    for choosing 2 items from a set.
 
-    :param n: the number of 'distinct' numbers.
+    :param n_size: the number of 'distinct' numbers.
 
-    :return: from 'n choose 2', or C(n, 2).
+    :return: the 'n choose 2', or C(n, 2).
     """
-    return int(0.5 * n * (n - 1))
+
+    # Sanity check #1.
+    if not isinstance(n_size, int):
+        raise TypeError("'n_size' must be an integer number.")
+    # _end_if_
+
+    # Sanity check #2.
+    if n_size <= 1:
+        raise ValueError("'n_size' must be more than one.")
+    # _end_if_
+
+    return int(0.5 * n_size * (n_size - 1))
 # _end_def_
 
 def average_hamming_distance(population: list[Chromosome],
