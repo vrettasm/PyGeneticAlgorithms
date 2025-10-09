@@ -303,13 +303,15 @@ class GenericGA(object):
         # _end_for_
     # _end_def_
 
-    def adapt_probabilities(self, threshold: float = None) -> None:
+    def adapt_probabilities(self, threshold: float = None) -> bool:
         """
         This method is used (optionally) to adjust simultaneously the crossover
         and mutation parameters of the GenericGA object.
 
         :param threshold: (float) This parameter is used to determine whether we
         are going to increase or decrease the crossover and mutation parameters.
+
+        :return: True if the parameters have changed, else False.
         """
 
         # Check if the threshold value is missing.
@@ -354,6 +356,8 @@ class GenericGA(object):
             self._crossx_op.probability = min(max(trial_pc, 0.0), 1.0)
             self._mutate_op.probability = min(max(trial_pm, 0.0), 1.0)
         # _end_if_
+
+        return have_changed
     # _end_def_
 
     def population_fitness(self) -> list[float]:
