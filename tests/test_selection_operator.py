@@ -49,7 +49,7 @@ class TestSelectionOperator(unittest.TestCase):
         :return: None.
         """
 
-        # Upon creation the iterarion value should be zero.
+        # Upon creation the iteration value should be zero.
         self.assertAlmostEqual(0, self.select_op.iter)
 
         # Update with a new value.
