@@ -225,7 +225,7 @@ class StandardGA(GenericGA):
 
             # Check for convergence.
             if f_tol and isclose(avg_fitness_i, avg_fitness_0,
-                                 rel_tol=f_tol) and avg_distance < 0.025:
+                                 rel_tol=1.0E-5, abs_tol=f_tol) and avg_distance < 0.025:
                 # Display a warning message.
                 print(f"{self.__class__.__name__} converged in {i + 1} iterations.")
 
