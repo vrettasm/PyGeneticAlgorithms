@@ -45,7 +45,7 @@ class UniformCrossover(CrossoverOperator):
             number_of_genes = len(parent1)
 
             # Preallocate 1st genome.
-            genome_1 = [None] * number_of_genes
+            genome_1: list = [None] * number_of_genes
 
             # Preallocate 2nd genome.
             genome_2 = [None] * number_of_genes
