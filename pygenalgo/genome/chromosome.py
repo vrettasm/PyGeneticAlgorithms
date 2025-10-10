@@ -97,6 +97,17 @@ class Chromosome(object):
         return self._genome
     # _end_def_
 
+    def invalidate_fitness(self) -> None:
+        """
+        Invalidates the fitness of the chromosome
+        by setting the value to NaN. This is used
+        during the evolution process (mutation).
+
+        :return: None.
+        """
+        self._fitness = float("NaN")
+    # _end_def_
+
     def is_genome_valid(self) -> bool:
         """
         Checks the validity of the whole chromosome, by
