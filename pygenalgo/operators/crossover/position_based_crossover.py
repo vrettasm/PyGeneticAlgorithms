@@ -51,8 +51,8 @@ class PositionBasedCrossover(CrossoverOperator):
                                                   replace=False, shuffle=False))
 
             # Initialize the genome of the new chromosomes to 'None'.
-            genome_1 = number_of_genes * [None]
-            genome_2 = number_of_genes * [None]
+            genome_1: list = number_of_genes * [None]
+            genome_2: list = number_of_genes * [None]
 
             # Copy the genes of the parents at
             # the preselected gene cross points.
