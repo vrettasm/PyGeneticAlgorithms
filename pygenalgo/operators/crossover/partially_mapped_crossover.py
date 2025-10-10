@@ -43,8 +43,8 @@ class PartiallyMappedCrossover(CrossoverOperator):
             number_of_genes = len(parent1)
 
             # Initialize the genome of the two new chromosomes to None.
-            genome_1 = number_of_genes * [None]
-            genome_2 = number_of_genes * [None]
+            genome_1: list = number_of_genes * [None]
+            genome_2: list = number_of_genes * [None]
 
             # Select randomly the two crossover points.
             i, j = self.rng.choice(number_of_genes, size=2,
