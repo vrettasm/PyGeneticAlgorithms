@@ -48,7 +48,7 @@ class UniformCrossover(CrossoverOperator):
             genome_1: list = [None] * number_of_genes
 
             # Preallocate 2nd genome.
-            genome_2 = [None] * number_of_genes
+            genome_2: list = [None] * number_of_genes
 
             # Generate all random numbers in one call.
             swap_probability = self.rng.random(size=number_of_genes) > 0.5
