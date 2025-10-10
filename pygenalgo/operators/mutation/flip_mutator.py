@@ -43,8 +43,8 @@ class FlipMutator(MutationOperator):
             # flip the old gene value.
             individual[self.rng.integers(n_genes)].flip()
 
-            # Invalidate the fitness of the chromosome.
-            individual.fitness = float("NaN")
+            # Set the fitness to NaN.
+            individual.invalidate_fitness()
 
             # Increase the mutator counter.
             self.inc_counter()

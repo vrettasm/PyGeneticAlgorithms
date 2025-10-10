@@ -56,8 +56,8 @@ class InverseMutator(MutationOperator):
             # Put back the inverse items.
             individual.genome[i:j] = sliced_chromosome
 
-            # Invalidate the fitness of the chromosome.
-            individual.fitness = float("NaN")
+            # Set the fitness to NaN.
+            individual.invalidate_fitness()
 
             # Increase the mutator counter.
             self.inc_counter()

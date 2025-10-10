@@ -47,8 +47,8 @@ class GaussianMutator(MutationOperator):
             # Select randomly the mutation point and update its value.
             individual[self.rng.integers(n_genes)].gaussian(sigma=self._items)
 
-            # Invalidate the fitness of the chromosome.
-            individual.fitness = float("NaN")
+            # Set the fitness to NaN.
+            individual.invalidate_fitness()
 
             # Increase the mutator counter.
             self.inc_counter()

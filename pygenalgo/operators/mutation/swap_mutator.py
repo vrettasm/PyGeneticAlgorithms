@@ -44,8 +44,8 @@ class SwapMutator(MutationOperator):
             # Swap in place between the two positions.
             individual[i], individual[j] = individual[j], individual[i]
 
-            # Invalidate the fitness of the chromosome.
-            individual.fitness = float("NaN")
+            # Set the fitness to NaN.
+            individual.invalidate_fitness()
 
             # Increase the mutator counter.
             self.inc_counter()

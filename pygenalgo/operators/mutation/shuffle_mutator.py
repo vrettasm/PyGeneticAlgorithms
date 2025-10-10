@@ -57,8 +57,8 @@ class ShuffleMutator(MutationOperator):
             # Put back the shuffled items.
             individual[i:j] = sliced_chromosome
 
-            # Invalidate the fitness of the chromosome.
-            individual.fitness = float("NaN")
+            # Set the fitness to NaN.
+            individual.invalidate_fitness()
 
             # Increase the mutator counter.
             self.inc_counter()

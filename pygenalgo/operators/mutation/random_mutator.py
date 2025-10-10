@@ -44,8 +44,8 @@ class RandomMutator(MutationOperator):
             # replace the old gene with a new one.
             individual[self.rng.integers(n_genes)].random()
 
-            # Invalidate the fitness of the chromosome.
-            individual.fitness = float("NaN")
+            # Set the fitness to NaN.
+            individual.invalidate_fitness()
 
             # Increase the mutator counter.
             self.inc_counter()
