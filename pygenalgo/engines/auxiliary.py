@@ -172,6 +172,14 @@ def pareto_front(points: list) -> list:
 
     :return: List of points that lie on the pareto front.
     """
+    # Create a set with all the points sizes.
+    check_size = {len(point) for point in points}
+
+    # Sanity check.
+    if len(check_size) > 1:
+        raise RuntimeError("All point must have the same size.")
+    # _end_if_
+
     # Create a set that will hold
     # all the Pareto front points.
     pareto_points = set()
