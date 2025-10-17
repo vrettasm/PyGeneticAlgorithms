@@ -4,8 +4,9 @@ from functools import wraps, partial, lru_cache
 from pygenalgo.genome.chromosome import Chromosome
 
 # Public interface.
-__all__ = ["average_hamming_distance", "pareto_front", "apply_corrections",
-           "SubPopulation", "cost_function", "unique_pairs"]
+__all__ = ["average_hamming_distance", "pareto_front", "cost_function",
+           "apply_corrections", "SubPopulation", "unique_pairs",
+           "pareto_dominance"]
 
 @lru_cache(maxsize=64)
 def unique_pairs(n_size: int) -> int:
@@ -157,6 +158,43 @@ def apply_corrections(input_population: list[Chromosome],
     return corrections_counter, f_eval_counter
 # _end_def_
 
+def pareto_dominance(point_a: list, point_b: list) -> bool:
+    """
+    Implements a shortcut version of the pareto dominance condition:
+
+        all(p <= q for p, q in zip(point_i, point_j))
+                            and
+        any(p < q for p, q in zip(point_i, point_j))
+
+    NOTE: It is assumed that both points have the same size (length).
+
+    :param point_a: the first point.
+
+    :param point_b: the second point.
+
+    :return: if the condition is satisfied.
+    """
+    # Second condition.
+    at_least_one_greater = False
+
+    # Scan both points elementwise.
+    for p, q in zip(point_a, point_b):
+        # Return immediately.
+        if p < q:
+            return False
+        # _end_if_
+
+        # Check if the second condition is satisfied.
+        if not at_least_one_greater and p > q:
+            # Switch the flag value to avoid re-setting it.
+            at_least_one_greater = True
+        # _end_if_
+    # _end_for_
+
+    # If we got here return only the second condition.
+    return at_least_one_greater
+# _end_def_
+
 def pareto_front(points: list) -> list:
     """
     Simple function that calculates the pareto (optimal)
@@ -194,8 +232,7 @@ def pareto_front(points: list) -> list:
         for j, point_j in enumerate(points):
 
             # Check if "dominance" condition is satisfied.
-            if (i != j and all(p >= q for p, q in zip(point_i, point_j))
-                    and any(p > q for p, q in zip(point_i, point_j))):
+            if i != j and pareto_dominance(point_i, point_j):
                 # We swap the flag value.
                 is_pareto_optimal = False
 
