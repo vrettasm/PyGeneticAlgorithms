@@ -50,7 +50,7 @@ class RouletteWheelSelector(SelectionOperator):
         # Calculate sum of all fitness.
         sum_fitness = fsum(all_fitness)
 
-        # Calculate the "selection probabilities", of each member
+        # Calculate the "selection probabilities" of each member
         # in the population.
         selection_probs = [f / sum_fitness for f in all_fitness]
 
