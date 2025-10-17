@@ -172,9 +172,9 @@ def pareto_front(points: list) -> list:
 
     :return: List of points that lie on the pareto front.
     """
-    # Create a list that will hold
-    # ONLY the Pareto front points.
-    pareto_points = []
+    # Create a set that will hold
+    # all the Pareto front points.
+    pareto_points = set()
 
     # Iterate through every point in the list.
     for i, point_i in enumerate(points):
@@ -201,12 +201,12 @@ def pareto_front(points: list) -> list:
         # If we get here and the flag hasn't changed
         # it means that 'point_i' is on the frontier.
         if is_pareto_optimal:
-            pareto_points.append(point_i)
+            pareto_points.add(point_i)
         # _end_if_
     # _end_for_
 
-    # Return the points.
-    return pareto_points
+    # Return the points as list.
+    return list(pareto_points)
 # _end_def_
 
 def cost_function(func: Callable = None, minimize: bool = False):
