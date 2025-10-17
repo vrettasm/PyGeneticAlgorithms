@@ -186,8 +186,8 @@ def pareto_front(points: list) -> list:
         for j, point_j in enumerate(points):
 
             # Check if "dominance" condition is satisfied.
-            if i != j and all(p >= q for p, q in zip(point_i, point_j,
-                                                     strict=True)):
+            if (i != j and all(p >= q for p, q in zip(point_i, point_j))
+                    and any(p > q for p, q in zip(point_i, point_j))):
                 # We swap the flag value.
                 is_pareto_optimal = False
 
