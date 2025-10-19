@@ -278,10 +278,10 @@ def np_pareto_front(points: np.ndarray) -> np.ndarray:
     # Create a boolean array to track Pareto optimal points.
     is_pareto_optimal = np.ones(num_points, dtype=bool)
 
-    for i in range(num_points):
+    for i, point_i in enumerate(points):
         # Compare point i-th with all other points.
-        is_dominated = np.any(np.all(points <= points[i], axis=1) &
-                              np.any(points < points[i], axis=1))
+        is_dominated = np.any(np.all(points <= point_i, axis=1) &
+                              np.any(points < point_i, axis=1))
         # Set the flag appropriately.
         is_pareto_optimal[i] = not is_dominated
     # _end_for_
