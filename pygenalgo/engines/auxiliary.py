@@ -254,6 +254,41 @@ def pareto_front(points: list) -> list:
     return list(pareto_points)
 # _end_def_
 
+def np_pareto_front(points: np.ndarray) -> np.ndarray:
+    """
+    Simple function that calculates the pareto (optimal)
+    front points from a given input points numpy array.
+
+    :param points: list of points [(fx1, fx2, ..., fxn),
+                                   (fy1, fy2, ..., fyn),
+                                   ....................,
+                                   (fk1, fk2, ..., fkn)]
+
+    :return: array of points that lie on the pareto front.
+    """
+    # Sanity check.
+    if points.ndim != 2:
+        raise RuntimeError("Points must be a 2-D array.")
+    # _end_if_
+
+    # Get the number of points.
+    num_points = points.shape[0]
+
+    # Create a boolean array to track Pareto optimal points.
+    is_pareto_optimal = np.ones(num_points, dtype=bool)
+
+    for i in range(num_points):
+        # Compare point i-th with all other points.
+        is_dominated = np.any(np.all(points <= points[i], axis=1) &
+                              np.any(points < points[i], axis=1))
+        # Set the flag appropriately.
+        is_pareto_optimal[i] = not is_dominated
+    # _end_for_
+
+    # Return only the unique Pareto optimal points.
+    return np.unique(points[is_pareto_optimal], axis=0)
+# _end_def_
+
 def cost_function(func: Callable = None, minimize: bool = False):
     """
     Decorator for the function that we want to optimize.
