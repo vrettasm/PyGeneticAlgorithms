@@ -1,3 +1,4 @@
+import numpy as np
 from typing import Callable
 from dataclasses import dataclass, field
 from functools import wraps, partial, lru_cache
