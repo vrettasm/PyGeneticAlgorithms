@@ -7,7 +7,7 @@ from pygenalgo.genome.chromosome import Chromosome
 # Public interface.
 __all__ = ["average_hamming_distance", "pareto_front", "cost_function",
            "apply_corrections", "SubPopulation", "unique_pairs",
-           "pareto_dominance"]
+           "pareto_dominance", "np_pareto_front"]
 
 @lru_cache(maxsize=64)
 def unique_pairs(n_size: int) -> int:
