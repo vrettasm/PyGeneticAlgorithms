@@ -158,7 +158,7 @@ def apply_corrections(input_population: list[Chromosome],
     return corrections_counter, f_eval_counter
 # _end_def_
 
-def pareto_dominance(point_a: list, point_b: list) -> bool:
+def pareto_dominance(point_a: tuple, point_b: tuple) -> bool:
     """
     Implements a shortcut version of the pareto dominance condition:
 
@@ -168,9 +168,9 @@ def pareto_dominance(point_a: list, point_b: list) -> bool:
 
     NOTE: It is assumed that both points have the same size (length).
 
-    :param point_a: the first point.
+    :param point_a: the first point (as tuple).
 
-    :param point_b: the second point.
+    :param point_b: the second point (as tuple).
 
     :return: if the condition is satisfied.
     """
