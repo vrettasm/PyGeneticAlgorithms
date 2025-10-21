@@ -4,8 +4,8 @@ from math import isclose
 from numpy import (array, nanmean, nanstd, isfinite)
 
 from pygenalgo.engines.generic_ga import GenericGA
-from pygenalgo.engines.auxiliary import (apply_corrections,
-                                         average_hamming_distance)
+from pygenalgo.utils.auxiliary import (apply_corrections,
+                                       average_hamming_distance)
 
 from pygenalgo.operators.mutation.meta_mutator import MetaMutator
 from pygenalgo.operators.crossover.meta_crossover import MetaCrossover

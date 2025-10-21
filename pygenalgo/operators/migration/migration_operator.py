@@ -1,4 +1,4 @@
-from pygenalgo.engines.auxiliary import SubPopulation
+from pygenalgo.utils.auxiliary import SubPopulation
 from pygenalgo.operators.genetic_operator import GeneticOperator
 
 

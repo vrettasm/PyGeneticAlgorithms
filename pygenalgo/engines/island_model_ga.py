@@ -6,9 +6,9 @@ from collections import defaultdict
 from joblib import (Parallel, delayed)
 from numpy import (nanmean, nanstd, isfinite)
 
-from pygenalgo.engines.auxiliary import (SubPopulation,
-                                         apply_corrections,
-                                         average_hamming_distance)
+from pygenalgo.utils.auxiliary import (SubPopulation,
+                                       apply_corrections,
+                                       average_hamming_distance)
 
 from pygenalgo.engines.generic_ga import GenericGA
 from pygenalgo.operators.migration.meta_migration import MetaMigration
