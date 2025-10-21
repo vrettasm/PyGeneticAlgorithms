@@ -103,7 +103,8 @@ cases where we can evaluate if a termination condition is satisfied.
 
 ```python
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.engines.auxiliary import cost_function
+from pygenalgo.utils.utilities import cost_function
+
 
 # Fitness function <template>.
 @cost_function(minimize=True)
@@ -117,16 +118,19 @@ def fitness_func(individual: Chromosome):
     
     :return: the function value evaluated at the individual.
     """
+
+    # Extract gene values from the chromosome.
+    x = individual.values()
     
-    # CODE TO IMPLEMENT.
+    # ... CODE TO IMPLEMENT ...
 
     # Compute the function value.
     f_value = ...
-    
+
     # Condition for termination.
     # We set it to True / False.
     solution_found = ...
-    
+
     # Return the solution.
     return f_value, solution_found
 # _end_def_
