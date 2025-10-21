@@ -1,7 +1,9 @@
 import unittest
+
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.engines.auxiliary import SubPopulation
+
+from pygenalgo.utils.auxiliary import SubPopulation
 from pygenalgo.operators.migration.clockwise_migration import ClockwiseMigration
 
 

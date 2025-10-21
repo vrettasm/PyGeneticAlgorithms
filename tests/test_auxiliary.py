@@ -1,9 +1,12 @@
 import unittest
+
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.engines.auxiliary import (unique_pairs, cost_function,
-                                         apply_corrections,
-                                         average_hamming_distance)
+
+from pygenalgo.utils.utilities import cost_function
+from pygenalgo.utils.auxiliary import (unique_pairs,
+                                       apply_corrections,
+                                       average_hamming_distance)
 
 
 class TestAuxiliary(unittest.TestCase):
