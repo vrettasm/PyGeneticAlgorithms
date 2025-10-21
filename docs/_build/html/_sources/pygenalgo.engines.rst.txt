@@ -4,14 +4,6 @@ pygenalgo.engines package
 Submodules
 ----------
 
-pygenalgo.engines.auxiliary module
-----------------------------------
-
-.. automodule:: pygenalgo.engines.auxiliary
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 pygenalgo.engines.generic\_ga module
 ------------------------------------
 

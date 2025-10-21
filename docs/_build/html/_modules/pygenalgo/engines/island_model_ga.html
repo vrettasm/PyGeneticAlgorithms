@@ -1,22 +1,20 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pygenalgo.engines.island_model_ga &mdash; PyGenAlgo 01.70.50 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=d0c4109e"></script>
-        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d0c4109e"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -71,21 +69,21 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.engines.island_model_ga</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">isnan</span><span class="p">,</span> <span class="n">isclose</span>
-<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">attrgetter</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">isnan</span><span class="p">,</span> <span class="n">isclose</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">attrgetter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 
-<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="p">(</span><span class="n">nanmean</span><span class="p">,</span> <span class="n">nanstd</span><span class="p">,</span> <span class="n">isfinite</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">nanmean</span><span class="p">,</span> <span class="n">nanstd</span><span class="p">,</span> <span class="n">isfinite</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">pygenalgo.engines.auxiliary</span> <span class="kn">import</span> <span class="p">(</span><span class="n">SubPopulation</span><span class="p">,</span>
-                                         <span class="n">apply_corrections</span><span class="p">,</span>
-                                         <span class="n">average_hamming_distance</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.auxiliary</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">SubPopulation</span><span class="p">,</span>
+                                       <span class="n">apply_corrections</span><span class="p">,</span>
+                                       <span class="n">average_hamming_distance</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">pygenalgo.engines.generic_ga</span> <span class="kn">import</span> <span class="n">GenericGA</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.migration.meta_migration</span> <span class="kn">import</span> <span class="n">MetaMigration</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.migration.migration_operator</span> <span class="kn">import</span> <span class="n">MigrationOperator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.engines.generic_ga</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenericGA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.migration.meta_migration</span><span class="w"> </span><span class="kn">import</span> <span class="n">MetaMigration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.migration.migration_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MigrationOperator</span>
 
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;IslandModelGA&quot;</span><span class="p">]</span>
@@ -93,7 +91,7 @@
 
 <div class="viewcode-block" id="IslandModelGA">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA">[docs]</a>
-<span class="k">class</span> <span class="nc">IslandModelGA</span><span class="p">(</span><span class="n">GenericGA</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IslandModelGA</span><span class="p">(</span><span class="n">GenericGA</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
@@ -105,7 +103,7 @@
     <span class="c1"># Object variables (specific for the IslandModel).</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;num_islands&quot;</span><span class="p">,</span> <span class="s2">&quot;_migrate_op&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_islands</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">migrate_op</span><span class="p">:</span> <span class="n">MigrationOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_islands</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">migrate_op</span><span class="p">:</span> <span class="n">MigrationOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Default constructor of IslandModelGA object.</span>
 
@@ -139,7 +137,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">migrate_op</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MigrationOperator</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">migrate_op</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MigrationOperator</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor method that returns the migration operator reference.</span>
 
@@ -148,7 +146,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_migrate_op</span>
     <span class="c1"># _end_def_</span>
 
-    <span class="k">def</span> <span class="nf">_evolve_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">island</span><span class="p">:</span> <span class="n">SubPopulation</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evolve_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">island</span><span class="p">:</span> <span class="n">SubPopulation</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
                            <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">f_tol</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">adapt_probs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                            <span class="n">prob_crossx</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">prob_mutate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -159,19 +157,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Get the BitGenerator used by default_rng.</span>
-        <span class="n">bit_Gen</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="o">.</span><span class="n">bit_generator</span><span class="p">)</span>
+        <span class="n">bit_gen</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="o">.</span><span class="n">bit_generator</span><span class="p">)</span>
 
         <span class="c1"># Use the state from a fresh bit generator to re-seed rng_GA.</span>
         <span class="c1"># This uses the current system time (in nanoseconds) to avoid</span>
         <span class="c1"># using the same seed value among different Parallel workers.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="o">.</span><span class="n">bit_generator</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">bit_Gen</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time_ns</span><span class="p">())</span><span class="o">.</span><span class="n">state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="o">.</span><span class="n">bit_generator</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">bit_gen</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time_ns</span><span class="p">())</span><span class="o">.</span><span class="n">state</span>
 
         <span class="c1"># Keeps track of the convergence /termination of the</span>
         <span class="c1"># population, along with the iteration that happened.</span>
         <span class="n">has_converged</span> <span class="o">=</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
 
         <span class="c1"># Get the size of the population.</span>
-        <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+        <span class="n">pop_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
 
         <span class="c1"># Define local dictionary to hold the statistics.</span>
         <span class="n">local_stats</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;avg&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_crossx&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_mutate&quot;</span><span class="p">:</span> <span class="p">[]}</span>
@@ -224,7 +222,7 @@
                 <span class="c1"># Check if the chromosome already exists.</span>
                 <span class="k">if</span> <span class="n">best_chromosome</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">population_i</span><span class="p">:</span>
                     <span class="c1"># Select a position at random.</span>
-                    <span class="n">locus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+                    <span class="n">locus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">pop_size</span><span class="p">)</span>
 
                     <span class="c1"># Replace it with the previous best.</span>
                     <span class="n">population_i</span><span class="p">[</span><span class="n">locus</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_chromosome</span>
@@ -267,7 +265,7 @@
 
             <span class="c1"># Check for convergence.</span>
             <span class="k">if</span> <span class="n">f_tol</span> <span class="ow">and</span> <span class="n">isclose</span><span class="p">(</span><span class="n">avg_fitness_i</span><span class="p">,</span> <span class="n">avg_fitness_0</span><span class="p">,</span>
-                                 <span class="n">rel_tol</span><span class="o">=</span><span class="n">f_tol</span><span class="p">)</span> <span class="ow">and</span> <span class="n">avg_distance</span> <span class="o">&lt;</span> <span class="mf">0.025</span><span class="p">:</span>
+                                 <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.0E-5</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="n">f_tol</span><span class="p">)</span> <span class="ow">and</span> <span class="n">avg_distance</span> <span class="o">&lt;</span> <span class="mf">0.025</span><span class="p">:</span>
                 <span class="c1"># Switch the convergence flag and track the current iteration.</span>
                 <span class="n">has_converged</span> <span class="o">=</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
@@ -279,11 +277,10 @@
             <span class="k">if</span> <span class="n">adapt_probs</span><span class="p">:</span>
 
                 <span class="c1"># Update the genetic probabilities.</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">adapt_probabilities</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="n">avg_distance</span><span class="p">)</span>
-
-                <span class="c1"># Store the updated crossover and mutation probabilities.</span>
-                <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
-                <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">adapt_probabilities</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="n">avg_distance</span><span class="p">):</span>
+                    <span class="c1"># Store the updated crossover and mutation probabilities.</span>
+                    <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
+                    <span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Update the average value for the next iteration.</span>
@@ -298,9 +295,10 @@
 
 <div class="viewcode-block" id="IslandModelGA.run">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.run">[docs]</a>
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
             <span class="n">f_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allow_migration</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">n_periods</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-            <span class="n">adapt_probs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">adapt_probs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">f_max_eval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Main method of the IslandModelGA class, that implements the evolutionary routine.</span>
 
@@ -330,6 +328,10 @@
 
 <span class="sd">        :param shuffle: (bool) If enabled (set to True), it will shuffle the population before</span>
 <span class="sd">        the application of the crossover and mutation operations. Default is set to True.</span>
+
+<span class="sd">        :param f_max_eval: (int) it sets an upper limit of function evaluations. If the number</span>
+<span class="sd">        is exceeded the genetic algorithm stops. If this value is set, the epochs will be</span>
+<span class="sd">        ignored and re-adjusted to meet the new requirement.</span>
 
 <span class="sd">        :param verbose: (bool) if &#39;True&#39; it will display periodically information about the</span>
 <span class="sd">        current stats of the subpopulations. NB: This setting is active only when the option</span>
@@ -381,6 +383,22 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
         <span class="c1"># _end_for_</span>
+
+        <span class="c1"># Check if we have set a maximum number on function</span>
+        <span class="c1"># evaluations and re-adjust the epochs.</span>
+        <span class="k">if</span> <span class="n">f_max_eval</span><span class="p">:</span>
+
+            <span class="c1"># First remove the counts from the initial</span>
+            <span class="c1"># evaluation of the population.</span>
+            <span class="n">total_f_counts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">f_max_eval</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_eval</span>
+
+            <span class="c1"># Assuming each epoch performs N function evaluations.</span>
+            <span class="n">epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_f_counts</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">))</span>
+
+            <span class="c1"># Display an information message.</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;INFO: The &#39;f_max_eval&#39; parameter has been set to: </span><span class="si">{</span><span class="n">f_max_eval</span><span class="si">}</span><span class="s2">. &quot;</span>
+                  <span class="sa">f</span><span class="s2">&quot;The &#39;epochs&#39; value has been re-adjusted to: </span><span class="si">{</span><span class="n">epochs</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
 
         <span class="c1"># Display an information message.</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parallel evolution in progress with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_islands</span><span class="si">}</span><span class="s2"> islands ...&quot;</span><span class="p">)</span>
@@ -597,7 +615,7 @@
 
 <div class="viewcode-block" id="IslandModelGA.print_migration_stats">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.print_migration_stats">[docs]</a>
-    <span class="k">def</span> <span class="nf">print_migration_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">print_migration_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print the migration operators stats.</span>
 

@@ -1,23 +1,21 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pygenalgo package &mdash; PyGenAlgo 01.70.50 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=d0c4109e"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d0c4109e"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -52,6 +50,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html">pygenalgo.engines package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.genome.html">pygenalgo.genome package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.html">pygenalgo.operators package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.utils.html">pygenalgo.utils package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-pygenalgo">Module contents</a></li>
@@ -94,18 +93,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pygenalgo.engines.html">pygenalgo.engines package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pygenalgo.engines.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pygenalgo.engines.html#module-pygenalgo.engines.auxiliary">pygenalgo.engines.auxiliary module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.auxiliary.SubPopulation"><code class="docutils literal notranslate"><span class="pre">SubPopulation</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.auxiliary.SubPopulation.id"><code class="docutils literal notranslate"><span class="pre">SubPopulation.id</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.auxiliary.SubPopulation.pop_id"><code class="docutils literal notranslate"><span class="pre">SubPopulation.pop_id</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.auxiliary.SubPopulation.population"><code class="docutils literal notranslate"><span class="pre">SubPopulation.population</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.auxiliary.apply_corrections"><code class="docutils literal notranslate"><span class="pre">apply_corrections()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.auxiliary.average_hamming_distance"><code class="docutils literal notranslate"><span class="pre">average_hamming_distance()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.auxiliary.pareto_front"><code class="docutils literal notranslate"><span class="pre">pareto_front()</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="pygenalgo.engines.html#module-pygenalgo.engines.generic_ga">pygenalgo.engines.generic_ga module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA"><code class="docutils literal notranslate"><span class="pre">GenericGA</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.MAX_CPUs"><code class="docutils literal notranslate"><span class="pre">GenericGA.MAX_CPUs</span></code></a></li>
@@ -117,6 +104,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.crossover_op"><code class="docutils literal notranslate"><span class="pre">GenericGA.crossover_op</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.evaluate_fitness"><code class="docutils literal notranslate"><span class="pre">GenericGA.evaluate_fitness()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.f_eval"><code class="docutils literal notranslate"><span class="pre">GenericGA.f_eval</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.f_eval_increase_by"><code class="docutils literal notranslate"><span class="pre">GenericGA.f_eval_increase_by()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.fitness_func"><code class="docutils literal notranslate"><span class="pre">GenericGA.fitness_func</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.individual_fitness"><code class="docutils literal notranslate"><span class="pre">GenericGA.individual_fitness()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.mutate_op"><code class="docutils literal notranslate"><span class="pre">GenericGA.mutate_op</span></code></a></li>
@@ -164,6 +152,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.fitness"><code class="docutils literal notranslate"><span class="pre">Chromosome.fitness</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.genome"><code class="docutils literal notranslate"><span class="pre">Chromosome.genome</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.hamming_distance"><code class="docutils literal notranslate"><span class="pre">Chromosome.hamming_distance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.invalidate_fitness"><code class="docutils literal notranslate"><span class="pre">Chromosome.invalidate_fitness()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.is_genome_valid"><code class="docutils literal notranslate"><span class="pre">Chromosome.is_genome_valid()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.valid"><code class="docutils literal notranslate"><span class="pre">Chromosome.valid</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.values"><code class="docutils literal notranslate"><span class="pre">Chromosome.values()</span></code></a></li>
@@ -257,6 +246,30 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pygenalgo.operators.html#module-pygenalgo.operators">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pygenalgo.utils.html">pygenalgo.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pygenalgo.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pygenalgo.utils.html#module-pygenalgo.utils.auxiliary">pygenalgo.utils.auxiliary module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.SubPopulation"><code class="docutils literal notranslate"><span class="pre">SubPopulation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.SubPopulation.id"><code class="docutils literal notranslate"><span class="pre">SubPopulation.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.SubPopulation.pop_id"><code class="docutils literal notranslate"><span class="pre">SubPopulation.pop_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.SubPopulation.population"><code class="docutils literal notranslate"><span class="pre">SubPopulation.population</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.apply_corrections"><code class="docutils literal notranslate"><span class="pre">apply_corrections()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.average_hamming_distance"><code class="docutils literal notranslate"><span class="pre">average_hamming_distance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.unique_pairs"><code class="docutils literal notranslate"><span class="pre">unique_pairs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pygenalgo.utils.html#module-pygenalgo.utils.utilities">pygenalgo.utils.utilities module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.utilities.cost_function"><code class="docutils literal notranslate"><span class="pre">cost_function()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.utilities.np_pareto_front"><code class="docutils literal notranslate"><span class="pre">np_pareto_front()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.utilities.pareto_dominance"><code class="docutils literal notranslate"><span class="pre">pareto_dominance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.utilities.pareto_front"><code class="docutils literal notranslate"><span class="pre">pareto_front()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pygenalgo.utils.html#module-pygenalgo.utils">Module contents</a></li>
 </ul>
 </li>
 </ul>

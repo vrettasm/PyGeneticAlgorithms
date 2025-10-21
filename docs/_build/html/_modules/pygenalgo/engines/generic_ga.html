@@ -1,22 +1,20 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pygenalgo.engines.generic_ga &mdash; PyGenAlgo 01.70.50 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=d0c4109e"></script>
-        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d0c4109e"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -71,19 +69,19 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.engines.generic_ga</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">isnan</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">cpu_count</span>
-<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">attrgetter</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Tuple</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">isnan</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">cpu_count</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">attrgetter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 
-<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">default_rng</span><span class="p">,</span> <span class="n">Generator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_rng</span><span class="p">,</span> <span class="n">Generator</span>
 
-<span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.mutate_operator</span> <span class="kn">import</span> <span class="n">MutationOperator</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.selection.select_operator</span> <span class="kn">import</span> <span class="n">SelectionOperator</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.crossover.crossover_operator</span> <span class="kn">import</span> <span class="n">CrossoverOperator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.mutation.mutate_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MutationOperator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.selection.select_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">SelectionOperator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.crossover.crossover_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">CrossoverOperator</span>
 
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GenericGA&quot;</span><span class="p">]</span>
@@ -91,7 +89,7 @@
 
 <div class="viewcode-block" id="GenericGA">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA">[docs]</a>
-<span class="k">class</span> <span class="nc">GenericGA</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GenericGA</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
@@ -109,7 +107,7 @@
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;fitness_func&quot;</span><span class="p">,</span> <span class="s2">&quot;_select_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_crossx_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_mutate_op&quot;</span><span class="p">,</span>
                  <span class="s2">&quot;_stats&quot;</span><span class="p">,</span> <span class="s2">&quot;_n_cpus&quot;</span><span class="p">,</span> <span class="s2">&quot;_f_eval&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_pop</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span> <span class="n">fit_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">select_op</span><span class="p">:</span> <span class="n">SelectionOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_pop</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span> <span class="n">fit_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">select_op</span><span class="p">:</span> <span class="n">SelectionOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">mutate_op</span><span class="p">:</span> <span class="n">MutationOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">crossx_op</span><span class="p">:</span> <span class="n">CrossoverOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">n_cpus</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Default constructor of GenericGA object.</span>
@@ -182,7 +180,7 @@
 <div class="viewcode-block" id="GenericGA.set_seed">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.set_seed">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_seed</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_seed</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_seed</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets a new seed for the random number generator.</span>
 
@@ -196,7 +194,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">f_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">f_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor method that returns the value of the f_eval.</span>
 
@@ -206,7 +204,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor method that returns the &#39;stats&#39; dictionary.</span>
 
@@ -216,7 +214,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">select_op</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SelectionOperator</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_op</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SelectionOperator</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor method that returns the selection operator reference.</span>
 
@@ -226,7 +224,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">crossover_op</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CrossoverOperator</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">crossover_op</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CrossoverOperator</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor method that returns the crossover operator reference.</span>
 
@@ -236,7 +234,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">mutate_op</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MutationOperator</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mutate_op</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MutationOperator</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor method that returns the mutation operator reference.</span>
 
@@ -246,7 +244,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">n_cpus</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_cpus</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor method that returns the number of CPUs.</span>
 
@@ -255,9 +253,33 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span>
     <span class="c1"># _end_def_</span>
 
+<div class="viewcode-block" id="GenericGA.f_eval_increase_by">
+<a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.f_eval_increase_by">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">f_eval_increase_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_counts</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Utility method to allow the &#39;_f_eval&#39; to be updated with</span>
+<span class="sd">        new counts outside the main class. This can happen during</span>
+<span class="sd">        gene correction.</span>
+
+<span class="sd">        :param new_counts: the new value of &#39;counts&#39; that we want</span>
+<span class="sd">        to add on the current f_eval.</span>
+
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Sanity check.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_counts</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">new_counts</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;New counts must be positive integer.&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_f_eval</span> <span class="o">+=</span> <span class="n">new_counts</span></div>
+
+    <span class="c1"># _end_def_</span>
+
 <div class="viewcode-block" id="GenericGA.clear_all">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.clear_all">[docs]</a>
-    <span class="k">def</span> <span class="nf">clear_all</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_all</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Make sure all the genetic operator counters and the stats</span>
 <span class="sd">        are cleared. This reset everything before each run().</span>
@@ -279,7 +301,7 @@
 
 <div class="viewcode-block" id="GenericGA.best_chromosome">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.best_chromosome">[docs]</a>
-    <span class="k">def</span> <span class="nf">best_chromosome</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Chromosome</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">best_chromosome</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Chromosome</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Auxiliary method that returns the chromosome with the</span>
 <span class="sd">        highest fitness value. Safeguarded with ignoring NaNs.</span>
@@ -294,7 +316,7 @@
 
 <div class="viewcode-block" id="GenericGA.best_n">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.best_n">[docs]</a>
-    <span class="k">def</span> <span class="nf">best_n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">best_n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Auxiliary method that returns the best &#39;n&#39; chromosomes</span>
 <span class="sd">        with the highest fitness value.</span>
@@ -328,7 +350,7 @@
 
 <div class="viewcode-block" id="GenericGA.crossover_mutate">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.crossover_mutate">[docs]</a>
-    <span class="k">def</span> <span class="nf">crossover_mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">crossover_mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is an auxiliary method that combines the crossover and mutation</span>
 <span class="sd">        operations in one call. Since these operations happen in place the</span>
@@ -374,19 +396,27 @@
 
 <div class="viewcode-block" id="GenericGA.adapt_probabilities">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.adapt_probabilities">[docs]</a>
-    <span class="k">def</span> <span class="nf">adapt_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">adapt_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method is used (optionally) to adjust simultaneously the crossover</span>
 <span class="sd">        and mutation parameters of the GenericGA object.</span>
 
 <span class="sd">        :param threshold: (float) This parameter is used to determine whether we</span>
 <span class="sd">        are going to increase or decrease the crossover and mutation parameters.</span>
+
+<span class="sd">        :return: True if the parameters have changed, else False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Check if the threshold value is missing.</span>
         <span class="k">if</span> <span class="n">threshold</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                                <span class="sa">f</span><span class="s2">&quot;Threshold parameter is missing.&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Sanity check.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="n">threshold</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">threshold</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;Threshold value must be float in [0.0, 1.0].&quot;</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Initialize the trial values with the current</span>
@@ -417,14 +447,16 @@
         <span class="k">if</span> <span class="n">have_changed</span><span class="p">:</span>
             <span class="c1"># Ensure the probabilities stay within the range [0, 1].</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">trial_pc</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">trial_pm</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">trial_pm</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
+
+        <span class="k">return</span> <span class="n">have_changed</span></div>
+
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="GenericGA.population_fitness">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.population_fitness">[docs]</a>
-    <span class="k">def</span> <span class="nf">population_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">population_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the fitness values of all the population.</span>
 
@@ -436,7 +468,7 @@
 
 <div class="viewcode-block" id="GenericGA.individual_fitness">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.individual_fitness">[docs]</a>
-    <span class="k">def</span> <span class="nf">individual_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">individual_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the fitness value of an individual member of the population.</span>
 
@@ -450,9 +482,9 @@
 
 <div class="viewcode-block" id="GenericGA.evaluate_fitness">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.evaluate_fitness">[docs]</a>
-    <span class="k">def</span> <span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span>
                          <span class="n">parallel_mode</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                         <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;threading&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]:</span>
+                         <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;threading&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Evaluate all the chromosomes of the input list with the custom</span>
 <span class="sd">        fitness function. The parallel_mode is optional. Moreover, the</span>
@@ -490,22 +522,22 @@
         <span class="n">p_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fitness_i</span><span class="p">)</span>
 
         <span class="c1"># Preallocate the fitness list.</span>
-        <span class="n">fitness_values</span> <span class="o">=</span> <span class="n">p_size</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+        <span class="n">fitness_values</span> <span class="o">=</span> <span class="n">p_size</span> <span class="o">*</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;NaN&quot;</span><span class="p">)]</span>
 
         <span class="c1"># Flag to indicate if a solution has been found.</span>
         <span class="n">found_solution</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="c1"># Update all chromosomes with their fitness and check if a solution</span>
         <span class="c1"># has been found.</span>
-        <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">fit_tuple</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">input_population</span><span class="p">,</span> <span class="n">fitness_i</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">fit_result</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">input_population</span><span class="p">,</span> <span class="n">fitness_i</span><span class="p">)):</span>
             <span class="c1"># Attach the fitness to each chromosome.</span>
-            <span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fit_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fit_result</span><span class="p">[</span><span class="s2">&quot;f_value&quot;</span><span class="p">]</span>
 
             <span class="c1"># Collect the fitness in a separate list.</span>
-            <span class="n">fitness_values</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">fit_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">fitness_values</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">fit_result</span><span class="p">[</span><span class="s2">&quot;f_value&quot;</span><span class="p">]</span>
 
             <span class="c1"># Update the &quot;found solution&quot;.</span>
-            <span class="n">found_solution</span> <span class="o">|=</span> <span class="n">fit_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">found_solution</span> <span class="o">|=</span> <span class="n">fit_result</span><span class="p">[</span><span class="s2">&quot;solution_is_found&quot;</span><span class="p">]</span>
         <span class="c1"># _end_for_</span>
 
         <span class="c1"># Update the counter of function evaluations.</span>
@@ -518,7 +550,7 @@
 
 <div class="viewcode-block" id="GenericGA.run">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.run">[docs]</a>
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Main method of the Generic GA class, that implements the evolutionary routine.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -527,7 +559,7 @@
 
     <span class="c1"># _end_def_</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method is only a wrapper of the &quot;run&quot; method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

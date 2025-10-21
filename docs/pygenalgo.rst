@@ -10,6 +10,7 @@ Subpackages
    pygenalgo.engines
    pygenalgo.genome
    pygenalgo.operators
+   pygenalgo.utils
 
 Module contents
 ---------------

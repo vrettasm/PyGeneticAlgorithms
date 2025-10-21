@@ -1,22 +1,20 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pygenalgo.operators.mutation.meta_mutator &mdash; PyGenAlgo 01.70.50 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../../_static/documentation_options.js?v=d0c4109e"></script>
-        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=d0c4109e"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -71,17 +69,17 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.mutation.meta_mutator</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.swap_mutator</span> <span class="kn">import</span> <span class="n">SwapMutator</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.random_mutator</span> <span class="kn">import</span> <span class="n">RandomMutator</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.shuffle_mutator</span> <span class="kn">import</span> <span class="n">ShuffleMutator</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.inverse_mutator</span> <span class="kn">import</span> <span class="n">InverseMutator</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.mutation.mutate_operator</span> <span class="kn">import</span> <span class="n">MutationOperator</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.mutation.swap_mutator</span><span class="w"> </span><span class="kn">import</span> <span class="n">SwapMutator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.mutation.random_mutator</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomMutator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.mutation.shuffle_mutator</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShuffleMutator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.mutation.inverse_mutator</span><span class="w"> </span><span class="kn">import</span> <span class="n">InverseMutator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.mutation.mutate_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MutationOperator</span>
 
 
 <div class="viewcode-block" id="MetaMutator">
 <a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.meta_mutator.MetaMutator">[docs]</a>
-<span class="k">class</span> <span class="nc">MetaMutator</span><span class="p">(</span><span class="n">MutationOperator</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MetaMutator</span><span class="p">(</span><span class="n">MutationOperator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
@@ -91,7 +89,7 @@
 <span class="sd">        NOTE: In the future the equal probabilities can be amended.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutate_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutate_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a &#39;MetaMutator&#39; object with a predefined probability value.</span>
 
@@ -107,7 +105,7 @@
 
 <div class="viewcode-block" id="MetaMutator.mutate">
 <a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.meta_mutator.MetaMutator.mutate">[docs]</a>
-    <span class="k">def</span> <span class="nf">mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform the mutation operation by randomly applying another mutator.</span>
 
@@ -134,7 +132,7 @@
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">all_counters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">all_counters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor (getter) of the application counter from all the internal mutators.</span>
 <span class="sd">        This is mostly to verify that everything is working as expected.</span>
@@ -146,7 +144,7 @@
 
 <div class="viewcode-block" id="MetaMutator.reset_counter">
 <a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.meta_mutator.MetaMutator.reset_counter">[docs]</a>
-    <span class="k">def</span> <span class="nf">reset_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets ALL the counters to &#39;zero&#39;. We have to override the super().reset_counter()</span>
 <span class="sd">        method, because we have to call explicitly the reset_counter on all the internal</span>

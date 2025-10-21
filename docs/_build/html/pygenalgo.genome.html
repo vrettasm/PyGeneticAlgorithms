@@ -1,23 +1,21 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pygenalgo.genome package &mdash; PyGenAlgo 01.70.50 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=d0c4109e"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d0c4109e"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -52,6 +50,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html">pygenalgo.engines package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">pygenalgo.genome package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.html">pygenalgo.operators package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.utils.html">pygenalgo.utils package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="pygenalgo.html#module-pygenalgo">Module contents</a></li>
@@ -152,6 +151,19 @@ at which the corresponding genes are different.</p>
 </dd>
 </dl>
 <p>input chromosomes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.genome.chromosome.Chromosome.invalidate_fitness">
+<span class="sig-name descname"><span class="pre">invalidate_fitness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/genome/chromosome.html#Chromosome.invalidate_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.genome.chromosome.Chromosome.invalidate_fitness" title="Link to this definition"></a></dt>
+<dd><p>Invalidates the fitness of the chromosome
+by setting the value to NaN. This is used
+during the evolution process (mutation).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

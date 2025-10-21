@@ -1,22 +1,20 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pygenalgo.operators.selection.roulette_wheel_selector &mdash; PyGenAlgo 01.70.50 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../../_static/documentation_options.js?v=d0c4109e"></script>
-        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=d0c4109e"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -71,15 +69,15 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.selection.roulette_wheel_selector</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">fsum</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.genome.chromosome</span> <span class="kn">import</span> <span class="n">Chromosome</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.genetic_operator</span> <span class="kn">import</span> <span class="n">increase_counter</span>
-<span class="kn">from</span> <span class="nn">pygenalgo.operators.selection.select_operator</span> <span class="kn">import</span> <span class="n">SelectionOperator</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">fsum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.genetic_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">increase_counter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.selection.select_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">SelectionOperator</span>
 
 
 <div class="viewcode-block" id="RouletteWheelSelector">
 <a class="viewcode-back" href="../../../../pygenalgo.operators.selection.html#pygenalgo.operators.selection.roulette_wheel_selector.RouletteWheelSelector">[docs]</a>
-<span class="k">class</span> <span class="nc">RouletteWheelSelector</span><span class="p">(</span><span class="n">SelectionOperator</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RouletteWheelSelector</span><span class="p">(</span><span class="n">SelectionOperator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
@@ -91,7 +89,7 @@
 <span class="sd">        when forming the new generation of individuals (offsprings).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a &#39;RouletteWheelSelector&#39; object with a given probability value.</span>
 
@@ -102,8 +100,10 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">select_probability</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
+<div class="viewcode-block" id="RouletteWheelSelector.select">
+<a class="viewcode-back" href="../../../../pygenalgo.operators.selection.html#pygenalgo.operators.selection.roulette_wheel_selector.RouletteWheelSelector.select">[docs]</a>
     <span class="nd">@increase_counter</span>
-    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Select the individuals, from the input population, that will be passed on</span>
 <span class="sd">        to the next genetic operations of crossover and mutation to form the new</span>
@@ -125,7 +125,7 @@
         <span class="c1"># Calculate sum of all fitness.</span>
         <span class="n">sum_fitness</span> <span class="o">=</span> <span class="n">fsum</span><span class="p">(</span><span class="n">all_fitness</span><span class="p">)</span>
 
-        <span class="c1"># Calculate the &quot;selection probabilities&quot;, of each member</span>
+        <span class="c1"># Calculate the &quot;selection probabilities&quot; of each member</span>
         <span class="c1"># in the population.</span>
         <span class="n">selection_probs</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="o">/</span> <span class="n">sum_fitness</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">all_fitness</span><span class="p">]</span>
 
@@ -135,6 +135,7 @@
 
         <span class="c1"># Return the new parents (individuals).</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">index</span><span class="p">]</span></div>
+</div>
 
     <span class="c1"># _end_def_</span>
 
