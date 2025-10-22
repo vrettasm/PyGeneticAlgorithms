@@ -98,7 +98,7 @@ class GeneticOperator(object):
     # _end_def_
 
     @property
-    def iter(self) -> int:
+    def iteration(self) -> int:
         """
         Accessor (getter) of the iteration parameter.
 
@@ -107,8 +107,8 @@ class GeneticOperator(object):
         return self._iteration
     # _end_def_
 
-    @iter.setter
-    def iter(self, value: int) -> None:
+    @iteration.setter
+    def iteration(self, value: int) -> None:
         """
         Accessor (setter) of the iteration value.
 

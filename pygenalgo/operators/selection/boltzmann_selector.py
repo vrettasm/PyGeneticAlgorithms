@@ -44,7 +44,7 @@ class BoltzmannSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Compute the Temperature.
-        temperature = max(0.1, np_exp(-self.iter/self._items))
+        temperature = max(0.1, np_exp(-self.iteration / self._items))
 
         # Get the population size.
         pop_size = len(population)

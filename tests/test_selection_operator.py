@@ -50,15 +50,15 @@ class TestSelectionOperator(unittest.TestCase):
         """
 
         # Upon creation the iteration value should be zero.
-        self.assertAlmostEqual(0, self.select_op.iter)
+        self.assertAlmostEqual(0, self.select_op.iteration)
 
         # Update with a new value.
-        self.select_op.iter = 10
-        self.assertAlmostEqual(10, self.select_op.iter)
+        self.select_op.iteration = 10
+        self.assertAlmostEqual(10, self.select_op.iteration)
 
         # Update with a wrong type.
         with self.assertRaises(TypeError):
-            self.select_op.iter = 10.9
+            self.select_op.iteration = 10.9
         # _end_with_
 
     # _end_def_
