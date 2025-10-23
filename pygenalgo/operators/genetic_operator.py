@@ -128,7 +128,7 @@ class GeneticOperator(object):
     # _end_def_
 
     @property
-    def items(self) -> list | tuple:
+    def items(self):
         """
         Accessor (getter) of the _items container.
 
