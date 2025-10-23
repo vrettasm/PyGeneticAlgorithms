@@ -32,7 +32,7 @@ class GenericGA(object):
 
     # Object variables.
     __slots__ = ("population", "fitness_func", "_select_op", "_crossx_op", "_mutate_op",
-                 "_stats", "_n_cpus", "_f_eval")
+                 "_stats", "_n_cpus", "_f_eval", "_iteration")
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, select_op: SelectionOperator = None,
                  mutate_op: MutationOperator = None, crossx_op: CrossoverOperator = None, n_cpus: int = None):
@@ -102,6 +102,36 @@ class GenericGA(object):
 
         # Set the function evaluation to zero.
         self._f_eval = 0
+
+        # Set the iterations counter to zero.
+        self._iteration = 0
+    # _end_def_
+
+    @property
+    def iteration(self) -> int:
+        """
+        Accessor (getter) of the iteration parameter.
+
+        :return: the iteration value.
+        """
+        return self._iteration
+    # _end_def_
+
+    @iteration.setter
+    def iteration(self, value: int) -> None:
+        """
+        Accessor (setter) of the iteration value.
+
+        :param value: (int).
+        """
+        # Check for correct type and allow only
+        # the positive values.
+        if isinstance(value, int) and value >= 0:
+            # Update the iteration value.
+            self._iteration = value
+        else:
+            raise RuntimeError(f"{self.__class__.__name__}: "
+                               f"Iteration value should be positive int: {type(value)}.")
     # _end_def_
 
     @classmethod
