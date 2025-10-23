@@ -57,8 +57,13 @@ class TestSelectionOperator(unittest.TestCase):
         self.assertAlmostEqual(10, self.select_op.iteration)
 
         # Update with a wrong type.
-        with self.assertRaises(TypeError):
+        with self.assertRaises(RuntimeError):
             self.select_op.iteration = 10.9
+        # _end_with_
+
+        # Update with a wrong value.
+        with self.assertRaises(RuntimeError):
+            self.select_op.iteration = -1
         # _end_with_
 
     # _end_def_
