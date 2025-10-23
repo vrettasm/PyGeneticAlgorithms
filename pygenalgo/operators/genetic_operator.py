@@ -114,16 +114,17 @@ class GeneticOperator(object):
 
         :param value: (int).
         """
-        # Check for correct type.
-        if isinstance(value, int):
+        # Check for correct type and allow only
+        # the positive values.
+        if isinstance(value, int) and value >= 0:
             # Protect value assignment.
             with self._lock:
                 # Update the iteration value.
                 self._iteration = value
             # _end_with_
         else:
-            raise TypeError(f"{self.__class__.__name__}: "
-                            f"Iteration value should be int: {type(value)}.")
+            raise RuntimeError(f"{self.__class__.__name__}: "
+                               f"Iteration value should be positive int: {type(value)}.")
         # _end_if_
     # _end_def_
 
