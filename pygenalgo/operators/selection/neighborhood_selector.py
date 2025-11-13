@@ -1,10 +1,10 @@
 import numpy as np
 from operator import attrgetter
+from pygenalgo.utils.utilities import np_cdist
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
-from scipy.spatial.distance import cdist
 
 class NeighborhoodSelector(SelectionOperator):
     """
@@ -49,7 +49,7 @@ class NeighborhoodSelector(SelectionOperator):
         x_pos = np.array([p.values() for p in population])
 
         # Compute the pairwise distances.
-        pairwise_dists = cdist(x_pos, x_pos)
+        pairwise_dists = np_cdist(x_pos, scaled=True)
 
         # Sort the distances and get their indices.
         x_sorted = np.argsort(pairwise_dists, axis=1)
