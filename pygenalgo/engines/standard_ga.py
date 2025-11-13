@@ -223,12 +223,9 @@ class StandardGA(GenericGA):
                 break
             # _end_if_
 
-            # Compute the current average Hamming distance.
-            avg_distance = average_hamming_distance(population_i)
-
             # Check for convergence.
             if f_tol and isclose(avg_fitness_i, avg_fitness_0,
-                                 rel_tol=1.0E-5, abs_tol=f_tol) and avg_distance < 0.025:
+                                 rel_tol=1.0E-5, abs_tol=f_tol):
                 # Display a warning message.
                 print(f"{self.__class__.__name__} converged in {i + 1} iterations.")
 
@@ -241,6 +238,9 @@ class StandardGA(GenericGA):
 
             # Check the adaptive flag.
             if adapt_probs:
+
+                # Compute the current average Hamming distance.
+                avg_distance = average_hamming_distance(population_i)
 
                 # For threshold, we use the average Hamming
                 # distance of the 'current' population.
