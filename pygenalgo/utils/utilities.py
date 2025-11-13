@@ -3,7 +3,7 @@ from typing import Callable
 from functools import wraps, partial
 
 # Public interface.
-__all__ = ["pareto_front", "cost_function",
+__all__ = ["pareto_front", "cost_function", "np_cdist",
            "pareto_dominance", "np_pareto_front"]
 
 def pareto_dominance(point_a: tuple | list,
@@ -190,4 +190,43 @@ def cost_function(func: Callable = None, minimize: bool = False):
     # _end_def_
 
     return function_wrapper
+# _end_def_
+
+def np_cdist(x_pos: np.ndarray, scaled: bool = False) -> np.ndarray:
+    """
+    This is equivalent to the scipy.spatial.distance.cdist method
+    with Euclidean distance metric. It is a tailored version for
+    the purposes of the multimodal operation mode.
+
+    :param x_pos: a numpy array of positions. The dimensions of the
+    input array should [n_rows, n_cols], where n_rows is the number
+    of particles and n_cols are the number of positions.
+
+    :param scaled: boolean flag that allows the input array to be
+    scaled, using the MaxAbsScaler, before computing the distances.
+
+    :return: a square [n_rows, n_rows] numpy array of distances.
+    """
+
+    # Get the number of rows/cols.
+    n_rows, n_cols = x_pos.shape
+
+    # Check if we want the input data to be scaled.
+    if scaled:
+        # Scale with the MaxAbsScaler.
+        x_pos /= np.max(np.abs(x_pos), axis=0)
+    # _end_if_
+
+    # Create a square matrix with zeros.
+    dist_x = np.zeros((n_rows, n_rows), dtype=float)
+
+    # Iterate through all vectors.
+    for i in range(n_rows):
+        # Compute the Euclidean norm of the 'i-th' element with the rest of them.
+        dist_x[i, i + 1:] = np.sqrt(np.sum((x_pos[i] - x_pos[i + 1:, :]) ** 2, axis=1))
+
+        # Since the array is symmetric store the result in the 'i-th' column too.
+        dist_x[:, i] = dist_x[i, :]
+    # _end_for_
+    return dist_x
 # _end_def_
