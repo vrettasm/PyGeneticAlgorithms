@@ -39,7 +39,7 @@ class UniformCrossover(CrossoverOperator):
 
         # If the crossover probability is higher than
         # a uniformly random value, apply the changes.
-        if self.is_operator_applicable():
+        if self.is_operator_applicable() and (parent1 != parent2):
 
             # Get the length of the chromosome.
             number_of_genes = len(parent1)

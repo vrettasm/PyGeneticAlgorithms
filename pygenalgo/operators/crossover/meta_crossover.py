@@ -42,7 +42,7 @@ class MetaCrossover(CrossoverOperator):
 
         # If the crossover probability is higher than
         # a uniformly random value, make the changes.
-        if self.is_operator_applicable():
+        if self.is_operator_applicable() and (parent1 != parent2):
 
             # Get the number of available crossovers.
             n_operators = len(self.items)

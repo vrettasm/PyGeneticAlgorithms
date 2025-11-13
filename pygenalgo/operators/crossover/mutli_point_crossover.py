@@ -62,7 +62,7 @@ class MultiPointCrossover(CrossoverOperator):
 
         # If the crossover probability is higher than
         # a uniformly random value, make the changes.
-        if self.is_operator_applicable():
+        if self.is_operator_applicable() and (parent1 != parent2):
 
             # Select randomly the crossover points and sort them.
             loci = sorted(self.rng.choice(num_genes, size=num_points,

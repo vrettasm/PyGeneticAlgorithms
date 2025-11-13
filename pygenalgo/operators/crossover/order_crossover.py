@@ -37,7 +37,7 @@ class OrderCrossover(CrossoverOperator):
 
         # If the crossover probability is higher than
         # a uniformly random value, make the changes.
-        if self.is_operator_applicable():
+        if self.is_operator_applicable() and (parent1 != parent2):
 
             # Select randomly the crossover point from [1, M-1].
             locus = self.rng.integers(1, high=len(parent1)-1)
