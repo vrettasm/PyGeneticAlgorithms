@@ -35,8 +35,9 @@ class OrderCrossover(CrossoverOperator):
         :return: child1 and child2 (as Chromosomes).
         """
 
-        # If the crossover probability is higher than
-        # a uniformly random value, make the changes.
+        # If the crossover probability is higher than a uniformly
+        # random value and the parents aren't identical apply the
+        # changes.
         if self.is_operator_applicable() and (parent1 != parent2):
 
             # Select randomly the crossover point from [1, M-1].
