@@ -10,8 +10,9 @@ class NeighborhoodSelector(SelectionOperator):
     """
     Description:
 
-        TBD
-
+        Neighborhood Selector implements an object that performs selection by choosing
+        an individual from a set of neighboring individuals. The neighbors are selected
+        based on their proximity from one another using their Euclidean distance.
     """
 
     def __init__(self, select_probability: float = 1.0, k: int = 5):
@@ -59,7 +60,8 @@ class NeighborhoodSelector(SelectionOperator):
         neighbors = x_sorted[:, :self._items]
 
         # Return the new parents.
-        return [max([population[n] for n in neighbors[i]], key=attrgetter("fitness"))
+        return [max([population[n] for n in neighbors[i]],
+                    key=attrgetter("fitness"))
                 for i in range(pop_size)]
     # _end_def_
 
