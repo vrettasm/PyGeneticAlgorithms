@@ -16,20 +16,20 @@ class NeighborhoodSelector(SelectionOperator):
         based on their proximity from one another using their Euclidean distance.
     """
 
-    def __init__(self, select_probability: float = 1.0, k: int = 5):
+    def __init__(self, select_probability: float = 1.0, n_nearest: int = 5):
         """
         Construct a 'NeighborhoodSelector' object with a given probability value.
 
         :param select_probability: (float) in [0, 1].
 
-        :param k: the number of the neighbors (int).
+        :param n_nearest: the number of the nearest neighbors to consider (int).
         """
 
         # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
 
         # Number of neighbors of the tournament should be more than 2.
-        self._items = max(2, int(k))
+        self._items = max(2, int(n_nearest))
     # _end_def_
 
     @increase_counter
