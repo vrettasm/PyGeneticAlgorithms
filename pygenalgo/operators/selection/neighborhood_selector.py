@@ -61,7 +61,7 @@ class NeighborhoodSelector(SelectionOperator):
 
         # Return the new parents.
         return [max((population[j] for j in neighborhood[i]),
-                           key=attrgetter("fitness")) for i in range(pop_size)]
+                    key=attrgetter("fitness")) for i in range(pop_size)]
     # _end_def_
 
 # _end_class_
