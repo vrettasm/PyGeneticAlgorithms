@@ -1,4 +1,5 @@
 import numpy as np
+from collections import deque
 from operator import attrgetter
 from pygenalgo.utils.utilities import np_cdist
 from pygenalgo.genome.chromosome import Chromosome
@@ -52,17 +53,37 @@ class NeighborhoodSelector(SelectionOperator):
         # Compute the pairwise distances.
         pairwise_dists = np_cdist(x_pos, scaled=True)
 
-        # Sort the distances and get their indices.
+        # Sort the distances and get their indexes.
         x_sorted = np.argsort(pairwise_dists, axis=1)
 
         # Make a view of the first '_items'. This provides
         # a notion of a 'neighborhood' for each chromosome.
-        neighbors = x_sorted[:, :self._items]
+        neighborhood = x_sorted[:, :self._items]
+
+        # Calculate the selection probabilities of each member in the
+        # neighborhood, using their ranking position (low --> high).
+        # This should remain constant during the evolution hence the
+        # method is cached for improved performance.
+        selection_probs = self.linear_rank_probabilities(self._items)
+
+        # Create a new deque with fixed size.
+        new_parents = deque(maxlen=pop_size)
+
+        # Select the new parents.
+        for p_ids in neighborhood:
+            # Sort the neighbors in ascending order using their fitness.
+            sorted_neighbors = sorted((population[i] for i in p_ids),
+                                      key=attrgetter("fitness"))
+
+            # Select a new parent from the sorted neighbors.
+            n = self.rng.choice(self._items, p=selection_probs)
+
+            # Add it to the new deque.
+            new_parents.append(sorted_neighbors[n])
+        # _end_for_
 
         # Return the new parents.
-        return [max([population[n] for n in neighbors[i]],
-                    key=attrgetter("fitness"))
-                for i in range(pop_size)]
+        return list(new_parents)
     # _end_def_
 
 # _end_class_
