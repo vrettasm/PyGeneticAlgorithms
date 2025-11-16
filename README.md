@@ -21,9 +21,9 @@ parallel pool). So the default setting here is "parallel=False". Regarding the I
 parallel mode by definition.
 
   > **NEWS**:
-  > Recently a new feature was added "Neighborhood Selector". This selector operator if used for problems with multi
-  > modal objective functions. It allows the population to focus in multiple areas of the search space and detect more
-  > one optimal values.
+  > Recently the new feature "Neighborhood Selector" was added. This selector operator is used for problems with multi
+  > modal objective functions. It allows the population to focus on multiple areas of the search space and detect more
+  > than one optimal values. This features works in both computational modes (StandardGA and IslandModelGA).
   > 
 
 The current implementation offers a variety of genetic operators including:
