@@ -1,5 +1,5 @@
 from operator import attrgetter
-
+from functools import lru_cache
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
@@ -27,6 +27,34 @@ class LinearRankSelector(SelectionOperator):
         super().__init__(select_probability)
     # _end_def_
 
+    @staticmethod
+    @lru_cache(maxsize=32)
+    def probabilities(p_size: int) -> list[float]:
+        """
+        Calculate the rank probability distribution over the population size.
+        The function is cached so that repeated calls with the same input should
+        not recompute the same array since the population size of the swarm is not
+        expected to change.
+
+        NOTE: Probabilities are returned in ascending order.
+
+        :param p_size: (int) population size.
+
+        :return: (list) rank probability distribution in ascending order.
+        """
+        # Sanity check.
+        if p_size <= 0:
+            raise ValueError("Population size 'p_size' must be > 0.")
+        # _end_if_
+
+        # Calculate the sum of '1 + 2 + 3 + ... + N'.
+        # We know that this is equal to: N * (N+1)/2.
+        sum_ranked_values = float(0.5 * p_size * (p_size + 1))
+
+        # Return the probability values (ascending order).
+        return [n / sum_ranked_values for n in range(1, p_size + 1)]
+    # _end_def_
+
     @increase_counter
     def select(self, population: list[Chromosome]) -> list[Chromosome]:
         """
@@ -44,7 +72,7 @@ class LinearRankSelector(SelectionOperator):
 
         # Calculate the selection probabilities of each member
         # in the population, using their ranking position.
-        selection_probs = self.linear_rank_probabilities(pop_size)
+        selection_probs = LinearRankSelector.probabilities(pop_size)
 
         # Sort the population in ascending order using their fitness value.
         sorted_population = sorted(population, key=attrgetter("fitness"))
