@@ -21,16 +21,16 @@ parallel pool). So the default setting here is "parallel=False". Regarding the I
 parallel mode by definition.
 
   > **NEWS**:
-  > Recently a new feature was added "adapt_probs: (bool)". This option if enabled, will allow the crossover and
-  > mutation probabilities to adapt according to the convergence of the population to a single solution. This uses
-  > the average Hamming distance to set a threshold value and either increase or decrease the genetic probabilities
-  > by a pre-defined amount.
+  > Recently a new feature was added "Neighborhood Selector". This selector operator if used for problems with multi
+  > modal objective functions. It allows the population to focus in multiple areas of the search space and detect more
+  > one optimal values.
   > 
 
 The current implementation offers a variety of genetic operators including:
 
 - **Selection operators**:
   - [Linear Rank Selector](pygenalgo/operators/selection/linear_rank_selector.py)
+  - [Neighborhood Selector](pygenalgo/operators/selection/neighborhood_selector.py)
   - [Random Selector](pygenalgo/operators/selection/random_selector.py)
   - [Roulette Wheel Selector](pygenalgo/operators/selection/roulette_wheel_selector.py)
   - [Stochastic Universal Selector](pygenalgo/operators/selection/stochastic_universal_selector.py)
