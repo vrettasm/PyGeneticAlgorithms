@@ -134,10 +134,6 @@ class StandardGA(GenericGA):
             # Update current iteration.
             self.iteration = i
 
-            # Currently, this is used only
-            # from the Boltzmann Selector.
-            self.select_op.iteration = i
-
             # SELECT the parents.
             population_i = self.select_op(self.population)
 
@@ -273,12 +269,12 @@ class StandardGA(GenericGA):
         print(self.select_op)
 
         # Second print the crossover operator.
-        print(self.crossover_op)
+        print(self.crossx_op)
 
         # Check if we used the MetaCrossover.
-        if isinstance(self.crossover_op, MetaCrossover):
+        if isinstance(self.crossx_op, MetaCrossover):
             # Call internally all operators.
-            for op in self.crossover_op.items:
+            for op in self.crossx_op.items:
                 print(op)
             # _end_for_
         # _end_if_

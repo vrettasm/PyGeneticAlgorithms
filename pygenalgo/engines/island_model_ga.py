@@ -119,10 +119,6 @@ class IslandModelGA(GenericGA):
             # Update current iteration.
             self.iteration = i
 
-            # Currently, this is used only
-            # from the Boltzmann Selector.
-            self.select_op.iteration = i
-
             # SELECT the parents.
             population_i = self.select_op(island.population)
 
