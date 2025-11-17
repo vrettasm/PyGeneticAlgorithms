@@ -57,8 +57,11 @@ class GeneticOperator(object):
     # Create a random number generator.
     _rng: Generator = default_rng()
 
+    # Initialize the iteration value.
+    _iteration: int = 0
+
     # Object variables.
-    __slots__ = ("_probability", "_counter", "_lock", "_items", "_iteration")
+    __slots__ = ("_probability", "_counter", "_lock", "_items")
 
     def __init__(self, _probability: float) -> None:
         """
@@ -79,9 +82,6 @@ class GeneticOperator(object):
 
         # Place holder.
         self._items = None
-
-        # Initialize the iteration value.
-        self._iteration = 0
     # _end_def_
 
     @classmethod
@@ -107,8 +107,8 @@ class GeneticOperator(object):
         return self._iteration
     # _end_def_
 
-    @iteration.setter
-    def iteration(self, value: int) -> None:
+    @classmethod
+    def set_iteration(cls, value: int) -> None:
         """
         Accessor (setter) of the iteration value.
 
@@ -117,15 +117,11 @@ class GeneticOperator(object):
         # Check for correct type and allow only
         # the positive values.
         if isinstance(value, int) and value >= 0:
-            # Protect value assignment.
-            with self._lock:
-                # Update the iteration value.
-                self._iteration = value
-            # _end_with_
+            # Update the iteration value.
+            cls._iteration = value
         else:
-            raise RuntimeError(f"{self.__class__.__name__}: "
+            raise RuntimeError(f"{cls.__class__.__name__}: "
                                f"Iteration value should be positive int: {type(value)}.")
-        # _end_if_
     # _end_def_
 
     @property
@@ -157,7 +153,6 @@ class GeneticOperator(object):
         # Protect operator counter.
         with self._lock:
             self._counter = 0
-        # _end_with_
     # _end_def_
 
     def inc_counter(self) -> None:
@@ -170,7 +165,6 @@ class GeneticOperator(object):
         # Protect operator counter.
         with self._lock:
             self._counter += 1
-        # _end_with_
     # _end_def_
 
     @property
@@ -206,7 +200,6 @@ class GeneticOperator(object):
         else:
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Probability should be float: {type(new_value)}.")
-        # _end_if_
     # _end_def_
 
     @property
