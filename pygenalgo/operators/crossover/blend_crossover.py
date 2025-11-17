@@ -17,8 +17,7 @@ class BlendCrossover(CrossoverOperator):
 
     def __init__(self, crossover_probability: float = 0.9, p_alpha: float = 0.5):
         """
-        Construct a 'BlendCrossover' object with a given
-        probability value.
+        Construct a 'BlendCrossover' object with a given probability value.
 
         :param crossover_probability: (float).
 
