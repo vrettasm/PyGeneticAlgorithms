@@ -153,14 +153,19 @@ class StandardGA(GenericGA):
                 # Apply the function.
                 total_corrections, f_counts = apply_corrections(population_i, self.fitness_func)
 
-                # Update the function evaluation counter.
-                self.f_eval_increase_by(f_counts)
+                # If corrections were made, we will need to make some updates.
+                if total_corrections > 0:
 
-                # Print only if there were corrections,
-                # to avoid cluttering the screen.
-                if verbose and total_corrections:
-                    print(f"> {total_corrections} correction(s) took place at epoch: {i}.")
-                # _end_if_
+                    # Update the function evaluation counter.
+                    self.f_eval_increase_by(f_counts)
+
+                    # Update the fitness list to ensure consistency.
+                    fit_list_i = [p.fitness for p in population_i]
+
+                    # Check if we want to print.
+                    if verbose:
+                        print(f"> {total_corrections} correction(s) took place at epoch: {i}.")
+                    # _end_if_
             # _end_if_
 
             # Check if 'elitism' is enabled.

@@ -135,7 +135,15 @@ class IslandModelGA(GenericGA):
 
             # Check if 'corrections' are enabled.
             if correction:
-                apply_corrections(population_i, self.fitness_func)
+                # Apply the function.
+                total_corrections, _ = apply_corrections(population_i, self.fitness_func)
+
+                # If corrections were made we will
+                # need to update the fitness list.
+                if total_corrections > 0:
+
+                    # Update the fitness list to ensure consistency.
+                    fit_list_i = [p.fitness for p in population_i]
             # _end_if_
 
             # Check if 'elitism' is enabled.
