@@ -37,7 +37,7 @@ class TestSelectionOperator(unittest.TestCase):
         # Check if the select method is implemented.
         with self.assertRaises(NotImplementedError):
             self.select_op.select(population)
-U    # _end_def_
+    # _end_def_
 
 # _end_class_
 
