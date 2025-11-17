@@ -130,8 +130,6 @@ def apply_corrections(input_population: list[Chromosome],
 
                 # Update the counter.
                 corrected_genes += 1
-            # _end_if_
-
         # _end_for_
 
         # Check if there were any gene corrections.
