@@ -69,9 +69,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.selection.linear_rank_selector</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">attrgetter</span>
-
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">attrgetter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.genetic_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">increase_counter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.selection.select_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">SelectionOperator</span>
@@ -101,14 +100,16 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">select_probability</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
+<div class="viewcode-block" id="LinearRankSelector.probabilities">
+<a class="viewcode-back" href="../../../../pygenalgo.operators.selection.html#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.probabilities">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="nd">@cache</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_linear_rank_probabilities</span><span class="p">(</span><span class="n">p_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">probabilities</span><span class="p">(</span><span class="n">p_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the rank probability distribution over the population size.</span>
-<span class="sd">        The function is cached so repeated calls with the same input should</span>
-<span class="sd">        not recompute the same array since the population size of the swarm</span>
-<span class="sd">        is not expected to change.</span>
+<span class="sd">        The function is cached so that repeated calls with the same input should</span>
+<span class="sd">        not recompute the same array since the population size of the swarm is not</span>
+<span class="sd">        expected to change.</span>
 
 <span class="sd">        NOTE: Probabilities are returned in ascending order.</span>
 
@@ -116,23 +117,28 @@
 
 <span class="sd">        :return: (list) rank probability distribution in ascending order.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Sanity check.</span>
+        <span class="k">if</span> <span class="n">p_size</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Population size &#39;p_size&#39; must be &gt; 0.&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
 
         <span class="c1"># Calculate the sum of &#39;1 + 2 + 3 + ... + N&#39;.</span>
         <span class="c1"># We know that this is equal to: N * (N+1)/2.</span>
         <span class="n">sum_ranked_values</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">p_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">p_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
 
         <span class="c1"># Return the probability values (ascending order).</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">n</span> <span class="o">/</span> <span class="n">sum_ranked_values</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">n</span> <span class="o">/</span> <span class="n">sum_ranked_values</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span></div>
+
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="LinearRankSelector.select">
 <a class="viewcode-back" href="../../../../pygenalgo.operators.selection.html#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.select">[docs]</a>
     <span class="nd">@increase_counter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Select the individuals, from the input population, that will be passed on</span>
-<span class="sd">        to the next genetic operations of crossover and mutation to form the new</span>
-<span class="sd">        population of solutions.</span>
+<span class="sd">        Select the individuals, from the input population, that will be</span>
+<span class="sd">        passed on to the next genetic operations of crossover and mutation</span>
+<span class="sd">        to form the new population of solutions.</span>
 
 <span class="sd">        :param population: a list of chromosomes to select the parents from.</span>
 
@@ -144,7 +150,7 @@
 
         <span class="c1"># Calculate the selection probabilities of each member</span>
         <span class="c1"># in the population, using their ranking position.</span>
-        <span class="n">selection_probs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_linear_rank_probabilities</span><span class="p">(</span><span class="n">pop_size</span><span class="p">)</span>
+        <span class="n">selection_probs</span> <span class="o">=</span> <span class="n">LinearRankSelector</span><span class="o">.</span><span class="n">probabilities</span><span class="p">(</span><span class="n">pop_size</span><span class="p">)</span>
 
         <span class="c1"># Sort the population in ascending order using their fitness value.</span>
         <span class="n">sorted_population</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">))</span>

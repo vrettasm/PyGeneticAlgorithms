@@ -135,9 +135,10 @@
                              <span class="s2">&quot; exceeds the length of the chromosome.&quot;</span><span class="p">)</span>
         <span class="c1"># _end_def_</span>
 
-        <span class="c1"># If the crossover probability is higher than</span>
-        <span class="c1"># a uniformly random value, make the changes.</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
+        <span class="c1"># If the crossover probability is higher than a uniformly</span>
+        <span class="c1"># random value and the parents aren&#39;t identical apply the</span>
+        <span class="c1"># changes.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="n">parent1</span> <span class="o">!=</span> <span class="n">parent2</span><span class="p">):</span>
 
             <span class="c1"># Select randomly the crossover points and sort them.</span>
             <span class="n">loci</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_genes</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_points</span><span class="p">,</span>

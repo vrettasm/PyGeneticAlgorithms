@@ -70,6 +70,7 @@
              
   <h1>Source code for pygenalgo.operators.selection.stochastic_universal_selector</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">fsum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">accumulate</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.genetic_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">increase_counter</span>
@@ -104,10 +105,11 @@
 <div class="viewcode-block" id="StochasticUniversalSelector.select">
 <a class="viewcode-back" href="../../../../pygenalgo.operators.selection.html#pygenalgo.operators.selection.stochastic_universal_selector.StochasticUniversalSelector.select">[docs]</a>
     <span class="nd">@increase_counter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Select the individuals, from the input population, that will be passed on to the next</span>
-<span class="sd">        genetic operations of crossover and mutation to form the new population of solutions.</span>
+<span class="sd">        Select the individuals, from the input population, that will be</span>
+<span class="sd">        passed on to the next genetic operations of crossover and mutation</span>
+<span class="sd">        to form the new population of solutions.</span>
 
 <span class="sd">        :param population: a list of chromosomes to select the parents from.</span>
 
@@ -133,13 +135,13 @@
         <span class="n">pointers</span> <span class="o">=</span> <span class="p">(</span><span class="n">start_0</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">dist_p</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pop_size</span><span class="p">))</span>
 
         <span class="c1"># Create a list that will contain the new parents.</span>
-        <span class="n">new_parents</span> <span class="o">=</span> <span class="n">pop_size</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+        <span class="n">new_parents</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="n">pop_size</span><span class="p">)</span>
 
         <span class="c1"># Compute the cumulative sum of the fitness values.</span>
         <span class="n">cum_sum_fit</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">accumulate</span><span class="p">(</span><span class="n">all_fitness</span><span class="p">))</span>
 
         <span class="c1"># Collect the new parents.</span>
-        <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pointers</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pointers</span><span class="p">:</span>
 
             <span class="c1"># Reset the index to &#39;0&#39;.</span>
             <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
@@ -150,11 +152,11 @@
             <span class="c1"># _end_while_</span>
 
             <span class="c1"># Add the individual at position &#39;i&#39; in the new parents pool.</span>
-            <span class="n">new_parents</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">new_parents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
         <span class="c1"># _end_for_</span>
 
         <span class="c1"># Return the new parents (individuals).</span>
-        <span class="k">return</span> <span class="n">new_parents</span></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">new_parents</span><span class="p">)</span></div>
 </div>
 
     <span class="c1"># _end_def_</span>
