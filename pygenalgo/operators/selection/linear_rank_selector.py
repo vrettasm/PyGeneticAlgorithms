@@ -32,9 +32,9 @@ class LinearRankSelector(SelectionOperator):
     def probabilities(p_size: int) -> list[float]:
         """
         Calculate the rank probability distribution over the population size.
-        The function is cached so that repeated calls with the same input should
-        not recompute the same array since the population size of the swarm is not
-        expected to change.
+        The function is lru_cached so that repeated calls with the same input
+        should not recompute the same array, since the population size of the
+        chromosomes is not expected to change dynamically.
 
         NOTE: Probabilities are returned in ascending order.
 
