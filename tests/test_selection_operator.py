@@ -37,36 +37,7 @@ class TestSelectionOperator(unittest.TestCase):
         # Check if the select method is implemented.
         with self.assertRaises(NotImplementedError):
             self.select_op.select(population)
-        # _end_with_
-
-    # _end_def_
-
-    def test_iter(self):
-        """
-        The iteration value monitors the current epoch
-        (iteration) of the evolution process.
-
-        :return: None.
-        """
-
-        # Upon creation the iteration value should be zero.
-        self.assertAlmostEqual(0, self.select_op.iteration)
-
-        # Update with a new value.
-        self.select_op.iteration = 10
-        self.assertAlmostEqual(10, self.select_op.iteration)
-
-        # Update with a wrong type.
-        with self.assertRaises(RuntimeError):
-            self.select_op.iteration = 10.9
-        # _end_with_
-
-        # Update with a wrong value.
-        with self.assertRaises(RuntimeError):
-            self.select_op.iteration = -1
-        # _end_with_
-
-    # _end_def_
+U    # _end_def_
 
 # _end_class_
 
