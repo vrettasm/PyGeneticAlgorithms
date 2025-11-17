@@ -186,12 +186,9 @@ class IslandModelGA(GenericGA):
                 break
             # _end_if_
 
-            # Compute the current average Hamming distance.
-            avg_distance = average_hamming_distance(population_i)
-
             # Check for convergence.
             if f_tol and isclose(avg_fitness_i, avg_fitness_0,
-                                 rel_tol=1.0E-5, abs_tol=f_tol) and avg_distance < 0.025:
+                                 rel_tol=1.0E-5, abs_tol=f_tol):
                 # Switch the convergence flag and track the current iteration.
                 has_converged = (True, i + 1)
 
@@ -201,6 +198,9 @@ class IslandModelGA(GenericGA):
 
             # Check the adaptive flag.
             if adapt_probs:
+
+                # Compute the current average Hamming distance.
+                avg_distance = average_hamming_distance(population_i)
 
                 # Update the genetic probabilities.
                 if self.adapt_probabilities(threshold=avg_distance):
