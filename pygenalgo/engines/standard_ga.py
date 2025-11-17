@@ -238,14 +238,11 @@ class StandardGA(GenericGA):
                 # Compute the current average Hamming distance.
                 avg_distance = average_hamming_distance(population_i)
 
-                # For threshold, we use the average Hamming
-                # distance of the 'current' population.
+                # Update the genetic probabilities.
                 if self.adapt_probabilities(threshold=avg_distance):
                     # Store the updated crossover and mutation probabilities.
                     self._stats["prob_crossx"].append(self._crossx_op.probability)
                     self._stats["prob_mutate"].append(self._mutate_op.probability)
-            # _end_if_
-
         # _end_for_
 
         # Final time instant.
