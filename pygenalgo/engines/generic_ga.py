@@ -8,6 +8,7 @@ from joblib import (Parallel, delayed)
 from numpy.random import default_rng, Generator
 
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.genetic_operator import GeneticOperator
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
@@ -127,8 +128,12 @@ class GenericGA(object):
         # Check for correct type and allow only
         # the positive values.
         if isinstance(value, int) and value >= 0:
+
             # Update the iteration value.
             self._iteration = value
+
+            # Update the iteration value in the GeneticOperator Class.
+            GeneticOperator.set_iteration(value)
         else:
             raise RuntimeError(f"{self.__class__.__name__}: "
                                f"Iteration value should be positive int: {type(value)}.")
@@ -178,7 +183,7 @@ class GenericGA(object):
     # _end_def_
 
     @property
-    def crossover_op(self) -> CrossoverOperator:
+    def crossx_op(self) -> CrossoverOperator:
         """
         Accessor method that returns the crossover operator reference.
 
