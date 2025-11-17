@@ -23,8 +23,16 @@ class GaussianMutator(MutationOperator):
         # probability value.
         super().__init__(mutate_probability)
 
-        # Standard deviation (scale) of the Gaussian sample.
-        self._items = max(min(float(sigma), 1.0), 0.0)
+        # Ensure sigma parameter is float.
+        sigma = float(sigma)
+
+        # Ensure standard deviation is positive.
+        if sigma <= 0.0:
+            raise ValueError("Standard deviation must be positive.")
+        # _end_if_
+
+        # Assign to the _items placeholder.
+        self._items = sigma
     # _end_def_
 
     def mutate(self, individual: Chromosome) -> None:

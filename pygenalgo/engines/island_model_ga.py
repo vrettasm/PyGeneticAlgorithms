@@ -119,10 +119,6 @@ class IslandModelGA(GenericGA):
             # Update current iteration.
             self.iteration = i
 
-            # Currently, this is used only
-            # from the Boltzmann Selector.
-            self.select_op.iteration = i
-
             # SELECT the parents.
             population_i = self.select_op(island.population)
 
@@ -139,7 +135,15 @@ class IslandModelGA(GenericGA):
 
             # Check if 'corrections' are enabled.
             if correction:
-                apply_corrections(population_i, self.fitness_func)
+                # Apply the function.
+                total_corrections, _ = apply_corrections(population_i, self.fitness_func)
+
+                # If corrections were made we will
+                # need to update the fitness list.
+                if total_corrections > 0:
+
+                    # Update the fitness list to ensure consistency.
+                    fit_list_i = [p.fitness for p in population_i]
             # _end_if_
 
             # Check if 'elitism' is enabled.
@@ -190,12 +194,9 @@ class IslandModelGA(GenericGA):
                 break
             # _end_if_
 
-            # Compute the current average Hamming distance.
-            avg_distance = average_hamming_distance(population_i)
-
             # Check for convergence.
             if f_tol and isclose(avg_fitness_i, avg_fitness_0,
-                                 rel_tol=1.0E-5, abs_tol=f_tol) and avg_distance < 0.025:
+                                 rel_tol=1.0E-5, abs_tol=f_tol):
                 # Switch the convergence flag and track the current iteration.
                 has_converged = (True, i + 1)
 
@@ -205,6 +206,9 @@ class IslandModelGA(GenericGA):
 
             # Check the adaptive flag.
             if adapt_probs:
+
+                # Compute the current average Hamming distance.
+                avg_distance = average_hamming_distance(population_i)
 
                 # Update the genetic probabilities.
                 if self.adapt_probabilities(threshold=avg_distance):

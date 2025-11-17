@@ -134,10 +134,6 @@ class StandardGA(GenericGA):
             # Update current iteration.
             self.iteration = i
 
-            # Currently, this is used only
-            # from the Boltzmann Selector.
-            self.select_op.iteration = i
-
             # SELECT the parents.
             population_i = self.select_op(self.population)
 
@@ -157,14 +153,19 @@ class StandardGA(GenericGA):
                 # Apply the function.
                 total_corrections, f_counts = apply_corrections(population_i, self.fitness_func)
 
-                # Update the function evaluation counter.
-                self.f_eval_increase_by(f_counts)
+                # If corrections were made, we will need to make some updates.
+                if total_corrections > 0:
 
-                # Print only if there were corrections,
-                # to avoid cluttering the screen.
-                if verbose and total_corrections:
-                    print(f"> {total_corrections} correction(s) took place at epoch: {i}.")
-                # _end_if_
+                    # Update the function evaluation counter.
+                    self.f_eval_increase_by(f_counts)
+
+                    # Update the fitness list to ensure consistency.
+                    fit_list_i = [p.fitness for p in population_i]
+
+                    # Check if we want to print.
+                    if verbose:
+                        print(f"> {total_corrections} correction(s) took place at epoch: {i}.")
+                    # _end_if_
             # _end_if_
 
             # Check if 'elitism' is enabled.
@@ -223,12 +224,9 @@ class StandardGA(GenericGA):
                 break
             # _end_if_
 
-            # Compute the current average Hamming distance.
-            avg_distance = average_hamming_distance(population_i)
-
             # Check for convergence.
             if f_tol and isclose(avg_fitness_i, avg_fitness_0,
-                                 rel_tol=1.0E-5, abs_tol=f_tol) and avg_distance < 0.025:
+                                 rel_tol=1.0E-5, abs_tol=f_tol):
                 # Display a warning message.
                 print(f"{self.__class__.__name__} converged in {i + 1} iterations.")
 
@@ -242,14 +240,14 @@ class StandardGA(GenericGA):
             # Check the adaptive flag.
             if adapt_probs:
 
-                # For threshold, we use the average Hamming
-                # distance of the 'current' population.
+                # Compute the current average Hamming distance.
+                avg_distance = average_hamming_distance(population_i)
+
+                # Update the genetic probabilities.
                 if self.adapt_probabilities(threshold=avg_distance):
                     # Store the updated crossover and mutation probabilities.
                     self._stats["prob_crossx"].append(self._crossx_op.probability)
                     self._stats["prob_mutate"].append(self._mutate_op.probability)
-            # _end_if_
-
         # _end_for_
 
         # Final time instant.
@@ -273,12 +271,12 @@ class StandardGA(GenericGA):
         print(self.select_op)
 
         # Second print the crossover operator.
-        print(self.crossover_op)
+        print(self.crossx_op)
 
         # Check if we used the MetaCrossover.
-        if isinstance(self.crossover_op, MetaCrossover):
+        if isinstance(self.crossx_op, MetaCrossover):
             # Call internally all operators.
-            for op in self.crossover_op.items:
+            for op in self.crossx_op.items:
                 print(op)
             # _end_for_
         # _end_if_

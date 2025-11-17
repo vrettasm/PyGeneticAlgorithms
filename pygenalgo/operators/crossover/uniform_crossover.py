@@ -37,9 +37,10 @@ class UniformCrossover(CrossoverOperator):
         :return: child1 and child2 (as Chromosomes).
         """
 
-        # If the crossover probability is higher than
-        # a uniformly random value, apply the changes.
-        if self.is_operator_applicable():
+        # If the crossover probability is higher than a uniformly
+        # random value and the parents aren't identical apply the
+        # changes.
+        if self.is_operator_applicable() and (parent1 != parent2):
 
             # Get the length of the chromosome.
             number_of_genes = len(parent1)
@@ -50,18 +51,19 @@ class UniformCrossover(CrossoverOperator):
             # Preallocate 2nd genome.
             genome_2: list = [None] * number_of_genes
 
-            # Generate all random numbers in one call.
+            # Generate all uniform random numbers and convert them to bool.
             swap_probability = self.rng.random(size=number_of_genes) > 0.5
 
-            # Allocate the genes according to the swap probability.
-            for i, (flag, p1, p2) in enumerate(zip(swap_probability.tolist(),
-                                                   parent1.genome, parent2.genome)):
-                if flag:
-                    genome_1[i] = p1.clone()
-                    genome_2[i] = p2.clone()
+            # Set the genes according to the swap probability.
+            for i, (swap_flag, gene_1, gene_2) in enumerate(zip(swap_probability,
+                                                                parent1.genome,
+                                                                parent2.genome)):
+                if swap_flag:
+                    genome_1[i] = gene_2.clone()
+                    genome_2[i] = gene_1.clone()
                 else:
-                    genome_1[i] = p2.clone()
-                    genome_2[i] = p1.clone()
+                    genome_1[i] = gene_1.clone()
+                    genome_2[i] = gene_2.clone()
                 # _end_if_
 
             # _end_for_

@@ -106,11 +106,11 @@
 <div class="viewcode-block" id="BoltzmannSelector.select">
 <a class="viewcode-back" href="../../../../pygenalgo.operators.selection.html#pygenalgo.operators.selection.boltzmann_selector.BoltzmannSelector.select">[docs]</a>
     <span class="nd">@increase_counter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Select the individuals, from the input population, that will be passed on</span>
-<span class="sd">        to the next genetic operations of crossover and mutation to form the new</span>
-<span class="sd">        population of solutions.</span>
+<span class="sd">        Select the individuals, from the input population, that will be</span>
+<span class="sd">        passed on to the next genetic operations of crossover and mutation</span>
+<span class="sd">        to form the new population of solutions.</span>
 
 <span class="sd">        NOTE: the Boltzmann constant is held in the &#39;_items&#39; variable.</span>
 
@@ -119,7 +119,7 @@
 <span class="sd">        :return: the selected parents population (as list of chromosomes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Compute the Temperature.</span>
-        <span class="n">temperature</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">np_exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">iter</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">))</span>
+        <span class="n">temperature</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">np_exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">iteration</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">))</span>
 
         <span class="c1"># Get the population size.</span>
         <span class="n">pop_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>

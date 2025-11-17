@@ -28,11 +28,11 @@ class RouletteWheelSelector(SelectionOperator):
     # _end_def_
 
     @increase_counter
-    def select(self, population: list[Chromosome]):
+    def select(self, population: list[Chromosome]) -> list[Chromosome]:
         """
-        Select the individuals, from the input population, that will be passed on
-        to the next genetic operations of crossover and mutation to form the new
-        population of solutions.
+        Select the individuals, from the input population, that will be
+        passed on to the next genetic operations of crossover and mutation
+        to form the new population of solutions.
 
         :param population: a list of chromosomes to select the parents from.
 

@@ -1,6 +1,5 @@
-from functools import cache
 from operator import attrgetter
-
+from functools import lru_cache
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
@@ -29,13 +28,13 @@ class LinearRankSelector(SelectionOperator):
     # _end_def_
 
     @staticmethod
-    @cache
-    def _linear_rank_probabilities(p_size: int) -> list[float]:
+    @lru_cache(maxsize=32)
+    def probabilities(p_size: int) -> list[float]:
         """
         Calculate the rank probability distribution over the population size.
-        The function is cached so repeated calls with the same input should
-        not recompute the same array since the population size of the swarm
-        is not expected to change.
+        The function is cached so that repeated calls with the same input should
+        not recompute the same array since the population size of the swarm is not
+        expected to change.
 
         NOTE: Probabilities are returned in ascending order.
 
@@ -43,6 +42,10 @@ class LinearRankSelector(SelectionOperator):
 
         :return: (list) rank probability distribution in ascending order.
         """
+        # Sanity check.
+        if p_size <= 0:
+            raise ValueError("Population size 'p_size' must be > 0.")
+        # _end_if_
 
         # Calculate the sum of '1 + 2 + 3 + ... + N'.
         # We know that this is equal to: N * (N+1)/2.
@@ -53,11 +56,11 @@ class LinearRankSelector(SelectionOperator):
     # _end_def_
 
     @increase_counter
-    def select(self, population: list[Chromosome]):
+    def select(self, population: list[Chromosome]) -> list[Chromosome]:
         """
-        Select the individuals, from the input population, that will be passed on
-        to the next genetic operations of crossover and mutation to form the new
-        population of solutions.
+        Select the individuals, from the input population, that will be
+        passed on to the next genetic operations of crossover and mutation
+        to form the new population of solutions.
 
         :param population: a list of chromosomes to select the parents from.
 
@@ -69,7 +72,7 @@ class LinearRankSelector(SelectionOperator):
 
         # Calculate the selection probabilities of each member
         # in the population, using their ranking position.
-        selection_probs = self._linear_rank_probabilities(pop_size)
+        selection_probs = LinearRankSelector.probabilities(pop_size)
 
         # Sort the population in ascending order using their fitness value.
         sorted_population = sorted(population, key=attrgetter("fitness"))

@@ -1,4 +1,5 @@
 from math import fsum
+from collections import deque
 from itertools import accumulate
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
@@ -29,10 +30,11 @@ class StochasticUniversalSelector(SelectionOperator):
     # _end_def_
 
     @increase_counter
-    def select(self, population: list[Chromosome]):
+    def select(self, population: list[Chromosome]) -> list[Chromosome]:
         """
-        Select the individuals, from the input population, that will be passed on to the next
-        genetic operations of crossover and mutation to form the new population of solutions.
+        Select the individuals, from the input population, that will be
+        passed on to the next genetic operations of crossover and mutation
+        to form the new population of solutions.
 
         :param population: a list of chromosomes to select the parents from.
 
@@ -58,13 +60,13 @@ class StochasticUniversalSelector(SelectionOperator):
         pointers = (start_0 + i*dist_p for i in range(pop_size))
 
         # Create a list that will contain the new parents.
-        new_parents = pop_size * [None]
+        new_parents = deque(maxlen=pop_size)
 
         # Compute the cumulative sum of the fitness values.
         cum_sum_fit = list(accumulate(all_fitness))
 
         # Collect the new parents.
-        for n, p in enumerate(pointers):
+        for p in pointers:
 
             # Reset the index to '0'.
             i = 0
@@ -75,11 +77,11 @@ class StochasticUniversalSelector(SelectionOperator):
             # _end_while_
 
             # Add the individual at position 'i' in the new parents pool.
-            new_parents[n] = population[i]
+            new_parents.append(population[i])
         # _end_for_
 
         # Return the new parents (individuals).
-        return new_parents
+        return list(new_parents)
     # _end_def_
 
 # _end_class_

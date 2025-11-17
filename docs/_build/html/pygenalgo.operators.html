@@ -264,6 +264,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.linear_rank_selector">pygenalgo.operators.selection.linear_rank_selector module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector"><code class="docutils literal notranslate"><span class="pre">LinearRankSelector</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.probabilities"><code class="docutils literal notranslate"><span class="pre">LinearRankSelector.probabilities()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.select"><code class="docutils literal notranslate"><span class="pre">LinearRankSelector.select()</span></code></a></li>
 </ul>
 </li>
@@ -307,6 +308,13 @@
 <li class="toctree-l2"><a class="reference internal" href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.truncation_selector">pygenalgo.operators.selection.truncation_selector module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.truncation_selector.TruncationSelector"><code class="docutils literal notranslate"><span class="pre">TruncationSelector</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.truncation_selector.TruncationSelector.select"><code class="docutils literal notranslate"><span class="pre">TruncationSelector.select()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pygenalgo.operators.selection.html#pygenalgo-operators-selection-neighborhood-selector-module">pygenalgo.operators.selection.neighborhood_selector module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.neighborhood_selector.NeighborhoodSelector"><code class="docutils literal notranslate"><span class="pre">NeighborhoodSelector</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.neighborhood_selector.NeighborhoodSelector.select"><code class="docutils literal notranslate"><span class="pre">NeighborhoodSelector.select()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -373,7 +381,7 @@ random value, apply the operator’s changes.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pygenalgo.operators.genetic_operator.GeneticOperator.items">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></em><a class="headerlink" href="#pygenalgo.operators.genetic_operator.GeneticOperator.items" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">items</span></span><a class="headerlink" href="#pygenalgo.operators.genetic_operator.GeneticOperator.items" title="Link to this definition"></a></dt>
 <dd><p>Accessor (getter) of the _items container.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -383,8 +391,8 @@ random value, apply the operator’s changes.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="pygenalgo.operators.genetic_operator.GeneticOperator.iter">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">iter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#pygenalgo.operators.genetic_operator.GeneticOperator.iter" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="pygenalgo.operators.genetic_operator.GeneticOperator.iteration">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">iteration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#pygenalgo.operators.genetic_operator.GeneticOperator.iteration" title="Link to this definition"></a></dt>
 <dd><p>Accessor (getter) of the iteration parameter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -422,6 +430,17 @@ random value, apply the operator’s changes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>the random number generator.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.operators.genetic_operator.GeneticOperator.set_iteration">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/genetic_operator.html#GeneticOperator.set_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.genetic_operator.GeneticOperator.set_iteration" title="Link to this definition"></a></dt>
+<dd><p>Accessor (setter) of the iteration value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> – (int).</p>
 </dd>
 </dl>
 </dd></dl>

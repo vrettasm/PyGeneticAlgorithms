@@ -110,9 +110,10 @@
 <span class="sd">        :return: child1 and child2 (as Chromosomes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># If the crossover probability is higher than</span>
-        <span class="c1"># a uniformly random value, make the changes.</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
+        <span class="c1"># If the crossover probability is higher than a uniformly</span>
+        <span class="c1"># random value and the parents aren&#39;t identical apply the</span>
+        <span class="c1"># changes.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="n">parent1</span> <span class="o">!=</span> <span class="n">parent2</span><span class="p">):</span>
 
             <span class="c1"># Get the size of the chromosomes.</span>
             <span class="n">number_of_genes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span>

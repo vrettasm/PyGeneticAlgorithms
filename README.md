@@ -21,16 +21,16 @@ parallel pool). So the default setting here is "parallel=False". Regarding the I
 parallel mode by definition.
 
   > **NEWS**:
-  > Recently a new feature was added "adapt_probs: (bool)". This option if enabled, will allow the crossover and
-  > mutation probabilities to adapt according to the convergence of the population to a single solution. This uses
-  > the average Hamming distance to set a threshold value and either increase or decrease the genetic probabilities
-  > by a pre-defined amount.
+  > Recently the new feature "Neighborhood Selector" was added. This selector operator is used for problems with multi
+  > modal objective functions. It allows the population to focus on multiple areas of the search space and detect more
+  > than one optimal values. This features works in both computational modes (StandardGA and IslandModelGA).
   > 
 
 The current implementation offers a variety of genetic operators including:
 
 - **Selection operators**:
   - [Linear Rank Selector](pygenalgo/operators/selection/linear_rank_selector.py)
+  - [Neighborhood Selector](pygenalgo/operators/selection/neighborhood_selector.py)
   - [Random Selector](pygenalgo/operators/selection/random_selector.py)
   - [Roulette Wheel Selector](pygenalgo/operators/selection/roulette_wheel_selector.py)
   - [Stochastic Universal Selector](pygenalgo/operators/selection/stochastic_universal_selector.py)
@@ -81,12 +81,18 @@ so new things might come along the way.
 There are two options to install the software.
 
 The easiest way is to visit the GitHub web-page of the project and simply download the source code in
-[zip](https://github.com/vrettasm/PyGeneticAlgorithms/archive/refs/heads/master.zip) format. This option does not
-require a prior installation of git on the computer.
+[zip](https://github.com/vrettasm/PyGeneticAlgorithms/archive/refs/heads/master.zip) format. This option
+does not require a prior installation of git on the computer.
 
 Alternatively one can clone the project directly using git as follows:
 
     git clone https://github.com/vrettasm/PyGeneticAlgorithms.git
+
+After the download of the code (or the git clone), one can use the command:
+
+    pip install pygenalgo
+
+This will install the PyGenAlgo in the package management system.
 
 ### Required packages
 
@@ -141,24 +147,27 @@ Once the fitness function is defined correctly the next steps are straightforwar
 
 Some optimization examples on how to use these algorithms:
 
-| **Problem**                                                | **Variables** | **Objectives** | **Constraints** | **Mode** |
-|:-----------------------------------------------------------|:-------------:|:--------------:|:---------------:|:--------:|
-| [Sphere](examples/sphere.ipynb)                            |    M (=5)     |       1        |       no        |  serial  |
-| [Rastrigin](examples/rastrigin.ipynb)                      |    M (=5)     |       1        |       no        |  serial  |
-| [Rosenbrock](examples/rosenbrock_on_a_disk.ipynb)          |    M (=2)     |       1        |        1        |  serial  |
-| [Binh & Korn](examples/binh_and_korn_multiobjective.ipynb) |    M (=2)     |       2        |        2        |  serial  |
-| [Sphere](examples/sphere_in_parallel.ipynb)                |    M (=10)    |       1        |       no        | parallel |
-| [Easom](examples/easom_in_parallel.ipynb)                  |    M (=2)     |       1        |       no        | parallel |
-| [Traveling Salesman Problem](examples/tsp.ipynb)           |    M (=10)    |       1        |       yes       |  serial  |
-| [N-Queens puzzle](examples/queens_puzzle.ipynb)            |    M (=8)     |       1        |       yes       | parallel |
-| [OneMax](examples/one_max.ipynb)                           |    M (=50)    |       1        |       no        |  serial  |
-| [Tanaka](examples/tanaka_multiobjective.ipynb)             |    M (=2)     |       2        |        2        |  serial  |
-| [Zakharov](examples/zakharov.ipynb)                        |    M (=8)     |       1        |       no        |  serial  |
-| [Osyczka](examples/osyczka_kundu_multiobjective.ipynb)     |       6       |       2        |        6        | parallel |
+| **Problem**                                                | **Variables** | **Objectives** | **Constraints** | **Optima** |
+|:-----------------------------------------------------------|:-------------:|:--------------:|:---------------:|:----------:|
+| [Sphere](examples/sphere.ipynb)                            |    M (=5)     |       1        |       no        |   single   |
+| [Rastrigin](examples/rastrigin.ipynb)                      |    M (=5)     |       1        |       no        |   single   |
+| [Rosenbrock](examples/rosenbrock_on_a_disk.ipynb)          |    M (=2)     |       1        |        1        |   single   |
+| [Binh & Korn](examples/binh_and_korn_multiobjective.ipynb) |    M (=2)     |       2        |        2        |   single   |
+| [Sphere (parallel)](examples/sphere_in_parallel.ipynb)     |    M (=10)    |       1        |       no        |   single   |
+| [Easom (parallel)](examples/easom_in_parallel.ipynb)       |    M (=2)     |       1        |       no        |   single   |
+| [Traveling Salesman](examples/tsp.ipynb)                   |    M (=10)    |       1        |       yes       |   single   |
+| [N-Queens](examples/queens_puzzle.ipynb)                   |    M (=8)     |       1        |       yes       |   single   |
+| [OneMax](examples/one_max.ipynb)                           |    M (=50)    |       1        |       no        |   single   |
+| [Tanaka](examples/tanaka_multiobjective.ipynb)             |    M (=2)     |       2        |        2        |   single   |
+| [Zakharov](examples/zakharov.ipynb)                        |    M (=8)     |       1        |       no        |   single   |
+| [Osyczka](examples/osyczka_kundu_multiobjective.ipynb)     |       6       |       2        |        6        |   single   |
+| [Shubert](examples/shubert_2D.ipynb)                       |       2       |       1        |       no        |  multiple  |
+| [Gaussian Mixture](examples/gaussian_mixture_2D.ipynb)     |       2       |       1        |       no        |  multiple  |
+
 
 Constraint optimization problems can be easily addressed using the [Penalty Method](https://en.wikipedia.org/wiki/Penalty_method).
 Moreover, multi-objective optimizations (with or without constraints) can also be solved, using the _weighted sum method_,
-as shown in the examples above.
+as shown in the examples above. For multimodal optimizations check examples **Shubert** and **Gaussian Mixture**.
 
 ## References and Documentation
 
