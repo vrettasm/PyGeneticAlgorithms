@@ -68,6 +68,14 @@ pygenalgo.operators.selection.truncation\_selector module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.selection.neighborhood\_selector module
+---------------------------------------------------------
+
+.. automodule:: pygenalgo.operators.selection.neighborhood_selector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
