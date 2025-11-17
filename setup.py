@@ -8,7 +8,7 @@ with open("requirements.txt") as f:
 
 setup(
     name='PyGenAlgo',
-    version='1.7.1',
+    version='1.8.0',
     author='Michalis Vrettas, PhD',
     author_email='michail.vrettas@gmail.com',
     description='Genetic Algorithms toolbox in Python3',
