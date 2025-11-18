@@ -1,7 +1,7 @@
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 from pygenalgo.operators.crossover.uniform_crossover import UniformCrossover
-from pygenalgo.operators.crossover.mutli_point_crossover import MultiPointCrossover
+from pygenalgo.operators.crossover.multi_point_crossover import MultiPointCrossover
 from pygenalgo.operators.crossover.single_point_crossover import SinglePointCrossover
 
 
