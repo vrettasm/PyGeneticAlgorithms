@@ -74,6 +74,16 @@ class Gene(object):
         return self._datum
     # _end_def_
 
+    @value.setter
+    def value(self, new_value: Any) -> None:
+        """
+        Accessor (setter) of the data.
+
+        :return: None.
+        """
+        self._datum = new_value
+    # _end_def_
+
     @property
     def func(self) -> Callable:
         """
