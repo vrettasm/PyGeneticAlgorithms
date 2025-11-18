@@ -25,7 +25,7 @@ class TestMultiPointCrossover(unittest.TestCase):
         """
         # Create an object with a crossover probability of 1.0.
         self.cross_op = MultiPointCrossover(crossover_probability=1.0,
-                                            num_loci=3)
+                                            n_points=3)
     # _end_def_
 
     def test_crossover(self):
