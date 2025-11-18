@@ -46,7 +46,7 @@ class PolynomialMutator(MutationOperator):
                              f"The limit values are incorrect.")
         # _end_if_
 
-        # Assign to the _items placeholder.
+        # Assign variables to the _items placeholder.
         self._items = [eta_pm, lower_val, upper_val]
     # _end_def_
 
