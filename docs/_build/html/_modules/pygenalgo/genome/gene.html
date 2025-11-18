@@ -69,8 +69,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.genome.gene</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_rng</span><span class="p">,</span> <span class="n">Generator</span>
 
 <span class="c1"># Public interface.</span>
@@ -260,24 +260,6 @@
 
         <span class="c1"># Flip the current gene value.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">)</span></div>
-
-    <span class="c1"># _end_def_</span>
-
-<div class="viewcode-block" id="Gene.gaussian">
-<a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.gene.Gene.gaussian">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">gaussian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method adds a random value drawn from a standard normal</span>
-<span class="sd">        distribution x ~ N(0, sigma) to the current gene data value.</span>
-<span class="sd">        It is used mostly from the GaussianMutator method.</span>
-
-<span class="sd">        :param sigma: (float) standard deviation of the Gaussian.</span>
-
-<span class="sd">        :return: None.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># Add N(0, sigma) to the current gene value.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span></div>
 
     <span class="c1"># _end_def_</span>
 
