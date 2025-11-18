@@ -519,8 +519,6 @@ class IslandModelGA(GenericGA):
                     # Store the updated crossover and mutation values.
                     self._stats[island.id]["prob_crossx"].extend(local_stats["prob_crossx"])
                     self._stats[island.id]["prob_mutate"].extend(local_stats["prob_mutate"])
-                # _end_if_
-
             # _end_for_
 
         # _end_if_
