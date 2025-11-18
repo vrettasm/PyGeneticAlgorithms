@@ -306,6 +306,8 @@ class GenericGA(object):
 
         :param input_population: this is the population that we will apply
         the two genetic operators.
+
+        :return: None.
         """
 
         # Get the size of the input population.
