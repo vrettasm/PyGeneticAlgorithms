@@ -7,9 +7,9 @@ class PolynomialMutator(MutationOperator):
     """
     Description:
 
-        Polynomial mutator (PM-η), mutates the chromosome by adjusting the values
-        of genes according to a polynomial distribution. This results in a more
-        controlled and smoother alteration of values.
+        Polynomial mutator (PM-eta), mutates the chromosome by adjusting the
+        values of genes according to a polynomial distribution. This results
+        in a more controlled and smoother alteration of values.
     """
 
     def __init__(self, mutate_probability: float = 0.1, eta_pm: float = 20.0,
