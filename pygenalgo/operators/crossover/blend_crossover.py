@@ -70,8 +70,9 @@ class BlendCrossover(CrossoverOperator):
                 # Extract the gene values once.
                 g1, g2 = gene_1.value, gene_2.value
 
-                # Get the distance between the two gene values.
-                dist = fabs(g1 - g2)
+                # Get the offset by scaling the distance
+                # between the two gene values with alpha.
+                offset_distance = self._items * fabs(g1 - g2)
 
                 # Get the min / max values.
                 if g1 < g2:
@@ -80,10 +81,9 @@ class BlendCrossover(CrossoverOperator):
                     min_value, max_value = g2, g1
                 # _end_if_
 
-                # Compute the lower and upper limits.
-                # Note that '_items' is the alpha parameter.
-                lower_lim = min_value - (self._items * dist)
-                upper_lim = max_value + (self._items * dist)
+                # Compute the 'lower' / 'upper' limits.
+                lower_lim = min_value - offset_distance
+                upper_lim = max_value + offset_distance
 
                 # Create two new gene values.
                 new_value_1, new_value_2 = lower_lim + (upper_lim - lower_lim) * r_val
