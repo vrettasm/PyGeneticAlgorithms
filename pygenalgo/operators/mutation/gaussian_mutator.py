@@ -1,3 +1,4 @@
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
@@ -7,16 +8,21 @@ class GaussianMutator(MutationOperator):
     Description:
 
         Gaussian mutator, mutates the chromosome by selecting randomly a position
-        and add a Gaussian random value to the current gene value.
+        and perturbing it with a Gaussian random value to the current gene value.
     """
 
-    def __init__(self, mutate_probability: float = 0.1, sigma: float = 1.0):
+    def __init__(self, mutate_probability: float = 0.1, sigma: float = 1.0,
+                 lower_val: float = None, upper_val: float = None):
         """
         Construct a 'GaussianMutator' object with a given probability value.
 
         :param mutate_probability: (float).
 
-        :param sigma: (float) standard deviation of the Gaussian.
+        :param sigma: (float) standard deviation of the Gaussian N(0, sigma).
+
+        :param lower_val: (float) lower limit value for the gene mutation.
+
+        :param upper_val: (float) upper limit value for the gene mutation.
         """
 
         # Call the super constructor with the provided
@@ -28,11 +34,24 @@ class GaussianMutator(MutationOperator):
 
         # Ensure standard deviation is positive.
         if sigma <= 0.0:
-            raise ValueError("Standard deviation must be positive.")
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Standard deviation must be positive.")
         # _end_if_
 
-        # Assign to the _items placeholder.
-        self._items = sigma
+        # Ensure lower_val parameter is float.
+        lower_val = float(lower_val)
+
+        # Ensure upper_val parameter is float.
+        upper_val = float(upper_val)
+
+        # Ensure the order is correct.
+        if upper_val < lower_val:
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"The limit values are incorrect.")
+        # _end_if_
+
+        # Assign variables to the _items placeholder.
+        self._items = [sigma, lower_val, upper_val]
     # _end_def_
 
     def mutate(self, individual: Chromosome) -> None:
@@ -52,8 +71,19 @@ class GaussianMutator(MutationOperator):
             # Get the size of the chromosome.
             n_genes = len(individual)
 
-            # Select randomly the mutation point and update its value.
-            individual[self.rng.integers(n_genes)].gaussian(sigma=self._items)
+            # Extract the values from the placeholder variable.
+            sigma, xl, xu = self._items
+
+            # Select a random position in the genome.
+            i = self.rng.integers(n_genes)
+
+            # Calculate the new Gene value by sampling from N(value, sigma),
+            # ensuring it stays within limits.
+            new_value = min(max(self.rng.normal(loc=individual[i].value,
+                                                scale=sigma), xl), xu)
+
+            # Update the genome of the offspring with the new Gene.
+            individual[i] = Gene(datum=new_value, func=individual[i].func)
 
             # Set the fitness to NaN.
             individual.invalidate_fitness()
