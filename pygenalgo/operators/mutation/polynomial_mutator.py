@@ -42,7 +42,8 @@ class PolynomialMutator(MutationOperator):
 
         # Ensure the order is correct.
         if upper_val < lower_val:
-            raise ValueError("The limit values are incorrect.")
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"The limit values are incorrect.")
         # _end_if_
 
         # Assign to the _items placeholder.
