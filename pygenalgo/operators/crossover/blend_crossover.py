@@ -1,4 +1,5 @@
 from math import fabs
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -43,20 +44,18 @@ class BlendCrossover(CrossoverOperator):
         :return: child1 and child2 (as Chromosomes).
         """
 
-        # If the crossover probability is higher than a uniformly
-        # random value and the parents aren't identical apply the
-        # changes.
-        if (parent1 is not parent2) and (parent1 != parent2) and \
-                self.is_operator_applicable():
+        # If the crossover probability is higher than
+        # a uniformly random value apply the changes.
+        if self.is_operator_applicable():
 
             # Get the length of the chromosome.
             number_of_genes = len(parent1)
 
             # Preallocate 1st genome.
-            genome_1: list = [None] * number_of_genes
+            genome_1: list[Gene] = [None] * number_of_genes
 
             # Preallocate 2nd genome.
-            genome_2: list = [None] * number_of_genes
+            genome_2: list[Gene] = [None] * number_of_genes
 
             # Generate uniform random numbers (floats)
             # in the half-open interval [0.0, 1.0).
@@ -84,10 +83,12 @@ class BlendCrossover(CrossoverOperator):
                 lower_lim = min_value - (self._items * dist)
                 upper_lim = max_value + (self._items * dist)
 
-                # Update the genome of the offsprings by sampling uniform
-                # numbers in U[lower, upper], for both genomes.
-                genome_1[i] = lower_lim + (upper_lim - lower_lim)*r_val[0]
-                genome_2[i] = lower_lim + (upper_lim - lower_lim)*r_val[1]
+                # Create two new gene values.
+                new_value_1, new_value_2 = lower_lim + (upper_lim - lower_lim) * r_val
+
+                # Update the genome of the new offsprings with two new Genes.
+                genome_1[i] = Gene(datum=new_value_1, func=gene_1.func)
+                genome_2[i] = Gene(datum=new_value_2, func=gene_2.func)
             # _end_for_
 
             # Create the two NEW offsprings.
