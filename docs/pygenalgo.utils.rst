@@ -5,7 +5,7 @@ Submodules
 ----------
 
 pygenalgo.utils.auxiliary module
-------------------------------------
+--------------------------------
 
 .. automodule:: pygenalgo.utils.auxiliary
    :members:
@@ -13,7 +13,7 @@ pygenalgo.utils.auxiliary module
    :show-inheritance:
 
 pygenalgo.utils.utilities module
-------------------------------------------
+--------------------------------
 
 .. automodule:: pygenalgo.utils.utilities
    :members:

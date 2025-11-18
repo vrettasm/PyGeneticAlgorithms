@@ -20,10 +20,10 @@ pygenalgo.operators.crossover.meta\_crossover module
    :undoc-members:
    :show-inheritance:
 
-pygenalgo.operators.crossover.mutli\_point\_crossover module
+pygenalgo.operators.crossover.multi\_point\_crossover module
 ------------------------------------------------------------
 
-.. automodule:: pygenalgo.operators.crossover.mutli_point_crossover
+.. automodule:: pygenalgo.operators.crossover.multi_point_crossover
    :members:
    :undoc-members:
    :show-inheritance:
@@ -64,6 +64,14 @@ pygenalgo.operators.crossover.uniform\_crossover module
 -------------------------------------------------------
 
 .. automodule:: pygenalgo.operators.crossover.uniform_crossover
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pygenalgo.operators.crossover.blend\_crossover module
+-----------------------------------------------------
+
+.. automodule:: pygenalgo.operators.crossover.blend_crossover
    :members:
    :undoc-members:
    :show-inheritance:

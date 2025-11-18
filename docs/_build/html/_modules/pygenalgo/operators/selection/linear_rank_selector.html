@@ -107,9 +107,9 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">probabilities</span><span class="p">(</span><span class="n">p_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the rank probability distribution over the population size.</span>
-<span class="sd">        The function is cached so that repeated calls with the same input should</span>
-<span class="sd">        not recompute the same array since the population size of the swarm is not</span>
-<span class="sd">        expected to change.</span>
+<span class="sd">        The function is lru_cached so that repeated calls with the same input</span>
+<span class="sd">        should not recompute the same array, since the population size of the</span>
+<span class="sd">        chromosomes is not expected to change dynamically.</span>
 
 <span class="sd">        NOTE: Probabilities are returned in ascending order.</span>
 

@@ -72,7 +72,7 @@
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.crossover.crossover_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">CrossoverOperator</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.crossover.uniform_crossover</span><span class="w"> </span><span class="kn">import</span> <span class="n">UniformCrossover</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.crossover.mutli_point_crossover</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiPointCrossover</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.crossover.multi_point_crossover</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiPointCrossover</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.crossover.single_point_crossover</span><span class="w"> </span><span class="kn">import</span> <span class="n">SinglePointCrossover</span>
 
 
@@ -118,7 +118,8 @@
         <span class="c1"># If the crossover probability is higher than a uniformly</span>
         <span class="c1"># random value and the parents aren&#39;t identical apply the</span>
         <span class="c1"># changes.</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="n">parent1</span> <span class="o">!=</span> <span class="n">parent2</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">parent1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">parent2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">parent1</span> <span class="o">!=</span> <span class="n">parent2</span><span class="p">)</span> <span class="ow">and</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
             <span class="c1"># Get the number of available crossovers.</span>
             <span class="n">n_operators</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>

@@ -68,6 +68,14 @@ pygenalgo.operators.mutation.swap\_mutator module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.mutation.polynomial\_mutator module
+-------------------------------------------------------
+
+.. automodule:: pygenalgo.operators.mutation.polynomial_mutator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

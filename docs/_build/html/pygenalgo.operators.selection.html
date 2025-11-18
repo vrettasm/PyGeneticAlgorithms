@@ -141,9 +141,9 @@ is assigned to the best individual and the rank 1 to the worst individual.</p>
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.probabilities">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/selection/linear_rank_selector.html#LinearRankSelector.probabilities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.probabilities" title="Link to this definition"></a></dt>
 <dd><p>Calculate the rank probability distribution over the population size.
-The function is cached so that repeated calls with the same input should
-not recompute the same array since the population size of the swarm is not
-expected to change.</p>
+The function is lru_cached so that repeated calls with the same input
+should not recompute the same array, since the population size of the
+chromosomes is not expected to change dynamically.</p>
 <p>NOTE: Probabilities are returned in ascending order.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -371,9 +371,9 @@ to form the new population of solutions.</p>
 </dd></dl>
 
 </section>
-<section id="pygenalgo-operators-selection-neighborhood-selector-module">
-<h2>pygenalgo.operators.selection.neighborhood_selector module<a class="headerlink" href="#pygenalgo-operators-selection-neighborhood-selector-module" title="Link to this heading"></a></h2>
-<dl class="py class" id="module-pygenalgo.operators.selection.neighborhood_selector">
+<section id="module-pygenalgo.operators.selection.neighborhood_selector">
+<span id="pygenalgo-operators-selection-neighborhood-selector-module"></span><h2>pygenalgo.operators.selection.neighborhood_selector module<a class="headerlink" href="#module-pygenalgo.operators.selection.neighborhood_selector" title="Link to this heading"></a></h2>
+<dl class="py class">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.neighborhood_selector.NeighborhoodSelector">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.selection.neighborhood_selector.</span></span><span class="sig-name descname"><span class="pre">NeighborhoodSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">select_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_nearest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/selection/neighborhood_selector.html#NeighborhoodSelector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.neighborhood_selector.NeighborhoodSelector" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>

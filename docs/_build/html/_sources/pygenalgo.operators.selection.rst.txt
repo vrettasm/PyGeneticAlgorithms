@@ -69,7 +69,7 @@ pygenalgo.operators.selection.truncation\_selector module
    :show-inheritance:
 
 pygenalgo.operators.selection.neighborhood\_selector module
----------------------------------------------------------
+-----------------------------------------------------------
 
 .. automodule:: pygenalgo.operators.selection.neighborhood_selector
    :members:

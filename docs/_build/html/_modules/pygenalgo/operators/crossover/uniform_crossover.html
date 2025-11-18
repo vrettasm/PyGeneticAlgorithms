@@ -115,7 +115,8 @@
         <span class="c1"># If the crossover probability is higher than a uniformly</span>
         <span class="c1"># random value and the parents aren&#39;t identical apply the</span>
         <span class="c1"># changes.</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="n">parent1</span> <span class="o">!=</span> <span class="n">parent2</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">parent1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">parent2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">parent1</span> <span class="o">!=</span> <span class="n">parent2</span><span class="p">)</span> <span class="ow">and</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
             <span class="c1"># Get the length of the chromosome.</span>
             <span class="n">number_of_genes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span>
@@ -143,7 +144,7 @@
 
             <span class="c1"># _end_for_</span>
 
-            <span class="c1"># Create the two NEW offsprings.</span>
+            <span class="c1"># Create two NEW offsprings.</span>
             <span class="n">child1</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">genome_1</span><span class="p">)</span>
             <span class="n">child2</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">genome_2</span><span class="p">)</span>
 

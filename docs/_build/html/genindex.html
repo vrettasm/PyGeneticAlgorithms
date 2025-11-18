@@ -118,9 +118,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.best_chromosome">best_chromosome() (pygenalgo.engines.generic_ga.GenericGA method)</a>
 </li>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.best_n">best_n() (pygenalgo.engines.generic_ga.GenericGA method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.best_n">best_n() (pygenalgo.engines.generic_ga.GenericGA method)</a>
+      <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.blend_crossover.BlendCrossover">BlendCrossover (class in pygenalgo.operators.crossover.blend_crossover)</a>
 </li>
       <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.boltzmann_selector.BoltzmannSelector">BoltzmannSelector (class in pygenalgo.operators.selection.boltzmann_selector)</a>
 </li>
@@ -146,12 +148,14 @@
 </li>
       <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.counter">counter (pygenalgo.operators.genetic_operator.GeneticOperator property)</a>
 </li>
-      <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.crossover_operator.CrossoverOperator.crossover">crossover() (pygenalgo.operators.crossover.crossover_operator.CrossoverOperator method)</a>
+      <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.blend_crossover.BlendCrossover.crossover">crossover() (pygenalgo.operators.crossover.blend_crossover.BlendCrossover method)</a>
 
       <ul>
+        <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.crossover_operator.CrossoverOperator.crossover">(pygenalgo.operators.crossover.crossover_operator.CrossoverOperator method)</a>
+</li>
         <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.meta_crossover.MetaCrossover.crossover">(pygenalgo.operators.crossover.meta_crossover.MetaCrossover method)</a>
 </li>
-        <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.mutli_point_crossover.MultiPointCrossover.crossover">(pygenalgo.operators.crossover.mutli_point_crossover.MultiPointCrossover method)</a>
+        <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.multi_point_crossover.MultiPointCrossover.crossover">(pygenalgo.operators.crossover.multi_point_crossover.MultiPointCrossover method)</a>
 </li>
         <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.order_crossover.OrderCrossover.crossover">(pygenalgo.operators.crossover.order_crossover.OrderCrossover method)</a>
 </li>
@@ -192,17 +196,19 @@
 </li>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.fitness">fitness (pygenalgo.genome.chromosome.Chromosome property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.fitness_func">fitness_func (pygenalgo.engines.generic_ga.GenericGA attribute)</a>
 
       <ul>
         <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.fitness_func">(pygenalgo.engines.standard_ga.StandardGA attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.gene.Gene.flip">flip() (pygenalgo.genome.gene.Gene method)</a>
 </li>
       <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.flip_mutator.FlipMutator">FlipMutator (class in pygenalgo.operators.mutation.flip_mutator)</a>
+</li>
+      <li><a href="pygenalgo.genome.html#pygenalgo.genome.gene.Gene.func">func (pygenalgo.genome.gene.Gene property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -328,11 +334,13 @@
 </li>
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover">pygenalgo.operators.crossover</a>
 </li>
+        <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.blend_crossover">pygenalgo.operators.crossover.blend_crossover</a>
+</li>
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.crossover_operator">pygenalgo.operators.crossover.crossover_operator</a>
 </li>
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.meta_crossover">pygenalgo.operators.crossover.meta_crossover</a>
 </li>
-        <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.mutli_point_crossover">pygenalgo.operators.crossover.mutli_point_crossover</a>
+        <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.multi_point_crossover">pygenalgo.operators.crossover.multi_point_crossover</a>
 </li>
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.order_crossover">pygenalgo.operators.crossover.order_crossover</a>
 </li>
@@ -367,6 +375,8 @@
         <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.meta_mutator">pygenalgo.operators.mutation.meta_mutator</a>
 </li>
         <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.mutate_operator">pygenalgo.operators.mutation.mutate_operator</a>
+</li>
+        <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.polynomial_mutator">pygenalgo.operators.mutation.polynomial_mutator</a>
 </li>
         <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.random_mutator">pygenalgo.operators.mutation.random_mutator</a>
 </li>
@@ -403,7 +413,7 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.mutli_point_crossover.MultiPointCrossover">MultiPointCrossover (class in pygenalgo.operators.crossover.mutli_point_crossover)</a>
+      <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.multi_point_crossover.MultiPointCrossover">MultiPointCrossover (class in pygenalgo.operators.crossover.multi_point_crossover)</a>
 </li>
       <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.flip_mutator.FlipMutator.mutate">mutate() (pygenalgo.operators.mutation.flip_mutator.FlipMutator method)</a>
 
@@ -415,6 +425,8 @@
         <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.meta_mutator.MetaMutator.mutate">(pygenalgo.operators.mutation.meta_mutator.MetaMutator method)</a>
 </li>
         <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.mutate_operator.MutationOperator.mutate">(pygenalgo.operators.mutation.mutate_operator.MutationOperator method)</a>
+</li>
+        <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.polynomial_mutator.PolynomialMutator.mutate">(pygenalgo.operators.mutation.polynomial_mutator.PolynomialMutator method)</a>
 </li>
         <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.random_mutator.RandomMutator.mutate">(pygenalgo.operators.mutation.random_mutator.RandomMutator method)</a>
 </li>
@@ -464,6 +476,8 @@
       <li><a href="pygenalgo.utils.html#pygenalgo.utils.utilities.pareto_front">pareto_front() (in module pygenalgo.utils.utilities)</a>
 </li>
       <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.partially_mapped_crossover.PartiallyMappedCrossover">PartiallyMappedCrossover (class in pygenalgo.operators.crossover.partially_mapped_crossover)</a>
+</li>
+      <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.polynomial_mutator.PolynomialMutator">PolynomialMutator (class in pygenalgo.operators.mutation.polynomial_mutator)</a>
 </li>
       <li><a href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.SubPopulation.pop_id">pop_id (pygenalgo.utils.auxiliary.SubPopulation attribute)</a>
 </li>
@@ -558,6 +572,13 @@
 </li>
       </ul></li>
       <li>
+    pygenalgo.operators.crossover.blend_crossover
+
+      <ul>
+        <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.blend_crossover">module</a>
+</li>
+      </ul></li>
+      <li>
     pygenalgo.operators.crossover.crossover_operator
 
       <ul>
@@ -572,10 +593,10 @@
 </li>
       </ul></li>
       <li>
-    pygenalgo.operators.crossover.mutli_point_crossover
+    pygenalgo.operators.crossover.multi_point_crossover
 
       <ul>
-        <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.mutli_point_crossover">module</a>
+        <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.multi_point_crossover">module</a>
 </li>
       </ul></li>
       <li>
@@ -697,6 +718,13 @@
 
       <ul>
         <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.mutate_operator">module</a>
+</li>
+      </ul></li>
+      <li>
+    pygenalgo.operators.mutation.polynomial_mutator
+
+      <ul>
+        <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.polynomial_mutator">module</a>
 </li>
       </ul></li>
       <li>
