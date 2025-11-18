@@ -77,10 +77,10 @@ class BlendCrossover(CrossoverOperator):
             number_of_genes = len(parent1)
 
             # Preallocate 1st genome.
-            genome_1: list[Gene] = [None] * number_of_genes
+            genome_1: list = [None] * number_of_genes
 
             # Preallocate 2nd genome.
-            genome_2: list[Gene] = [None] * number_of_genes
+            genome_2: list = [None] * number_of_genes
 
             # Generate uniform random numbers (floats)
             # in the half-open interval [0.0, 1.0).
