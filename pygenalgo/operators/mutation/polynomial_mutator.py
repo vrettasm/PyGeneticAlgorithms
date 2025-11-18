@@ -12,7 +12,7 @@ class PolynomialMutator(MutationOperator):
         controlled and smoother alteration of values.
     """
 
-    def __init__(self, mutate_probability: float = 0.1, eta_pm: float = 50.0,
+    def __init__(self, mutate_probability: float = 0.1, eta_pm: float = 20.0,
                  lower_val: float = None, upper_val: float = None):
         """
         Construct a 'PolynomialMutator' object with a given probability value.
