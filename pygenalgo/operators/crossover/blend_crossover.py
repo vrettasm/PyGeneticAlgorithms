@@ -43,6 +43,12 @@ class BlendCrossover(CrossoverOperator):
         # Ensure upper_val parameter is float.
         upper_val = float(upper_val)
 
+        # Ensure the order is correct.
+        if upper_val < lower_val:
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"The limit values are incorrect.")
+        # _end_if_
+
         # Assign variables to the _items placeholder.
         self._items = [p_alpha, lower_val, upper_val]
     # _end_def_
