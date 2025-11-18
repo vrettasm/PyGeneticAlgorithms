@@ -7,8 +7,8 @@ class PolynomialMutator(MutationOperator):
     """
     Description:
 
-        Polynomial mutator, mutates the chromosome by adjusting the values of
-        traits according to a polynomial distribution. This results in a more
+        Polynomial mutator (PM-η), mutates the chromosome by adjusting the values
+        of traits according to a polynomial distribution. This results in a more
         controlled and smoother alteration of values.
     """
 
