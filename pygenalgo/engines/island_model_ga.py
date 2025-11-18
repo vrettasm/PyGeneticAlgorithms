@@ -195,8 +195,7 @@ class IslandModelGA(GenericGA):
             # _end_if_
 
             # Check for convergence.
-            if f_tol and isclose(avg_fitness_i, avg_fitness_0,
-                                 rel_tol=1.0E-5, abs_tol=f_tol):
+            if f_tol and isclose(avg_fitness_i, avg_fitness_0, abs_tol=f_tol):
                 # Switch the convergence flag and track the current iteration.
                 has_converged = (True, i + 1)
 
