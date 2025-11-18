@@ -281,13 +281,14 @@ class Chromosome(object):
         return new_object
     # _end_def_
 
-    def clone(self):
+    def clone(self) -> "Chromosome":
         """
-        Makes a duplicate of the self object.
+        Makes a duplicate of the self object
+        by deep-coping only the genome field.
 
         :return: a "deep-copy" of the object.
         """
-        return deepcopy(self)
+        return Chromosome(deepcopy(self._genome), self._fitness, self._valid)
     # _end_def_
 
 # _end_class_

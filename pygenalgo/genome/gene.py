@@ -254,13 +254,14 @@ class Gene(object):
         return new_object
     # _end_def_
 
-    def clone(self):
+    def clone(self) -> "Gene":
         """
-        Makes a duplicate of the self object.
+        Makes a duplicate of the self object
+        by deep-coping only the datum field.
 
         :return: a "deep-copy" of the object.
         """
-        return deepcopy(self)
+        return Gene(deepcopy(self._datum), self._func, self._valid)
     # _end_def_
 
 # _end_class_
