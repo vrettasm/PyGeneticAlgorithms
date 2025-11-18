@@ -16,21 +16,35 @@ class BlendCrossover(CrossoverOperator):
         NB: Used only for real coded genomes.
     """
 
-    def __init__(self, crossover_probability: float = 0.9, p_alpha: float = 0.5):
+    def __init__(self, crossover_probability: float = 0.9, p_alpha: float = 0.5,
+                 lower_val: float = None, upper_val: float = None):
         """
         Construct a 'BlendCrossover' object with a given probability value.
 
         :param crossover_probability: (float).
 
         :param p_alpha: (float).
+
+        :param lower_val: (float) lower limit value for the gene.
+
+        :param upper_val: (float) upper limit value for the gene.
         """
 
         # Call the super constructor with the provided
         # probability value.
         super().__init__(crossover_probability)
 
-        # Make sure 'alpha' parameter is in [0, 1].
-        self._items = max(0.0, min(float(p_alpha), 1.0))
+        # Ensure p_alpha parameter is float.
+        p_alpha = max(0.0, min(float(p_alpha), 1.0))
+
+        # Ensure lower_val parameter is float.
+        lower_val = float(lower_val)
+
+        # Ensure upper_val parameter is float.
+        upper_val = float(upper_val)
+
+        # Assign variables to the _items placeholder.
+        self._items = [p_alpha, lower_val, upper_val]
     # _end_def_
 
     def crossover(self, parent1: Chromosome, parent2: Chromosome):
@@ -49,6 +63,9 @@ class BlendCrossover(CrossoverOperator):
         # changes.
         if (parent1 is not parent2) and (parent1 != parent2) and \
                 self.is_operator_applicable():
+
+            # Extract the values from the placeholder variable.
+            p_alpha, xl, xu = self._items
 
             # Get the length of the chromosome.
             number_of_genes = len(parent1)
@@ -72,7 +89,7 @@ class BlendCrossover(CrossoverOperator):
 
                 # Get the offset by scaling the distance
                 # between the two gene values with alpha.
-                offset_distance = self._items * fabs(g1 - g2)
+                offset_distance = p_alpha * fabs(g1 - g2)
 
                 # Get the min / max values.
                 if g1 < g2:
@@ -87,6 +104,10 @@ class BlendCrossover(CrossoverOperator):
 
                 # Create two new gene values.
                 new_value_1, new_value_2 = lower_lim + (upper_lim - lower_lim) * r_val
+
+                # Ensure the new values stay within limits.
+                new_value_1 = min(max(new_value_1, xl), xu)
+                new_value_2 = min(max(new_value_2, xl), xu)
 
                 # Update the genome of the new offsprings with two new Genes.
                 genome_1[i] = Gene(datum=new_value_1, func=gene_1.func)
