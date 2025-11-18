@@ -21,9 +21,10 @@ parallel pool). So the default setting here is "parallel=False". Regarding the I
 parallel mode by definition.
 
   > **NEWS**:
-  > Recently the new feature "Neighborhood Selector" was added. This selector operator is used for problems with multi
-  > modal objective functions. It allows the population to focus on multiple areas of the search space and detect more
-  > than one optimal values. This features works in both computational modes (StandardGA and IslandModelGA).
+  > Recently two new features were added. The "Neighborhood Selector" operator is used for problems with multi-modal
+  > objective functions. It allows the population to focus on multiple areas of the search space and detect more than
+  > one optimal values. This features works in both computational modes (StandardGA and IslandModelGA). Moreover, the
+  > Blend-α (BLX-α) crossover operator was implemented with focus on real coded genomes (floats).
   > 
 
 The current implementation offers a variety of genetic operators including:
@@ -45,6 +46,7 @@ The current implementation offers a variety of genetic operators including:
   - [Order Crossover (OX1)](pygenalgo/operators/crossover/order_crossover.py)
   - [Partially Mapped Crossover (PMX)](pygenalgo/operators/crossover/partially_mapped_crossover.py)
   - [Position Based Crossover (POS)](pygenalgo/operators/crossover/position_based_crossover.py)
+  - [Blend-α Crossover (BLX-α)](pygenalgo/operators/crossover/blend_crossover.py)
 
 - **Mutation operators**:
   - [Random Mutator](pygenalgo/operators/mutation/random_mutator.py)
