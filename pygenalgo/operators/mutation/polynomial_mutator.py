@@ -1,4 +1,3 @@
-from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
@@ -83,11 +82,12 @@ class PolynomialMutator(MutationOperator):
             # Select a random position in the genome.
             i = self.rng.integers(n_genes)
 
-            # Calculate the new value ensuring it stays within limits.
-            new_value = min(max(individual[i].value + delta * (xu - xl), xl), xu)
+            # Get the old value of the Gene.
+            old_value = individual[i].value
 
-            # Update the genome of the offspring with the new Gene.
-            individual[i] = Gene(datum=new_value, func=individual[i].func)
+            # Update the genome of the offspring with the new value ensuring it
+            # stays within limits.
+            individual[i].value = min(max(old_value + delta * (xu - xl), xl), xu)
 
             # Set the fitness to NaN.
             individual.invalidate_fitness()
