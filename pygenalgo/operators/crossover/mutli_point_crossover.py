@@ -13,22 +13,21 @@ class MultiPointCrossover(CrossoverOperator):
         It produces faster mixing, compared with single-point crossover.
     """
 
-    def __init__(self, crossover_probability: float = 0.9, num_loci: int = 2):
+    def __init__(self, crossover_probability: float = 0.9, n_points: int = 2):
         """
-        Construct a 'MultiPointCrossover' object with a given
-        probability value.
+        Construct a 'MultiPointCrossover' object with a given probability value.
 
         :param crossover_probability: (float).
 
-        :param num_loci: (int).
+        :param n_points: (int) the number of points to cut the genome.
         """
 
         # Call the super constructor with the provided
         # probability value.
         super().__init__(crossover_probability)
 
-        # Make sure number of loci are at least 2.
-        self._items = max(int(num_loci), 2)
+        # Make sure number of points are at least 2.
+        self._items = max(int(n_points), 2)
     # _end_def_
 
     def crossover(self, parent1: Chromosome, parent2: Chromosome):
