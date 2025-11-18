@@ -8,7 +8,7 @@ class PolynomialMutator(MutationOperator):
     Description:
 
         Polynomial mutator (PM-η), mutates the chromosome by adjusting the values
-        of traits according to a polynomial distribution. This results in a more
+        of genes according to a polynomial distribution. This results in a more
         controlled and smoother alteration of values.
     """
 
@@ -52,7 +52,8 @@ class PolynomialMutator(MutationOperator):
 
     def mutate(self, individual: Chromosome) -> None:
         """
-        Perform the mutation operation by ...
+        Perform the mutation operation by adjusting the values
+        of genes according to a polynomial distribution.
 
         :param individual: (Chromosome).
 
