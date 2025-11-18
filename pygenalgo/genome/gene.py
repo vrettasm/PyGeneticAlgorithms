@@ -1,5 +1,5 @@
-from typing import Any, Callable
 from copy import deepcopy
+from typing import Any, Callable
 from numpy.random import default_rng, Generator
 
 # Public interface.
@@ -179,21 +179,6 @@ class Gene(object):
 
         # Flip the current gene value.
         self._datum = int(not self._datum)
-    # _end_def_
-
-    def gaussian(self, sigma: float = 1.0) -> None:
-        """
-        This method adds a random value drawn from a standard normal
-        distribution x ~ N(0, sigma) to the current gene data value.
-        It is used mostly from the GaussianMutator method.
-
-        :param sigma: (float) standard deviation of the Gaussian.
-
-        :return: None.
-        """
-
-        # Add N(0, sigma) to the current gene value.
-        self._datum += self._rng.normal(scale=sigma)
     # _end_def_
 
     def __str__(self) -> str:
