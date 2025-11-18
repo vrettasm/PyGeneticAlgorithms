@@ -75,6 +75,16 @@ class Gene(object):
     # _end_def_
 
     @property
+    def func(self) -> Callable:
+        """
+        Accessor (getter) of the gene function reference.
+
+        :return: the _func reference.
+        """
+        return self._func
+    # _end_def_
+
+    @property
     def is_valid(self) -> bool:
         """
         Accessor (getter) of the validity parameter.
