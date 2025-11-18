@@ -69,8 +69,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.mutation.gaussian_mutator</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.gene</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gene</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.mutation.mutate_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MutationOperator</span>
 
 
@@ -152,14 +151,13 @@
             <span class="c1"># Select a random position in the genome.</span>
             <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_genes</span><span class="p">)</span>
 
+            <span class="c1"># Get the old value of the Gene.</span>
+            <span class="n">old_value</span> <span class="o">=</span> <span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+
             <span class="c1"># Calculate the new Gene value by sampling from N(value, sigma),</span>
             <span class="c1"># ensuring it stays within limits.</span>
-            <span class="n">new_value</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                                                <span class="n">scale</span><span class="o">=</span><span class="n">sigma</span><span class="p">),</span> <span class="n">xl</span><span class="p">),</span> <span class="n">xu</span><span class="p">)</span>
-
-            <span class="c1"># Update the genome of the offspring with the new Gene.</span>
-            <span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Gene</span><span class="p">(</span><span class="n">datum</span><span class="o">=</span><span class="n">new_value</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">func</span><span class="p">)</span>
-
+            <span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">old_value</span><span class="p">,</span>
+                                                          <span class="n">scale</span><span class="o">=</span><span class="n">sigma</span><span class="p">),</span> <span class="n">xl</span><span class="p">),</span> <span class="n">xu</span><span class="p">)</span>
             <span class="c1"># Set the fitness to NaN.</span>
             <span class="n">individual</span><span class="o">.</span><span class="n">invalidate_fitness</span><span class="p">()</span>
 

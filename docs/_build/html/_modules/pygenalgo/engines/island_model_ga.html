@@ -268,8 +268,7 @@
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Check for convergence.</span>
-            <span class="k">if</span> <span class="n">f_tol</span> <span class="ow">and</span> <span class="n">isclose</span><span class="p">(</span><span class="n">avg_fitness_i</span><span class="p">,</span> <span class="n">avg_fitness_0</span><span class="p">,</span>
-                                 <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.0E-5</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="n">f_tol</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">f_tol</span> <span class="ow">and</span> <span class="n">isclose</span><span class="p">(</span><span class="n">avg_fitness_i</span><span class="p">,</span> <span class="n">avg_fitness_0</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="n">f_tol</span><span class="p">):</span>
                 <span class="c1"># Switch the convergence flag and track the current iteration.</span>
                 <span class="n">has_converged</span> <span class="o">=</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
