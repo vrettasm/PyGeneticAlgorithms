@@ -70,8 +70,8 @@ class MultiPointCrossover(CrossoverOperator):
                                           replace=False, shuffle=False))
 
             # Initialize the offspring genomes to None.
-            genome_1 = num_genes * [None]
-            genome_2 = num_genes * [None]
+            genome_1: list = num_genes * [None]
+            genome_2: list = num_genes * [None]
 
             # Initialize a set of hyperparameters.
             reset_flag, upper_lim, j = True, loci[0], 0
