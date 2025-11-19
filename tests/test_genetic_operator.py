@@ -22,7 +22,7 @@ class TestGeneticOperator(unittest.TestCase):
         :return: None.
         """
         # Create an object with a valid probability.
-        self.gen_op = GeneticOperator(_probability=0.5)
+        self.gen_op = GeneticOperator(probability=0.5)
     # _end_def_
 
     def test_probability_range(self):
@@ -65,14 +65,14 @@ class TestGeneticOperator(unittest.TestCase):
         :return: None.
         """
         # Number of repetitions.
-        N = 10
+        n_repeat = 10
 
-        for i in range(N):
+        for i in range(n_repeat):
             self.gen_op.inc_counter()
         # _end_for_
 
         # The counter should have been increased 'N' times.
-        self.assertEqual(N, self.gen_op.counter)
+        self.assertEqual(n_repeat, self.gen_op.counter)
 
         # Reset the counter.
         self.gen_op.reset_counter()
