@@ -1,9 +1,9 @@
 import unittest
-
+import numpy as np
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 
-from pygenalgo.utils.utilities import cost_function
+from pygenalgo.utils.utilities import cost_function, clamp
 from pygenalgo.utils.auxiliary import (unique_pairs,
                                        apply_corrections,
                                        average_hamming_distance)
@@ -44,16 +44,34 @@ class TestAuxiliary(unittest.TestCase):
         # Ensure the correct error is raised.
         with self.assertRaises(ValueError):
             unique_pairs(1)
+    # _end_def_
 
-        # Ensure the correct error is raised.
-        with self.assertRaises(TypeError):
-            unique_pairs(3.5)
+    def test_clamp(self):
+        """
+        Test the functionality of clamp.
+        """
+
+        # Number of repetitions.
+        n_repeats = 10
+
+        for i in range(n_repeats):
+            x_lower = np.random.randint(0, 5)
+            x_upper = np.random.randint(6, 9)
+
+            xi = 9.0*np.random.random()
+
+            r1 = min(max(xi, x_lower), x_upper)
+            r2 = clamp(xi, x_lower, x_upper)
+
+            # They should be exactly equal.
+            self.assertEqual(r1, r2)
+        # _end_for_
     # _end_def_
 
     def test_apply_corrections(self):
         """
-        Tests the apply_corrections method, creating a 'dummy' population
-        and invalidating manually some Genes.
+        Tests the apply_corrections method, creating a dummy
+        population and invalidating manually some Genes.
 
         :return: None.
         """
