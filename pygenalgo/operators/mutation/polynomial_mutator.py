@@ -1,3 +1,4 @@
+from pygenalgo.utils.utilities import clamp
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
@@ -87,7 +88,7 @@ class PolynomialMutator(MutationOperator):
 
             # Update the genome of the offspring with the new value ensuring it
             # stays within limits.
-            individual[i].value = min(max(old_value + delta * (xu - xl), xl), xu)
+            individual[i].value = clamp(old_value + delta * (xu - xl), xl, xu)
 
             # Set the fitness to NaN.
             individual.invalidate_fitness()
