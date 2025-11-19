@@ -1,5 +1,6 @@
 from math import fabs
 from pygenalgo.genome.gene import Gene
+from pygenalgo.utils.utilities import clamp
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
