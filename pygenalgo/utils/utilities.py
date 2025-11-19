@@ -4,7 +4,20 @@ from functools import wraps, partial
 
 # Public interface.
 __all__ = ["pareto_front", "cost_function", "np_cdist",
-           "pareto_dominance", "np_pareto_front"]
+           "pareto_dominance", "np_pareto_front", "clamp"]
+
+
+def clamp(x: float, x_lower: float, x_upper: float) -> float:
+    """
+    Clamps a value within a specified range.
+
+    :param x: value to clamp
+    :param x_lower: lower bound
+    :param x_upper: upper bound
+    :return: clamped value
+    """
+    return min(max(x, x_lower), x_upper)
+# _end_def_
 
 def pareto_dominance(point_a: tuple | list,
                      point_b: tuple | list) -> bool:
