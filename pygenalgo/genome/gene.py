@@ -130,13 +130,18 @@ class Gene(object):
 
         :return: true or false.
         """
-
-        # Make sure both items are of type 'Gene'.
-        if isinstance(other, Gene):
-            return self._datum == other._datum
+        # Check if they are the same instance.
+        if self is other:
+            return True
         # _end_if_
 
-        return False
+        # Make sure both items are Gene.
+        if not isinstance(other, Gene):
+            return NotImplemented
+        # _end_if_
+
+        # Compare only the datum fields.
+        return self._datum == other._datum
     # _end_def_
 
     def __hash__(self) -> int:

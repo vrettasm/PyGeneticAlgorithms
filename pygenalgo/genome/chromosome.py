@@ -172,15 +172,18 @@ class Chromosome(object):
 
         :return: True if the genomes are identical else False.
         """
-
-        # Make sure both objects are of
-        # the same type 'Chromosome'.
-        if isinstance(other, Chromosome):
-
-            # Compare directly the two genomes.
-            return self._genome == other.genome
+        # Check if they are the same instance.
+        if self is other:
+            return True
         # _end_if_
-        return False
+
+        # Make sure both items are Chromosomes.
+        if not isinstance(other, Chromosome):
+            return NotImplemented
+        # _end_if_
+
+        # Compare directly the two genomes.
+        return self._genome == other.genome
     # _end_def_
 
     def __hash__(self) -> int:
