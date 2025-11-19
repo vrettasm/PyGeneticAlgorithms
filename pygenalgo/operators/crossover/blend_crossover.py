@@ -36,7 +36,7 @@ class BlendCrossover(CrossoverOperator):
         super().__init__(crossover_probability)
 
         # Ensure p_alpha parameter is float.
-        p_alpha = max(0.0, min(float(p_alpha), 1.0))
+        p_alpha = clamp(float(p_alpha), 0.0, 1.0)
 
         # Ensure lower_val parameter is float.
         lower_val = float(lower_val)
@@ -112,9 +112,9 @@ class BlendCrossover(CrossoverOperator):
                 # Create two new gene values.
                 new_value_1, new_value_2 = lower_lim + (upper_lim - lower_lim) * r_val
 
-                # Ensure the new values stay within limits.
-                new_value_1 = min(max(new_value_1, xl), xu)
-                new_value_2 = min(max(new_value_2, xl), xu)
+                # Ensure the new values are within limits.
+                new_value_1 = clamp(new_value_1, xl, xu)
+                new_value_2 = clamp(new_value_2, xl, xu)
 
                 # Update the genome of the new offsprings with two new Genes.
                 genome_1[i] = Gene(datum=new_value_1, func=gene_1.func)
