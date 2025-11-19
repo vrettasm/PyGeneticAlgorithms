@@ -1,5 +1,6 @@
 from threading import Lock
 from functools import wraps
+from pygenalgo.utils.utilities import clamp
 from numpy.random import default_rng, Generator
 
 # Public interface.
@@ -48,10 +49,12 @@ class GeneticOperator(object):
     """
     Description:
 
-        Provides the base class (interface) for a Genetic Operator. This class includes some common
-        variables (such as the probability and the application counter) along with access to them.
+        Provides the base class (interface) for a Genetic Operator.
+        This class includes the common variables (such as the probability
+        and the application counter) along with access to them.
 
-        All genetic operators (Selection, Crossover, Mutation, Migration) should inherit this class.
+        All genetic operators (Selection, Crossover, Mutation, Migration)
+        should inherit this class.
     """
 
     # Create a random number generator.
@@ -63,16 +66,16 @@ class GeneticOperator(object):
     # Object variables.
     __slots__ = ("_probability", "_counter", "_lock", "_items")
 
-    def __init__(self, _probability: float) -> None:
+    def __init__(self, probability: float) -> None:
         """
-        Construct a 'GeneticOperator' object with a given
-        probability value.
+        Construct a 'GeneticOperator' object with
+        a given probability value.
 
-        :param _probability: (float) in [0, 1].
+        :param probability: (float) in [0, 1].
         """
 
         # Ensure the default entry value is within range [0, 1].
-        self._probability = max(min(float(_probability), 1.0), 0.0)
+        self._probability = clamp(float(probability), 0.0, 1.0)
 
         # Initialize the application counter to zero.
         self._counter = 0
