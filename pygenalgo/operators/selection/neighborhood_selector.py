@@ -23,7 +23,6 @@ class NeighborhoodSelector(SelectionOperator):
 
         :param n_nearest: the number of the nearest neighbors to consider (int).
         """
-
         # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
 
@@ -42,7 +41,6 @@ class NeighborhoodSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
-
         # Get the population size.
         pop_size = len(population)
 

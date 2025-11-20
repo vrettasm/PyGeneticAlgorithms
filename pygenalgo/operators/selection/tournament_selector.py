@@ -23,7 +23,6 @@ class TournamentSelector(SelectionOperator):
 
         :param k: the number of participants in the tournament (int).
         """
-
         # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
 
@@ -42,7 +41,6 @@ class TournamentSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
-
         # Get the population size.
         pop_size = len(population)
 

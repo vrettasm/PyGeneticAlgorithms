@@ -21,7 +21,6 @@ class TruncationSelector(SelectionOperator):
 
         :param p: proportion of the population that will reproduce (float).
         """
-
         # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
 
@@ -40,7 +39,6 @@ class TruncationSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
-
         # Get the population size.
         pop_size = len(population)
 

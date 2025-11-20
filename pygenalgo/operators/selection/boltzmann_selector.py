@@ -22,7 +22,6 @@ class BoltzmannSelector(SelectionOperator):
 
         :param k: constant of the Boltzmann distribution.
         """
-
         # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
 

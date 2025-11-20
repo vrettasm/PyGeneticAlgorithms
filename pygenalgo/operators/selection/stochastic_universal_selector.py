@@ -24,7 +24,6 @@ class StochasticUniversalSelector(SelectionOperator):
 
         :param select_probability: (float) in [0, 1].
         """
-
         # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
     # _end_def_
@@ -40,7 +39,6 @@ class StochasticUniversalSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
-
         # Extract the fitness value of each chromosome.
         # This assumes that the fitness values are all
         # positive.

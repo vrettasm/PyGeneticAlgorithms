@@ -22,7 +22,6 @@ class LinearRankSelector(SelectionOperator):
 
         :param select_probability: (float) in [0, 1].
         """
-
         # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
     # _end_def_
@@ -66,7 +65,6 @@ class LinearRankSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
-
         # Get the population size.
         pop_size = len(population)
 
