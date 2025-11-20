@@ -38,8 +38,7 @@ class SwapMutator(MutationOperator):
             n_genes = len(individual)
 
             # Select randomly the two mutation points.
-            i, j = self.rng.choice(n_genes, size=2, replace=False,
-                                   shuffle=False)
+            i, j = self.rng.choice(n_genes, size=2, replace=False, shuffle=False)
 
             # Swap in place between the two positions.
             individual[i], individual[j] = individual[j], individual[i]
@@ -49,7 +48,6 @@ class SwapMutator(MutationOperator):
 
             # Increase the mutator counter.
             self.inc_counter()
-        # _end_if_
     # _end_def_
 
 # _end_class_

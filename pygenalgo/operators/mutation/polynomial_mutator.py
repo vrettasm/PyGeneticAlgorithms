@@ -67,7 +67,7 @@ class PolynomialMutator(MutationOperator):
             # Get the size of the chromosome.
             n_genes = len(individual)
 
-            # Extract the values from the placeholder variable.
+            # Extract the variables from the placeholder _items.
             eta_pm, xl, xu = self._items
 
             # Generate a random number in [0, 1).
@@ -95,8 +95,6 @@ class PolynomialMutator(MutationOperator):
 
             # Increase the mutator counter.
             self.inc_counter()
-        # _end_if_
-
     # _end_def_
 
 # _end_class_

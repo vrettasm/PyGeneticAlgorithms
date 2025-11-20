@@ -61,8 +61,6 @@ class InverseMutator(MutationOperator):
 
             # Increase the mutator counter.
             self.inc_counter()
-        # _end_if_
-
     # _end_def_
 
 # _end_class_
