@@ -207,11 +207,13 @@ class Gene(object):
 
     def __repr__(self) -> str:
         """
-        Repr operator is called when a string representation is needed that can be evaluated.
+        Repr operator is called when a string representation
+        is needed that can be evaluated.
 
         :return: Gene().
         """
-        return f"{self.__class__.__name__}(datum={self._datum}, func={self._func}, valid={self._valid})"
+        return (f"{self.__class__.__name__}(datum={self._datum},"
+                f" func={self._func}, valid={self._valid})")
     # _end_def_
 
     def __copy__(self):
