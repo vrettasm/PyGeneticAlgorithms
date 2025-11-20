@@ -71,6 +71,7 @@
   <h1>Source code for pygenalgo.operators.genetic_operator</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">threading</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lock</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">clamp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_rng</span><span class="p">,</span> <span class="n">Generator</span>
 
 <span class="c1"># Public interface.</span>
@@ -124,10 +125,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Provides the base class (interface) for a Genetic Operator. This class includes some common</span>
-<span class="sd">        variables (such as the probability and the application counter) along with access to them.</span>
+<span class="sd">        Provides the base class (interface) for a Genetic Operator.</span>
+<span class="sd">        This class includes the common variables (such as the probability</span>
+<span class="sd">        and the application counter) along with access to them.</span>
 
-<span class="sd">        All genetic operators (Selection, Crossover, Mutation, Migration) should inherit this class.</span>
+<span class="sd">        All genetic operators (Selection, Crossover, Mutation, Migration)</span>
+<span class="sd">        should inherit this class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Create a random number generator.</span>
@@ -139,16 +142,16 @@
     <span class="c1"># Object variables.</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_probability&quot;</span><span class="p">,</span> <span class="s2">&quot;_counter&quot;</span><span class="p">,</span> <span class="s2">&quot;_lock&quot;</span><span class="p">,</span> <span class="s2">&quot;_items&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_probability</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Construct a &#39;GeneticOperator&#39; object with a given</span>
-<span class="sd">        probability value.</span>
+<span class="sd">        Construct a &#39;GeneticOperator&#39; object with</span>
+<span class="sd">        a given probability value.</span>
 
-<span class="sd">        :param _probability: (float) in [0, 1].</span>
+<span class="sd">        :param probability: (float) in [0, 1].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Ensure the default entry value is within range [0, 1].</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">_probability</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">probability</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 
         <span class="c1"># Initialize the application counter to zero.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_counter</span> <span class="o">=</span> <span class="mi">0</span>

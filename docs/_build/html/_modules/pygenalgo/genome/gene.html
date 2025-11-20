@@ -206,13 +206,18 @@
 
 <span class="sd">        :return: true or false.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># Make sure both items are of type &#39;Gene&#39;.</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Gene</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_datum</span>
+        <span class="c1"># Check if they are the same instance.</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">other</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
         <span class="c1"># _end_if_</span>
 
-        <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># Make sure both items are Gene.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Gene</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Compare only the datum fields.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_datum</span>
     <span class="c1"># _end_def_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>

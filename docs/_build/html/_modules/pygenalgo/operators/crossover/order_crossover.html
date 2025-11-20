@@ -113,8 +113,7 @@
         <span class="c1"># If the crossover probability is higher than a uniformly</span>
         <span class="c1"># random value and the parents aren&#39;t identical apply the</span>
         <span class="c1"># changes.</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">parent1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">parent2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">parent1</span> <span class="o">!=</span> <span class="n">parent2</span><span class="p">)</span> <span class="ow">and</span> \
-                <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">parent1</span> <span class="o">!=</span> <span class="n">parent2</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
             <span class="c1"># Select randomly the crossover point from [1, M-1].</span>
             <span class="n">locus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>

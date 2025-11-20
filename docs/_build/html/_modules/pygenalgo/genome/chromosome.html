@@ -257,15 +257,18 @@
 
 <span class="sd">        :return: True if the genomes are identical else False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># Make sure both objects are of</span>
-        <span class="c1"># the same type &#39;Chromosome&#39;.</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Chromosome</span><span class="p">):</span>
-
-            <span class="c1"># Compare directly the two genomes.</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_genome</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">genome</span>
+        <span class="c1"># Check if they are the same instance.</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">other</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
         <span class="c1"># _end_if_</span>
-        <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Make sure both items are Chromosomes.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Chromosome</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Compare directly the two genomes.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_genome</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">genome</span>
     <span class="c1"># _end_def_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
