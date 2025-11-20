@@ -74,7 +74,6 @@ class Chromosome(object):
 
         :param new_value: (float).
         """
-
         # Check for correct type.
         if isinstance(new_value, (int, float)):
 
@@ -141,9 +140,8 @@ class Chromosome(object):
         :return: (int) the number of dissimilarities between the two
         input chromosomes.
         """
-
-        # Make sure both objects are of
-        # the same type 'Chromosome'.
+        # Make sure both objects are
+        # of the same type Chromosome.
         if isinstance(other, Chromosome):
 
             # Quick exit if both objects are
@@ -244,7 +242,6 @@ class Chromosome(object):
 
         :return: a (shallow) copy of the self object.
         """
-
         # Return the new copy.
         return Chromosome(self._genome, self._fitness, self._valid)
     # _end_copy_
@@ -259,7 +256,6 @@ class Chromosome(object):
 
         :return: a new identical "clone" of the self object.
         """
-
         # Create a new instance.
         new_object = Chromosome.__new__(Chromosome)
 
