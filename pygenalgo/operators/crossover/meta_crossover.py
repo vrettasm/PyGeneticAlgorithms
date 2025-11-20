@@ -19,7 +19,6 @@ class MetaCrossover(CrossoverOperator):
 
         :param crossover_probability: (float).
         """
-
         # Call the super constructor with the provided
         # probability value.
         super().__init__(crossover_probability)
@@ -39,7 +38,6 @@ class MetaCrossover(CrossoverOperator):
 
         :return: child1 and child2 (as Chromosomes).
         """
-
         # If the crossover probability is higher than a uniformly
         # random value and the parents aren't identical apply the
         # changes.
@@ -83,15 +81,12 @@ class MetaCrossover(CrossoverOperator):
 
         :return: None.
         """
-
         # First call the super() to reset the self internal counter.
         super().reset_counter()
 
         # Here call explicitly the reset on each of the internal cross operators.
         for op in self.items:
             op.reset_counter()
-        # _end_for_
-
     # _end_def_
 
 # _end_class_

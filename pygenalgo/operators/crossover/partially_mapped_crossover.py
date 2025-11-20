@@ -18,7 +18,6 @@ class PartiallyMappedCrossover(CrossoverOperator):
 
         :param crossover_probability: (float).
         """
-
         # Call the super constructor with the provided
         # probability value.
         super().__init__(crossover_probability)
@@ -34,7 +33,6 @@ class PartiallyMappedCrossover(CrossoverOperator):
 
         :return: child1 and child2 (as Chromosomes).
         """
-
         # If the crossover probability is higher than a uniformly
         # random value and the parents aren't identical apply the
         # changes.

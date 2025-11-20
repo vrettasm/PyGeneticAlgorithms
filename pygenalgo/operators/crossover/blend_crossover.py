@@ -30,7 +30,6 @@ class BlendCrossover(CrossoverOperator):
 
         :param upper_val: (float) upper limit value for the gene.
         """
-
         # Call the super constructor with the provided
         # probability value.
         super().__init__(crossover_probability)
@@ -64,7 +63,6 @@ class BlendCrossover(CrossoverOperator):
 
         :return: child1 and child2 (as Chromosomes).
         """
-
         # If the crossover probability is higher than a uniformly
         # random value and the parents aren't identical apply the
         # changes.

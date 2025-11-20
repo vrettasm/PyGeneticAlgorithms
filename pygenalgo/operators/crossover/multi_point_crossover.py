@@ -21,7 +21,6 @@ class MultiPointCrossover(CrossoverOperator):
 
         :param n_points: (int) the number of points to cut the genome.
         """
-
         # Call the super constructor with the provided
         # probability value.
         super().__init__(crossover_probability)
@@ -43,7 +42,6 @@ class MultiPointCrossover(CrossoverOperator):
 
         :return: child1 and child2 (as Chromosomes).
         """
-
         # Get the number of genes from the first parent (chromosome).
         # N.B.: It is assumed that both parents have the same size.
         num_genes = len(parent1)
