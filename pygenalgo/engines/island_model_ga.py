@@ -40,7 +40,6 @@ class IslandModelGA(GenericGA):
 
         :return: a new GA object.
         """
-
         # Call the super constructor with all the input parameters.
         super().__init__(**kwargs)
 
@@ -80,7 +79,6 @@ class IslandModelGA(GenericGA):
 
         :return: a tuple (island, has_converged, local_stats, elapsed_time)
         """
-
         # Get the BitGenerator used by default_rng.
         bit_gen = type(self.rng_GA.bit_generator)
 
@@ -268,7 +266,6 @@ class IslandModelGA(GenericGA):
 
         :return: None.
         """
-
         # Reset stats dictionary.
         self._stats.clear()
 
@@ -545,7 +542,6 @@ class IslandModelGA(GenericGA):
 
         :return: None.
         """
-
         # First print the migration operator.
         print(self.migrate_op)
 
