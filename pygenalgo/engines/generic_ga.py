@@ -4,7 +4,7 @@ from typing import Callable
 from operator import attrgetter
 from collections import defaultdict
 
-from joblib import (Parallel, delayed)
+from joblib import Parallel, delayed
 from numpy.random import default_rng, Generator
 
 from pygenalgo.genome.chromosome import Chromosome
@@ -21,8 +21,9 @@ class GenericGA(object):
     """
     Description:
 
-        Generic GA class models the interface of a specific genetic algorithm model (or engine).
-        It provides the common variables and functionality that all GA models should share.
+        Generic GA class models the interface of a specific genetic algorithm model
+        (or engine). It provides the common variables and functionality that all GA
+        models should share.
     """
 
     # Make a random number generator.
@@ -230,6 +231,7 @@ class GenericGA(object):
                              f"New counts must be positive integer.")
         # _end_if_
 
+        # Update the function evaluation counter.
         self._f_eval += new_counts
     # _end_def_
 
@@ -337,7 +339,6 @@ class GenericGA(object):
 
             # MUTATE in place the 2nd offspring.
             self._mutate_op(input_population[k])
-        # _end_for_
     # _end_def_
 
     def adapt_probabilities(self, threshold: float = None) -> bool:
