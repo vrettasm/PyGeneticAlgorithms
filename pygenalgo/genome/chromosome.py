@@ -55,7 +55,6 @@ class Chromosome(object):
         else:
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Validity flag should be bool: {type(new_value)}.")
-        # _end_if_
     # _end_def_
 
     @property
@@ -84,7 +83,6 @@ class Chromosome(object):
         else:
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Fitness should be float: {type(new_value)}.")
-        # _end_if_
     # _end_def_
 
     @property
@@ -160,7 +158,6 @@ class Chromosome(object):
         else:
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Can't compute Hamming distance in different type objects.")
-        # _end_if_
     # _end_def_
 
     def __eq__(self, other) -> bool:
