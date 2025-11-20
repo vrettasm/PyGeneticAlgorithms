@@ -59,8 +59,6 @@ class IslandModelGA(GenericGA):
             raise ValueError(f"{self.__class__.__name__}: Migration operator is missing.")
         else:
             self._migrate_op = migrate_op
-        # _end_if_
-
     # _end_def_
 
     @property
@@ -226,7 +224,7 @@ class IslandModelGA(GenericGA):
         return island, has_converged, local_stats, elapsed_time
     # _end_def_
 
-    def run(self, epochs: int = 1000, correction: bool = False, elitism: bool = True,
+    def run(self, epochs: int = 500, correction: bool = False, elitism: bool = True,
             f_tol: float = None, allow_migration: bool = False, n_periods: int = 10,
             adapt_probs: bool = False, shuffle: bool = True, f_max_eval: int = None,
             verbose: bool = False) -> None:
@@ -556,8 +554,6 @@ class IslandModelGA(GenericGA):
             # Call internally all operators.
             for op in self.migrate_op.items:
                 print(op)
-            # _end_for_
-        # _end_if_
     # _end_def_
 
 # _end_class_
