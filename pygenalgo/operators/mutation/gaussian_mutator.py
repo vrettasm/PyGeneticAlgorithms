@@ -24,7 +24,6 @@ class GaussianMutator(MutationOperator):
 
         :param upper_val: (float) upper limit value for the gene mutation.
         """
-
         # Call the super constructor with the provided
         # probability value.
         super().__init__(mutate_probability)
@@ -48,7 +47,6 @@ class GaussianMutator(MutationOperator):
         if upper_val < lower_val:
             raise ValueError(f"{self.__class__.__name__}: "
                              f"The limit values are incorrect.")
-        # _end_if_
 
         # Assign variables to the _items placeholder.
         self._items = [sigma, lower_val, upper_val]
@@ -63,7 +61,6 @@ class GaussianMutator(MutationOperator):
 
         :return: None.
         """
-
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
         if self.is_operator_applicable():

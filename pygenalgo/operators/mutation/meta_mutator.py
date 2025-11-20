@@ -22,7 +22,6 @@ class MetaMutator(MutationOperator):
 
         :param mutate_probability: (float).
         """
-
         # Call the super constructor with the provided probability value.
         super().__init__(mutate_probability)
 
@@ -38,7 +37,6 @@ class MetaMutator(MutationOperator):
 
         :return: None.
         """
-
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
         if self.is_operator_applicable():
@@ -52,7 +50,6 @@ class MetaMutator(MutationOperator):
 
             # Increase the mutator counter.
             self.inc_counter()
-        # _end_if_
     # _end_def_
 
     @property
@@ -74,7 +71,6 @@ class MetaMutator(MutationOperator):
 
         :return: None.
         """
-
         # First call the super() to reset the self internal counter.
         super().reset_counter()
 

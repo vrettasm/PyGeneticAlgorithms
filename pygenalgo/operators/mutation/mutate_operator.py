@@ -16,7 +16,6 @@ class MutationOperator(GeneticOperator):
 
         :param mutation_probability: (float).
         """
-
         # Call the super constructor with the provided
         # probability value.
         super().__init__(mutation_probability)

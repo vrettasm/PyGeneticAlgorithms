@@ -16,7 +16,6 @@ class SwapMutator(MutationOperator):
 
         :param mutate_probability: (float).
         """
-
         # Call the super constructor with the provided probability value.
         super().__init__(mutate_probability)
     # _end_def_
@@ -29,7 +28,6 @@ class SwapMutator(MutationOperator):
 
         :return: None.
         """
-
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
         if self.is_operator_applicable():
