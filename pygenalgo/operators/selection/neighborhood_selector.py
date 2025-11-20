@@ -46,7 +46,7 @@ class NeighborhoodSelector(SelectionOperator):
         # Get the population size.
         pop_size = len(population)
 
-        # Extract the population positions as an array.
+        # Extract the population positions as numpy array.
         x_pos = np.array([p.values() for p in population])
 
         # Compute the pairwise distances.
