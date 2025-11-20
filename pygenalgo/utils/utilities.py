@@ -7,7 +7,9 @@ __all__ = ["pareto_front", "cost_function", "np_cdist",
            "pareto_dominance", "np_pareto_front", "clamp"]
 
 
-def clamp(x: float, x_lower: float, x_upper: float) -> float:
+def clamp(x: int | float,
+          x_lower: int | float,
+          x_upper: int | float) -> int | float:
     """
     Clamps a value within a specified range.
 
