@@ -51,11 +51,11 @@ class UniformCrossover(CrossoverOperator):
             # Preallocate 2nd genome.
             genome_2: list = [None] * number_of_genes
 
-            # Generate all uniform random numbers and convert them to bool.
-            swap_probability = self.rng.random(size=number_of_genes) > 0.5
+            # Generate uniform random numbers and convert them to bool.
+            swap_bool_flag = self.rng.random(size=number_of_genes) > 0.5
 
             # Set the genes according to the swap probability.
-            for i, (swap_flag, gene_1, gene_2) in enumerate(zip(swap_probability,
+            for i, (swap_flag, gene_1, gene_2) in enumerate(zip(swap_bool_flag,
                                                                 parent1.genome,
                                                                 parent2.genome)):
                 if swap_flag:
