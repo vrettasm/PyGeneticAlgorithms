@@ -53,7 +53,6 @@ class GenericGA(object):
 
         :param n_cpus: Number of requested CPUs for the evolution process (Default=Max_CPU).
         """
-
         # Copy the reference of the population.
         self.population = initial_pop.copy()
 
@@ -224,7 +223,6 @@ class GenericGA(object):
 
         :return: None.
         """
-
         # Sanity check.
         if not isinstance(new_counts, int) or new_counts < 0:
             raise ValueError(f"{self.__class__.__name__}: "
@@ -275,7 +273,6 @@ class GenericGA(object):
 
         :return: Return the 'n' chromosomes with the highest fitness.
         """
-
         # Make sure 'n' is positive integer.
         if not isinstance(n, int) or n <= 0:
             raise ValueError(f"{self.__class__.__name__}: "
@@ -311,7 +308,6 @@ class GenericGA(object):
 
         :return: None.
         """
-
         # Get the size of the input population.
         pop_size = len(input_population)
 
@@ -351,7 +347,6 @@ class GenericGA(object):
 
         :return: True if the parameters have changed, else False.
         """
-
         # Check if the threshold value is missing.
         if threshold is None:
             raise RuntimeError(f"{self.__class__.__name__}: "
@@ -437,7 +432,6 @@ class GenericGA(object):
 
         :return: a list with the fitness values and the found solution flag.
         """
-
         # Get a local copy of the fitness function.
         fit_func = self.fitness_func
 
