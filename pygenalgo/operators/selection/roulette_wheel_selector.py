@@ -8,12 +8,14 @@ class RouletteWheelSelector(SelectionOperator):
     """
     Description:
 
-        Roulette Wheel Selector implements 'fitness proportional selection'. Each member
-        of the population is assigned a probability value that is directly proportional
-        to its fitness value (compared to the rest of the population).
+        Roulette Wheel Selection employs a probabilistic mechanism where individuals are
+        selected based on their fitness relative to the entire population. Each individual
+        receives a slice of a wheel proportional to its fitness, similar to a casino roulette,
+        where a random number determines the selected individual. This method encourages selection
+        of fitter individuals while allowing lower-fitness individuals a chance to contribute.
+        While effective, it can lead to premature convergence if the population's fitness is skewed,
+        often referred to as the "selection pressure."
 
-        Individuals with higher fitness value are more likely to be selected for parents
-        when forming the new generation of individuals (offsprings).
     """
 
     def __init__(self, select_probability: float = 1.0):

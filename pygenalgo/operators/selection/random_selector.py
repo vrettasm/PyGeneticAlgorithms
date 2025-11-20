@@ -7,11 +7,15 @@ class RandomSelector(SelectionOperator):
     """
     Description:
 
-        Random Selector implements selection assuming that all members of the population
-        have the same probability to be selected as parents 1/N, effectively assuming a
-        uniform probability.
+        Random Selection involves choosing individuals from a population without any regard
+        to their fitness levels. Each member has an equal chance of being selected, which
+        promotes genetic diversity by allowing exploration of various solutions. While this
+        method is simple and easy to implement, it can lead to inefficient results, especially
+        in populations with varying fitness values. Random selection may overlook high-quality
+        solutions, making it less effective in later stages of evolution. However, it can serve
+        as a useful mechanism in the initial stages or when diversity is paramount for avoiding
+        premature convergence.
 
-        It does not favor the fit individuals therefore the mixing will be very slow.
     """
 
     def __init__(self, select_probability: float = 1.0):

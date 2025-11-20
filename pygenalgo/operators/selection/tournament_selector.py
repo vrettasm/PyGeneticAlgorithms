@@ -9,10 +9,15 @@ class TournamentSelector(SelectionOperator):
     """
     Description:
 
-        Tournament Selector implements an object that performs selection by choosing
-        an individual from a set of individuals. The winner of each tournament i.e.
-        (the one with the highest fitness value) is selected as new parent to perform
-        crossover and mutation.
+        Tournament Selection operates by randomly selecting a subset of individuals
+        from the population and competing them against each other based on their fitness.
+        The individual with the highest fitness in the mini-group is chosen for reproduction.
+        This method provides a balance between selection pressure and diversity, as larger
+        tournament sizes increase the likelihood of selecting fitter individuals, while smaller
+        sizes maintain population diversity. The size of the tournament can be adjusted depending
+        on the desired selection pressure. This technique is computationally efficient and effective,
+        especially in dynamic environments or populations with diverse fitness landscapes.
+
     """
 
     def __init__(self, select_probability: float = 1.0, k: int = 5):

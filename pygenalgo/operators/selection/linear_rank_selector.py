@@ -9,11 +9,16 @@ class LinearRankSelector(SelectionOperator):
     """
     Description:
 
-        Linear Rank Selector implements an object that performs selection using ranking.
-        The individuals first are sorted according to their fitness values. The rank 'N'
-        is assigned to the best individual and the rank 1 to the worst individual.
+        The LinearRank Selector is a selection mechanism in genetic algorithms that ranks
+        individuals based on their fitness values. It assigns selection probabilities to
+        candidates in a linear fashion, ensuring that higher-ranking individuals are more
+        likely to be chosen for reproduction. The operator helps maintain diversity in the
+        population by avoiding premature convergence, allowing lower-ranked individuals a
+        chance to contribute. This method is particularly effective in scenarios with varying
+        fitness levels, as it balances selection pressure while fostering exploration of the
+        solution space. Overall, it enhances the optimization process in evolutionary computation
+        models.
 
-        After that the selection process is similar to the one of RouletteWheelSelector.
     """
 
     def __init__(self, select_probability: float = 1.0):

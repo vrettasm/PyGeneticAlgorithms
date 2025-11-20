@@ -7,10 +7,14 @@ class TruncationSelector(SelectionOperator):
     """
     Description:
 
-        Truncation Selector, creates a new population using a pre-defined proportion of the old population.
-        When this method is called, it sorts the individuals of the OLD population using their fitness and
-        then using a predefined value (e.g. p=0.3 or 30%) selects repeatedly new individuals from the top
-        0.3 percent of the old population, until we reach the required size of the NEW population.
+        Truncation Selection is a straightforward method where only a predetermined percentage of the best
+        individuals are selected based on fitness, while the rest are discarded. This ensures a consistent
+        evolution of stronger solutions, accelerating convergence toward optimal fitness levels. While
+        effective in honing in on high-quality individuals, truncation selection can create a loss of genetic
+        diversity, risking premature convergence if the population becomes too homogeneous. The selection
+        proportion can be adjusted to control the pressure, making this method adaptable for various scenarios
+        but necessitating monitoring to retain essential diversity.
+
     """
 
     def __init__(self, select_probability: float = 1.0, p: float = 0.3):

@@ -9,9 +9,16 @@ class BoltzmannSelector(SelectionOperator):
     """
     Description:
 
-        Boltzmann Selector implements an object that performs selection by choosing an
-        individual from a set of individuals by sampling solutions from a Boltzmann
-        distribution depending on their fitness's.
+        Boltzmann Selection integrates principles from physical systems into genetic
+        algorithms, using a temperature parameter to influence selection probability.
+        The basic idea is that as the "temperature" decreases, the likelihood of selecting
+        higher-fitness individuals increases, mimicking the cooling process in simulated
+        annealing. At high temperatures, the selection is more random, allowing exploration.
+        As temperature falls, the process becomes more exploitative, favoring superior solutions.
+        This duality makes Boltzmann Selection versatile, although it requires careful tuning of
+        the temperature parameter to maintain a balance between exploration and exploitation over
+        generations.
+
     """
 
     def __init__(self, select_probability: float = 1.0, k: float = 100.0):

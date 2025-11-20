@@ -10,9 +10,15 @@ class NeighborhoodSelector(SelectionOperator):
     """
     Description:
 
-        Neighborhood Selector implements an object that performs selection by choosing
-        an individual from a set of neighboring individuals. The neighbors are selected
-        based on their proximity from one another using their Euclidean distance.
+        Neighborhood Selection focuses on leveraging local relationships within the population
+        to guide the selection process. Unlike global methods, it emphasizes individuals that
+        are closely related in the solution space. This operator selects candidates based on their
+        proximity, fostering local exploration and potentially discovering niche solutions.
+        Neighborhood Selection can lead to a more cohesive search through similar solutions,
+        promoting the evolution of specialized characteristics. While it can enhance diversity
+        within clusters of solutions, the method also risks missing out on globally optimal solutions
+        if too localized, necessitating a balance between exploration and exploitation in broader landscapes.
+
     """
 
     def __init__(self, select_probability: float = 1.0, n_nearest: int = 5):
