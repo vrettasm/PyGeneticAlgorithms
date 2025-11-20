@@ -18,7 +18,6 @@ def unique_pairs(n_size: int) -> int:
 
     :return: the 'n choose 2', or C(n, 2).
     """
-
     # Sanity check #1.
     if not isinstance(n_size, int):
         raise TypeError("'n_size' must be an integer number.")
@@ -47,7 +46,6 @@ def average_hamming_distance(population: list[Chromosome],
     :return: (float) the total number of differences, in the genes,
     divided by the total number of genes compared.
     """
-
     # Sanity check 1: This should never happen!
     if not population:
         raise RuntimeError("Population list is empty!")
@@ -103,7 +101,6 @@ def apply_corrections(input_population: list[Chromosome],
 
     :return: the number of corrected genes and the additional function evaluations.
     """
-
     # Holds the number of the corrected chromosomes.
     corrections_counter = 0
 
@@ -146,8 +143,6 @@ def apply_corrections(input_population: list[Chromosome],
 
             # Increase counter by one.
             f_eval_counter += 1
-        # _end_if_
-
     # _end_for_
 
     # Return the total number of corrected genes along
@@ -219,4 +214,5 @@ class SubPopulation(object):
         """
         return item in self.population
     # _end_def_
+
 # _end_class_

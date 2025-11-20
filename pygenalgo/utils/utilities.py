@@ -11,10 +11,10 @@ def clamp(x: float, x_lower: float, x_upper: float) -> float:
     """
     Clamps a value within a specified range.
 
-    :param x: value to clamp
-    :param x_lower: lower bound
-    :param x_upper: upper bound
-    :return: clamped value
+    :param x: value to clamp.
+    :param x_lower: lower bound.
+    :param x_upper: upper bound.
+    :return: clamped value.
     """
     return min(max(x, x_lower), x_upper)
 # _end_def_
@@ -101,15 +101,12 @@ def pareto_front(points: list) -> list:
                 # Break the internal loop and
                 # continue to the next point.
                 break
-            # _end_if_
-
         # _end_for_
 
         # If we get here and the flag hasn't changed
         # it means that 'point_i' is on the frontier.
         if is_pareto_optimal:
             pareto_points.add(point_i)
-        # _end_if_
     # _end_for_
 
     # Return the points as list.
@@ -164,7 +161,6 @@ def cost_function(func: Callable = None, minimize: bool = False):
 
     :return: the 'function_wrapper' method.
     """
-
     # This allows the decorator to be called with
     # parenthesis and using the default parameters.
     if func is None:
@@ -220,7 +216,6 @@ def np_cdist(x_pos: np.ndarray, scaled: bool = False) -> np.ndarray:
 
     :return: a square [n_rows, n_rows] numpy array of distances.
     """
-
     # Get the number of rows/cols.
     n_rows, n_cols = x_pos.shape
 
