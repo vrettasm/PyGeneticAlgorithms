@@ -64,8 +64,6 @@ class UniformCrossover(CrossoverOperator):
                 else:
                     genome_1[i] = gene_1.clone()
                     genome_2[i] = gene_2.clone()
-                # _end_if_
-
             # _end_for_
 
             # Create two NEW offsprings.
