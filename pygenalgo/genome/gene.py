@@ -34,7 +34,6 @@ class Gene(object):
         
         :param valid: This flag is used to set the Gene as valid (True) or invalid (False).
         """
-        
         # Copy the data reference.
         self._datum = datum
         
@@ -119,7 +118,6 @@ class Gene(object):
         else:
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Validity flag should be bool: {type(new_value)}.")
-        # _end_if_
     # _end_def_
 
     def __eq__(self, other) -> bool:
@@ -174,7 +172,6 @@ class Gene(object):
 
         :return: None.
         """
-
         # Use the random function to set a new value at the data.
         self._datum = self._func()
     # _end_def_
@@ -190,7 +187,6 @@ class Gene(object):
 
         :return: None.
         """
-
         # Flip the current gene value.
         self._datum = int(not self._datum)
     # _end_def_
@@ -223,7 +219,6 @@ class Gene(object):
 
         :return: a (shallow) copy of the self object.
         """
-
         # Return the new copy.
         return Gene(self._datum, self._func, self._valid)
     # _end_def_
@@ -238,7 +233,6 @@ class Gene(object):
 
         :return: a new identical "clone" of the self object.
         """
-
         # Create a new instance.
         new_object = Gene.__new__(Gene)
 
