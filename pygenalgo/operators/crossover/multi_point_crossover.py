@@ -106,7 +106,7 @@ class MultiPointCrossover(CrossoverOperator):
 
             # _end_for_
 
-            # Create the two NEW offsprings.
+            # Create two NEW offsprings.
             child1 = Chromosome(genome_1)
             child2 = Chromosome(genome_2)
 

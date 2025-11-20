@@ -120,7 +120,7 @@ class BlendCrossover(CrossoverOperator):
                 genome_2[i] = Gene(datum=new_value_2, func=gene_2.func)
             # _end_for_
 
-            # Create the two NEW offsprings.
+            # Create two NEW offsprings.
             child1 = Chromosome(genome_1)
             child2 = Chromosome(genome_2)
 

@@ -51,7 +51,8 @@ class PositionBasedCrossover(CrossoverOperator):
                                                   size=number_of_points,
                                                   replace=False, shuffle=False))
 
-            # Initialize the genome of the new chromosomes to 'None'.
+            # Initialize the genome lists for the new
+            # chromosomes to 'None'.
             genome_1: list = number_of_genes * [None]
             genome_2: list = number_of_genes * [None]
 
@@ -85,7 +86,7 @@ class PositionBasedCrossover(CrossoverOperator):
 
             # _end_for_
 
-            # Create the two NEW offsprings.
+            # Create two NEW offsprings.
             child1 = Chromosome(genome_1)
             child2 = Chromosome(genome_2)
 

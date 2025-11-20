@@ -45,10 +45,10 @@ class UniformCrossover(CrossoverOperator):
             # Get the length of the chromosome.
             number_of_genes = len(parent1)
 
-            # Preallocate 1st genome.
+            # Preallocate 1st offspring genome list.
             genome_1: list = [None] * number_of_genes
 
-            # Preallocate 2nd genome.
+            # Preallocate 2nd offspring genome list.
             genome_2: list = [None] * number_of_genes
 
             # Generate uniform random numbers and convert them to bool.
