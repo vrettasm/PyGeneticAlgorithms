@@ -49,7 +49,7 @@ class NeighborhoodSelector(SelectionOperator):
         # Extract the population positions as numpy array.
         x_pos = np.array([p.values() for p in population])
 
-        # Compute the pairwise distances.
+        # Compute the pairwise Euclidean distances.
         pairwise_dists = np_cdist(x_pos, scaled=True)
 
         # Sort the distances and get their indexes.
