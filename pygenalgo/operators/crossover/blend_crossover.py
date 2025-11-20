@@ -115,7 +115,7 @@ class BlendCrossover(CrossoverOperator):
                 new_value_1 = clamp(new_value_1, xl, xu)
                 new_value_2 = clamp(new_value_2, xl, xu)
 
-                # Update the genome of the new offsprings with two new Genes.
+                # Update the genome of the new offsprings with new Genes.
                 genome_1[i] = Gene(datum=new_value_1, func=gene_1.func)
                 genome_2[i] = Gene(datum=new_value_2, func=gene_2.func)
             # _end_for_
