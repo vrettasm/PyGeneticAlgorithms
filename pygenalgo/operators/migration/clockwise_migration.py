@@ -18,7 +18,6 @@ class ClockwiseMigration(MigrationOperator):
 
         :param migration_probability: (float) in [0, 1].
         """
-
         # Call the super constructor with the provided probability value.
         super().__init__(migration_probability)
     # _end_def_
@@ -31,7 +30,6 @@ class ClockwiseMigration(MigrationOperator):
 
         :return: None.
         """
-
         # Perform the migration only if we have more than one
         # active populations.
         if len(islands) > 1:
@@ -50,13 +48,10 @@ class ClockwiseMigration(MigrationOperator):
 
                     # Replace the chromosome with the best one from its left.
                     island_i.population[idx] = best_chromosomes[i-1].clone()
-                # _end_if_
-
             # _end_for_
 
             # Increase the migration counter.
             self.inc_counter()
-        # _end_if_
     # _end_def_
 
 # _end_class_

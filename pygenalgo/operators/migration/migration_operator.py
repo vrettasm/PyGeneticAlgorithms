@@ -16,7 +16,6 @@ class MigrationOperator(GeneticOperator):
 
         :param migration_probability: (float).
         """
-
         # Call the super constructor with the provided probability value.
         super().__init__(migration_probability)
     # _end_def_

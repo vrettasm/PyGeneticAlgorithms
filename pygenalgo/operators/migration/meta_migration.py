@@ -20,7 +20,6 @@ class MetaMigration(MigrationOperator):
 
         :param migration_probability: (float).
         """
-
         # Call the super constructor with the provided probability value.
         super().__init__(migration_probability)
 
@@ -36,7 +35,6 @@ class MetaMigration(MigrationOperator):
 
         :return: None.
         """
-
         # Perform the migration only if we have more than one
         # active populations.
         if len(islands) > 1:
@@ -53,7 +51,6 @@ class MetaMigration(MigrationOperator):
 
                 # Increase the migration counter.
                 self.inc_counter()
-            # _end_if_
         # _end_if_
     # _end_def_
 
@@ -76,14 +73,12 @@ class MetaMigration(MigrationOperator):
 
         :return: None.
         """
-
         # First call the super() to reset the self internal counter.
         super().reset_counter()
 
         # Here call explicitly the reset on each of the internal mutators.
         for op in self.items:
             op.reset_counter()
-        # _end_for_
     # _end_def_
 
 # _end_class_
