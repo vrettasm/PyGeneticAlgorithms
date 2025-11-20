@@ -277,7 +277,6 @@ class StandardGA(GenericGA):
             # Call internally all operators.
             for op in self.crossx_op.items:
                 print(op)
-            # _end_for_
         # _end_if_
 
         # Lastly print the mutation operator.
@@ -289,7 +288,6 @@ class StandardGA(GenericGA):
             for op in self.mutate_op.items:
                 print(op)
             # _end_for_
-        # _end_if_
     # _end_def_
 
 # _end_class_
