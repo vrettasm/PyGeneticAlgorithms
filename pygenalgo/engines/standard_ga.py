@@ -41,7 +41,6 @@ class StandardGA(GenericGA):
 
         :return: the mean and std of the fitness values.
         """
-
         # Convert the fitness list in a numpy array.
         arr = array(fit_list, dtype=float)
 
@@ -100,7 +99,6 @@ class StandardGA(GenericGA):
 
         :return: None.
         """
-
         # Make sure everything is cleared.
         self.clear_all()
 
@@ -265,7 +263,6 @@ class StandardGA(GenericGA):
 
         :return: None.
         """
-
         # First print the selection operator.
         print(self.select_op)
 
