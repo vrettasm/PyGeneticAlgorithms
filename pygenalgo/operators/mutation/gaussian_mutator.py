@@ -1,3 +1,4 @@
+from pygenalgo.utils.utilities import clamp
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
@@ -81,8 +82,8 @@ class GaussianMutator(MutationOperator):
 
             # Calculate the new Gene value by sampling from N(value, sigma),
             # ensuring it stays within limits.
-            individual[i].value = min(max(self.rng.normal(loc=old_value,
-                                                          scale=sigma), xl), xu)
+            individual[i].value = clamp(self.rng.normal(loc=old_value,
+                                                        scale=sigma), xl, xu)
             # Set the fitness to NaN.
             individual.invalidate_fitness()
 
