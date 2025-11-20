@@ -31,7 +31,6 @@ def increase_counter(method):
         because if the method fails (exit with an error) then
         the counter value will be useless.
         """
-
         # Run the wrapped method.
         result = method(self, *args, **kwargs)
 
@@ -73,7 +72,6 @@ class GeneticOperator(object):
 
         :param probability: (float) in [0, 1].
         """
-
         # Ensure the default entry value is within range [0, 1].
         self._probability = clamp(float(probability), 0.0, 1.0)
 
@@ -187,7 +185,6 @@ class GeneticOperator(object):
 
         :param new_value: (float) in [0, 1].
         """
-
         # Check for the correct type.
         if isinstance(new_value, float):
 
@@ -236,7 +233,6 @@ class GeneticOperator(object):
             Override to print a readable string presentation of the
             genetic operator object, using the selected parameters.
         """
-
         # Initialize the string with the class name and its ID.
         str_self = f" {self.__class__.__name__}: ({id(self)})\n"
 
