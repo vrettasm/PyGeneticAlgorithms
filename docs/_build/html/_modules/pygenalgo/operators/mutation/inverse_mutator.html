@@ -89,7 +89,6 @@
 
 <span class="sd">        :param mutate_probability: (float).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Call the super constructor with the provided probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mutate_probability</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
@@ -105,7 +104,6 @@
 
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># If the mutation probability is higher than</span>
         <span class="c1"># a uniformly random value, make the changes.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
@@ -137,8 +135,6 @@
             <span class="c1"># Increase the mutator counter.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span></div>
 </div>
-
-        <span class="c1"># _end_if_</span>
 
     <span class="c1"># _end_def_</span>
 

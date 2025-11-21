@@ -100,9 +100,15 @@
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Boltzmann Selector implements an object that performs selection by choosing an
-individual from a set of individuals by sampling solutions from a Boltzmann
-distribution depending on their fitness’s.</p>
+<div><p>Boltzmann Selection integrates principles from physical systems into genetic
+algorithms, using a temperature parameter to influence selection probability.
+The basic idea is that as the “temperature” decreases, the likelihood of selecting
+higher-fitness individuals increases, mimicking the cooling process in simulated
+annealing. At high temperatures, the selection is more random, allowing exploration.
+As temperature falls, the process becomes more exploitative, favoring superior solutions.
+This duality makes Boltzmann Selection versatile, although it requires careful tuning of
+the temperature parameter to maintain a balance between exploration and exploitation over
+generations.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.boltzmann_selector.BoltzmannSelector.select">
@@ -132,10 +138,15 @@ to form the new population of solutions.</p>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Linear Rank Selector implements an object that performs selection using ranking.
-The individuals first are sorted according to their fitness values. The rank ‘N’
-is assigned to the best individual and the rank 1 to the worst individual.</p>
-<p>After that the selection process is similar to the one of RouletteWheelSelector.</p>
+<div><p>The LinearRank Selector is a selection mechanism in genetic algorithms that ranks
+individuals based on their fitness values. It assigns selection probabilities to
+candidates in a linear fashion, ensuring that higher-ranking individuals are more
+likely to be chosen for reproduction. The operator helps maintain diversity in the
+population by avoiding premature convergence, allowing lower-ranked individuals a
+chance to contribute. This method is particularly effective in scenarios with varying
+fitness levels, as it balances selection pressure while fostering exploration of the
+solution space. Overall, it enhances the optimization process in evolutionary computation
+models.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.probabilities">
@@ -182,10 +193,14 @@ to form the new population of solutions.</p>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Random Selector implements selection assuming that all members of the population
-have the same probability to be selected as parents 1/N, effectively assuming a
-uniform probability.</p>
-<p>It does not favor the fit individuals therefore the mixing will be very slow.</p>
+<div><p>Random Selection involves choosing individuals from a population without any regard
+to their fitness levels. Each member has an equal chance of being selected, which
+promotes genetic diversity by allowing exploration of various solutions. While this
+method is simple and easy to implement, it can lead to inefficient results, especially
+in populations with varying fitness values. Random selection may overlook high-quality
+solutions, making it less effective in later stages of evolution. However, it can serve
+as a useful mechanism in the initial stages or when diversity is paramount for avoiding
+premature convergence.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.random_selector.RandomSelector.select">
@@ -214,11 +229,13 @@ to form the new population of solutions.</p>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Roulette Wheel Selector implements ‘fitness proportional selection’. Each member
-of the population is assigned a probability value that is directly proportional
-to its fitness value (compared to the rest of the population).</p>
-<p>Individuals with higher fitness value are more likely to be selected for parents
-when forming the new generation of individuals (offsprings).</p>
+<div><p>Roulette Wheel Selection employs a probabilistic mechanism where individuals are
+selected based on their fitness relative to the entire population. Each individual
+receives a slice of a wheel proportional to its fitness, similar to a casino roulette,
+where a random number determines the selected individual. This method encourages selection
+of fitter individuals while allowing lower-fitness individuals a chance to contribute.
+While effective, it can lead to premature convergence if the population’s fitness is skewed,
+often referred to as the “selection pressure.”</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.roulette_wheel_selector.RouletteWheelSelector.select">
@@ -315,10 +332,14 @@ to form the new population of solutions.</p>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Tournament Selector implements an object that performs selection by choosing
-an individual from a set of individuals. The winner of each tournament i.e.
-(the one with the highest fitness value) is selected as new parent to perform
-crossover and mutation.</p>
+<div><p>Tournament Selection operates by randomly selecting a subset of individuals
+from the population and competing them against each other based on their fitness.
+The individual with the highest fitness in the mini-group is chosen for reproduction.
+This method provides a balance between selection pressure and diversity, as larger
+tournament sizes increase the likelihood of selecting fitter individuals, while smaller
+sizes maintain population diversity. The size of the tournament can be adjusted depending
+on the desired selection pressure. This technique is computationally efficient and effective,
+especially in dynamic environments or populations with diverse fitness landscapes.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.tournament_selector.TournamentSelector.select">
@@ -347,10 +368,13 @@ to form the new population of solutions.</p>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Truncation Selector, creates a new population using a pre-defined proportion of the old population.
-When this method is called, it sorts the individuals of the OLD population using their fitness and
-then using a predefined value (e.g. p=0.3 or 30%) selects repeatedly new individuals from the top
-0.3 percent of the old population, until we reach the required size of the NEW population.</p>
+<div><p>Truncation Selection is a straightforward method where only a predetermined percentage of the best
+individuals are selected based on fitness, while the rest are discarded. This ensures a consistent
+evolution of stronger solutions, accelerating convergence toward optimal fitness levels. While
+effective in honing in on high-quality individuals, truncation selection can create a loss of genetic
+diversity, risking premature convergence if the population becomes too homogeneous. The selection
+proportion can be adjusted to control the pressure, making this method adaptable for various scenarios
+but necessitating monitoring to retain essential diversity.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.truncation_selector.TruncationSelector.select">
@@ -379,9 +403,14 @@ to form the new population of solutions.</p>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Neighborhood Selector implements an object that performs selection by choosing
-an individual from a set of neighboring individuals. The neighbors are selected
-based on their proximity from one another using their Euclidean distance.</p>
+<div><p>Neighborhood Selection focuses on leveraging local relationships within the population
+to guide the selection process. Unlike global methods, it emphasizes individuals that
+are closely related in the solution space. This operator selects candidates based on their
+proximity, fostering local exploration and potentially discovering niche solutions.
+Neighborhood Selection can lead to a more cohesive search through similar solutions,
+promoting the evolution of specialized characteristics. While it can enhance diversity
+within clusters of solutions, the method also risks missing out on globally optimal solutions
+if too localized, necessitating a balance between exploration and exploitation in broader landscapes.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.neighborhood_selector.NeighborhoodSelector.select">

@@ -82,11 +82,16 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Linear Rank Selector implements an object that performs selection using ranking.</span>
-<span class="sd">        The individuals first are sorted according to their fitness values. The rank &#39;N&#39;</span>
-<span class="sd">        is assigned to the best individual and the rank 1 to the worst individual.</span>
+<span class="sd">        The LinearRank Selector is a selection mechanism in genetic algorithms that ranks</span>
+<span class="sd">        individuals based on their fitness values. It assigns selection probabilities to</span>
+<span class="sd">        candidates in a linear fashion, ensuring that higher-ranking individuals are more</span>
+<span class="sd">        likely to be chosen for reproduction. The operator helps maintain diversity in the</span>
+<span class="sd">        population by avoiding premature convergence, allowing lower-ranked individuals a</span>
+<span class="sd">        chance to contribute. This method is particularly effective in scenarios with varying</span>
+<span class="sd">        fitness levels, as it balances selection pressure while fostering exploration of the</span>
+<span class="sd">        solution space. Overall, it enhances the optimization process in evolutionary computation</span>
+<span class="sd">        models.</span>
 
-<span class="sd">        After that the selection process is similar to the one of RouletteWheelSelector.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
@@ -95,7 +100,6 @@
 
 <span class="sd">        :param select_probability: (float) in [0, 1].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Call the super constructor with the provided probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">select_probability</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
@@ -144,7 +148,6 @@
 
 <span class="sd">        :return: the selected parents population (as list of chromosomes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Get the population size.</span>
         <span class="n">pop_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
 

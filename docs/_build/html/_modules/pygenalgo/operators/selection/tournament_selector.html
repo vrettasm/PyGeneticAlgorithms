@@ -82,10 +82,15 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Tournament Selector implements an object that performs selection by choosing</span>
-<span class="sd">        an individual from a set of individuals. The winner of each tournament i.e.</span>
-<span class="sd">        (the one with the highest fitness value) is selected as new parent to perform</span>
-<span class="sd">        crossover and mutation.</span>
+<span class="sd">        Tournament Selection operates by randomly selecting a subset of individuals</span>
+<span class="sd">        from the population and competing them against each other based on their fitness.</span>
+<span class="sd">        The individual with the highest fitness in the mini-group is chosen for reproduction.</span>
+<span class="sd">        This method provides a balance between selection pressure and diversity, as larger</span>
+<span class="sd">        tournament sizes increase the likelihood of selecting fitter individuals, while smaller</span>
+<span class="sd">        sizes maintain population diversity. The size of the tournament can be adjusted depending</span>
+<span class="sd">        on the desired selection pressure. This technique is computationally efficient and effective,</span>
+<span class="sd">        especially in dynamic environments or populations with diverse fitness landscapes.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
@@ -96,7 +101,6 @@
 
 <span class="sd">        :param k: the number of participants in the tournament (int).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Call the super constructor with the provided probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">select_probability</span><span class="p">)</span>
 
@@ -117,7 +121,6 @@
 
 <span class="sd">        :return: the selected parents population (as list of chromosomes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Get the population size.</span>
         <span class="n">pop_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
 

@@ -82,9 +82,16 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Boltzmann Selector implements an object that performs selection by choosing an</span>
-<span class="sd">        individual from a set of individuals by sampling solutions from a Boltzmann</span>
-<span class="sd">        distribution depending on their fitness&#39;s.</span>
+<span class="sd">        Boltzmann Selection integrates principles from physical systems into genetic</span>
+<span class="sd">        algorithms, using a temperature parameter to influence selection probability.</span>
+<span class="sd">        The basic idea is that as the &quot;temperature&quot; decreases, the likelihood of selecting</span>
+<span class="sd">        higher-fitness individuals increases, mimicking the cooling process in simulated</span>
+<span class="sd">        annealing. At high temperatures, the selection is more random, allowing exploration.</span>
+<span class="sd">        As temperature falls, the process becomes more exploitative, favoring superior solutions.</span>
+<span class="sd">        This duality makes Boltzmann Selection versatile, although it requires careful tuning of</span>
+<span class="sd">        the temperature parameter to maintain a balance between exploration and exploitation over</span>
+<span class="sd">        generations.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">100.0</span><span class="p">):</span>
@@ -95,7 +102,6 @@
 
 <span class="sd">        :param k: constant of the Boltzmann distribution.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Call the super constructor with the provided probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">select_probability</span><span class="p">)</span>
 

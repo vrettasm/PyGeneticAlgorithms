@@ -93,7 +93,6 @@
 
 <span class="sd">        :param migration_probability: (float).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Call the super constructor with the provided probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">migration_probability</span><span class="p">)</span>
 
@@ -111,7 +110,6 @@
 
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Perform the migration only if we have more than one</span>
         <span class="c1"># active populations.</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">islands</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -129,7 +127,6 @@
                 <span class="c1"># Increase the migration counter.</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span></div>
 
-            <span class="c1"># _end_if_</span>
         <span class="c1"># _end_if_</span>
     <span class="c1"># _end_def_</span>
 
@@ -154,7 +151,6 @@
 
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># First call the super() to reset the self internal counter.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reset_counter</span><span class="p">()</span>
 
@@ -163,7 +159,6 @@
             <span class="n">op</span><span class="o">.</span><span class="n">reset_counter</span><span class="p">()</span></div>
 </div>
 
-        <span class="c1"># _end_for_</span>
     <span class="c1"># _end_def_</span>
 
 <span class="c1"># _end_class_</span>

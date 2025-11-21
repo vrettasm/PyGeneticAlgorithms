@@ -107,7 +107,6 @@
 <span class="sd">        </span>
 <span class="sd">        :param valid: This flag is used to set the Gene as valid (True) or invalid (False).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
         <span class="c1"># Copy the data reference.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="n">datum</span>
         
@@ -195,7 +194,6 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                             <span class="sa">f</span><span class="s2">&quot;Validity flag should be bool: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="c1"># _end_if_</span>
     <span class="c1"># _end_def_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -235,7 +233,6 @@
             <span class="c1"># If it fails try to convert</span>
             <span class="c1"># it to a tuple first.</span>
             <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">))</span>
-        <span class="c1"># _end_try_</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="Gene.random">
@@ -253,7 +250,6 @@
 
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Use the random function to set a new value at the data.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">()</span></div>
 
@@ -272,7 +268,6 @@
 
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Flip the current gene value.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">)</span></div>
 
@@ -289,11 +284,13 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Repr operator is called when a string representation is needed that can be evaluated.</span>
+<span class="sd">        Repr operator is called when a string representation</span>
+<span class="sd">        is needed that can be evaluated.</span>
 
 <span class="sd">        :return: Gene().</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(datum=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="si">}</span><span class="s2">, func=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="si">}</span><span class="s2">, valid=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(datum=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="si">}</span><span class="s2">,&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot; func=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="si">}</span><span class="s2">, valid=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -304,7 +301,6 @@
 
 <span class="sd">        :return: a (shallow) copy of the self object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Return the new copy.</span>
         <span class="k">return</span> <span class="n">Gene</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
@@ -319,7 +315,6 @@
 
 <span class="sd">        :return: a new identical &quot;clone&quot; of the self object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Create a new instance.</span>
         <span class="n">new_object</span> <span class="o">=</span> <span class="n">Gene</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">Gene</span><span class="p">)</span>
 

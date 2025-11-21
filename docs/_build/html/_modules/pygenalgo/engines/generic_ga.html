@@ -75,7 +75,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">attrgetter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_rng</span><span class="p">,</span> <span class="n">Generator</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
@@ -94,8 +94,9 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Generic GA class models the interface of a specific genetic algorithm model (or engine).</span>
-<span class="sd">        It provides the common variables and functionality that all GA models should share.</span>
+<span class="sd">        Generic GA class models the interface of a specific genetic algorithm model</span>
+<span class="sd">        (or engine). It provides the common variables and functionality that all GA</span>
+<span class="sd">        models should share.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Make a random number generator.</span>
@@ -125,7 +126,6 @@
 
 <span class="sd">        :param n_cpus: Number of requested CPUs for the evolution process (Default=Max_CPU).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Copy the reference of the population.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">initial_pop</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
@@ -301,13 +301,13 @@
 
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Sanity check.</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_counts</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">new_counts</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                              <span class="sa">f</span><span class="s2">&quot;New counts must be positive integer.&quot;</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
+        <span class="c1"># Update the function evaluation counter.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_f_eval</span> <span class="o">+=</span> <span class="n">new_counts</span></div>
 
     <span class="c1"># _end_def_</span>
@@ -360,7 +360,6 @@
 
 <span class="sd">        :return: Return the &#39;n&#39; chromosomes with the highest fitness.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Make sure &#39;n&#39; is positive integer.</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
@@ -399,7 +398,6 @@
 
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Get the size of the input population.</span>
         <span class="n">pop_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_population</span><span class="p">)</span>
 
@@ -428,7 +426,6 @@
             <span class="c1"># MUTATE in place the 2nd offspring.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="p">(</span><span class="n">input_population</span><span class="p">[</span><span class="n">k</span><span class="p">])</span></div>
 
-        <span class="c1"># _end_for_</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="GenericGA.adapt_probabilities">
@@ -443,7 +440,6 @@
 
 <span class="sd">        :return: True if the parameters have changed, else False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Check if the threshold value is missing.</span>
         <span class="k">if</span> <span class="n">threshold</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
@@ -538,7 +534,6 @@
 
 <span class="sd">        :return: a list with the fitness values and the found solution flag.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Get a local copy of the fitness function.</span>
         <span class="n">fit_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_func</span>
 

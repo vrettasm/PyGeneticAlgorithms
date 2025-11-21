@@ -128,7 +128,6 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                             <span class="sa">f</span><span class="s2">&quot;Validity flag should be bool: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="c1"># _end_if_</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -148,7 +147,6 @@
 
 <span class="sd">        :param new_value: (float).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Check for correct type.</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
 
@@ -157,7 +155,6 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                             <span class="sa">f</span><span class="s2">&quot;Fitness should be float: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="c1"># _end_if_</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -227,9 +224,8 @@
 <span class="sd">        :return: (int) the number of dissimilarities between the two</span>
 <span class="sd">        input chromosomes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># Make sure both objects are of</span>
-        <span class="c1"># the same type &#39;Chromosome&#39;.</span>
+        <span class="c1"># Make sure both objects are</span>
+        <span class="c1"># of the same type Chromosome.</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Chromosome</span><span class="p">):</span>
 
             <span class="c1"># Quick exit if both objects are</span>
@@ -245,7 +241,6 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                             <span class="sa">f</span><span class="s2">&quot;Can&#39;t compute Hamming distance in different type objects.&quot;</span><span class="p">)</span></div>
 
-        <span class="c1"># _end_if_</span>
     <span class="c1"># _end_def_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -332,7 +327,6 @@
 
 <span class="sd">        :return: a (shallow) copy of the self object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Return the new copy.</span>
         <span class="k">return</span> <span class="n">Chromosome</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_genome</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">)</span>
     <span class="c1"># _end_copy_</span>
@@ -347,7 +341,6 @@
 
 <span class="sd">        :return: a new identical &quot;clone&quot; of the self object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Create a new instance.</span>
         <span class="n">new_object</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">Chromosome</span><span class="p">)</span>
 

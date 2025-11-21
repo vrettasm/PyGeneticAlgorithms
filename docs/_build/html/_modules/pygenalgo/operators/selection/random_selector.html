@@ -80,11 +80,15 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Random Selector implements selection assuming that all members of the population</span>
-<span class="sd">        have the same probability to be selected as parents 1/N, effectively assuming a</span>
-<span class="sd">        uniform probability.</span>
+<span class="sd">        Random Selection involves choosing individuals from a population without any regard</span>
+<span class="sd">        to their fitness levels. Each member has an equal chance of being selected, which</span>
+<span class="sd">        promotes genetic diversity by allowing exploration of various solutions. While this</span>
+<span class="sd">        method is simple and easy to implement, it can lead to inefficient results, especially</span>
+<span class="sd">        in populations with varying fitness values. Random selection may overlook high-quality</span>
+<span class="sd">        solutions, making it less effective in later stages of evolution. However, it can serve</span>
+<span class="sd">        as a useful mechanism in the initial stages or when diversity is paramount for avoiding</span>
+<span class="sd">        premature convergence.</span>
 
-<span class="sd">        It does not favor the fit individuals therefore the mixing will be very slow.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
@@ -93,7 +97,6 @@
 
 <span class="sd">        :param select_probability: (float) in [0, 1].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Call the super constructor with the provided probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">select_probability</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>

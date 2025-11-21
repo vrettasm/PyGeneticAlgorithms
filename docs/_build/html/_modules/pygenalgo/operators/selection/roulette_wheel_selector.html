@@ -81,12 +81,14 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Roulette Wheel Selector implements &#39;fitness proportional selection&#39;. Each member</span>
-<span class="sd">        of the population is assigned a probability value that is directly proportional</span>
-<span class="sd">        to its fitness value (compared to the rest of the population).</span>
+<span class="sd">        Roulette Wheel Selection employs a probabilistic mechanism where individuals are</span>
+<span class="sd">        selected based on their fitness relative to the entire population. Each individual</span>
+<span class="sd">        receives a slice of a wheel proportional to its fitness, similar to a casino roulette,</span>
+<span class="sd">        where a random number determines the selected individual. This method encourages selection</span>
+<span class="sd">        of fitter individuals while allowing lower-fitness individuals a chance to contribute.</span>
+<span class="sd">        While effective, it can lead to premature convergence if the population&#39;s fitness is skewed,</span>
+<span class="sd">        often referred to as the &quot;selection pressure.&quot;</span>
 
-<span class="sd">        Individuals with higher fitness value are more likely to be selected for parents</span>
-<span class="sd">        when forming the new generation of individuals (offsprings).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
@@ -95,7 +97,6 @@
 
 <span class="sd">        :param select_probability: (float) in [0, 1].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Call the super constructor with the provided probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">select_probability</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
@@ -113,7 +114,6 @@
 
 <span class="sd">        :return: the selected parents population (as list of chromosomes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># Get the population size.</span>
         <span class="n">pop_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
 
