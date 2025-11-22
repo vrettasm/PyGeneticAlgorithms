@@ -3,7 +3,7 @@ from typing import Callable
 from functools import wraps, partial
 
 # Public interface.
-__all__ = ["pareto_front", "cost_function", "np_cdist",
+__all__ = ["pareto_front", "cost_function", "np_cdist", "print_on_condition",
            "pareto_dominance", "np_pareto_front", "clamp"]
 
 
