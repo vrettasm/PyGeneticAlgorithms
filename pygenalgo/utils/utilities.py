@@ -7,6 +7,20 @@ __all__ = ["pareto_front", "cost_function", "np_cdist",
            "pareto_dominance", "np_pareto_front", "clamp"]
 
 
+def print_on_condition(msg: str, condition: bool = False) -> None:
+    """
+    Prints a message on a condition.
+
+    :msg: (string) message to print.
+
+    :condition: (bool) if condition is True will print the message.
+
+    :returns: None.
+    """
+    if condition:
+        print(msg)
+# _end_def_
+
 def clamp(x: int | float,
           x_lower: int | float,
           x_upper: int | float) -> int | float:
