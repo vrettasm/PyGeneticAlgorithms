@@ -192,12 +192,12 @@ class StandardGA(GenericGA):
             avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i)
 
             # Check if we want to print output.
-            if (i % its_time_to_print) == 0:
-                # Display an information message.
-                print_on_condition(f"Epoch: {i + 1:>5} -> "
-                                   f"Avg. Fitness = {avg_fitness_i:.4f}, "
-                                   f"Spread = {std_fitness_i:.4f}.", verbose)
-            # _end_if_
+            print_ok = verbose and (i % its_time_to_print) == 0
+
+            # Display an information message.
+            print_on_condition(f"Epoch: {i + 1:>5} -> "
+                               f"Avg. Fitness = {avg_fitness_i:.4f}, "
+                               f"Spread = {std_fitness_i:.4f}.", print_ok)
 
             # Update the old population with the new chromosomes.
             self.population = population_i
