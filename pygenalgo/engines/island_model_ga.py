@@ -6,6 +6,7 @@ from collections import defaultdict
 from joblib import (Parallel, delayed)
 from numpy import (nanmean, nanstd, isfinite)
 
+from pygenalgo.utils.utilities import print_on_condition
 from pygenalgo.utils.auxiliary import (SubPopulation,
                                        apply_corrections,
                                        average_hamming_distance)
@@ -366,11 +367,7 @@ class IslandModelGA(GenericGA):
                 for i in range(n_periods):
 
                     # Check if we want information on the screen.
-                    if verbose:
-
-                        # Print a message to the screen.
-                        print(f"\nCurrent period {i+1} / {n_periods}:\n")
-                    # _end_if_
+                    print_on_condition(f"\nCurrent period {i+1} / {n_periods}:\n", verbose)
 
                     # If the remainder epochs is not zero, add them in the
                     # last iteration to complete the total number of epochs.
@@ -494,11 +491,12 @@ class IslandModelGA(GenericGA):
                 # Extract the results.
                 island, has_converged, local_stats, _ = res_n
 
-                # Check if the island has converged early.
-                if verbose and has_converged[0]:
-                    print(f"Island population {island.id}, "
-                          f"finished in {has_converged[1]} iterations.")
-                # _end_if_
+                # Check if we want to print output.
+                print_ok = verbose and has_converged[0]
+
+                # Display an information message.
+                print_on_condition(f"Island population {island.id}, "
+                                   f"finished in {has_converged[1]} iterations.", print_ok)
 
                 # Copy only the population.
                 final_population.extend(island.population)
