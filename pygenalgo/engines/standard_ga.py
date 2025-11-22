@@ -4,6 +4,7 @@ from math import isclose
 from numpy import (array, nanmean, nanstd, isfinite)
 
 from pygenalgo.engines.generic_ga import GenericGA
+from pygenalgo.utils.utilities import print_on_condition
 from pygenalgo.utils.auxiliary import (apply_corrections,
                                        average_hamming_distance)
 
@@ -161,9 +162,8 @@ class StandardGA(GenericGA):
                     fit_list_i = [p.fitness for p in population_i]
 
                     # Check if we want to print.
-                    if verbose:
-                        print(f"> {total_corrections} correction(s) took place at epoch: {i}.")
-                    # _end_if_
+                    print_on_condition(f"> {total_corrections} "
+                                       f"correction(s) took place at epoch: {i}.", verbose)
             # _end_if_
 
             # Check if 'elitism' is enabled.
@@ -192,11 +192,11 @@ class StandardGA(GenericGA):
             avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i)
 
             # Check if we want to print output.
-            if verbose and (i % its_time_to_print) == 0:
+            if (i % its_time_to_print) == 0:
                 # Display an information message.
-                print(f"Epoch: {i + 1:>5} -> "
-                      f"Avg. Fitness = {avg_fitness_i:.4f}, "
-                      f"Spread = {std_fitness_i:.4f}.")
+                print_on_condition(f"Epoch: {i + 1:>5} -> "
+                                   f"Avg. Fitness = {avg_fitness_i:.4f}, "
+                                   f"Spread = {std_fitness_i:.4f}.", verbose)
             # _end_if_
 
             # Update the old population with the new chromosomes.
