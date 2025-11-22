@@ -186,20 +186,18 @@ class GeneticOperator(object):
         :param new_value: (float) in [0, 1].
         """
         # Check for the correct type.
-        if isinstance(new_value, float):
-
-            # Ensure the correct range of values.
-            if 0.0 <= new_value <= 1.0:
-
-                # Update the probability value.
-                self._probability = new_value
-            else:
-                raise ValueError(f"{self.__class__.__name__}: "
-                                 f"Probability should be in [0, 1].")
-            # _end_if_
-        else:
+        if not isinstance(new_value, float):
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Probability should be float: {type(new_value)}.")
+        # _end_if_
+
+        # Ensure the correct range.
+        if 0.0 <= new_value <= 1.0:
+            # Update the probability value.
+            self._probability = new_value
+        else:
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Probability should be in [0, 1].")
     # _end_def_
 
     @property
