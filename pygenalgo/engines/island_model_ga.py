@@ -6,7 +6,7 @@ from collections import defaultdict
 from joblib import (Parallel, delayed)
 from numpy import (nanmean, nanstd, isfinite)
 
-from pygenalgo.utils.utilities import print_on_condition
+from pygenalgo.engines import logger
 from pygenalgo.utils.auxiliary import (SubPopulation,
                                        apply_corrections,
                                        average_hamming_distance)
@@ -202,7 +202,6 @@ class IslandModelGA(GenericGA):
 
             # Check the adaptive flag.
             if adapt_probs:
-
                 # Compute the current average Hamming distance.
                 avg_distance = average_hamming_distance(population_i)
 
@@ -322,13 +321,13 @@ class IslandModelGA(GenericGA):
             # Assuming each epoch performs N function evaluations.
             epochs = int(total_f_counts / len(self.population))
 
-            # Display an information message.
-            print(f"INFO: The 'f_max_eval' parameter has been set to: {f_max_eval}. "
-                  f"The 'epochs' value has been re-adjusted to: {epochs}\n")
+            # Display a warning message.
+            logger.warning(f"The 'f_max_eval' parameter has been set to: {f_max_eval}. "
+                           f"The 'epochs' value has been re-adjusted to: {epochs}\n")
         # _end_if_
 
         # Display an information message.
-        print(f"Parallel evolution in progress with {self.num_islands} islands ...")
+        logger.info(f"Parallel evolution in progress with {self.num_islands} islands ...")
 
         # Final population.
         final_population = []
@@ -366,8 +365,10 @@ class IslandModelGA(GenericGA):
                 # Break the total 'epochs' in n_periods.
                 for i in range(n_periods):
 
-                    # Check if we want information on the screen.
-                    print_on_condition(f"\nCurrent period {i+1} / {n_periods}:\n", verbose)
+                    # Check if we want information on to be logged.
+                    if verbose:
+                        logger.info(f"Current period {i+1} / {n_periods}:")
+                    # _end_if_
 
                     # If the remainder epochs is not zero, add them in the
                     # last iteration to complete the total number of epochs.
@@ -407,13 +408,13 @@ class IslandModelGA(GenericGA):
                             best_fitness = max((p.fitness for p in island.population
                                                 if not isnan(p.fitness)))
 
-                            # Print a message to the screen.
-                            print(f"Best Fitness in island {island.id} is:= {best_fitness:.5f}.")
+                            # Log an update of the progress.
+                            logger.info(f"Best Fitness in island {island.id} "
+                                        f"is:= {best_fitness:.5f}")
                         # _end_if_
 
                         # First check if the island has converged.
                         if has_converged[0]:
-
                             # Copy the population in the final list.
                             final_population.extend(island.population)
 
@@ -422,12 +423,11 @@ class IslandModelGA(GenericGA):
                                 # Compute the total number of iterations.
                                 itr = int(i*n_epochs + has_converged[1])
 
-                                # Print a message to the screen.
-                                print(f"Island population {island.id}, finished in {itr} iterations.")
+                                # Log a warning message to the screen.
+                                logger.warning(f"Island population {island.id} "
+                                               f"finished in {itr} iterations. ")
                             # _end_if_
-
                         else:
-
                             # Add the island population to the new active list.
                             active_population.append(island)
                         # _end_if_
@@ -457,6 +457,7 @@ class IslandModelGA(GenericGA):
 
                     # Check for early termination.
                     if len(active_population) == 0:
+                        logger.warning("No active islands found.")
                         break
                     # _end_if_
 
@@ -491,12 +492,10 @@ class IslandModelGA(GenericGA):
                 # Extract the results.
                 island, has_converged, local_stats, _ = res_n
 
-                # Check if we want to print output.
-                print_ok = verbose and has_converged[0]
-
-                # Display an information message.
-                print_on_condition(f"Island population {island.id}, "
-                                   f"finished in {has_converged[1]} iterations.", print_ok)
+                # Check if we want to log output.
+                if has_converged[0]:
+                    logger.info(f"Island population {island.id}, "
+                                f"finished in {has_converged[1]} iterations.")
 
                 # Copy only the population.
                 final_population.extend(island.population)
@@ -507,7 +506,6 @@ class IslandModelGA(GenericGA):
 
                 # Check if we were adapting the probabilities.
                 if adapt_probs:
-
                     # Store the updated crossover and mutation values.
                     self._stats[island.id]["prob_crossx"].extend(local_stats["prob_crossx"])
                     self._stats[island.id]["prob_mutate"].extend(local_stats["prob_mutate"])
@@ -528,7 +526,7 @@ class IslandModelGA(GenericGA):
         time_tf = time.perf_counter()
 
         # Print message.
-        print(f"Final Avg. Fitness = {avg_fitness_final:.4f}.")
+        logger.info(f"Final Avg. Fitness = {avg_fitness_final:.4f}.")
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")

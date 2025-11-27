@@ -3,8 +3,8 @@ from math import isclose
 
 from numpy import (array, nanmean, nanstd, isfinite)
 
+from pygenalgo.engines import logger
 from pygenalgo.engines.generic_ga import GenericGA
-from pygenalgo.utils.utilities import print_on_condition
 from pygenalgo.utils.auxiliary import (apply_corrections,
                                        average_hamming_distance)
 
@@ -122,7 +122,7 @@ class StandardGA(GenericGA):
         its_time_to_print = (epochs//10)
 
         # Display an information message.
-        print(f"Initial Avg. Fitness = {avg_fitness_0:.4f}")
+        logger.info(f"Initial Avg. Fitness = {avg_fitness_0:.4f}")
 
         # Initial time instant.
         time_t0 = time.perf_counter()
@@ -161,9 +161,9 @@ class StandardGA(GenericGA):
                     # Update the fitness list to ensure consistency.
                     fit_list_i = [p.fitness for p in population_i]
 
-                    # Check if we want to print.
-                    print_on_condition(f"> {total_corrections} "
-                                       f"correction(s) took place at epoch: {i}.", verbose)
+                    # Log the corrections.
+                    logger.debug(f"> {total_corrections} "
+                                 f"correction(s) took place at epoch: {i}")
             # _end_if_
 
             # Check if 'elitism' is enabled.
@@ -191,43 +191,40 @@ class StandardGA(GenericGA):
             # Update the mean/std in the dictionary.
             avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i)
 
-            # Check if we want to print output.
-            print_ok = verbose and (i % its_time_to_print) == 0
-
-            # Display an information message.
-            print_on_condition(f"Epoch: {i + 1:>5} -> "
-                               f"Avg. Fitness = {avg_fitness_i:.4f}, "
-                               f"Spread = {std_fitness_i:.4f}.", print_ok)
+            # Log the information message.
+            if verbose and (i % its_time_to_print) == 0:
+                logger.info(f"Epoch: {i + 1:>5} -> "
+                            f"Avg. Fitness = {avg_fitness_i:.4f}, "
+                            f"Spread = {std_fitness_i:.4f}")
+            # _end_if_
 
             # Update the old population with the new chromosomes.
             self.population = population_i
 
             # Check for termination.
             if found_solution:
-                # Display a warning message.
-                print(f"{self.__class__.__name__} finished in {i + 1} iterations.")
-
-                # Exit from the loop.
+                # Log a warning message.
+                logger.warning(f"{self.__class__.__name__} "
+                               f"finished in {i + 1} iterations.")
+                # Exit.
                 break
             # _end_if_
 
             # Check for the maximum function evaluations.
             if f_max_eval and self.f_eval >= f_max_eval:
-
-                # Display an information message.
-                print(f"{self.__class__.__name__} "
-                      "Reached the maximum number of function evaluations.")
-
-                # Exit from the loop.
+                # Log a warning message.
+                logger.warning(f"{self.__class__.__name__} "
+                               "reached the maximum number of function evaluations.")
+                # Exit.
                 break
             # _end_if_
 
             # Check for convergence.
             if f_tol and isclose(avg_fitness_i, avg_fitness_0, abs_tol=f_tol):
                 # Display a warning message.
-                print(f"{self.__class__.__name__} converged in {i + 1} iterations.")
-
-                # Exit from the loop.
+                logger.warning(f"{self.__class__.__name__} "
+                               f"converged in {i + 1} iterations.")
+                # Exit.
                 break
             # _end_if_
 
@@ -236,7 +233,6 @@ class StandardGA(GenericGA):
 
             # Check the adaptive flag.
             if adapt_probs:
-
                 # Compute the current average Hamming distance.
                 avg_distance = average_hamming_distance(population_i)
 
@@ -251,7 +247,7 @@ class StandardGA(GenericGA):
         time_tf = time.perf_counter()
 
         # Display the final average fitness value.
-        print(f"Final   Avg. Fitness = {avg_fitness_0:.4f}")
+        logger.info(f"Final   Avg. Fitness = {avg_fitness_0:.4f}")
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")

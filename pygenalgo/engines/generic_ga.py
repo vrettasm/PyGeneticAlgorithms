@@ -7,6 +7,7 @@ from collections import defaultdict
 from joblib import Parallel, delayed
 from numpy.random import default_rng, Generator
 
+from pygenalgo.engines import logger
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import GeneticOperator
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
@@ -106,6 +107,9 @@ class GenericGA(object):
 
         # Set the iterations counter to zero.
         self._iteration = 0
+
+        # Log the object initialization.
+        logger.debug(f"{self.__class__.__name__} initialization complete.")
     # _end_def_
 
     @property
@@ -150,6 +154,9 @@ class GenericGA(object):
         """
         # Re-initialize the class variable.
         cls.rng_GA = default_rng(seed=new_seed)
+
+        # Log the new seed.
+        logger.debug(f"{cls.__name__} has a new seed.")
     # _end_def_
 
     @property
@@ -250,6 +257,9 @@ class GenericGA(object):
 
         # Reset f_eval counter.
         self._f_eval = 0
+
+        # Log the cleanup.
+        logger.debug(f"{self.__class__.__name__} cleared.")
     # _end_def_
 
     def best_chromosome(self) -> Chromosome:
@@ -388,6 +398,10 @@ class GenericGA(object):
             # Ensure the probabilities stay within the range [0, 1].
             self._crossx_op.probability = min(max(trial_pc, 0.0), 1.0)
             self._mutate_op.probability = min(max(trial_pm, 0.0), 1.0)
+
+            # Log the update of the parameters.
+            logger.debug(f"{self.__class__.__name__} "
+                         f"probabilities have been updated.")
         # _end_if_
 
         return have_changed
