@@ -6,12 +6,6 @@ from numpy.random import default_rng, Generator
 # Public interface.
 __all__ = ["GeneticOperator", "increase_counter"]
 
-# Author.
-__author__ = "Michalis Vrettas, PhD"
-
-# Email.
-__email__ = "michail.vrettas@gmail.com"
-
 
 def increase_counter(method):
     """
