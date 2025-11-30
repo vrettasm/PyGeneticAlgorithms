@@ -1,4 +1,4 @@
-# PyGenAlgo:  A simple and powerful toolkit for genetic algorithms.
+# PyGenAlgo: A simple and powerful toolkit for genetic algorithms.
 
 ![Logo](./logo/pga_logo.png)
 
