@@ -37,8 +37,9 @@ class GenericGA(object):
     __slots__ = ("population", "fitness_func", "_select_op", "_crossx_op",
                  "_mutate_op", "_stats", "_n_cpus", "_f_eval", "_iteration")
 
-    def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, select_op: SelectionOperator = None,
-                 mutate_op: MutationOperator = None, crossx_op: CrossoverOperator = None, n_cpus: int = None):
+    def __init__(self, initial_pop: list[Chromosome], fit_func: Callable,
+                 select_op: SelectionOperator = None, mutate_op: MutationOperator = None,
+                 crossx_op: CrossoverOperator = None, n_cpus: int = None) -> None:
         """
         Default constructor of GenericGA object.
 
@@ -491,7 +492,7 @@ class GenericGA(object):
         return fitness_values, found_solution
     # _end_def_
 
-    def run(self, *args, **kwargs):
+    def run(self, *args, **kwargs) -> None:
         """
         Main method of the Generic GA class, that implements the evolutionary routine.
         """
@@ -499,7 +500,7 @@ class GenericGA(object):
                                   f"You should implement this method!")
     # _end_def_
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs) -> None:
         """
         This method is only a wrapper of the "run" method.
         """

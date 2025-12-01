@@ -12,7 +12,7 @@ class GaussianMutator(MutationOperator):
     """
 
     def __init__(self, mutate_probability: float = 0.1, sigma: float = 1.0,
-                 lower_val: float = None, upper_val: float = None):
+                 lower_val: float = None, upper_val: float = None) -> None:
         """
         Construct a 'GaussianMutator' object with a given probability value.
 

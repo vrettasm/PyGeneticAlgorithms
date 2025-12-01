@@ -10,7 +10,7 @@ class SwapMutator(MutationOperator):
         values between two randomly selected gene positions.
     """
 
-    def __init__(self, mutate_probability: float = 0.1):
+    def __init__(self, mutate_probability: float = 0.1) -> None:
         """
         Construct a 'SwapMutator' object with a given probability value.
 

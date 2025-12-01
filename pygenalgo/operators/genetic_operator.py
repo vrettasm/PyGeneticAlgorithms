@@ -1,3 +1,4 @@
+from typing import Any
 from threading import Lock
 from functools import wraps
 from pygenalgo.utils.utilities import clamp
@@ -120,7 +121,7 @@ class GeneticOperator(object):
     # _end_def_
 
     @property
-    def items(self):
+    def items(self) -> Any:
         """
         Accessor (getter) of the _items container.
 

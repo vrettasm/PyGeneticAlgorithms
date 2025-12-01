@@ -11,7 +11,7 @@ class RandomMigration(MigrationOperator):
         each island migrates its best chromosome to a randomly selected population.
     """
 
-    def __init__(self, migration_probability: float = 0.95):
+    def __init__(self, migration_probability: float = 0.95) -> None:
         """
         Construct a 'RandomMigration' object with a given probability value.
 

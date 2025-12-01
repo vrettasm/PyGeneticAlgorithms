@@ -13,7 +13,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
         It is used predominantly in combinatorial problems.
     """
 
-    def __init__(self, crossover_probability: float = 0.9):
+    def __init__(self, crossover_probability: float = 0.9) -> None:
         """
         Construct a 'PartiallyMappedCrossover' object with
         a given probability value.
@@ -25,7 +25,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
         super().__init__(crossover_probability)
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome):
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
         """
         Perform the crossover operation on the two input parent chromosomes.
 

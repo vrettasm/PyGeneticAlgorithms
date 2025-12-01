@@ -10,7 +10,7 @@ class RandomMutator(MutationOperator):
         the Gene with a new one that has been generated randomly (uniform probability).
     """
 
-    def __init__(self, mutate_probability: float = 0.1):
+    def __init__(self, mutate_probability: float = 0.1) -> None:
         """
         Construct a 'RandomMutator' object with a given
         probability value.

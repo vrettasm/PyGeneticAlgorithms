@@ -31,7 +31,7 @@ class IslandModelGA(GenericGA):
     # Object variables (specific for the IslandModel).
     __slots__ = ("num_islands", "_migrate_op")
 
-    def __init__(self, num_islands: int, migrate_op: MigrationOperator = None, **kwargs):
+    def __init__(self, num_islands: int, migrate_op: MigrationOperator = None, **kwargs) -> None:
         """
         Default constructor of IslandModelGA object.
 

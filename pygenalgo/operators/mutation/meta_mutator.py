@@ -16,7 +16,7 @@ class MetaMutator(MutationOperator):
         NOTE: In the future the equal probabilities can be amended.
     """
 
-    def __init__(self, mutate_probability: float = 0.1):
+    def __init__(self, mutate_probability: float = 0.1) -> None:
         """
         Construct a 'MetaMutator' object with a predefined probability value.
 

@@ -9,7 +9,7 @@ class MigrationOperator(GeneticOperator):
         Provides the base class (interface) for a Migration Operator.
     """
 
-    def __init__(self, migration_probability: float):
+    def __init__(self, migration_probability: float) -> None:
         """
         Construct a 'MigrationOperator' object with a given
         probability value.

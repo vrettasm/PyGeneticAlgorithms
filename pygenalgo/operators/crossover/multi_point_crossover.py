@@ -13,7 +13,7 @@ class MultiPointCrossover(CrossoverOperator):
         It produces faster mixing, compared with single-point crossover.
     """
 
-    def __init__(self, crossover_probability: float = 0.9, n_points: int = 2):
+    def __init__(self, crossover_probability: float = 0.9, n_points: int = 2) -> None:
         """
         Construct a 'MultiPointCrossover' object with a given probability value.
 
@@ -29,7 +29,7 @@ class MultiPointCrossover(CrossoverOperator):
         self._items = max(int(n_points), 2)
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome):
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
         """
         Perform the crossover operation on the two input parent
         chromosomes, using multiple cutting points (num_loci).

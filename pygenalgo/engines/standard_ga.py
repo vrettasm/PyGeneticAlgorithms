@@ -25,7 +25,7 @@ class StandardGA(GenericGA):
         the genetic operators (crossover and mutation).
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         """
         Default constructor of StandardGA object.
         """

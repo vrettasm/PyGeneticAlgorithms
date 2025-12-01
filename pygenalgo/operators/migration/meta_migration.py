@@ -14,7 +14,7 @@ class MetaMigration(MigrationOperator):
         NOTE: In the future the equal probabilities can be amended.
     """
 
-    def __init__(self, migration_probability: float = 0.95):
+    def __init__(self, migration_probability: float = 0.95) -> None:
         """
         Construct a 'MetaMigration' object with a predefined probability value.
 

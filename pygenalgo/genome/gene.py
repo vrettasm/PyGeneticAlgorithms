@@ -23,7 +23,7 @@ class Gene(object):
     # Object variables.
     __slots__ = ("_datum", "_func", "_valid")
 
-    def __init__(self, datum: Any, func: Callable, valid: bool = True):
+    def __init__(self, datum: Any, func: Callable, valid: bool = True) -> None:
         """
         Initialize a Gene object.
         
@@ -223,7 +223,7 @@ class Gene(object):
         return Gene(self._datum, self._func, self._valid)
     # _end_def_
 
-    def __deepcopy__(self, memo):
+    def __deepcopy__(self, memo) -> "Gene":
         """
         This custom method overrides the default deepcopy method
         and is used when we call the "clone" method of the class.

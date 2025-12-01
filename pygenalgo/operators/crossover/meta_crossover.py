@@ -13,7 +13,7 @@ class MetaCrossover(CrossoverOperator):
         all other crossovers (one at a time), with equal probability.
     """
 
-    def __init__(self, crossover_probability: float = 0.9):
+    def __init__(self, crossover_probability: float = 0.9) -> None:
         """
         Construct a 'MetaCrossover' object with a given probability value.
 
@@ -27,7 +27,7 @@ class MetaCrossover(CrossoverOperator):
         self._items = (UniformCrossover(1.0), MultiPointCrossover(1.0), SinglePointCrossover(1.0))
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome):
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
         """
         Perform the crossover operation on the two input parent
         chromosomes, by selecting randomly a predefined method.

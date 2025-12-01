@@ -244,7 +244,7 @@ class Chromosome(object):
         return Chromosome(self._genome, self._fitness, self._valid)
     # _end_copy_
 
-    def __deepcopy__(self, memo):
+    def __deepcopy__(self, memo) -> "Chromosome":
         """
         This custom method overrides the default deepcopy method
         and is used when we call the "clone" method of the class.

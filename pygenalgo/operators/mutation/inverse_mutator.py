@@ -10,7 +10,7 @@ class InverseMutator(MutationOperator):
         the gene values between two randomly selected gene end-positions.
     """
 
-    def __init__(self, mutate_probability: float = 0.1):
+    def __init__(self, mutate_probability: float = 0.1) -> None:
         """
         Construct a 'InverseMutator' object with a given probability value.
 

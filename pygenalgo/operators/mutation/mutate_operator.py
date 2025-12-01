@@ -9,7 +9,7 @@ class MutationOperator(GeneticOperator):
         Provides the base class (interface) for a Mutation Operator.
     """
 
-    def __init__(self, mutation_probability: float):
+    def __init__(self, mutation_probability: float) -> None:
         """
         Construct a 'MutationOperator' object with a
         given probability value.
@@ -35,7 +35,7 @@ class MutationOperator(GeneticOperator):
                                   f"You should implement this method!")
     # _end_def_
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs) -> None:
         """
         This is only a wrapper of the "mutate" method.
         """

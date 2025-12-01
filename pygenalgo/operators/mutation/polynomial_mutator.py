@@ -13,7 +13,7 @@ class PolynomialMutator(MutationOperator):
     """
 
     def __init__(self, mutate_probability: float = 0.1, eta_pm: float = 20.0,
-                 lower_val: float = None, upper_val: float = None):
+                 lower_val: float = None, upper_val: float = None) -> None:
         """
         Construct a 'PolynomialMutator' object with a given probability value.
 

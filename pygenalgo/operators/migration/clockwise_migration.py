@@ -12,7 +12,7 @@ class ClockwiseMigration(MigrationOperator):
         following a "clockwise" rotation movement.
     """
 
-    def __init__(self, migration_probability: float = 0.95):
+    def __init__(self, migration_probability: float = 0.95) -> None:
         """
         Construct a 'ClockwiseMigration' object with a given probability value.
 

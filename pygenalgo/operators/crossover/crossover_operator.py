@@ -9,7 +9,7 @@ class CrossoverOperator(GeneticOperator):
         Provides the base class (interface) for a Crossover Operator.
     """
 
-    def __init__(self, crossover_probability: float):
+    def __init__(self, crossover_probability: float) -> None:
         """
         Construct a 'CrossoverOperator' object with a
         given probability value.
@@ -22,7 +22,7 @@ class CrossoverOperator(GeneticOperator):
         super().__init__(crossover_probability)
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome):
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
         """
         Abstract method that "reminds" the user that if they want to
         create a Crossover Class that inherits from here they should

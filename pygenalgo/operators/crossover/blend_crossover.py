@@ -18,7 +18,7 @@ class BlendCrossover(CrossoverOperator):
     """
 
     def __init__(self, crossover_probability: float = 0.9, p_alpha: float = 0.5,
-                 lower_val: float = None, upper_val: float = None):
+                 lower_val: float = None, upper_val: float = None) -> None:
         """
         Construct a 'BlendCrossover' object with a given probability value.
 
@@ -53,7 +53,7 @@ class BlendCrossover(CrossoverOperator):
         self._items = [p_alpha, lower_val, upper_val]
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome):
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
         """
         Perform the crossover operation on the two input parent chromosomes.
 

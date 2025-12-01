@@ -10,7 +10,7 @@ class FlipMutator(MutationOperator):
         a position and flip its Gene value (0 -> 1, or 1 -> 0).
     """
 
-    def __init__(self, mutate_probability: float = 0.1):
+    def __init__(self, mutate_probability: float = 0.1) -> None:
         """
         Construct a 'FlipMutator' object with a given probability value.
 
