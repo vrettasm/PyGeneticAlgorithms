@@ -42,7 +42,7 @@ class MultiPointCrossover(CrossoverOperator):
 
         :return: child1 and child2 (as Chromosomes).
         """
-        # Get the number of genes from the first parent (chromosome).
+        # Get the number of genes from the first parent chromosome.
         # N.B.: It is assumed that both parents have the same size.
         num_genes = len(parent1)
 

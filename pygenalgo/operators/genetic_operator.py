@@ -109,14 +109,14 @@ class GeneticOperator(object):
 
         :param value: (int).
         """
-        # Check for correct type and allow only
-        # the positive values.
-        if isinstance(value, int) and value >= 0:
-            # Update the iteration value.
-            cls._iteration = value
-        else:
+        # Check for correct type and allow only the positive values.
+        if not isinstance(value, int) or value < 0:
             raise RuntimeError(f"{cls.__class__.__name__}: "
                                f"Iteration value should be positive int: {type(value)}.")
+        # _end_if_
+
+        # Update the iteration value.
+        cls._iteration = value
     # _end_def_
 
     @property
@@ -186,12 +186,13 @@ class GeneticOperator(object):
         # _end_if_
 
         # Ensure the correct range.
-        if 0.0 <= new_value <= 1.0:
-            # Update the probability value.
-            self._probability = new_value
-        else:
+        if not (0.0 <= new_value <= 1.0):
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Probability should be in [0, 1].")
+        # _end_if_
+
+        # Update the probability value.
+        self._probability = new_value
     # _end_def_
 
     @property
