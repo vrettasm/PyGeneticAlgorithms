@@ -37,14 +37,14 @@ class Gene(object):
         # Copy the data reference.
         self._datum = datum
         
-        # Make sure the random function is callable.
+        # Sanity check.
         if not callable(func):
             raise TypeError(f"{self.__class__.__name__}: Random function is not callable.")
-        else:
-            # Get the random function.
-            self._func = func
         # _end_if_
-        
+
+        # Get the random function.
+        self._func = func
+
         # Copy the valid flag. Note that if the _datum field
         # is set to None, the Gene is automatically invalid.
         self._valid = False if self._datum is None else valid
@@ -110,14 +110,14 @@ class Gene(object):
 
         :param new_value: (bool).
         """
-        # Check for correct type.
-        if isinstance(new_value, bool):
-
-            # Update the flag value.
-            self._valid = new_value
-        else:
+        # Check for the correct type.
+        if not isinstance(new_value, bool):
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Validity flag should be bool: {type(new_value)}.")
+        # _end_if_
+
+        # Update the flag value.
+        self._valid = new_value
     # _end_def_
 
     def __eq__(self, other) -> bool:

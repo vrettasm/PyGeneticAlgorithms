@@ -47,14 +47,14 @@ class Chromosome(object):
 
         :param new_value: (bool).
         """
-        # Check for correct type.
-        if isinstance(new_value, bool):
-
-            # Update the flag value.
-            self._valid = new_value
-        else:
+        # Check for the correct type.
+        if not isinstance(new_value, bool):
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Validity flag should be bool: {type(new_value)}.")
+        # _end_if_
+
+        # Update the flag value.
+        self._valid = new_value
     # _end_def_
 
     @property
@@ -74,14 +74,14 @@ class Chromosome(object):
 
         :param new_value: (float).
         """
-        # Check for correct type.
-        if isinstance(new_value, (int, float)):
-
-            # Update the fitness value.
-            self._fitness = float(new_value)
-        else:
+        # Check for the correct type.
+        if not isinstance(new_value, (int, float)):
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Fitness should be float: {type(new_value)}.")
+        # _end_if_
+
+        # Update the fitness value.
+        self._fitness = float(new_value)
     # _end_def_
 
     @property
@@ -140,22 +140,20 @@ class Chromosome(object):
         :return: (int) the number of dissimilarities between the two
         input chromosomes.
         """
-        # Make sure both objects are
-        # of the same type Chromosome.
-        if isinstance(other, Chromosome):
-
-            # Quick exit if both objects are
-            # the same or equal.
-            if self is other or self == other:
-                return 0
-            # _end_if_
-
-            # Compute the dissimilarities in their genomes.
-            return [k != l for k, l in zip(self._genome, other.genome,
-                                           strict=True)].count(True)
-        else:
+        # Make sure both objects are of the same type Chromosome.
+        if not isinstance(other, Chromosome):
             raise TypeError(f"{self.__class__.__name__}: "
                             f"Can't compute Hamming distance in different type objects.")
+        # _end_if_
+
+        # Quick exit if both objects are the same or equal.
+        if self is other or self == other:
+            return 0
+        # _end_if_
+
+        # Compute the dissimilarities in their genomes.
+        return [k != l for k, l in zip(self._genome, other.genome,
+                                       strict=True)].count(True)
     # _end_def_
 
     def __eq__(self, other) -> bool:
