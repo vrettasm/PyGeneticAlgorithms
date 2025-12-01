@@ -86,7 +86,7 @@
 <span class="sd">        It produces fast mixing, compared with single-point crossover.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crossover_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crossover_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a &#39;UniformCrossover&#39; object with a given</span>
 <span class="sd">        probability value.</span>
@@ -100,7 +100,7 @@
 
 <div class="viewcode-block" id="UniformCrossover.crossover">
 <a class="viewcode-back" href="../../../../pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.uniform_crossover.UniformCrossover.crossover">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent1</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">,</span> <span class="n">parent2</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent1</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">,</span> <span class="n">parent2</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">,</span> <span class="n">Chromosome</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform the crossover operation on the two input parent chromosomes.</span>
 

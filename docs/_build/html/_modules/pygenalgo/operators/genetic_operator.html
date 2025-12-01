@@ -69,19 +69,14 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.genetic_operator</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">threading</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lock</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">threading</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lock</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">clamp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_rng</span><span class="p">,</span> <span class="n">Generator</span>
 
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GeneticOperator&quot;</span><span class="p">,</span> <span class="s2">&quot;increase_counter&quot;</span><span class="p">]</span>
-
-<span class="c1"># Author.</span>
-<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Michalis Vrettas, PhD&quot;</span>
-
-<span class="c1"># Email.</span>
-<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;michail.vrettas@gmail.com&quot;</span>
 
 
 <div class="viewcode-block" id="increase_counter">
@@ -196,19 +191,19 @@
 
 <span class="sd">        :param value: (int).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Check for correct type and allow only</span>
-        <span class="c1"># the positive values.</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="c1"># Update the iteration value.</span>
-            <span class="bp">cls</span><span class="o">.</span><span class="n">_iteration</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Check for correct type and allow only the positive values.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
-                               <span class="sa">f</span><span class="s2">&quot;Iteration value should be positive int: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+                               <span class="sa">f</span><span class="s2">&quot;Iteration value should be positive int: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Update the iteration value.</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_iteration</span> <span class="o">=</span> <span class="n">value</span></div>
 
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Accessor (getter) of the _items container.</span>
 
@@ -274,20 +269,19 @@
 <span class="sd">        :param new_value: (float) in [0, 1].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Check for the correct type.</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
-
-            <span class="c1"># Ensure the correct range of values.</span>
-            <span class="k">if</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">new_value</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">:</span>
-
-                <span class="c1"># Update the probability value.</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span> <span class="o">=</span> <span class="n">new_value</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
-                                 <span class="sa">f</span><span class="s2">&quot;Probability should be in [0, 1].&quot;</span><span class="p">)</span>
-            <span class="c1"># _end_if_</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                             <span class="sa">f</span><span class="s2">&quot;Probability should be float: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Ensure the correct range.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">new_value</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;Probability should be in [0, 1].&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Update the probability value.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span> <span class="o">=</span> <span class="n">new_value</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>

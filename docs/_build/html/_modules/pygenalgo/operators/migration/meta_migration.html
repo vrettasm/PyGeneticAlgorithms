@@ -87,7 +87,7 @@
 <span class="sd">        NOTE: In the future the equal probabilities can be amended.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">migration_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.95</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">migration_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.95</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a &#39;MetaMigration&#39; object with a predefined probability value.</span>
 
@@ -111,23 +111,19 @@
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Perform the migration only if we have more than one</span>
-        <span class="c1"># active populations.</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">islands</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="c1"># If the migration probability is higher than</span>
-            <span class="c1"># a uniformly random value, make the transfer.</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
+        <span class="c1"># active populations and the migration probability is</span>
+        <span class="c1"># higher than a uniformly random value.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">islands</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
+            <span class="c1"># Get the number of migrators.</span>
+            <span class="n">n_operators</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
 
-                <span class="c1"># Get the number of available migrators.</span>
-                <span class="n">n_operators</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
+            <span class="c1"># Select randomly with equal probability a method and call</span>
+            <span class="c1"># its migrate method.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_operators</span><span class="p">)]</span><span class="o">.</span><span class="n">migrate</span><span class="p">(</span><span class="n">islands</span><span class="p">)</span>
 
-                <span class="c1"># Select randomly with equal probability a method and call</span>
-                <span class="c1"># its migrate method.</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_operators</span><span class="p">)]</span><span class="o">.</span><span class="n">migrate</span><span class="p">(</span><span class="n">islands</span><span class="p">)</span>
+            <span class="c1"># Increase the migration counter.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span></div>
 
-                <span class="c1"># Increase the migration counter.</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span></div>
-
-        <span class="c1"># _end_if_</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>

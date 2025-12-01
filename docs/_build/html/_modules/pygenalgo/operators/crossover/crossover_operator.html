@@ -82,7 +82,7 @@
 <span class="sd">        Provides the base class (interface) for a Crossover Operator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crossover_probability</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crossover_probability</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a &#39;CrossoverOperator&#39; object with a</span>
 <span class="sd">        given probability value.</span>
@@ -97,7 +97,7 @@
 
 <div class="viewcode-block" id="CrossoverOperator.crossover">
 <a class="viewcode-back" href="../../../../pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.crossover_operator.CrossoverOperator.crossover">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent1</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">,</span> <span class="n">parent2</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent1</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">,</span> <span class="n">parent2</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">,</span> <span class="n">Chromosome</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Abstract method that &quot;reminds&quot; the user that if they want to</span>
 <span class="sd">        create a Crossover Class that inherits from here they should</span>

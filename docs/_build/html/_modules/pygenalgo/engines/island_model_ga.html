@@ -77,6 +77,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">nanmean</span><span class="p">,</span> <span class="n">nanstd</span><span class="p">,</span> <span class="n">isfinite</span><span class="p">)</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.engines</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.auxiliary</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">SubPopulation</span><span class="p">,</span>
                                        <span class="n">apply_corrections</span><span class="p">,</span>
                                        <span class="n">average_hamming_distance</span><span class="p">)</span>
@@ -103,7 +104,7 @@
     <span class="c1"># Object variables (specific for the IslandModel).</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;num_islands&quot;</span><span class="p">,</span> <span class="s2">&quot;_migrate_op&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_islands</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">migrate_op</span><span class="p">:</span> <span class="n">MigrationOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_islands</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">migrate_op</span><span class="p">:</span> <span class="n">MigrationOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Default constructor of IslandModelGA object.</span>
 
@@ -117,20 +118,22 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># Sanity check.</span>
-        <span class="k">if</span> <span class="n">num_islands</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">):</span>
-            <span class="c1"># Assign the number of islands.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">num_islands</span> <span class="o">=</span> <span class="n">num_islands</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">num_islands</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">):</span>
             <span class="c1"># Raise an error if number of islands is too high.</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                              <span class="sa">f</span><span class="s2">&quot;Number of requested islands (</span><span class="si">{</span><span class="n">num_islands</span><span class="si">}</span><span class="s2">) exceeds the size of the population.&quot;</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
-        <span class="c1"># Get Migration Operator.</span>
+        <span class="c1"># Sanity check.</span>
         <span class="k">if</span> <span class="n">migrate_op</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: Migration operator is missing.&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_migrate_op</span> <span class="o">=</span> <span class="n">migrate_op</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Assign the number of islands.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_islands</span> <span class="o">=</span> <span class="n">num_islands</span>
+
+        <span class="c1"># Get Migration Operator.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_migrate_op</span> <span class="o">=</span> <span class="n">migrate_op</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -274,7 +277,6 @@
 
             <span class="c1"># Check the adaptive flag.</span>
             <span class="k">if</span> <span class="n">adapt_probs</span><span class="p">:</span>
-
                 <span class="c1"># Compute the current average Hamming distance.</span>
                 <span class="n">avg_distance</span> <span class="o">=</span> <span class="n">average_hamming_distance</span><span class="p">(</span><span class="n">population_i</span><span class="p">)</span>
 
@@ -396,13 +398,13 @@
             <span class="c1"># Assuming each epoch performs N function evaluations.</span>
             <span class="n">epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_f_counts</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">))</span>
 
-            <span class="c1"># Display an information message.</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;INFO: The &#39;f_max_eval&#39; parameter has been set to: </span><span class="si">{</span><span class="n">f_max_eval</span><span class="si">}</span><span class="s2">. &quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;The &#39;epochs&#39; value has been re-adjusted to: </span><span class="si">{</span><span class="n">epochs</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="c1"># Display a warning message.</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The &#39;f_max_eval&#39; parameter has been set to: </span><span class="si">{</span><span class="n">f_max_eval</span><span class="si">}</span><span class="s2">. &quot;</span>
+                           <span class="sa">f</span><span class="s2">&quot;The &#39;epochs&#39; value has been re-adjusted to: </span><span class="si">{</span><span class="n">epochs</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Display an information message.</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parallel evolution in progress with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_islands</span><span class="si">}</span><span class="s2"> islands ...&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parallel evolution in progress with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_islands</span><span class="si">}</span><span class="s2"> islands ...&quot;</span><span class="p">)</span>
 
         <span class="c1"># Final population.</span>
         <span class="n">final_population</span> <span class="o">=</span> <span class="p">[]</span>
@@ -440,11 +442,9 @@
                 <span class="c1"># Break the total &#39;epochs&#39; in n_periods.</span>
                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_periods</span><span class="p">):</span>
 
-                    <span class="c1"># Check if we want information on the screen.</span>
+                    <span class="c1"># Check if we want information on to be logged.</span>
                     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-
-                        <span class="c1"># Print a message to the screen.</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Current period </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">n_periods</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Current period </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">n_periods</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
                     <span class="c1"># _end_if_</span>
 
                     <span class="c1"># If the remainder epochs is not zero, add them in the</span>
@@ -485,13 +485,13 @@
                             <span class="n">best_fitness</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">island</span><span class="o">.</span><span class="n">population</span>
                                                 <span class="k">if</span> <span class="ow">not</span> <span class="n">isnan</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)))</span>
 
-                            <span class="c1"># Print a message to the screen.</span>
-                            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best Fitness in island </span><span class="si">{</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> is:= </span><span class="si">{</span><span class="n">best_fitness</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                            <span class="c1"># Log an update of the progress.</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best Fitness in island </span><span class="si">{</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> &quot;</span>
+                                        <span class="sa">f</span><span class="s2">&quot;is:= </span><span class="si">{</span><span class="n">best_fitness</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                         <span class="c1"># _end_if_</span>
 
                         <span class="c1"># First check if the island has converged.</span>
                         <span class="k">if</span> <span class="n">has_converged</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-
                             <span class="c1"># Copy the population in the final list.</span>
                             <span class="n">final_population</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
 
@@ -500,12 +500,11 @@
                                 <span class="c1"># Compute the total number of iterations.</span>
                                 <span class="n">itr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">n_epochs</span> <span class="o">+</span> <span class="n">has_converged</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-                                <span class="c1"># Print a message to the screen.</span>
-                                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Island population </span><span class="si">{</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">, finished in </span><span class="si">{</span><span class="n">itr</span><span class="si">}</span><span class="s2"> iterations.&quot;</span><span class="p">)</span>
+                                <span class="c1"># Log a warning message to the screen.</span>
+                                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Island population </span><span class="si">{</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> &quot;</span>
+                                               <span class="sa">f</span><span class="s2">&quot;finished in </span><span class="si">{</span><span class="n">itr</span><span class="si">}</span><span class="s2"> iterations. &quot;</span><span class="p">)</span>
                             <span class="c1"># _end_if_</span>
-
                         <span class="k">else</span><span class="p">:</span>
-
                             <span class="c1"># Add the island population to the new active list.</span>
                             <span class="n">active_population</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">island</span><span class="p">)</span>
                         <span class="c1"># _end_if_</span>
@@ -535,6 +534,7 @@
 
                     <span class="c1"># Check for early termination.</span>
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">active_population</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No active islands found.&quot;</span><span class="p">)</span>
                         <span class="k">break</span>
                     <span class="c1"># _end_if_</span>
 
@@ -569,11 +569,10 @@
                 <span class="c1"># Extract the results.</span>
                 <span class="n">island</span><span class="p">,</span> <span class="n">has_converged</span><span class="p">,</span> <span class="n">local_stats</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">res_n</span>
 
-                <span class="c1"># Check if the island has converged early.</span>
-                <span class="k">if</span> <span class="n">verbose</span> <span class="ow">and</span> <span class="n">has_converged</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Island population </span><span class="si">{</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">, &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;finished in </span><span class="si">{</span><span class="n">has_converged</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> iterations.&quot;</span><span class="p">)</span>
-                <span class="c1"># _end_if_</span>
+                <span class="c1"># Check if we want to log output.</span>
+                <span class="k">if</span> <span class="n">has_converged</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Island population </span><span class="si">{</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">, &quot;</span>
+                                <span class="sa">f</span><span class="s2">&quot;finished in </span><span class="si">{</span><span class="n">has_converged</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> iterations.&quot;</span><span class="p">)</span>
 
                 <span class="c1"># Copy only the population.</span>
                 <span class="n">final_population</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
@@ -584,7 +583,6 @@
 
                 <span class="c1"># Check if we were adapting the probabilities.</span>
                 <span class="k">if</span> <span class="n">adapt_probs</span><span class="p">:</span>
-
                     <span class="c1"># Store the updated crossover and mutation values.</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">])</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">])</span>
@@ -605,7 +603,7 @@
         <span class="n">time_tf</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
 
         <span class="c1"># Print message.</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final Avg. Fitness = </span><span class="si">{</span><span class="n">avg_fitness_final</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final Avg. Fitness = </span><span class="si">{</span><span class="n">avg_fitness_final</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
         <span class="c1"># Print final duration in seconds.</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Elapsed time: </span><span class="si">{</span><span class="p">(</span><span class="n">time_tf</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">time_t0</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds.&quot;</span><span class="p">)</span></div>
