@@ -20,7 +20,7 @@ class TournamentSelector(SelectionOperator):
 
     """
 
-    def __init__(self, select_probability: float = 1.0, k: int = 5):
+    def __init__(self, select_probability: float = 1.0, k: int = 5) -> None:
         """
         Construct a 'TournamentSelector' object with a given probability value.
 

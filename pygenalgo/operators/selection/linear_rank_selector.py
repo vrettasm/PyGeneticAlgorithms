@@ -21,7 +21,7 @@ class LinearRankSelector(SelectionOperator):
 
     """
 
-    def __init__(self, select_probability: float = 1.0):
+    def __init__(self, select_probability: float = 1.0) -> None:
         """
         Construct a 'LinearRankSelector' object with a given probability value.
 

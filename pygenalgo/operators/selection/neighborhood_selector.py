@@ -21,7 +21,7 @@ class NeighborhoodSelector(SelectionOperator):
 
     """
 
-    def __init__(self, select_probability: float = 1.0, n_nearest: int = 5):
+    def __init__(self, select_probability: float = 1.0, n_nearest: int = 5) -> None:
         """
         Construct a 'NeighborhoodSelector' object with a given probability value.
 

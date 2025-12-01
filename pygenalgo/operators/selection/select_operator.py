@@ -11,7 +11,7 @@ class SelectionOperator(GeneticOperator):
         is applied with 100% 'probability'.
     """
 
-    def __init__(self, selection_probability: float):
+    def __init__(self, selection_probability: float) -> None:
         """
         Construct a 'SelectionOperator' object with a
         given probability value.
@@ -23,7 +23,7 @@ class SelectionOperator(GeneticOperator):
         super().__init__(selection_probability)
     # _end_def_
 
-    def select(self, population: list[Chromosome]):
+    def select(self, population: list[Chromosome]) -> list[Chromosome]:
         """
         Abstract method that "reminds" the user that if they want to
         create a Selection Class that inherits from here they should
@@ -38,7 +38,7 @@ class SelectionOperator(GeneticOperator):
                                   f"You should implement this method!")
     # _end_def_
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs) -> list[Chromosome]:
         """
         This is only a wrapper of the "select" method.
         """

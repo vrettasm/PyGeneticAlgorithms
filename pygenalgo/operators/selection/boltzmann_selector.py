@@ -21,7 +21,7 @@ class BoltzmannSelector(SelectionOperator):
 
     """
 
-    def __init__(self, select_probability: float = 1.0, k: float = 100.0):
+    def __init__(self, select_probability: float = 1.0, k: float = 100.0) -> None:
         """
         Construct a 'BoltzmannSelector' object with a given probability value.
 

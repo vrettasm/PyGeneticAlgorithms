@@ -17,7 +17,7 @@ class TruncationSelector(SelectionOperator):
 
     """
 
-    def __init__(self, select_probability: float = 1.0, p: float = 0.3):
+    def __init__(self, select_probability: float = 1.0, p: float = 0.3) -> None:
         """
         Construct a 'TruncationSelector' object with a given probability value.
 

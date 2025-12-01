@@ -18,7 +18,7 @@ class RouletteWheelSelector(SelectionOperator):
 
     """
 
-    def __init__(self, select_probability: float = 1.0):
+    def __init__(self, select_probability: float = 1.0) -> None:
         """
         Construct a 'RouletteWheelSelector' object with a given probability value.
 
