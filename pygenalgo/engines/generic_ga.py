@@ -34,8 +34,8 @@ class GenericGA(object):
     MAX_CPUs: int = 1 if not cpu_count() else cpu_count()
 
     # Object variables.
-    __slots__ = ("population", "fitness_func", "_select_op", "_crossx_op", "_mutate_op",
-                 "_stats", "_n_cpus", "_f_eval", "_iteration")
+    __slots__ = ("population", "fitness_func", "_select_op", "_crossx_op",
+                 "_mutate_op", "_stats", "_n_cpus", "_f_eval", "_iteration")
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable, select_op: SelectionOperator = None,
                  mutate_op: MutationOperator = None, crossx_op: CrossoverOperator = None, n_cpus: int = None):
@@ -54,45 +54,46 @@ class GenericGA(object):
 
         :param n_cpus: Number of requested CPUs for the evolution process (Default=Max_CPU).
         """
+        # Sanity check.
+        if not callable(fit_func):
+            raise TypeError(f"{self.__class__.__name__}: Fitness function is not callable.")
+        # _end_if_
+
+        # Sanity check.
+        if select_op is None:
+            raise ValueError(f"{self.__class__.__name__}: Selection operator is missing.")
+        # _end_if_
+
+        # Sanity check.
+        if mutate_op is None:
+            raise ValueError(f"{self.__class__.__name__}: Mutation operator is missing.")
+        # _end_if_
+
+        # Sanity check.
+        if crossx_op is None:
+            raise ValueError(f"{self.__class__.__name__}: Crossover operator is missing.")
+        # _end_if_
+
         # Copy the reference of the population.
         self.population = initial_pop.copy()
 
-        # Make sure the fitness function is indeed callable.
-        if not callable(fit_func):
-            raise TypeError(f"{self.__class__.__name__}: Fitness function is not callable.")
-        else:
-            # Get the fitness function.
-            self.fitness_func = fit_func
-        # _end_if_
+        # Get the fitness function.
+        self.fitness_func = fit_func
 
         # Get Selection Operator.
-        if select_op is None:
-            raise ValueError(f"{self.__class__.__name__}: Selection operator is missing.")
-        else:
-            self._select_op = select_op
-        # _end_if_
+        self._select_op = select_op
 
         # Get Mutation Operator.
-        if mutate_op is None:
-            raise ValueError(f"{self.__class__.__name__}: Mutation operator is missing.")
-        else:
-            self._mutate_op = mutate_op
-        # _end_if_
+        self._mutate_op = mutate_op
 
         # Get Crossover Operator.
-        if crossx_op is None:
-            raise ValueError(f"{self.__class__.__name__}: Crossover operator is missing.")
-        else:
-            self._crossx_op = crossx_op
-        # _end_if_
+        self._crossx_op = crossx_op
 
         # Get the number of requested CPUs.
         if n_cpus is None:
-
             # This is the default option.
             self._n_cpus = max(1, GenericGA.MAX_CPUs-1)
         else:
-
             # Assign the  requested number, making sure we have
             # enough CPUs and the value entered has the correct
             # type.
@@ -129,18 +130,17 @@ class GenericGA(object):
 
         :param value: (int).
         """
-        # Check for correct type and allow only
-        # the positive values.
-        if isinstance(value, int) and value >= 0:
-
-            # Update the iteration value.
-            self._iteration = value
-
-            # Update the iteration value in the GeneticOperator Class.
-            GeneticOperator.set_iteration(value)
-        else:
+        # Check for correct type and allow only the positive values.
+        if not isinstance(value, int) or value < 0:
             raise RuntimeError(f"{self.__class__.__name__}: "
                                f"Iteration value should be positive int: {type(value)}.")
+        # _end_if_
+
+        # Update the iteration value.
+        self._iteration = value
+
+        # Update the iteration value in the GeneticOperator Class.
+        GeneticOperator.set_iteration(value)
     # _end_def_
 
     @classmethod

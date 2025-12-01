@@ -45,20 +45,22 @@ class IslandModelGA(GenericGA):
         super().__init__(**kwargs)
 
         # Sanity check.
-        if num_islands < len(self.population):
-            # Assign the number of islands.
-            self.num_islands = num_islands
-        else:
+        if num_islands > len(self.population):
             # Raise an error if number of islands is too high.
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Number of requested islands ({num_islands}) exceeds the size of the population.")
         # _end_if_
 
-        # Get Migration Operator.
+        # Sanity check.
         if migrate_op is None:
             raise ValueError(f"{self.__class__.__name__}: Migration operator is missing.")
-        else:
-            self._migrate_op = migrate_op
+        # _end_if_
+
+        # Assign the number of islands.
+        self.num_islands = num_islands
+
+        # Get Migration Operator.
+        self._migrate_op = migrate_op
     # _end_def_
 
     @property
