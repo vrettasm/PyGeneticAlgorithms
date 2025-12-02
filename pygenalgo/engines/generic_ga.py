@@ -101,6 +101,9 @@ class GenericGA(object):
             self._n_cpus = max(1, min(GenericGA.MAX_CPUs-1, int(n_cpus)))
         # _end_if_
 
+        # Log the number of CPUs.
+        logger.debug(f"{self.__class__.__name__} uses {self._n_cpus} CPUs.")
+
         # Dictionary with statistics.
         self._stats = defaultdict(list)
 
