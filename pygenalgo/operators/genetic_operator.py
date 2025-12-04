@@ -43,9 +43,9 @@ class GeneticOperator(object):
     """
     Description:
 
-        Provides the base class (interface) for a Genetic Operator.
-        This class includes the common variables (such as the probability
-        and the application counter) along with access to them.
+        Provides the parent class (interface) for a Genetic Operator.
+        This class includes the common variables, such as the probability
+        and the application counter, along with access to them.
 
         All genetic operators (Selection, Crossover, Mutation, Migration)
         should inherit this class.
