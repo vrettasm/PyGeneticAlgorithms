@@ -109,7 +109,7 @@ class BlendCrossover(CrossoverOperator):
                 max_value += offset_distance
 
                 # Create two new gene values.
-                new_value_1, new_value_2 = lower_lim + (upper_lim - lower_lim) * r_val
+                new_value_1, new_value_2 = min_value + (max_value - min_value) * r_val
 
                 # Ensure the new values are within limits.
                 new_value_1 = clamp(new_value_1, xl, xu)
