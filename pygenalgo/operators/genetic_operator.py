@@ -1,7 +1,6 @@
 from typing import Any
 from threading import Lock
 from functools import wraps
-from pygenalgo.utils.utilities import clamp
 from numpy.random import default_rng, Generator
 
 # Public interface.
