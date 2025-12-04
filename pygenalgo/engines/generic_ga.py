@@ -35,7 +35,7 @@ class GenericGA(object):
 
     # Object variables.
     __slots__ = ("population", "fitness_func", "_select_op", "_crossx_op",
-                 "_mutate_op", "_stats", "_n_cpus", "_f_eval", "_iteration")
+                 "_mutate_op", "_stats", "_n_cpus", "_f_evals", "_iteration")
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable,
                  select_op: SelectionOperator = None, mutate_op: MutationOperator = None,
@@ -108,7 +108,7 @@ class GenericGA(object):
         self._stats = defaultdict(list)
 
         # Set the function evaluation to zero.
-        self._f_eval = 0
+        self._f_evals = 0
 
         # Set the iterations counter to zero.
         self._iteration = 0
@@ -164,13 +164,13 @@ class GenericGA(object):
     # _end_def_
 
     @property
-    def f_eval(self) -> int:
+    def f_evals(self) -> int:
         """
         Accessor method that returns the value of the f_eval.
 
         :return: (int) the counted number of function evaluations.
         """
-        return self._f_eval
+        return self._f_evals
     # _end_def_
 
     @property
@@ -241,7 +241,7 @@ class GenericGA(object):
         # _end_if_
 
         # Update the function evaluation counter.
-        self._f_eval += new_counts
+        self._f_evals += new_counts
     # _end_def_
 
     def clear_all(self) -> None:
@@ -260,7 +260,7 @@ class GenericGA(object):
         self._stats.clear()
 
         # Reset f_eval counter.
-        self._f_eval = 0
+        self._f_evals = 0
 
         # Log the cleanup.
         logger.debug(f"{self.__class__.__name__} cleared.")
@@ -489,7 +489,7 @@ class GenericGA(object):
         # _end_for_
 
         # Update the counter of function evaluations.
-        self._f_eval += p_size
+        self._f_evals += p_size
 
         # Return the fitness values.
         return fitness_values, found_solution

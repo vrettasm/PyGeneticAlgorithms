@@ -318,7 +318,7 @@ class IslandModelGA(GenericGA):
 
             # First remove the counts from the initial
             # evaluation of the population.
-            total_f_counts = int(f_max_eval) - self.f_eval
+            total_f_counts = int(f_max_eval) - self.f_evals
 
             # Assuming each epoch performs N function evaluations.
             epochs = int(total_f_counts / len(self.population))

@@ -211,7 +211,7 @@ class StandardGA(GenericGA):
             # _end_if_
 
             # Check for the maximum function evaluations.
-            if f_max_eval and self.f_eval >= f_max_eval:
+            if f_max_eval and self.f_evals >= f_max_eval:
                 # Log a warning message.
                 logger.warning(f"{self.__class__.__name__} "
                                "reached the maximum number of function evaluations.")
