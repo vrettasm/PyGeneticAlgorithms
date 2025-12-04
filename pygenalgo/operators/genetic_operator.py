@@ -67,8 +67,15 @@ class GeneticOperator(object):
 
         :param probability: (float) in [0, 1].
         """
-        # Ensure the default entry value is within range [0, 1].
-        self._probability = clamp(float(probability), 0.0, 1.0)
+        # Ensure correct type.
+        probability = float(probability)
+
+        # Ensure correct range [0, 1].
+        if not (0.0 <= probability <= 1.0):
+            raise ValueError(f"{self.__class__.__name__} the value "
+                             f"{probability} is not within valid range.")
+        # Assign the value.
+        self._probability = probability
 
         # Initialize the application counter to zero.
         self._counter = 0
