@@ -48,7 +48,7 @@ class LinearRankSelector(SelectionOperator):
         """
         # Sanity check.
         if p_size <= 0:
-            raise ValueError("Population size 'p_size' must be > 0.")
+            raise ValueError(f"Population size {p_size} must be > 0.")
         # _end_if_
 
         # Calculate the sum of '1 + 2 + 3 + ... + N'.
