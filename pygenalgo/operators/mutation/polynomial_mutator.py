@@ -33,6 +33,12 @@ class PolynomialMutator(MutationOperator):
         # Ensure eta_pm parameter is float.
         eta_pm = float(eta_pm)
 
+        # Ensure that both lower and upper limits are provided.
+        if lower_val is None or upper_val is None:
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Lower or Upper limits are missing.")
+        # _end_if_
+
         # Ensure lower_val parameter is float.
         lower_val = float(lower_val)
 
@@ -40,7 +46,7 @@ class PolynomialMutator(MutationOperator):
         upper_val = float(upper_val)
 
         # Ensure the order is correct.
-        if upper_val < lower_val:
+        if upper_val <= lower_val:
             raise ValueError(f"{self.__class__.__name__}: "
                              f"The limit values are incorrect.")
 
