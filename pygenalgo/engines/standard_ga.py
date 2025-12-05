@@ -211,7 +211,7 @@ class StandardGA(GenericGA):
             # _end_if_
 
             # Check for the maximum function evaluations.
-            if f_max_eval and self.f_evals >= f_max_eval:
+            if f_max_eval is not None and self.f_evals >= f_max_eval:
                 # Log a warning message.
                 logger.warning(f"{self.__class__.__name__} "
                                "reached the maximum number of function evaluations.")
@@ -220,7 +220,7 @@ class StandardGA(GenericGA):
             # _end_if_
 
             # Check for convergence.
-            if f_tol and isclose(avg_fitness_i, avg_fitness_0, abs_tol=f_tol):
+            if f_tol is not None and isclose(avg_fitness_i, avg_fitness_0, abs_tol=f_tol):
                 # Display a warning message.
                 logger.warning(f"{self.__class__.__name__} "
                                f"converged in {i + 1} iterations.")

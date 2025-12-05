@@ -314,7 +314,7 @@ class IslandModelGA(GenericGA):
 
         # Check if we have set a maximum number on function
         # evaluations and re-adjust the epochs.
-        if f_max_eval:
+        if f_max_eval is not None:
 
             # First remove the counts from the initial
             # evaluation of the population.
