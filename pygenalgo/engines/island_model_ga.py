@@ -104,7 +104,7 @@ class IslandModelGA(GenericGA):
         avg_fitness_0 = 1.0e+100
 
         # Check if initial probabilities have been given.
-        if prob_crossx and prob_mutate:
+        if prob_crossx is not None and prob_mutate is not None:
             self._crossx_op.probability = prob_crossx
             self._mutate_op.probability = prob_mutate
         # _end_if_
