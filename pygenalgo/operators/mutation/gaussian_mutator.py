@@ -53,6 +53,7 @@ class GaussianMutator(MutationOperator):
         if upper_val <= lower_val:
             raise ValueError(f"{self.__class__.__name__}: "
                              f"The limit values are incorrect.")
+        # _end_if_
 
         # Assign variables to the _items placeholder.
         self._items = [sigma, lower_val, upper_val]
