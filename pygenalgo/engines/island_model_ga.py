@@ -74,7 +74,7 @@ class IslandModelGA(GenericGA):
     # _end_def_
 
     def _evolve_population(self, island: SubPopulation, epochs: int, shuffle: bool,
-                           correction: bool, elitism: bool, f_tol: float, adapt_probs: bool = None,
+                           correction: bool, elitism: bool, f_tol: float, adapt_probs: bool,
                            prob_crossx: float = None, prob_mutate: float = None) -> tuple:
         """
         This is a helper method to be used inside the Parallel delayed method.
