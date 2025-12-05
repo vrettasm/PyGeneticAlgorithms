@@ -50,7 +50,7 @@ class GaussianMutator(MutationOperator):
         upper_val = float(upper_val)
 
         # Ensure the order is correct.
-        if upper_val < lower_val:
+        if upper_val <= lower_val:
             raise ValueError(f"{self.__class__.__name__}: "
                              f"The limit values are incorrect.")
 
