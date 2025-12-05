@@ -37,6 +37,12 @@ class BlendCrossover(CrossoverOperator):
         # Ensure p_alpha parameter is float.
         p_alpha = clamp(float(p_alpha), 0.0, 1.0)
 
+        # Ensure that both lower and upper limits are provided.
+        if lower_val is None or upper_val is None:
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Lower or Upper limits are missing.")
+        # _end_if_
+
         # Ensure lower_val parameter is float.
         lower_val = float(lower_val)
 
@@ -44,7 +50,7 @@ class BlendCrossover(CrossoverOperator):
         upper_val = float(upper_val)
 
         # Ensure the order is correct.
-        if upper_val < lower_val:
+        if upper_val <= lower_val:
             raise ValueError(f"{self.__class__.__name__}: "
                              f"The limit values are incorrect.")
         # _end_if_
@@ -102,9 +108,8 @@ class BlendCrossover(CrossoverOperator):
                     min_value, max_value = g2, g1
                 # _end_if_
 
-                # Compute the lower and upper
-                # limits by removing / adding
-                # the offset distance.
+                # Compute the lower and upper limits by
+                # removing / adding the offset distance.
                 min_value -= offset_distance
                 max_value += offset_distance
 
