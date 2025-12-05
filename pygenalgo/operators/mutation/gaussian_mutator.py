@@ -37,6 +37,12 @@ class GaussianMutator(MutationOperator):
                              f"Standard deviation must be positive.")
         # _end_if_
 
+        # Ensure that both lower and upper limits are provided.
+        if lower_val is None or upper_val is None:
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Lower or Upper limits are missing.")
+        # _end_if_
+
         # Ensure lower_val parameter is float.
         lower_val = float(lower_val)
 
