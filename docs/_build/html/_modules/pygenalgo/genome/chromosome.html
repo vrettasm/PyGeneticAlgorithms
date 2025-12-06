@@ -70,8 +70,6 @@
              
   <h1>Source code for pygenalgo.genome.chromosome</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
-
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.gene</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gene</span>
 
 <span class="c1"># Public interface.</span>
@@ -80,7 +78,6 @@
 
 <div class="viewcode-block" id="Chromosome">
 <a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome">[docs]</a>
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Chromosome</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
@@ -90,18 +87,31 @@
 <span class="sd">        the evolution process.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># Define the genome as a list of genes. This list</span>
-    <span class="c1"># will encode a &quot;single solution to the problem&quot;.</span>
-    <span class="n">_genome</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">])</span>
+    <span class="c1"># Object variables.</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_genome&quot;</span><span class="p">,</span> <span class="s2">&quot;_fitness&quot;</span><span class="p">,</span> <span class="s2">&quot;_valid&quot;</span><span class="p">)</span>
 
-    <span class="c1"># The fitness value will correspond to how well the</span>
-    <span class="c1"># chromosome fits in its environment, as defined by</span>
-    <span class="c1"># the fitness function.</span>
-    <span class="n">_fitness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;NaN&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">genome</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">],</span> <span class="n">fitness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;NaN&quot;</span><span class="p">),</span>
+                 <span class="n">valid</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a Chromosome object.</span>
 
-    <span class="c1"># Define a boolean flag. This flag here can be used</span>
-    <span class="c1"># to include hard/soft constraints to the chromosome.</span>
-    <span class="n">_valid</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="sd">        :param genome: a list of genes. This list will encode a single</span>
+<span class="sd">        solution to the problem</span>
+
+<span class="sd">        :param fitness: the fitness of the chromosome.</span>
+
+<span class="sd">        :param valid: whether the chromosome is valid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Copy the genome.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_genome</span> <span class="o">=</span> <span class="n">genome</span>
+
+        <span class="c1"># Get the initial fitness value.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span> <span class="o">=</span> <span class="n">fitness</span>
+
+        <span class="c1"># Set the bool flag.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span> <span class="o">=</span> <span class="n">valid</span>
+    <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">valid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -329,7 +339,7 @@
         <span class="k">return</span> <span class="n">Chromosome</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_genome</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">)</span>
     <span class="c1"># _end_copy_</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Chromosome&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Chromosome&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This custom method overrides the default deepcopy method</span>
 <span class="sd">        and is used when we call the &quot;clone&quot; method of the class.</span>

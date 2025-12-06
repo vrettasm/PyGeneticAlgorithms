@@ -72,7 +72,6 @@
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">threading</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lock</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">clamp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_rng</span><span class="p">,</span> <span class="n">Generator</span>
 
 <span class="c1"># Public interface.</span>
@@ -119,9 +118,9 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Provides the base class (interface) for a Genetic Operator.</span>
-<span class="sd">        This class includes the common variables (such as the probability</span>
-<span class="sd">        and the application counter) along with access to them.</span>
+<span class="sd">        Provides the parent class (interface) for a Genetic Operator.</span>
+<span class="sd">        This class includes the common variables, such as the probability</span>
+<span class="sd">        and the application counter, along with access to them.</span>
 
 <span class="sd">        All genetic operators (Selection, Crossover, Mutation, Migration)</span>
 <span class="sd">        should inherit this class.</span>
@@ -143,8 +142,15 @@
 
 <span class="sd">        :param probability: (float) in [0, 1].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Ensure the default entry value is within range [0, 1].</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">probability</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="c1"># Ensure correct type.</span>
+        <span class="n">probability</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">probability</span><span class="p">)</span>
+
+        <span class="c1"># Ensure correct range [0, 1].</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">probability</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> the value &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">probability</span><span class="si">}</span><span class="s2"> is not within valid range.&quot;</span><span class="p">)</span>
+        <span class="c1"># Assign the value.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span> <span class="o">=</span> <span class="n">probability</span>
 
         <span class="c1"># Initialize the application counter to zero.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_counter</span> <span class="o">=</span> <span class="mi">0</span>

@@ -110,6 +110,12 @@
                              <span class="sa">f</span><span class="s2">&quot;Standard deviation must be positive.&quot;</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
+        <span class="c1"># Ensure that both lower and upper limits are provided.</span>
+        <span class="k">if</span> <span class="n">lower_val</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">upper_val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;Lower or Upper limits are missing.&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
         <span class="c1"># Ensure lower_val parameter is float.</span>
         <span class="n">lower_val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">lower_val</span><span class="p">)</span>
 
@@ -117,9 +123,10 @@
         <span class="n">upper_val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">upper_val</span><span class="p">)</span>
 
         <span class="c1"># Ensure the order is correct.</span>
-        <span class="k">if</span> <span class="n">upper_val</span> <span class="o">&lt;</span> <span class="n">lower_val</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">upper_val</span> <span class="o">&lt;=</span> <span class="n">lower_val</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                              <span class="sa">f</span><span class="s2">&quot;The limit values are incorrect.&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
 
         <span class="c1"># Assign variables to the _items placeholder.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">[</span><span class="n">sigma</span><span class="p">,</span> <span class="n">lower_val</span><span class="p">,</span> <span class="n">upper_val</span><span class="p">]</span>
