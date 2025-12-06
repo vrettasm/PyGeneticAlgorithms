@@ -150,32 +150,34 @@
 
 <span class="sd">        :param epochs: (int) maximum number of iterations in the evolution process.</span>
 
-<span class="sd">        :param elitism: (bool) flag that defines elitism. If &#39;True&#39; then the chromosome</span>
-<span class="sd">        with the higher fitness will always be copied to the next generation (unaltered).</span>
+<span class="sd">        :param elitism: (bool) flag that enables elitism. If True then the chromosome with</span>
+<span class="sd">                        the highest fitness will always be copied to the next generation</span>
+<span class="sd">                        (unaltered).</span>
 
 <span class="sd">        :param correction: (bool) flag that if set to &#39;True&#39; will check the validity of</span>
-<span class="sd">        the population (at the gene level) and attempt to correct the genome by calling</span>
-<span class="sd">        the random() method of the flawed gene.</span>
+<span class="sd">                           the population (at the gene level) and attempt to correct the</span>
+<span class="sd">                           genome by calling the random() method of the flawed gene.</span>
 
 <span class="sd">        :param f_tol: (float) tolerance in the difference between the average values of two</span>
-<span class="sd">        consecutive populations. It is used to determine the convergence of the population.</span>
-<span class="sd">        If this value is None (default) the algorithm will terminate using the epochs value.</span>
+<span class="sd">                      consecutive populations. It is used to determine the convergence of the</span>
+<span class="sd">                      population. If this value is None (default) the algorithm will terminate</span>
+<span class="sd">                      using the epochs value.</span>
 
 <span class="sd">        :param parallel: (bool) Flag that enables parallel computation of the fitness function.</span>
 
 <span class="sd">        :param adapt_probs: (bool) If enabled (set to True), it will allow the crossover and</span>
-<span class="sd">        mutation probabilities to adapt according to the convergence of the population to a</span>
-<span class="sd">        single solution. Default is set to False.</span>
+<span class="sd">                            mutation probabilities to adapt according to the convergence of</span>
+<span class="sd">                            the population to a single solution. Default is set to False.</span>
 
 <span class="sd">        :param shuffle: (bool) If enabled (set to True), it will shuffle the population before</span>
-<span class="sd">        the application of the crossover and mutation operations. Default is set to True.</span>
+<span class="sd">                        the application of the crossover and mutation operations. The default</span>
+<span class="sd">                        is set to True.</span>
 
 <span class="sd">        :param f_max_eval: (int) it sets an upper limit of function evaluations. If the number</span>
-<span class="sd">        is exceeded the genetic algorithm stops.</span>
+<span class="sd">                           is exceeded the genetic algorithm stops.</span>
 
 <span class="sd">        :param verbose: (bool) if &#39;True&#39; it will display periodically information about the</span>
-<span class="sd">        current average fitness and spread of the population.</span>
-
+<span class="sd">                        current average fitness and spread of the population.</span>
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Make sure everything is cleared.</span>

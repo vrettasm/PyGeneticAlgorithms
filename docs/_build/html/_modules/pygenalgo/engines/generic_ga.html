@@ -308,8 +308,7 @@
 <span class="sd">        gene correction.</span>
 
 <span class="sd">        :param new_counts: the new value of &#39;counts&#39; that we want</span>
-<span class="sd">        to add on the current f_eval.</span>
-
+<span class="sd">                           to add on the current f_eval.</span>
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Sanity check.</span>
@@ -408,7 +407,7 @@
 <span class="sd">        have been selected for breeding.</span>
 
 <span class="sd">        :param input_population: this is the population that we will apply</span>
-<span class="sd">        the two genetic operators.</span>
+<span class="sd">                                 the two genetic operators.</span>
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get the size of the input population.</span>
@@ -448,9 +447,9 @@
 <span class="sd">        This method is used (optionally) to adjust simultaneously the crossover</span>
 <span class="sd">        and mutation parameters of the GenericGA object.</span>
 
-<span class="sd">        :param threshold: (float) This parameter is used to determine whether we</span>
-<span class="sd">        are going to increase or decrease the crossover and mutation parameters.</span>
-
+<span class="sd">        :param threshold: This float parameter is used to determine whether we are</span>
+<span class="sd">                          going to increase or decrease the crossover and mutation</span>
+<span class="sd">                          parameters.</span>
 <span class="sd">        :return: True if the parameters have changed, else False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Check if the threshold value is missing.</span>
@@ -542,12 +541,12 @@
 <span class="sd">        better to select &quot;loky&quot;.</span>
 
 <span class="sd">        :param input_population: (list) The population of Chromosomes</span>
-<span class="sd">        that we want to evaluate their fitness.</span>
+<span class="sd">                                 that we want to evaluate their fitness.</span>
 
 <span class="sd">        :param parallel_mode: (bool) Enables parallel computation of</span>
-<span class="sd">        the fitness function.</span>
+<span class="sd">                              the fitness function.</span>
 
-<span class="sd">        :param backend: Backend for the parallel Joblib framework.</span>
+<span class="sd">        :param backend: (str) Backend for the parallel Joblib framework.</span>
 
 <span class="sd">        :return: a list with the fitness values and the found solution flag.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

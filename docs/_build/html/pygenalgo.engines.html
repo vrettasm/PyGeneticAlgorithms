@@ -115,13 +115,12 @@ models should share.</p>
 and mutation parameters of the GenericGA object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>threshold</strong> – (float) This parameter is used to determine whether we</p>
+<dd class="field-odd"><p><strong>threshold</strong> – This float parameter is used to determine whether we are
+going to increase or decrease the crossover and mutation
+parameters.</p>
 </dd>
-</dl>
-<p>are going to increase or decrease the crossover and mutation parameters.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if the parameters have changed, else False.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the parameters have changed, else False.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -175,11 +174,13 @@ operations in one call. Since these operations happen in place the
 have been selected for breeding.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>input_population</strong> – this is the population that we will apply</p>
+<dd class="field-odd"><p><strong>input_population</strong> – this is the population that we will apply
+the two genetic operators.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
-<p>the two genetic operators.
-:return: None.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -202,19 +203,13 @@ default backend is “threading”, but in the IslandModelGA it is
 better to select “loky”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>input_population</strong> – (list) The population of Chromosomes</p>
-</dd>
-</dl>
-<p>that we want to evaluate their fitness.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>parallel_mode</strong> – (bool) Enables parallel computation of</p>
-</dd>
-</dl>
-<p>the fitness function.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>backend</strong> – Backend for the parallel Joblib framework.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_population</strong> – (list) The population of Chromosomes
+that we want to evaluate their fitness.</p></li>
+<li><p><strong>parallel_mode</strong> – (bool) Enables parallel computation of
+the fitness function.</p></li>
+<li><p><strong>backend</strong> – (str) Backend for the parallel Joblib framework.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>a list with the fitness values and the found solution flag.</p>
@@ -230,13 +225,11 @@ new counts outside the main class. This can happen during
 gene correction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>new_counts</strong> – the new value of ‘counts’ that we want</p>
+<dd class="field-odd"><p><strong>new_counts</strong> – the new value of ‘counts’ that we want
+to add on the current f_eval.</p>
 </dd>
-</dl>
-<p>to add on the current f_eval.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -322,7 +315,7 @@ gene correction.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.rng_GA">
-<span class="sig-name descname"><span class="pre">rng_GA</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Generator(PCG64)</span> <span class="pre">at</span> <span class="pre">0x113634200</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.rng_GA" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rng_GA</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Generator(PCG64)</span> <span class="pre">at</span> <span class="pre">0x108AB4200</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.rng_GA" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -417,68 +410,37 @@ each island.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>epochs</strong> – (int) maximum number of iterations in the evolution process.</p></li>
-<li><p><strong>correction</strong> – (bool) flag that if set to ‘True’ will check the validity of</p></li>
+<li><p><strong>correction</strong> – (bool) flag that if set to ‘True’ will check the validity of
+the population (at the gene level) and attempt to correct the
+genome by calling the random() method of the flawed gene.</p></li>
+<li><p><strong>elitism</strong> – (bool) flag that enables elitism. If set to True then the chromosome
+with the highest fitness will always be copied to the next generation
+(unaltered).</p></li>
+<li><p><strong>f_tol</strong> – (float) tolerance in the difference between the average values of two
+consecutive populations. It is used to determine the convergence of the
+population. If this value is None (default) the algorithm will terminate
+using the epochs value.</p></li>
+<li><p><strong>allow_migration</strong> – (bool) flag that if set to ‘True’ will allow the migration
+of the best individuals among the different islands.</p></li>
+<li><p><strong>n_periods</strong> – (int) the number of times that we will break the main evolution
+to allow for chromosomes to migrate. NB: This setting is active
+only when the option allow_migration == True. Otherwise, is ignored.</p></li>
+<li><p><strong>adapt_probs</strong> – (bool) If enabled (set to True), it will allow the crossover and
+mutation probabilities to adapt according to the convergence of
+the population to a single solution. Default is set to False.</p></li>
+<li><p><strong>shuffle</strong> – (bool) If enabled (set to True), it will shuffle the population before
+the application of the crossover and mutation operations. The default
+is set to True.</p></li>
+<li><p><strong>f_max_eval</strong> – (int) it sets an upper limit of function evaluations. If the number
+is exceeded the genetic algorithm stops. If this value is set, the
+epochs will be ignored and re-adjusted to meet the new requirement.</p></li>
+<li><p><strong>verbose</strong> – (bool) if ‘True’ it will display periodically information about the
+current stats of the subpopulations. NB: This setting is active only
+when the option allow_migration == True. Otherwise, is ignored.</p></li>
 </ul>
 </dd>
-</dl>
-<p>the population (at the gene level) and attempt to correct the genome by calling
-the random() method of the flawed gene.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>elitism</strong> – (bool) flag that defines elitism. If ‘True’ then the chromosome</p>
-</dd>
-</dl>
-<p>with the higher fitness will always be copied to the next generation (unaltered).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>f_tol</strong> – (float) tolerance in the difference between the average values of two</p>
-</dd>
-</dl>
-<p>consecutive populations. It is used to determine the convergence of the population.
-If this value is None (default) the algorithm will terminate using the epochs value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>allow_migration</strong> – (bool) flag that if set to ‘True’ will allow the migration</p>
-</dd>
-</dl>
-<p>of the best individuals among the different islands.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>n_periods</strong> – (int) the number of times that we will break the main evolution</p>
-</dd>
-</dl>
-<p>to allow for chromosomes to migrate. NB: This setting is active only when the option
-allow_migration == True. Otherwise, is ignored.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>adapt_probs</strong> – (bool) If enabled (set to True), it will allow the crossover and</p>
-</dd>
-</dl>
-<p>mutation probabilities to adapt according to the convergence of the population to a
-single solution. Default is set to False.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>shuffle</strong> – (bool) If enabled (set to True), it will shuffle the population before</p>
-</dd>
-</dl>
-<p>the application of the crossover and mutation operations. Default is set to True.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>f_max_eval</strong> – (int) it sets an upper limit of function evaluations. If the number</p>
-</dd>
-</dl>
-<p>is exceeded the genetic algorithm stops. If this value is set, the epochs will be
-ignored and re-adjusted to meet the new requirement.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>verbose</strong> – (bool) if ‘True’ it will display periodically information about the</p>
-</dd>
-</dl>
-<p>current stats of the subpopulations. NB: This setting is active only when the option
-allow_migration == True. Otherwise, is ignored.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -527,56 +489,31 @@ the genetic operators (crossover and mutation).</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>epochs</strong> – (int) maximum number of iterations in the evolution process.</p></li>
-<li><p><strong>elitism</strong> – (bool) flag that defines elitism. If ‘True’ then the chromosome</p></li>
-</ul>
-</dd>
-</dl>
-<p>with the higher fitness will always be copied to the next generation (unaltered).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>correction</strong> – (bool) flag that if set to ‘True’ will check the validity of</p>
-</dd>
-</dl>
-<p>the population (at the gene level) and attempt to correct the genome by calling
-the random() method of the flawed gene.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>f_tol</strong> – (float) tolerance in the difference between the average values of two</p>
-</dd>
-</dl>
-<p>consecutive populations. It is used to determine the convergence of the population.
-If this value is None (default) the algorithm will terminate using the epochs value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<li><p><strong>elitism</strong> – (bool) flag that enables elitism. If True then the chromosome with
+the highest fitness will always be copied to the next generation
+(unaltered).</p></li>
+<li><p><strong>correction</strong> – (bool) flag that if set to ‘True’ will check the validity of
+the population (at the gene level) and attempt to correct the
+genome by calling the random() method of the flawed gene.</p></li>
+<li><p><strong>f_tol</strong> – (float) tolerance in the difference between the average values of two
+consecutive populations. It is used to determine the convergence of the
+population. If this value is None (default) the algorithm will terminate
+using the epochs value.</p></li>
 <li><p><strong>parallel</strong> – (bool) Flag that enables parallel computation of the fitness function.</p></li>
-<li><p><strong>adapt_probs</strong> – (bool) If enabled (set to True), it will allow the crossover and</p></li>
+<li><p><strong>adapt_probs</strong> – (bool) If enabled (set to True), it will allow the crossover and
+mutation probabilities to adapt according to the convergence of
+the population to a single solution. Default is set to False.</p></li>
+<li><p><strong>shuffle</strong> – (bool) If enabled (set to True), it will shuffle the population before
+the application of the crossover and mutation operations. The default
+is set to True.</p></li>
+<li><p><strong>f_max_eval</strong> – (int) it sets an upper limit of function evaluations. If the number
+is exceeded the genetic algorithm stops.</p></li>
+<li><p><strong>verbose</strong> – (bool) if ‘True’ it will display periodically information about the
+current average fitness and spread of the population.</p></li>
 </ul>
 </dd>
-</dl>
-<p>mutation probabilities to adapt according to the convergence of the population to a
-single solution. Default is set to False.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>shuffle</strong> – (bool) If enabled (set to True), it will shuffle the population before</p>
-</dd>
-</dl>
-<p>the application of the crossover and mutation operations. Default is set to True.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>f_max_eval</strong> – (int) it sets an upper limit of function evaluations. If the number</p>
-</dd>
-</dl>
-<p>is exceeded the genetic algorithm stops.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>verbose</strong> – (bool) if ‘True’ it will display periodically information about the</p>
-</dd>
-</dl>
-<p>current average fitness and spread of the population.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
