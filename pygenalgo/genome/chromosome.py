@@ -1,13 +1,10 @@
 from copy import deepcopy
-from dataclasses import dataclass, field
-
 from pygenalgo.genome.gene import Gene
 
 # Public interface.
 __all__ = ["Chromosome"]
 
 
-@dataclass(init=True, repr=True)
 class Chromosome(object):
     """
     Description:
@@ -17,18 +14,31 @@ class Chromosome(object):
         the evolution process.
     """
 
-    # Define the genome as a list of genes. This list
-    # will encode a "single solution to the problem".
-    _genome: list = field(default_factory=list[Gene])
+    # Object variables.
+    __slots__ = ("_genome", "_fitness", "_valid")
 
-    # The fitness value will correspond to how well the
-    # chromosome fits in its environment, as defined by
-    # the fitness function.
-    _fitness: float = float("NaN")
+    def __init__(self, genome: list[Gene], fitness: float = float("NaN"),
+                 valid: bool = True) -> None:
+        """
+        Initialize a Chromosome object.
 
-    # Define a boolean flag. This flag here can be used
-    # to include hard/soft constraints to the chromosome.
-    _valid: bool = True
+        :param genome: a list of genes. This list will encode a single
+        solution to the problem
+
+        :param fitness: the fitness of the chromosome.
+
+        :param valid: whether the chromosome is valid.
+        """
+
+        # Copy the genome.
+        self._genome = genome
+
+        # Get the initial fitness value.
+        self._fitness = fitness
+
+        # Set the bool flag.
+        self._valid = valid
+    # _end_def_
 
     @property
     def valid(self) -> bool:
