@@ -230,8 +230,7 @@ class GenericGA(object):
         gene correction.
 
         :param new_counts: the new value of 'counts' that we want
-        to add on the current f_eval.
-
+                           to add on the current f_eval.
         :return: None.
         """
         # Sanity check.
@@ -318,8 +317,7 @@ class GenericGA(object):
         have been selected for breeding.
 
         :param input_population: this is the population that we will apply
-        the two genetic operators.
-
+                                 the two genetic operators.
         :return: None.
         """
         # Get the size of the input population.
@@ -356,9 +354,9 @@ class GenericGA(object):
         This method is used (optionally) to adjust simultaneously the crossover
         and mutation parameters of the GenericGA object.
 
-        :param threshold: (float) This parameter is used to determine whether we
-        are going to increase or decrease the crossover and mutation parameters.
-
+        :param threshold: This float parameter is used to determine whether we are
+                          going to increase or decrease the crossover and mutation
+                          parameters.
         :return: True if the parameters have changed, else False.
         """
         # Check if the threshold value is missing.
@@ -441,12 +439,12 @@ class GenericGA(object):
         better to select "loky".
 
         :param input_population: (list) The population of Chromosomes
-        that we want to evaluate their fitness.
+                                 that we want to evaluate their fitness.
 
         :param parallel_mode: (bool) Enables parallel computation of
-        the fitness function.
+                              the fitness function.
 
-        :param backend: Backend for the parallel Joblib framework.
+        :param backend: (str) Backend for the parallel Joblib framework.
 
         :return: a list with the fitness values and the found solution flag.
         """

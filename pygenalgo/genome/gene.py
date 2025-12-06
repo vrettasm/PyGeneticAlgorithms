@@ -30,9 +30,9 @@ class Gene(object):
         :param datum: Datum holds a reference of the gene-data structure.
         
         :param func: This 'private' function is used in the 'random()' method
-        to be used by the mutation operators.
+                     to be used by the mutation operators.
         
-        :param valid: This flag is used to set the Gene as valid (True) or invalid (False).
+        :param valid: This flag is used to set the Gene as valid or invalid.
         """
         # Copy the data reference.
         self._datum = datum
@@ -182,8 +182,8 @@ class Gene(object):
         FlipMutator operator for problems where the chromosome is represented
         by a list of bits.
 
-         i)  1 -> 0
-        ii)  0 -> 1
+        1)  1 -> 0
+        2)  0 -> 1
 
         :return: None.
         """
@@ -229,7 +229,7 @@ class Gene(object):
         and is used when we call the "clone" method of the class.
 
         :param memo: dictionary of objects already copied during
-        the current copying pass.
+                     the current copying pass.
 
         :return: a new identical "clone" of the self object.
         """

@@ -234,38 +234,40 @@ class IslandModelGA(GenericGA):
         :param epochs: (int) maximum number of iterations in the evolution process.
 
         :param correction: (bool) flag that if set to 'True' will check the validity of
-        the population (at the gene level) and attempt to correct the genome by calling
-        the random() method of the flawed gene.
+                           the population (at the gene level) and attempt to correct the
+                           genome by calling the random() method of the flawed gene.
 
-        :param elitism: (bool) flag that defines elitism. If 'True' then the chromosome
-        with the higher fitness will always be copied to the next generation (unaltered).
+        :param elitism: (bool) flag that enables elitism. If set to True then the chromosome
+                        with the highest fitness will always be copied to the next generation
+                        (unaltered).
 
         :param f_tol: (float) tolerance in the difference between the average values of two
-        consecutive populations. It is used to determine the convergence of the population.
-        If this value is None (default) the algorithm will terminate using the epochs value.
+                      consecutive populations. It is used to determine the convergence of the
+                      population. If this value is None (default) the algorithm will terminate
+                      using the epochs value.
 
         :param allow_migration: (bool) flag that if set to 'True' will allow the migration
-        of the best individuals among the different islands.
+                                of the best individuals among the different islands.
 
         :param n_periods: (int) the number of times that we will break the main evolution
-        to allow for chromosomes to migrate. NB: This setting is active only when the option
-        allow_migration == True. Otherwise, is ignored.
+                          to allow for chromosomes to migrate. NB: This setting is active
+                          only when the option allow_migration == True. Otherwise, is ignored.
 
         :param adapt_probs: (bool) If enabled (set to True), it will allow the crossover and
-        mutation probabilities to adapt according to the convergence of the population to a
-        single solution. Default is set to False.
+                            mutation probabilities to adapt according to the convergence of
+                            the population to a single solution. Default is set to False.
 
         :param shuffle: (bool) If enabled (set to True), it will shuffle the population before
-        the application of the crossover and mutation operations. Default is set to True.
+                        the application of the crossover and mutation operations. The default
+                        is set to True.
 
         :param f_max_eval: (int) it sets an upper limit of function evaluations. If the number
-        is exceeded the genetic algorithm stops. If this value is set, the epochs will be
-        ignored and re-adjusted to meet the new requirement.
+                           is exceeded the genetic algorithm stops. If this value is set, the
+                           epochs will be ignored and re-adjusted to meet the new requirement.
 
         :param verbose: (bool) if 'True' it will display periodically information about the
-        current stats of the subpopulations. NB: This setting is active only when the option
-        allow_migration == True. Otherwise, is ignored.
-
+                        current stats of the subpopulations. NB: This setting is active only
+                        when the option allow_migration == True. Otherwise, is ignored.
         :return: None.
         """
         # Reset stats dictionary.

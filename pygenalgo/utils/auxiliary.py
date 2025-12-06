@@ -38,13 +38,13 @@ def average_hamming_distance(population: list[Chromosome],
     to measure the similarity in the whole population of chromosomes.
 
     :param population: List(Chromosome) the population we want to compute
-    the average Hamming distance.
+                       the average Hamming distance.
 
     :param normal: (bool) flag that requires the return of the normalized
-    average distance.
+                   average distance.
 
     :return: (float) the total number of differences, in the genes,
-    divided by the total number of genes compared.
+             divided by the total number of genes compared.
     """
     # Sanity check 1: This should never happen!
     if not population:
@@ -95,7 +95,7 @@ def apply_corrections(input_population: list[Chromosome],
     chromosome to update its fitness.
 
     :param input_population: List(Chromosome) the population we want to apply
-    corrections (if applicable).
+                             corrections (if applicable).
 
     :param fit_func: callable fitness function.
 

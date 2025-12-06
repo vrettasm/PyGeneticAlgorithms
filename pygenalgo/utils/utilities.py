@@ -13,8 +13,11 @@ def clamp(x: int | float,
     Clamps a value within a specified range.
 
     :param x: value to clamp.
+
     :param x_lower: lower bound.
+
     :param x_upper: upper bound.
+
     :return: clamped value.
     """
     return min(max(x, x_lower), x_upper)
@@ -25,9 +28,8 @@ def pareto_dominance(point_a: tuple | list,
     """
     Implements a shortcut version of the pareto dominance condition:
 
-        all(p <= q for p, q in zip(point_i, point_j))
-                            and
-        any(p < q for p, q in zip(point_i, point_j))
+    all(p <= q for p, q in zip(point_i, point_j)) &&
+    any(p < q for p, q in zip(point_i, point_j))
 
     NOTE: It is assumed that both points have the same size (length).
 
@@ -156,9 +158,9 @@ def cost_function(func: Callable = None, minimize: bool = False):
 
     :param func: the function to be optimized.
 
-    :param minimize: if 'True' it will return the negative
-    function value to allow for the minimization.
-    Default is 'False'.
+    :param minimize: if 'True' it will return the negative function
+                     value to allow for the minimization. Default is
+                     set to 'False'.
 
     :return: the 'function_wrapper' method.
     """
@@ -209,11 +211,12 @@ def np_cdist(x_pos: np.ndarray, scaled: bool = False) -> np.ndarray:
     the purposes of the multimodal operation mode.
 
     :param x_pos: a numpy array of positions. The dimensions of the
-    input array should [n_rows, n_cols], where n_rows is the number
-    of particles and n_cols are the number of positions.
+                  input array should [n_rows, n_cols], where n_rows
+                  is the number of particles and n_cols are the number
+                  of positions.
 
-    :param scaled: boolean flag that allows the input array to be
-    scaled, using the MaxAbsScaler, before computing the distances.
+    :param scaled: boolean flag that allows the input array to be scaled,
+                   using the MaxAbsScaler, before computing the distances.
 
     :return: a square [n_rows, n_rows] numpy array of distances.
     """

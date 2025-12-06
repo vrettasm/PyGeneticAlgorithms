@@ -23,7 +23,7 @@ class Chromosome(object):
         Initialize a Chromosome object.
 
         :param genome: a list of genes. This list will encode a single
-        solution to the problem
+                       solution to the problem
 
         :param fitness: the fitness of the chromosome.
 
@@ -148,7 +148,7 @@ class Chromosome(object):
         :param other: (Chromosome) to compare the Hamming distance.
 
         :return: (int) the number of dissimilarities between the two
-        input chromosomes.
+                 input chromosomes.
         """
         # Make sure both objects are of the same type Chromosome.
         if not isinstance(other, Chromosome):
@@ -260,7 +260,7 @@ class Chromosome(object):
         and is used when we call the "clone" method of the class.
 
         :param memo: dictionary of objects already copied during
-        the current copying pass.
+                     the current copying pass.
 
         :return: a new identical "clone" of the self object.
         """
