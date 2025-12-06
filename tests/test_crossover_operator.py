@@ -1,4 +1,5 @@
 import unittest
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -32,16 +33,17 @@ class TestCrossoverOperator(unittest.TestCase):
 
         :return: None.
         """
+        # Dummy genome with two genes.
+        genome = [Gene('1', lambda x: int(x), True),
+                  Gene('2', lambda x: int(x), True)]
 
         # Create two empty test parents.
-        parent1 = Chromosome()
-        parent2 = Chromosome()
+        parent1 = Chromosome(genome)
+        parent2 = Chromosome(genome)
 
         # Check if the crossover method is implemented.
         with self.assertRaises(NotImplementedError):
             self.cross_op.crossover(parent1, parent2)
-        # _end_with_
-
     # _end_def_
 
 # _end_class_

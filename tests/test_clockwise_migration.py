@@ -38,26 +38,26 @@ class TestClockwiseMigration(unittest.TestCase):
         """
 
         # Create a dummy list of three SubPopulation objects.
-        pop = [SubPopulation(0, [Chromosome(_genome=[Gene('a', lambda: str('x')),
-                                                     Gene('b', lambda: str('x'))], _fitness=0),
-                                 Chromosome(_genome=[Gene('c', lambda: str('x')),
-                                                     Gene('d', lambda: str('x'))], _fitness=1),
-                                 Chromosome(_genome=[Gene('e', lambda: str('x')),
-                                                     Gene('f', lambda: str('x'))], _fitness=2)]
+        pop = [SubPopulation(0, [Chromosome(genome=[Gene('a', lambda: str('x')),
+                                                    Gene('b', lambda: str('x'))], fitness=0),
+                                 Chromosome(genome=[Gene('c', lambda: str('x')),
+                                                    Gene('d', lambda: str('x'))], fitness=1),
+                                 Chromosome(genome=[Gene('e', lambda: str('x')),
+                                                    Gene('f', lambda: str('x'))], fitness=2)]
                              ),
-               SubPopulation(1, [Chromosome(_genome=[Gene('1', lambda: str('x')),
-                                                     Gene('2', lambda: str('x'))], _fitness=4),
-                                 Chromosome(_genome=[Gene('3', lambda: str('x')),
-                                                     Gene('4', lambda: str('x'))], _fitness=5),
-                                 Chromosome(_genome=[Gene('5', lambda: str('x')),
-                                                     Gene('6', lambda: str('x'))], _fitness=6)]
+               SubPopulation(1, [Chromosome(genome=[Gene('1', lambda: str('x')),
+                                                    Gene('2', lambda: str('x'))], fitness=4),
+                                 Chromosome(genome=[Gene('3', lambda: str('x')),
+                                                    Gene('4', lambda: str('x'))], fitness=5),
+                                 Chromosome(genome=[Gene('5', lambda: str('x')),
+                                                    Gene('6', lambda: str('x'))], fitness=6)]
                              ),
-               SubPopulation(2, [Chromosome(_genome=[Gene('7', lambda: str('x')),
-                                                     Gene('8', lambda: str('x'))], _fitness=7),
-                                 Chromosome(_genome=[Gene('h', lambda: str('x')),
-                                                     Gene('i', lambda: str('x'))], _fitness=8),
-                                 Chromosome(_genome=[Gene('j', lambda: str('x')),
-                                                     Gene('l', lambda: str('x'))], _fitness=9)]
+               SubPopulation(2, [Chromosome(genome=[Gene('7', lambda: str('x')),
+                                                     Gene('8', lambda: str('x'))], fitness=7),
+                                 Chromosome(genome=[Gene('h', lambda: str('x')),
+                                                     Gene('i', lambda: str('x'))], fitness=8),
+                                 Chromosome(genome=[Gene('j', lambda: str('x')),
+                                                     Gene('l', lambda: str('x'))], fitness=9)]
                              )
                ]
 

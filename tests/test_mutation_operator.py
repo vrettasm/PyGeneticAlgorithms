@@ -1,4 +1,5 @@
 import unittest
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
@@ -32,8 +33,12 @@ class TestMutationOperator(unittest.TestCase):
         :return: None.
         """
 
+        # Dummy genome with two genes.
+        genome = [Gene('1', lambda x: int(x), True),
+                  Gene('2', lambda x: int(x), True)]
+
         # Create an empty test parent.
-        parent1 = Chromosome()
+        parent1 = Chromosome(genome)
 
         # Check if the mutate method is implemented.
         with self.assertRaises(NotImplementedError):

@@ -57,7 +57,7 @@ class TestFlipMutator(unittest.TestCase):
                              Gene(1, func),
                              Gene(0, func),
                              Gene(1, func),
-                             Gene(0, func)], _fitness=0.0)
+                             Gene(0, func)], fitness=0.0)
 
         # Print chromosome BEFORE mutation.
         list_before = [xi.value for xi in chromo]

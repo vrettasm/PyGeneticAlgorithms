@@ -52,7 +52,7 @@ class TestPositionBasedCrossover(unittest.TestCase):
                               Gene('K', lambda: str('x'))])
 
         # Get the number of 'unique' genes BEFORE crossover.
-        N1 = len(set(parent1.genome))
+        n1 = len(set(parent1.genome))
 
         # Make a second of parent.
         parent2 = Chromosome([Gene('C', lambda: str('x')),
@@ -68,7 +68,7 @@ class TestPositionBasedCrossover(unittest.TestCase):
                               Gene('D', lambda: str('x'))])
 
         # Get the number of 'unique' genes BEFORE crossover.
-        N2 = len(set(parent2.genome))
+        n2 = len(set(parent2.genome))
 
         # Print parents BEFORE crossover.
         print("Parent-1: ", " ".join([xi.value for xi in parent1]))
@@ -83,16 +83,16 @@ class TestPositionBasedCrossover(unittest.TestCase):
         print("Child--2: ", " ".join([xi.value for xi in child2]))
 
         # Get the number of 'unique' genes AFTER crossover.
-        M1 = len(set(child1.genome))
+        m1 = len(set(child1.genome))
 
         # Get the number of 'unique' genes AFTER crossover.
-        M2 = len(set(child2.genome))
+        m2 = len(set(child2.genome))
 
-        self.assertEqual(N1, N2, msg="Parents1/2 genome does not match.")
-        self.assertEqual(N1, M1, msg="Parent1/Offspring1 genome does not match after crossover.")
+        self.assertEqual(n1, n2, msg="Parents1/2 genome does not match.")
+        self.assertEqual(n1, m1, msg="Parent1/Offspring1 genome does not match after crossover.")
 
-        self.assertEqual(M1, M2, msg="Offsprings1/2 genome does not match.")
-        self.assertEqual(N2, M2, msg="Parent2/Offspring2 genome does not match after crossover.")
+        self.assertEqual(m1, m2, msg="Offsprings1/2 genome does not match.")
+        self.assertEqual(n2, m2, msg="Parent2/Offspring2 genome does not match after crossover.")
     # _end_def_
 
 # _end_class_
