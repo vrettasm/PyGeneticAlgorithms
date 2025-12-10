@@ -1,5 +1,6 @@
 from copy import deepcopy
 from typing import Any, Callable
+from collections.abc import Iterable
 from numpy.random import default_rng, Generator
 
 # Public interface.
@@ -139,7 +140,17 @@ class Gene(object):
         # _end_if_
 
         # Compare only the datum fields.
-        return self._datum == other._datum
+        condition = self._datum == other._datum
+
+        # If the condition is an Iterable
+        # make sure all the fields align.
+        if isinstance(condition, Iterable):
+            are_equal = all(condition)
+        else:
+            are_equal = condition
+        # _end_if_
+
+        return are_equal
     # _end_def_
 
     def __hash__(self) -> int:
