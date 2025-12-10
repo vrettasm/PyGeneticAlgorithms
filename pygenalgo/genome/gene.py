@@ -142,15 +142,8 @@ class Gene(object):
         # Compare only the datum fields.
         condition = self._datum == other._datum
 
-        # If the condition is an Iterable
-        # make sure all the fields align.
-        if isinstance(condition, Iterable):
-            are_equal = all(condition)
-        else:
-            are_equal = condition
-        # _end_if_
-
-        return are_equal
+        # If the condition is an Iterable make sure all the fields are checked.
+        return all(condition) if isinstance(condition, Iterable) else condition
     # _end_def_
 
     def __hash__(self) -> int:
