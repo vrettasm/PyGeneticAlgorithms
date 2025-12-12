@@ -26,7 +26,7 @@ def clamp(x: int | float,
 def pareto_dominance(point_a: tuple | list,
                      point_b: tuple | list) -> bool:
     """
-    Implements a shortcut version of the pareto dominance condition:
+    Implements a shortcut version of the Pareto dominance condition:
 
     all(p <= q for p, q in zip(point_i, point_j)) &&
     any(p < q for p, q in zip(point_i, point_j))
@@ -62,7 +62,7 @@ def pareto_dominance(point_a: tuple | list,
 
 def pareto_front(points: list) -> list:
     """
-    Simple function that calculates the pareto (optimal)
+    Simple function that calculates the Pareto (optimal)
     front points from a given input points list.
 
     NOTE: The function is working directly with lists,
@@ -73,7 +73,7 @@ def pareto_front(points: list) -> list:
                                    ....................,
                                    (fk1, fk2, ..., fkn)]
 
-    :return: List of points that lie on the pareto front.
+    :return: List of points that lie on the Pareto front.
     """
     # Create a set with all the points sizes.
     check_size = {len(point) for point in points}
@@ -118,7 +118,7 @@ def pareto_front(points: list) -> list:
 
 def np_pareto_front(points: np.ndarray) -> np.ndarray:
     """
-    Simple function that calculates the pareto (optimal)
+    Simple function that calculates the Pareto (optimal)
     front points from a given input points numpy array.
 
     :param points: array of points [(fx1, fx2, ..., fxn),
@@ -126,7 +126,7 @@ def np_pareto_front(points: np.ndarray) -> np.ndarray:
                                     ....................,
                                     (fk1, fk2, ..., fkn)]
 
-    :return: array of points that lie on the pareto front.
+    :return: array of points that lie on the Pareto front.
     """
     # Sanity check.
     if points.ndim != 2:
@@ -206,23 +206,33 @@ def cost_function(func: Callable = None, minimize: bool = False):
 
 def np_cdist(x_pos: np.ndarray, scaled: bool = False) -> np.ndarray:
     """
-    This is equivalent to the scipy.spatial.distance.cdist method
-    with Euclidean distance metric. It is a tailored version for
-    the purposes of the multimodal operation mode.
+    This is equivalent to the scipy.spatial.distance.cdist method with Euclidean
+    distance metric. It is a tailored version for the purposes of the multimodal
+    operation mode.
 
-    :param x_pos: a numpy array of positions. The dimensions of the
-                  input array should [n_rows, n_cols], where n_rows
-                  is the number of particles and n_cols are the number
-                  of positions.
+    :param x_pos: a ndarray of positions. The dimensions of the input array should be
+                  [n_rows, n_cols], where n_rows is the number of particles and n_cols
+                  are the number of positions. In special 3D cases the input can have
+                  a shape of [n_sample, n_rows, n_cols], in these cases the input will
+                  be first reshaped to [n_sample, (n_rows*n_cols)] before we continue.
 
-    :param scaled: boolean flag that allows the input array to be scaled,
-                   using the MaxAbsScaler, before computing the distances.
+    :param scaled: boolean flag that allows the input array to be scaled, using the
+                   MaxAbsScaler, before computing the distances.
 
-    :return: a square [n_rows, n_rows] numpy array of distances.
+    :return: a square [n_rows, n_rows] ndarray of distances.
     """
+    # Check if the input array is 3D.
+    if x_pos.ndim == 3:
+        # Get the original shape of the matrix.
+        n_samples, n_rows, n_cols = x_pos.shape
+
+        # Reshape it by combining the n_rows and n_cols.
+        x_pos = x_pos.reshape((n_samples, n_rows * n_cols), copy=False)
+    # _end_if_
+    
     # Get the number of rows/cols.
     n_rows, n_cols = x_pos.shape
-
+    
     # Check if we want the input data to be scaled.
     if scaled:
         # Scale with the MaxAbsScaler.
