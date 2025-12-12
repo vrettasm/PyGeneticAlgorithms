@@ -71,6 +71,7 @@
   <h1>Source code for pygenalgo.genome.gene</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_rng</span><span class="p">,</span> <span class="n">Generator</span>
 
 <span class="c1"># Public interface.</span>
@@ -215,7 +216,10 @@
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Compare only the datum fields.</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_datum</span>
+        <span class="n">condition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_datum</span>
+
+        <span class="c1"># If the condition is an Iterable make sure all the fields are checked.</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span> <span class="k">else</span> <span class="n">condition</span>
     <span class="c1"># _end_def_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
