@@ -115,7 +115,7 @@ class Chromosome(object):
         self._fitness = float("NaN")
     # _end_def_
 
-    def is_genome_valid(self) -> bool:
+    def has_valid_genome(self) -> bool:
         """
         Checks the validity of the whole chromosome, by
         calling individually all genes is_valid method.

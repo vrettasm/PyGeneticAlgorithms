@@ -56,13 +56,13 @@ class TestChromosome(unittest.TestCase):
                           fitness=0.0, valid=True)
 
         # This genome SHOULD be valid.
-        self.assertTrue(ch_1.is_genome_valid())
+        self.assertTrue(ch_1.has_valid_genome())
 
         # Let's invalidate the genome by flipping one gene.
         ch_1[0].is_valid = False
 
         # This genome SHOULD NOT be valid.
-        self.assertFalse(ch_1.is_genome_valid())
+        self.assertFalse(ch_1.has_valid_genome())
     # _end_def_
 
     def test_clone(self):
