@@ -70,72 +70,53 @@ class PartiallyMappedCrossover(CrossoverOperator):
             segment_of_genome_1 = set(genome_1[i:j])
             segment_of_genome_2 = set(genome_2[i:j])
 
-            # Start building the 1st offspring.
-            for x, gene_x in enumerate(parent2.genome[i:j], start=i):
+            # Start building the offsprings.
+            for n, (gene_x, gene_y) in enumerate(zip(parent2.genome[i:j],
+                                                     parent1.genome[i:j]), start=i):
 
-                # Check if the 'gene_x' exists in child1 genome.
-                if gene_x in segment_of_genome_1:
-                    continue
+                # Check if the 'gene_x' exists in child1.
+                if gene_x not in segment_of_genome_1:
+                    # Initialize the local search variables.
+                    idx, found = n, False
+
+                    # Repeat until you find the right position.
+                    while not found:
+                        # Look for the position of gene[idx] in parent2.
+                        x_pos = parent2.genome.index(genome_1[idx])
+
+                        # If the position is inside the segment update
+                        # the index and repeat the process.
+                        if x_pos in id_segment:
+                            idx = x_pos
+                        else:
+                            # Copy the gene.
+                            genome_1[x_pos] = gene_x.clone()
+
+                            # Break the loop.
+                            found = True
                 # _end_if_
 
-                # Initialize the local search variables.
-                idx, found = x, False
+                # Check if the 'gene_y' exists in child2.
+                if gene_y not in segment_of_genome_2:
+                    # Initialize the local search variables.
+                    idy, found = n, False
 
-                # Repeat until you find the right position.
-                while not found:
+                    # Repeat until you find the right position.
+                    while not found:
+                        # Look for the position of gene[idx] in parent1.
+                        y_pos = parent1.genome.index(genome_2[idy])
 
-                    # Look for the position of gene[idx] in parent2.
-                    x_pos = parent2.genome.index(genome_1[idx])
+                        # If the position is inside the segment update
+                        # the index and repeat the process.
+                        if y_pos in id_segment:
+                            idy = y_pos
+                        else:
+                            # Copy the gene.
+                            genome_2[y_pos] = gene_y.clone()
 
-                    # If the position is inside the segment update
-                    # the index and repeat the process.
-                    if x_pos in id_segment:
-                        idx = x_pos
-                    else:
-
-                        # Copy the gene.
-                        genome_1[x_pos] = gene_x.clone()
-
-                        # Break the loop.
-                        found = True
-                    # _end_if_
-
-                # _end_while_
-
-            # _end_for_
-
-            # Start building the 2nd offspring.
-            for y, gene_y in enumerate(parent1.genome[i:j], start=i):
-
-                # Check if the 'gene_y' exists in child2 genome.
-                if gene_y in segment_of_genome_2:
-                    continue
+                            # Break the loop.
+                            found = True
                 # _end_if_
-
-                # Initialize the local search variables.
-                idy, found = y, False
-
-                # Repeat until you find the right position.
-                while not found:
-
-                    # Look for the position of gene[idx] in parent1.
-                    y_pos = parent1.genome.index(genome_2[idy])
-
-                    # If the position is inside the segment update
-                    # the index and repeat the process.
-                    if y_pos in id_segment:
-                        idy = y_pos
-                    else:
-
-                        # Copy the gene.
-                        genome_2[y_pos] = gene_y.clone()
-
-                        # Break the loop.
-                        found = True
-                    # _end_if_
-
-                # _end_while_
-
             # _end_for_
 
             # Final step to fill child1/2 genomes.
@@ -144,13 +125,10 @@ class PartiallyMappedCrossover(CrossoverOperator):
                 # Check if the gene exists.
                 if gene_a not in genome_2:
                     genome_2[k] = gene_a.clone()
-                # _end_if_
 
                 # Check if the gene exists.
                 if gene_b not in genome_1:
                     genome_1[k] = gene_b.clone()
-                # _end_if_
-
             # _end_for_
 
             # Create two NEW offsprings.
