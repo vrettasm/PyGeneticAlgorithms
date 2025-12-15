@@ -46,7 +46,7 @@ class RandomMigration(MigrationOperator):
                 if self.is_operator_applicable():
 
                     # Select randomly one individual chromosome.
-                    idx = self.rng.integers(0, len(island_i.population))
+                    idx = self.rng.integers(0, len(island_i.population), dtype=int)
 
                     # Replace the randomly selected chromosome with
                     # the pre-selected best one from the list above.

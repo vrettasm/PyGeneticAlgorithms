@@ -38,8 +38,8 @@ class FlipMutator(MutationOperator):
 
             # Select randomly the mutation point and
             # flip the old gene value.
-            individual[self.rng.integers(n_genes)].flip()
-
+            individual[self.rng.integers(n_genes,
+                                         dtype=int)].flip()
             # Set the fitness to NaN.
             individual.invalidate_fitness()
 

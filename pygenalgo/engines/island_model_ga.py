@@ -155,7 +155,7 @@ class IslandModelGA(GenericGA):
                 # Check if the chromosome already exists.
                 if best_chromosome not in population_i:
                     # Select a position at random.
-                    locus = self.rng_GA.integers(pop_size)
+                    locus = self.rng_GA.integers(pop_size, dtype=int)
 
                     # Replace it with the previous best.
                     population_i[locus] = best_chromosome

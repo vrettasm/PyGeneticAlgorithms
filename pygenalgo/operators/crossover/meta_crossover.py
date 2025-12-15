@@ -48,8 +48,8 @@ class MetaCrossover(CrossoverOperator):
 
             # Select randomly, with equal probability (but this can be changed),
             # a crossover operator and call its crossover method.
-            child1, child2 = self.items[self.rng.integers(n_operators)].crossover(parent1, parent2)
-
+            child1, child2 = self.items[self.rng.integers(n_operators,
+                                                          dtype=int)].crossover(parent1, parent2)
             # Increase the crossover counter.
             self.inc_counter()
         else:

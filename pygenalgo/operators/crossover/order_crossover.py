@@ -39,7 +39,7 @@ class OrderCrossover(CrossoverOperator):
         if (parent1 != parent2) and self.is_operator_applicable():
 
             # Select randomly the crossover point from [1, M-1].
-            locus = self.rng.integers(1, high=len(parent1)-1)
+            locus = self.rng.integers(1, high=len(parent1)-1, dtype=int)
 
             # Create auxiliary Sets for faster membership check.
             used_parent1 = set(parent1.genome[:locus])

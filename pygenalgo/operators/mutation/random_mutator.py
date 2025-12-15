@@ -40,8 +40,8 @@ class RandomMutator(MutationOperator):
 
             # Select randomly the mutation point and
             # replace the old gene with a new one.
-            individual[self.rng.integers(n_genes)].random()
-
+            individual[self.rng.integers(n_genes,
+                                         dtype=int)].random()
             # Set the fitness to NaN.
             individual.invalidate_fitness()
 

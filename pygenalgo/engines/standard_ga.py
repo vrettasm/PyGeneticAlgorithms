@@ -108,7 +108,7 @@ class StandardGA(GenericGA):
         # Get the size of the population.
         pop_size = len(self.population)
 
-        # Get the fitness values before optimisation.
+        # Get the fitness values before optimization.
         fit_list_0, _ = self.evaluate_fitness(self.population, parallel)
 
         # Update the average statistics in the dictionary.
@@ -180,7 +180,7 @@ class StandardGA(GenericGA):
                 if previous_best not in population_i:
 
                     # Select a position at random.
-                    locus = self.rng_GA.integers(pop_size)
+                    locus = self.rng_GA.integers(pop_size, dtype=int)
 
                     # Replace it with the previous best.
                     population_i[locus] = previous_best

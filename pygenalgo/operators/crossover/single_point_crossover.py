@@ -41,7 +41,7 @@ class SinglePointCrossover(CrossoverOperator):
         if (parent1 != parent2) and self.is_operator_applicable():
 
             # Select randomly the crossover point.
-            locus = self.rng.integers(1, high=len(parent1))
+            locus = self.rng.integers(1, high=len(parent1), dtype=int)
 
             # Construct 1st offspring genome list at locus.
             genome_1 = [x.clone() for x in parent1.genome[:locus] +

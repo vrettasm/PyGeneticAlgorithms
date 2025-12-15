@@ -44,8 +44,8 @@ class MetaMigration(MigrationOperator):
 
             # Select randomly with equal probability a method and call
             # its migrate method.
-            self.items[self.rng.integers(n_operators)].migrate(islands)
-
+            self.items[self.rng.integers(n_operators,
+                                         dtype=int)].migrate(islands)
             # Increase the migration counter.
             self.inc_counter()
     # _end_def_

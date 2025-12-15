@@ -79,7 +79,7 @@ class GaussianMutator(MutationOperator):
             sigma, xl, xu = self._items
 
             # Select a random position in the genome.
-            i = self.rng.integers(n_genes)
+            i = self.rng.integers(n_genes, dtype=int)
 
             # Get the old value of the Gene.
             old_value = individual[i].value

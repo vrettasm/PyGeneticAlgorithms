@@ -46,8 +46,8 @@ class MetaMutator(MutationOperator):
 
             # Select randomly with equal probability
             # a mutator and call its mutation method.
-            self.items[self.rng.integers(n_operators)].mutate(individual)
-
+            self.items[self.rng.integers(n_operators,
+                                         dtype=int)].mutate(individual)
             # Increase the mutator counter.
             self.inc_counter()
     # _end_def_

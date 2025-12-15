@@ -44,7 +44,7 @@ class ClockwiseMigration(MigrationOperator):
                 if self.is_operator_applicable():
 
                     # Select randomly one individual chromosome.
-                    idx = self.rng.integers(0, len(island_i.population))
+                    idx = self.rng.integers(0, len(island_i.population), dtype=int)
 
                     # Replace the chromosome with the best one from its left.
                     island_i.population[idx] = best_chromosomes[i-1].clone()
