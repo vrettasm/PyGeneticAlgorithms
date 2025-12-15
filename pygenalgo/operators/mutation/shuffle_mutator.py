@@ -53,7 +53,7 @@ class ShuffleMutator(MutationOperator):
             self.rng.shuffle(sliced_chromosome)
 
             # Put back the shuffled items.
-            individual[i:j] = sliced_chromosome
+            individual.genome[i:j] = sliced_chromosome
 
             # Set the fitness to NaN.
             individual.invalidate_fitness()
