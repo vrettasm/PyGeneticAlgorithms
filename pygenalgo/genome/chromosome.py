@@ -246,7 +246,7 @@ class Chromosome(object):
         :return: true if the 'item' belongs in the genome.
         """
         return item in self._genome
-    # _end_if_
+    # _end_def_
 
     def __copy__(self):
         """
