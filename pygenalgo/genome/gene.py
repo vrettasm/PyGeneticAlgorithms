@@ -121,6 +121,48 @@ class Gene(object):
         self._valid = new_value
     # _end_def_
 
+    def random(self) -> None:
+        """
+        This method should be different for each type of Gene. It describes
+        how a specific type of Gene creates a random version of itself. The
+        main  idea is that inside the Chromosome, each Gene can represent a
+        very different concept of the  problem solution, so its Gene should
+        have its own way to perform random mutation.
+
+        This way by calling on the random() method, each Gene will know how
+        to mutate itself without breaking any rules/constraints.
+
+        :return: None.
+        """
+        # Use the random function to set a new value at the data.
+        self._datum = self._func()
+    # _end_def_
+
+    def flip(self) -> None:
+        """
+        This method flips the value of the gene data. It is used only by the
+        FlipMutator operator for problems where the chromosome is represented
+        by a list of bits.
+
+        1)  1 -> 0
+        2)  0 -> 1
+
+        :return: None.
+        """
+        # Flip the current gene value.
+        self._datum = int(not self._datum)
+    # _end_def_
+
+    def clone(self) -> "Gene":
+        """
+        Makes a duplicate of the self object
+        by deep-coping only the datum field.
+
+        :return: a "deep-copy" of the object.
+        """
+        return Gene(deepcopy(self._datum), self._func, self._valid)
+    # _end_def_
+
     def __eq__(self, other) -> bool:
         """
         When we compare two Genes we care only about the data they hold.
@@ -161,38 +203,6 @@ class Gene(object):
             # If it fails try to convert
             # it to a tuple first.
             return hash(tuple(self._datum))
-    # _end_def_
-
-    def random(self) -> None:
-        """
-        This method should be different for each type of Gene. It describes
-        how a specific type of Gene creates a random version of itself. The
-        main  idea is that inside the Chromosome, each Gene can represent a
-        very different concept of the  problem solution, so its Gene should
-        have its own way to perform random mutation.
-
-        This way by calling on the random() method, each Gene will know how
-        to mutate itself without breaking any rules/constraints.
-
-        :return: None.
-        """
-        # Use the random function to set a new value at the data.
-        self._datum = self._func()
-    # _end_def_
-
-    def flip(self) -> None:
-        """
-        This method flips the value of the gene data. It is used only by the
-        FlipMutator operator for problems where the chromosome is represented
-        by a list of bits.
-
-        1)  1 -> 0
-        2)  0 -> 1
-
-        :return: None.
-        """
-        # Flip the current gene value.
-        self._datum = int(not self._datum)
     # _end_def_
 
     def __str__(self) -> str:
@@ -256,16 +266,6 @@ class Gene(object):
 
         # Return identical instance.
         return new_object
-    # _end_def_
-
-    def clone(self) -> "Gene":
-        """
-        Makes a duplicate of the self object
-        by deep-coping only the datum field.
-
-        :return: a "deep-copy" of the object.
-        """
-        return Gene(deepcopy(self._datum), self._func, self._valid)
     # _end_def_
 
 # _end_class_
