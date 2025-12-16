@@ -86,12 +86,12 @@ class BlendCrossover(CrossoverOperator):
             # Preallocate 2nd genome.
             genome_2: list = [None] * number_of_genes
 
-            # Generate uniform random numbers (floats)
-            # in the half-open interval [0.0, 1.0).
-            rv_uniform = self.rng.random(size=(number_of_genes, 2))
+            # Generate uniform random numbers (floats) in the half-open
+            # interval [0.0, 1.0).
+            random_uniform = self.rng.random(size=(number_of_genes, 2))
 
             # Set the genes accordingly.
-            for i, (r_val, gene_1, gene_2) in enumerate(zip(rv_uniform,
+            for i, (r_val, gene_1, gene_2) in enumerate(zip(random_uniform,
                                                             parent1.genome,
                                                             parent2.genome)):
                 # Extract the gene values once.
