@@ -162,6 +162,16 @@ class Chromosome(object):
                                        strict=True)].count(True)
     # _end_def_
 
+    def clone(self) -> "Chromosome":
+        """
+        Makes a duplicate of the self object
+        by deep-coping only the genome field.
+
+        :return: a "deep-copy" of the object.
+        """
+        return Chromosome(deepcopy(self._genome), self._fitness, self._valid)
+    # _end_def_
+
     def __eq__(self, other) -> bool:
         """
         Compares the genome of self, with the other chromosome
@@ -279,16 +289,6 @@ class Chromosome(object):
 
         # Return identical instance.
         return new_object
-    # _end_def_
-
-    def clone(self) -> "Chromosome":
-        """
-        Makes a duplicate of the self object
-        by deep-coping only the genome field.
-
-        :return: a "deep-copy" of the object.
-        """
-        return Chromosome(deepcopy(self._genome), self._fitness, self._valid)
     # _end_def_
 
 # _end_class_
