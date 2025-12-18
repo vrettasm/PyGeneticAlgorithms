@@ -2,12 +2,7 @@
 
 ![Logo](./logo/pga_logo.png)
 
-"Genetic Algorithms [(GA)](https://en.wikipedia.org/wiki/Genetic_algorithm), are meta heuristic algorithms
-inspired by the process of natural selection and belong to a larger class of evolutionary algorithms (EA)."
-
--- (From Wikipedia, the free encyclopedia)
-
-This repository implements a genetic algorithm (GA) in Python3 programming language, using only **Numpy** and **Joblib**
+This repository implements a genetic algorithm toolbox in Python3 programming language, using only **Numpy** and **Joblib**
 as additional libraries. The basic approach offers a "StandardGA" class, where the whole population of chromosomes is
 replaced by a new one at the end of each iteration (or epoch). More recently, a new computational model was added named
 "IslandModelGA" class that offers a new genetic operator (MigrationOperator), that allows for periodic migration of the
