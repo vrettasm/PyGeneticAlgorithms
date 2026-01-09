@@ -7,7 +7,7 @@ with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
 setup(
-    name='PyGenAlgo',
+    name='pygenalgo',
     version='1.8.0',
     author='Michalis Vrettas, PhD',
     author_email='michail.vrettas@gmail.com',
