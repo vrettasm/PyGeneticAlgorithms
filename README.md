@@ -87,9 +87,10 @@ Alternatively one can clone the project directly using git as follows:
 
     git clone https://github.com/vrettasm/PyGeneticAlgorithms.git
 
-After the download of the code (or the git clone), one can use the command:
+After the download of the code (or the git clone), one can use the following commands:
 
-    pip install pygenalgo
+    cd PyGeneticAlgorithms
+    pip install .
 
 This will install the PyGenAlgo in the package management system.
 
