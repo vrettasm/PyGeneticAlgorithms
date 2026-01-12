@@ -79,11 +79,11 @@ so new things might come along the way.
 
 There are two options to install the software.
 
-The easiest way is to visit the GitHub web-page of the project and simply download the source code in
-[zip](https://github.com/vrettasm/PyGeneticAlgorithms/archive/refs/heads/master.zip) format. This option
-does not require a prior installation of git on the computer.
+The easiest way is to download it from PyPI. Simply run the following command on a terminal:
+    
+    pip install pygenalgo
 
-Alternatively one can clone the project directly using git as follows:
+Alternatively one can clone directly the latest version using git as follows:
 
     git clone https://github.com/vrettasm/PyGeneticAlgorithms.git
 
@@ -92,7 +92,7 @@ After the download of the code (or the git clone), one can use the following com
     cd PyGeneticAlgorithms
     pip install .
 
-This will install the PyGenAlgo in the package management system.
+This will install the latest PyGenAlgo version in the package management system.
 
 ### Required packages
 
