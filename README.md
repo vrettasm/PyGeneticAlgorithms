@@ -1,7 +1,9 @@
 # PyGenAlgo: A simple and powerful toolkit for genetic algorithms.
 
 ![Logo](./logo/pga_logo.png)
+
 [![DOI](https://zenodo.org/badge/311952715.svg)](https://doi.org/10.5281/zenodo.18171837)
+
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 Score: 9.10/10
 
