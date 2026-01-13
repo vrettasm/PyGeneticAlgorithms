@@ -41,7 +41,8 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">pygenalgo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
 </ul>
 
         </div>
@@ -122,13 +123,13 @@
 
             <span class="c1"># Make a slice list of the genes</span>
             <span class="c1"># we want to shuffle: i -&gt; j.</span>
-            <span class="n">sliced_chromosome</span> <span class="o">=</span> <span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">sliced_chromosome</span> <span class="o">=</span> <span class="n">individual</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
 
             <span class="c1"># Shuffle the copied slice in place.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">sliced_chromosome</span><span class="p">)</span>
 
             <span class="c1"># Put back the shuffled items.</span>
-            <span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">sliced_chromosome</span>
+            <span class="n">individual</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">sliced_chromosome</span>
 
             <span class="c1"># Set the fitness to NaN.</span>
             <span class="n">individual</span><span class="o">.</span><span class="n">invalidate_fitness</span><span class="p">()</span>

@@ -1,5 +1,5 @@
-pygenalgo.operators.crossover package
-=====================================
+Crossover Operators
+===================
 
 Submodules
 ----------

@@ -1,5 +1,5 @@
-pygenalgo.operators package
-===========================
+Operators
+=========
 
 Subpackages
 -----------

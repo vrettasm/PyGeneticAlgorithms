@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.operators.mutation.gaussian_mutator &mdash; PyGenAlgo 01.70.50 documentation</title>
+  <title>pygenalgo.operators.mutation.polynomial_mutator &mdash; PyGenAlgo 01.70.50 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
@@ -60,7 +60,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">pygenalgo.operators.mutation.gaussian_mutator</li>
+      <li class="breadcrumb-item active">pygenalgo.operators.mutation.polynomial_mutator</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -69,30 +69,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for pygenalgo.operators.mutation.gaussian_mutator</h1><div class="highlight"><pre>
+  <h1>Source code for pygenalgo.operators.mutation.polynomial_mutator</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">clamp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.mutation.mutate_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MutationOperator</span>
 
 
-<div class="viewcode-block" id="GaussianMutator">
-<a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.gaussian_mutator.GaussianMutator">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">GaussianMutator</span><span class="p">(</span><span class="n">MutationOperator</span><span class="p">):</span>
+<div class="viewcode-block" id="PolynomialMutator">
+<a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.polynomial_mutator.PolynomialMutator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PolynomialMutator</span><span class="p">(</span><span class="n">MutationOperator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Gaussian mutator, mutates the chromosome by selecting randomly a position</span>
-<span class="sd">        and perturbing it with a Gaussian random value to the current gene value.</span>
+<span class="sd">        Polynomial mutator (PM-eta), mutates the chromosome by adjusting the</span>
+<span class="sd">        values of genes according to a polynomial distribution. This results</span>
+<span class="sd">        in a more controlled and smoother alteration of values.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutate_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutate_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">eta_pm</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">,</span>
                  <span class="n">lower_val</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">upper_val</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Construct a &#39;GaussianMutator&#39; object with a given probability value.</span>
+<span class="sd">        Construct a &#39;PolynomialMutator&#39; object with a given probability value.</span>
 
 <span class="sd">        :param mutate_probability: (float).</span>
 
-<span class="sd">        :param sigma: (float) standard deviation of the Gaussian N(0, sigma).</span>
+<span class="sd">        :param eta_pm: (float) the distribution index for polynomial mutation.</span>
+<span class="sd">                        Higher values mean smaller perturbations (more local search).</span>
 
 <span class="sd">        :param lower_val: (float) lower limit value for the gene mutation.</span>
 
@@ -102,14 +104,8 @@
         <span class="c1"># probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mutate_probability</span><span class="p">)</span>
 
-        <span class="c1"># Ensure sigma parameter is float.</span>
-        <span class="n">sigma</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
-
-        <span class="c1"># Ensure standard deviation is positive.</span>
-        <span class="k">if</span> <span class="n">sigma</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;Standard deviation must be positive.&quot;</span><span class="p">)</span>
-        <span class="c1"># _end_if_</span>
+        <span class="c1"># Ensure eta_pm parameter is float.</span>
+        <span class="n">eta_pm</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">eta_pm</span><span class="p">)</span>
 
         <span class="c1"># Ensure that both lower and upper limits are provided.</span>
         <span class="k">if</span> <span class="n">lower_val</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">upper_val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -130,15 +126,15 @@
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Assign variables to the _items placeholder.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">[</span><span class="n">sigma</span><span class="p">,</span> <span class="n">lower_val</span><span class="p">,</span> <span class="n">upper_val</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">[</span><span class="n">eta_pm</span><span class="p">,</span> <span class="n">lower_val</span><span class="p">,</span> <span class="n">upper_val</span><span class="p">]</span>
     <span class="c1"># _end_def_</span>
 
-<div class="viewcode-block" id="GaussianMutator.mutate">
-<a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.gaussian_mutator.GaussianMutator.mutate">[docs]</a>
+<div class="viewcode-block" id="PolynomialMutator.mutate">
+<a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.polynomial_mutator.PolynomialMutator.mutate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Perform the mutation operation by randomly adding the</span>
-<span class="sd">        Gaussian value to a randomly selected gene position.</span>
+<span class="sd">        Perform the mutation operation by adjusting the values</span>
+<span class="sd">        of genes according to a polynomial distribution.</span>
 
 <span class="sd">        :param individual: (Chromosome).</span>
 
@@ -151,8 +147,18 @@
             <span class="c1"># Get the size of the chromosome.</span>
             <span class="n">n_genes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
 
-            <span class="c1"># Extract the values from the placeholder variable.</span>
-            <span class="n">sigma</span><span class="p">,</span> <span class="n">xl</span><span class="p">,</span> <span class="n">xu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span>
+            <span class="c1"># Extract the variables from the placeholder _items.</span>
+            <span class="n">eta_pm</span><span class="p">,</span> <span class="n">xl</span><span class="p">,</span> <span class="n">xu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span>
+
+            <span class="c1"># Generate a random number in [0, 1).</span>
+            <span class="n">rand_u</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+
+            <span class="c1"># Calculate delta (the perturbation factor).</span>
+            <span class="k">if</span> <span class="n">rand_u</span> <span class="o">&lt;=</span> <span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">delta</span> <span class="o">=</span> <span class="p">((</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">rand_u</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">eta_pm</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)))</span> <span class="o">-</span> <span class="mf">1.0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">delta</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">((</span><span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">rand_u</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">eta_pm</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)))</span>
+            <span class="c1"># _end_if_</span>
 
             <span class="c1"># Select a random position in the genome.</span>
             <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_genes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
@@ -160,10 +166,10 @@
             <span class="c1"># Get the old value of the Gene.</span>
             <span class="n">old_value</span> <span class="o">=</span> <span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
 
-            <span class="c1"># Calculate the new Gene value by sampling from N(value, sigma),</span>
-            <span class="c1"># ensuring it stays within limits.</span>
-            <span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">old_value</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma</span><span class="p">),</span>
-                                        <span class="n">xl</span><span class="p">,</span> <span class="n">xu</span><span class="p">)</span>
+            <span class="c1"># Update the genome of the offspring with the new value ensuring it</span>
+            <span class="c1"># stays within limits.</span>
+            <span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">old_value</span> <span class="o">+</span> <span class="n">delta</span> <span class="o">*</span> <span class="p">(</span><span class="n">xu</span> <span class="o">-</span> <span class="n">xl</span><span class="p">),</span> <span class="n">xl</span><span class="p">,</span> <span class="n">xu</span><span class="p">)</span>
+
             <span class="c1"># Set the fitness to NaN.</span>
             <span class="n">individual</span><span class="o">.</span><span class="n">invalidate_fitness</span><span class="p">()</span>
 

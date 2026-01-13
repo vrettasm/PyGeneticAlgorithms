@@ -1,5 +1,5 @@
-pygenalgo.operators.migration package
-=====================================
+Migration Operators
+===================
 
 Submodules
 ----------

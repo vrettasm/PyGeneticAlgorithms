@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Utils &mdash; PyGenAlgo 01.70.50 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d0c4109e"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Selection operators" href="pygenalgo.operators.selection.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PyGenAlgo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pygenalgo.html">PyGenAlgo</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="pygenalgo.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html">Engines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.genome.html">Genome</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.html">Operators</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pygenalgo.html#module-pygenalgo">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PyGenAlgo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Modules</a></li>
+          <li class="breadcrumb-item"><a href="pygenalgo.html">PyGenAlgo</a></li>
+      <li class="breadcrumb-item active">Utils</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pygenalgo.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="utils">
+<h1>Utils<a class="headerlink" href="#utils" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-pygenalgo.utils.auxiliary">
+<span id="pygenalgo-utils-auxiliary-module"></span><h2>pygenalgo.utils.auxiliary module<a class="headerlink" href="#module-pygenalgo.utils.auxiliary" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pygenalgo.utils.auxiliary.SubPopulation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.auxiliary.</span></span><span class="sig-name descname"><span class="pre">SubPopulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pop_id:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">population:</span> <span class="pre">list</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/utils/auxiliary.html#SubPopulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.auxiliary.SubPopulation" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Auxiliary class container used in the IslandModelGA
+to hold all the subpopulations (one on each island).</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pygenalgo.utils.auxiliary.SubPopulation.id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#pygenalgo.utils.auxiliary.SubPopulation.id" title="Link to this definition"></a></dt>
+<dd><p>Accessor (getter) of the id parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the id value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.utils.auxiliary.SubPopulation.pop_id">
+<span class="sig-name descname"><span class="pre">pop_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#pygenalgo.utils.auxiliary.SubPopulation.pop_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.utils.auxiliary.SubPopulation.population">
+<span class="sig-name descname"><span class="pre">population</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#pygenalgo.utils.auxiliary.SubPopulation.population" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygenalgo.utils.auxiliary.apply_corrections">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.auxiliary.</span></span><span class="sig-name descname"><span class="pre">apply_corrections</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/auxiliary.html#apply_corrections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.auxiliary.apply_corrections" title="Link to this definition"></a></dt>
+<dd><p>Check the population  for invalid genes and correct them by applying directly
+the random method. It is assumed that the random method of the Gene is always
+returning a ‘valid’ value for the Gene. After that we need to re-evaluate the
+chromosome to update its fitness.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_population</strong> – List(Chromosome) the population we want to apply
+corrections (if applicable).</p></li>
+<li><p><strong>fit_func</strong> – callable fitness function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the number of corrected genes and the additional function evaluations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygenalgo.utils.auxiliary.average_hamming_distance">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.auxiliary.</span></span><span class="sig-name descname"><span class="pre">average_hamming_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/auxiliary.html#average_hamming_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.auxiliary.average_hamming_distance" title="Link to this definition"></a></dt>
+<dd><p>Computes the average Hamming distance of a population. We use this
+to measure the similarity in the whole population of chromosomes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>population</strong> – List(Chromosome) the population we want to compute
+the average Hamming distance.</p></li>
+<li><p><strong>normal</strong> – (bool) flag that requires the return of the normalized
+average distance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(float) the total number of differences, in the genes,
+divided by the total number of genes compared.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygenalgo.utils.auxiliary.unique_pairs">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.auxiliary.</span></span><span class="sig-name descname"><span class="pre">unique_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/auxiliary.html#unique_pairs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.auxiliary.unique_pairs" title="Link to this definition"></a></dt>
+<dd><p>Computes the number of unique pairs among ‘n_size’
+distinct numbers by using the combination formula
+for choosing 2 items from a set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_size</strong> – the number of ‘distinct’ numbers.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the ‘n choose 2’, or C(n, 2).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pygenalgo.utils.utilities">
+<span id="pygenalgo-utils-utilities-module"></span><h2>pygenalgo.utils.utilities module<a class="headerlink" href="#module-pygenalgo.utils.utilities" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pygenalgo.utils.utilities.clamp">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">clamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_lower</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_upper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#clamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.clamp" title="Link to this definition"></a></dt>
+<dd><p>Clamps a value within a specified range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – value to clamp.</p></li>
+<li><p><strong>x_lower</strong> – lower bound.</p></li>
+<li><p><strong>x_upper</strong> – upper bound.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>clamped value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygenalgo.utils.utilities.cost_function">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">cost_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#cost_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.cost_function" title="Link to this definition"></a></dt>
+<dd><p>Decorator for the function that we want to optimize.
+The default setting is maximization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> – the function to be optimized.</p></li>
+<li><p><strong>minimize</strong> – if ‘True’ it will return the negative function
+value to allow for the minimization. Default is
+set to ‘False’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the ‘function_wrapper’ method.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygenalgo.utils.utilities.np_cdist">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">np_cdist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#np_cdist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.np_cdist" title="Link to this definition"></a></dt>
+<dd><p>This is equivalent to the scipy.spatial.distance.cdist method with Euclidean
+distance metric. It is a tailored version for the purposes of the multimodal
+operation mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pos</strong> – a ndarray of positions. The dimensions of the input array should be
+[n_rows, n_cols], where n_rows is the number of particles and n_cols
+are the number of positions. In special 3D cases the input can have
+a shape of [n_sample, n_rows, n_cols], in these cases the input will
+be first reshaped to [n_sample, (n_rows*n_cols)] before we continue.</p></li>
+<li><p><strong>scaled</strong> – boolean flag that allows the input array to be scaled, using the
+MaxAbsScaler, before computing the distances.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a square [n_rows, n_rows] ndarray of distances.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygenalgo.utils.utilities.np_pareto_front">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">np_pareto_front</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#np_pareto_front"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.np_pareto_front" title="Link to this definition"></a></dt>
+<dd><p>Simple function that calculates the Pareto (optimal)
+front points from a given input points numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>points</strong> – array of points [(fx1, fx2, …, fxn),
+(fy1, fy2, …, fyn),
+………………..,
+(fk1, fk2, …, fkn)]</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>array of points that lie on the Pareto front.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygenalgo.utils.utilities.pareto_dominance">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">pareto_dominance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#pareto_dominance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.pareto_dominance" title="Link to this definition"></a></dt>
+<dd><p>Implements a shortcut version of the Pareto dominance condition:</p>
+<p>all(p &lt;= q for p, q in zip(point_i, point_j)) &amp;&amp;
+any(p &lt; q for p, q in zip(point_i, point_j))</p>
+<p>NOTE: It is assumed that both points have the same size (length).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point_a</strong> – the  first point (as tuple or list).</p></li>
+<li><p><strong>point_b</strong> – the second point (as tuple or list).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>if the condition is satisfied.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygenalgo.utils.utilities.pareto_front">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">pareto_front</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#pareto_front"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.pareto_front" title="Link to this definition"></a></dt>
+<dd><p>Simple function that calculates the Pareto (optimal)
+front points from a given input points list.</p>
+<p>NOTE: The function is working directly with lists,
+even though it can be optimized using numpy arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>points</strong> – list of points [(fx1, fx2, …, fxn),
+(fy1, fy2, …, fyn),
+………………..,
+(fk1, fk2, …, fkn)]</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of points that lie on the Pareto front.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pygenalgo.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pygenalgo.utils" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pygenalgo.operators.selection.html" class="btn btn-neutral float-left" title="Selection operators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Michalis Vrettas, PhD.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

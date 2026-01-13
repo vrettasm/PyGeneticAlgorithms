@@ -1,5 +1,5 @@
-pygenalgo.operators.selection package
-=====================================
+Selection operators
+===================
 
 Submodules
 ----------

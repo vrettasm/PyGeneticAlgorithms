@@ -41,7 +41,8 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">pygenalgo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
 </ul>
 
         </div>
@@ -191,20 +192,16 @@
 
     <span class="c1"># _end_def_</span>
 
-<div class="viewcode-block" id="Chromosome.is_genome_valid">
-<a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.is_genome_valid">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">is_genome_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="Chromosome.has_valid_genome">
+<a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.has_valid_genome">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_valid_genome</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks the validity of the whole chromosome, by</span>
 <span class="sd">        calling individually all genes is_valid method.</span>
 
-<span class="sd">        In addition, it &quot;double-checks&quot; that all entries</span>
-<span class="sd">        in the genome are of type &#39;Gene&#39;.</span>
-
 <span class="sd">        :return: True if ALL genes are valid, else False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Gene</span><span class="p">)</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">is_valid</span>
-                   <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_genome</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">is_valid</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_genome</span><span class="p">)</span></div>
 
     <span class="c1"># _end_def_</span>
 
@@ -248,6 +245,19 @@
         <span class="c1"># Compute the dissimilarities in their genomes.</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">k</span> <span class="o">!=</span> <span class="n">l</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_genome</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">genome</span><span class="p">,</span>
                                        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
+
+    <span class="c1"># _end_def_</span>
+
+<div class="viewcode-block" id="Chromosome.clone">
+<a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.clone">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Chromosome&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Makes a duplicate of the self object</span>
+<span class="sd">        by deep-coping only the genome field.</span>
+
+<span class="sd">        :return: a &quot;deep-copy&quot; of the object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_genome</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">)</span></div>
 
     <span class="c1"># _end_def_</span>
 
@@ -325,7 +335,7 @@
 <span class="sd">        :return: true if the &#39;item&#39; belongs in the genome.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_genome</span>
-    <span class="c1"># _end_if_</span>
+    <span class="c1"># _end_def_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -367,20 +377,7 @@
         <span class="nb">setattr</span><span class="p">(</span><span class="n">new_object</span><span class="p">,</span> <span class="s2">&quot;_valid&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">)</span>
 
         <span class="c1"># Return identical instance.</span>
-        <span class="k">return</span> <span class="n">new_object</span>
-    <span class="c1"># _end_def_</span>
-
-<div class="viewcode-block" id="Chromosome.clone">
-<a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.clone">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Chromosome&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Makes a duplicate of the self object</span>
-<span class="sd">        by deep-coping only the genome field.</span>
-
-<span class="sd">        :return: a &quot;deep-copy&quot; of the object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_genome</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">)</span></div>
-</div>
+        <span class="k">return</span> <span class="n">new_object</span></div>
 
     <span class="c1"># _end_def_</span>
 

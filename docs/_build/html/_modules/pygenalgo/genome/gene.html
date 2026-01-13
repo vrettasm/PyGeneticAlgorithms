@@ -41,7 +41,8 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">pygenalgo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
 </ul>
 
         </div>
@@ -197,6 +198,57 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span> <span class="o">=</span> <span class="n">new_value</span>
     <span class="c1"># _end_def_</span>
 
+<div class="viewcode-block" id="Gene.random">
+<a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.gene.Gene.random">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">random</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method should be different for each type of Gene. It describes</span>
+<span class="sd">        how a specific type of Gene creates a random version of itself. The</span>
+<span class="sd">        main  idea is that inside the Chromosome, each Gene can represent a</span>
+<span class="sd">        very different concept of the  problem solution, so its Gene should</span>
+<span class="sd">        have its own way to perform random mutation.</span>
+
+<span class="sd">        This way by calling on the random() method, each Gene will know how</span>
+<span class="sd">        to mutate itself without breaking any rules/constraints.</span>
+
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Use the random function to set a new value at the data.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">()</span></div>
+
+    <span class="c1"># _end_def_</span>
+
+<div class="viewcode-block" id="Gene.flip">
+<a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.gene.Gene.flip">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">flip</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method flips the value of the gene data. It is used only by the</span>
+<span class="sd">        FlipMutator operator for problems where the chromosome is represented</span>
+<span class="sd">        by a list of bits.</span>
+
+<span class="sd">        1)  1 -&gt; 0</span>
+<span class="sd">        2)  0 -&gt; 1</span>
+
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Flip the current gene value.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">)</span></div>
+
+    <span class="c1"># _end_def_</span>
+
+<div class="viewcode-block" id="Gene.clone">
+<a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.gene.Gene.clone">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Gene&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Makes a duplicate of the self object</span>
+<span class="sd">        by deep-coping only the datum field.</span>
+
+<span class="sd">        :return: a &quot;deep-copy&quot; of the object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Gene</span><span class="p">(</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">)</span></div>
+
+    <span class="c1"># _end_def_</span>
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        When we compare two Genes we care only about the data they hold.</span>
@@ -237,44 +289,6 @@
             <span class="c1"># If it fails try to convert</span>
             <span class="c1"># it to a tuple first.</span>
             <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">))</span>
-    <span class="c1"># _end_def_</span>
-
-<div class="viewcode-block" id="Gene.random">
-<a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.gene.Gene.random">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">random</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method should be different for each type of Gene. It describes</span>
-<span class="sd">        how a specific type of Gene creates a random version of itself. The</span>
-<span class="sd">        main  idea is that inside the Chromosome, each Gene can represent a</span>
-<span class="sd">        very different concept of the  problem solution, so its Gene should</span>
-<span class="sd">        have its own way to perform random mutation.</span>
-
-<span class="sd">        This way by calling on the random() method, each Gene will know how</span>
-<span class="sd">        to mutate itself without breaking any rules/constraints.</span>
-
-<span class="sd">        :return: None.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Use the random function to set a new value at the data.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">()</span></div>
-
-    <span class="c1"># _end_def_</span>
-
-<div class="viewcode-block" id="Gene.flip">
-<a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.gene.Gene.flip">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">flip</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method flips the value of the gene data. It is used only by the</span>
-<span class="sd">        FlipMutator operator for problems where the chromosome is represented</span>
-<span class="sd">        by a list of bits.</span>
-
-<span class="sd">        1)  1 -&gt; 0</span>
-<span class="sd">        2)  0 -&gt; 1</span>
-
-<span class="sd">        :return: None.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Flip the current gene value.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">)</span></div>
-
     <span class="c1"># _end_def_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -337,20 +351,7 @@
         <span class="nb">setattr</span><span class="p">(</span><span class="n">new_object</span><span class="p">,</span> <span class="s2">&quot;_valid&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">)</span>
 
         <span class="c1"># Return identical instance.</span>
-        <span class="k">return</span> <span class="n">new_object</span>
-    <span class="c1"># _end_def_</span>
-
-<div class="viewcode-block" id="Gene.clone">
-<a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.gene.Gene.clone">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Gene&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Makes a duplicate of the self object</span>
-<span class="sd">        by deep-coping only the datum field.</span>
-
-<span class="sd">        :return: a &quot;deep-copy&quot; of the object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">Gene</span><span class="p">(</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">)</span></div>
-</div>
+        <span class="k">return</span> <span class="n">new_object</span></div>
 
     <span class="c1"># _end_def_</span>
 

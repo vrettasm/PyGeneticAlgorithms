@@ -1,5 +1,5 @@
-pygenalgo.engines package
-=========================
+Engines
+=======
 
 Submodules
 ----------

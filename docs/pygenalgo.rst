@@ -1,5 +1,5 @@
-pygenalgo package
-=================
+PyGenAlgo
+=========
 
 Subpackages
 -----------

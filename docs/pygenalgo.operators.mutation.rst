@@ -1,5 +1,5 @@
-pygenalgo.operators.mutation package
-====================================
+Mutation Operators
+==================
 
 Submodules
 ----------

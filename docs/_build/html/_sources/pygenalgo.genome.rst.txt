@@ -1,5 +1,5 @@
-pygenalgo.genome package
-========================
+Genome
+======
 
 Submodules
 ----------
