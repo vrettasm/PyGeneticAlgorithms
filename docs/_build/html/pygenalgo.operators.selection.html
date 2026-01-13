@@ -337,8 +337,9 @@ The individual with the highest fitness in the mini-group is chosen for reproduc
 This method provides a balance between selection pressure and diversity, as larger
 tournament sizes increase the likelihood of selecting fitter individuals, while smaller
 sizes maintain population diversity. The size of the tournament can be adjusted depending
-on the desired selection pressure. This technique is computationally efficient and effective,
-especially in dynamic environments or populations with diverse fitness landscapes.</p>
+on the desired selection pressure. This technique is computationally efficient and
+effective, especially in dynamic environments or populations with diverse fitness
+landscapes.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.tournament_selector.TournamentSelector.select">
@@ -367,13 +368,15 @@ to form the new population of solutions.</p>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Truncation Selection is a straightforward method where only a predetermined percentage of the best
-individuals are selected based on fitness, while the rest are discarded. This ensures a consistent
-evolution of stronger solutions, accelerating convergence toward optimal fitness levels. While
-effective in honing in on high-quality individuals, truncation selection can create a loss of genetic
-diversity, risking premature convergence if the population becomes too homogeneous. The selection
-proportion can be adjusted to control the pressure, making this method adaptable for various scenarios
-but necessitating monitoring to retain essential diversity.</p>
+<div><p>Truncation Selection is a straightforward method where only a predetermined
+percentage of the best individuals are selected based on fitness, while the
+rest are discarded. This ensures a consistent evolution of stronger solutions,
+accelerating convergence toward optimal fitness levels. While effective in
+honing in on high-quality individuals, truncation selection can create a loss
+of genetic diversity, risking premature convergence if the population becomes
+too homogeneous. The selection proportion can be adjusted to control the pressure,
+making this method adaptable for various scenarios but necessitating monitoring to
+retain essential diversity.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.truncation_selector.TruncationSelector.select">
@@ -402,14 +405,16 @@ to form the new population of solutions.</p>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Neighborhood Selection focuses on leveraging local relationships within the population
-to guide the selection process. Unlike global methods, it emphasizes individuals that
-are closely related in the solution space. This operator selects candidates based on their
-proximity, fostering local exploration and potentially discovering niche solutions.
-Neighborhood Selection can lead to a more cohesive search through similar solutions,
-promoting the evolution of specialized characteristics. While it can enhance diversity
-within clusters of solutions, the method also risks missing out on globally optimal solutions
-if too localized, necessitating a balance between exploration and exploitation in broader landscapes.</p>
+<div><p>Neighborhood Selection focuses on leveraging local relationships within
+the population to guide the selection process. Unlike global methods it
+emphasizes individuals that are closely related in the solution space.
+This operator selects candidates based on their proximity, fostering local
+exploration and potentially discovering niche solutions. Neighborhood Selection
+can lead to a more cohesive search through similar solutions, promoting the
+evolution of specialized characteristics. While it can enhance diversity within
+clusters of solutions, the method also risks missing out on globally optimal
+solutions if too localized, necessitating a balance between exploration and
+exploitation in broader landscapes.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.neighborhood_selector.NeighborhoodSelector.select">

@@ -100,7 +100,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mutate_probability</span><span class="p">)</span>
 
         <span class="c1"># NOTE: In here the mutation probabilities for each mutator are set to 1.0.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">(</span><span class="n">SwapMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">RandomMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">ShuffleMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">InverseMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">(</span><span class="n">SwapMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">RandomMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+                       <span class="n">ShuffleMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">InverseMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="MetaMutator.mutate">

@@ -122,7 +122,8 @@
         <span class="k">if</span> <span class="n">num_islands</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">):</span>
             <span class="c1"># Raise an error if number of islands is too high.</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;Number of requested islands (</span><span class="si">{</span><span class="n">num_islands</span><span class="si">}</span><span class="s2">) exceeds the size of the population.&quot;</span><span class="p">)</span>
+                             <span class="sa">f</span><span class="s2">&quot;Number of requested islands (</span><span class="si">{</span><span class="n">num_islands</span><span class="si">}</span><span class="s2">) &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;exceeds the size of the population.&quot;</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Sanity check.</span>
@@ -382,7 +383,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_fitness_0</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
 
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">: Mean=</span><span class="si">{</span><span class="n">avg_fitness_0</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, Std=</span><span class="si">{</span><span class="n">std_fitness_0</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">: Mean=</span><span class="si">{</span><span class="n">avg_fitness_0</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, &quot;</span>
+                                   <span class="sa">f</span><span class="s2">&quot;Std=</span><span class="si">{</span><span class="n">std_fitness_0</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Store the initial crossover and mutation probabilities.</span>
@@ -479,7 +481,7 @@
                     <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">results_i</span><span class="p">:</span>
 
                         <span class="c1"># Extract the results.</span>
-                        <span class="n">island</span><span class="p">,</span> <span class="n">has_converged</span><span class="p">,</span> <span class="n">local_stats</span><span class="p">,</span> <span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">res</span>
+                        <span class="n">island</span><span class="p">,</span> <span class="n">has_converged</span><span class="p">,</span> <span class="n">local_stats</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">res</span>
 
                         <span class="c1"># Check if we want information on the screen.</span>
                         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>

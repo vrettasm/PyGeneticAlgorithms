@@ -70,9 +70,10 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.utils.utilities</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span><span class="p">,</span> <span class="n">partial</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pareto_front&quot;</span><span class="p">,</span> <span class="s2">&quot;cost_function&quot;</span><span class="p">,</span> <span class="s2">&quot;np_cdist&quot;</span><span class="p">,</span>
@@ -318,10 +319,10 @@
         <span class="c1"># Reshape it by combining the n_rows and n_cols.</span>
         <span class="n">x_pos</span> <span class="o">=</span> <span class="n">x_pos</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_rows</span> <span class="o">*</span> <span class="n">n_cols</span><span class="p">),</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="c1"># _end_if_</span>
-    
+
     <span class="c1"># Get the number of rows/cols.</span>
     <span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span> <span class="o">=</span> <span class="n">x_pos</span><span class="o">.</span><span class="n">shape</span>
-    
+
     <span class="c1"># Check if we want the input data to be scaled.</span>
     <span class="k">if</span> <span class="n">scaled</span><span class="p">:</span>
         <span class="c1"># Scale with the MaxAbsScaler.</span>

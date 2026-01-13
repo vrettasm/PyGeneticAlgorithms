@@ -70,8 +70,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.selection.neighborhood_selector</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">attrgetter</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">attrgetter</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">np_cdist</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.genetic_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">increase_counter</span>
@@ -84,14 +84,16 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Neighborhood Selection focuses on leveraging local relationships within the population</span>
-<span class="sd">        to guide the selection process. Unlike global methods, it emphasizes individuals that</span>
-<span class="sd">        are closely related in the solution space. This operator selects candidates based on their</span>
-<span class="sd">        proximity, fostering local exploration and potentially discovering niche solutions.</span>
-<span class="sd">        Neighborhood Selection can lead to a more cohesive search through similar solutions,</span>
-<span class="sd">        promoting the evolution of specialized characteristics. While it can enhance diversity</span>
-<span class="sd">        within clusters of solutions, the method also risks missing out on globally optimal solutions</span>
-<span class="sd">        if too localized, necessitating a balance between exploration and exploitation in broader landscapes.</span>
+<span class="sd">        Neighborhood Selection focuses on leveraging local relationships within</span>
+<span class="sd">        the population to guide the selection process. Unlike global methods it</span>
+<span class="sd">        emphasizes individuals that are closely related in the solution space.</span>
+<span class="sd">        This operator selects candidates based on their proximity, fostering local</span>
+<span class="sd">        exploration and potentially discovering niche solutions. Neighborhood Selection</span>
+<span class="sd">        can lead to a more cohesive search through similar solutions, promoting the</span>
+<span class="sd">        evolution of specialized characteristics. While it can enhance diversity within</span>
+<span class="sd">        clusters of solutions, the method also risks missing out on globally optimal</span>
+<span class="sd">        solutions if too localized, necessitating a balance between exploration and</span>
+<span class="sd">        exploitation in broader landscapes.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
