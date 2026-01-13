@@ -7,13 +7,15 @@ class TruncationSelector(SelectionOperator):
     """
     Description:
 
-        Truncation Selection is a straightforward method where only a predetermined percentage of the best
-        individuals are selected based on fitness, while the rest are discarded. This ensures a consistent
-        evolution of stronger solutions, accelerating convergence toward optimal fitness levels. While
-        effective in honing in on high-quality individuals, truncation selection can create a loss of genetic
-        diversity, risking premature convergence if the population becomes too homogeneous. The selection
-        proportion can be adjusted to control the pressure, making this method adaptable for various scenarios
-        but necessitating monitoring to retain essential diversity.
+        Truncation Selection is a straightforward method where only a predetermined
+        percentage of the best individuals are selected based on fitness, while the
+        rest are discarded. This ensures a consistent evolution of stronger solutions,
+        accelerating convergence toward optimal fitness levels. While effective in
+        honing in on high-quality individuals, truncation selection can create a loss
+        of genetic diversity, risking premature convergence if the population becomes
+        too homogeneous. The selection proportion can be adjusted to control the pressure,
+        making this method adaptable for various scenarios but necessitating monitoring to
+        retain essential diversity.
 
     """
 

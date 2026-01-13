@@ -1,5 +1,5 @@
-import numpy as np
 from operator import attrgetter
+import numpy as np
 from pygenalgo.utils.utilities import np_cdist
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
@@ -10,14 +10,16 @@ class NeighborhoodSelector(SelectionOperator):
     """
     Description:
 
-        Neighborhood Selection focuses on leveraging local relationships within the population
-        to guide the selection process. Unlike global methods, it emphasizes individuals that
-        are closely related in the solution space. This operator selects candidates based on their
-        proximity, fostering local exploration and potentially discovering niche solutions.
-        Neighborhood Selection can lead to a more cohesive search through similar solutions,
-        promoting the evolution of specialized characteristics. While it can enhance diversity
-        within clusters of solutions, the method also risks missing out on globally optimal solutions
-        if too localized, necessitating a balance between exploration and exploitation in broader landscapes.
+        Neighborhood Selection focuses on leveraging local relationships within
+        the population to guide the selection process. Unlike global methods it
+        emphasizes individuals that are closely related in the solution space.
+        This operator selects candidates based on their proximity, fostering local
+        exploration and potentially discovering niche solutions. Neighborhood Selection
+        can lead to a more cohesive search through similar solutions, promoting the
+        evolution of specialized characteristics. While it can enhance diversity within
+        clusters of solutions, the method also risks missing out on globally optimal
+        solutions if too localized, necessitating a balance between exploration and
+        exploitation in broader landscapes.
 
     """
 

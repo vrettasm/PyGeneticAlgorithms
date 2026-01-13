@@ -151,7 +151,7 @@ def apply_corrections(input_population: list[Chromosome],
 # _end_def_
 
 @dataclass(init=True, repr=True)
-class SubPopulation(object):
+class SubPopulation:
     """
     Auxiliary class container used in the IslandModelGA
     to hold all the subpopulations (one on each island).

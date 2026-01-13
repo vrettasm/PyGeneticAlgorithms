@@ -5,7 +5,7 @@ from pygenalgo.genome.gene import Gene
 __all__ = ["Chromosome"]
 
 
-class Chromosome(object):
+class Chromosome:
     """
     Description:
 

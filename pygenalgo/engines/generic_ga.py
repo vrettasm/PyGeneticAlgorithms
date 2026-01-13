@@ -18,7 +18,7 @@ from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 __all__ = ["GenericGA"]
 
 
-class GenericGA(object):
+class GenericGA:
     """
     Description:
 

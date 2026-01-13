@@ -121,7 +121,7 @@ class StandardGA(GenericGA):
         # Local variable to display information on the screen.
         # To avoid cluttering the screen we print info only 10
         # times regardless of the total number of epochs.
-        its_time_to_print = (epochs//10)
+        its_time_to_print = epochs//10
 
         # Display an information message.
         logger.info(f"Initial Avg. Fitness = {avg_fitness_0:.4f}")

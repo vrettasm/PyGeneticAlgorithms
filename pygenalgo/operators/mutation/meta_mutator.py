@@ -26,7 +26,8 @@ class MetaMutator(MutationOperator):
         super().__init__(mutate_probability)
 
         # NOTE: In here the mutation probabilities for each mutator are set to 1.0.
-        self._items = (SwapMutator(1.0), RandomMutator(1.0), ShuffleMutator(1.0), InverseMutator(1.0))
+        self._items = (SwapMutator(1.0), RandomMutator(1.0),
+                       ShuffleMutator(1.0), InverseMutator(1.0))
     # _end_def_
 
     def mutate(self, individual: Chromosome) -> None:

@@ -15,8 +15,9 @@ class TournamentSelector(SelectionOperator):
         This method provides a balance between selection pressure and diversity, as larger
         tournament sizes increase the likelihood of selecting fitter individuals, while smaller
         sizes maintain population diversity. The size of the tournament can be adjusted depending
-        on the desired selection pressure. This technique is computationally efficient and effective,
-        especially in dynamic environments or populations with diverse fitness landscapes.
+        on the desired selection pressure. This technique is computationally efficient and
+        effective, especially in dynamic environments or populations with diverse fitness
+        landscapes.
 
     """
 

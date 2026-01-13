@@ -38,7 +38,7 @@ def increase_counter(method):
 # _end_def_
 
 
-class GeneticOperator(object):
+class GeneticOperator:
     """
     Description:
 
@@ -70,7 +70,7 @@ class GeneticOperator(object):
         probability = float(probability)
 
         # Ensure correct range [0, 1].
-        if not (0.0 <= probability <= 1.0):
+        if not 0.0 <= probability <= 1.0:
             raise ValueError(f"{self.__class__.__name__} the value "
                              f"{probability} is not within valid range.")
         # Assign the value.
@@ -193,7 +193,7 @@ class GeneticOperator(object):
         # _end_if_
 
         # Ensure the correct range.
-        if not (0.0 <= new_value <= 1.0):
+        if not 0.0 <= new_value <= 1.0:
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Probability should be in [0, 1].")
         # _end_if_

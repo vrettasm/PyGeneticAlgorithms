@@ -1,6 +1,7 @@
-import numpy as np
 from typing import Callable
 from functools import wraps, partial
+
+import numpy as np
 
 # Public interface.
 __all__ = ["pareto_front", "cost_function", "np_cdist",
@@ -229,10 +230,10 @@ def np_cdist(x_pos: np.ndarray, scaled: bool = False) -> np.ndarray:
         # Reshape it by combining the n_rows and n_cols.
         x_pos = x_pos.reshape((n_samples, n_rows * n_cols), copy=False)
     # _end_if_
-    
+
     # Get the number of rows/cols.
     n_rows, n_cols = x_pos.shape
-    
+
     # Check if we want the input data to be scaled.
     if scaled:
         # Scale with the MaxAbsScaler.

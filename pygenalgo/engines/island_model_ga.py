@@ -48,7 +48,8 @@ class IslandModelGA(GenericGA):
         if num_islands > len(self.population):
             # Raise an error if number of islands is too high.
             raise ValueError(f"{self.__class__.__name__}: "
-                             f"Number of requested islands ({num_islands}) exceeds the size of the population.")
+                             f"Number of requested islands ({num_islands}) "
+                             f"exceeds the size of the population.")
         # _end_if_
 
         # Sanity check.
@@ -306,7 +307,8 @@ class IslandModelGA(GenericGA):
                 self._stats[pop_n.id]["std"].append(std_fitness_0)
             else:
 
-                raise RuntimeError(f"{pop_n.id}: Mean={avg_fitness_0:.5f}, Std={std_fitness_0:.5f}.")
+                raise RuntimeError(f"{pop_n.id}: Mean={avg_fitness_0:.5f}, "
+                                   f"Std={std_fitness_0:.5f}.")
             # _end_if_
 
             # Store the initial crossover and mutation probabilities.
@@ -403,7 +405,7 @@ class IslandModelGA(GenericGA):
                     for res in results_i:
 
                         # Extract the results.
-                        island, has_converged, local_stats, elapsed_time = res
+                        island, has_converged, local_stats, _ = res
 
                         # Check if we want information on the screen.
                         if verbose:

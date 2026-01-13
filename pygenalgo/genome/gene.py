@@ -7,7 +7,7 @@ from numpy.random import default_rng, Generator
 __all__ = ["Gene"]
 
 
-class Gene(object):
+class Gene:
     """
     Description:
 
@@ -37,7 +37,7 @@ class Gene(object):
         """
         # Copy the data reference.
         self._datum = datum
-        
+
         # Sanity check.
         if not callable(func):
             raise TypeError(f"{self.__class__.__name__}: Random function is not callable.")
