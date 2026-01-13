@@ -4,11 +4,23 @@ Examples
 Simple optimization
 -------------------
 
-Multiobjective function (with constraints)
-------------------------------------------
+.. toctree::
+
+    one_max
+
+Combinatorial problem (with constraints)
+----------------------------------------
+
+.. toctree::
+
+    tsp_path
 
 Multimodal function
 -------------------
+
+.. toctree::
+
+    gaussian_2d
 
 More examples
 -------------
