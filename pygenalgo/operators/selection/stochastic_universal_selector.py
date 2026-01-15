@@ -44,6 +44,11 @@ class StochasticUniversalSelector(SelectionOperator):
         # positive.
         all_fitness = [p.fitness for p in population]
 
+        # Sanity check.
+        if not all(fit_value > 0.0 for fit_value in all_fitness):
+            raise ValueError("All fitness values must be positive.")
+        # _end_if_
+
         # Get the population size.
         pop_size = len(population)
 
