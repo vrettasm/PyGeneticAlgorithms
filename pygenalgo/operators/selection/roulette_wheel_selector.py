@@ -39,22 +39,8 @@ class RouletteWheelSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
-        # Get the population size.
-        pop_size = len(population)
-
-        # Extract the fitness value of each chromosome.
-        all_fitness = [p.fitness for p in population]
-
-        # If there are negative values we perform a shift
-        # transformation where all the values are shifted
-        # so that the minimum fitness is going to be one.
-        if any(fit_value < 0.0 for fit_value in all_fitness):
-            # Compute the shift value.
-            shift_value = abs(min(all_fitness)) + 1.0
-
-            # Shift all fitness values so that the minimum is '1'.
-            all_fitness = [f + shift_value for f in all_fitness]
-        # _end_if_
+        # Extract the (positive) fitness values from the chromosomes.
+        all_fitness = self.ensure_positive_fitness(population)
 
         # Calculate sum of all fitness.
         sum_fitness = fsum(all_fitness)
