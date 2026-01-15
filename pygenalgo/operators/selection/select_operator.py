@@ -1,3 +1,4 @@
+from math import fabs
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import GeneticOperator
 
