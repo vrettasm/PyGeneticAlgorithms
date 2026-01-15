@@ -40,13 +40,17 @@ class StochasticUniversalSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Extract the fitness value of each chromosome.
-        # This assumes that the fitness values are all
-        # positive.
         all_fitness = [p.fitness for p in population]
 
-        # Sanity check.
-        if not all(fit_value > 0.0 for fit_value in all_fitness):
-            raise ValueError("All fitness values must be positive.")
+        # If there are negative values we perform a shift
+        # transformation where all the values are shifted
+        # so that the minimum fitness is going to be one.
+        if any(fit_value < 0.0 for fit_value in all_fitness):
+            # Compute the shift value.
+            shift_value = abs(min(all_fitness)) + 1.0
+
+            # Shift all fitness values so that the minimum is '1'.
+            all_fitness = [f + shift_value for f in all_fitness]
         # _end_if_
 
         # Get the population size.
