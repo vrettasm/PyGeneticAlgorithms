@@ -101,11 +101,15 @@
 <span class="sd">        models should share.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># Make a random number generator.</span>
     <span class="n">rng_GA</span><span class="p">:</span> <span class="n">Generator</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Random Number Generator for the whole class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># Set the maximum number of CPUs (at least one).</span>
     <span class="n">MAX_CPUs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">cpu_count</span><span class="p">()</span> <span class="k">else</span> <span class="n">cpu_count</span><span class="p">()</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set the maximum number of CPUs (at least one).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Object variables.</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;fitness_func&quot;</span><span class="p">,</span> <span class="s2">&quot;_select_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_crossx_op&quot;</span><span class="p">,</span>
