@@ -5,7 +5,7 @@
 [![DOI](https://zenodo.org/badge/311952715.svg)](https://doi.org/10.5281/zenodo.18171837)
 
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
-Score: 9.20 / 10
+Score: 9.10 / 10
 
 This repository implements a genetic algorithm toolbox in Python3 programming language, using only **Numpy** and **Joblib**
 as additional libraries. The basic approach offers a "StandardGA" class, where the whole population of chromosomes is
