@@ -1,5 +1,4 @@
-from math import fsum
-from numpy import exp as np_exp
+from math import fsum, exp
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
@@ -49,15 +48,25 @@ class BoltzmannSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
-        # Compute the Temperature.
-        temperature = max(0.1, np_exp(-self.iteration / self._items))
-
-        # Get the population size.
-        pop_size = len(population)
-
         # Extract the fitness value of each chromosome.
-        # This assumes that the fitness values are all positive.
-        exp_fitness = np_exp([-p.fitness/temperature for p in population]).tolist()
+        all_fitness = [p.fitness for p in population]
+
+        # If there are negative values we perform a shift
+        # transformation where all the values are shifted
+        # so that the minimum fitness is going to be one.
+        if any(fit_value < 0.0 for fit_value in all_fitness):
+            # Compute the shift value.
+            shift_value = abs(min(all_fitness)) + 1.0
+
+            # Shift all fitness values so that the minimum is '1'.
+            all_fitness = [f + shift_value for f in all_fitness]
+        # _end_if_
+
+        # Compute the Temperature value (using the current iteration).
+        temperature = max(0.1, exp(-self.iteration / self._items))
+
+        # Convert the fitness values with the exponential.
+        exp_fitness = [exp(-f/temperature) for f in all_fitness]
 
         # Calculate sum of all fitness.
         sum_fitness = fsum(exp_fitness)
@@ -65,6 +74,9 @@ class BoltzmannSelector(SelectionOperator):
         # Calculate the selection probabilities of each member
         # in the population (Boltzmann distribution).
         selection_probs = [f/sum_fitness for f in exp_fitness]
+
+        # Get the population size.
+        pop_size = len(population)
 
         # Select the new individuals indexes.
         index = self.rng.choice(pop_size, size=pop_size, p=selection_probs,
