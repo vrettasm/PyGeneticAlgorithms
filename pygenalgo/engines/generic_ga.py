@@ -27,11 +27,15 @@ class GenericGA:
         models should share.
     """
 
-    # Make a random number generator.
     rng_GA: Generator = default_rng()
+    """
+    Random Number Generator for the whole class.
+    """
 
-    # Set the maximum number of CPUs (at least one).
     MAX_CPUs: int = 1 if not cpu_count() else cpu_count()
+    """
+    Set the maximum number of CPUs (at least one).
+    """
 
     # Object variables.
     __slots__ = ("population", "fitness_func", "_select_op", "_crossx_op",

@@ -50,11 +50,15 @@ class GeneticOperator:
         should inherit this class.
     """
 
-    # Create a random number generator.
     _rng: Generator = default_rng()
+    """
+    Random Number Generator for the whole class.
+    """
 
-    # Initialize the iteration value.
     _iteration: int = 0
+    """
+    Provides access of the iteration value to every genetic operator.
+    """
 
     # Object variables.
     __slots__ = ("_probability", "_counter", "_lock", "_items")
