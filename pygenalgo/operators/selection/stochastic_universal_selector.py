@@ -3,7 +3,8 @@ from collections import deque
 from itertools import accumulate
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
-from pygenalgo.operators.selection.select_operator import SelectionOperator
+from pygenalgo.operators.selection.select_operator import (SelectionOperator,
+                                                           ensure_positive_fitness)
 
 
 class StochasticUniversalSelector(SelectionOperator):
@@ -40,7 +41,7 @@ class StochasticUniversalSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Extract the (positive) fitness values from the chromosomes.
-        all_fitness = self.ensure_positive_fitness(population)
+        all_fitness = ensure_positive_fitness(population)
 
         # Get the population size.
         pop_size = len(population)

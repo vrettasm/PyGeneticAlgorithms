@@ -1,7 +1,8 @@
 from math import fsum
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
-from pygenalgo.operators.selection.select_operator import SelectionOperator
+from pygenalgo.operators.selection.select_operator import (SelectionOperator,
+                                                           ensure_positive_fitness)
 
 
 class RouletteWheelSelector(SelectionOperator):
@@ -40,7 +41,7 @@ class RouletteWheelSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Extract the (positive) fitness values from the chromosomes.
-        all_fitness = self.ensure_positive_fitness(population)
+        all_fitness = ensure_positive_fitness(population)
 
         # Calculate sum of all fitness.
         sum_fitness = fsum(all_fitness)
