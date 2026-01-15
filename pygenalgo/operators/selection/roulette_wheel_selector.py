@@ -44,7 +44,7 @@ class RouletteWheelSelector(SelectionOperator):
 
         # Extract the fitness value of each chromosome.
         all_fitness = [p.fitness for p in population]
-        
+
         # If there are negative values we perform a shift
         # transformation where all the values are shifted
         # so that the minimum fitness is going to be one.
