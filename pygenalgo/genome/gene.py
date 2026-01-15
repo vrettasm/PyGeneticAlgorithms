@@ -1,7 +1,6 @@
 from copy import deepcopy
 from typing import Any, Callable
 from collections.abc import Iterable
-from numpy.random import default_rng, Generator
 
 # Public interface.
 __all__ = ["Gene"]
@@ -17,9 +16,6 @@ class Gene:
         image. This way provides us with flexibility to parameterize the chromosome with
         different "kinds of genes" each one responsible for a specific function.
     """
-
-    # Random number generator.
-    _rng: Generator = default_rng()
 
     # Object variables.
     __slots__ = ("_datum", "_func", "_valid")
@@ -49,19 +45,6 @@ class Gene:
         # Copy the valid flag. Note that if the _datum field
         # is set to None, the Gene is automatically invalid.
         self._valid = False if self._datum is None else valid
-    # _end_def_
-
-    @classmethod
-    def set_seed(cls, new_seed=None) -> None:
-        """
-        Sets a new seed for the random number generator.
-
-        :param new_seed: New seed value (default=None).
-
-        :return: None.
-        """
-        # Re-initialize the class variable.
-        cls._rng = default_rng(seed=new_seed)
     # _end_def_
 
     @property
