@@ -124,19 +124,8 @@
 
 <span class="sd">        :return: the selected parents population (as list of chromosomes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Extract the fitness value of each chromosome.</span>
-        <span class="n">all_fitness</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">population</span><span class="p">]</span>
-
-        <span class="c1"># If there are negative values we perform a shift</span>
-        <span class="c1"># transformation where all the values are shifted</span>
-        <span class="c1"># so that the minimum fitness is going to be one.</span>
-        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">fit_value</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="k">for</span> <span class="n">fit_value</span> <span class="ow">in</span> <span class="n">all_fitness</span><span class="p">):</span>
-            <span class="c1"># Compute the shift value.</span>
-            <span class="n">shift_value</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">all_fitness</span><span class="p">))</span> <span class="o">+</span> <span class="mf">1.0</span>
-
-            <span class="c1"># Shift all fitness values so that the minimum is &#39;1&#39;.</span>
-            <span class="n">all_fitness</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="o">+</span> <span class="n">shift_value</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">all_fitness</span><span class="p">]</span>
-        <span class="c1"># _end_if_</span>
+        <span class="c1"># Extract the (positive) fitness values from the chromosomes.</span>
+        <span class="n">all_fitness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ensure_positive_fitness</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
 
         <span class="c1"># Compute the Temperature value (using the current iteration).</span>
         <span class="n">temperature</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">iteration</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">))</span>
