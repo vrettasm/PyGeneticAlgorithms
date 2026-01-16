@@ -138,11 +138,11 @@
         <span class="c1"># Compute the cumulative sum of the fitness values.</span>
         <span class="n">cum_sum_fit</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">accumulate</span><span class="p">(</span><span class="n">all_fitness</span><span class="p">))</span>
 
+        <span class="c1"># Set the index to &#39;0&#39;.</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+
         <span class="c1"># Collect the new parents.</span>
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pointers</span><span class="p">:</span>
-
-            <span class="c1"># Reset the index to &#39;0&#39;.</span>
-            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
 
             <span class="c1"># Find the cumulative value smaller than &#39;p&#39;.</span>
             <span class="k">while</span> <span class="n">cum_sum_fit</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
