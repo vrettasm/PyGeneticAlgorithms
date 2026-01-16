@@ -61,6 +61,21 @@ class BoltzmannSelector(SelectionOperator):
         # Calculate sum of all fitness.
         sum_fitness = fsum(exp_fitness)
 
+        # Get the population size.
+        pop_size = len(population)
+
+        # If total fitness is zero (or effectively zero),
+        # fall back to uniform random selection so every
+        # individual has equal chance.
+        if isclose(sum_fitness, 0.0):
+            # Select chromosomes randomly with equal probability.
+            safe_index = self.rng.choice(pop_size, size=pop_size,
+                                         replace=True, shuffle=False)
+
+            # Return the new parents to a list.
+            return [population[i] for i in safe_index]
+        # _end_if_
+
         # Calculate the selection probabilities of each member
         # in the population (Boltzmann distribution).
         selection_probs = [f/sum_fitness for f in exp_fitness]
