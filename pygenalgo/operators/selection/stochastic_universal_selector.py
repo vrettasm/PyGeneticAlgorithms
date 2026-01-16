@@ -1,4 +1,4 @@
-from math import fsum
+from math import fsum, isclose
 from itertools import accumulate
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
@@ -45,8 +45,23 @@ class StochasticUniversalSelector(SelectionOperator):
         # Get the population size.
         pop_size = len(population)
 
-        # Compute the distance between pointers.
-        dist_p = fsum(all_fitness) / pop_size
+        # Calculate sum of all fitness.
+        sum_fitness = fsum(all_fitness)
+
+        # If total fitness is zero (or effectively zero),
+        # fall back to uniform random selection so every
+        # individual has equal chance.
+        if isclose(sum_fitness, 0.0):
+            # Select the new individuals indexes.
+            index = self.rng.choice(pop_size, size=pop_size,
+                                    replace=True, shuffle=False)
+
+            # Select randomly with equal probability.
+            return [population[i] for i in index]
+        # _end_if_
+
+        # Distance between pointers.
+        dist_p = sum_fitness / pop_size
 
         # Get a random number between 0 and dist_p.
         start_0 = dist_p * self.rng.random()

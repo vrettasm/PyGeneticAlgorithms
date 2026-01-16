@@ -1,4 +1,4 @@
-from math import fsum
+from math import fsum, isclose
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import (SelectionOperator,
@@ -40,18 +40,30 @@ class RouletteWheelSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
+        # Get the population size.
+        pop_size = len(population)
+
         # Extract the (positive) fitness values from the chromosomes.
         all_fitness = ensure_positive_fitness(population)
 
         # Calculate sum of all fitness.
         sum_fitness = fsum(all_fitness)
 
+        # If total fitness is zero (or effectively zero),
+        # fall back to uniform random selection so every
+        # individual has equal chance.
+        if isclose(sum_fitness, 0.0):
+            # Select the new individuals indexes.
+            index = self.rng.choice(pop_size, size=pop_size,
+                                    replace=True, shuffle=False)
+
+            # Select randomly with equal probability.
+            return [population[i] for i in index]
+        # _end_if_
+
         # Calculate the "selection probabilities" of each member
         # in the population.
         selection_probs = [f / sum_fitness for f in all_fitness]
-
-        # Get the population size.
-        pop_size = len(population)
 
         # Select the new individuals (indexes).
         index = self.rng.choice(pop_size, size=pop_size, p=selection_probs,
