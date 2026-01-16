@@ -65,9 +65,6 @@ class StochasticUniversalSelector(SelectionOperator):
         # Collect the new parents.
         for p in pointers:
 
-            # Reset the index to '0'.
-            i = 0
-
             # Find the cumulative value smaller than 'p'.
             while cum_sum_fit[i] < p:
                 i += 1
