@@ -1,5 +1,4 @@
 from math import fsum
-from collections import deque
 from itertools import accumulate
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
@@ -57,7 +56,7 @@ class StochasticUniversalSelector(SelectionOperator):
         pointers = (start_0 + i*dist_p for i in range(pop_size))
 
         # Create a list that will contain the new parents.
-        new_parents = deque(maxlen=pop_size)
+        new_parents: list[Chromosome] = []
 
         # Compute the cumulative sum of the fitness values.
         cum_sum_fit = list(accumulate(all_fitness))
@@ -78,7 +77,7 @@ class StochasticUniversalSelector(SelectionOperator):
         # _end_for_
 
         # Return the new parents (individuals).
-        return list(new_parents)
+        return new_parents
     # _end_def_
 
 # _end_class_
