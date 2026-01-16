@@ -97,8 +97,11 @@
         <span class="c1"># probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">crossover_probability</span><span class="p">)</span>
 
-        <span class="c1"># NOTE: In here the crossover probabilities for each operator are set to 1.0.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">(</span><span class="n">UniformCrossover</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">MultiPointCrossover</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">SinglePointCrossover</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
+        <span class="c1"># NOTE: In here the crossover probabilities</span>
+        <span class="c1">#       for each operator are set to 1.0.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">(</span><span class="n">UniformCrossover</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+                       <span class="n">MultiPointCrossover</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+                       <span class="n">SinglePointCrossover</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="MetaCrossover.crossover">

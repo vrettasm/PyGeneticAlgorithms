@@ -70,7 +70,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.selection.boltzmann_selector</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">fsum</span><span class="p">,</span> <span class="n">exp</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">fsum</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">isclose</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.genetic_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">increase_counter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.selection.select_operator</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">SelectionOperator</span><span class="p">,</span>
@@ -137,12 +137,24 @@
         <span class="c1"># Calculate sum of all fitness.</span>
         <span class="n">sum_fitness</span> <span class="o">=</span> <span class="n">fsum</span><span class="p">(</span><span class="n">exp_fitness</span><span class="p">)</span>
 
-        <span class="c1"># Calculate the selection probabilities of each member</span>
-        <span class="c1"># in the population (Boltzmann distribution).</span>
-        <span class="n">selection_probs</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">/</span><span class="n">sum_fitness</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">exp_fitness</span><span class="p">]</span>
-
         <span class="c1"># Get the population size.</span>
         <span class="n">pop_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+
+        <span class="c1"># If total fitness is zero (or effectively zero),</span>
+        <span class="c1"># fall back to uniform random selection so every</span>
+        <span class="c1"># individual has equal chance.</span>
+        <span class="k">if</span> <span class="n">isclose</span><span class="p">(</span><span class="n">sum_fitness</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">):</span>
+            <span class="c1"># Select chromosomes randomly with equal probability.</span>
+            <span class="n">safe_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pop_size</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">pop_size</span><span class="p">,</span>
+                                         <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1"># Return the new parents to a list.</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">safe_index</span><span class="p">]</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Calculate the selection probabilities of each member</span>
+        <span class="c1"># in the population (Boltzmann distribution).</span>
+        <span class="n">selection_probs</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="o">/</span> <span class="n">sum_fitness</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">exp_fitness</span><span class="p">]</span>
 
         <span class="c1"># Select the new individuals indexes.</span>
         <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pop_size</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">pop_size</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">selection_probs</span><span class="p">,</span>
