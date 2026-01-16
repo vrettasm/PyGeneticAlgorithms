@@ -78,7 +78,7 @@ class BoltzmannSelector(SelectionOperator):
 
         # Calculate the selection probabilities of each member
         # in the population (Boltzmann distribution).
-        selection_probs = [f/sum_fitness for f in exp_fitness]
+        selection_probs = [f / sum_fitness for f in exp_fitness]
 
         # Get the population size.
         pop_size = len(population)
