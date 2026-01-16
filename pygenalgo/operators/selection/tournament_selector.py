@@ -50,9 +50,12 @@ class TournamentSelector(SelectionOperator):
         # Get the population size.
         pop_size = len(population)
 
+        # Local copy of random choice.
+        random_choice = self.rng.choice
+
         # Select the contestants for each tournament.
-        contestants = np_array([self.rng.choice(pop_size, size=self._items,
-                                                replace=False, shuffle=False)
+        contestants = np_array([random_choice(pop_size, size=self._items,
+                                              replace=False, shuffle=False)
                                 for _ in range(pop_size)])
         # Return the new parents.
         return [max((population[j] for j in contestants[i]),
