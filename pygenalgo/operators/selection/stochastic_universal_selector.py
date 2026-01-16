@@ -52,12 +52,12 @@ class StochasticUniversalSelector(SelectionOperator):
         # fall back to uniform random selection so every
         # individual has equal chance.
         if isclose(sum_fitness, 0.0):
-            # Select the new individuals indexes.
-            index = self.rng.choice(pop_size, size=pop_size,
-                                    replace=True, shuffle=False)
+            # Select the new individuals with equal probability.
+            safe_index = self.rng.choice(pop_size, size=pop_size,
+                                         replace=True, shuffle=False)
 
-            # Select randomly with equal probability.
-            return [population[i] for i in index]
+            # Return the new parents to a list.
+            return [population[i] for i in safe_index]
         # _end_if_
 
         # Distance between pointers.
