@@ -62,6 +62,9 @@ class StochasticUniversalSelector(SelectionOperator):
         # Compute the cumulative sum of the fitness values.
         cum_sum_fit = list(accumulate(all_fitness))
 
+        # Set the index to '0'.
+        i = 0
+
         # Collect the new parents.
         for p in pointers:
 
