@@ -80,9 +80,6 @@ class BoltzmannSelector(SelectionOperator):
         # in the population (Boltzmann distribution).
         selection_probs = [f / sum_fitness for f in exp_fitness]
 
-        # Get the population size.
-        pop_size = len(population)
-
         # Select the new individuals indexes.
         index = self.rng.choice(pop_size, size=pop_size, p=selection_probs,
                                 replace=True, shuffle=False)
