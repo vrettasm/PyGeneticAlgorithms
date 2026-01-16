@@ -242,6 +242,10 @@ class GeneticOperator:
 
         # Add all the fields with their values.
         for s in self.__slots__:
+            # Skip the _lock representation
+            # (not useful and can be noisy)
+            if s == "_lock":
+                continue
             str_self += (" " + s + ": " +
                          str(self.__getattribute__(s)) + "\n")
         # _end_for_
