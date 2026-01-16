@@ -23,8 +23,11 @@ class MetaCrossover(CrossoverOperator):
         # probability value.
         super().__init__(crossover_probability)
 
-        # NOTE: In here the crossover probabilities for each operator are set to 1.0.
-        self._items = (UniformCrossover(1.0), MultiPointCrossover(1.0), SinglePointCrossover(1.0))
+        # NOTE: In here the crossover probabilities for
+        # each operator are set to 1.0.
+        self._items = (UniformCrossover(1.0),
+                       MultiPointCrossover(1.0),
+                       SinglePointCrossover(1.0))
     # _end_def_
 
     def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
