@@ -122,6 +122,16 @@ class GenericGA:
     # _end_def_
 
     @property
+    def rng(self) -> Generator:
+        """
+        Get access of the Class variable (rng_GA).
+
+        :return: the random number generator.
+        """
+        return self.rng_GA
+    # _end_def_
+
+    @property
     def iteration(self) -> int:
         """
         Accessor (getter) of the iteration parameter.
