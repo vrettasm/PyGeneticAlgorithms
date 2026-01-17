@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath('..'))
 project = "PyGenAlgo"
 copyright = "2024, Michalis Vrettas, PhD"
 author = "Michalis Vrettas, PhD"
-release = "01.70.50"
+release = "1.8.2"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
