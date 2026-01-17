@@ -103,7 +103,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Object variables (specific for the IslandModel).</span>
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;num_islands&quot;</span><span class="p">,</span> <span class="s2">&quot;_migrate_op&quot;</span><span class="p">)</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_num_islands&quot;</span><span class="p">,</span> <span class="s2">&quot;_migrate_op&quot;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_islands</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">migrate_op</span><span class="p">:</span> <span class="n">MigrationOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -132,10 +132,21 @@
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Assign the number of islands.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">num_islands</span> <span class="o">=</span> <span class="n">num_islands</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_islands</span><span class="p">))</span>
 
         <span class="c1"># Get Migration Operator.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_migrate_op</span> <span class="o">=</span> <span class="n">migrate_op</span>
+    <span class="c1"># _end_def_</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">num_islands</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Accessor method that returns the</span>
+<span class="sd">        number of islands in the model.</span>
+
+<span class="sd">        :return: the number of islands.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -357,8 +368,8 @@
 
         <span class="c1"># Initial random split of the total population in (active) subpopulations.</span>
         <span class="c1"># Active here means &#39;still evolving&#39;.</span>
-        <span class="n">active_population</span> <span class="o">=</span> <span class="p">[</span><span class="n">SubPopulation</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="bp">self</span><span class="o">.</span><span class="n">num_islands</span><span class="p">])</span>
-                             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_islands</span><span class="p">)]</span>
+        <span class="n">active_population</span> <span class="o">=</span> <span class="p">[</span><span class="n">SubPopulation</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span><span class="p">])</span>
+                             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span><span class="p">)]</span>
 
         <span class="c1"># Initial evaluation of the subpopulations.</span>
         <span class="k">for</span> <span class="n">pop_n</span> <span class="ow">in</span> <span class="n">active_population</span><span class="p">:</span>
@@ -409,7 +420,7 @@
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Display an information message.</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parallel evolution in progress with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_islands</span><span class="si">}</span><span class="s2"> islands ...&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parallel evolution in progress with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span><span class="si">}</span><span class="s2"> islands ...&quot;</span><span class="p">)</span>
 
         <span class="c1"># Final population.</span>
         <span class="n">final_population</span> <span class="o">=</span> <span class="p">[]</span>
