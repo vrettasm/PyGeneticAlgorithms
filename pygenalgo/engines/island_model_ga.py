@@ -58,7 +58,7 @@ class IslandModelGA(GenericGA):
         # _end_if_
 
         # Assign the number of islands.
-        self._num_islands = num_islands
+        self._num_islands = max(1, int(num_islands))
 
         # Get Migration Operator.
         self._migrate_op = migrate_op
