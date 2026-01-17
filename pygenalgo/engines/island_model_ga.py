@@ -29,7 +29,7 @@ class IslandModelGA(GenericGA):
     """
 
     # Object variables (specific for the IslandModel).
-    __slots__ = ("num_islands", "_migrate_op")
+    __slots__ = ("_num_islands", "_migrate_op")
 
     def __init__(self, num_islands: int, migrate_op: MigrationOperator = None, **kwargs) -> None:
         """
@@ -58,10 +58,21 @@ class IslandModelGA(GenericGA):
         # _end_if_
 
         # Assign the number of islands.
-        self.num_islands = num_islands
+        self._num_islands = num_islands
 
         # Get Migration Operator.
         self._migrate_op = migrate_op
+    # _end_def_
+
+    @property
+    def num_islands(self) -> int:
+        """
+        Accessor method that returns the
+        number of islands in the model.
+
+        :return: the number of islands.
+        """
+        return self._num_islands
     # _end_def_
 
     @property
@@ -281,8 +292,8 @@ class IslandModelGA(GenericGA):
 
         # Initial random split of the total population in (active) subpopulations.
         # Active here means 'still evolving'.
-        active_population = [SubPopulation(i, self.population[i::self.num_islands])
-                             for i in range(self.num_islands)]
+        active_population = [SubPopulation(i, self.population[i::self._num_islands])
+                             for i in range(self._num_islands)]
 
         # Initial evaluation of the subpopulations.
         for pop_n in active_population:
@@ -333,7 +344,7 @@ class IslandModelGA(GenericGA):
         # _end_if_
 
         # Display an information message.
-        logger.info(f"Parallel evolution in progress with {self.num_islands} islands ...")
+        logger.info(f"Parallel evolution in progress with {self._num_islands} islands ...")
 
         # Final population.
         final_population = []
