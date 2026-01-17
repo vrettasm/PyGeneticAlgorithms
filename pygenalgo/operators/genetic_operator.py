@@ -207,7 +207,7 @@ class GeneticOperator:
     # _end_def_
 
     @property
-    def rng(self):
+    def rng(self) -> Generator:
         """
         Get access of the Class variable (_rng).
 
