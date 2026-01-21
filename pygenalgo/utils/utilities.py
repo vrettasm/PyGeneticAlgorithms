@@ -2,6 +2,7 @@ from typing import Callable
 from functools import wraps, partial
 
 import numpy as np
+from numpy.typing import NDArray
 
 # Public interface.
 __all__ = ["pareto_front", "cost_function", "np_cdist",
@@ -117,7 +118,7 @@ def pareto_front(points: list) -> list:
     return list(pareto_points)
 # _end_def_
 
-def np_pareto_front(points: np.ndarray) -> np.ndarray:
+def np_pareto_front(points: NDArray) -> NDArray:
     """
     Simple function that calculates the Pareto (optimal)
     front points from a given input points numpy array.
@@ -205,7 +206,7 @@ def cost_function(func: Callable = None, minimize: bool = False):
     return function_wrapper
 # _end_def_
 
-def np_cdist(x_pos: np.ndarray, scaled: bool = False) -> np.ndarray:
+def np_cdist(x_pos: NDArray, scaled: bool = False) -> NDArray:
     """
     This is equivalent to the scipy.spatial.distance.cdist method with Euclidean
     distance metric. It is a tailored version for the purposes of the multimodal
