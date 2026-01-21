@@ -76,6 +76,14 @@ pygenalgo.operators.selection.neighborhood\_selector module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.selection.meta\_selector module
+---------------------------------------------------
+
+.. automodule:: pygenalgo.operators.selection.meta_selector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
