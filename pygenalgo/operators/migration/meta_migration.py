@@ -1,6 +1,6 @@
 from pygenalgo.utils.auxiliary import SubPopulation
-from pygenalgo.operators.migration.migration_operator import MigrationOperator
 from pygenalgo.operators.migration.random_migration import RandomMigration
+from pygenalgo.operators.migration.migration_operator import MigrationOperator
 from pygenalgo.operators.migration.clockwise_migration import ClockwiseMigration
 
 
