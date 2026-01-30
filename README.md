@@ -179,10 +179,10 @@ as shown in the examples above. For multimodal optimizations check examples **Sh
 
 This work is described in:
 
-- [Michail D. Vrettas and Stefano Silvestri (2025)](https://www.sciencedirect.com/science/article/pii/S2352711025000949)
-"PyGenAlgo: a simple and powerful toolkit for genetic algorithms". SoftwareX, vol. 30. DOI: 10.1016/j.softx.2025.102127.
+- [Michail D. Vrettas and Stefano Silvestri (2025)]
+"StarPSO: A Unified Framework for Particle Swarm Optimization Across Multiple Problem Types" (submitted).
 
-You can find the latest documentation [here](https://pygeneticalgorithms.readthedocs.io/en/latest/).
+You can find the latest documentation [here](https://pystarpso.readthedocs.io/en/latest/).
 
 ### Contact
 
