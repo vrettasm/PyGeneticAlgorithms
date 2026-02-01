@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pygenalgo"
-version = "1.8.0"
+version = "1.9.0"
 description = "Genetic Algorithms toolbox in Python3"
 readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.10"
