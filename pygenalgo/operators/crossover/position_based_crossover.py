@@ -45,9 +45,9 @@ class PositionBasedCrossover(CrossoverOperator):
             number_of_points = self.rng.integers(1, high=number_of_genes-1, dtype=int)
 
             # Select randomly the crossover points.
-            cross_points = sorted(self.rng.choice(number_of_genes,
-                                                  size=number_of_points,
-                                                  replace=False, shuffle=False))
+            cross_points = self.rng.choice(number_of_genes,
+                                           size=number_of_points,
+                                           replace=False, shuffle=False)
 
             # Initialize the genome lists for the new
             # chromosomes to 'None'.
