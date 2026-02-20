@@ -42,7 +42,7 @@ class PositionBasedCrossover(CrossoverOperator):
             number_of_genes = len(parent1)
 
             # Select randomly a number of crossover points.
-            number_of_points = self.rng.integers(1, high=number_of_genes-1)
+            number_of_points = self.rng.integers(1, high=number_of_genes-1, dtype=int)
 
             # Select randomly the crossover points.
             cross_points = sorted(self.rng.choice(number_of_genes,
