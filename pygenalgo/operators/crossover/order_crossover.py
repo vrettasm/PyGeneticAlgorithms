@@ -42,16 +42,16 @@ class OrderCrossover(CrossoverOperator):
             locus = self.rng.integers(1, high=len(parent1)-1, dtype=int)
 
             # Create auxiliary Sets for faster membership check.
-            used_parent1 = set(parent1.genome[:locus])
-            used_parent2 = set(parent2.genome[:locus])
+            used_in_parent1 = set(parent1.genome[:locus])
+            used_in_parent2 = set(parent2.genome[:locus])
 
             # Construct 1st offspring genome list at locus.
             genome_1 = [gene.clone() for gene in parent1.genome[:locus] +
-                        [x for x in parent2 if x not in used_parent1]]
+                        [x for x in parent2 if x not in used_in_parent1]]
 
             # Construct 2nd offspring genome list at locus.
             genome_2 = [gene.clone() for gene in parent2.genome[:locus] +
-                        [y for y in parent1 if y not in used_parent2]]
+                        [y for y in parent1 if y not in used_in_parent2]]
 
             # Create two NEW offsprings.
             child1 = Chromosome(genome_1)
