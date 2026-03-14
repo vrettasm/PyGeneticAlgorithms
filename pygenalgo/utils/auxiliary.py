@@ -214,5 +214,4 @@ class SubPopulation:
         """
         return item in self.population
     # _end_def_
-
 # _end_class_
