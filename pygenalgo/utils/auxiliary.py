@@ -215,22 +215,3 @@ class SubPopulation:
         return item in self.population
     # _end_def_
 # _end_class_
-
-@dataclass(frozen=True)
-class Probability:
-    """
-    Auxiliary class that models the Probability object.
-    """
-
-    # The probability value.
-    value: float
-
-    def __post_init__(self) -> None:
-        # Ensure the correct type.
-        p_value = float(self.value)
-
-        # Ensure correct range [0, 1].
-        if not 0.0 <= p_value <= 1.0:
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"Value should be in [0, 1]. ")
-# _end_class_
