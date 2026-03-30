@@ -33,7 +33,7 @@ class SwapMutator(MutationOperator):
         if self.is_operator_applicable():
 
             # Get the size of the chromosome.
-            n_genes = len(individual)
+            n_genes: int = len(individual)
 
             # Select randomly the two mutation points.
             i, j = self.rng.choice(n_genes, size=2, replace=False, shuffle=False)

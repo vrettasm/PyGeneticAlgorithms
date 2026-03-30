@@ -73,7 +73,7 @@ class GaussianMutator(MutationOperator):
         if self.is_operator_applicable():
 
             # Get the size of the chromosome.
-            n_genes = len(individual)
+            n_genes: int = len(individual)
 
             # Extract the values from the placeholder variable.
             sigma, xl, xu = self._items

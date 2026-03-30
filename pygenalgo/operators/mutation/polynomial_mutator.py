@@ -69,13 +69,13 @@ class PolynomialMutator(MutationOperator):
         if self.is_operator_applicable():
 
             # Get the size of the chromosome.
-            n_genes = len(individual)
+            n_genes: int = len(individual)
 
             # Extract the variables from the placeholder _items.
             eta_pm, xl, xu = self._items
 
             # Generate a random number in [0, 1).
-            rand_u = self.rng.random()
+            rand_u: float = self.rng.random()
 
             # Calculate delta (the perturbation factor).
             if rand_u <= 0.5:

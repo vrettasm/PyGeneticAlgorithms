@@ -36,7 +36,7 @@ class RandomMutator(MutationOperator):
         if self.is_operator_applicable():
 
             # Get the size of the chromosome.
-            n_genes = len(individual)
+            n_genes: int = len(individual)
 
             # Select randomly the mutation point and
             # replace the old gene with a new one.
