@@ -115,15 +115,16 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">parent1</span> <span class="o">!=</span> <span class="n">parent2</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
             <span class="c1"># Get the size of the chromosomes.</span>
-            <span class="n">number_of_genes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span>
+            <span class="n">number_of_genes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span>
 
             <span class="c1"># Select randomly a number of crossover points.</span>
-            <span class="n">number_of_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">number_of_genes</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
+            <span class="n">number_of_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span>
+                                                      <span class="n">high</span><span class="o">=</span><span class="n">number_of_genes</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                                                      <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
             <span class="c1"># Select randomly the crossover points.</span>
-            <span class="n">cross_points</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">number_of_genes</span><span class="p">,</span>
-                                                  <span class="n">size</span><span class="o">=</span><span class="n">number_of_points</span><span class="p">,</span>
-                                                  <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="n">cross_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">number_of_genes</span><span class="p">,</span>
+                                           <span class="n">size</span><span class="o">=</span><span class="n">number_of_points</span><span class="p">,</span>
+                                           <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
             <span class="c1"># Initialize the genome lists for the new</span>
             <span class="c1"># chromosomes to &#39;None&#39;.</span>
