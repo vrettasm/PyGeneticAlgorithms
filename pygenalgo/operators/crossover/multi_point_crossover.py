@@ -44,10 +44,10 @@ class MultiPointCrossover(CrossoverOperator):
         """
         # Get the number of genes from the first parent chromosome.
         # N.B.: It is assumed that both parents have the same size.
-        num_genes = len(parent1)
+        num_genes: int = len(parent1)
 
         # Extract the number of cut points.
-        num_points = self._items
+        num_points: int = self._items
 
         # Ensure the number of requested cutting points
         # do not exceed the length of the chromosomes.

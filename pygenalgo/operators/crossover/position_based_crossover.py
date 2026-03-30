@@ -39,11 +39,12 @@ class PositionBasedCrossover(CrossoverOperator):
         if (parent1 != parent2) and self.is_operator_applicable():
 
             # Get the size of the chromosomes.
-            number_of_genes = len(parent1)
+            number_of_genes: int = len(parent1)
 
             # Select randomly a number of crossover points.
-            number_of_points = self.rng.integers(1, high=number_of_genes-1, dtype=int)
-
+            number_of_points: int = self.rng.integers(1,
+                                                      high=number_of_genes-1,
+                                                      dtype=int)
             # Select randomly the crossover points.
             cross_points = self.rng.choice(number_of_genes,
                                            size=number_of_points,

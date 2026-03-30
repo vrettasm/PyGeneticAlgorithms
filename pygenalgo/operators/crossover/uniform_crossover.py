@@ -41,7 +41,7 @@ class UniformCrossover(CrossoverOperator):
         if (parent1 != parent2) and self.is_operator_applicable():
 
             # Get the length of the chromosome.
-            number_of_genes = len(parent1)
+            number_of_genes: int = len(parent1)
 
             # Preallocate 1st offspring genome list.
             genome_1: list = [None] * number_of_genes

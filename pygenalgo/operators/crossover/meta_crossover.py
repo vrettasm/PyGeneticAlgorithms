@@ -47,7 +47,7 @@ class MetaCrossover(CrossoverOperator):
         if (parent1 != parent2) and self.is_operator_applicable():
 
             # Get the number of available crossovers.
-            n_operators = len(self.items)
+            n_operators: int = len(self.items)
 
             # Select randomly, with equal probability (but this can be changed),
             # a crossover operator and call its crossover method.

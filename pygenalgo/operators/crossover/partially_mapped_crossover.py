@@ -41,7 +41,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
         if (parent1 != parent2) and self.is_operator_applicable():
 
             # Get the size of the chromosomes.
-            number_of_genes = len(parent1)
+            number_of_genes: int = len(parent1)
 
             # Initialize the genome lists for the new
             # chromosomes to 'None'.
