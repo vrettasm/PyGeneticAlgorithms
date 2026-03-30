@@ -44,7 +44,7 @@ class RouletteWheelSelector(SelectionOperator):
         pop_size = len(population)
 
         # Extract the (positive) fitness values from the chromosomes.
-        all_fitness = ensure_positive_fitness(population)
+        all_fitness: list[float] = ensure_positive_fitness(population)
 
         # Calculate sum of all fitness.
         sum_fitness = fsum(all_fitness)

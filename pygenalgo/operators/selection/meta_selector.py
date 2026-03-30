@@ -45,7 +45,7 @@ class MetaSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Get the number of available selectors.
-        n_operators = len(self.items)
+        n_operators: int = len(self.items)
 
         # Select randomly a method, with equal probability
         # (but this can be changed).

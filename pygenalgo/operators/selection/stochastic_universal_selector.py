@@ -40,7 +40,7 @@ class StochasticUniversalSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Extract the (positive) fitness values from the chromosomes.
-        all_fitness = ensure_positive_fitness(population)
+        all_fitness: list[float] = ensure_positive_fitness(population)
 
         # Get the population size.
         pop_size = len(population)
