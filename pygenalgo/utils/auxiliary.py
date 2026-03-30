@@ -102,16 +102,16 @@ def apply_corrections(input_population: list[Chromosome],
     :return: the number of corrected genes and the additional function evaluations.
     """
     # Holds the number of the corrected chromosomes.
-    corrections_counter = 0
+    corrections_counter: int = 0
 
     # Counts the additional function evaluations.
-    f_eval_counter = 0
+    f_eval_counter: int = 0
 
     # Go through all the chromosomes of the input population.
     for chromosome in input_population:
 
         # Holds the corrected genes.
-        corrected_genes = 0
+        corrected_genes: int = 0
 
         # Go through every Gene in the chromosome.
         for gene in chromosome:
