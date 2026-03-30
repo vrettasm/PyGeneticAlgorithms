@@ -106,7 +106,7 @@ class StandardGA(GenericGA):
         self.clear_all()
 
         # Get the size of the population.
-        pop_size = len(self.population)
+        pop_size: int = len(self.population)
 
         # Get the fitness values before optimization.
         fit_list_0, _ = self.evaluate_fitness(self.population, parallel)

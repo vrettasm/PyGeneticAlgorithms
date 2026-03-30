@@ -335,7 +335,7 @@ class GenericGA:
         :return: None.
         """
         # Get the size of the input population.
-        pop_size = len(input_population)
+        pop_size: int = len(input_population)
 
         # CROSSOVER and MUTATE to produce the new offsprings.
         for j in range(0, pop_size, 2):
@@ -392,7 +392,7 @@ class GenericGA:
 
         # Initialize the flag with "False"
         # to avoid unnecessary assignments.
-        have_changed = False
+        have_changed: bool = False
 
         # Use the threshold value to adjust
         # the probabilities accordingly.
@@ -463,7 +463,7 @@ class GenericGA:
         :return: a list with the fitness values and the found solution flag.
         """
         # Get a local copy of the fitness function.
-        fit_func = self.fitness_func
+        fit_func: Callable = self.fitness_func
 
         # Check the 'parallel_mode' flag.
         if parallel_mode:
@@ -479,13 +479,13 @@ class GenericGA:
         # _end_if_
 
         # Get the size of the population.
-        p_size = len(fitness_i)
+        p_size: int = len(fitness_i)
 
         # Preallocate the fitness list.
-        fitness_values = p_size * [float("NaN")]
+        fitness_values: list[float] = p_size * [float("NaN")]
 
         # Flag to indicate if a solution has been found.
-        found_solution = False
+        found_solution: bool = False
 
         # Update all chromosomes with their fitness and check if a solution
         # has been found.
