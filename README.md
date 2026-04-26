@@ -153,22 +153,23 @@ Once the fitness function is defined correctly the next steps are straightforwar
 
 Some optimization examples on how to use these algorithms:
 
-| **Problem**                                                | **Variables** | **Objectives** | **Constraints** | **Optima** |
-|:-----------------------------------------------------------|:-------------:|:--------------:|:---------------:|:----------:|
-| [Sphere](examples/sphere.ipynb)                            |    M (=5)     |       1        |       no        |   single   |
-| [Rastrigin](examples/rastrigin.ipynb)                      |    M (=5)     |       1        |       no        |   single   |
-| [Rosenbrock](examples/rosenbrock_on_a_disk.ipynb)          |    M (=2)     |       1        |        1        |   single   |
-| [Binh & Korn](examples/binh_and_korn_multiobjective.ipynb) |    M (=2)     |       2        |        2        |   single   |
-| [Sphere (parallel)](examples/sphere_in_parallel.ipynb)     |    M (=10)    |       1        |       no        |   single   |
-| [Easom (parallel)](examples/easom_in_parallel.ipynb)       |    M (=2)     |       1        |       no        |   single   |
-| [Traveling Salesman](examples/tsp.ipynb)                   |    M (=10)    |       1        |       yes       |   single   |
-| [N-Queens](examples/queens_puzzle.ipynb)                   |    M (=8)     |       1        |       yes       |   single   |
-| [OneMax](examples/one_max.ipynb)                           |    M (=50)    |       1        |       no        |   single   |
-| [Tanaka](examples/tanaka_multiobjective.ipynb)             |    M (=2)     |       2        |        2        |   single   |
-| [Zakharov](examples/zakharov.ipynb)                        |    M (=8)     |       1        |       no        |   single   |
-| [Osyczka](examples/osyczka_kundu_multiobjective.ipynb)     |       6       |       2        |        6        |   single   |
-| [Shubert](examples/shubert_2D.ipynb)                       |       2       |       1        |       no        |  multiple  |
-| [Gaussian Mixture](examples/gaussian_mixture_2D.ipynb)     |       2       |       1        |       no        |  multiple  |
+| **Problem**                                                   | **Variables** | **Objectives** | **Constraints** | **Optima** |
+|:--------------------------------------------------------------|:-------------:|:--------------:|:---------------:|:----------:|
+| [Sphere](examples/sphere.ipynb)                               |    M (=5)     |       1        |       no        |   single   |
+| [Rastrigin](examples/rastrigin.ipynb)                         |    M (=5)     |       1        |       no        |   single   |
+| [Rosenbrock](examples/rosenbrock_on_a_disk.ipynb)             |    M (=2)     |       1        |        1        |   single   |
+| [Binh & Korn](examples/binh_and_korn_multiobjective.ipynb)    |    M (=2)     |       2        |        2        |   single   |
+| [Sphere (parallel)](examples/sphere_in_parallel.ipynb)        |    M (=10)    |       1        |       no        |   single   |
+| [Easom (parallel)](examples/easom_in_parallel.ipynb)          |    M (=2)     |       1        |       no        |   single   |
+| [Traveling Salesman](examples/tsp.ipynb)                      |    M (=10)    |       1        |       yes       |   single   |
+| [N-Queens](examples/queens_puzzle.ipynb)                      |    M (=8)     |       1        |       yes       |   single   |
+| [OneMax](examples/one_max.ipynb)                              |    M (=50)    |       1        |       no        |   single   |
+| [Tanaka](examples/tanaka_multiobjective.ipynb)                |    M (=2)     |       2        |        2        |   single   |
+| [Zakharov](examples/zakharov.ipynb)                           |    M (=8)     |       1        |       no        |   single   |
+| [Osyczka](examples/osyczka_kundu_multiobjective.ipynb)        |       6       |       2        |        6        |   single   |
+| [Shubert](examples/shubert_2D.ipynb)                          |       2       |       1        |       no        |  multiple  |
+| [Gaussian Mixture](examples/gaussian_mixture_2D.ipynb)        |       2       |       1        |       no        |  multiple  |
+| [Multi-Depot VRP](examples/mdvrp/mdvrp_with_clustering.ipynb) |       M       |       1        |       yes       |  multiple  |
 
 
 Constraint optimization problems can be easily addressed using the [Penalty Method](https://en.wikipedia.org/wiki/Penalty_method).
