@@ -2,7 +2,6 @@ import json
 from collections import namedtuple
 
 import numpy as np
-from numba import njit
 from scipy.spatial import distance
 from numpy.random import default_rng
 
@@ -51,24 +50,6 @@ def load_data(filepath: str) -> tuple[list[Customer], list[Depot]]:
 
     # Return both lists.
     return customers, depots
-# _end_def_
-
-# Numba optimized for speed.
-@njit(fastmath=True)
-def euclidean_dist(x0, y0, x1, y1) -> float:
-    """
-    Calculate the Euclidean distance between
-    two points (x0, y0) and (x1, y1).
-
-    :param x0: first point x-coordinate.
-    :param y0: first point y-coordinate.
-
-    :param x1: second point x-coordinate.
-    :param y1: second point y-coordinate.
-
-    :return: the Euclidean distance.
-    """
-    return np.sqrt((x0 - x1)**2 + ((y0 - y1)**2))
 # _end_def_
 
 def cluster_customers_to_depots(depots: list[Depot],
@@ -235,7 +216,7 @@ def evaluate_solution(individual: Chromosome, assignment: Cluster,
             xk, yk = route[k].x, route[k].y
 
             # Compute the Euclidean distance.
-            route_distance += euclidean_dist(xk, yk, xj, yj)
+            route_distance += distance.euclidean((xk, yk), (xj, yj))
 
             # Add the customer's demand to the route demand.
             route_demand += demand_k
