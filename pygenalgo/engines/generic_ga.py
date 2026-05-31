@@ -1,8 +1,8 @@
 from math import isnan
 from os import cpu_count
-from typing import Callable
 from operator import attrgetter
 from collections import defaultdict
+from typing import Callable, Optional
 
 from joblib import Parallel, delayed
 from numpy.random import default_rng, Generator
@@ -42,8 +42,8 @@ class GenericGA:
                  "_mutate_op", "_stats", "_n_cpus", "_f_evals", "_iteration")
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable,
-                 select_op: SelectionOperator = None, mutate_op: MutationOperator = None,
-                 crossx_op: CrossoverOperator = None, n_cpus: int = None) -> None:
+                 select_op: Optional[SelectionOperator] = None, mutate_op: Optional[MutationOperator] = None,
+                 crossx_op: Optional[CrossoverOperator] = None, n_cpus: Optional[int] = None) -> None:
         """
         Default constructor of GenericGA object.
 
@@ -279,7 +279,7 @@ class GenericGA:
         logger.debug(f"{self.__class__.__name__} cleared.")
     # _end_def_
 
-    def best_chromosome(self) -> Chromosome:
+    def best_chromosome(self) -> Optional[Chromosome]:
         """
         Auxiliary method that returns the chromosome with the
         highest fitness value. Safeguarded with ignoring NaNs.
@@ -363,7 +363,7 @@ class GenericGA:
             self._mutate_op(input_population[k])
     # _end_def_
 
-    def adapt_probabilities(self, threshold: float = None) -> bool:
+    def adapt_probabilities(self, threshold: Optional[float] = None) -> bool:
         """
         This method is used (optionally) to adjust simultaneously the crossover
         and mutation parameters of the GenericGA object.
