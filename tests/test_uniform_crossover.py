@@ -70,6 +70,46 @@ class TestUniformCrossover(unittest.TestCase):
         print("Child-2: ", " ".join([xi.value for xi in child2]))
     # _end_def_
 
+    def test_uneven_chromosomes(self):
+        """
+        Test the crossover operator with
+        chromosomes of different sizes.
+
+        :return: None.
+        """
+
+        # Create two dummy test parents.
+        parent1 = Chromosome([Gene('a', lambda: str('!')),
+                              Gene('b', lambda: str('!')),
+                              Gene('c', lambda: str('!')),
+                              Gene('d', lambda: str('!')),
+                              Gene('e', lambda: str('!')),
+                              Gene('f', lambda: str('!'))])
+
+        parent2 = Chromosome([Gene('0', lambda: str('!')),
+                              Gene('1', lambda: str('!')),
+                              Gene('2', lambda: str('!')),
+                              Gene('3', lambda: str('!')),
+                              Gene('4', lambda: str('!')),
+                              Gene('5', lambda: str('!')),
+                              Gene('6', lambda: str('!')),
+                              Gene('7', lambda: str('!')),
+                              Gene('8', lambda: str('!')),
+                              Gene('9', lambda: str('!'))])
+
+        # Print parents BEFORE crossover.
+        print("Parent-1: ", " ".join([xi.value for xi in parent1]))
+        print("Parent-2: ", " ".join([xi.value for xi in parent2]))
+
+        # Perform the crossover.
+        child1, child2 = self.cross_op(parent1, parent2)
+        print("---------")
+
+        # Print offsprings AFTER crossover.
+        print("Child-1: ", " ".join([xi.value for xi in child1]))
+        print("Child-2: ", " ".join([xi.value for xi in child2]))
+    # _end_def_
+
 # _end_class_
 
 
