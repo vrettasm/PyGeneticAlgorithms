@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pygenalgo.utils.utilities import clamp
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
