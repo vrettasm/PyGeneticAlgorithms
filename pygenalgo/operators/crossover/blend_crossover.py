@@ -20,7 +20,7 @@ class BlendCrossover(CrossoverOperator):
     """
 
     def __init__(self, crossover_probability: float = 0.9, p_alpha: float = 0.5,
-                 lower_val: float = None, upper_val: float = None) -> None:
+                 lower_val: Optional[float] = None, upper_val: Optional[float] = None) -> None:
         """
         Construct a 'BlendCrossover' object with a given probability value.
 
