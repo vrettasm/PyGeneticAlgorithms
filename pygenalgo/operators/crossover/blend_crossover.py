@@ -1,4 +1,6 @@
 from math import fabs
+from typing import Optional
+
 from pygenalgo.genome.gene import Gene
 from pygenalgo.utils.utilities import clamp
 from pygenalgo.genome.chromosome import Chromosome
