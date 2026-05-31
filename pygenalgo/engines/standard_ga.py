@@ -1,5 +1,6 @@
 import time
 from math import isclose
+from typing import Optional
 
 from numpy import (array, nanmean, nanstd, isfinite)
 
@@ -65,8 +66,8 @@ class StandardGA(GenericGA):
     # _end_def_
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
-            f_tol: float = None, parallel: bool = False, adapt_probs: bool = False,
-            shuffle: bool = True, f_max_eval: int = None, verbose: bool = False) -> None:
+            f_tol: Optional[float] = None, parallel: bool = False, adapt_probs: bool = False,
+            shuffle: bool = True, f_max_eval: Optional[int] = None, verbose: bool = False) -> None:
         """
         Main method of the StandardGA class, that implements the evolutionary routine.
 
