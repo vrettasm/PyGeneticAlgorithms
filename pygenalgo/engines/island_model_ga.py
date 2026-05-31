@@ -1,4 +1,5 @@
 import time
+from typing import Optional
 from math import isnan, isclose
 from operator import attrgetter
 from collections import defaultdict
@@ -31,7 +32,8 @@ class IslandModelGA(GenericGA):
     # Object variables (specific for the IslandModel).
     __slots__ = ("_num_islands", "_migrate_op")
 
-    def __init__(self, num_islands: int, migrate_op: MigrationOperator = None, **kwargs) -> None:
+    def __init__(self, num_islands: int, migrate_op: Optional[MigrationOperator] = None,
+                 **kwargs) -> None:
         """
         Default constructor of IslandModelGA object.
 
@@ -87,7 +89,8 @@ class IslandModelGA(GenericGA):
 
     def _evolve_population(self, island: SubPopulation, epochs: int, shuffle: bool,
                            correction: bool, elitism: bool, f_tol: float, adapt_probs: bool,
-                           prob_crossx: float = None, prob_mutate: float = None) -> tuple:
+                           prob_crossx: Optional[float] = None,
+                           prob_mutate: Optional[float] = None) -> tuple:
         """
         This is a helper method to be used inside the Parallel delayed method.
         It is responsible for running the evolution of a single population (island).
@@ -237,8 +240,8 @@ class IslandModelGA(GenericGA):
     # _end_def_
 
     def run(self, epochs: int = 500, correction: bool = False, elitism: bool = True,
-            f_tol: float = None, allow_migration: bool = False, n_periods: int = 10,
-            adapt_probs: bool = False, shuffle: bool = True, f_max_eval: int = None,
+            f_tol: Optional[float] = None, allow_migration: bool = False, n_periods: int = 10,
+            adapt_probs: bool = False, shuffle: bool = True, f_max_eval: Optional[int] = None,
             verbose: bool = False) -> None:
         """
         Main method of the IslandModelGA class, that implements the evolutionary routine.
