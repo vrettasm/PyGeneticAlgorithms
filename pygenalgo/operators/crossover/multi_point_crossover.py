@@ -42,16 +42,19 @@ class MultiPointCrossover(CrossoverOperator):
 
         :return: child1 and child2 (as Chromosomes).
         """
-        # Get the number of genes from the first parent chromosome.
-        # N.B.: It is assumed that both parents have the same size.
-        num_genes: int = len(parent1)
+        # Get the lengths of the chromosomes.
+        length_1: int = len(parent1)
+        length_2: int = len(parent2)
+
+        # Find the minimum length.
+        min_length: int = min(length_1, length_2)
 
         # Extract the number of cut points.
         num_points: int = self._items
 
         # Ensure the number of requested cutting points
         # do not exceed the length of the chromosomes.
-        if num_points >= num_genes:
+        if num_points >= min_length:
             raise ValueError(f"{self.__class__.__name__}:"
                              " Number of requested crossover points"
                              " exceeds the length of the chromosome.")
@@ -63,18 +66,20 @@ class MultiPointCrossover(CrossoverOperator):
         if (parent1 != parent2) and self.is_operator_applicable():
 
             # Select randomly the crossover points and sort them.
-            loci = sorted(self.rng.choice(num_genes, size=num_points,
+            loci = sorted(self.rng.choice(min_length, size=num_points,
                                           replace=False, shuffle=False))
 
-            # Initialize the offspring genomes to None.
-            genome_1: list = num_genes * [None]
-            genome_2: list = num_genes * [None]
+            # Create the 1st offspring genome list.
+            genome_1 = [gene.clone() for gene in parent1.genome]
+
+            # Create the 2nd offspring genome list.
+            genome_2 = [gene.clone() for gene in parent2.genome]
 
             # Initialize a set of hyperparameters.
             reset_flag, upper_lim, j = True, loci[0], 0
 
-            # Scan the whole list of genes.
-            for i in range(num_genes):
+            # Scan the genomes up to min_length.
+            for i in range(min_length):
 
                 # Once we surpass the upper limit (in loci)
                 # we reset the  flag value to allow changes
@@ -90,16 +95,12 @@ class MultiPointCrossover(CrossoverOperator):
                     # We make sure the upper limit value does not exceed
                     # the number of genes. Also, this avoids the out of
                     # bound IndexError.
-                    upper_lim = loci[j] if j < num_points else num_genes
+                    upper_lim = loci[j] if j < num_points else min_length
                 # _end_if_
 
                 # Check the flag value.
-                if reset_flag:
-                    genome_1[i] = parent1.genome[i].clone()
-                    genome_2[i] = parent2.genome[i].clone()
-                else:
-                    genome_1[i] = parent2.genome[i].clone()
-                    genome_2[i] = parent1.genome[i].clone()
+                if not reset_flag:
+                    genome_1[i], genome_2[i] = genome_2[i], genome_1[i]
                 # _end_if_
 
             # _end_for_
