@@ -22,10 +22,8 @@ parallel pool). So the default setting here is "parallel=False". Regarding the I
 parallel mode by definition.
 
   > **NEWS**:
-  > Recently three new features were added. The "Neighborhood Selector" operator is used for problems with multi-modal
-  > objective functions. It allows the population to focus on multiple areas of the search space and detect more than
-  > one optimal values. This features works in both computational modes (StandardGA and IslandModelGA). Moreover, the
-  > Blend-α (BLX-α) crossover and Polynomial (PM-η) mutation operators were implemented with focus on real coded genomes.
+  > In this new release three crossover operators (SinglePointCrossover, MultiPointCrossover and UniformCrossover)
+  > got an update that: i) makes them faster and ii) allows them to be used with chromosomes of different lengths.
   > 
 
 The current implementation offers a variety of genetic operators including:

@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.operators.crossover.single_point_crossover &mdash; PyGenAlgo 1.9.0 documentation</title>
+  <title>pygenalgo.operators.crossover.single_point_crossover &mdash; PyGenAlgo 1.9.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=c4cb232b"></script>
+      <script src="../../../../_static/documentation_options.js?v=60b3a732"></script>
       <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -116,16 +116,23 @@
         <span class="c1"># changes.</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">parent1</span> <span class="o">!=</span> <span class="n">parent2</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
-            <span class="c1"># Select randomly the crossover point.</span>
-            <span class="n">locus</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+            <span class="c1"># Get the lengths of the chromosomes.</span>
+            <span class="n">length_1</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span>
+            <span class="n">length_2</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent2</span><span class="p">)</span>
 
-            <span class="c1"># Construct 1st offspring genome list at locus.</span>
-            <span class="n">genome_1</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[:</span><span class="n">locus</span><span class="p">]</span> <span class="o">+</span>
-                        <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">locus</span><span class="p">:]]</span>
+            <span class="c1"># Find the minimum length.</span>
+            <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">length_1</span><span class="p">,</span> <span class="n">length_2</span><span class="p">)</span>
 
-            <span class="c1"># Construct 2nd offspring genome list at locus.</span>
-            <span class="n">genome_2</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[:</span><span class="n">locus</span><span class="p">]</span> <span class="o">+</span>
-                        <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">locus</span><span class="p">:]]</span>
+            <span class="c1"># Select randomly a crossover point from [0, min_length-1].</span>
+            <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">min_length</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+            <span class="c1"># Construct 1st offspring genome list at &#39;idx&#39;.</span>
+            <span class="n">genome_1</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[:</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span>
+                        <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">idx</span><span class="p">:]]</span>
+
+            <span class="c1"># Construct 2nd offspring genome list at &#39;idx&#39;.</span>
+            <span class="n">genome_2</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[:</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span>
+                        <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">idx</span><span class="p">:]]</span>
 
             <span class="c1"># Create two NEW offsprings.</span>
             <span class="n">child1</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="p">(</span><span class="n">genome_1</span><span class="p">)</span>

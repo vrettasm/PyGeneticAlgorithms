@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.operators.crossover.multi_point_crossover &mdash; PyGenAlgo 1.9.0 documentation</title>
+  <title>pygenalgo.operators.crossover.multi_point_crossover &mdash; PyGenAlgo 1.9.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=c4cb232b"></script>
+      <script src="../../../../_static/documentation_options.js?v=60b3a732"></script>
       <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -118,16 +118,19 @@
 
 <span class="sd">        :return: child1 and child2 (as Chromosomes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Get the number of genes from the first parent chromosome.</span>
-        <span class="c1"># N.B.: It is assumed that both parents have the same size.</span>
-        <span class="n">num_genes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span>
+        <span class="c1"># Get the lengths of the chromosomes.</span>
+        <span class="n">length_1</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span>
+        <span class="n">length_2</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent2</span><span class="p">)</span>
+
+        <span class="c1"># Find the minimum length.</span>
+        <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">length_1</span><span class="p">,</span> <span class="n">length_2</span><span class="p">)</span>
 
         <span class="c1"># Extract the number of cut points.</span>
         <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span>
 
         <span class="c1"># Ensure the number of requested cutting points</span>
         <span class="c1"># do not exceed the length of the chromosomes.</span>
-        <span class="k">if</span> <span class="n">num_points</span> <span class="o">&gt;=</span> <span class="n">num_genes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">num_points</span> <span class="o">&gt;=</span> <span class="n">min_length</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">:&quot;</span>
                              <span class="s2">&quot; Number of requested crossover points&quot;</span>
                              <span class="s2">&quot; exceeds the length of the chromosome.&quot;</span><span class="p">)</span>
@@ -139,18 +142,20 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">parent1</span> <span class="o">!=</span> <span class="n">parent2</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
             <span class="c1"># Select randomly the crossover points and sort them.</span>
-            <span class="n">loci</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_genes</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_points</span><span class="p">,</span>
+            <span class="n">loci</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">min_length</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_points</span><span class="p">,</span>
                                           <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
 
-            <span class="c1"># Initialize the offspring genomes to None.</span>
-            <span class="n">genome_1</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">num_genes</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
-            <span class="n">genome_2</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">num_genes</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+            <span class="c1"># Create the 1st offspring genome list.</span>
+            <span class="n">genome_1</span> <span class="o">=</span> <span class="p">[</span><span class="n">gene</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">]</span>
+
+            <span class="c1"># Create the 2nd offspring genome list.</span>
+            <span class="n">genome_2</span> <span class="o">=</span> <span class="p">[</span><span class="n">gene</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">]</span>
 
             <span class="c1"># Initialize a set of hyperparameters.</span>
             <span class="n">reset_flag</span><span class="p">,</span> <span class="n">upper_lim</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">loci</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span>
 
-            <span class="c1"># Scan the whole list of genes.</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_genes</span><span class="p">):</span>
+            <span class="c1"># Scan the genomes up to min_length.</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">min_length</span><span class="p">):</span>
 
                 <span class="c1"># Once we surpass the upper limit (in loci)</span>
                 <span class="c1"># we reset the  flag value to allow changes</span>
@@ -166,16 +171,12 @@
                     <span class="c1"># We make sure the upper limit value does not exceed</span>
                     <span class="c1"># the number of genes. Also, this avoids the out of</span>
                     <span class="c1"># bound IndexError.</span>
-                    <span class="n">upper_lim</span> <span class="o">=</span> <span class="n">loci</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">num_points</span> <span class="k">else</span> <span class="n">num_genes</span>
+                    <span class="n">upper_lim</span> <span class="o">=</span> <span class="n">loci</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">num_points</span> <span class="k">else</span> <span class="n">min_length</span>
                 <span class="c1"># _end_if_</span>
 
                 <span class="c1"># Check the flag value.</span>
-                <span class="k">if</span> <span class="n">reset_flag</span><span class="p">:</span>
-                    <span class="n">genome_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
-                    <span class="n">genome_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">genome_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
-                    <span class="n">genome_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">reset_flag</span><span class="p">:</span>
+                    <span class="n">genome_1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">genome_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">genome_2</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">genome_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                 <span class="c1"># _end_if_</span>
 
             <span class="c1"># _end_for_</span>

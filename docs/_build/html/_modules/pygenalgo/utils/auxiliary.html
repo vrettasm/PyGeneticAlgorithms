@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.utils.auxiliary &mdash; PyGenAlgo 1.9.0 documentation</title>
+  <title>pygenalgo.utils.auxiliary &mdash; PyGenAlgo 1.9.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=c4cb232b"></script>
+      <script src="../../../_static/documentation_options.js?v=60b3a732"></script>
       <script src="../../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -182,16 +182,16 @@
 <span class="sd">    :return: the number of corrected genes and the additional function evaluations.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Holds the number of the corrected chromosomes.</span>
-    <span class="n">corrections_counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">corrections_counter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="c1"># Counts the additional function evaluations.</span>
-    <span class="n">f_eval_counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">f_eval_counter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="c1"># Go through all the chromosomes of the input population.</span>
     <span class="k">for</span> <span class="n">chromosome</span> <span class="ow">in</span> <span class="n">input_population</span><span class="p">:</span>
 
         <span class="c1"># Holds the corrected genes.</span>
-        <span class="n">corrected_genes</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">corrected_genes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="c1"># Go through every Gene in the chromosome.</span>
         <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">chromosome</span><span class="p">:</span>
