@@ -21,28 +21,44 @@ class LinearRankSelector(SelectionOperator):
 
     """
 
-    def __init__(self, select_probability: float = 1.0) -> None:
+    def __init__(self, select_probability: float = 1.0, eta: float = 2.0) -> None:
         """
         Construct a 'LinearRankSelector' object with a given probability value.
 
         :param select_probability: (float) in [0, 1].
+        :param eta: (float) pressure adjustment factor [1, 2]. A value of 1
+                    provides the lowest selection pressure (uniform random)
+                    whilst a value of 2, will provide the highest selection
+                    pressure.
         """
         # Call the super constructor with the provided probability value.
         super().__init__(select_probability)
+
+        # Sanity check for selection pressure parameter.
+        if not (1.0 <= eta <= 2.0):
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Selection pressure {eta} must be between 1.0 and 2.0.")
+        # _end_if_
+
+        # Store the pressure adjustable parameter.
+        self._items = float(eta)
     # _end_def_
 
     @staticmethod
-    @lru_cache(maxsize=32)
-    def probabilities(p_size: int) -> list[float]:
+    @lru_cache(maxsize=64)
+    def probabilities(p_size: int, eta: float) -> list[float]:
         """
         Calculate the rank probability distribution over the population size.
         The function is lru_cached so that repeated calls with the same input
         should not recompute the same array, since the population size of the
-        chromosomes is not expected to change dynamically.
+        chromosomes is not expected to change dynamically. The eta parameter
+        provides a means to adjust the pressure from total random (eta = 1.0)
+        to the highest possible rank (eta = 2.0).
 
         NOTE: Probabilities are returned in ascending order.
 
         :param p_size: (int) population size.
+        :param eta: (float) pressure adjustment factor.
 
         :return: (list) rank probability distribution in ascending order.
         """
@@ -51,12 +67,18 @@ class LinearRankSelector(SelectionOperator):
             raise ValueError(f"Population size {p_size} must be > 0.")
         # _end_if_
 
-        # Calculate the sum of '1 + 2 + 3 + ... + N'.
-        # We know that this is equal to: N * (N+1)/2.
-        sum_ranked_values = float(0.5 * p_size * (p_size + 1))
+        # Handle edge case where population size is 1.
+        if p_size == 1:
+            return [1.0]
+        # _end_if_
+
+        # Precompute constant invariants out of the
+        # loop to eliminate repetitive division.
+        base = (2.0 - eta) / p_size
+        step = (2.0 * (eta - 1.0)) / (p_size * (p_size - 1))
 
         # Return the probability values (ascending order).
-        return [n / sum_ranked_values for n in range(1, p_size + 1)]
+        return [base + (i * step) for i in range(p_size)]
     # _end_def_
 
     @increase_counter
@@ -74,8 +96,10 @@ class LinearRankSelector(SelectionOperator):
         pop_size = len(population)
 
         # Calculate the selection probabilities of each member
-        # in the population, using their ranking position.
-        selection_probs = LinearRankSelector.probabilities(pop_size)
+        # in the population, using their ranking position. Use
+        # the pressure adjustment parameter 'eta' (as _items).
+        selection_probs = LinearRankSelector.probabilities(pop_size,
+                                                           self._items)
 
         # Sort the population in ascending order using their fitness value.
         sorted_population = sorted(population, key=attrgetter("fitness"))
