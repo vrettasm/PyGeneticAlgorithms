@@ -181,7 +181,7 @@ class StandardGA(GenericGA):
                 if previous_best not in population_i:
 
                     # Select a position at random.
-                    locus = self.rng_GA.integers(pop_size, dtype=int)
+                    locus: int = self.rng_GA.integers(pop_size, dtype=int)
 
                     # Replace it with the previous best.
                     population_i[locus] = previous_best
