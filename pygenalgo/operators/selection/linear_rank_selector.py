@@ -1,3 +1,4 @@
+from math import fsum
 from operator import attrgetter
 from functools import lru_cache
 from pygenalgo.genome.chromosome import Chromosome
@@ -77,8 +78,15 @@ class LinearRankSelector(SelectionOperator):
         base = (2.0 - eta) / p_size
         step = (2.0 * (eta - 1.0)) / (p_size * (p_size - 1))
 
-        # Return the probability values (ascending order).
-        return [base + (i * step) for i in range(p_size)]
+        # Calculate the probabilities.
+        probabilities = [base + (i * step) for i in range(p_size)]
+
+        # Calculate the sum of probabilities.
+        total = fsum(probabilities)
+
+        # Normalize for minor numerical safety. The
+        # probability values are in ascending order.
+        return [p / total for p in probabilities]
     # _end_def_
 
     @increase_counter
