@@ -8,13 +8,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Selection operators &mdash; PyGenAlgo 1.9.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=60b3a732"></script>
-      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -135,7 +135,7 @@ to form the new population of solutions.</p>
 <span id="pygenalgo-operators-selection-linear-rank-selector-module"></span><h2>pygenalgo.operators.selection.linear_rank_selector module<a class="headerlink" href="#module-pygenalgo.operators.selection.linear_rank_selector" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.selection.linear_rank_selector.</span></span><span class="sig-name descname"><span class="pre">LinearRankSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">select_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/selection/linear_rank_selector.html#LinearRankSelector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.selection.linear_rank_selector.</span></span><span class="sig-name descname"><span class="pre">LinearRankSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">select_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/selection/linear_rank_selector.html#LinearRankSelector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
@@ -151,15 +151,20 @@ models.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.probabilities">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/selection/linear_rank_selector.html#LinearRankSelector.probabilities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.probabilities" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/selection/linear_rank_selector.html#LinearRankSelector.probabilities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.probabilities" title="Link to this definition"></a></dt>
 <dd><p>Calculate the rank probability distribution over the population size.
 The function is lru_cached so that repeated calls with the same input
 should not recompute the same array, since the population size of the
-chromosomes is not expected to change dynamically.</p>
+chromosomes is not expected to change dynamically. The eta parameter
+provides a means to adjust the pressure from total random (eta = 1.0)
+to the highest possible rank (eta = 2.0).</p>
 <p>NOTE: Probabilities are returned in ascending order.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>p_size</strong> – (int) population size.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p_size</strong> – (int) population size.</p></li>
+<li><p><strong>eta</strong> – (float) pressure adjustment factor.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>(list) rank probability distribution in ascending order.</p>
