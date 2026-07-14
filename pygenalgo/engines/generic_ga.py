@@ -106,7 +106,7 @@ class GenericGA:
         # _end_if_
 
         # Log the number of CPUs.
-        logger.debug(f"{self.__class__.__name__} uses {self._n_cpus} CPUs.")
+        logger.debug("%s uses %s CPUs.", self.__class__.__name__, self._n_cpus)
 
         # Dictionary with statistics.
         self._stats = defaultdict(list)
@@ -118,7 +118,7 @@ class GenericGA:
         self._iteration = 0
 
         # Log the object initialization.
-        logger.debug(f"{self.__class__.__name__} initialization complete.")
+        logger.debug("%s initialization complete.", self.__class__.__name__)
     # _end_def_
 
     @property
@@ -174,7 +174,7 @@ class GenericGA:
         cls.rng_GA = default_rng(seed=new_seed)
 
         # Log the new seed.
-        logger.debug(f"{cls.__name__} has a new seed.")
+        logger.debug("%s has a new seed.", cls.__name__)
     # _end_def_
 
     @property
@@ -276,7 +276,7 @@ class GenericGA:
         self._f_evals = 0
 
         # Log the cleanup.
-        logger.debug(f"{self.__class__.__name__} cleared.")
+        logger.debug("%s cleared.", self.__class__.__name__)
     # _end_def_
 
     def best_chromosome(self) -> Optional[Chromosome]:
@@ -416,8 +416,8 @@ class GenericGA:
             self._mutate_op.probability = min(max(trial_pm, 0.0), 1.0)
 
             # Log the update of the parameters.
-            logger.debug(f"{self.__class__.__name__} "
-                         f"probabilities have been updated.")
+            logger.debug("%s probabilities have been updated.",
+                         self.__class__.__name__)
         # _end_if_
 
         return have_changed
