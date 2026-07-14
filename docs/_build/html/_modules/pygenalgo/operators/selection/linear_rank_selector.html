@@ -106,8 +106,8 @@
 <span class="sd">                    whilst a value of 2, will provide the highest selection</span>
 <span class="sd">                    pressure.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Call the super constructor with the provided probability value.</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">select_probability</span><span class="p">)</span>
+        <span class="c1"># Call the super constructor with the provided initial value.</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">selection_probability</span><span class="o">=</span><span class="n">select_probability</span><span class="p">)</span>
 
         <span class="c1"># Sanity check for selection pressure parameter.</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">&lt;=</span> <span class="n">eta</span> <span class="o">&lt;=</span> <span class="mf">2.0</span><span class="p">):</span>

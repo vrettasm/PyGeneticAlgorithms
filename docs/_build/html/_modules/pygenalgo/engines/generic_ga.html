@@ -154,45 +154,45 @@
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Copy the reference of the population.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">initial_pop</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]</span> <span class="o">=</span> <span class="n">initial_pop</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
         <span class="c1"># Get the fitness function.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fitness_func</span> <span class="o">=</span> <span class="n">fit_func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness_func</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">fit_func</span>
 
         <span class="c1"># Get Selection Operator.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_select_op</span> <span class="o">=</span> <span class="n">select_op</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_select_op</span><span class="p">:</span> <span class="n">SelectionOperator</span> <span class="o">=</span> <span class="n">select_op</span>
 
         <span class="c1"># Get Mutation Operator.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span> <span class="o">=</span> <span class="n">mutate_op</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="p">:</span> <span class="n">MutationOperator</span> <span class="o">=</span> <span class="n">mutate_op</span>
 
         <span class="c1"># Get Crossover Operator.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span> <span class="o">=</span> <span class="n">crossx_op</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="p">:</span> <span class="n">CrossoverOperator</span> <span class="o">=</span> <span class="n">crossx_op</span>
 
         <span class="c1"># Get the number of requested CPUs.</span>
         <span class="k">if</span> <span class="n">n_cpus</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># This is the default option.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">GenericGA</span><span class="o">.</span><span class="n">MAX_CPUs</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">GenericGA</span><span class="o">.</span><span class="n">MAX_CPUs</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Assign the  requested number, making sure we have</span>
             <span class="c1"># enough CPUs and the value entered has the correct</span>
             <span class="c1"># type.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">GenericGA</span><span class="o">.</span><span class="n">MAX_CPUs</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_cpus</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">GenericGA</span><span class="o">.</span><span class="n">MAX_CPUs</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_cpus</span><span class="p">)))</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Log the number of CPUs.</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> uses </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span><span class="si">}</span><span class="s2"> CPUs.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> uses </span><span class="si">%s</span><span class="s2"> CPUs.&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_cpus</span><span class="p">)</span>
 
         <span class="c1"># Dictionary with statistics.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
 
         <span class="c1"># Set the function evaluation to zero.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_f_evals</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_f_evals</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="c1"># Set the iterations counter to zero.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_iteration</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iteration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="c1"># Log the object initialization.</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> initialization complete.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> initialization complete.&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -229,7 +229,7 @@
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Update the iteration value.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_iteration</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iteration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">value</span>
 
         <span class="c1"># Update the iteration value in the GeneticOperator Class.</span>
         <span class="n">GeneticOperator</span><span class="o">.</span><span class="n">set_iteration</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -250,7 +250,7 @@
         <span class="bp">cls</span><span class="o">.</span><span class="n">rng_GA</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">new_seed</span><span class="p">)</span>
 
         <span class="c1"># Log the new seed.</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> has a new seed.&quot;</span><span class="p">)</span></div>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has a new seed.&quot;</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span></div>
 
     <span class="c1"># _end_def_</span>
 
@@ -358,7 +358,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_f_evals</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="c1"># Log the cleanup.</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> cleared.&quot;</span><span class="p">)</span></div>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> cleared.&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span></div>
 
     <span class="c1"># _end_def_</span>
 
@@ -402,8 +402,10 @@
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Sort the population in descending order.</span>
-        <span class="n">sorted_population</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">isnan</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)],</span>
-                                   <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">sorted_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">isnan</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)],</span>
+            <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
 
         <span class="c1"># Return the best &#39;n&#39; chromosomes.</span>
         <span class="k">return</span> <span class="n">sorted_population</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">]</span></div>
@@ -442,7 +444,7 @@
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Get the index of the next chromosome.</span>
-            <span class="n">k</span> <span class="o">=</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span>
 
             <span class="c1"># Replace directly the OLD parents with the NEW offsprings.</span>
             <span class="n">input_population</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">input_population</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="p">(</span><span class="n">input_population</span><span class="p">[</span><span class="n">j</span><span class="p">],</span>
@@ -481,8 +483,8 @@
 
         <span class="c1"># Initialize the trial values with the current</span>
         <span class="c1"># probabilities to avoid going out of limits.</span>
-        <span class="n">trial_pc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span>
-        <span class="n">trial_pm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span>
+        <span class="n">trial_pc</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crossx_op</span><span class="o">.</span><span class="n">probability</span>
+        <span class="n">trial_pm</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span>
 
         <span class="c1"># Initialize the flag with &quot;False&quot;</span>
         <span class="c1"># to avoid unnecessary assignments.</span>
@@ -510,8 +512,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">trial_pm</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
 
             <span class="c1"># Log the update of the parameters.</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;probabilities have been updated.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> probabilities have been updated.&quot;</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
         <span class="k">return</span> <span class="n">have_changed</span></div>

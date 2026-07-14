@@ -101,8 +101,8 @@
 
 <span class="sd">        :param p: proportion of the population that will reproduce (float).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Call the super constructor with the provided probability value.</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">select_probability</span><span class="p">)</span>
+        <span class="c1"># Call the super constructor with the provided initial value.</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">selection_probability</span><span class="o">=</span><span class="n">select_probability</span><span class="p">)</span>
 
         <span class="c1"># The proportion value should be in [0.1, 0.9].</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="mf">0.9</span><span class="p">),</span> <span class="mf">0.1</span><span class="p">)</span>
