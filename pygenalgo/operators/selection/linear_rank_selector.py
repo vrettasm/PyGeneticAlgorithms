@@ -42,7 +42,7 @@ class LinearRankSelector(SelectionOperator):
         # _end_if_
 
         # Store the pressure adjustable parameter.
-        self._items = float(eta)
+        self._items: float = float(eta)
     # _end_def_
 
     @staticmethod
@@ -75,14 +75,16 @@ class LinearRankSelector(SelectionOperator):
 
         # Precompute constant invariants out of the
         # loop to eliminate repetitive division.
-        base = (2.0 - eta) / p_size
-        step = (2.0 * (eta - 1.0)) / (p_size * (p_size - 1))
+        base: float = (2.0 - eta) / p_size
+        step: float = (2.0 * (eta - 1.0)) / (p_size * (p_size - 1))
 
         # Calculate the probabilities.
-        probabilities = [base + (i * step) for i in range(p_size)]
+        probabilities: list[float] = [
+            base + (i * step) for i in range(p_size)
+        ]
 
         # Calculate the sum of probabilities.
-        total = fsum(probabilities)
+        total: float = fsum(probabilities)
 
         # Normalize for minor numerical safety. The
         # probability values are in ascending order.
@@ -101,7 +103,7 @@ class LinearRankSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Get the population size.
-        pop_size = len(population)
+        pop_size: int = len(population)
 
         # Calculate the selection probabilities of each member
         # in the population, using their ranking position. Use
