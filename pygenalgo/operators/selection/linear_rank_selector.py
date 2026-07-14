@@ -47,7 +47,7 @@ class LinearRankSelector(SelectionOperator):
 
     @staticmethod
     @lru_cache(maxsize=64)
-    def probabilities(p_size: int, eta: float) -> list[float]:
+    def probabilities(pop_size: int, eta: float) -> list[float]:
         """
         Calculate the rank probability distribution over the population size.
         The function is lru_cached so that repeated calls with the same input
@@ -58,29 +58,29 @@ class LinearRankSelector(SelectionOperator):
 
         NOTE: Probabilities are returned in ascending order.
 
-        :param p_size: (int) population size.
+        :param pop_size: (int) population size.
         :param eta: (float) pressure adjustment factor.
 
         :return: (list) rank probability distribution in ascending order.
         """
         # Sanity check.
-        if p_size <= 0:
-            raise ValueError(f"Population size {p_size} must be > 0.")
+        if pop_size <= 0:
+            raise ValueError(f"Population size {pop_size} must be > 0.")
         # _end_if_
 
         # Handle edge case where population size is 1.
-        if p_size == 1:
+        if pop_size == 1:
             return [1.0]
         # _end_if_
 
         # Precompute constant invariants out of the
         # loop to eliminate repetitive division.
-        base: float = (2.0 - eta) / p_size
-        step: float = (2.0 * (eta - 1.0)) / (p_size * (p_size - 1))
+        base: float = (2.0 - eta) / pop_size
+        step: float = (2.0 * (eta - 1.0)) / (pop_size * (pop_size - 1))
 
         # Calculate the probabilities.
         probabilities: list[float] = [
-            base + (i * step) for i in range(p_size)
+            base + (i * step) for i in range(pop_size)
         ]
 
         # Calculate the sum of probabilities.
