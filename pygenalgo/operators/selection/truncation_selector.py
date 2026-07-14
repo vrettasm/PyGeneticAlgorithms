@@ -31,7 +31,7 @@ class TruncationSelector(SelectionOperator):
         super().__init__(select_probability)
 
         # The proportion value should be in [0.1, 0.9].
-        self._items = max(min(float(p), 0.9), 0.1)
+        self._items: float = max(min(float(p), 0.9), 0.1)
     # _end_def_
 
     @increase_counter
@@ -46,13 +46,16 @@ class TruncationSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Get the population size.
-        pop_size = len(population)
+        pop_size: int = len(population)
 
-        # Sort the population in descending order using their fitness value.
-        sorted_population = sorted(population, key=attrgetter("fitness"), reverse=True)
+        # Sort the population in descending order using
+        # their fitness value.
+        sorted_population: list[Chromosome] = sorted(
+            population, key=attrgetter("fitness"), reverse=True
+        )
 
-        # Select tne new parents using only the higher percentage '%' of
-        # the old population (indexes).
+        # Select tne new parents using only the higher
+        # percentage '%' of the old population indexes.
         index = self.rng.choice(int(pop_size*self._items), size=pop_size,
                                 replace=True, shuffle=True)
 
