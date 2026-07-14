@@ -78,7 +78,9 @@ def pareto_front(points: list) -> list:
     :return: List of points that lie on the Pareto front.
     """
     # Create a set with all the points sizes.
-    check_size = {len(point) for point in points}
+    check_size: set = {
+        len(point) for point in points
+    }
 
     # Sanity check.
     if len(check_size) > 1:
@@ -92,8 +94,8 @@ def pareto_front(points: list) -> list:
     # Iterate through every point in the list.
     for i, point_i in enumerate(points):
 
-        # Set the pareto optimal flag value to True.
-        is_pareto_optimal = True
+        # Set the pareto optimal flag to True.
+        is_pareto_optimal: bool = True
 
         # Compare it against every other point.
         for j, point_j in enumerate(points):
@@ -136,10 +138,10 @@ def np_pareto_front(points: NDArray) -> NDArray:
     # _end_if_
 
     # Get the number of points.
-    num_points = points.shape[0]
+    num_points: int = points.shape[0]
 
-    # Create a boolean array to track Pareto optimal points.
-    is_pareto_optimal = np.ones(num_points, dtype=bool)
+    # Create an array of boolean to track Pareto optimal points.
+    is_pareto_optimal: NDArray = np.ones(num_points, dtype=bool)
 
     for i, point_i in enumerate(points):
         # Compare point i-th with all other points.
