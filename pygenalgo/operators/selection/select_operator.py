@@ -42,9 +42,9 @@ class SelectionOperator(GeneticOperator):
     """
     Description:
 
-        Provides the base class (interface) for a Selection Operator.  Note that even
-        though the operator accepts a probability value, for the moment this operator
-        is applied with 100% 'probability'.
+        Provides the base class (interface) for a Selection Operator.
+        Note that even though the operator accepts a probability value,
+        for the moment this operator is applied with 100% 'probability'.
     """
 
     def __init__(self, selection_probability: float) -> None:
