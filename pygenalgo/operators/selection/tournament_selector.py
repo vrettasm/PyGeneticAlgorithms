@@ -1,5 +1,8 @@
 from operator import attrgetter
+
+from numpy.typing import NDArray
 from numpy import array as np_array
+
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
@@ -33,7 +36,7 @@ class TournamentSelector(SelectionOperator):
         super().__init__(select_probability)
 
         # Number of participants of the tournament should be more than 2.
-        self._items = max(2, int(k))
+        self._items: int = max(2, int(k))
     # _end_def_
 
     @increase_counter
@@ -48,18 +51,25 @@ class TournamentSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Get the population size.
-        pop_size = len(population)
+        pop_size: int = len(population)
 
         # Local copy of random choice.
         random_choice = self.rng.choice
 
         # Select the contestants for each tournament.
-        contestants = np_array([random_choice(pop_size, size=self._items,
-                                              replace=False, shuffle=False)
-                                for _ in range(pop_size)])
+        contestants: NDArray = np_array([
+            random_choice(pop_size, size=self._items, replace=False, shuffle=False)
+            for _ in range(pop_size)
+        ])
+
+        # Define the key.
+        key_sort = attrgetter("fitness")
+
         # Return the new parents.
-        return [max((population[j] for j in contestants[i]),
-                key=attrgetter("fitness")) for i in range(pop_size)]
+        return [
+            max((population[k] for k in row), key=key_sort)
+            for row in contestants
+        ]
     # _end_def_
 
 # _end_class_
