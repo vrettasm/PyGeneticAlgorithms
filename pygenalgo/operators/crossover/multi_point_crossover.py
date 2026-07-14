@@ -1,3 +1,4 @@
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -26,7 +27,7 @@ class MultiPointCrossover(CrossoverOperator):
         super().__init__(crossover_probability)
 
         # Make sure number of points are at least 2.
-        self._items = max(int(n_points), 2)
+        self._items: int = max(int(n_points), 2)
     # _end_def_
 
     def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
@@ -70,10 +71,14 @@ class MultiPointCrossover(CrossoverOperator):
                                           replace=False, shuffle=False))
 
             # Create the 1st offspring genome list.
-            genome_1 = [gene.clone() for gene in parent1.genome]
+            genome_1: list[Gene] = [
+                gene.clone() for gene in parent1.genome
+            ]
 
             # Create the 2nd offspring genome list.
-            genome_2 = [gene.clone() for gene in parent2.genome]
+            genome_2: list[Gene] = [
+                gene.clone() for gene in parent2.genome
+            ]
 
             # Initialize a set of hyperparameters.
             reset_flag, upper_lim, j = True, loci[0], 0

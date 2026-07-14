@@ -25,9 +25,11 @@ class MetaCrossover(CrossoverOperator):
 
         # NOTE: In here the crossover probabilities
         #       for each operator are set to 1.0.
-        self._items = (UniformCrossover(1.0),
-                       MultiPointCrossover(1.0),
-                       SinglePointCrossover(1.0))
+        self._items: tuple[CrossoverOperator] = (
+            UniformCrossover(1.0),
+            MultiPointCrossover(1.0),
+            SinglePointCrossover(1.0)
+        )
     # _end_def_
 
     def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
@@ -49,10 +51,13 @@ class MetaCrossover(CrossoverOperator):
             # Get the number of available crossovers.
             n_operators: int = len(self.items)
 
-            # Select randomly, with equal probability (but this can be changed),
-            # a crossover operator and call its crossover method.
-            child1, child2 = self.items[self.rng.integers(n_operators,
-                                                          dtype=int)].crossover(parent1, parent2)
+            # Select randomly, with equal probability
+            # a crossover operator.
+            idx: int = self.rng.integers(n_operators, dtype=int)
+
+            # Call its crossover method.
+            child1, child2 = self.items[idx].crossover(parent1, parent2)
+
             # Increase the crossover counter.
             self.inc_counter()
         else:

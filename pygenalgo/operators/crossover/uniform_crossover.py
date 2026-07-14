@@ -1,3 +1,4 @@
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -45,13 +46,17 @@ class UniformCrossover(CrossoverOperator):
             length_2: int = len(parent2)
 
             # Create the 1st offspring genome list.
-            genome_1 = [gene.clone() for gene in parent1.genome]
+            genome_1: list[Gene] = [
+                gene.clone() for gene in parent1.genome
+            ]
 
             # Create the 2nd offspring genome list.
-            genome_2 = [gene.clone() for gene in parent2.genome]
+            genome_2: list[Gene] = [
+                gene.clone() for gene in parent2.genome
+            ]
 
             # Find the minimum length.
-            min_length = min(length_1, length_2)
+            min_length: int = min(length_1, length_2)
 
             # Generate uniform random numbers and convert them to bool.
             swap_bool_flag = self.rng.random(size=min_length) > 0.5

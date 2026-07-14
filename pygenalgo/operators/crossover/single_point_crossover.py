@@ -1,3 +1,4 @@
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -51,12 +52,16 @@ class SinglePointCrossover(CrossoverOperator):
             idx: int = self.rng.integers(0, high=min_length, dtype=int)
 
             # Construct 1st offspring genome list at 'idx'.
-            genome_1 = [x.clone() for x in parent2.genome[:idx] +
-                        parent1.genome[idx:]]
+            genome_1: list[Gene] = [
+                x.clone() for x in parent2.genome[:idx] +
+                                   parent1.genome[idx:]
+            ]
 
             # Construct 2nd offspring genome list at 'idx'.
-            genome_2 = [y.clone() for y in parent1.genome[:idx] +
-                        parent2.genome[idx:]]
+            genome_2: list[Gene] = [
+                y.clone() for y in parent1.genome[:idx] +
+                                   parent2.genome[idx:]
+            ]
 
             # Create two NEW offsprings.
             child1 = Chromosome(genome_1)

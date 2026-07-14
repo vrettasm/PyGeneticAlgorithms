@@ -46,10 +46,10 @@ class BlendCrossover(CrossoverOperator):
         # _end_if_
 
         # Ensure lower_val parameter is float.
-        lower_val = float(lower_val)
+        lower_val: float = float(lower_val)
 
         # Ensure upper_val parameter is float.
-        upper_val = float(upper_val)
+        upper_val: float = float(upper_val)
 
         # Ensure the order is correct.
         if upper_val <= lower_val:
@@ -58,7 +58,9 @@ class BlendCrossover(CrossoverOperator):
         # _end_if_
 
         # Assign variables to the _items placeholder.
-        self._items = [p_alpha, lower_val, upper_val]
+        self._items: list[float] = [
+            p_alpha, lower_val, upper_val
+        ]
     # _end_def_
 
     def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:

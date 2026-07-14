@@ -1,3 +1,4 @@
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
@@ -47,12 +48,16 @@ class OrderCrossover(CrossoverOperator):
             used_in_parent2 = set(parent2.genome[:loc2])
 
             # Construct 1st offspring genome list at locus.
-            genome_1 = [gene.clone() for gene in parent1.genome[:loc1] +
-                        [x for x in parent2 if x not in used_in_parent1]]
+            genome_1: list[Gene] = [
+                gene.clone() for gene in parent1.genome[:loc1] +
+                                         [x for x in parent2 if x not in used_in_parent1]
+            ]
 
             # Construct 2nd offspring genome list at locus.
-            genome_2 = [gene.clone() for gene in parent2.genome[:loc2] +
-                        [y for y in parent1 if y not in used_in_parent2]]
+            genome_2: list[Gene] = [
+                gene.clone() for gene in parent2.genome[:loc2] +
+                                         [y for y in parent1 if y not in used_in_parent2]
+            ]
 
             # Create two NEW offsprings.
             child1 = Chromosome(genome_1)
