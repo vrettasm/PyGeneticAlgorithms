@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from copy import deepcopy
 from pygenalgo.genome.gene import Gene
 
@@ -31,13 +33,13 @@ class Chromosome:
         """
 
         # Copy the genome.
-        self._genome = genome
+        self._genome: list[Gene] = genome
 
         # Get the initial fitness value.
-        self._fitness = fitness
+        self._fitness: float = fitness
 
         # Set the bool flag.
-        self._valid = valid
+        self._valid: bool = valid
     # _end_def_
 
     @property
@@ -59,8 +61,8 @@ class Chromosome:
         """
         # Check for the correct type.
         if not isinstance(new_value, bool):
-            raise TypeError(f"{self.__class__.__name__}: "
-                            f"Validity flag should be bool: {type(new_value)}.")
+            raise TypeError(f"{self.__class__.__name__}: Validity flag "
+                            f"should be bool: {new_value.__class__.__name__}.")
         # _end_if_
 
         # Update the flag value.
@@ -86,8 +88,8 @@ class Chromosome:
         """
         # Check for the correct type.
         if not isinstance(new_value, (int, float)):
-            raise TypeError(f"{self.__class__.__name__}: "
-                            f"Fitness should be float: {type(new_value)}.")
+            raise TypeError(f"{self.__class__.__name__}: Fitness should "
+                            f"be float: {new_value.__class__.__name__}.")
         # _end_if_
 
         # Update the fitness value.
@@ -135,16 +137,17 @@ class Chromosome:
         return [gene.value for gene in self._genome]
     # _end_def_
 
-    def hamming_distance(self, other) -> int:
+    def hamming_distance(self, other: Chromosome) -> int:
         """
-        Compute the Hamming distance of the "self" object, with the
-        "other" chromosome. In practice, it's the number of positions
-        at which the corresponding genes are different.
+        Compute the Hamming distance of the "self" object,
+        with the "other" chromosome. In practice, it's the
+        number of positions at which the corresponding genes
+        are different.
 
         :param other: (Chromosome) to compare the Hamming distance.
 
-        :return: (int) the number of dissimilarities between the two
-                 input chromosomes.
+        :return: (int) the number of dissimilarities between
+                 the two input chromosomes.
         """
         # Make sure both objects are of the same type Chromosome.
         if not isinstance(other, Chromosome):
@@ -162,7 +165,7 @@ class Chromosome:
                                        strict=True)].count(True)
     # _end_def_
 
-    def clone(self) -> "Chromosome":
+    def clone(self) -> Chromosome:
         """
         Makes a duplicate of the self object
         by deep-coping only the genome field.
@@ -172,7 +175,7 @@ class Chromosome:
         return Chromosome(deepcopy(self._genome), self._fitness, self._valid)
     # _end_def_
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: Chromosome) -> bool:
         """
         Compares the genome of self, with the other chromosome
         and returns True if they are identical otherwise False.
@@ -260,7 +263,7 @@ class Chromosome:
         return Chromosome(self._genome, self._fitness, self._valid)
     # _end_copy_
 
-    def __deepcopy__(self, memo: dict) -> "Chromosome":
+    def __deepcopy__(self, memo: dict) -> Chromosome:
         """
         This custom method overrides the default deepcopy method
         and is used when we call the "clone" method of the class.

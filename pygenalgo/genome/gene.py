@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from copy import deepcopy
 from typing import Any, Callable
 from collections.abc import Iterable
@@ -136,7 +138,7 @@ class Gene:
         self._datum = int(not self._datum)
     # _end_def_
 
-    def clone(self) -> "Gene":
+    def clone(self) -> Gene:
         """
         Makes a duplicate of the self object
         by deep-coping only the datum field.
@@ -146,11 +148,12 @@ class Gene:
         return Gene(deepcopy(self._datum), self._func, self._valid)
     # _end_def_
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: Gene) -> bool:
         """
-        When we compare two Genes we care only about the data they hold.
+        When we compare two Genes we care only about
+        the data they hold.
 
-        :param other: the second object we want to compare to.
+        :param other: the second object we want to compare.
 
         :return: true or false.
         """
@@ -220,7 +223,7 @@ class Gene:
         return Gene(self._datum, self._func, self._valid)
     # _end_def_
 
-    def __deepcopy__(self, memo: dict) -> "Gene":
+    def __deepcopy__(self, memo: dict) -> Gene:
         """
         This custom method overrides the default deepcopy method
         and is used when we call the "clone" method of the class.
