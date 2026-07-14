@@ -33,14 +33,15 @@ class IslandModelGA(GenericGA):
     # Object variables (specific for the IslandModel).
     __slots__ = ("_num_islands", "_migrate_op")
 
-    def __init__(self, num_islands: int, migrate_op: Optional[MigrationOperator] = None,
-                 **kwargs) -> None:
+    def __init__(self, num_islands: int,
+                 migrate_op: MigrationOperator, **kwargs) -> None:
         """
         Default constructor of IslandModelGA object.
 
         :param num_islands: (int) number of parallel evolving islands.
 
-        :param migrate_op: migration operator (must inherit from class MigrationOperator).
+        :param migrate_op: migration operator (must inherit from class
+                           MigrationOperator).
 
         :return: a new GA object.
         """
@@ -53,11 +54,6 @@ class IslandModelGA(GenericGA):
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Number of requested islands ({num_islands}) "
                              f"exceeds the size of the population.")
-        # _end_if_
-
-        # Sanity check.
-        if migrate_op is None:
-            raise ValueError(f"{self.__class__.__name__}: Migration operator is missing.")
         # _end_if_
 
         # Assign the number of islands.
