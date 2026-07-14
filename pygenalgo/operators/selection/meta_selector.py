@@ -49,10 +49,11 @@ class MetaSelector(SelectionOperator):
         # Get the number of available selectors.
         n_operators: int = len(self.items)
 
-        # Select randomly a method, with equal probability
-        # (but this can be changed).
-        return self.items[self.rng.integers(n_operators,
-                                            dtype=int)].select(population)
+        # Select randomly with equal probability.
+        idx: int = self.rng.integers(n_operators, dtype=int)
+
+        # Apply its own select method.
+        return self.items[idx].select(population)
     # _end_def_
 
     @property
