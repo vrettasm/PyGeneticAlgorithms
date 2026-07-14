@@ -52,12 +52,12 @@ def average_hamming_distance(population: list[Chromosome],
     # _end_if_
 
     # Get the number of the chromosomes.
-    n_chromosomes = len(population)
+    n_chromosomes: int = len(population)
 
     # Get the size of the chromosome. It is
     # assumed that all chromosomes have the
     # same size.
-    n_genes = len(population[0])
+    n_genes: int = len(population[0])
 
     # Sanity check 2: This should never happen!
     if n_genes == 0:
@@ -65,10 +65,12 @@ def average_hamming_distance(population: list[Chromosome],
     # _end_if_
 
     # Initialize the counter.
-    total_diffs = 0
+    total_diffs: int = 0
 
     # Create a HashMap with the chromosomes' genome.
-    genome_map = {i: item.genome for i, item in enumerate(population)}
+    genome_map: dict = {
+        i: item.genome for i, item in enumerate(population)
+    }
 
     # Here we sum the Hamming distances for all unique
     # pairs of chromosomes (to avoid double counting).
@@ -80,7 +82,7 @@ def average_hamming_distance(population: list[Chromosome],
 
     # Compute the averaged distance, using the total
     # number of 'unique pairs'.
-    dist_avg = total_diffs / unique_pairs(n_chromosomes)
+    dist_avg: float = total_diffs / unique_pairs(n_chromosomes)
 
     # Return the averaged (or the normalized) value.
     return dist_avg / n_genes if normal else dist_avg
