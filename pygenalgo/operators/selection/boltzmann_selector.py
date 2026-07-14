@@ -33,7 +33,7 @@ class BoltzmannSelector(SelectionOperator):
         super().__init__(select_probability)
 
         # Make sure 'k' is float and at least 50.
-        self._items = max(float(k), 50.0)
+        self._items: float = max(float(k), 50.0)
     # _end_def_
 
     @increase_counter
@@ -53,16 +53,18 @@ class BoltzmannSelector(SelectionOperator):
         all_fitness: list[float] = ensure_positive_fitness(population)
 
         # Compute the Temperature value (using the current iteration).
-        temperature = max(0.1, exp(-self.iteration / self._items))
+        temperature: float = max(0.1, exp(-self.iteration / self._items))
 
         # Convert the fitness values with the exponential.
-        exp_fitness = [exp(-f/temperature) for f in all_fitness]
+        exp_fitness: list[float] = [
+            exp(-f/temperature) for f in all_fitness
+        ]
 
         # Calculate sum of all fitness.
-        sum_fitness = fsum(exp_fitness)
+        sum_fitness: float = fsum(exp_fitness)
 
         # Get the population size.
-        pop_size = len(population)
+        pop_size: int = len(population)
 
         # If total fitness is zero (or effectively zero),
         # fall back to uniform random selection so every
@@ -78,7 +80,9 @@ class BoltzmannSelector(SelectionOperator):
 
         # Calculate the selection probabilities of each member
         # in the population (Boltzmann distribution).
-        selection_probs = [f / sum_fitness for f in exp_fitness]
+        selection_probs: list[float] = [
+            f / sum_fitness for f in exp_fitness
+        ]
 
         # Select the new individuals indexes.
         index = self.rng.choice(pop_size, size=pop_size, p=selection_probs,
