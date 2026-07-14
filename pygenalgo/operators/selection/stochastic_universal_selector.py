@@ -1,5 +1,7 @@
+from typing import Generator
 from math import fsum, isclose
 from itertools import accumulate
+
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import (SelectionOperator,
@@ -43,10 +45,10 @@ class StochasticUniversalSelector(SelectionOperator):
         all_fitness: list[float] = ensure_positive_fitness(population)
 
         # Get the population size.
-        pop_size = len(population)
+        pop_size: int = len(population)
 
         # Calculate sum of all fitness.
-        sum_fitness = fsum(all_fitness)
+        sum_fitness: float = fsum(all_fitness)
 
         # If total fitness is zero (or effectively zero),
         # fall back to uniform random selection so every
@@ -61,33 +63,37 @@ class StochasticUniversalSelector(SelectionOperator):
         # _end_if_
 
         # Distance between pointers.
-        dist_p = sum_fitness / pop_size
+        dist_p: float = sum_fitness / pop_size
 
         # Get a random number between 0 and dist_p.
-        start_0 = dist_p * self.rng.random()
+        start_0: float = dist_p * self.rng.random()
 
-        # Calculate the pointers at equal distances 'dist_p'
-        # starting from 'start_0'.
-        pointers = (start_0 + i*dist_p for i in range(pop_size))
+        # Create a generator to calculate the pointers at
+        # equal distances 'dist_p' starting from 'start_0'.
+        pointers: Generator[float] = (
+            start_0 + i*dist_p for i in range(pop_size)
+        )
 
         # Create a list that will contain the new parents.
         new_parents: list[Chromosome] = []
 
         # Compute the cumulative sum of the fitness values.
-        cum_sum_fit = list(accumulate(all_fitness))
+        cum_sum_fit: list[float] = list(accumulate(all_fitness))
 
         # Set the index to '0'.
-        i = 0
+        i: int = 0
 
         # Collect the new parents.
         for p in pointers:
 
-            # Find the cumulative value smaller than 'p'.
+            # Find the cumulative value
+            # that is smaller than 'p'.
             while cum_sum_fit[i] < p:
                 i += 1
             # _end_while_
 
-            # Add the individual at position 'i' in the new parents pool.
+            # Add the individual at position
+            # 'i' in the new parents list.
             new_parents.append(population[i])
         # _end_for_
 
