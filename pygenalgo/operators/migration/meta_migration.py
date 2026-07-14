@@ -23,8 +23,11 @@ class MetaMigration(MigrationOperator):
         # Call the super constructor with the provided probability value.
         super().__init__(migration_probability)
 
-        # NOTE: In here the migration probabilities for each policy are set to 1.0.
-        self._items = (RandomMigration(1.0), ClockwiseMigration(1.0))
+        # NOTE: In here the migration probabilities
+        # for each policy are set to 1.0 (i.e. 100%).
+        self._items: tuple[MigrationOperator] = (
+            RandomMigration(1.0), ClockwiseMigration(1.0)
+        )
     # _end_def_
 
     def migrate(self, islands: list[SubPopulation]) -> None:
@@ -40,12 +43,14 @@ class MetaMigration(MigrationOperator):
         # higher than a uniformly random value.
         if len(islands) > 1 and self.is_operator_applicable():
             # Get the number of migrators.
-            n_operators = len(self.items)
+            n_operators: int = len(self.items)
 
-            # Select randomly with equal probability a method and call
-            # its migrate method.
-            self.items[self.rng.integers(n_operators,
-                                         dtype=int)].migrate(islands)
+            # Select randomly (with equal probability) a method.
+            idx: int = self.rng.integers(n_operators, dtype=int)
+
+            # Call its own migrate method.
+            self.items[idx].migrate(islands)
+
             # Increase the migration counter.
             self.inc_counter()
     # _end_def_
@@ -63,9 +68,10 @@ class MetaMigration(MigrationOperator):
 
     def reset_counter(self) -> None:
         """
-        Sets ALL the counters to 'zero'. We have to override the super().reset_counter()
-        method, because we have to call explicitly the reset_counter on all the internal
-        operators.
+        Sets ALL the counters to zero. We have to override
+        the super().reset_counter() method because we have
+        to call explicitly the reset_counter on all the
+        internal operators.
 
         :return: None.
         """

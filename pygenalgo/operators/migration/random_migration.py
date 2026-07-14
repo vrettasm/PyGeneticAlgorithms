@@ -1,4 +1,6 @@
 from operator import attrgetter
+
+from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.auxiliary import SubPopulation
 from pygenalgo.operators.migration.migration_operator import MigrationOperator
 
@@ -32,9 +34,15 @@ class RandomMigration(MigrationOperator):
         # Perform the migration only if we have more than one
         # active populations.
         if len(islands) > 1:
-            # First find the best individual chromosome FROM EACH island.
-            best_chromosomes = [max(island_i.population, key=attrgetter("fitness"))
-                                for island_i in islands]
+            # Define the key.
+            key_sort = attrgetter("fitness")
+
+            # First find the best individual chromosome
+            # FROM EACH island.
+            best_chromosomes: list[Chromosome] = [
+                max(island_i.population, key=key_sort)
+                for island_i in islands
+            ]
 
             # Shuffle the order of the best chromosomes list.
             self.rng.shuffle(best_chromosomes)
@@ -46,7 +54,9 @@ class RandomMigration(MigrationOperator):
                 if self.is_operator_applicable():
 
                     # Select randomly one individual chromosome.
-                    idx = self.rng.integers(0, len(island_i.population), dtype=int)
+                    idx: int = self.rng.integers(0,
+                                                 len(island_i.population),
+                                                 dtype=int)
 
                     # Replace the randomly selected chromosome with
                     # the pre-selected best one from the list above.
