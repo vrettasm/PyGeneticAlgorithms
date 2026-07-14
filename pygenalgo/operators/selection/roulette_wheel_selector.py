@@ -43,13 +43,13 @@ class RouletteWheelSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Get the population size.
-        pop_size = len(population)
+        pop_size: int = len(population)
 
         # Extract the (positive) fitness values from the chromosomes.
         all_fitness: list[float] = ensure_positive_fitness(population)
 
         # Calculate sum of all fitness.
-        sum_fitness = fsum(all_fitness)
+        sum_fitness: float = fsum(all_fitness)
 
         # If total fitness is zero (or effectively zero),
         # fall back to uniform random selection so every
@@ -65,7 +65,9 @@ class RouletteWheelSelector(SelectionOperator):
 
         # Calculate the "selection probabilities" of each member
         # in the population.
-        selection_probs = [f / sum_fitness for f in all_fitness]
+        selection_probs: list[float] = [
+            f / sum_fitness for f in all_fitness
+        ]
 
         # Select the new individuals (indexes).
         index = self.rng.choice(pop_size, size=pop_size, p=selection_probs,
