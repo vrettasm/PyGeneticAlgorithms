@@ -40,7 +40,7 @@ class RandomSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Get the population size.
-        pop_size = len(population)
+        pop_size: int = len(population)
 
         # Select the new individuals indexes.
         index = self.rng.choice(pop_size, size=pop_size, replace=True, shuffle=False)
