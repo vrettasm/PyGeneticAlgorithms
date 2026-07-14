@@ -83,7 +83,7 @@ class GeneticOperator:
         self._probability: float = probability
 
         # Initialize the application counter to zero.
-        self._counter = 0
+        self._counter: int = 0
 
         # Initialize a thread lock.
         self._lock = Lock()
