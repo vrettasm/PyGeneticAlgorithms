@@ -28,7 +28,7 @@ def ensure_positive_fitness(population: list[Chromosome]) -> list[float]:
     # so that the minimum fitness is going to be one.
     if any(fit_value < 0.0 for fit_value in all_fitness):
         # Compute the shift value.
-        shift_value = fabs(min(all_fitness)) + 1.0
+        shift_value: float = fabs(min(all_fitness)) + 1.0
 
         # Shift all fitness values so that the minimum is '1'.
         all_fitness = [f + shift_value for f in all_fitness]
