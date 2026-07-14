@@ -18,8 +18,10 @@ def ensure_positive_fitness(population: list[Chromosome]) -> list[float]:
 
     :return: (list) of positive fitness values.
     """
-    # Extract all the fitness values from the chromosomes.
-    all_fitness: list[float] = [p.fitness for p in population]
+    # Extract all the fitness values.
+    all_fitness: list[float] = [
+        p.fitness for p in population
+    ]
 
     # If there are negative values we perform a shift
     # transformation where all the values are shifted
