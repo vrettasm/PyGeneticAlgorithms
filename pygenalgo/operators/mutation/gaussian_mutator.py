@@ -26,9 +26,8 @@ class GaussianMutator(MutationOperator):
 
         :param upper_val: (float) upper limit value for the gene mutation.
         """
-        # Call the super constructor with the provided
-        # probability value.
-        super().__init__(mutate_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(mutation_probability=mutate_probability)
 
         # Ensure sigma parameter is float.
         sigma = float(sigma)

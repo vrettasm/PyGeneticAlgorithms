@@ -32,8 +32,8 @@ class TournamentSelector(SelectionOperator):
 
         :param k: the number of participants in the tournament (int).
         """
-        # Call the super constructor with the provided probability value.
-        super().__init__(select_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(selection_probability=select_probability)
 
         # Number of participants of the tournament should be more than 2.
         self._items: int = max(2, int(k))

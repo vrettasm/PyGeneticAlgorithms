@@ -19,9 +19,8 @@ class OrderCrossover(CrossoverOperator):
 
         :param crossover_probability: (float).
         """
-        # Call the super constructor with the provided
-        # probability value.
-        super().__init__(crossover_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(crossover_probability=crossover_probability)
     # _end_def_
 
     def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:

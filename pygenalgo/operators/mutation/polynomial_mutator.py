@@ -30,9 +30,8 @@ class PolynomialMutator(MutationOperator):
 
         :param upper_val: (float) upper limit value for the gene mutation.
         """
-        # Call the super constructor with the provided
-        # probability value.
-        super().__init__(mutate_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(mutation_probability=mutate_probability)
 
         # Ensure eta_pm parameter is float.
         eta_pm = float(eta_pm)

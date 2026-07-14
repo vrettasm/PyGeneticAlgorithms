@@ -16,8 +16,8 @@ class MigrationOperator(GeneticOperator):
 
         :param migration_probability: (float).
         """
-        # Call the super constructor with the provided probability value.
-        super().__init__(migration_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(probability=migration_probability)
     # _end_def_
 
     def migrate(self, islands: list[SubPopulation]) -> None:

@@ -29,8 +29,8 @@ class BoltzmannSelector(SelectionOperator):
 
         :param k: constant of the Boltzmann distribution.
         """
-        # Call the super constructor with the provided probability value.
-        super().__init__(select_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(selection_probability=select_probability)
 
         # Make sure 'k' is float and at least 50.
         self._items: float = max(float(k), 50.0)

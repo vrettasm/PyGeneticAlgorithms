@@ -34,8 +34,8 @@ class NeighborhoodSelector(SelectionOperator):
 
         :param n_nearest: the number of the nearest neighbors to consider (int).
         """
-        # Call the super constructor with the provided probability value.
-        super().__init__(select_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(selection_probability=select_probability)
 
         # Number of neighbors of the tournament should be more than 2.
         self._items: int = max(2, int(n_nearest))

@@ -20,8 +20,8 @@ class MetaMigration(MigrationOperator):
 
         :param migration_probability: (float).
         """
-        # Call the super constructor with the provided probability value.
-        super().__init__(migration_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(migration_probability=migration_probability)
 
         # NOTE: In here the migration probabilities
         # for each policy are set to 1.0 (i.e. 100%).

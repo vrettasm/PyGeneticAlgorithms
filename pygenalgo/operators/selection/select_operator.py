@@ -54,9 +54,8 @@ class SelectionOperator(GeneticOperator):
 
         :param selection_probability: (float).
         """
-        # Call the super constructor with the provided
-        # probability value.
-        super().__init__(selection_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(probability=selection_probability)
     # _end_def_
 
     def select(self, population: list[Chromosome]) -> list[Chromosome]:

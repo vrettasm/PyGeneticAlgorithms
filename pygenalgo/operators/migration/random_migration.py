@@ -19,8 +19,8 @@ class RandomMigration(MigrationOperator):
 
         :param migration_probability: (float) in [0, 1].
         """
-        # Call the super constructor with the provided probability value.
-        super().__init__(migration_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(migration_probability=migration_probability)
     # _end_def_
 
     def migrate(self, islands: list[SubPopulation]) -> None:

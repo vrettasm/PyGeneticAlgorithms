@@ -24,8 +24,8 @@ class MetaSelector(SelectionOperator):
 
         :param select_probability: (float).
         """
-        # Call the super constructor with the provided probability value.
-        super().__init__(select_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(selection_probability=select_probability)
 
         # NOTE: In here the selection probabilities for each operator are
         #       set to 1.0.

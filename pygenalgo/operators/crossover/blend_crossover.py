@@ -32,9 +32,8 @@ class BlendCrossover(CrossoverOperator):
 
         :param upper_val: (float) upper limit value for the gene.
         """
-        # Call the super constructor with the provided
-        # probability value.
-        super().__init__(crossover_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(crossover_probability=crossover_probability)
 
         # Ensure p_alpha parameter is float.
         p_alpha = clamp(float(p_alpha), 0.0, 1.0)

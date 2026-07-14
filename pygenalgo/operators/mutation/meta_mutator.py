@@ -22,8 +22,8 @@ class MetaMutator(MutationOperator):
 
         :param mutate_probability: (float).
         """
-        # Call the super constructor with the provided probability value.
-        super().__init__(mutate_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(mutation_probability=mutate_probability)
 
         # NOTE: In here the mutation probabilities
         # for each mutator are set to 1.0.

@@ -26,8 +26,8 @@ class StochasticUniversalSelector(SelectionOperator):
 
         :param select_probability: (float) in [0, 1].
         """
-        # Call the super constructor with the provided probability value.
-        super().__init__(select_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(selection_probability=select_probability)
     # _end_def_
 
     @increase_counter

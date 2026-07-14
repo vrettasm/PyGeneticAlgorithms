@@ -32,8 +32,8 @@ class LinearRankSelector(SelectionOperator):
                     whilst a value of 2, will provide the highest selection
                     pressure.
         """
-        # Call the super constructor with the provided probability value.
-        super().__init__(select_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(selection_probability=select_probability)
 
         # Sanity check for selection pressure parameter.
         if not (1.0 <= eta <= 2.0):

@@ -16,9 +16,8 @@ class MutationOperator(GeneticOperator):
 
         :param mutation_probability: (float).
         """
-        # Call the super constructor with the provided
-        # probability value.
-        super().__init__(mutation_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(probability=mutation_probability)
     # _end_def_
 
     def mutate(self, individual: Chromosome) -> None:

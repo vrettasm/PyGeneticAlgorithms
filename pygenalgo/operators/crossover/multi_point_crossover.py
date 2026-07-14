@@ -22,9 +22,8 @@ class MultiPointCrossover(CrossoverOperator):
 
         :param n_points: (int) the number of points to cut the genome.
         """
-        # Call the super constructor with the provided
-        # probability value.
-        super().__init__(crossover_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(crossover_probability=crossover_probability)
 
         # Make sure number of points are at least 2.
         self._items: int = max(int(n_points), 2)

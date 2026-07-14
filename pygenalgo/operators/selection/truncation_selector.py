@@ -27,8 +27,8 @@ class TruncationSelector(SelectionOperator):
 
         :param p: proportion of the population that will reproduce (float).
         """
-        # Call the super constructor with the provided probability value.
-        super().__init__(select_probability)
+        # Call the super constructor with the provided initial value.
+        super().__init__(selection_probability=select_probability)
 
         # The proportion value should be in [0.1, 0.9].
         self._items: float = max(min(float(p), 0.9), 0.1)
