@@ -96,8 +96,8 @@ class Gene:
         """
         # Check for the correct type.
         if not isinstance(new_value, bool):
-            raise TypeError(f"{self.__class__.__name__}: "
-                            f"Validity flag should be bool: {type(new_value)}.")
+            raise TypeError(f"{self.__class__.__name__}: Validity flag "
+                            f"should be bool: {new_value.__class__.__name__}.")
         # _end_if_
 
         # Update the flag value.
