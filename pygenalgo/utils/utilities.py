@@ -42,7 +42,7 @@ def pareto_dominance(point_a: tuple | list,
     :return: if the condition is satisfied.
     """
     # Second condition.
-    at_least_one_greater = False
+    at_least_one_greater: bool = False
 
     # Scan both points elementwise.
     for p, q in zip(point_a, point_b):
