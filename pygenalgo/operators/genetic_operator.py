@@ -80,7 +80,7 @@ class GeneticOperator:
             raise ValueError(f"{self.__class__.__name__} the value "
                              f"{probability} is not within valid range.")
         # Assign the value.
-        self._probability = probability
+        self._probability: float = probability
 
         # Initialize the application counter to zero.
         self._counter = 0
