@@ -10,15 +10,15 @@ class LinearRankSelector(SelectionOperator):
     """
     Description:
 
-        The LinearRank Selector is a selection mechanism in genetic algorithms that ranks
-        individuals based on their fitness values. It assigns selection probabilities to
-        candidates in a linear fashion, ensuring that higher-ranking individuals are more
-        likely to be chosen for reproduction. The operator helps maintain diversity in the
-        population by avoiding premature convergence, allowing lower-ranked individuals a
-        chance to contribute. This method is particularly effective in scenarios with varying
-        fitness levels, as it balances selection pressure while fostering exploration of the
-        solution space. Overall, it enhances the optimization process in evolutionary computation
-        models.
+        The LinearRank Selector is a selection mechanism in genetic algorithms
+        that ranks individuals based on their fitness values. It assigns selection
+        probabilities to candidates in a linear fashion, ensuring that higher-ranking
+        individuals are more likely to be chosen for reproduction. The operator helps
+        maintain diversity in the population by avoiding premature convergence, allowing
+        lower-ranked individuals a chance to contribute. This method is particularly
+        effective in scenarios with varying fitness levels, as it balances selection
+        pressure while fostering exploration of the solution space. Overall, it enhances
+        the optimization process in evolutionary computation models.
 
     """
 
