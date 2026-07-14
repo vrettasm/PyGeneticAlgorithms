@@ -194,11 +194,13 @@ all other mutators (one at a time), with equal probability.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pygenalgo.operators.mutation.meta_mutator.MetaMutator.all_counters">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_counters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#pygenalgo.operators.mutation.meta_mutator.MetaMutator.all_counters" title="Link to this definition"></a></dt>
-<dd><p>Accessor (getter) of the application counter from all the internal mutators.
-This is mostly to verify that everything is working as expected.</p>
+<dd><p>Accessor (getter) of the application counter from all
+the internal mutators. This is mostly to verify that
+everything is working as expected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>a dictionary with the counter calls for all mutator methods.</p>
+<dd class="field-odd"><p>a dictionary with the counter calls for all
+mutator methods.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -220,9 +222,10 @@ This is mostly to verify that everything is working as expected.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.mutation.meta_mutator.MetaMutator.reset_counter">
 <span class="sig-name descname"><span class="pre">reset_counter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/mutation/meta_mutator.html#MetaMutator.reset_counter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.mutation.meta_mutator.MetaMutator.reset_counter" title="Link to this definition"></a></dt>
-<dd><p>Sets ALL the counters to ‘zero’. We have to override the super().reset_counter()
-method, because we have to call explicitly the reset_counter on all the internal
-operators.</p>
+<dd><p>Sets ALL the counters to zero. We have to override
+the super().reset_counter() method because we have
+to call explicitly the reset_counter on all the
+internal operators.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None.</p>

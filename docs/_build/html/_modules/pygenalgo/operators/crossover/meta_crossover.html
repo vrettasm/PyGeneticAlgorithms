@@ -99,9 +99,11 @@
 
         <span class="c1"># NOTE: In here the crossover probabilities</span>
         <span class="c1">#       for each operator are set to 1.0.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">(</span><span class="n">UniformCrossover</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
-                       <span class="n">MultiPointCrossover</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
-                       <span class="n">SinglePointCrossover</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">CrossoverOperator</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">UniformCrossover</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+            <span class="n">MultiPointCrossover</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+            <span class="n">SinglePointCrossover</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="MetaCrossover.crossover">
@@ -125,10 +127,13 @@
             <span class="c1"># Get the number of available crossovers.</span>
             <span class="n">n_operators</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
 
-            <span class="c1"># Select randomly, with equal probability (but this can be changed),</span>
-            <span class="c1"># a crossover operator and call its crossover method.</span>
-            <span class="n">child1</span><span class="p">,</span> <span class="n">child2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_operators</span><span class="p">,</span>
-                                                          <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)]</span><span class="o">.</span><span class="n">crossover</span><span class="p">(</span><span class="n">parent1</span><span class="p">,</span> <span class="n">parent2</span><span class="p">)</span>
+            <span class="c1"># Select randomly, with equal probability</span>
+            <span class="c1"># a crossover operator.</span>
+            <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_operators</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+            <span class="c1"># Call its crossover method.</span>
+            <span class="n">child1</span><span class="p">,</span> <span class="n">child2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">crossover</span><span class="p">(</span><span class="n">parent1</span><span class="p">,</span> <span class="n">parent2</span><span class="p">)</span>
+
             <span class="c1"># Increase the crossover counter.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>

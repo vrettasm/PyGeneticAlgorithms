@@ -70,7 +70,22 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.utils.utilities</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Description:</span>
+
+<span class="sd">    Includes utility functions that used throughout pygenalgo.</span>
+
+<span class="sd">Author:</span>
+<span class="sd">    Michail D. Vrettas, PhD</span>
+
+<span class="sd">Email:</span>
+<span class="sd">    michail.vrettas@gmail.com</span>
+
+<span class="sd">Metadata:</span>
+<span class="sd">    License: GPL-3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span><span class="p">,</span> <span class="n">partial</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -119,7 +134,7 @@
 <span class="sd">    :return: if the condition is satisfied.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Second condition.</span>
-    <span class="n">at_least_one_greater</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">at_least_one_greater</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># Scan both points elementwise.</span>
     <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">point_a</span><span class="p">,</span> <span class="n">point_b</span><span class="p">):</span>
@@ -158,7 +173,9 @@
 <span class="sd">    :return: List of points that lie on the Pareto front.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Create a set with all the points sizes.</span>
-    <span class="n">check_size</span> <span class="o">=</span> <span class="p">{</span><span class="nb">len</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">}</span>
+    <span class="n">check_size</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span>
+    <span class="p">}</span>
 
     <span class="c1"># Sanity check.</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">check_size</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -172,8 +189,8 @@
     <span class="c1"># Iterate through every point in the list.</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
 
-        <span class="c1"># Set the pareto optimal flag value to True.</span>
-        <span class="n">is_pareto_optimal</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># Set the pareto optimal flag to True.</span>
+        <span class="n">is_pareto_optimal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="c1"># Compare it against every other point.</span>
         <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">point_j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
@@ -219,10 +236,10 @@
     <span class="c1"># _end_if_</span>
 
     <span class="c1"># Get the number of points.</span>
-    <span class="n">num_points</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="c1"># Create a boolean array to track Pareto optimal points.</span>
-    <span class="n">is_pareto_optimal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="c1"># Create an array of boolean to track Pareto optimal points.</span>
+    <span class="n">is_pareto_optimal</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
         <span class="c1"># Compare point i-th with all other points.</span>

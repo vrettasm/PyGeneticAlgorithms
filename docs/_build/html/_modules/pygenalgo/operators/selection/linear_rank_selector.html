@@ -84,15 +84,15 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        The LinearRank Selector is a selection mechanism in genetic algorithms that ranks</span>
-<span class="sd">        individuals based on their fitness values. It assigns selection probabilities to</span>
-<span class="sd">        candidates in a linear fashion, ensuring that higher-ranking individuals are more</span>
-<span class="sd">        likely to be chosen for reproduction. The operator helps maintain diversity in the</span>
-<span class="sd">        population by avoiding premature convergence, allowing lower-ranked individuals a</span>
-<span class="sd">        chance to contribute. This method is particularly effective in scenarios with varying</span>
-<span class="sd">        fitness levels, as it balances selection pressure while fostering exploration of the</span>
-<span class="sd">        solution space. Overall, it enhances the optimization process in evolutionary computation</span>
-<span class="sd">        models.</span>
+<span class="sd">        The LinearRank Selector is a selection mechanism in genetic algorithms</span>
+<span class="sd">        that ranks individuals based on their fitness values. It assigns selection</span>
+<span class="sd">        probabilities to candidates in a linear fashion, ensuring that higher-ranking</span>
+<span class="sd">        individuals are more likely to be chosen for reproduction. The operator helps</span>
+<span class="sd">        maintain diversity in the population by avoiding premature convergence, allowing</span>
+<span class="sd">        lower-ranked individuals a chance to contribute. This method is particularly</span>
+<span class="sd">        effective in scenarios with varying fitness levels, as it balances selection</span>
+<span class="sd">        pressure while fostering exploration of the solution space. Overall, it enhances</span>
+<span class="sd">        the optimization process in evolutionary computation models.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -116,14 +116,14 @@
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Store the pressure adjustable parameter.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">eta</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">eta</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="LinearRankSelector.probabilities">
 <a class="viewcode-back" href="../../../../pygenalgo.operators.selection.html#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.probabilities">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">probabilities</span><span class="p">(</span><span class="n">p_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">probabilities</span><span class="p">(</span><span class="n">pop_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the rank probability distribution over the population size.</span>
 <span class="sd">        The function is lru_cached so that repeated calls with the same input</span>
@@ -134,31 +134,33 @@
 
 <span class="sd">        NOTE: Probabilities are returned in ascending order.</span>
 
-<span class="sd">        :param p_size: (int) population size.</span>
+<span class="sd">        :param pop_size: (int) population size.</span>
 <span class="sd">        :param eta: (float) pressure adjustment factor.</span>
 
 <span class="sd">        :return: (list) rank probability distribution in ascending order.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Sanity check.</span>
-        <span class="k">if</span> <span class="n">p_size</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Population size </span><span class="si">{</span><span class="n">p_size</span><span class="si">}</span><span class="s2"> must be &gt; 0.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pop_size</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Population size </span><span class="si">{</span><span class="n">pop_size</span><span class="si">}</span><span class="s2"> must be &gt; 0.&quot;</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Handle edge case where population size is 1.</span>
-        <span class="k">if</span> <span class="n">p_size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">pop_size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">]</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Precompute constant invariants out of the</span>
         <span class="c1"># loop to eliminate repetitive division.</span>
-        <span class="n">base</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">-</span> <span class="n">eta</span><span class="p">)</span> <span class="o">/</span> <span class="n">p_size</span>
-        <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">eta</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">p_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">p_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">base</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">-</span> <span class="n">eta</span><span class="p">)</span> <span class="o">/</span> <span class="n">pop_size</span>
+        <span class="n">step</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">eta</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">pop_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">pop_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
 
         <span class="c1"># Calculate the probabilities.</span>
-        <span class="n">probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="n">base</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">step</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p_size</span><span class="p">)]</span>
+        <span class="n">probabilities</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">base</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">step</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pop_size</span><span class="p">)</span>
+        <span class="p">]</span>
 
         <span class="c1"># Calculate the sum of probabilities.</span>
-        <span class="n">total</span> <span class="o">=</span> <span class="n">fsum</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span>
+        <span class="n">total</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">fsum</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span>
 
         <span class="c1"># Normalize for minor numerical safety. The</span>
         <span class="c1"># probability values are in ascending order.</span>
@@ -180,7 +182,7 @@
 <span class="sd">        :return: the selected parents population (as list of chromosomes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get the population size.</span>
-        <span class="n">pop_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+        <span class="n">pop_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
 
         <span class="c1"># Calculate the selection probabilities of each member</span>
         <span class="c1"># in the population, using their ranking position. Use</span>

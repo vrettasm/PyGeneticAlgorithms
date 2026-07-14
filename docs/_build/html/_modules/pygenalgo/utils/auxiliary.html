@@ -70,7 +70,22 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.utils.auxiliary</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Description:</span>
+
+<span class="sd">    Includes auxiliary functions and dataclasses used throughout pygenalgo.</span>
+
+<span class="sd">Author:</span>
+<span class="sd">    Michail D. Vrettas, PhD</span>
+
+<span class="sd">Email:</span>
+<span class="sd">    michail.vrettas@gmail.com</span>
+
+<span class="sd">Metadata:</span>
+<span class="sd">    License: GPL-3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
@@ -129,12 +144,12 @@
     <span class="c1"># _end_if_</span>
 
     <span class="c1"># Get the number of the chromosomes.</span>
-    <span class="n">n_chromosomes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+    <span class="n">n_chromosomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
 
     <span class="c1"># Get the size of the chromosome. It is</span>
     <span class="c1"># assumed that all chromosomes have the</span>
     <span class="c1"># same size.</span>
-    <span class="n">n_genes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">n_genes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
     <span class="c1"># Sanity check 2: This should never happen!</span>
     <span class="k">if</span> <span class="n">n_genes</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -142,10 +157,12 @@
     <span class="c1"># _end_if_</span>
 
     <span class="c1"># Initialize the counter.</span>
-    <span class="n">total_diffs</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total_diffs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="c1"># Create a HashMap with the chromosomes&#39; genome.</span>
-    <span class="n">genome_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">genome</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">population</span><span class="p">)}</span>
+    <span class="n">genome_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">i</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">genome</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+    <span class="p">}</span>
 
     <span class="c1"># Here we sum the Hamming distances for all unique</span>
     <span class="c1"># pairs of chromosomes (to avoid double counting).</span>
@@ -157,7 +174,7 @@
 
     <span class="c1"># Compute the averaged distance, using the total</span>
     <span class="c1"># number of &#39;unique pairs&#39;.</span>
-    <span class="n">dist_avg</span> <span class="o">=</span> <span class="n">total_diffs</span> <span class="o">/</span> <span class="n">unique_pairs</span><span class="p">(</span><span class="n">n_chromosomes</span><span class="p">)</span>
+    <span class="n">dist_avg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">total_diffs</span> <span class="o">/</span> <span class="n">unique_pairs</span><span class="p">(</span><span class="n">n_chromosomes</span><span class="p">)</span>
 
     <span class="c1"># Return the averaged (or the normalized) value.</span>
     <span class="k">return</span> <span class="n">dist_avg</span> <span class="o">/</span> <span class="n">n_genes</span> <span class="k">if</span> <span class="n">normal</span> <span class="k">else</span> <span class="n">dist_avg</span></div>

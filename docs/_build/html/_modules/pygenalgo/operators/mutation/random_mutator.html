@@ -114,10 +114,12 @@
             <span class="c1"># Get the size of the chromosome.</span>
             <span class="n">n_genes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
 
-            <span class="c1"># Select randomly the mutation point and</span>
-            <span class="c1"># replace the old gene with a new one.</span>
-            <span class="n">individual</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_genes</span><span class="p">,</span>
-                                         <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)]</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+            <span class="c1"># Select an index at random.</span>
+            <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_genes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+            <span class="c1"># Replace the old gene with a random one.</span>
+            <span class="n">individual</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+
             <span class="c1"># Set the fitness to NaN.</span>
             <span class="n">individual</span><span class="o">.</span><span class="n">invalidate_fitness</span><span class="p">()</span>
 

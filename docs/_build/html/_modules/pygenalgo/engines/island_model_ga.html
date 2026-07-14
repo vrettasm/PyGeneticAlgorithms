@@ -80,6 +80,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">nanmean</span><span class="p">,</span> <span class="n">nanstd</span><span class="p">,</span> <span class="n">isfinite</span><span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.engines</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.auxiliary</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">SubPopulation</span><span class="p">,</span>
                                        <span class="n">apply_corrections</span><span class="p">,</span>
                                        <span class="n">average_hamming_distance</span><span class="p">)</span>
@@ -134,10 +135,10 @@
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Assign the number of islands.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_islands</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_islands</span><span class="p">))</span>
 
         <span class="c1"># Get Migration Operator.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_migrate_op</span> <span class="o">=</span> <span class="n">migrate_op</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_migrate_op</span><span class="p">:</span> <span class="n">MigrationOperator</span> <span class="o">=</span> <span class="n">migrate_op</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -184,13 +185,15 @@
         <span class="n">has_converged</span> <span class="o">=</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
 
         <span class="c1"># Get the size of the population.</span>
-        <span class="n">pop_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+        <span class="n">pop_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
 
         <span class="c1"># Define local dictionary to hold the statistics.</span>
-        <span class="n">local_stats</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;avg&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_crossx&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_mutate&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="n">local_stats</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;avg&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_crossx&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_mutate&quot;</span><span class="p">:</span> <span class="p">[]</span>
+        <span class="p">}</span>
 
         <span class="c1"># Initialize this auxiliary parameter to a large number.</span>
-        <span class="n">avg_fitness_0</span> <span class="o">=</span> <span class="mf">1.0e+100</span>
+        <span class="n">avg_fitness_0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e+100</span>
 
         <span class="c1"># Check if initial probabilities have been given.</span>
         <span class="k">if</span> <span class="n">prob_crossx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">prob_mutate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -230,16 +233,21 @@
                 <span class="c1"># need to update the fitness list.</span>
                 <span class="k">if</span> <span class="n">total_corrections</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
 
-                    <span class="c1"># Update the fitness list to ensure consistency.</span>
-                    <span class="n">fit_list_i</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">population_i</span><span class="p">]</span>
+                    <span class="c1"># Update the fitness list to</span>
+                    <span class="c1"># ensure consistency.</span>
+                    <span class="n">fit_list_i</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">population_i</span>
+                    <span class="p">]</span>
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Check if &#39;elitism&#39; is enabled.</span>
             <span class="k">if</span> <span class="n">elitism</span><span class="p">:</span>
                 <span class="c1"># Find the individual chromosome with the highest fitness</span>
                 <span class="c1"># value (from the old subpopulation of the current island).</span>
-                <span class="n">best_chromosome</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">island</span><span class="o">.</span><span class="n">population</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">isnan</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)],</span>
-                                      <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+                <span class="n">best_chromosome</span><span class="p">:</span> <span class="n">Chromosome</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">island</span><span class="o">.</span><span class="n">population</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">isnan</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)],</span>
+                    <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+                <span class="p">)</span>
 
                 <span class="c1"># Check if the chromosome already exists.</span>
                 <span class="k">if</span> <span class="n">best_chromosome</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">population_i</span><span class="p">:</span>
@@ -369,16 +377,21 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">rng_GA</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
-        <span class="c1"># Initial random split of the total population in (active) subpopulations.</span>
-        <span class="c1"># Active here means &#39;still evolving&#39;.</span>
-        <span class="n">active_population</span> <span class="o">=</span> <span class="p">[</span><span class="n">SubPopulation</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span><span class="p">])</span>
-                             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span><span class="p">)]</span>
+        <span class="c1"># Initial random split of the total population</span>
+        <span class="c1"># in (active) subpopulations. Active here means</span>
+        <span class="c1"># &#39;still evolving&#39;.</span>
+        <span class="n">active_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SubPopulation</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">SubPopulation</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span><span class="p">)</span>
+        <span class="p">]</span>
 
         <span class="c1"># Initial evaluation of the subpopulations.</span>
         <span class="k">for</span> <span class="n">pop_n</span> <span class="ow">in</span> <span class="n">active_population</span><span class="p">:</span>
 
             <span class="c1"># Initialize the statistics dictionary.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;avg&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_crossx&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_mutate&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">]:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;avg&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_crossx&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_mutate&quot;</span><span class="p">:</span> <span class="p">[]</span>
+            <span class="p">}</span>
 
             <span class="c1"># Initial evaluation of the population. This can run also in parallel.</span>
             <span class="n">fit_list_0</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">(</span><span class="n">pop_n</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="n">parallel_mode</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -418,12 +431,15 @@
             <span class="n">epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_f_counts</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">))</span>
 
             <span class="c1"># Display a warning message.</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The &#39;f_max_eval&#39; parameter has been set to: </span><span class="si">{</span><span class="n">f_max_eval</span><span class="si">}</span><span class="s2">. &quot;</span>
-                           <span class="sa">f</span><span class="s2">&quot;The &#39;epochs&#39; value has been re-adjusted to: </span><span class="si">{</span><span class="n">epochs</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;The &#39;f_max_eval&#39; parameter has been set to: </span><span class="si">%s</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;The &#39;epochs&#39; value has been re-adjusted to: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">f_max_eval</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Display an information message.</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parallel evolution in progress with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span><span class="si">}</span><span class="s2"> islands ...&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Parallel evolution in progress with </span><span class="si">%s</span><span class="s2"> islands ...&quot;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span><span class="p">)</span>
 
         <span class="c1"># Final population.</span>
         <span class="n">final_population</span> <span class="o">=</span> <span class="p">[]</span>
@@ -463,7 +479,7 @@
 
                     <span class="c1"># Check if we want information on to be logged.</span>
                     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Current period </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">n_periods</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Current period </span><span class="si">%s</span><span class="s2"> / </span><span class="si">%s</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_periods</span><span class="p">)</span>
                     <span class="c1"># _end_if_</span>
 
                     <span class="c1"># If the remainder epochs is not zero, add them in the</span>
@@ -505,8 +521,10 @@
                                                 <span class="k">if</span> <span class="ow">not</span> <span class="n">isnan</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)))</span>
 
                             <span class="c1"># Log an update of the progress.</span>
-                            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best Fitness in island </span><span class="si">{</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> &quot;</span>
-                                        <span class="sa">f</span><span class="s2">&quot;is:= </span><span class="si">{</span><span class="n">best_fitness</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                                <span class="s2">&quot;Best Fitness in island </span><span class="si">%s</span><span class="s2"> is:= </span><span class="si">%.5f</span><span class="s2">&quot;</span><span class="p">,</span>
+                                <span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">best_fitness</span>
+                            <span class="p">)</span>
                         <span class="c1"># _end_if_</span>
 
                         <span class="c1"># First check if the island has converged.</span>
@@ -520,8 +538,10 @@
                                 <span class="n">itr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">n_epochs</span> <span class="o">+</span> <span class="n">has_converged</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
                                 <span class="c1"># Log a warning message to the screen.</span>
-                                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Island population </span><span class="si">{</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> &quot;</span>
-                                               <span class="sa">f</span><span class="s2">&quot;finished in </span><span class="si">{</span><span class="n">itr</span><span class="si">}</span><span class="s2"> iterations. &quot;</span><span class="p">)</span>
+                                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                                    <span class="s2">&quot;Island population </span><span class="si">%s</span><span class="s2"> finished in </span><span class="si">%s</span><span class="s2"> iterations.&quot;</span><span class="p">,</span>
+                                    <span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">itr</span>
+                                <span class="p">)</span>
                             <span class="c1"># _end_if_</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="c1"># Add the island population to the new active list.</span>
@@ -590,8 +610,10 @@
 
                 <span class="c1"># Check if we want to log output.</span>
                 <span class="k">if</span> <span class="n">has_converged</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Island population </span><span class="si">{</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">, &quot;</span>
-                                <span class="sa">f</span><span class="s2">&quot;finished in </span><span class="si">{</span><span class="n">has_converged</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> iterations.&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="s2">&quot;Island population </span><span class="si">%s</span><span class="s2">, finished in </span><span class="si">%s</span><span class="s2"> iterations.&quot;</span><span class="p">,</span>
+                        <span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">has_converged</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="p">)</span>
 
                 <span class="c1"># Copy only the population.</span>
                 <span class="n">final_population</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
@@ -622,7 +644,7 @@
         <span class="n">time_tf</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
 
         <span class="c1"># Print message.</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final Avg. Fitness = </span><span class="si">{</span><span class="n">avg_fitness_final</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Final Avg. Fitness = </span><span class="si">%.4f</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">avg_fitness_final</span><span class="p">)</span>
 
         <span class="c1"># Print final duration in seconds.</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Elapsed time: </span><span class="si">{</span><span class="p">(</span><span class="n">time_tf</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">time_t0</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds.&quot;</span><span class="p">)</span></div>

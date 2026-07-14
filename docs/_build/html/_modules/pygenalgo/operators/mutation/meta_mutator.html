@@ -99,9 +99,12 @@
         <span class="c1"># Call the super constructor with the provided probability value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mutate_probability</span><span class="p">)</span>
 
-        <span class="c1"># NOTE: In here the mutation probabilities for each mutator are set to 1.0.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">(</span><span class="n">SwapMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">RandomMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
-                       <span class="n">ShuffleMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">InverseMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
+        <span class="c1"># NOTE: In here the mutation probabilities</span>
+        <span class="c1"># for each mutator are set to 1.0.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">MutationOperator</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">SwapMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">RandomMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+            <span class="n">ShuffleMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">InverseMutator</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="MetaMutator.mutate">
@@ -121,10 +124,12 @@
             <span class="c1"># Get the number of available mutators.</span>
             <span class="n">n_operators</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
 
-            <span class="c1"># Select randomly with equal probability</span>
-            <span class="c1"># a mutator and call its mutation method.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_operators</span><span class="p">,</span>
-                                         <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)]</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+            <span class="c1"># Select randomly with equal probability.</span>
+            <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_operators</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+            <span class="c1"># Call its mutation method.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+
             <span class="c1"># Increase the mutator counter.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span></div>
 
@@ -133,10 +138,12 @@
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">all_counters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Accessor (getter) of the application counter from all the internal mutators.</span>
-<span class="sd">        This is mostly to verify that everything is working as expected.</span>
+<span class="sd">        Accessor (getter) of the application counter from all</span>
+<span class="sd">        the internal mutators. This is mostly to verify that</span>
+<span class="sd">        everything is working as expected.</span>
 
-<span class="sd">        :return: a dictionary with the counter calls for all mutator methods.</span>
+<span class="sd">        :return: a dictionary with the counter calls for all</span>
+<span class="sd">                 mutator methods.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">mut_op</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">mut_op</span><span class="o">.</span><span class="n">counter</span> <span class="k">for</span> <span class="n">mut_op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">}</span>
     <span class="c1"># _end_def_</span>
@@ -145,9 +152,10 @@
 <a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.meta_mutator.MetaMutator.reset_counter">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">reset_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sets ALL the counters to &#39;zero&#39;. We have to override the super().reset_counter()</span>
-<span class="sd">        method, because we have to call explicitly the reset_counter on all the internal</span>
-<span class="sd">        operators.</span>
+<span class="sd">        Sets ALL the counters to zero. We have to override</span>
+<span class="sd">        the super().reset_counter() method because we have</span>
+<span class="sd">        to call explicitly the reset_counter on all the</span>
+<span class="sd">        internal operators.</span>
 
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

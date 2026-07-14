@@ -83,13 +83,15 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Roulette Wheel Selection employs a probabilistic mechanism where individuals are</span>
-<span class="sd">        selected based on their fitness relative to the entire population. Each individual</span>
-<span class="sd">        receives a slice of a wheel proportional to its fitness, similar to a casino roulette,</span>
-<span class="sd">        where a random number determines the selected individual. This method encourages selection</span>
-<span class="sd">        of fitter individuals while allowing lower-fitness individuals a chance to contribute.</span>
-<span class="sd">        While effective, it can lead to premature convergence if the population&#39;s fitness is skewed,</span>
-<span class="sd">        often referred to as the &quot;selection pressure.&quot;</span>
+<span class="sd">        Roulette Wheel Selection employs a probabilistic mechanism where</span>
+<span class="sd">        individuals are selected based on their fitness relative to the</span>
+<span class="sd">        entire population. Each individual receives a slice of a wheel</span>
+<span class="sd">        proportional to its fitness, similar to a casino roulette, where</span>
+<span class="sd">        a random number determines the selected individual. This method</span>
+<span class="sd">        encourages selection of fitter individuals while allowing lower-fitness</span>
+<span class="sd">        individuals a chance to contribute. While effective, it can lead to</span>
+<span class="sd">        premature convergence if the population&#39;s fitness is skewed, often</span>
+<span class="sd">        referred to as the &quot;selection pressure.&quot;</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -117,13 +119,13 @@
 <span class="sd">        :return: the selected parents population (as list of chromosomes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get the population size.</span>
-        <span class="n">pop_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+        <span class="n">pop_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
 
         <span class="c1"># Extract the (positive) fitness values from the chromosomes.</span>
         <span class="n">all_fitness</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">ensure_positive_fitness</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
 
         <span class="c1"># Calculate sum of all fitness.</span>
-        <span class="n">sum_fitness</span> <span class="o">=</span> <span class="n">fsum</span><span class="p">(</span><span class="n">all_fitness</span><span class="p">)</span>
+        <span class="n">sum_fitness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">fsum</span><span class="p">(</span><span class="n">all_fitness</span><span class="p">)</span>
 
         <span class="c1"># If total fitness is zero (or effectively zero),</span>
         <span class="c1"># fall back to uniform random selection so every</span>
@@ -139,7 +141,9 @@
 
         <span class="c1"># Calculate the &quot;selection probabilities&quot; of each member</span>
         <span class="c1"># in the population.</span>
-        <span class="n">selection_probs</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="o">/</span> <span class="n">sum_fitness</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">all_fitness</span><span class="p">]</span>
+        <span class="n">selection_probs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">f</span> <span class="o">/</span> <span class="n">sum_fitness</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">all_fitness</span>
+        <span class="p">]</span>
 
         <span class="c1"># Select the new individuals (indexes).</span>
         <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pop_size</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">pop_size</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">selection_probs</span><span class="p">,</span>

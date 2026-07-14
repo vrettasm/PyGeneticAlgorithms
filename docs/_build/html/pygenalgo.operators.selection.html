@@ -139,19 +139,19 @@ to form the new population of solutions.</p>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>The LinearRank Selector is a selection mechanism in genetic algorithms that ranks
-individuals based on their fitness values. It assigns selection probabilities to
-candidates in a linear fashion, ensuring that higher-ranking individuals are more
-likely to be chosen for reproduction. The operator helps maintain diversity in the
-population by avoiding premature convergence, allowing lower-ranked individuals a
-chance to contribute. This method is particularly effective in scenarios with varying
-fitness levels, as it balances selection pressure while fostering exploration of the
-solution space. Overall, it enhances the optimization process in evolutionary computation
-models.</p>
+<div><p>The LinearRank Selector is a selection mechanism in genetic algorithms
+that ranks individuals based on their fitness values. It assigns selection
+probabilities to candidates in a linear fashion, ensuring that higher-ranking
+individuals are more likely to be chosen for reproduction. The operator helps
+maintain diversity in the population by avoiding premature convergence, allowing
+lower-ranked individuals a chance to contribute. This method is particularly
+effective in scenarios with varying fitness levels, as it balances selection
+pressure while fostering exploration of the solution space. Overall, it enhances
+the optimization process in evolutionary computation models.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.probabilities">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/selection/linear_rank_selector.html#LinearRankSelector.probabilities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.probabilities" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pop_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/selection/linear_rank_selector.html#LinearRankSelector.probabilities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.probabilities" title="Link to this definition"></a></dt>
 <dd><p>Calculate the rank probability distribution over the population size.
 The function is lru_cached so that repeated calls with the same input
 should not recompute the same array, since the population size of the
@@ -162,7 +162,7 @@ to the highest possible rank (eta = 2.0).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>p_size</strong> – (int) population size.</p></li>
+<li><p><strong>pop_size</strong> – (int) population size.</p></li>
 <li><p><strong>eta</strong> – (float) pressure adjustment factor.</p></li>
 </ul>
 </dd>
@@ -235,13 +235,15 @@ to form the new population of solutions.</p>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Roulette Wheel Selection employs a probabilistic mechanism where individuals are
-selected based on their fitness relative to the entire population. Each individual
-receives a slice of a wheel proportional to its fitness, similar to a casino roulette,
-where a random number determines the selected individual. This method encourages selection
-of fitter individuals while allowing lower-fitness individuals a chance to contribute.
-While effective, it can lead to premature convergence if the population’s fitness is skewed,
-often referred to as the “selection pressure.”</p>
+<div><p>Roulette Wheel Selection employs a probabilistic mechanism where
+individuals are selected based on their fitness relative to the
+entire population. Each individual receives a slice of a wheel
+proportional to its fitness, similar to a casino roulette, where
+a random number determines the selected individual. This method
+encourages selection of fitter individuals while allowing lower-fitness
+individuals a chance to contribute. While effective, it can lead to
+premature convergence if the population’s fitness is skewed, often
+referred to as the “selection pressure.”</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.roulette_wheel_selector.RouletteWheelSelector.select">
@@ -270,9 +272,9 @@ to form the new population of solutions.</p>
 <dd><p>Bases: <a class="reference internal" href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator" title="pygenalgo.operators.genetic_operator.GeneticOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneticOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Provides the base class (interface) for a Selection Operator.  Note that even
-though the operator accepts a probability value, for the moment this operator
-is applied with 100% ‘probability’.</p>
+<div><p>Provides the base class (interface) for a Selection Operator.
+Note that even though the operator accepts a probability value,
+for the moment this operator is applied with 100% ‘probability’.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.select_operator.SelectionOperator.select">
@@ -473,8 +475,9 @@ randomly the predefined selectors (one at a time), with equal probability.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.meta_selector.MetaSelector.all_counters">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_counters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#pygenalgo.operators.selection.meta_selector.MetaSelector.all_counters" title="Link to this definition"></a></dt>
-<dd><p>Accessor (getter) of the application counter from all the internal selectors.
-This is mostly to verify that everything is working as expected.</p>
+<dd><p>Accessor (get) of the application counter from all the internal
+selectors. This is mostly to verify that everything is working
+as expected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>a dictionary with the counter calls for all selector methods.</p>
@@ -485,9 +488,9 @@ This is mostly to verify that everything is working as expected.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.meta_selector.MetaSelector.reset_counter">
 <span class="sig-name descname"><span class="pre">reset_counter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/selection/meta_selector.html#MetaSelector.reset_counter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.meta_selector.MetaSelector.reset_counter" title="Link to this definition"></a></dt>
-<dd><p>Sets ALL the counters to ‘zero’. We have to override the super().reset_counter()
-method, because we have to call explicitly the reset_counter on all the internal
-operators.</p>
+<dd><p>Sets ALL the counters to zero. We have to override the
+super().reset_counter() method because we have to call
+explicitly the reset_counter on all the internal operators.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None.</p>
