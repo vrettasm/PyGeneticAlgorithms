@@ -29,8 +29,10 @@ class MetaSelector(SelectionOperator):
 
         # NOTE: In here the selection probabilities for each operator are
         #       set to 1.0.
-        self._items = (RandomSelector(1.0), LinearRankSelector(1.0),
-                       RouletteWheelSelector(1.0), TournamentSelector(1.0))
+        self._items: tuple[SelectionOperator] = (
+            RandomSelector(1.0), LinearRankSelector(1.0),
+            RouletteWheelSelector(1.0), TournamentSelector(1.0)
+        )
     # _end_def_
 
     @increase_counter
