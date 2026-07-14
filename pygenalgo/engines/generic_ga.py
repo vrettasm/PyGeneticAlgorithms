@@ -80,42 +80,42 @@ class GenericGA:
         # _end_if_
 
         # Copy the reference of the population.
-        self.population = initial_pop.copy()
+        self.population: list[Chromosome] = initial_pop.copy()
 
         # Get the fitness function.
-        self.fitness_func = fit_func
+        self.fitness_func: Callable = fit_func
 
         # Get Selection Operator.
-        self._select_op = select_op
+        self._select_op: SelectionOperator = select_op
 
         # Get Mutation Operator.
-        self._mutate_op = mutate_op
+        self._mutate_op: MutationOperator = mutate_op
 
         # Get Crossover Operator.
-        self._crossx_op = crossx_op
+        self._crossx_op: CrossoverOperator = crossx_op
 
         # Get the number of requested CPUs.
         if n_cpus is None:
             # This is the default option.
-            self._n_cpus = max(1, GenericGA.MAX_CPUs-1)
+            self._n_cpus: int = max(1, GenericGA.MAX_CPUs-1)
         else:
             # Assign the  requested number, making sure we have
             # enough CPUs and the value entered has the correct
             # type.
-            self._n_cpus = max(1, min(GenericGA.MAX_CPUs-1, int(n_cpus)))
+            self._n_cpus: int = max(1, min(GenericGA.MAX_CPUs-1, int(n_cpus)))
         # _end_if_
 
         # Log the number of CPUs.
         logger.debug("%s uses %s CPUs.", self.__class__.__name__, self._n_cpus)
 
         # Dictionary with statistics.
-        self._stats = defaultdict(list)
+        self._stats: dict = defaultdict(list)
 
         # Set the function evaluation to zero.
-        self._f_evals = 0
+        self._f_evals: int = 0
 
         # Set the iterations counter to zero.
-        self._iteration = 0
+        self._iteration: int = 0
 
         # Log the object initialization.
         logger.debug("%s initialization complete.", self.__class__.__name__)
@@ -155,7 +155,7 @@ class GenericGA:
         # _end_if_
 
         # Update the iteration value.
-        self._iteration = value
+        self._iteration: int = value
 
         # Update the iteration value in the GeneticOperator Class.
         GeneticOperator.set_iteration(value)
@@ -314,8 +314,10 @@ class GenericGA:
         # _end_if_
 
         # Sort the population in descending order.
-        sorted_population = sorted([p for p in self.population if not isnan(p.fitness)],
-                                   key=attrgetter("fitness"), reverse=True)
+        sorted_population: list[Chromosome] = sorted(
+            [p for p in self.population if not isnan(p.fitness)],
+            key=attrgetter("fitness"), reverse=True
+        )
 
         # Return the best 'n' chromosomes.
         return sorted_population[0:n]
@@ -351,7 +353,7 @@ class GenericGA:
             # _end_if_
 
             # Get the index of the next chromosome.
-            k = j+1
+            k: int = j+1
 
             # Replace directly the OLD parents with the NEW offsprings.
             input_population[j], input_population[k] = self._crossx_op(input_population[j],
@@ -387,8 +389,8 @@ class GenericGA:
 
         # Initialize the trial values with the current
         # probabilities to avoid going out of limits.
-        trial_pc = self._crossx_op.probability
-        trial_pm = self._mutate_op.probability
+        trial_pc: float = self._crossx_op.probability
+        trial_pm: float = self._mutate_op.probability
 
         # Initialize the flag with "False"
         # to avoid unnecessary assignments.
