@@ -124,8 +124,8 @@ class GeneticOperator:
         """
         # Check for correct type and allow only the positive values.
         if not isinstance(value, int) or value < 0:
-            raise RuntimeError(f"{cls.__class__.__name__}: "
-                               f"Iteration value should be positive int: {type(value)}.")
+            raise RuntimeError(f"{cls.__class__.__name__}: Iteration value should"
+                               f" be positive 'int': {value.__class__.__name__}.")
         # _end_if_
 
         # Update the iteration value.
