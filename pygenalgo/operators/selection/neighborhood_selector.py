@@ -1,5 +1,8 @@
 from operator import attrgetter
+
 import numpy as np
+from numpy.typing import NDArray
+
 from pygenalgo.utils.utilities import np_cdist
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
@@ -49,25 +52,30 @@ class NeighborhoodSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
-        # Get the population size.
-        pop_size = len(population)
 
         # Extract the population positions as numpy array.
-        x_pos = np.array([p.values() for p in population])
+        x_pos: NDArray = np.array([
+            p.values() for p in population
+        ], dtype=float)
 
         # Compute the pairwise Euclidean distances.
-        pairwise_dists = np_cdist(x_pos, scaled=True)
+        pairwise_dists: NDArray = np_cdist(x_pos, scaled=True)
 
         # Sort the distances and get their indexes.
-        x_sorted = np.argsort(pairwise_dists, axis=1)
+        x_sorted: NDArray = np.argsort(pairwise_dists, axis=1)
 
         # Make a view of the first '_items'. This provides
         # a notion of a 'neighborhood' for each chromosome.
-        neighborhood = x_sorted[:, :self._items]
+        neighborhood: NDArray = x_sorted[:, :self._items]
+
+        # Define the key.
+        key_sort = attrgetter("fitness")
 
         # Return the new parents.
-        return [max((population[j] for j in neighborhood[i]),
-                    key=attrgetter("fitness")) for i in range(pop_size)]
+        return [
+            max((population[k] for k in row), key=key_sort)
+            for row in neighborhood
+        ]
     # _end_def_
 
 # _end_class_
