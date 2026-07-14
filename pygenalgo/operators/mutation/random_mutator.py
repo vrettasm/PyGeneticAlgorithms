@@ -38,10 +38,12 @@ class RandomMutator(MutationOperator):
             # Get the size of the chromosome.
             n_genes: int = len(individual)
 
-            # Select randomly the mutation point and
-            # replace the old gene with a new one.
-            individual[self.rng.integers(n_genes,
-                                         dtype=int)].random()
+            # Select an index at random.
+            idx: int = self.rng.integers(n_genes, dtype=int)
+
+            # Replace the old gene with a random one.
+            individual[idx].random()
+
             # Set the fitness to NaN.
             individual.invalidate_fitness()
 

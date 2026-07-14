@@ -25,9 +25,12 @@ class MetaMutator(MutationOperator):
         # Call the super constructor with the provided probability value.
         super().__init__(mutate_probability)
 
-        # NOTE: In here the mutation probabilities for each mutator are set to 1.0.
-        self._items = (SwapMutator(1.0), RandomMutator(1.0),
-                       ShuffleMutator(1.0), InverseMutator(1.0))
+        # NOTE: In here the mutation probabilities
+        # for each mutator are set to 1.0.
+        self._items: tuple[MutationOperator] = (
+            SwapMutator(1.0), RandomMutator(1.0),
+            ShuffleMutator(1.0), InverseMutator(1.0)
+        )
     # _end_def_
 
     def mutate(self, individual: Chromosome) -> None:
@@ -45,10 +48,12 @@ class MetaMutator(MutationOperator):
             # Get the number of available mutators.
             n_operators: int = len(self.items)
 
-            # Select randomly with equal probability
-            # a mutator and call its mutation method.
-            self.items[self.rng.integers(n_operators,
-                                         dtype=int)].mutate(individual)
+            # Select randomly with equal probability.
+            idx: int = self.rng.integers(n_operators, dtype=int)
+
+            # Call its mutation method.
+            self.items[idx].mutate(individual)
+
             # Increase the mutator counter.
             self.inc_counter()
     # _end_def_
@@ -56,19 +61,22 @@ class MetaMutator(MutationOperator):
     @property
     def all_counters(self) -> dict:
         """
-        Accessor (getter) of the application counter from all the internal mutators.
-        This is mostly to verify that everything is working as expected.
+        Accessor (getter) of the application counter from all
+        the internal mutators. This is mostly to verify that
+        everything is working as expected.
 
-        :return: a dictionary with the counter calls for all mutator methods.
+        :return: a dictionary with the counter calls for all
+                 mutator methods.
         """
         return {mut_op.__class__.__name__: mut_op.counter for mut_op in self.items}
     # _end_def_
 
     def reset_counter(self) -> None:
         """
-        Sets ALL the counters to 'zero'. We have to override the super().reset_counter()
-        method, because we have to call explicitly the reset_counter on all the internal
-        operators.
+        Sets ALL the counters to zero. We have to override
+        the super().reset_counter() method because we have
+        to call explicitly the reset_counter on all the
+        internal operators.
 
         :return: None.
         """

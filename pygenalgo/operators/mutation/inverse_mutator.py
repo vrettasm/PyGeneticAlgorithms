@@ -46,7 +46,7 @@ class InverseMutator(MutationOperator):
 
             # Make a slice list of the genes
             # we want to inverse their order: i -> j.
-            sliced_chromosome = individual.genome[i:j]
+            sliced_chromosome: list[Chromosome] = individual.genome[i:j]
 
             # Invert the copied slice in place.
             sliced_chromosome.reverse()
