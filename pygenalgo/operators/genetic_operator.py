@@ -57,7 +57,9 @@ class GeneticOperator:
 
     _iteration: int = 0
     """
-    Provides access of the iteration value to every genetic operator.
+    Provides access of the iteration value  to every genetic operator.
+    We want all the genetic operators to be able to use the same exact
+    value for this parameter.
     """
 
     # Object variables.
