@@ -42,8 +42,8 @@ class GenericGA:
                  "_mutate_op", "_stats", "_n_cpus", "_f_evals", "_iteration")
 
     def __init__(self, initial_pop: list[Chromosome], fit_func: Callable,
-                 select_op: Optional[SelectionOperator] = None, mutate_op: Optional[MutationOperator] = None,
-                 crossx_op: Optional[CrossoverOperator] = None, n_cpus: Optional[int] = None) -> None:
+                 select_op: SelectionOperator, mutate_op: MutationOperator,
+                 crossx_op: CrossoverOperator, n_cpus: Optional[int] = None) -> None:
         """
         Default constructor of GenericGA object.
 
@@ -62,21 +62,6 @@ class GenericGA:
         # Sanity check.
         if not callable(fit_func):
             raise TypeError(f"{self.__class__.__name__}: Fitness function is not callable.")
-        # _end_if_
-
-        # Sanity check.
-        if select_op is None:
-            raise ValueError(f"{self.__class__.__name__}: Selection operator is missing.")
-        # _end_if_
-
-        # Sanity check.
-        if mutate_op is None:
-            raise ValueError(f"{self.__class__.__name__}: Mutation operator is missing.")
-        # _end_if_
-
-        # Sanity check.
-        if crossx_op is None:
-            raise ValueError(f"{self.__class__.__name__}: Crossover operator is missing.")
         # _end_if_
 
         # Copy the reference of the population.
@@ -511,7 +496,8 @@ class GenericGA:
 
     def run(self, *args, **kwargs) -> None:
         """
-        Main method of the Generic GA class, that implements the evolutionary routine.
+        Main method of the Generic GA class
+        that implements the evolutionary routine.
         """
         raise NotImplementedError(f"{self.__class__.__name__}: "
                                   f"You should implement this method!")
