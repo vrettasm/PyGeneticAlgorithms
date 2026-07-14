@@ -288,8 +288,8 @@ class GeneticOperator:
             setattr(self, attr, value)
         # _end_for_
 
-        # Add a new lock.
-        self._lock = Lock()
+        # Add a NEW lock.
+        self._lock: Lock = Lock()
     # _end_def_
 
 # _end_class_
