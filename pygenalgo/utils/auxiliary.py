@@ -1,3 +1,18 @@
+"""
+Description:
+
+    Includes auxiliary functions and dataclasses used throughout pygenalgo.
+
+Author:
+    Michail D. Vrettas, PhD
+
+Email:
+    michail.vrettas@gmail.com
+
+Metadata:
+    License: GPL-3
+"""
+
 from typing import Callable
 from functools import lru_cache
 from dataclasses import dataclass, field

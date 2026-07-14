@@ -1,3 +1,18 @@
+"""
+Description:
+
+    Includes utility functions that used throughout pygenalgo.
+
+Author:
+    Michail D. Vrettas, PhD
+
+Email:
+    michail.vrettas@gmail.com
+
+Metadata:
+    License: GPL-3
+"""
+
 from typing import Callable
 from functools import wraps, partial
 
