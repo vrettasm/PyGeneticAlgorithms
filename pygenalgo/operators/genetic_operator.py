@@ -194,8 +194,8 @@ class GeneticOperator:
         """
         # Check for the correct type.
         if not isinstance(new_value, float):
-            raise TypeError(f"{self.__class__.__name__}: "
-                            f"Probability should be float: {type(new_value)}.")
+            raise TypeError(f"{self.__class__.__name__}: Probability value"
+                            f"should be 'float': {new_value.__class__.__name__}.")
         # _end_if_
 
         # Ensure the correct range.
