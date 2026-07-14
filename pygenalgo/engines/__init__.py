@@ -9,4 +9,3 @@ logging.basicConfig(format="%(asctime)s %(levelname)s: %(message)s",
 
 # Public interface.
 __all__ = ["logger"]
-

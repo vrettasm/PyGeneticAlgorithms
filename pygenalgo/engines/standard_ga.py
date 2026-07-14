@@ -3,6 +3,7 @@ from math import isclose
 from typing import Optional
 
 from numpy import (array, nanmean, nanstd, isfinite)
+from numpy.typing import NDArray
 
 from pygenalgo.engines import logger
 from pygenalgo.engines.generic_ga import GenericGA
@@ -44,11 +45,11 @@ class StandardGA(GenericGA):
         :return: the mean and std of the fitness values.
         """
         # Convert the fitness list in a numpy array.
-        arr = array(fit_list, dtype=float)
+        arr: NDArray = array(fit_list, dtype=float)
 
         # Get the mean and std values.
-        avg_fitness = nanmean(arr, dtype=float)
-        std_fitness = nanstd(arr, dtype=float)
+        avg_fitness: float = nanmean(arr, dtype=float)
+        std_fitness: float = nanstd(arr, dtype=float)
 
         # Make sure the stat values are finite.
         if all(isfinite([avg_fitness, std_fitness])):
@@ -125,7 +126,7 @@ class StandardGA(GenericGA):
         its_time_to_print = epochs // 10 if epochs > 10 else 2
 
         # Display an information message.
-        logger.info(f"Initial Avg. Fitness = {avg_fitness_0:.4f}")
+        logger.info("Initial Avg. Fitness = %.4f", avg_fitness_0)
 
         # Initial time instant.
         time_t0 = time.perf_counter()
@@ -165,8 +166,10 @@ class StandardGA(GenericGA):
                     fit_list_i = [p.fitness for p in population_i]
 
                     # Log the corrections.
-                    logger.debug(f"> {total_corrections} "
-                                 f"correction(s) took place at epoch: {i}")
+                    logger.debug(
+                        "> %d correction(s) took place at epoch: %d",
+                        total_corrections, i
+                    )
             # _end_if_
 
             # Check if 'elitism' is enabled.
@@ -196,9 +199,10 @@ class StandardGA(GenericGA):
 
             # Log the information message.
             if verbose and (i % its_time_to_print) == 0:
-                logger.info(f"Epoch: {i + 1:>5} -> "
-                            f"Avg. Fitness = {avg_fitness_i:.4f}, "
-                            f"Spread = {std_fitness_i:.4f}")
+                logger.info(
+                    "Epoch: %5d -> Avg. Fitness = %.4f, Spread = %.4f",
+                    i + 1, avg_fitness_i, std_fitness_i
+                )
             # _end_if_
 
             # Update the old population with the new chromosomes.
@@ -207,8 +211,8 @@ class StandardGA(GenericGA):
             # Check for termination.
             if found_solution:
                 # Log a warning message.
-                logger.warning(f"{self.__class__.__name__} "
-                               f"finished in {i + 1} iterations.")
+                logger.warning("%s finished in %d iterations.",
+                               self.__class__.__name__, i + 1)
                 # Exit.
                 break
             # _end_if_
@@ -216,8 +220,8 @@ class StandardGA(GenericGA):
             # Check for the maximum function evaluations.
             if f_max_eval is not None and self.f_evals >= f_max_eval:
                 # Log a warning message.
-                logger.warning(f"{self.__class__.__name__} "
-                               "reached the maximum number of function evaluations.")
+                logger.warning("%s reached the maximum number of function evaluations.",
+                               self.__class__.__name__)
                 # Exit.
                 break
             # _end_if_
@@ -225,8 +229,8 @@ class StandardGA(GenericGA):
             # Check for convergence.
             if f_tol is not None and isclose(avg_fitness_i, avg_fitness_0, abs_tol=f_tol):
                 # Display a warning message.
-                logger.warning(f"{self.__class__.__name__} "
-                               f"converged in {i + 1} iterations.")
+                logger.warning("%s converged in %d iterations.",
+                               self.__class__.__name__, i + 1)
                 # Exit.
                 break
             # _end_if_
@@ -250,7 +254,7 @@ class StandardGA(GenericGA):
         time_tf = time.perf_counter()
 
         # Display the final average fitness value.
-        logger.info(f"Final   Avg. Fitness = {avg_fitness_0:.4f}")
+        logger.info("Final   Avg. Fitness = %.4f", avg_fitness_0)
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
