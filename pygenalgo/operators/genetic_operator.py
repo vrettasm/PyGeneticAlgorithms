@@ -86,7 +86,7 @@ class GeneticOperator:
         self._counter: int = 0
 
         # Initialize a thread lock.
-        self._lock = Lock()
+        self._lock: Lock = Lock()
 
         # Place holder.
         self._items = None
