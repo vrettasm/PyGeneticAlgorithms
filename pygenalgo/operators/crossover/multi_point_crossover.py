@@ -46,8 +46,8 @@ class MultiPointCrossover(CrossoverOperator):
         length_1: int = len(parent1)
         length_2: int = len(parent2)
 
-        # Find the minimum length.
-        min_length: int = min(length_1, length_2)
+        # Find the minimum length of the two chromosomes.
+        min_length: int = min(len(parent1), len(parent2))
 
         # Extract the number of cut points.
         num_points: int = self._items
