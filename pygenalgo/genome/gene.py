@@ -145,10 +145,10 @@ class Gene:
 
     def clone(self) -> Gene:
         """
-        Makes a duplicate of the self object
-        by deep-coping only the datum field.
+        Makes a duplicate (clone) of the self
+        object.
 
-        :return: a "deep-copy" of the object.
+        :return: a (deep) clone of the object.
         """
 
         # Avoid costly deepcopy if datum is immutable.
