@@ -40,10 +40,6 @@ class UniformCrossover(CrossoverOperator):
         # changes.
         if (parent1 != parent2) and self.is_operator_applicable():
 
-            # Get the lengths of the chromosomes.
-            length_1: int = len(parent1)
-            length_2: int = len(parent2)
-
             # Create the 1st offspring genome list.
             genome_1: list[Gene] = [
                 gene.clone() for gene in parent1.genome
@@ -54,8 +50,8 @@ class UniformCrossover(CrossoverOperator):
                 gene.clone() for gene in parent2.genome
             ]
 
-            # Find the minimum length.
-            min_length: int = min(length_1, length_2)
+            # Find the minimum length of the two chromosomes.
+            min_length: int = min(len(parent1), len(parent2))
 
             # Generate uniform random numbers and convert them to bool.
             swap_bool_flag = self.rng.random(size=min_length) > 0.5

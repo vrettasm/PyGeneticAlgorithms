@@ -40,12 +40,8 @@ class SinglePointCrossover(CrossoverOperator):
         # changes.
         if (parent1 != parent2) and self.is_operator_applicable():
 
-            # Get the lengths of the chromosomes.
-            length_1: int = len(parent1)
-            length_2: int = len(parent2)
-
-            # Find the minimum length.
-            min_length: int = min(length_1, length_2)
+            # Find the minimum length of the two chromosomes.
+            min_length: int = min(len(parent1), len(parent2))
 
             # Select randomly a crossover point from [0, min_length-1].
             idx: int = self.rng.integers(0, high=min_length, dtype=int)
