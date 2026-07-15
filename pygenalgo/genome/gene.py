@@ -42,7 +42,7 @@ class Gene:
         # _end_if_
 
         # Get the random function.
-        self._func = func
+        self._func: Callable = func
 
         # Copy the valid flag. Note that if the _datum field
         # is set to None, the Gene is automatically invalid.
