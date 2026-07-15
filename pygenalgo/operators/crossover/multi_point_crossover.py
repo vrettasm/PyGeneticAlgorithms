@@ -42,9 +42,6 @@ class MultiPointCrossover(CrossoverOperator):
 
         :return: child1 and child2 (as Chromosomes).
         """
-        # Get the lengths of the chromosomes.
-        length_1: int = len(parent1)
-        length_2: int = len(parent2)
 
         # Find the minimum length of the two chromosomes.
         min_length: int = min(len(parent1), len(parent2))
