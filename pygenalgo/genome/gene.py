@@ -34,7 +34,7 @@ class Gene:
         :param valid: This flag is used to set the Gene as valid or invalid.
         """
         # Copy the data reference.
-        self._datum = datum
+        self._datum: Any = datum
 
         # Sanity check.
         if not callable(func):
