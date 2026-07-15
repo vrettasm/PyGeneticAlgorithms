@@ -150,6 +150,12 @@ class Gene:
 
         :return: a "deep-copy" of the object.
         """
+
+        # Avoid costly deepcopy if datum is immutable.
+        if isinstance(self._datum, Gene._IMMUTABLE_TYPES):
+            return Gene(self._datum, self._func, self._valid)
+
+        # Default (safe but slow) deepcopy.
         return Gene(deepcopy(self._datum), self._func, self._valid)
     # _end_def_
 
@@ -244,10 +250,16 @@ class Gene:
         # Don't copy self reference.
         memo[id(self)] = new_object
 
-        # Deepcopy ONLY the datum because it
-        # might be a complex mutable object.
-        setattr(new_object, "_datum",
-                deepcopy(self._datum, memo))
+        # Avoid deepcopy if it is not necessary.
+        if isinstance(self._datum, Gene._IMMUTABLE_TYPES):
+            # Simple copy of the datum.
+            setattr(new_object, "_datum", self._datum)
+        else:
+            # Deepcopy ONLY the datum because it
+            # might be a complex mutable object.
+            setattr(new_object, "_datum",
+                    deepcopy(self._datum, memo))
+        # _end_if_
 
         # Simply copy the function handle.
         setattr(new_object, "_func", self._func)
