@@ -46,7 +46,7 @@ class Gene:
 
         # Copy the valid flag. Note that if the _datum field
         # is set to None, the Gene is automatically invalid.
-        self._valid = False if self._datum is None else valid
+        self._valid: bool = False if self._datum is None else valid
     # _end_def_
 
     @property
