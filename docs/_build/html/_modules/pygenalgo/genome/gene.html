@@ -93,6 +93,11 @@
 <span class="sd">        different &quot;kinds of genes&quot; each one responsible for a specific function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="c1"># Auxiliary tuple.</span>
+    <span class="n">_IMMUTABLE_TYPES</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">complex</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="p">)</span>
+
     <span class="c1"># Object variables.</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_datum&quot;</span><span class="p">,</span> <span class="s2">&quot;_func&quot;</span><span class="p">,</span> <span class="s2">&quot;_valid&quot;</span><span class="p">)</span>
 
@@ -108,7 +113,7 @@
 <span class="sd">        :param valid: This flag is used to set the Gene as valid or invalid.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Copy the data reference.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="n">datum</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">datum</span>
 
         <span class="c1"># Sanity check.</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
@@ -116,11 +121,11 @@
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Get the random function.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_func</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">func</span>
 
         <span class="c1"># Copy the valid flag. Note that if the _datum field</span>
         <span class="c1"># is set to None, the Gene is automatically invalid.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">valid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">valid</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -222,11 +227,17 @@
 <a class="viewcode-back" href="../../../pygenalgo.genome.html#pygenalgo.genome.gene.Gene.clone">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Gene</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Makes a duplicate of the self object</span>
-<span class="sd">        by deep-coping only the datum field.</span>
+<span class="sd">        Makes a duplicate (clone) of the self</span>
+<span class="sd">        object.</span>
 
-<span class="sd">        :return: a &quot;deep-copy&quot; of the object.</span>
+<span class="sd">        :return: a (deep) clone of the object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Avoid costly deepcopy if datum is immutable.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">,</span> <span class="n">Gene</span><span class="o">.</span><span class="n">_IMMUTABLE_TYPES</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Gene</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">)</span>
+
+        <span class="c1"># Default (safe but slow) deepcopy.</span>
         <span class="k">return</span> <span class="n">Gene</span><span class="p">(</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">)</span></div>
 
     <span class="c1"># _end_def_</span>
@@ -322,10 +333,16 @@
         <span class="c1"># Don&#39;t copy self reference.</span>
         <span class="n">memo</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)]</span> <span class="o">=</span> <span class="n">new_object</span>
 
-        <span class="c1"># Deepcopy ONLY the datum because it</span>
-        <span class="c1"># might be a complex mutable object.</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="n">new_object</span><span class="p">,</span> <span class="s2">&quot;_datum&quot;</span><span class="p">,</span>
-                <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">,</span> <span class="n">memo</span><span class="p">))</span>
+        <span class="c1"># Avoid deepcopy if it is not necessary.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">,</span> <span class="n">Gene</span><span class="o">.</span><span class="n">_IMMUTABLE_TYPES</span><span class="p">):</span>
+            <span class="c1"># Simple copy of the datum.</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">new_object</span><span class="p">,</span> <span class="s2">&quot;_datum&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Deepcopy ONLY the datum because it</span>
+            <span class="c1"># might be a complex mutable object.</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">new_object</span><span class="p">,</span> <span class="s2">&quot;_datum&quot;</span><span class="p">,</span>
+                    <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">,</span> <span class="n">memo</span><span class="p">))</span>
+        <span class="c1"># _end_if_</span>
 
         <span class="c1"># Simply copy the function handle.</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="n">new_object</span><span class="p">,</span> <span class="s2">&quot;_func&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">)</span>
