@@ -1,8 +1,8 @@
 import time
-from typing import Optional
 from math import isnan, isclose
 from operator import attrgetter
 from collections import defaultdict
+from typing import (Optional, Callable)
 
 from joblib import (Parallel, delayed)
 from numpy import (nanmean, nanstd, isfinite)
@@ -364,6 +364,9 @@ class IslandModelGA(GenericGA):
         # Final population.
         final_population = []
 
+        # Local copy of evolve population.
+        fn_evolve: Callable = self._evolve_population
+
         # Initial time instant.
         time_t0 = time.perf_counter()
 
@@ -391,8 +394,11 @@ class IslandModelGA(GenericGA):
             # Compute the remainder epochs (if any).
             rem_epochs = int(epochs % n_periods)
 
+            # Type hint the work_parallel to avoid warnings.
+            work_parallel: Parallel
+
             # Reuse the pool of workers.
-            with Parallel(n_jobs=self.n_cpus, backend="loky") as parallel:
+            with Parallel(n_jobs=self.n_cpus, backend="loky") as work_parallel:
 
                 # Break the total 'epochs' in n_periods.
                 for i in range(n_periods):
@@ -410,17 +416,22 @@ class IslandModelGA(GenericGA):
                         n_epochs += rem_epochs
                     # _end_if_
 
+                    # Local copy of common parameters.
+                    common: dict = {
+                        "f_tol": f_tol,
+                        "epochs": n_epochs,
+                        "shuffle": shuffle,
+                        "elitism": elitism,
+                        "correction": correction,
+                        "adapt_probs": adapt_probs
+                    }
+
                     # Evolve the subpopulations in parallel for 'n_epochs'.
-                    results_i = parallel(
-                        delayed(self._evolve_population)(island=pop_i,
-                                                         epochs=n_epochs,
-                                                         shuffle=shuffle,
-                                                         elitism=elitism,
-                                                         correction=correction,
-                                                         f_tol=f_tol,
-                                                         adapt_probs=adapt_probs,
-                                                         prob_crossx=genetic_probs[pop_i.id]["crossx"],
-                                                         prob_mutate=genetic_probs[pop_i.id]["mutate"])
+                    results_i = work_parallel(
+                        delayed(fn_evolve)(island=pop_i,
+                                           prob_crossx=genetic_probs[pop_i.id]["crossx"],
+                                           prob_mutate=genetic_probs[pop_i.id]["mutate"],
+                                           **common)
                         for pop_i in active_population
                     )
 
@@ -510,15 +521,19 @@ class IslandModelGA(GenericGA):
 
         else:
 
+            # Local copy of common parameters.
+            common: dict = {
+                "f_tol": f_tol,
+                "epochs": epochs,
+                "shuffle": shuffle,
+                "elitism": elitism,
+                "correction": correction,
+                "adapt_probs": adapt_probs
+            }
+
             # Evolve the subpopulations in parallel for 'epoch' iterations.
             results = Parallel(n_jobs=self.n_cpus, backend="loky")(
-                delayed(self._evolve_population)(island=pop_n,
-                                                 epochs=epochs,
-                                                 shuffle=shuffle,
-                                                 elitism=elitism,
-                                                 correction=correction,
-                                                 f_tol=f_tol,
-                                                 adapt_probs=adapt_probs)
+                delayed(fn_evolve)(island=pop_n, **common)
                 for pop_n in active_population
             )
 
