@@ -71,10 +71,10 @@
              
   <h1>Source code for pygenalgo.engines.island_model_ga</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">isnan</span><span class="p">,</span> <span class="n">isclose</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">attrgetter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">Optional</span><span class="p">,</span> <span class="n">Callable</span><span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">nanmean</span><span class="p">,</span> <span class="n">nanstd</span><span class="p">,</span> <span class="n">isfinite</span><span class="p">)</span>
@@ -107,14 +107,15 @@
     <span class="c1"># Object variables (specific for the IslandModel).</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_num_islands&quot;</span><span class="p">,</span> <span class="s2">&quot;_migrate_op&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_islands</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">migrate_op</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MigrationOperator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_islands</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                 <span class="n">migrate_op</span><span class="p">:</span> <span class="n">MigrationOperator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Default constructor of IslandModelGA object.</span>
 
 <span class="sd">        :param num_islands: (int) number of parallel evolving islands.</span>
 
-<span class="sd">        :param migrate_op: migration operator (must inherit from class MigrationOperator).</span>
+<span class="sd">        :param migrate_op: migration operator (must inherit from class</span>
+<span class="sd">                           MigrationOperator).</span>
 
 <span class="sd">        :return: a new GA object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -127,11 +128,6 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                              <span class="sa">f</span><span class="s2">&quot;Number of requested islands (</span><span class="si">{</span><span class="n">num_islands</span><span class="si">}</span><span class="s2">) &quot;</span>
                              <span class="sa">f</span><span class="s2">&quot;exceeds the size of the population.&quot;</span><span class="p">)</span>
-        <span class="c1"># _end_if_</span>
-
-        <span class="c1"># Sanity check.</span>
-        <span class="k">if</span> <span class="n">migrate_op</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: Migration operator is missing.&quot;</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Assign the number of islands.</span>
@@ -323,7 +319,7 @@
 
 <div class="viewcode-block" id="IslandModelGA.run">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.run">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
             <span class="n">f_tol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allow_migration</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">n_periods</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
             <span class="n">adapt_probs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">f_max_eval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -444,6 +440,9 @@
         <span class="c1"># Final population.</span>
         <span class="n">final_population</span> <span class="o">=</span> <span class="p">[]</span>
 
+        <span class="c1"># Local copy of evolve population.</span>
+        <span class="n">fn_evolve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evolve_population</span>
+
         <span class="c1"># Initial time instant.</span>
         <span class="n">time_t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
 
@@ -471,8 +470,11 @@
             <span class="c1"># Compute the remainder epochs (if any).</span>
             <span class="n">rem_epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">epochs</span> <span class="o">%</span> <span class="n">n_periods</span><span class="p">)</span>
 
+            <span class="c1"># Type hint the work_parallel to avoid warnings.</span>
+            <span class="n">work_parallel</span><span class="p">:</span> <span class="n">Parallel</span>
+
             <span class="c1"># Reuse the pool of workers.</span>
-            <span class="k">with</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_cpus</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;loky&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">parallel</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_cpus</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;loky&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">work_parallel</span><span class="p">:</span>
 
                 <span class="c1"># Break the total &#39;epochs&#39; in n_periods.</span>
                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_periods</span><span class="p">):</span>
@@ -490,17 +492,22 @@
                         <span class="n">n_epochs</span> <span class="o">+=</span> <span class="n">rem_epochs</span>
                     <span class="c1"># _end_if_</span>
 
+                    <span class="c1"># Local copy of common parameters.</span>
+                    <span class="n">common</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;f_tol&quot;</span><span class="p">:</span> <span class="n">f_tol</span><span class="p">,</span>
+                        <span class="s2">&quot;epochs&quot;</span><span class="p">:</span> <span class="n">n_epochs</span><span class="p">,</span>
+                        <span class="s2">&quot;shuffle&quot;</span><span class="p">:</span> <span class="n">shuffle</span><span class="p">,</span>
+                        <span class="s2">&quot;elitism&quot;</span><span class="p">:</span> <span class="n">elitism</span><span class="p">,</span>
+                        <span class="s2">&quot;correction&quot;</span><span class="p">:</span> <span class="n">correction</span><span class="p">,</span>
+                        <span class="s2">&quot;adapt_probs&quot;</span><span class="p">:</span> <span class="n">adapt_probs</span>
+                    <span class="p">}</span>
+
                     <span class="c1"># Evolve the subpopulations in parallel for &#39;n_epochs&#39;.</span>
-                    <span class="n">results_i</span> <span class="o">=</span> <span class="n">parallel</span><span class="p">(</span>
-                        <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_evolve_population</span><span class="p">)(</span><span class="n">island</span><span class="o">=</span><span class="n">pop_i</span><span class="p">,</span>
-                                                         <span class="n">epochs</span><span class="o">=</span><span class="n">n_epochs</span><span class="p">,</span>
-                                                         <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span>
-                                                         <span class="n">elitism</span><span class="o">=</span><span class="n">elitism</span><span class="p">,</span>
-                                                         <span class="n">correction</span><span class="o">=</span><span class="n">correction</span><span class="p">,</span>
-                                                         <span class="n">f_tol</span><span class="o">=</span><span class="n">f_tol</span><span class="p">,</span>
-                                                         <span class="n">adapt_probs</span><span class="o">=</span><span class="n">adapt_probs</span><span class="p">,</span>
-                                                         <span class="n">prob_crossx</span><span class="o">=</span><span class="n">genetic_probs</span><span class="p">[</span><span class="n">pop_i</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;crossx&quot;</span><span class="p">],</span>
-                                                         <span class="n">prob_mutate</span><span class="o">=</span><span class="n">genetic_probs</span><span class="p">[</span><span class="n">pop_i</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;mutate&quot;</span><span class="p">])</span>
+                    <span class="n">results_i</span> <span class="o">=</span> <span class="n">work_parallel</span><span class="p">(</span>
+                        <span class="n">delayed</span><span class="p">(</span><span class="n">fn_evolve</span><span class="p">)(</span><span class="n">island</span><span class="o">=</span><span class="n">pop_i</span><span class="p">,</span>
+                                           <span class="n">prob_crossx</span><span class="o">=</span><span class="n">genetic_probs</span><span class="p">[</span><span class="n">pop_i</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;crossx&quot;</span><span class="p">],</span>
+                                           <span class="n">prob_mutate</span><span class="o">=</span><span class="n">genetic_probs</span><span class="p">[</span><span class="n">pop_i</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;mutate&quot;</span><span class="p">],</span>
+                                           <span class="o">**</span><span class="n">common</span><span class="p">)</span>
                         <span class="k">for</span> <span class="n">pop_i</span> <span class="ow">in</span> <span class="n">active_population</span>
                     <span class="p">)</span>
 
@@ -590,15 +597,19 @@
 
         <span class="k">else</span><span class="p">:</span>
 
+            <span class="c1"># Local copy of common parameters.</span>
+            <span class="n">common</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;f_tol&quot;</span><span class="p">:</span> <span class="n">f_tol</span><span class="p">,</span>
+                <span class="s2">&quot;epochs&quot;</span><span class="p">:</span> <span class="n">epochs</span><span class="p">,</span>
+                <span class="s2">&quot;shuffle&quot;</span><span class="p">:</span> <span class="n">shuffle</span><span class="p">,</span>
+                <span class="s2">&quot;elitism&quot;</span><span class="p">:</span> <span class="n">elitism</span><span class="p">,</span>
+                <span class="s2">&quot;correction&quot;</span><span class="p">:</span> <span class="n">correction</span><span class="p">,</span>
+                <span class="s2">&quot;adapt_probs&quot;</span><span class="p">:</span> <span class="n">adapt_probs</span>
+            <span class="p">}</span>
+
             <span class="c1"># Evolve the subpopulations in parallel for &#39;epoch&#39; iterations.</span>
             <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_cpus</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;loky&quot;</span><span class="p">)(</span>
-                <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_evolve_population</span><span class="p">)(</span><span class="n">island</span><span class="o">=</span><span class="n">pop_n</span><span class="p">,</span>
-                                                 <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
-                                                 <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span>
-                                                 <span class="n">elitism</span><span class="o">=</span><span class="n">elitism</span><span class="p">,</span>
-                                                 <span class="n">correction</span><span class="o">=</span><span class="n">correction</span><span class="p">,</span>
-                                                 <span class="n">f_tol</span><span class="o">=</span><span class="n">f_tol</span><span class="p">,</span>
-                                                 <span class="n">adapt_probs</span><span class="o">=</span><span class="n">adapt_probs</span><span class="p">)</span>
+                <span class="n">delayed</span><span class="p">(</span><span class="n">fn_evolve</span><span class="p">)(</span><span class="n">island</span><span class="o">=</span><span class="n">pop_n</span><span class="p">,</span> <span class="o">**</span><span class="n">common</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">pop_n</span> <span class="ow">in</span> <span class="n">active_population</span>
             <span class="p">)</span>
 
