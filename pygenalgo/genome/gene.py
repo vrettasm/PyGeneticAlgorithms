@@ -19,6 +19,11 @@ class Gene:
         different "kinds of genes" each one responsible for a specific function.
     """
 
+    # Auxiliary tuple.
+    _IMMUTABLE_TYPES = (
+        int, float, complex, str, bytes, bool, type(None)
+    )
+
     # Object variables.
     __slots__ = ("_datum", "_func", "_valid")
 
