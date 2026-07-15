@@ -57,7 +57,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
             # _end_if_
 
             # Make a set of indices for the middle segment.
-            id_segment = set(range(i, j))
+            id_segment: set[int] = set(range(i, j))
 
             # Copy the relevant part of the segment.
             for k in id_segment:
