@@ -272,8 +272,10 @@ class GenericGA:
         :return: Return the chromosome with the highest fitness.
         """
         # Return the chromosome with the highest fitness.
-        return max((p for p in self.population if not isnan(p.fitness)),
-                   key=attrgetter("fitness"), default=None)
+        return max(
+            (p for p in self.population if not isnan(p.fitness)),
+            key=attrgetter("fitness"), default=None
+        )
     # _end_def_
 
     def best_n(self, n: int = 1) -> list[Chromosome]:
