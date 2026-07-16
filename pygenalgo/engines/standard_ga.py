@@ -129,7 +129,7 @@ class StandardGA(GenericGA):
         logger.info("Initial Avg. Fitness = %.4f", avg_fitness_0)
 
         # Initial time instant.
-        time_t0 = time.perf_counter()
+        time_t0: float = time.perf_counter()
 
         # Repeat 'epoch' times.
         for i in range(epochs):
@@ -251,7 +251,7 @@ class StandardGA(GenericGA):
         # _end_for_
 
         # Final time instant.
-        time_tf = time.perf_counter()
+        time_tf: float = time.perf_counter()
 
         # Display the final average fitness value.
         logger.info("Final   Avg. Fitness = %.4f", avg_fitness_0)
