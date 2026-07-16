@@ -182,7 +182,8 @@ class StandardGA(GenericGA):
                 # Check if the chromosome already exists in
                 # the current generation to avoid flooding
                 # the new pool with the same chromosome.
-                if previous_best not in population_i:
+                if (previous_best is not None and
+                        previous_best not in population_i):
 
                     # Select a position at random.
                     locus: int = self.rng_GA.integers(pop_size, dtype=int)
