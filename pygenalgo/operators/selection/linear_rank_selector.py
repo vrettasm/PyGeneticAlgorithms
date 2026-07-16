@@ -109,7 +109,7 @@ class LinearRankSelector(SelectionOperator):
         # in the population, using their ranking position. Use
         # the pressure adjustment parameter 'eta' (as _items).
         selection_probs = LinearRankSelector.probabilities(pop_size,
-                                                           self._items)
+                                                           eta=self._items)
 
         # Sort the population in ascending order using their fitness value.
         sorted_population = sorted(population, key=attrgetter("fitness"))
