@@ -167,7 +167,7 @@ class IslandModelGA(GenericGA):
                 # Find the individual chromosome with the highest fitness
                 # value (from the old subpopulation of the current island).
                 best_chromosome: Chromosome = max(
-                    [p for p in island.population if not isnan(p.fitness)],
+                    (p for p in island.population if not isnan(p.fitness)),
                     key=attrgetter("fitness"), default=None
                 )
 
