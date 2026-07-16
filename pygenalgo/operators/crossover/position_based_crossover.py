@@ -61,7 +61,7 @@ class PositionBasedCrossover(CrossoverOperator):
                 genome_2[i] = parent1.genome[i].clone()
             # _end_for_
 
-            # Fill the rest of the positions in both offsprings.
+            # Fill the rest with the positions in both offsprings.
             for gene1, gene2 in zip(parent1.genome, parent2.genome):
 
                 # Check if 'gene1' exists in 1st offspring.
