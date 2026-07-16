@@ -168,14 +168,14 @@ class Gene:
 
         :return: true or false.
         """
-        # Check if they are the same instance.
-        if self is other:
-            return True
-        # _end_if_
-
         # Make sure both items are Gene.
         if not isinstance(other, Gene):
             return NotImplemented
+        # _end_if_
+
+        # Check if they are the same instance.
+        if self is other:
+            return True
         # _end_if_
 
         # Compare only the datum fields.
