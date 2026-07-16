@@ -62,6 +62,20 @@ class MultiPointCrossover(CrossoverOperator):
         # changes.
         if (parent1 != parent2) and self.is_operator_applicable():
 
+            # Find the minimum length of the two chromosomes.
+            min_length: int = min(len(parent1), len(parent2))
+
+            # Extract the number of cut points.
+            num_points: int = self._items
+
+            # Ensure the number of requested cutting points
+            # do not exceed the length of the chromosomes.
+            if num_points >= min_length:
+                raise ValueError(f"{self.__class__.__name__}:"
+                                 " Number of requested crossover points"
+                                 " exceeds the length of the chromosome.")
+            # _end_def_
+
             # Select randomly the crossover points and sort them.
             loci = sorted(self.rng.choice(min_length, size=num_points,
                                           replace=False, shuffle=False))
