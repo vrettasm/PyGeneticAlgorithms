@@ -42,21 +42,6 @@ class MultiPointCrossover(CrossoverOperator):
 
         :return: child1 and child2 (as Chromosomes).
         """
-
-        # Find the minimum length of the two chromosomes.
-        min_length: int = min(len(parent1), len(parent2))
-
-        # Extract the number of cut points.
-        num_points: int = self._items
-
-        # Ensure the number of requested cutting points
-        # do not exceed the length of the chromosomes.
-        if num_points >= min_length:
-            raise ValueError(f"{self.__class__.__name__}:"
-                             " Number of requested crossover points"
-                             " exceeds the length of the chromosome.")
-        # _end_def_
-
         # If the crossover probability is higher than a uniformly
         # random value and the parents aren't identical apply the
         # changes.
