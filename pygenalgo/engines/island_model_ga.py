@@ -243,6 +243,7 @@ class IslandModelGA(GenericGA):
         return island, has_converged, local_stats, elapsed_time
     # _end_def_
 
+    # pylint: disable=arguments-differ
     def run(self, epochs: int = 500, elitism: bool = True, correction: bool = False,
             f_tol: Optional[float] = None, allow_migration: bool = False, n_periods: int = 10,
             adapt_probs: bool = False, shuffle: bool = True, f_max_eval: Optional[int] = None,
