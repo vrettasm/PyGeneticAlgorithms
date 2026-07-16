@@ -69,7 +69,7 @@ class MultiPointCrossover(CrossoverOperator):
             num_points: int = self._items
 
             # Ensure the number of requested cutting points
-            # do not exceed the length of the chromosomes.
+            # does not exceed the length of the chromosomes.
             if num_points >= min_length:
                 raise ValueError(f"{self.__class__.__name__}:"
                                  " Number of requested crossover points"
