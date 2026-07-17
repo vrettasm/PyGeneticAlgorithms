@@ -1,12 +1,5 @@
-# Standard imports.
-from functools import lru_cache
-
-# Third party imports.
-from numpy import arange
-from numpy.typing import NDArray
-
-# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.utils.utilities import two_indices_fast
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
 
@@ -28,19 +21,6 @@ class SwapMutator(MutationOperator):
         super().__init__(mutation_probability=mutate_probability)
     # _end_def_
 
-    @staticmethod
-    @lru_cache(maxsize=64)
-    def _cached_range(num: int) -> NDArray:
-        """
-        Cached range function.
-
-        :param num: max range value.
-
-        :return: NDArray (0, 1, ..., num-1).
-        """
-        return arange(num, dtype=int)
-    # _end_def_
-
     def mutate(self, individual: Chromosome) -> None:
         """
         Perform the mutation operation by swapping
@@ -54,14 +34,8 @@ class SwapMutator(MutationOperator):
         # a uniformly random value, make the changes.
         if self.is_operator_applicable():
 
-            # Make an array with all the indexes.
-            indexes: NDArray = SwapMutator._cached_range(len(individual))
-
-            # Shuffle them in place.
-            self.rng.shuffle(indexes)
-
-            # Select the first two values.
-            i, j = indexes[0:2]
+            # Select two random (distinct) values.
+            i, j = two_indices_fast(self.rng, len(individual))
 
             # Swap in place between the two positions.
             individual[i], individual[j] = individual[j], individual[i]
