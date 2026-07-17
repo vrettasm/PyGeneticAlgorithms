@@ -271,3 +271,32 @@ def np_cdist(x_pos: NDArray, scaled: bool = False) -> NDArray:
     # _end_for_
     return dist_x
 # _end_def_
+
+def two_indices_fast(rng: Generator, num: int) -> tuple[int, int]:
+    """
+    Select two distinct random indices in the range [0, num)
+    without allocating, or shuffling a np.arange(num) array.
+
+    :param rng: Random number generator used to draw uniform
+                integers.
+
+    :param num: Exclusive upper bound of the index range.
+                Must be greater than 1.
+
+    :return:
+    """
+    # Sanity check.
+    if num <= 1:
+        raise ValueError("'num' must be more than one.")
+
+    # Pick a random 'i' in [0, num).
+    i: int = rng.integers(num, dtype=int)
+
+    # Pick another random 'r' in [0, num-1).
+    r: int = rng.integers(num-1, dtype=int)
+
+    # Set 'j' by excluding 'i' via a mapped draw.
+    j: int = r if r < i else r + 1
+
+    return i, j
+# _end_def_
