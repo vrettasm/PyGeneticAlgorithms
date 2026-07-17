@@ -35,7 +35,7 @@ def unique_pairs(n_size: int) -> int:
     """
     # Sanity check #1.
     if not isinstance(n_size, int):
-        raise TypeError("'n_size' must be an integer number.")
+        raise TypeError("'n_size' must be an integer.")
     # _end_if_
 
     # Sanity check #2.
