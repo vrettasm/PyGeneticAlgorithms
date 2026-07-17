@@ -284,7 +284,8 @@ def two_indices_fast(rng: Generator, num: int) -> tuple[int, int]:
     :param num: Exclusive upper bound of the index range.
                 Must be greater than 1.
 
-    :return:
+    :return: two distinct integer values 'i' and 'j' from the
+             range [0, num-1].
     """
     # Sanity check.
     if num <= 1:
