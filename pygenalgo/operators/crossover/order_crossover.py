@@ -1,5 +1,6 @@
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.utils.utilities import two_indices_fast
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
 
@@ -38,9 +39,8 @@ class OrderCrossover(CrossoverOperator):
         # changes.
         if (parent1 != parent2) and self.is_operator_applicable():
 
-            # Select randomly two crossover points from [1, M-1].
-            loc1, loc2 = self.rng.integers(1, high=len(parent1)-1,
-                                           size=2, dtype=int)
+            # Select two random (distinct) crossover points.
+            loc1, loc2 = two_indices_fast(self.rng, len(parent1))
 
             # Create auxiliary Sets for faster membership check.
             used_in_parent1 = set(parent1.genome[:loc1])

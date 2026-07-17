@@ -1,4 +1,5 @@
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.utils.utilities import two_indices_fast
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
 
@@ -47,9 +48,8 @@ class PartiallyMappedCrossover(CrossoverOperator):
             genome_1: list = number_of_genes * [None]
             genome_2: list = number_of_genes * [None]
 
-            # Select randomly the two crossover points.
-            i, j = self.rng.choice(number_of_genes, size=2,
-                                   replace=False, shuffle=False)
+            # Select two random (distinct) crossover points.
+            i, j = two_indices_fast(self.rng, number_of_genes)
 
             # Swap indices (if necessary).
             if i > j:
