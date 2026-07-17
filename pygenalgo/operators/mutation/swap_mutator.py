@@ -32,7 +32,6 @@ class SwapMutator(MutationOperator):
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
         if self.is_operator_applicable():
-
             # Get the size of the chromosome.
             n_genes: int = len(individual)
 
