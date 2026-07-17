@@ -21,8 +21,8 @@ from numpy.typing import NDArray
 from numpy.random import Generator
 
 # Public interface.
-__all__ = ["pareto_front", "cost_function", "np_cdist",
-           "pareto_dominance", "np_pareto_front", "clamp"]
+__all__ = ["pareto_front", "cost_function", "np_cdist", "clamp",
+           "pareto_dominance", "np_pareto_front", "two_indices_fast"]
 
 def clamp(x: int | float,
           x_lower: int | float,
