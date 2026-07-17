@@ -51,7 +51,7 @@ class UniformCrossover(CrossoverOperator):
             ]
 
             # Find the minimum length of the two chromosomes.
-            min_length: int = min(len(parent1), len(parent2))
+            min_length: int = min(len(genome_1), len(genome_2))
 
             # Generate uniform random numbers and convert them to bool.
             swap_bool_flag = self.rng.random(size=min_length) > 0.5
