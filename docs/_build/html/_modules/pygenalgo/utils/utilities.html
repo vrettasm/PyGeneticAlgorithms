@@ -90,10 +90,11 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generator</span>
 
 <span class="c1"># Public interface.</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pareto_front&quot;</span><span class="p">,</span> <span class="s2">&quot;cost_function&quot;</span><span class="p">,</span> <span class="s2">&quot;np_cdist&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;pareto_dominance&quot;</span><span class="p">,</span> <span class="s2">&quot;np_pareto_front&quot;</span><span class="p">,</span> <span class="s2">&quot;clamp&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pareto_front&quot;</span><span class="p">,</span> <span class="s2">&quot;cost_function&quot;</span><span class="p">,</span> <span class="s2">&quot;np_cdist&quot;</span><span class="p">,</span> <span class="s2">&quot;clamp&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;pareto_dominance&quot;</span><span class="p">,</span> <span class="s2">&quot;np_pareto_front&quot;</span><span class="p">,</span> <span class="s2">&quot;two_indices_fast&quot;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="clamp">
 <a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.clamp">[docs]</a>
@@ -359,6 +360,39 @@
         <span class="n">dist_x</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist_x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
     <span class="c1"># _end_for_</span>
     <span class="k">return</span> <span class="n">dist_x</span></div>
+
+<span class="c1"># _end_def_</span>
+
+<div class="viewcode-block" id="two_indices_fast">
+<a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.two_indices_fast">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">two_indices_fast</span><span class="p">(</span><span class="n">rng</span><span class="p">:</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">num</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Select two distinct random indices in the range [0, num)</span>
+<span class="sd">    without allocating, or shuffling a np.arange(num) array.</span>
+
+<span class="sd">    :param rng: Random number generator used to draw uniform</span>
+<span class="sd">                integers.</span>
+
+<span class="sd">    :param num: Exclusive upper bound of the index range.</span>
+<span class="sd">                Must be greater than 1.</span>
+
+<span class="sd">    :return: two distinct integer values &#39;i&#39; and &#39;j&#39; from the</span>
+<span class="sd">             range [0, num-1].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Sanity check.</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;num&#39; must be more than one.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Pick a random &#39;i&#39; in [0, num).</span>
+    <span class="n">i</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># Pick another random &#39;r&#39; in [0, num-1).</span>
+    <span class="n">r</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># Set &#39;j&#39; by excluding &#39;i&#39; via a mapped draw.</span>
+    <span class="n">j</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">r</span> <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="k">else</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span></div>
 
 <span class="c1"># _end_def_</span>
 </pre></div>

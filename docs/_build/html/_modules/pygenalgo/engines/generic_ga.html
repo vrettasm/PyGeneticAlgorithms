@@ -357,8 +357,10 @@
 <span class="sd">        :return: Return the chromosome with the highest fitness.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Return the chromosome with the highest fitness.</span>
-        <span class="k">return</span> <span class="nb">max</span><span class="p">((</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">isnan</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)),</span>
-                   <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">isnan</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">fitness</span><span class="p">)),</span>
+            <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+        <span class="p">)</span></div>
 
     <span class="c1"># _end_def_</span>
 

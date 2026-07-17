@@ -188,7 +188,7 @@
         <span class="c1"># in the population, using their ranking position. Use</span>
         <span class="c1"># the pressure adjustment parameter &#39;eta&#39; (as _items).</span>
         <span class="n">selection_probs</span> <span class="o">=</span> <span class="n">LinearRankSelector</span><span class="o">.</span><span class="n">probabilities</span><span class="p">(</span><span class="n">pop_size</span><span class="p">,</span>
-                                                           <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">)</span>
+                                                           <span class="n">eta</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">)</span>
 
         <span class="c1"># Sort the population in ascending order using their fitness value.</span>
         <span class="n">sorted_population</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">))</span>

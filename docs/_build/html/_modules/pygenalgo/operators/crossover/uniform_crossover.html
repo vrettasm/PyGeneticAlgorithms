@@ -127,7 +127,7 @@
             <span class="p">]</span>
 
             <span class="c1"># Find the minimum length of the two chromosomes.</span>
-            <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent2</span><span class="p">))</span>
+            <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">genome_1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">genome_2</span><span class="p">))</span>
 
             <span class="c1"># Generate uniform random numbers and convert them to bool.</span>
             <span class="n">swap_bool_flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">min_length</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.5</span>

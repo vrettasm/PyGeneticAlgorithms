@@ -251,14 +251,14 @@
 
 <span class="sd">        :return: true or false.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Check if they are the same instance.</span>
-        <span class="k">if</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">other</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="c1"># _end_if_</span>
-
         <span class="c1"># Make sure both items are Gene.</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Gene</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Check if they are the same instance.</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">other</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Compare only the datum fields.</span>

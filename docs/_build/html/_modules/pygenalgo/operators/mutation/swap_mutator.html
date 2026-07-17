@@ -71,6 +71,7 @@
              
   <h1>Source code for pygenalgo.operators.mutation.swap_mutator</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">two_indices_fast</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.mutation.mutate_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MutationOperator</span>
 
 
@@ -98,7 +99,8 @@
 <a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.swap_mutator.SwapMutator.mutate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Perform the mutation operation by swapping the genes at two random positions.</span>
+<span class="sd">        Perform the mutation operation by swapping</span>
+<span class="sd">        the genes at two random positions.</span>
 
 <span class="sd">        :param individual: (Chromosome).</span>
 
@@ -108,11 +110,8 @@
         <span class="c1"># a uniformly random value, make the changes.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
-            <span class="c1"># Get the size of the chromosome.</span>
-            <span class="n">n_genes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
-
-            <span class="c1"># Select randomly the two mutation points.</span>
-            <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">n_genes</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="c1"># Select two random (distinct) values.</span>
+            <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">two_indices_fast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">))</span>
 
             <span class="c1"># Swap in place between the two positions.</span>
             <span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">individual</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">individual</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
