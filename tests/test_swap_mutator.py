@@ -47,15 +47,28 @@ class TestSwapMutator(unittest.TestCase):
                              Gene('j', lambda: str('_')),
                              Gene('k', lambda: str('_'))])
 
+        # Get chromosome values before the mutation.
+        c_before = [xi.value for xi in chromo]
+
         # Print chromosome BEFORE mutation.
-        print("Before: ", " ".join([xi.value for xi in chromo]))
+        print("Before: ", " ".join(c_before))
 
         # Perform the mutation (in place).
         self.mut_op(chromo)
         print("-------")
 
+        # Get chromosome values after the mutation.
+        c_after = [xi.value for xi in chromo]
+
         # Print chromosome AFTER mutation.
-        print("After : ", " ".join([xi.value for xi in chromo]))
+        print("After : ", " ".join(c_after))
+
+        # Get the lengths of the sets.
+        len1 = len(set(c_before))
+        len2 = len(set(c_after))
+
+        # Assert that we don't have any losses.
+        self.assertEqual(len1, len2)
     # _end_def_
 
 # _end_class_
