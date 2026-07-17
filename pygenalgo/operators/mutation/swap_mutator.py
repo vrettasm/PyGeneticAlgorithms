@@ -22,7 +22,8 @@ class SwapMutator(MutationOperator):
 
     def mutate(self, individual: Chromosome) -> None:
         """
-        Perform the mutation operation by swapping the genes at two random positions.
+        Perform the mutation operation by swapping the genes at two
+        random positions.
 
         :param individual: (Chromosome).
 
