@@ -18,6 +18,7 @@ from functools import wraps, partial
 
 import numpy as np
 from numpy.typing import NDArray
+from numpy.random import Generator
 
 # Public interface.
 __all__ = ["pareto_front", "cost_function", "np_cdist",
