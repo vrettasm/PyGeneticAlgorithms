@@ -1,4 +1,5 @@
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.utils.utilities import two_indices_fast
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
 
@@ -33,11 +34,8 @@ class ShuffleMutator(MutationOperator):
         # a uniformly random value, make the changes.
         if self.is_operator_applicable():
 
-            # Get the size of the chromosome.
-            n_genes: int = len(individual)
-
-            # Select randomly two mutation end-points.
-            i, j = self.rng.choice(n_genes, size=2, replace=False)
+            # Select two random (distinct) values.
+            i, j = two_indices_fast(self.rng, len(individual))
 
             # Swap indices (if necessary).
             if i > j:
