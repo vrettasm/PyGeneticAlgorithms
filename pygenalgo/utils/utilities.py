@@ -294,11 +294,9 @@ def two_indices_fast(rng: Generator, num: int) -> tuple[int, int]:
     # Pick a random 'i' in [0, num).
     i: int = rng.integers(num, dtype=int)
 
-    # Pick another random 'r' in [0, num-1).
-    r: int = rng.integers(num-1, dtype=int)
+    # Pick another random 'j' in [0, num-1).
+    j: int = rng.integers(num-1, dtype=int)
 
     # Set 'j' by excluding 'i' via a mapped draw.
-    j: int = r if r < i else r + 1
-
-    return i, j
+    return i, j if j < i else j + 1
 # _end_def_
