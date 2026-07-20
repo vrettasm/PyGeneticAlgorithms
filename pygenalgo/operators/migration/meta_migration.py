@@ -25,7 +25,7 @@ class MetaMigration(MigrationOperator):
 
         # NOTE: In here the migration probabilities
         # for each policy are set to 1.0 (i.e. 100%).
-        self._items: tuple[MigrationOperator] = (
+        self._items: tuple[MigrationOperator, ...] = (
             RandomMigration(1.0), ClockwiseMigration(1.0)
         )
     # _end_def_

@@ -36,7 +36,7 @@ class LinearRankSelector(SelectionOperator):
         super().__init__(selection_probability=select_probability)
 
         # Sanity check for selection pressure parameter.
-        if not (1.0 <= eta <= 2.0):
+        if not 1.0 <= eta <= 2.0:
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Selection pressure {eta} must be between 1.0 and 2.0.")
         # _end_if_

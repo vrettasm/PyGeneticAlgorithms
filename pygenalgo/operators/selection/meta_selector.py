@@ -27,9 +27,9 @@ class MetaSelector(SelectionOperator):
         # Call the super constructor with the provided initial value.
         super().__init__(selection_probability=select_probability)
 
-        # NOTE: In here the selection probabilities for each operator are
-        #       set to 1.0.
-        self._items: tuple[SelectionOperator] = (
+        # NOTE: In here the selection probabilities for each operator
+        # are set to 1.0.
+        self._items: tuple[SelectionOperator, ...] = (
             RandomSelector(1.0), LinearRankSelector(1.0),
             RouletteWheelSelector(1.0), TournamentSelector(1.0)
         )

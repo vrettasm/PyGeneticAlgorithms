@@ -89,7 +89,7 @@ class GeneticOperator:
         self._lock: Lock = Lock()
 
         # Place holder.
-        self._items = None
+        self._items: Any = None
     # _end_def_
 
     @classmethod

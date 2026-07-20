@@ -57,9 +57,9 @@ class GaussianMutator(MutationOperator):
         # _end_if_
 
         # Assign variables to the _items placeholder.
-        self._items: list[float] = [
+        self._items: tuple[float, ...] = (
             sigma, lower_val, upper_val
-        ]
+        )
     # _end_def_
 
     def mutate(self, individual: Chromosome) -> None:

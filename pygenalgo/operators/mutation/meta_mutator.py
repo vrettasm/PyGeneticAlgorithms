@@ -27,7 +27,7 @@ class MetaMutator(MutationOperator):
 
         # NOTE: In here the mutation probabilities
         # for each mutator are set to 1.0.
-        self._items: tuple[MutationOperator] = (
+        self._items: tuple[MutationOperator, ...] = (
             SwapMutator(1.0), RandomMutator(1.0),
             ShuffleMutator(1.0), InverseMutator(1.0)
         )

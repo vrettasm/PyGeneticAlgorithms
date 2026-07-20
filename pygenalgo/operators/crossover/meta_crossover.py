@@ -24,7 +24,7 @@ class MetaCrossover(CrossoverOperator):
 
         # NOTE: In here the crossover probabilities
         #       for each operator are set to 1.0.
-        self._items: tuple[CrossoverOperator] = (
+        self._items: tuple[CrossoverOperator, ...] = (
             UniformCrossover(1.0),
             MultiPointCrossover(1.0),
             SinglePointCrossover(1.0)
