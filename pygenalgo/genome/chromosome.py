@@ -184,14 +184,14 @@ class Chromosome:
 
         :return: True if the genomes are identical else False.
         """
-        # Check if they are the same instance.
-        if self is other:
-            return True
-        # _end_if_
-
         # Make sure both items are Chromosomes.
         if not isinstance(other, Chromosome):
             return NotImplemented
+        # _end_if_
+
+        # Check if they are the same instance.
+        if self is other:
+            return True
         # _end_if_
 
         # Compare directly the two genomes.
