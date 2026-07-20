@@ -20,7 +20,7 @@ class Gene:
     """
 
     # Auxiliary tuple.
-    _IMMUTABLE_TYPES = (
+    _IMMUTABLE_TYPES: tuple[Any, ...] = (
         int, float, complex, str, bytes, bool, type(None)
     )
 
