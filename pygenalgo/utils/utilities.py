@@ -13,8 +13,10 @@ Metadata:
     License: GPL-3
 """
 
+from numbers import Real
 from typing import Callable, Union
 from functools import wraps, partial
+from collections.abc import Sequence
 
 import numpy as np
 from numpy.typing import NDArray
@@ -44,8 +46,8 @@ def clamp(x: Number,
     return min(max(x, x_lower), x_upper)
 # _end_def_
 
-def pareto_dominance(point_a: tuple | list,
-                     point_b: tuple | list) -> bool:
+def pareto_dominance(point_a: Sequence[Real],
+                     point_b: Sequence[Real]) -> bool:
     """
     Implements a shortcut version of the Pareto dominance condition:
 
