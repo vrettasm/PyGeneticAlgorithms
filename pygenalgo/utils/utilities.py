@@ -160,11 +160,22 @@ def np_pareto_front(points: NDArray) -> NDArray:
     is_pareto_optimal: NDArray = np.ones(num_points, dtype=bool)
 
     for i, point_i in enumerate(points):
-        # Compare point i-th with all other points.
-        is_dominated = np.any(np.all(points <= point_i, axis=1) &
-                              np.any(points < point_i, axis=1))
-        # Set the flag appropriately.
-        is_pareto_optimal[i] = not is_dominated
+        # Condition 1:
+        # Less than or equal to all objectives.
+        le_all: NDArray = np.all(points <= point_i, axis=1)
+
+        # Condition 2:
+        # Less than at least in one objective.
+        lt_any: NDArray = np.any(points < point_i, axis=1)
+
+        # Combine the two conditions.
+        dominates_i: NDArray = le_all & lt_any
+
+        # Explicit self-exclusion.
+        dominates_i[i] = False
+
+        # Set the i-th flag appropriately.
+        is_pareto_optimal[i] = not np.any(dominates_i)
     # _end_for_
 
     # Return only the unique Pareto optimal points.
