@@ -24,9 +24,12 @@ from numpy.random import Generator
 __all__ = ["pareto_front", "cost_function", "np_cdist", "clamp",
            "pareto_dominance", "np_pareto_front", "two_indices_fast"]
 
-def clamp(x: int | float,
-          x_lower: int | float,
-          x_upper: int | float) -> int | float:
+# Declare a union type.
+Number = Union[int, float]
+
+def clamp(x: Number,
+          x_lower: Number,
+          x_upper: Number) -> Number:
     """
     Clamps a value within a specified range.
 
