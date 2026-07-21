@@ -58,7 +58,7 @@ def pareto_dominance(point_a: tuple | list,
     :return: if the condition is satisfied.
     """
     # Second condition.
-    at_least_one_greater: bool = False
+    strictly_better: bool = False
 
     # Scan both points elementwise.
     for p, q in zip(point_a, point_b):
@@ -67,15 +67,16 @@ def pareto_dominance(point_a: tuple | list,
             return False
         # _end_if_
 
-        # Check if the second condition is satisfied.
-        if not at_least_one_greater and p > q:
-            # Switch the flag value to avoid re-setting it.
-            at_least_one_greater = True
-        # _end_if_
+        # Check if the second condition
+        # is satisfied.
+        if not strictly_better and p > q:
+            # Switch the flag value
+            # to avoid re-setting it.
+            strictly_better = True
     # _end_for_
 
     # If we got here return only the second condition.
-    return at_least_one_greater
+    return strictly_better
 # _end_def_
 
 def pareto_front(points: list) -> list:
