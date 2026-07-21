@@ -13,7 +13,7 @@ Metadata:
     License: GPL-3
 """
 
-from typing import Callable
+from typing import Callable, Union
 from functools import wraps, partial
 
 import numpy as np
