@@ -69,6 +69,11 @@ def average_hamming_distance(population: list[Chromosome],
     # Get the number of the chromosomes.
     n_chromosomes: int = len(population)
 
+    # Sanity check 2: This should be rare!
+    if n_chromosomes < 2:
+        return 0.0
+    # _end_if_
+
     # Get the size of the chromosome. It is
     # assumed that all chromosomes have the
     # same size.
