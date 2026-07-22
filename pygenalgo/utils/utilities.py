@@ -140,15 +140,19 @@ def pareto_front(points: list) -> list:
     return list(pareto_points)
 # _end_def_
 
-def np_pareto_front(points: NDArray) -> NDArray:
+def np_pareto_front_slow(points: NDArray) -> NDArray:
     """
-    Simple function that calculates the Pareto (optimal)
+    Simple function that calculates the Pareto optimal
     front points from a given input points numpy array.
 
     :param points: array of points [(fx1, fx2, ..., fxn),
                                     (fy1, fy2, ..., fyn),
                                     ....................,
                                     (fk1, fk2, ..., fkn)]
+
+    NOTE:  Its space (memory) complexity grows linearly
+    with the number of points in the NDArray: O(N), but
+    it is much slower than its numpy vectorized version.
 
     :return: array of points that lie on the Pareto front.
     """
@@ -184,6 +188,52 @@ def np_pareto_front(points: NDArray) -> NDArray:
 
     # Return only the unique Pareto optimal points.
     return np.unique(points[is_pareto_optimal], axis=0)
+# _end_def_
+
+def np_pareto_front(points: NDArray) -> NDArray:
+    """
+    Fast (numpy - vectorized) function that calculates
+    the Pareto optimal front points from a given input
+    points numpy array.
+
+    :param points: array of points [(fx1, fx2, ..., fxn),
+                                    (fy1, fy2, ..., fyn),
+                                    ....................,
+                                    (fk1, fk2, ..., fkn)]
+
+    NOTE: Its memory complexity grows quadratically
+    with the number of points in the NDArray: O(N^2)!
+
+    :return: array of points that lie on the Pareto front.
+    """
+    # Sanity check.
+    if points.ndim != 2:
+        raise RuntimeError("Points must be a 2-D array.")
+    # _end_if_
+
+    # Remove duplicate rows early to speed up
+    # downstream matrix computations.
+    unique_points = np.unique(points, axis=0)
+
+    # Use broadcasting to get all pairwise differences
+    # Shape transitions from:
+    # (N, D) -> (N, 1, D) and
+    # (1, N, D) -> (N, N, D).
+    diff = unique_points[:, None, :] - unique_points[None, :, :]
+
+    # Point 'i' dominates point 'j' if and only if:
+    # 1) i <= j in all objectives, AND
+    # 2) i < j  in at least one objective.
+    le_all = np.all(diff <= 0, axis=-1)
+    lt_any = np.any(diff < 0, axis=-1)
+    dominates = le_all & lt_any
+
+    # A point is Pareto optimal if
+    # NO other point dominates it.
+    is_pareto = ~np.any(dominates, axis=0)
+
+    # Get the pareto optimal points.
+    return unique_points[is_pareto]
 # _end_def_
 
 def cost_function(func: Callable = None, minimize: bool = False):
