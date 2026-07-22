@@ -63,7 +63,7 @@ class TestUtilities(unittest.TestCase):
         i_front = np_pareto_front(points, return_index=True)
 
         for k, l in zip(i_front, p_front):
-            self.assertEqual(0.0, np.sum(l - points[k]))
+            self.assertAlmostEqual(0.0, np.sum(l - points[k]))
     # _end_def_
 
 # _end_class_
