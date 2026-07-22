@@ -23,8 +23,8 @@ from numpy.typing import NDArray
 from numpy.random import Generator
 
 # Public interface.
-__all__ = ["pareto_front", "cost_function", "np_cdist", "clamp",
-           "pareto_dominance", "np_pareto_front", "two_indices_fast"]
+__all__ = ["pareto_front", "cost_function", "np_cdist",
+           "clamp", "np_pareto_front", "two_indices_fast"]
 
 # Declare a union type.
 Number = Union[int, float]
@@ -46,7 +46,7 @@ def clamp(x: Number,
     return min(max(x, x_lower), x_upper)
 # _end_def_
 
-def pareto_dominance(point_a: Sequence[Real],
+def _pareto_dominance(point_a: Sequence[Real],
                      point_b: Sequence[Real]) -> bool:
     """
     Implements a shortcut version of the Pareto dominance condition:
@@ -121,7 +121,7 @@ def pareto_front(points: list) -> list:
         for j, point_j in enumerate(points):
 
             # Check if "dominance" condition is satisfied.
-            if i != j and pareto_dominance(point_i, point_j):
+            if i != j and _pareto_dominance(point_i, point_j):
                 # We swap the flag value.
                 is_pareto_optimal = False
 
