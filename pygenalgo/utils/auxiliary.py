@@ -75,18 +75,9 @@ def average_hamming_distance(population: list[Chromosome],
         return 0.0
     # _end_if_
 
-    # Get the size of the chromosome. It is
-    # assumed that all chromosomes have the
-    # same size.
-    n_genes: int = len(population[0])
-
-    # Sanity check 3: This should never happen!
-    if n_genes == 0:
-        raise RuntimeError("The number of genes in the Chromosomes is zero!")
-    # _end_if_
-
-    # Initialize the counter.
+    # Initialize the counters.
     total_diffs: int = 0
+    total_genes_compared: int = 0
 
     # Here we sum the Hamming distances for all unique
     # pairs of chromosomes (to avoid double counting).
@@ -94,22 +85,40 @@ def average_hamming_distance(population: list[Chromosome],
         # Local copy of i-th genome.
         genome_i = population[i].genome
 
+        # Get its length.
+        len_i = len(genome_i)
+
         for j in range(i + 1, n_chromosomes):
             # Local copy of j-th genome.
             genome_j = population[j].genome
 
+            # Get its length.
+            len_j = len(genome_j)
+
+            # Add the length of the longer chromosome.
+            total_genes_compared += max(len_i, len_j)
+
             # Count the differences.
             total_diffs += sum(
-                k != l for k, l in zip(genome_i, genome_j)
+                k != l for k, l in zip_longest(genome_i, genome_j,
+                                               fillvalue=None)
             )
     # _end_for_
 
-    # Compute the averaged distance, using the total
-    # number of 'unique pairs'.
-    dist_avg: float = total_diffs / unique_pairs(n_chromosomes)
+    # Sanity check 3: Ensure we actually compared genes.
+    if total_genes_compared == 0:
+        raise RuntimeError("All chromosomes in the population are empty!")
+    # _end_if_
 
-    # Return the averaged (or the normalized) value.
-    return dist_avg / n_genes if normal else dist_avg
+    # Calculate final distance based on normal flag.
+    if normal:
+        # Normalized: Total differences divided
+        # by the total gene positions counted.
+        return total_diffs / total_genes_compared
+    else:
+        # Absolute: Average number of differences
+        # per unique pair.
+        return total_diffs / unique_pairs(n_chromosomes)
 # _end_def_
 
 def apply_corrections(input_population: list[Chromosome],
