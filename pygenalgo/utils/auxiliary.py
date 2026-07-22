@@ -44,7 +44,7 @@ def unique_pairs(n_size: int) -> int:
         raise ValueError("'n_size' must be more than one.")
     # _end_if_
 
-    return int(0.5 * n_size * (n_size - 1))
+    return n_size * (n_size - 1) // 2
 # _end_def_
 
 def average_hamming_distance(population: list[Chromosome],
