@@ -16,6 +16,7 @@ Metadata:
 from typing import Callable
 from functools import lru_cache
 from itertools import zip_longest
+from collections import defaultdict
 from dataclasses import dataclass, field
 from pygenalgo.genome.chromosome import Chromosome
 
