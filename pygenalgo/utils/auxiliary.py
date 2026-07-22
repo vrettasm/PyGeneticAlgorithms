@@ -48,33 +48,29 @@ def unique_pairs(n_size: int) -> int:
     return n_size * (n_size - 1) // 2
 # _end_def_
 
-def average_hamming_distance(population: list[Chromosome],
-                             normal: bool = True) -> float:
+def _average_hamming_distance_vcl(population: list[Chromosome],
+                                  normal: bool = True) -> float:
     """
-    Computes the average Hamming distance of a population. We use this
-    to measure the similarity in the whole population of chromosomes.
+    Computes the average Hamming distance of a population with
+    variable chromosome lengths (VCL). This is used internally
+    by the average_hamming_distance function, when the genomes
+    have variable lengths.
 
-    :param population: List(Chromosome) the population we want to compute
-                       the average Hamming distance.
+    Even though this implementation covers also the case with
+    equal chromosome lengths, it should be avoided because it
+    is O(N^2 * L).
 
-    :param normal: (bool) flag that requires the return of the normalized
-                   average distance.
+    :param population: List(Chromosome) the population we want
+                       to compute the average Hamming distance.
+
+    :param normal: (bool) if True the average distance will be
+                    normalized.
 
     :return: (float) the total number of differences, in the genes,
              divided by the total number of genes compared.
     """
-    # Sanity check 1: This should never happen!
-    if not population:
-        raise RuntimeError("Population list is empty!")
-    # _end_if_
-
     # Get the number of the chromosomes.
     n_chromosomes: int = len(population)
-
-    # Sanity check 2: This should be rare!
-    if n_chromosomes < 2:
-        return 0.0
-    # _end_if_
 
     # Initialize the counters.
     total_diffs: int = 0
@@ -120,6 +116,96 @@ def average_hamming_distance(population: list[Chromosome],
         # Absolute: Average number of differences
         # per unique pair.
         return total_diffs / unique_pairs(n_chromosomes)
+# _end_def_
+
+def average_hamming_distance(population: list[Chromosome],
+                             normal: bool = True) -> float:
+    """
+    Computes the average Hamming distance of the input population.
+    This is used to measure the similarity in the whole population
+    of chromosomes. The complexity is O(N * L), but works only when
+    all the chromosomes have the same length. If they are not, then
+    the slower version is called _average_hamming_distance_vcl().
+
+    :param population: List(Chromosome) the population we want to compute
+                       the average Hamming distance.
+
+    :param normal: (bool) flag that requires the return of the normalized
+                   average distance.
+
+    :return: (float) the total number of differences in the genes, divided
+             by the total number of genes compared.
+    """
+
+    # Sanity check 1: This should never happen!
+    if not population:
+        raise RuntimeError("Population list is empty!")
+    # _end_if_
+
+    # Get the number of the chromosomes.
+    n_chromosomes: int = len(population)
+
+    # Sanity check 2: This should be rare!
+    if n_chromosomes < 2:
+        return 0.0
+    # _end_if_
+
+    # Extract all genomes.
+    genomes: list = [c.genome for c in population]
+
+    # Extract all lengths.
+    all_lengths: list[int] = [len(g) for g in genomes]
+
+    # Fast path: all lengths are equal
+    # (this is the most common case).
+    if all(l == all_lengths[0] for l in all_lengths):
+        # Get the size of the genome.
+        n_genes = all_lengths[0]
+
+        # Sanity check.
+        if n_genes == 0:
+            raise RuntimeError("All chromosomes in the population are empty!")
+
+        # Initialize counter.
+        total_diffs: int = 0
+
+        # This is true because all chromosomes
+        # have the same length.
+        total_pairs: int = unique_pairs(n_chromosomes)
+
+        for i in range(n_genes):
+            # Initialize inner counter.
+            counts = defaultdict(int)
+
+            # Count how many times the same gene
+            # appears in the i-th position.
+            for g in genomes:
+                counts[g[i]] += 1
+
+            # Reset the counter.
+            equal_pairs: int = 0
+
+            # For each entry in the counts
+            # update the equal pairs counter.
+            for cnt in counts.values():
+                equal_pairs += cnt * (cnt - 1) // 2
+
+            # Update the total differences.
+            total_diffs += (total_pairs - equal_pairs)
+        # _end_for_
+
+        # Compute the total genes compared.
+        total_genes_compared = n_genes * total_pairs
+
+        # Return according to the normal flag.
+        if normal:
+            return total_diffs / total_genes_compared
+        else:
+            return total_diffs / total_pairs
+    # _end_if_
+
+    # Fallback: variable chromosome length (rare case).
+    return _average_hamming_distance_vcl(population, normal)
 # _end_def_
 
 def apply_corrections(input_population: list[Chromosome],
