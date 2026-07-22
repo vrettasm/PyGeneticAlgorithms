@@ -63,8 +63,8 @@ class RouletteWheelSelector(SelectionOperator):
             return [population[i] for i in safe_index]
         # _end_if_
 
-        # Calculate the "selection probabilities" of each member
-        # in the population.
+        # Calculate the "selection probability"
+        # for each member in the population.
         selection_probs: list[float] = [
             f / sum_fitness for f in all_fitness
         ]
