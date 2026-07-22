@@ -190,7 +190,7 @@ def np_pareto_front_slow(points: NDArray) -> NDArray:
     return np.unique(points[is_pareto_optimal], axis=0)
 # _end_def_
 
-def np_pareto_front(points: NDArray) -> NDArray:
+def np_pareto_front(points: NDArray, return_index: bool = False) -> NDArray:
     """
     Fast (numpy - vectorized) function that calculates
     the Pareto optimal front points from a given input
@@ -200,6 +200,9 @@ def np_pareto_front(points: NDArray) -> NDArray:
                                     (fy1, fy2, ..., fyn),
                                     ....................,
                                     (fk1, fk2, ..., fkn)]
+
+    :param return_index: if 'True' it will return the indexes
+                         of the points instead of their values.
 
     NOTE: Its memory complexity grows quadratically
     with the number of points in the NDArray: O(N^2)!
@@ -211,9 +214,12 @@ def np_pareto_front(points: NDArray) -> NDArray:
         raise RuntimeError("Points must be a 2-D array.")
     # _end_if_
 
-    # Remove duplicate rows early to speed up
-    # downstream matrix computations.
-    unique_points = np.unique(points, axis=0)
+    # Remove any duplicate points before
+    # continue to speed up the operations.
+    unique_points, rep_idx = np.unique(
+        np.round(points, decimals=12),
+        axis=0, return_index=True
+    )
 
     # Use broadcasting to get all pairwise differences
     # Shape transitions from:
@@ -226,14 +232,20 @@ def np_pareto_front(points: NDArray) -> NDArray:
     # 2) i < j  in at least one objective.
     le_all = np.all(diff <= 0, axis=-1)
     lt_any = np.any(diff < 0, axis=-1)
-    dominates = le_all & lt_any
 
-    # A point is Pareto optimal if
-    # NO other point dominates it.
-    is_pareto = ~np.any(dominates, axis=0)
+    # Prepare the joint condition.
+    strictly_better = le_all & lt_any
 
-    # Get the pareto optimal points.
-    return unique_points[is_pareto]
+    # A point is Pareto optimal if NO other point dominates it.
+    is_pareto_unique = ~np.any(strictly_better, axis=0)
+
+    # Check return flag value.
+    if return_index:
+        # Return the indexes instead.
+        return rep_idx[is_pareto_unique]
+
+    # Get the pareto optimal (unique) points.
+    return unique_points[is_pareto_unique]
 # _end_def_
 
 def cost_function(func: Callable = None, minimize: bool = False):
