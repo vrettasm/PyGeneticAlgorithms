@@ -199,10 +199,13 @@ class Gene:
 
         :return: the hash value of the datum.
         """
+        # Local copy of _datum field.
+        _data = self._datum
+
         # Extra care for numpy arrays.
-        if isinstance(self._datum, ndarray):
+        if isinstance(_data, ndarray):
             # Ensure the data are continuous.
-            a = np.ascontiguousarray(self._datum)
+            a = np.ascontiguousarray(_data)
 
             # Convert everything to python scalars.
             values = a.ravel(order="C").astype(object).tolist()
@@ -216,12 +219,12 @@ class Gene:
         try:
             # Return directly the hash
             # value of the datum field.
-            return hash(self._datum)
+            return hash(_data)
 
         except TypeError:
-            # If it fails try to convert
-            # it to a tuple first.
-            return hash(tuple(self._datum))
+            # Try to convert it to a
+            # tuple (before hashing).
+            return hash(tuple(_data))
     # _end_def_
 
     def __str__(self) -> str:
