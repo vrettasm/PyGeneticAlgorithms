@@ -61,7 +61,8 @@ class TournamentSelector(SelectionOperator):
 
         # Select the contestants for each tournament.
         contestants: NDArray = np_array([
-            random_choice(pop_size, size=self._items, replace=False, shuffle=False)
+            random_choice(pop_size, size=n_contestants,
+                          replace=False, shuffle=False)
             for _ in range(pop_size)
         ])
 
