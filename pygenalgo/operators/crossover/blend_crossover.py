@@ -57,9 +57,9 @@ class BlendCrossover(CrossoverOperator):
         # _end_if_
 
         # Assign variables to the _items placeholder.
-        self._items: list[float] = [
+        self._items: tuple[float, ...] = (
             p_alpha, lower_val, upper_val
-        ]
+        )
     # _end_def_
 
     def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
