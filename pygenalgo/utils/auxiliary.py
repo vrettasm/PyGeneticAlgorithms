@@ -93,8 +93,9 @@ def average_hamming_distance(population: list[Chromosome],
             genome_j = population[j].genome
 
             # Count the differences.
-            total_diffs += [k != l for k, l in zip(genome_i,
-                                                   genome_j)].count(True)
+            total_diffs += sum(
+                k != l for k, l in zip(genome_i, genome_j)
+            )
     # _end_for_
 
     # Compute the averaged distance, using the total
