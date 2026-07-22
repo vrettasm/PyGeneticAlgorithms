@@ -79,7 +79,7 @@ def average_hamming_distance(population: list[Chromosome],
     # same size.
     n_genes: int = len(population[0])
 
-    # Sanity check 2: This should never happen!
+    # Sanity check 3: This should never happen!
     if n_genes == 0:
         raise RuntimeError("The number of genes in the Chromosomes is zero!")
     # _end_if_
