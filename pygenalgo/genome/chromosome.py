@@ -175,7 +175,7 @@ class Chromosome:
         return Chromosome(deepcopy(self._genome), self._fitness, self._valid)
     # _end_def_
 
-    def __eq__(self, other: Chromosome) -> bool:
+    def __eq__(self, other: object) -> bool:
         """
         Compares the genome of self, with the other chromosome
         and returns True if they are identical otherwise False.

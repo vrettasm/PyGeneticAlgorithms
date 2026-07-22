@@ -159,7 +159,7 @@ class Gene:
         return Gene(deepcopy(self._datum), self._func, self._valid)
     # _end_def_
 
-    def __eq__(self, other: Gene) -> bool:
+    def __eq__(self, other: object) -> bool:
         """
         When we compare two Genes we care only about
         the data they hold.
