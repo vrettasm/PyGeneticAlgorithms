@@ -82,17 +82,19 @@ def average_hamming_distance(population: list[Chromosome],
     # Initialize the counter.
     total_diffs: int = 0
 
-    # Create a HashMap with the chromosomes' genome.
-    genome_map: dict = {
-        i: item.genome for i, item in enumerate(population)
-    }
-
     # Here we sum the Hamming distances for all unique
     # pairs of chromosomes (to avoid double counting).
     for i in range(n_chromosomes):
+        # Local copy of i-th genome.
+        genome_i = population[i].genome
+
         for j in range(i + 1, n_chromosomes):
-            total_diffs += [k != l for k, l in zip(genome_map[i],
-                                                   genome_map[j])].count(True)
+            # Local copy of j-th genome.
+            genome_j = population[j].genome
+
+            # Count the differences.
+            total_diffs += [k != l for k, l in zip(genome_i,
+                                                   genome_j)].count(True)
     # _end_for_
 
     # Compute the averaged distance, using the total
