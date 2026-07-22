@@ -19,7 +19,7 @@ class TestUtilities(unittest.TestCase):
         print(">> TestUtilities - FINISH -", end='\n\n')
     # _end_def_
 
-    def test_two_indices_fast(self):
+    def test_two_indices_fast(self) -> None:
         """
         Test the functionality of two_indices_fast.
         """
