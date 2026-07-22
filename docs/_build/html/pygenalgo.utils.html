@@ -159,8 +159,11 @@ corrections (if applicable).</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="pygenalgo.utils.auxiliary.average_hamming_distance">
 <span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.auxiliary.</span></span><span class="sig-name descname"><span class="pre">average_hamming_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/auxiliary.html#average_hamming_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.auxiliary.average_hamming_distance" title="Link to this definition"></a></dt>
-<dd><p>Computes the average Hamming distance of a population. We use this
-to measure the similarity in the whole population of chromosomes.</p>
+<dd><p>Computes the average Hamming distance of the input population.
+This is used to measure the similarity in the whole population
+of chromosomes. The complexity is O(N * L), but works only when
+all the chromosomes have the same length. If they are not, then
+the slower version is called _average_hamming_distance_vcl().</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -171,8 +174,8 @@ average distance.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(float) the total number of differences, in the genes,
-divided by the total number of genes compared.</p>
+<dd class="field-even"><p>(float) the total number of differences in the genes, divided
+by the total number of genes compared.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -290,7 +293,7 @@ front points from a given input points numpy array.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pygenalgo.utils.utilities.pareto_dominance">
-<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">pareto_dominance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#pareto_dominance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.pareto_dominance" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">pareto_dominance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Real</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Real</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#pareto_dominance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.pareto_dominance" title="Link to this definition"></a></dt>
 <dd><p>Implements a shortcut version of the Pareto dominance condition:</p>
 <p>all(p &lt;= q for p, q in zip(point_i, point_j)) &amp;&amp;
 any(p &lt; q for p, q in zip(point_i, point_j))</p>

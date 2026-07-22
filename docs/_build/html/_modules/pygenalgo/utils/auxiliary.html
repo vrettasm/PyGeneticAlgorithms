@@ -87,6 +87,8 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">zip_longest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
 
@@ -117,8 +119,78 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;n_size&#39; must be more than one.&quot;</span><span class="p">)</span>
     <span class="c1"># _end_if_</span>
 
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">n_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span></div>
+    <span class="k">return</span> <span class="n">n_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span></div>
 
+<span class="c1"># _end_def_</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_average_hamming_distance_vcl</span><span class="p">(</span><span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span>
+                                  <span class="n">normal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the average Hamming distance of a population with</span>
+<span class="sd">    variable chromosome lengths (VCL). This is used internally</span>
+<span class="sd">    by the average_hamming_distance function, when the genomes</span>
+<span class="sd">    have variable lengths.</span>
+
+<span class="sd">    Even though this implementation covers also the case with</span>
+<span class="sd">    equal chromosome lengths, it should be avoided because it</span>
+<span class="sd">    is O(N^2 * L).</span>
+
+<span class="sd">    :param population: List(Chromosome) the population we want</span>
+<span class="sd">                       to compute the average Hamming distance.</span>
+
+<span class="sd">    :param normal: (bool) if True the average distance will be</span>
+<span class="sd">                    normalized.</span>
+
+<span class="sd">    :return: (float) the total number of differences, in the genes,</span>
+<span class="sd">             divided by the total number of genes compared.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Get the number of the chromosomes.</span>
+    <span class="n">n_chromosomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+
+    <span class="c1"># Initialize the counters.</span>
+    <span class="n">total_diffs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total_genes_compared</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Here we sum the Hamming distances for all unique</span>
+    <span class="c1"># pairs of chromosomes (to avoid double counting).</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_chromosomes</span><span class="p">):</span>
+        <span class="c1"># Local copy of i-th genome.</span>
+        <span class="n">genome_i</span> <span class="o">=</span> <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">genome</span>
+
+        <span class="c1"># Get its length.</span>
+        <span class="n">len_i</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">genome_i</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_chromosomes</span><span class="p">):</span>
+            <span class="c1"># Local copy of j-th genome.</span>
+            <span class="n">genome_j</span> <span class="o">=</span> <span class="n">population</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">genome</span>
+
+            <span class="c1"># Get its length.</span>
+            <span class="n">len_j</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">genome_j</span><span class="p">)</span>
+
+            <span class="c1"># Add the length of the longer chromosome.</span>
+            <span class="n">total_genes_compared</span> <span class="o">+=</span> <span class="nb">max</span><span class="p">(</span><span class="n">len_i</span><span class="p">,</span> <span class="n">len_j</span><span class="p">)</span>
+
+            <span class="c1"># Count the differences.</span>
+            <span class="n">total_diffs</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">(</span>
+                <span class="n">k</span> <span class="o">!=</span> <span class="n">l</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">zip_longest</span><span class="p">(</span><span class="n">genome_i</span><span class="p">,</span> <span class="n">genome_j</span><span class="p">,</span>
+                                               <span class="n">fillvalue</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="p">)</span>
+    <span class="c1"># _end_for_</span>
+
+    <span class="c1"># Sanity check 3: Ensure we actually compared genes.</span>
+    <span class="k">if</span> <span class="n">total_genes_compared</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;All chromosomes in the population are empty!&quot;</span><span class="p">)</span>
+    <span class="c1"># _end_if_</span>
+
+    <span class="c1"># Calculate final distance based on normal flag.</span>
+    <span class="k">if</span> <span class="n">normal</span><span class="p">:</span>
+        <span class="c1"># Normalized: Total differences divided</span>
+        <span class="c1"># by the total gene positions counted.</span>
+        <span class="k">return</span> <span class="n">total_diffs</span> <span class="o">/</span> <span class="n">total_genes_compared</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Absolute: Average number of differences</span>
+        <span class="c1"># per unique pair.</span>
+        <span class="k">return</span> <span class="n">total_diffs</span> <span class="o">/</span> <span class="n">unique_pairs</span><span class="p">(</span><span class="n">n_chromosomes</span><span class="p">)</span>
 <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="average_hamming_distance">
@@ -126,8 +198,11 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">average_hamming_distance</span><span class="p">(</span><span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span>
                              <span class="n">normal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Computes the average Hamming distance of a population. We use this</span>
-<span class="sd">    to measure the similarity in the whole population of chromosomes.</span>
+<span class="sd">    Computes the average Hamming distance of the input population.</span>
+<span class="sd">    This is used to measure the similarity in the whole population</span>
+<span class="sd">    of chromosomes. The complexity is O(N * L), but works only when</span>
+<span class="sd">    all the chromosomes have the same length. If they are not, then</span>
+<span class="sd">    the slower version is called _average_hamming_distance_vcl().</span>
 
 <span class="sd">    :param population: List(Chromosome) the population we want to compute</span>
 <span class="sd">                       the average Hamming distance.</span>
@@ -135,9 +210,10 @@
 <span class="sd">    :param normal: (bool) flag that requires the return of the normalized</span>
 <span class="sd">                   average distance.</span>
 
-<span class="sd">    :return: (float) the total number of differences, in the genes,</span>
-<span class="sd">             divided by the total number of genes compared.</span>
+<span class="sd">    :return: (float) the total number of differences in the genes, divided</span>
+<span class="sd">             by the total number of genes compared.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="c1"># Sanity check 1: This should never happen!</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">population</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Population list is empty!&quot;</span><span class="p">)</span>
@@ -146,38 +222,67 @@
     <span class="c1"># Get the number of the chromosomes.</span>
     <span class="n">n_chromosomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
 
-    <span class="c1"># Get the size of the chromosome. It is</span>
-    <span class="c1"># assumed that all chromosomes have the</span>
-    <span class="c1"># same size.</span>
-    <span class="n">n_genes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-    <span class="c1"># Sanity check 2: This should never happen!</span>
-    <span class="k">if</span> <span class="n">n_genes</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;The number of genes in the Chromosomes is zero!&quot;</span><span class="p">)</span>
+    <span class="c1"># Sanity check 2: This should be rare!</span>
+    <span class="k">if</span> <span class="n">n_chromosomes</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span>
     <span class="c1"># _end_if_</span>
 
-    <span class="c1"># Initialize the counter.</span>
-    <span class="n">total_diffs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Extract all genomes.</span>
+    <span class="n">genomes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">genome</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">population</span><span class="p">]</span>
 
-    <span class="c1"># Create a HashMap with the chromosomes&#39; genome.</span>
-    <span class="n">genome_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">i</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">genome</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
-    <span class="p">}</span>
+    <span class="c1"># Extract all lengths.</span>
+    <span class="n">all_lengths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genomes</span><span class="p">]</span>
 
-    <span class="c1"># Here we sum the Hamming distances for all unique</span>
-    <span class="c1"># pairs of chromosomes (to avoid double counting).</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_chromosomes</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_chromosomes</span><span class="p">):</span>
-            <span class="n">total_diffs</span> <span class="o">+=</span> <span class="p">[</span><span class="n">k</span> <span class="o">!=</span> <span class="n">l</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">genome_map</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
-                                                   <span class="n">genome_map</span><span class="p">[</span><span class="n">j</span><span class="p">])]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-    <span class="c1"># _end_for_</span>
+    <span class="c1"># Fast path: all lengths are equal</span>
+    <span class="c1"># (this is the most common case).</span>
+    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">l</span> <span class="o">==</span> <span class="n">all_lengths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">all_lengths</span><span class="p">):</span>
+        <span class="c1"># Get the size of the genome.</span>
+        <span class="n">n_genes</span> <span class="o">=</span> <span class="n">all_lengths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="c1"># Compute the averaged distance, using the total</span>
-    <span class="c1"># number of &#39;unique pairs&#39;.</span>
-    <span class="n">dist_avg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">total_diffs</span> <span class="o">/</span> <span class="n">unique_pairs</span><span class="p">(</span><span class="n">n_chromosomes</span><span class="p">)</span>
+        <span class="c1"># Sanity check.</span>
+        <span class="k">if</span> <span class="n">n_genes</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;All chromosomes in the population are empty!&quot;</span><span class="p">)</span>
 
-    <span class="c1"># Return the averaged (or the normalized) value.</span>
-    <span class="k">return</span> <span class="n">dist_avg</span> <span class="o">/</span> <span class="n">n_genes</span> <span class="k">if</span> <span class="n">normal</span> <span class="k">else</span> <span class="n">dist_avg</span></div>
+        <span class="c1"># Initialize counter.</span>
+        <span class="n">total_diffs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># This is true because all chromosomes</span>
+        <span class="c1"># have the same length.</span>
+        <span class="n">total_pairs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">unique_pairs</span><span class="p">(</span><span class="n">n_chromosomes</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_genes</span><span class="p">):</span>
+            <span class="c1"># Initialize inner counter.</span>
+            <span class="n">counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+            <span class="c1"># Count how many times the same gene</span>
+            <span class="c1"># appears in the i-th position.</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genomes</span><span class="p">:</span>
+                <span class="n">counts</span><span class="p">[</span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c1"># Reset the counter.</span>
+            <span class="n">equal_pairs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="c1"># For each entry in the counts</span>
+            <span class="c1"># update the equal pairs counter.</span>
+            <span class="k">for</span> <span class="n">cnt</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">equal_pairs</span> <span class="o">+=</span> <span class="n">cnt</span> <span class="o">*</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+
+            <span class="c1"># Update the total differences.</span>
+            <span class="n">total_diffs</span> <span class="o">+=</span> <span class="p">(</span><span class="n">total_pairs</span> <span class="o">-</span> <span class="n">equal_pairs</span><span class="p">)</span>
+        <span class="c1"># _end_for_</span>
+
+        <span class="c1"># Compute the total genes compared.</span>
+        <span class="n">total_genes_compared</span> <span class="o">=</span> <span class="n">n_genes</span> <span class="o">*</span> <span class="n">total_pairs</span>
+
+        <span class="c1"># Return according to the normal flag.</span>
+        <span class="k">if</span> <span class="n">normal</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">total_diffs</span> <span class="o">/</span> <span class="n">total_genes_compared</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">total_diffs</span> <span class="o">/</span> <span class="n">total_pairs</span>
+    <span class="c1"># _end_if_</span>
+
+    <span class="c1"># Fallback: variable chromosome length (rare case).</span>
+    <span class="k">return</span> <span class="n">_average_hamming_distance_vcl</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">normal</span><span class="p">)</span></div>
 
 <span class="c1"># _end_def_</span>
 

@@ -85,8 +85,10 @@
 <span class="sd">    License: GPL-3</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Real</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span><span class="p">,</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
@@ -96,11 +98,14 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pareto_front&quot;</span><span class="p">,</span> <span class="s2">&quot;cost_function&quot;</span><span class="p">,</span> <span class="s2">&quot;np_cdist&quot;</span><span class="p">,</span> <span class="s2">&quot;clamp&quot;</span><span class="p">,</span>
            <span class="s2">&quot;pareto_dominance&quot;</span><span class="p">,</span> <span class="s2">&quot;np_pareto_front&quot;</span><span class="p">,</span> <span class="s2">&quot;two_indices_fast&quot;</span><span class="p">]</span>
 
+<span class="c1"># Declare a union type.</span>
+<span class="n">Number</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+
 <div class="viewcode-block" id="clamp">
 <a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.clamp">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">clamp</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span>
-          <span class="n">x_lower</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span>
-          <span class="n">x_upper</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">clamp</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span>
+          <span class="n">x_lower</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span>
+          <span class="n">x_upper</span><span class="p">:</span> <span class="n">Number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Clamps a value within a specified range.</span>
 
@@ -118,8 +123,8 @@
 
 <div class="viewcode-block" id="pareto_dominance">
 <a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.pareto_dominance">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">pareto_dominance</span><span class="p">(</span><span class="n">point_a</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">|</span> <span class="nb">list</span><span class="p">,</span>
-                     <span class="n">point_b</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">|</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">pareto_dominance</span><span class="p">(</span><span class="n">point_a</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Real</span><span class="p">],</span>
+                     <span class="n">point_b</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Real</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implements a shortcut version of the Pareto dominance condition:</span>
 
@@ -135,7 +140,7 @@
 <span class="sd">    :return: if the condition is satisfied.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Second condition.</span>
-    <span class="n">at_least_one_greater</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">strictly_better</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># Scan both points elementwise.</span>
     <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">point_a</span><span class="p">,</span> <span class="n">point_b</span><span class="p">):</span>
@@ -144,15 +149,16 @@
             <span class="k">return</span> <span class="kc">False</span>
         <span class="c1"># _end_if_</span>
 
-        <span class="c1"># Check if the second condition is satisfied.</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">at_least_one_greater</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="n">q</span><span class="p">:</span>
-            <span class="c1"># Switch the flag value to avoid re-setting it.</span>
-            <span class="n">at_least_one_greater</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="c1"># _end_if_</span>
+        <span class="c1"># Check if the second condition</span>
+        <span class="c1"># is satisfied.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">strictly_better</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="n">q</span><span class="p">:</span>
+            <span class="c1"># Switch the flag value</span>
+            <span class="c1"># to avoid re-setting it.</span>
+            <span class="n">strictly_better</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="c1"># _end_for_</span>
 
     <span class="c1"># If we got here return only the second condition.</span>
-    <span class="k">return</span> <span class="n">at_least_one_greater</span></div>
+    <span class="k">return</span> <span class="n">strictly_better</span></div>
 
 <span class="c1"># _end_def_</span>
 
@@ -173,14 +179,12 @@
 
 <span class="sd">    :return: List of points that lie on the Pareto front.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Create a set with all the points sizes.</span>
-    <span class="n">check_size</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nb">len</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span>
-    <span class="p">}</span>
+    <span class="c1"># Get the size of the first point.</span>
+    <span class="n">n_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">points</span> <span class="k">else</span> <span class="mi">0</span>
 
     <span class="c1"># Sanity check.</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">check_size</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;All point must have the same size.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n_size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n_size</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;All points must have the same size.&quot;</span><span class="p">)</span>
     <span class="c1"># _end_if_</span>
 
     <span class="c1"># Create a set that will hold</span>
@@ -243,11 +247,22 @@
     <span class="n">is_pareto_optimal</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
-        <span class="c1"># Compare point i-th with all other points.</span>
-        <span class="n">is_dominated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">points</span> <span class="o">&lt;=</span> <span class="n">point_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span>
-                              <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">points</span> <span class="o">&lt;</span> <span class="n">point_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-        <span class="c1"># Set the flag appropriately.</span>
-        <span class="n">is_pareto_optimal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">is_dominated</span>
+        <span class="c1"># Condition 1:</span>
+        <span class="c1"># Less than or equal to all objectives.</span>
+        <span class="n">le_all</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">points</span> <span class="o">&lt;=</span> <span class="n">point_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Condition 2:</span>
+        <span class="c1"># Less than at least in one objective.</span>
+        <span class="n">lt_any</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">points</span> <span class="o">&lt;</span> <span class="n">point_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Combine the two conditions.</span>
+        <span class="n">dominates_i</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">le_all</span> <span class="o">&amp;</span> <span class="n">lt_any</span>
+
+        <span class="c1"># Explicit self-exclusion.</span>
+        <span class="n">dominates_i</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Set the i-th flag appropriately.</span>
+        <span class="n">is_pareto_optimal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">dominates_i</span><span class="p">)</span>
     <span class="c1"># _end_for_</span>
 
     <span class="c1"># Return only the unique Pareto optimal points.</span>
@@ -386,13 +401,11 @@
     <span class="c1"># Pick a random &#39;i&#39; in [0, num).</span>
     <span class="n">i</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
-    <span class="c1"># Pick another random &#39;r&#39; in [0, num-1).</span>
-    <span class="n">r</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="c1"># Pick another random &#39;j&#39; in [0, num-1).</span>
+    <span class="n">j</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
     <span class="c1"># Set &#39;j&#39; by excluding &#39;i&#39; via a mapped draw.</span>
-    <span class="n">j</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">r</span> <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="k">else</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span>
-
-    <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span></div>
+    <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="k">else</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span></div>
 
 <span class="c1"># _end_def_</span>
 </pre></div>

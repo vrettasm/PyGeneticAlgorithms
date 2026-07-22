@@ -99,7 +99,7 @@
 
         <span class="c1"># NOTE: In here the migration probabilities</span>
         <span class="c1"># for each policy are set to 1.0 (i.e. 100%).</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">MigrationOperator</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">MigrationOperator</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">RandomMigration</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">ClockwiseMigration</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
         <span class="p">)</span>
     <span class="c1"># _end_def_</span>
