@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from copy import deepcopy
 from typing import Any, Callable
-from collections.abc import Iterable
+
+import numpy as np
+from numpy import ndarray
 
 # Public interface.
 __all__ = ["Gene"]
@@ -178,11 +180,17 @@ class Gene:
             return True
         # _end_if_
 
-        # Compare only the datum fields.
-        condition = self._datum == other._datum
+        # Local copy of _datum fields.
+        a = self._datum
+        b = other._datum
 
-        # If the condition is an Iterable make sure all the fields are checked.
-        return all(condition) if isinstance(condition, Iterable) else condition
+        # In case of Numpy arrays / lists or tuples.
+        if isinstance(a, ndarray) or isinstance(b, ndarray):
+            return np.array_equal(a, b)
+        # _end_if_
+
+        # Make the comparison.
+        return a == b
     # _end_def_
 
     def __hash__(self) -> int:
@@ -191,6 +199,20 @@ class Gene:
 
         :return: the hash value of the datum.
         """
+        # Extra care for numpy arrays.
+        if isinstance(self._datum, ndarray):
+            # Ensure the data are continuous.
+            a = np.ascontiguousarray(self._datum)
+
+            # Convert everything to python scalars.
+            values = a.ravel(order="C").astype(object).tolist()
+
+            # Hash the tuple.
+            return hash(
+                ("__ndarray__", a.shape, tuple(values))
+            )
+        # _end_if_
+
         try:
             # Return directly the hash
             # value of the datum field.
