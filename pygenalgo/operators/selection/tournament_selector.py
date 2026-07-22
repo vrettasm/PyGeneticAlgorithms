@@ -56,6 +56,9 @@ class TournamentSelector(SelectionOperator):
         # Local copy of random choice.
         random_choice = self.rng.choice
 
+        # Number of contestants.
+        n_contestants = self._items
+
         # Select the contestants for each tournament.
         contestants: NDArray = np_array([
             random_choice(pop_size, size=self._items, replace=False, shuffle=False)
