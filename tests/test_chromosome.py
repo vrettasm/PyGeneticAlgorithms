@@ -51,8 +51,8 @@ class TestChromosome(unittest.TestCase):
 
         # Create a 'dummy' chromosome with 3 'genes'.
         ch_1 = Chromosome(genome=[Gene(0, func),
-                                   Gene(1, func),
-                                   Gene(2, func)],
+                                  Gene(1, func),
+                                  Gene(2, func)],
                           fitness=0.0, valid=True)
 
         # This genome SHOULD be valid.
