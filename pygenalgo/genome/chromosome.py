@@ -70,7 +70,7 @@ class Chromosome:
     # _end_def_
 
     @property
-    def fitness(self) -> float:
+    def fitness(self) -> Optional[Fitness]:
         """
         Accessor of the fitness value of the chromosome.
 
