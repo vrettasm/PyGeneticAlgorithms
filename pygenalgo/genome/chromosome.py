@@ -34,6 +34,8 @@ class Chromosome:
                        solution to the problem
 
         :param fitness: the fitness of the chromosome (float or tuple).
+                        Default value is None, which indicates invalid
+                        chromosome.
 
         :param valid: whether the chromosome is valid.
         """
