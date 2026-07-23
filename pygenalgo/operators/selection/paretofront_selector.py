@@ -64,7 +64,7 @@ class ParetoFrontSelector(SelectionOperator):
 
         # Create a list to hold the indexes of the
         # parents that are on the pareto front.
-        pareto_index: list = [
+        pareto_index: list[int] = [
             np_pareto_front(x_fit[row], return_index=True)[0]
             for row in neighborhood
         ]
