@@ -36,6 +36,7 @@ class LinearRankSelector(SelectionOperator):
         super().__init__(selection_probability=select_probability)
 
         # Ensure input is float.
+        # WARNING: A value error will be raised if cast fails.
         eta = float(eta)
 
         # Sanity check (correct range).
