@@ -35,8 +35,8 @@ class TournamentSelector(SelectionOperator):
         # Call the super constructor with the provided initial value.
         super().__init__(selection_probability=select_probability)
 
-        # Number of participants of the tournament should be more than 2.
-        self._items: int = max(2, int(k))
+        # Number of participants of the tournament should be more than 5.
+        self._items: int = max(5, int(k))
     # _end_def_
 
     @increase_counter
