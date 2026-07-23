@@ -41,6 +41,24 @@ class TestUtilities(unittest.TestCase):
             self.assertNotEqual(i, j)
     # _end_def_
 
+    def test_two_indices_fast_in_order(self) -> None:
+        """
+        Test the functionality in_order functionality
+        of two_indices_fast function.
+        """
+
+        # Call the function 1000 times.
+        for _ in range(1000):
+            # Generate a random size >= 2.
+            n_size = self.rng.integers(low=2, high=100)
+
+            # Get two random numbers.
+            i, j = two_indices_fast(rng=self.rng, num=n_size, in_order=True)
+
+            # Output must be ordered.
+            self.assertLess(i, j)
+    # _end_def_
+
     def test_np_pareto_front(self) -> None:
         """
         Test the functionality of np_pareto_from_index.
