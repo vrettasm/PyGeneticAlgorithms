@@ -53,6 +53,9 @@ class RandomMigration(MigrationOperator):
                 # Perform the migration with a predefined probability.
                 if self.is_operator_applicable():
 
+                    # Get the population size of the island.
+                    pop_size: int = len(island_i.population)
+
                     # Select randomly one individual chromosome.
                     idx: int = self.rng.integers(0,
                                                  len(island_i.population),
