@@ -14,6 +14,9 @@ from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
+# Define a fitness type.
+Fitness = float | tuple[float, ...]
+
 # Public interface.
 __all__ = ["GenericGA"]
 
