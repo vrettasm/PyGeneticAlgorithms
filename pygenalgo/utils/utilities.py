@@ -201,9 +201,6 @@ def np_pareto_front(points: NDArray, return_index: bool = False) -> NDArray:
                                     ....................,
                                     (fk1, fk2, ..., fkn)]
 
-    :param return_index: if 'True' it will return the indexes
-                         of the points instead of their values.
-
     NOTE: Its memory complexity grows quadratically
     with the number of points in the NDArray: O(N^2)!
 
