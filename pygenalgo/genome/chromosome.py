@@ -52,7 +52,7 @@ class Chromosome:
 
         else:
             # Apply normalization to the variable.
-            self._fitness = self._normalize_fitness(fitness)
+            self._fitness = Chromosome._normalize_fitness(fitness)
         # _end_if_
 
         # Set the bool flag.
