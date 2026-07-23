@@ -64,17 +64,10 @@ class ParetoFrontSelector(SelectionOperator):
 
         # Create a list to hold the indexes of the
         # parents that are on the pareto front.
-        pareto_index: list = [None] * neighborhood.shape[0]
-
-        # Construct the list with the pareto indexes.
-        for i, row in enumerate(neighborhood):
-            # Gather the fitness vectors.
-            points = x_fit[row]
-
-            # Get the first point of the pareto front.
-            pareto_index[i] = np_pareto_front(points,
-                                              return_index=True)[0]
-        # _end_for_
+        pareto_index: list = [
+            np_pareto_front(x_fit[row], return_index=True)[0]
+            for row in neighborhood
+        ]
 
         # Return the new parents.
         return [
