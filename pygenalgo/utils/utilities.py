@@ -282,19 +282,21 @@ def cost_function(func: Callable = None, minimize: bool = False):
         # Run the function we want to optimize.
         result = func(*args, **kwargs)
 
-        # Check if the function returns a tuple (with two values)
-        # or a single output parameter. In the former, the second
-        # value should be boolean to signal that the solution meets
+        # Check if the function returns a tuple, with two values
+        # or a single output parameter. In the former the second
+        # value should be bool to signal that the solution meets
         # the termination requirements.
-        if isinstance(result, tuple) and len(result) == 2:
+        if isinstance(result, tuple) and len(result) == 2 and\
+                isinstance(result[1], bool):
 
-            f_value, solution_is_found = result[0], bool(result[1])
+            f_value, solution_is_found = result
         else:
 
             f_value, solution_is_found = result, False
         # _end_if_
 
-        # Multi-objective functions return tuple.
+        # Multi-objective functions return a tuple
+        # with all the objective function values.
         if isinstance(f_value, tuple):
 
             if minimize:
