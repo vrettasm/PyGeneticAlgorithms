@@ -129,6 +129,9 @@ def average_hamming_distance(population: list[Chromosome],
     all the chromosomes have the same length. If they are not, then
     the slower version is called _average_hamming_distance_vcl().
 
+    - N: number of chromosomes
+    - L: length of chromosomes.
+
     :param population: List(Chromosome) the population we want to compute
                        the average Hamming distance.
 
