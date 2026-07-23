@@ -56,6 +56,10 @@ class Chromosome:
             # Ensure every value is cast to float.
             self._fitness = tuple(float(x) for x in fitness)
 
+            # In case we accidentally pass a single
+            # element tuple adjust to single float.
+            if len(self._fitness) == 1:
+                self._fitness = self._fitness[0]
         else:
             raise TypeError(f"{self.__class__.__name__}: Fitness should be None,"
                             f"float or tuple[float, ...]; got: "
