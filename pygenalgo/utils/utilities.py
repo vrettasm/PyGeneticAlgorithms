@@ -1,7 +1,7 @@
 """
 Description:
 
-    Includes utility functions that used throughout pygenalgo.
+    Includes utility functions that used throughout PyGenAlgo.
 
 Author:
     Michail D. Vrettas, PhD
