@@ -2,8 +2,8 @@ import numpy as np
 from numpy.typing import NDArray
 
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.utils.utilities import np_cdist, np_pareto_front
 from pygenalgo.operators.genetic_operator import increase_counter
+from pygenalgo.utils.utilities import np_cdist, np_pareto_front_index
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
 
@@ -49,7 +49,7 @@ class ParetoFrontSelector(SelectionOperator):
 
         # Extract the population fitness to numpy array.
         x_fit: NDArray = np.array([
-            p.fitness for p in population
+            (*p.fitness, n) for n, p in enumerate(population)
         ], dtype=float)
 
         # Compute the pairwise Euclidean distances.
@@ -63,9 +63,9 @@ class ParetoFrontSelector(SelectionOperator):
         neighborhood: NDArray = x_sorted[:, :self._items]
 
         # Creates a list that holds the indexes of
-        # the parents that are on the pareto front.
+        # the parents that are on the Pareto front.
         pareto_index: list[int] = [
-            np_pareto_front(x_fit[row], return_index=True)[0]
+            np_pareto_front_index(x_fit[row])[0]
             for row in neighborhood
         ]
 
