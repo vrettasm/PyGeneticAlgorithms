@@ -99,7 +99,7 @@ class PolynomialMutator(MutationOperator):
             # stays within limits.
             individual[i].value = clamp(old_value + delta * (xu - xl), xl, xu)
 
-            # Set the fitness to NaN.
+            # Set the fitness to None.
             individual.invalidate_fitness()
 
             # Increase the mutator counter.

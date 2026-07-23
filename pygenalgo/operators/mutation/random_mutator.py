@@ -43,7 +43,7 @@ class RandomMutator(MutationOperator):
             # Replace the old gene with a random one.
             individual[idx].random()
 
-            # Set the fitness to NaN.
+            # Set the fitness to None.
             individual.invalidate_fitness()
 
             # Increase the mutator counter.
