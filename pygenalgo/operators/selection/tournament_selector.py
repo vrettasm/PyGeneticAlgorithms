@@ -64,7 +64,7 @@ class TournamentSelector(SelectionOperator):
             random_choice(pop_size, size=n_contestants,
                           replace=False, shuffle=False)
             for _ in range(pop_size)
-        ])
+        ], dtype=int)
 
         # Define the key.
         key_sort = attrgetter("fitness")
