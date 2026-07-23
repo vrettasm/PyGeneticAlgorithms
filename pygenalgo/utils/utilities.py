@@ -213,9 +213,8 @@ def np_pareto_front(points: NDArray, return_index: bool = False) -> NDArray:
 
     # Remove any duplicate points before
     # continue to speed up the operations.
-    unique_points, rep_idx = np.unique(
-        np.round(points, decimals=12),
-        axis=0, return_index=True
+    unique_points = np.unique(
+        np.round(points, decimals=12), axis=0
     )
 
     # Use broadcasting to get all pairwise differences
