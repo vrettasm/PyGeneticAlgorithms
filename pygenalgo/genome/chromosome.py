@@ -75,7 +75,7 @@ class Chromosome:
         Accessor of the fitness variable of
         the chromosome.
 
-        :return: the fitness (float) of the genome.
+        :return: the fitness of the genome.
         """
         return self._fitness
     # _end_def_
