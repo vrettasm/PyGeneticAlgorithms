@@ -71,7 +71,7 @@ class ParetoFrontSelector(SelectionOperator):
             # Gather the fitness vectors.
             points = x_fit[row]
 
-            # Get the first point in the pareto front.
+            # Get the first point of the pareto front.
             pareto_index[i] = np_pareto_front(points,
                                               return_index=True)[0]
         # _end_for_
