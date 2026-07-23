@@ -476,8 +476,8 @@ class GenericGA:
         # Flag to indicate if a solution has been found.
         found_solution: bool = False
 
-        # Update all chromosomes with their fitness and check if a solution
-        # has been found.
+        # Update all chromosomes with their fitness and
+        # check if a solution has been found.
         for n, (p, fit_result) in enumerate(zip(input_population, fitness_i)):
             # Attach the fitness to each chromosome.
             p.fitness = fit_result["f_value"]
