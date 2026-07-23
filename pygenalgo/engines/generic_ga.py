@@ -273,7 +273,7 @@ class GenericGA:
         """
         # Return the chromosome with the highest fitness.
         return max(
-            (p for p in self.population if not isnan(p.fitness)),
+            (p for p in self.population if p.fitness is not None),
             key=attrgetter("fitness"), default=None
         )
     # _end_def_
@@ -302,7 +302,7 @@ class GenericGA:
 
         # Sort the population in descending order.
         sorted_population: list[Chromosome] = sorted(
-            [p for p in self.population if not isnan(p.fitness)],
+            [p for p in self.population if p.fitness is not None],
             key=attrgetter("fitness"), reverse=True
         )
 
