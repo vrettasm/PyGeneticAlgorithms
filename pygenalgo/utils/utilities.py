@@ -294,6 +294,18 @@ def cost_function(func: Callable = None, minimize: bool = False):
             f_value, solution_is_found = result, False
         # _end_if_
 
+        # Multi-objective functions return tuple.
+        if isinstance(f_value, tuple):
+
+            if minimize:
+                # Reverse the sign of the objectives.
+                f_value = tuple(-fx for fx in f_value)
+
+            return {"f_value": f_value,
+                    "solution_is_found": solution_is_found}
+        # _end_if_
+
+        # Standard return statement.
         return {"f_value": -f_value if minimize else f_value,
                 "solution_is_found": solution_is_found}
     # _end_def_
