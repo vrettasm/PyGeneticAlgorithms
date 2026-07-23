@@ -364,7 +364,8 @@ def np_cdist(x_pos: NDArray, scaled: bool = False) -> NDArray:
     return dist_x
 # _end_def_
 
-def two_indices_fast(rng: Generator, num: int) -> tuple[int, int]:
+def two_indices_fast(rng: Generator, num: int,
+                     in_order: bool = False) -> tuple[int, int]:
     """
     Select two distinct random indices in the range [0, num)
     without allocating, or shuffling a np.arange(num) array.
@@ -375,8 +376,10 @@ def two_indices_fast(rng: Generator, num: int) -> tuple[int, int]:
     :param num: Exclusive upper bound of the index range.
                 Must be greater than 1.
 
-    :return: two distinct integer values 'i' and 'j' from the
-             range [0, num-1].
+    :param in_order: Boolean flag that allows the output
+                     values to be sorted in ascending order.
+
+    :return: Two distinct integer values from the range [0, num).
     """
     # Sanity check.
     if num <= 1:
@@ -385,9 +388,15 @@ def two_indices_fast(rng: Generator, num: int) -> tuple[int, int]:
     # Pick a random 'i' in [0, num).
     i: int = rng.integers(num, dtype=int)
 
-    # Pick another random 'j' in [0, num-1).
-    j: int = rng.integers(num-1, dtype=int)
+    # Pick another random 'k' in [0, num-1).
+    k: int = rng.integers(num-1, dtype=int)
 
-    # Set 'j' by excluding 'i' via a mapped draw.
-    return i, j if j < i else j + 1
+    # If the flag is set to True.
+    if in_order:
+        # Return in ascending order.
+        return (k, i) if k < i else (i, k + 1)
+
+    # Default is random order.
+    # Exclude 'i' from the second index via a mapped draw.
+    return i, k if k < i else k + 1
 # _end_def_
