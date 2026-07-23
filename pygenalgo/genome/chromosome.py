@@ -114,7 +114,7 @@ class Chromosome:
 
         :return: None.
         """
-        self._fitness = float("NaN")
+        self._fitness = None
     # _end_def_
 
     def has_valid_genome(self) -> bool:
