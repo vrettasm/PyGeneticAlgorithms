@@ -48,26 +48,49 @@ class Chromosome:
             # Default assignment.
             self._fitness = None
 
-        elif isinstance(fitness, (int, float)):
-            # Cast to int to float too.
-            self._fitness = float(fitness)
-
-        elif isinstance(fitness, tuple):
-            # Ensure every value is cast to float.
-            self._fitness = tuple(float(x) for x in fitness)
-
-            # In case we accidentally pass a single
-            # element tuple adjust to single float.
-            if len(self._fitness) == 1:
-                self._fitness = self._fitness[0]
         else:
-            raise TypeError(f"{self.__class__.__name__}: Fitness should be None,"
-                            f"float or tuple[float, ...]; got: "
-                            f"{new_value.__class__.__name__} instead.")
+            # Apply normalization to the variable.
+            self._fitness = self._normalize_fitness(fitness)
         # _end_if_
 
         # Set the bool flag.
         self._valid: bool = valid
+    # _end_def_
+
+    @staticmethod
+    def _normalize_fitness(value: object) -> Fitness:
+        """
+        Helper function to normalize the fitness value
+        before we assign it in the 'self' object. This
+        helps us to avoid code duplication between the
+        __init__ and fitness.setter methods.
+
+        :param value: anything we want to normalize.
+
+        :return: a float | tuple[float, ...]
+        """
+
+        # First check if it is scalar
+        # (most frequent case).
+        if isinstance(value, (int, float)):
+            return float(value)
+        # _end_if_
+
+        # Then check is it is tuple
+        # (used in multi-objective).
+        if isinstance(value, tuple):
+            # Ensure everything is cast to float.
+            t = tuple(float(x) for x in value)
+
+            # Avoid single element tuples.
+            return t[0] if len(t) == 1 else t
+        # _end_if_
+
+        # Otherwise raise a Type error.
+        raise TypeError(
+            f"{Chromosome.__name__}: Fitness should be float or tuple[float, ...]; "
+            f"got {type(value).__name__} instead."
+        )
     # _end_def_
 
     @property
@@ -115,26 +138,8 @@ class Chromosome:
 
         :param new_value: (float or tuple of floats).
         """
-        # Ensure float is assigned.
-        if isinstance(new_value, (int, float)):
-            self._fitness = float(new_value)
-            return
-        # _end_if_
-
-        # Ensure everything is converted.
-        if isinstance(new_value, tuple):
-            self._fitness = tuple(float(x) for x in new_value)
-
-            # In case we accidentally pass a single
-            # element tuple adjust to single float.
-            if len(self._fitness) == 1:
-                self._fitness = self._fitness[0]
-            return
-        # _end_if_
-
-        # If we get here raise an error.
-        raise TypeError(f"{self.__class__.__name__}: Fitness should "
-                        f"be float or tuple: {new_value.__class__.__name__}.")
+        # Ensure normalized fitness value.
+        self._fitness = self._normalize_fitness(new_value)
     # _end_def_
 
     @property
