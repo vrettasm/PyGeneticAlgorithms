@@ -62,8 +62,8 @@ class ParetoFrontSelector(SelectionOperator):
         # a notion of a 'neighborhood' for each chromosome.
         neighborhood: NDArray = x_sorted[:, :self._items]
 
-        # Create a list to hold the indexes of the
-        # parents that are on the pareto front.
+        # Creates a list that holds the indexes of
+        # the parents that are on the pareto front.
         pareto_index: list[int] = [
             np_pareto_front(x_fit[row], return_index=True)[0]
             for row in neighborhood
