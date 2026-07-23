@@ -49,12 +49,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
             genome_2: list = number_of_genes * [None]
 
             # Select two random (distinct) crossover points.
-            i, j = two_indices_fast(self.rng, number_of_genes)
-
-            # Swap indices (if necessary).
-            if i > j:
-                i, j = j, i
-            # _end_if_
+            i, j = two_indices_fast(self.rng, number_of_genes, in_order=True)
 
             # Make a set of indices for the middle segment.
             id_segment: set[int] = set(range(i, j))
