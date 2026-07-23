@@ -47,7 +47,7 @@ def clamp(x: Number,
 # _end_def_
 
 def _pareto_dominance(point_a: Sequence[Real],
-                     point_b: Sequence[Real]) -> bool:
+                      point_b: Sequence[Real]) -> bool:
     """
     Implements a shortcut version of the Pareto dominance condition:
 
