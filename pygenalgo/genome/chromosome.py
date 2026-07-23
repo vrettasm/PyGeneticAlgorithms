@@ -88,6 +88,20 @@ class Chromosome:
             return t[0] if len(t) == 1 else t
         # _end_if_
 
+        # Finally, numpy 1d arrays
+        # (future-proof for vector fitness).
+        if isinstance(value, ndarray):
+            #  Ensure only 1d are accepted.
+            if value.ndim != 1:
+                raise TypeError("Fitness numpy array must be 1D.")
+
+            # Convert everything to tuple[float, ...].
+            t = tuple(float(x) for x in value.tolist())
+
+            # Avoid single element tuples.
+            return t[0] if len(t) == 1 else t
+        # _end_if_
+
         # Otherwise raise a Type error.
         raise TypeError(
             f"{Chromosome.__name__}: Fitness should be float or tuple[float, ...]; "
