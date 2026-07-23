@@ -3,6 +3,8 @@ from __future__ import annotations
 from copy import deepcopy
 from typing import Any, Optional
 
+from numpy import ndarray
+
 from pygenalgo.genome.gene import Gene
 
 # Define a fitness type.
