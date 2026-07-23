@@ -87,14 +87,21 @@ class Chromosome:
 
         :param new_value: (float or tuple of floats).
         """
-        # Check for the correct type.
-        if not isinstance(new_value, (int, float)):
-            raise TypeError(f"{self.__class__.__name__}: Fitness should "
-                            f"be float: {new_value.__class__.__name__}.")
+        # Ensure float is assigned.
+        if isinstance(new_value, (int, float)):
+            self._fitness = float(new_value)
+            return
         # _end_if_
 
-        # Update the fitness value.
-        self._fitness = float(new_value)
+        # Ensure everything is converted.
+        if isinstance(new_value, tuple):
+            self._fitness = tuple(float(x) for x in new_value)
+            return
+        # _end_if_
+
+        # If we get here raise an error.
+        raise TypeError(f"{self.__class__.__name__}: Fitness should "
+                        f"be float or tuple: {new_value.__class__.__name__}.")
     # _end_def_
 
     @property
