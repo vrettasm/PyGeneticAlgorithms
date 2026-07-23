@@ -1,9 +1,5 @@
 import time
-from math import isclose
 from typing import Optional
-
-from numpy import (array, nanmean, nanstd, isfinite)
-from numpy.typing import NDArray
 
 from pygenalgo.engines import logger
 from pygenalgo.engines.generic_ga import GenericGA
@@ -41,7 +37,7 @@ class MultiObjectiveGA(GenericGA):
 
     # pylint: disable=arguments-differ
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
-            f_tol: Optional[float] = None, parallel: bool = False, adapt_probs: bool = False,
+            parallel: bool = False, adapt_probs: bool = False,
             shuffle: bool = True, f_max_eval: Optional[int] = None, verbose: bool = False) -> None:
         """
         Main method of the StandardGA class, that implements the evolutionary routine.
@@ -55,11 +51,6 @@ class MultiObjectiveGA(GenericGA):
         :param correction: (bool) flag that if set to 'True' will check the validity of
                            the population (at the gene level) and attempt to correct the
                            genome by calling the random() method of the flawed gene.
-
-        :param f_tol: (float) tolerance in the difference between the average values of two
-                      consecutive populations. It is used to determine the convergence of the
-                      population. If this value is None (default) the algorithm will terminate
-                      using the epochs value.
 
         :param parallel: (bool) Flag that enables parallel computation of the fitness function.
 
@@ -87,29 +78,16 @@ class MultiObjectiveGA(GenericGA):
         # Get the fitness values before optimization.
         fit_list_0, _ = self.evaluate_fitness(self.population, parallel)
 
-        # Update the average statistics in the dictionary.
-        avg_fitness_0, _ = self.update_stats(fit_list_0)
-
-        # Store the initial crossover and mutation probabilities.
-        self._stats["prob_crossx"].append(self._crossx_op.probability)
-        self._stats["prob_mutate"].append(self._mutate_op.probability)
-
         # Local variable to display information on the screen.
         # To avoid cluttering the screen we print info only 10
         # times regardless of the total number of epochs.
         its_time_to_print = epochs // 10 if epochs > 10 else 2
-
-        # Display an information message.
-        logger.info("Initial Avg. Fitness = %.4f", avg_fitness_0)
 
         # Initial time instant.
         time_t0: float = time.perf_counter()
 
         # Repeat 'epoch' times.
         for i in range(epochs):
-
-            # Update current iteration.
-            self.iteration = i
 
             # SELECT the parents.
             population_i = self.select_op(self.population)
@@ -169,9 +147,6 @@ class MultiObjectiveGA(GenericGA):
                 # _end_if_
             # _end_if_
 
-            # Update the mean/std in the dictionary.
-            avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i)
-
             # Log the information message.
             if verbose and (i % its_time_to_print) == 0:
                 logger.info(
@@ -201,18 +176,6 @@ class MultiObjectiveGA(GenericGA):
                 break
             # _end_if_
 
-            # Check for convergence.
-            if f_tol is not None and isclose(avg_fitness_i, avg_fitness_0, abs_tol=f_tol):
-                # Display a warning message.
-                logger.warning("%s converged in %d iterations.",
-                               self.__class__.__name__, i + 1)
-                # Exit.
-                break
-            # _end_if_
-
-            # Update the average value for the next iteration.
-            avg_fitness_0 = avg_fitness_i
-
             # Check the adaptive flag.
             if adapt_probs:
                 # Compute the current average Hamming distance.
@@ -227,9 +190,6 @@ class MultiObjectiveGA(GenericGA):
 
         # Final time instant.
         time_tf: float = time.perf_counter()
-
-        # Display the final average fitness value.
-        logger.info("Final   Avg. Fitness = %.4f", avg_fitness_0)
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
