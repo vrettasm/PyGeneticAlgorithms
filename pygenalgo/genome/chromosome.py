@@ -161,6 +161,10 @@ class Chromosome:
             return 0
         # _end_if_
 
+        # Extract genomes.
+        genome_1 = self._genome
+        genome_2 = other.genome
+
         # Compute the dissimilarities in their genomes.
         return [k != l for k, l in zip(self._genome, other.genome,
                                        strict=True)].count(True)
