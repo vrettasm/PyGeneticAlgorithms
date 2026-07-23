@@ -139,10 +139,11 @@ class Chromosome:
 
     def hamming_distance(self, other: Chromosome) -> int:
         """
-        Compute the Hamming distance of the "self" object,
-        with the "other" chromosome. In practice, it's the
-        number of positions at which the corresponding genes
-        are different.
+        Compute the Hamming distance of the "self" object, with the "other"
+        chromosome. In practice, it's the number of positions at which the
+        corresponding genes are different.
+
+        NOTE: It assumes that both chromosomes have the same length.
 
         :param other: (Chromosome) to compare the Hamming distance.
 
