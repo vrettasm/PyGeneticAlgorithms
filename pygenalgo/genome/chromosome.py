@@ -85,7 +85,7 @@ class Chromosome:
         """
         Accessor (setter) of the fitness value.
 
-        :param new_value: (float).
+        :param new_value: (float or tuple of floats).
         """
         # Check for the correct type.
         if not isinstance(new_value, (int, float)):
