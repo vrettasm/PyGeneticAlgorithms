@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from typing import Optional
+from typing import Any, Optional
 
 from pygenalgo.genome.gene import Gene
 
@@ -300,7 +300,7 @@ class Chromosome:
         return Chromosome(self._genome, self._fitness, self._valid)
     # _end_copy_
 
-    def __deepcopy__(self, memo: dict) -> Chromosome:
+    def __deepcopy__(self, memo: dict[int, Any]) -> Chromosome:
         """
         This custom method overrides the default deepcopy method
         and is used when we call the "clone" method of the class.
@@ -318,14 +318,13 @@ class Chromosome:
 
         # Deepcopy ONLY the genome because
         # it is a (mutable) list of Genes.
-        setattr(new_object, "_genome",
-                deepcopy(self._genome, memo))
+        new_object._genome = deepcopy(self._genome, memo)
 
         # Simply copy the fitness value.
-        setattr(new_object, "_fitness", self._fitness)
+        new_object._fitness = self._fitness
 
         # Simply copy the boolean flag.
-        setattr(new_object, "_valid", self._valid)
+        new_object._valid = self._valid
 
         # Return identical instance.
         return new_object
