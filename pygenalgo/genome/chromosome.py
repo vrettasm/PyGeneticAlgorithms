@@ -124,6 +124,11 @@ class Chromosome:
         # Ensure everything is converted.
         if isinstance(new_value, tuple):
             self._fitness = tuple(float(x) for x in new_value)
+
+            # In case we accidentally pass a single
+            # element tuple adjust to single float.
+            if len(self._fitness) == 1:
+                self._fitness = self._fitness[0]
             return
         # _end_if_
 
