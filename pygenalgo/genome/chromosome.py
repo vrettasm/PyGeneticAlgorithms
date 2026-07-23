@@ -155,7 +155,7 @@ class Chromosome:
         :param new_value: (float or tuple of floats).
         """
         # Ensure normalized fitness value.
-        self._fitness = self._normalize_fitness(new_value)
+        self._fitness = Chromosome._normalize_fitness(new_value)
     # _end_def_
 
     @property
