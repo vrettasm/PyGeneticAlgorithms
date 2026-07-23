@@ -81,7 +81,7 @@ class Chromosome:
     # _end_def_
 
     @fitness.setter
-    def fitness(self, new_value: float) -> None:
+    def fitness(self, new_value: Fitness) -> None:
         """
         Accessor (setter) of the fitness value.
 
