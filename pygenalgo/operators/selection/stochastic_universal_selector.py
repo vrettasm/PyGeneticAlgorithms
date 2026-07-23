@@ -71,7 +71,7 @@ class StochasticUniversalSelector(SelectionOperator):
 
         # Create a generator to calculate the pointers at
         # equal distances 'dist_p' starting from 'start_0'.
-        pointers: Generator[float] = (
+        pointers: Generator[float, None, None] = (
             start_0 + i*dist_p for i in range(pop_size)
         )
 
