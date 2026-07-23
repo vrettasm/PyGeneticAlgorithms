@@ -38,7 +38,7 @@ class Chromosome:
         :param valid: whether the chromosome is valid.
         """
 
-        # Copy the genome.
+        # Assign locally the genome.
         self._genome: list[Gene] = genome
 
         # Get the initial fitness value.
