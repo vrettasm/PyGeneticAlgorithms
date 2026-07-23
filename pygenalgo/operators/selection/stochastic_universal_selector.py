@@ -1,5 +1,6 @@
 from typing import Generator
 from math import fsum, isclose
+from bisect import bisect_left
 from itertools import accumulate
 
 from pygenalgo.genome.chromosome import Chromosome
@@ -74,28 +75,14 @@ class StochasticUniversalSelector(SelectionOperator):
             start_0 + i*dist_p for i in range(pop_size)
         )
 
-        # Create a list that will contain the new parents.
-        new_parents: list[Chromosome] = []
-
         # Compute the cumulative sum of the fitness values.
         cum_sum_fit: list[float] = list(accumulate(all_fitness))
 
-        # Set the index to '0'.
-        i: int = 0
-
-        # Collect the new parents.
-        for p in pointers:
-
-            # Find the cumulative value
-            # that is smaller than 'p'.
-            while cum_sum_fit[i] < p:
-                i += 1
-            # _end_while_
-
-            # Add the individual at position
-            # 'i' in the new parents list.
-            new_parents.append(population[i])
-        # _end_for_
+        # Use optimized C-level binary search to extract individuals
+        new_parents: list[Chromosome] = [
+            population[bisect_left(cum_sum_fit, p)]
+            for p in pointers
+        ]
 
         # Return the new parents (individuals).
         return new_parents
