@@ -58,7 +58,9 @@ def _average_hamming_distance_vcl(population: list[Chromosome],
 
     Even though this implementation covers also the case with
     equal chromosome lengths, it should be avoided because it
-    is O(N^2 * L).
+    is O(N^2 * L) where:
+    - N: number of chromosomes
+    - L: length of chromosomes.
 
     :param population: List(Chromosome) the population we want
                        to compute the average Hamming distance.
