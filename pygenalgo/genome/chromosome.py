@@ -147,8 +147,8 @@ class Chromosome:
 
         :param other: (Chromosome) to compare the Hamming distance.
 
-        :return: (int) the number of dissimilarities between
-                 the two input chromosomes.
+        :return: (int) the number of dissimilarities between the two input
+                 chromosomes.
         """
         # Make sure both objects are of the same type Chromosome.
         if not isinstance(other, Chromosome):
