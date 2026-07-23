@@ -72,7 +72,8 @@ class Chromosome:
     @property
     def fitness(self) -> Optional[Fitness]:
         """
-        Accessor of the fitness value of the chromosome.
+        Accessor of the fitness variable of
+        the chromosome.
 
         :return: the fitness (float) of the genome.
         """
