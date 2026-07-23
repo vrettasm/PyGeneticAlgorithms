@@ -1,7 +1,12 @@
 from __future__ import annotations
 
 from copy import deepcopy
+from typing import Optional
+
 from pygenalgo.genome.gene import Gene
+
+# Define a fitness type.
+Fitness = float | tuple[float, ...]
 
 # Public interface.
 __all__ = ["Chromosome"]
@@ -19,7 +24,8 @@ class Chromosome:
     # Object variables.
     __slots__ = ("_genome", "_fitness", "_valid")
 
-    def __init__(self, genome: list[Gene], fitness: float = float("NaN"),
+    def __init__(self, genome: list[Gene],
+                 fitness: Optional[Fitness] = None,
                  valid: bool = True) -> None:
         """
         Initialize a Chromosome object.
@@ -27,7 +33,7 @@ class Chromosome:
         :param genome: a list of genes. This list will encode a single
                        solution to the problem
 
-        :param fitness: the fitness of the chromosome.
+        :param fitness: the fitness of the chromosome (float or tuple).
 
         :param valid: whether the chromosome is valid.
         """
@@ -36,7 +42,23 @@ class Chromosome:
         self._genome: list[Gene] = genome
 
         # Get the initial fitness value.
-        self._fitness: float = fitness
+        if fitness is None:
+            # Default assignment.
+            self._fitness = None
+
+        elif isinstance(fitness, (int, float)):
+            # Cast to int to float too.
+            self._fitness = float(fitness)
+
+        elif isinstance(fitness, tuple):
+            # Ensure every value is cast to float.
+            self._fitness = tuple(float(x) for x in fitness)
+
+        else:
+            raise TypeError(f"{self.__class__.__name__}: Fitness should be None,"
+                            f"float or tuple[float, ...]; got: "
+                            f"{new_value.__class__.__name__} instead.")
+        # _end_if_
 
         # Set the bool flag.
         self._valid: bool = valid
