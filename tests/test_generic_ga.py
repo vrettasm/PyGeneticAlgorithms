@@ -1,5 +1,4 @@
 import unittest
-from numpy import nan
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.engines.generic_ga import GenericGA
@@ -27,7 +26,7 @@ class TestGenericGA(unittest.TestCase):
         :return: None.
         """
         pop = [Chromosome([Gene('a', lambda: str('x')),
-                                   Gene('b', lambda: str('x'))], fitness=nan),
+                                   Gene('b', lambda: str('x'))], fitness=0.0),
                Chromosome([Gene('c', lambda: str('x')),
                                    Gene('d', lambda: str('x'))], fitness=1.0),
                Chromosome([Gene('e', lambda: str('x')),
@@ -45,15 +44,17 @@ class TestGenericGA(unittest.TestCase):
                Chromosome([Gene('j', lambda: str('x')),
                                    Gene('l', lambda: str('x'))], fitness=9.0),
                Chromosome([Gene('7', lambda: str('x')),
-                                   Gene('8', lambda: str('x'))], fitness=nan),
+                                   Gene('8', lambda: str('x'))], fitness=0.0),
                Chromosome([Gene('h', lambda: str('x')),
                                    Gene('i', lambda: str('x'))], fitness=18.0),
                Chromosome([Gene('j', lambda: str('x')),
                                    Gene('k', lambda: str('x'))], fitness=19.0)
                ]
         # Create an object with a genetic probabilities of 1.0.
-        self.ga = GenericGA(pop, lambda x: 0.0, SelectionOperator(1.0), MutationOperator(1.0),
-                            CrossoverOperator(1.0))
+        self.ga = GenericGA(
+            initial_pop=pop, fit_func=lambda x: 0.0,
+            select_op=SelectionOperator(1.0), mutate_op=MutationOperator(1.0), crossx_op=CrossoverOperator(1.0)
+        )
     # _end_def_
 
     def test_best_chromosome(self):
