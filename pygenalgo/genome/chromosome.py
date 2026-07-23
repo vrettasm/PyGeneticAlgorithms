@@ -108,8 +108,8 @@ class Chromosome:
 
     def invalidate_fitness(self) -> None:
         """
-        Invalidates the fitness of the chromosome
-        by setting the value to NaN. This is used
+        Invalidates the fitness  of the chromosome
+        by setting its value to None. This is used
         during the evolution process (mutation).
 
         :return: None.
