@@ -84,7 +84,7 @@ def _pareto_dominance(point_a: Sequence[Real],
     return strictly_better
 # _end_def_
 
-def pareto_front(points: list) -> list:
+def pareto_front(points: list[Sequence[Real]]) -> list:
     """
     Simple function that calculates the Pareto (optimal)
     front points from a given input points list.
