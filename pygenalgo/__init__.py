@@ -13,4 +13,4 @@ __author__ = "Michalis Vrettas, PhD"
 
 __email__ = "michail.vrettas@gmail.com"
 
-__version__ = "1.9.1"
+__version__ = "2.0.0"
