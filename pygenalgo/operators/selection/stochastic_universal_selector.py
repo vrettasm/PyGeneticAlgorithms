@@ -78,7 +78,7 @@ class StochasticUniversalSelector(SelectionOperator):
         # Compute the cumulative sum of the fitness values.
         cum_sum_fit: list[float] = list(accumulate(all_fitness))
 
-        # Use optimized C-level binary search to extract individuals
+        # Use optimized C-level binary search to extract individuals.
         new_parents: list[Chromosome] = [
             population[bisect_left(cum_sum_fit, p)]
             for p in pointers
