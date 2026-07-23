@@ -235,11 +235,6 @@ def np_pareto_front(points: NDArray, return_index: bool = False) -> NDArray:
     # A point is Pareto optimal if NO other point dominates it.
     is_pareto_unique = ~np.any(strictly_better, axis=0)
 
-    # Check return flag value.
-    if return_index:
-        # Return the indexes instead.
-        return rep_idx[is_pareto_unique]
-
     # Get the pareto optimal (unique) points.
     return unique_points[is_pareto_unique]
 # _end_def_
