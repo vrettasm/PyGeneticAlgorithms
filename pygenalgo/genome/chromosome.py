@@ -62,14 +62,14 @@ class Chromosome:
     @staticmethod
     def _normalize_fitness(value: object) -> Fitness:
         """
-        Helper function to normalize the fitness value
-        before we assign it in the 'self' object. This
-        helps us to avoid code duplication between the
-        __init__ and fitness.setter methods.
+        Normalize fitness input into either:
+        - float
+        - tuple[float, ...] (squeezed: (x,) -> x)
 
-        :param value: anything we want to normalize.
+        :param value: float, int, tuple of numeric
+                      values or 1-dim numpy arrays.
 
-        :return: a float | tuple[float, ...]
+        :return: float | tuple[float, ...]
         """
 
         # First check if it is scalar
