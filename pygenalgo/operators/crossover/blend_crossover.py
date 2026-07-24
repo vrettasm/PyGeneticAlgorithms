@@ -131,8 +131,8 @@ class BlendCrossover(CrossoverOperator):
                 diff = max_value - min_value
 
                 # Create two new gene values.
-                new_value_1 = min_value + diff * rv_1
-                new_value_2 = min_value + diff * rv_2
+                new_value_1 = min_value + (diff * rv_1)
+                new_value_2 = min_value + (diff * rv_2)
 
                 # Local bounds lookups.
                 x_lower = xl[i]
