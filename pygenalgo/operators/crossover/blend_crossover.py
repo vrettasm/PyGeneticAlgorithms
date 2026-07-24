@@ -88,21 +88,20 @@ class BlendCrossover(CrossoverOperator):
             # have the same lengths.
             number_of_genes: int = len(parent1)
 
-            # Preallocate 1st genome.
+            # Preallocate 1st child's genome.
             genome_1: list = [None] * number_of_genes
 
-            # Preallocate 2nd genome.
+            # Preallocate 2nd child's genome.
             genome_2: list = [None] * number_of_genes
 
-            # Generate uniform random numbers (floats) in the half-open
-            # interval [0.0, 1.0).
+            # Generate uniform random numbers in the [0.0, 1.0).
             random_uniform = self.rng.random(size=(number_of_genes, 2))
 
             # Extract locally the genomes of both parents.
             parent_1: list[Gene] = parent1.genome
             parent_2: list[Gene] = parent2.genome
 
-            # Set the genes accordingly.
+            # Set the new gene values iteratively.
             for i in range(number_of_genes):
 
                 # Extract the gene values once.
@@ -125,11 +124,15 @@ class BlendCrossover(CrossoverOperator):
                 min_value -= offset_distance
                 max_value += offset_distance
 
-                # Extract random uniform floats for this step
-                r_val = random_uniform[i]
+                # Extract the two random values.
+                rv_1, rv_2 = random_uniform[i]
+
+                # Compute the difference.
+                diff = max_value - min_value
 
                 # Create two new gene values.
-                new_value_1, new_value_2 = min_value + (max_value - min_value) * r_val
+                new_value_1 = min_value + diff * rv_1
+                new_value_2 = min_value + diff * rv_2
 
                 # Local bounds lookups.
                 x_lower = xl[i]
