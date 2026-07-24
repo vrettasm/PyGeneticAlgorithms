@@ -1,4 +1,6 @@
-from typing import Optional
+from numpy import asarray
+from numpy import any as np_any
+from numpy.typing import ArrayLike
 
 from pygenalgo.utils.utilities import clamp
 from pygenalgo.genome.chromosome import Chromosome
@@ -16,19 +18,20 @@ class PolynomialMutator(MutationOperator):
 
     def __init__(self, mutate_probability: float = 0.1,
                  eta_pm: float = 20.0,
-                 lower_val: Optional[float] = None,
-                 upper_val: Optional[float] = None) -> None:
+                 lower_lim: ArrayLike = None,
+                 upper_lim: ArrayLike = None) -> None:
         """
         Construct a 'PolynomialMutator' object with a given probability value.
 
         :param mutate_probability: (float).
 
         :param eta_pm: (float) the distribution index for polynomial mutation.
-                        Higher values mean smaller perturbations (more local search).
+                        Higher values mean smaller perturbations (more local
+                        search).
 
-        :param lower_val: (float) lower limit value for the gene mutation.
+        :param lower_lim: (ArrayLike) lower limit values for the genes.
 
-        :param upper_val: (float) upper limit value for the gene mutation.
+        :param upper_lim: (ArrayLike) upper limit values for the genes.
         """
         # Call the super constructor with the provided initial value.
         super().__init__(mutation_probability=mutate_probability)
@@ -36,27 +39,29 @@ class PolynomialMutator(MutationOperator):
         # Ensure eta_pm parameter is float.
         eta_pm = float(eta_pm)
 
-        # Ensure that both lower and upper limits are provided.
-        if lower_val is None or upper_val is None:
+        # Check if the lower and upper bounds are set.
+        if (lower_lim is None) or (upper_lim is None):
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Lower or Upper limits are missing.")
         # _end_if_
 
-        # Ensure lower_val parameter is float.
-        lower_val: float = float(lower_val)
+        # Make sure the limits are numpy arrays.
+        lower_lim = asarray(lower_lim, dtype=float)
+        upper_lim = asarray(upper_lim, dtype=float)
 
-        # Ensure upper_val parameter is float.
-        upper_val: float = float(upper_val)
-
-        # Ensure the order is correct.
-        if upper_val <= lower_val:
+        # Check if there is a size mismatch.
+        if lower_lim.size != upper_lim.size:
             raise ValueError(f"{self.__class__.__name__}: "
-                             f"The limit values are incorrect.")
-        # _end_if_
+                             f"Lower and Upper limits sizes do not match.")
+
+        # Check if the boundaries are set correctly.
+        if np_any(upper_lim <= lower_lim):
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Lower and Upper limits are set incorrectly.")
 
         # Assign variables to the _items placeholder.
         self._items: tuple[float, ...] = (
-            eta_pm, lower_val, upper_val
+            eta_pm, lower_lim, upper_lim
         )
     # _end_def_
 
@@ -79,25 +84,49 @@ class PolynomialMutator(MutationOperator):
             # Extract the variables from the placeholder.
             eta_pm, x_lower, x_upper = self._items
 
+            # Select a random position in the genome.
+            idx: int = self.rng.integers(n_genes, dtype=int)
+
+            # Copy the old value of the Gene.
+            old_value = individual[idx].value
+
+            # Local bounds lookups.
+            xl: float = x_lower[idx]
+            xu: float = x_upper[idx]
+
+            # Compute the difference.
+            bound_span: float = xu - xl
+
+            # Normalize variable to [0, 1]
+            # distance to bounds.
+            delta1 = (old_value - xl) / bound_span
+            delta2 = (xu - old_value) / bound_span
+
             # Generate a random number in [0, 1).
             rand_u: float = self.rng.random()
 
+            # Mutation power value.
+            m_power: float = 1.0 / (eta_pm + 1.0)
+
             # Calculate delta (the perturbation factor).
             if rand_u <= 0.5:
-                delta = ((2.0 * rand_u) ** (1.0 / (eta_pm + 1.0))) - 1.0
+
+                base_ratio = 1.0 - delta1
+                val = 2.0 * rand_u + (1.0 - 2.0 * rand_u) * (base_ratio ** (eta_pm + 1.0))
+                delta_q = (val ** m_power) - 1.0
             else:
-                delta = 1.0 - ((2.0 * (1.0 - rand_u)) ** (1.0 / (eta_pm + 1.0)))
+
+                base_ratio = 1.0 - delta2
+                val = 2.0 * (1.0 - rand_u) + 2.0 * (rand_u - 0.5) * (base_ratio ** (eta_pm + 1.0))
+                delta_q = 1.0 - (val ** m_power)
             # _end_if_
 
-            # Select a random position in the genome.
-            i: int = self.rng.integers(n_genes, dtype=int)
+            # Update old gene value.
+            new_value: float = old_value + delta_q * bound_span
 
-            # Get the old value of the Gene.
-            old_value = individual[i].value
-
-            # Update the genome of the offspring with the new value ensuring it
-            # stays within limits.
-            individual[i].value = clamp(old_value + delta * (xu - xl), xl, xu)
+            # Update the genome of the offspring with the
+            # new value ensuring it stays within limits.
+            individual[idx].value = clamp(new_value, xl, xu)
 
             # Set the fitness to None.
             individual.invalidate_fitness()
