@@ -84,6 +84,8 @@ class BlendCrossover(CrossoverOperator):
             p_alpha, xl, xu = self._items
 
             # Get the length of the chromosome.
+            # Here we assume that both parents
+            # have the same lengths.
             number_of_genes: int = len(parent1)
 
             # Preallocate 1st genome.
