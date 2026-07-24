@@ -142,13 +142,13 @@ class BlendCrossover(CrossoverOperator):
                 new_value_1 = min(max(new_value_1, x_lower), x_upper)
                 new_value_2 = min(max(new_value_2, x_lower), x_upper)
 
-                # Extract the gene functions.
-                gene_1_func = parent_1[i].func
-                gene_2_func = parent_2[i].func
+                # Extract the gene function. Note that at index 'i'
+                # both children will always have the exact same logic.
+                gene_function = parent_1[i].func
 
                 # Update the genome of the new offsprings with new Genes.
-                genome_1[i] = Gene(datum=new_value_1, func=gene_1_func)
-                genome_2[i] = Gene(datum=new_value_2, func=gene_2_func)
+                genome_1[i] = Gene(datum=new_value_1, func=gene_function)
+                genome_2[i] = Gene(datum=new_value_2, func=gene_function)
             # _end_for_
 
             # Create two NEW offsprings.
