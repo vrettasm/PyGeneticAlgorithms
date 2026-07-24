@@ -95,7 +95,7 @@ class BlendCrossover(CrossoverOperator):
             genome_2: list = [None] * number_of_genes
 
             # Generate uniform random numbers in the [0.0, 1.0).
-            random_uniform = self.rng.random(size=(number_of_genes, 2))
+            random_uniform: NDArray = self.rng.random(size=(number_of_genes, 2))
 
             # Extract locally the genomes of both parents.
             parent_1: list[Gene] = parent1.genome
