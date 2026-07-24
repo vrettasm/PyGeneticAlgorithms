@@ -139,8 +139,8 @@ class BlendCrossover(CrossoverOperator):
                 x_upper = xu[i]
 
                 # Ensure the new values are within limits.
-                new_value_1 = clamp(new_value_1, x_lower, x_upper)
-                new_value_2 = clamp(new_value_2, x_lower, x_upper)
+                new_value_1 = min(max(new_value_1, x_lower), x_upper)
+                new_value_2 = min(max(new_value_2, x_lower), x_upper)
 
                 # Extract the gene functions.
                 gene_1_func = parent_1[i].func
