@@ -29,9 +29,9 @@ class BlendCrossover(CrossoverOperator):
 
         :param p_alpha: (float).
 
-        :param lower_lim: (ArrayLike) lower limits value for the gene.
+        :param lower_lim: (ArrayLike) lower limit values for the genes.
 
-        :param upper_lim: (ArrayLike) upper limits value for the gene.
+        :param upper_lim: (ArrayLike) upper limit values for the genes.
         """
 
         # Call the super constructor with the provided initial value.
