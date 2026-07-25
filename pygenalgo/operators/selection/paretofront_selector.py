@@ -2,8 +2,8 @@ import numpy as np
 from numpy.typing import NDArray
 
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.utils.utilities import np_pareto_front_index
 from pygenalgo.operators.genetic_operator import increase_counter
-from pygenalgo.utils.utilities import np_cdist, np_pareto_front_index
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
 
@@ -15,19 +15,14 @@ class ParetoFrontSelector(SelectionOperator):
 
     """
 
-    def __init__(self, select_probability: float = 1.0, n_nearest: int = 5) -> None:
+    def __init__(self, select_probability: float = 1.0) -> None:
         """
         Construct a 'ParetoFrontSelector' object with a given probability value.
 
         :param select_probability: (float) in [0, 1].
-
-        :param n_nearest: the number of the nearest neighbors to consider (int).
         """
         # Call the super constructor with the provided initial value.
         super().__init__(selection_probability=select_probability)
-
-        # Number of neighbors should be at least 5.
-        self._items: int = max(5, int(n_nearest))
     # _end_def_
 
     @increase_counter
@@ -42,36 +37,50 @@ class ParetoFrontSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
 
-        # Extract the population positions to numpy array.
-        x_pos: NDArray = np.array([
-            p.values() for p in population
-        ], dtype=float)
-
         # Extract the population fitness to numpy array.
-        x_fit: NDArray = np.array([
-            (*p.fitness, n) for n, p in enumerate(population)
+        fitness: NDArray = np.asarray([
+            p.fitness for p in population
         ], dtype=float)
 
-        # Compute the pairwise Euclidean distances.
-        pairwise_dists: NDArray = np_cdist(x_pos, scaled=True)
+        # Size of the population.
+        n_size = len(population)
 
-        # Sort the distances and get their indexes.
-        x_sorted: NDArray = np.argsort(pairwise_dists, axis=1)
+        # Append a new column with the indexes.
+        x_fit = np.concatenate((fitness,
+                                np.arange(n_size, dtype=float)[:, None]),
+                               axis=1)
 
-        # Make a view of the first '_items'. This provides
-        # a notion of a 'neighborhood' for each chromosome.
-        neighborhood: NDArray = x_sorted[:, :self._items]
+        # Estimate the pareto front and get the indexes only.
+        pareto_front: NDArray = np_pareto_front_index(x_fit)
 
-        # Creates a list that holds the indexes of
-        # the parents that are on the Pareto front.
-        pareto_index: list[int] = [
-            np_pareto_front_index(x_fit[row])[0]
-            for row in neighborhood
-        ]
+        print(pareto_front.size)
+
+        # Check if we need more parents.
+        r = n_size - pareto_front.size
+        if r > 0:
+            # Make a boolean mask of size N.
+            mask = np.ones(n_size, dtype=bool)
+
+            # Set the values to False.
+            mask[pareto_front] = False
+
+            # This will hold the available.
+            remaining = np.nonzero(mask)[0]
+
+            # Sample with replacement from the
+            # remaining to fill the population.
+            extra = np.random.choice(remaining, size=r, replace=True)
+
+            # Append the extras to the population.
+            chosen = np.concatenate((pareto_front, extra), axis=0)
+        else:
+            # This is highly unlikely but it could happen.
+            chosen = pareto_front
+        # _end_if_
 
         # Return the new parents.
         return [
-            population[k] for k in pareto_index
+            population[int(k)] for k in chosen
         ]
     # _end_def_
 
