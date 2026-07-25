@@ -22,7 +22,7 @@ class MultiObjectiveGA(GenericGA):
         which specializes for multi-objective optimization problems.
     """
 
-    def __init__(self, select_probability: float, n_nearest: int, **kwargs) -> None:
+    def __init__(self, select_probability: float, **kwargs) -> None:
         """
         Default constructor of MultiObjectiveGA object, using fixed selection operator.
 
@@ -31,7 +31,7 @@ class MultiObjectiveGA(GenericGA):
         :param n_nearest: the number of the nearest neighbors to consider (int).
         """
         # Call the super constructor with all the input parameters.
-        super().__init__(select_op=ParetoFrontSelector(select_probability, n_nearest),
+        super().__init__(select_op=ParetoFrontSelector(select_probability),
                          **kwargs)
     # _end_def_
 
