@@ -126,8 +126,8 @@ def np_pareto_front_index(points: NDArray,
                                     ....................,
                                     (fk1, fk2, ..., fkn)]
 
-    :param minimize: whether we are solving minimization
-                     or maximization problem.
+    :param mode: "max" (maximize all objective) or
+                 "min" (minimize all objective).
 
     :return: array of indexes (from the points that lie
              on the Pareto front).
