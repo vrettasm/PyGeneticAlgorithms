@@ -190,7 +190,8 @@ def np_pareto_front_slow(points: NDArray) -> NDArray:
     return np.unique(points[is_pareto_optimal], axis=0)
 # _end_def_
 
-def np_pareto_front_index(points: NDArray) -> NDArray:
+def np_pareto_front_index(points: NDArray,
+                          minimize: bool = False) -> NDArray:
     """
     Fast (numpy - vectorized) function that calculates
     the Pareto optimal front from a given input points
