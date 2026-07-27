@@ -64,6 +64,9 @@ class ParetoFrontSelector(SelectionOperator):
             chosen: NDArray = pareto_indices
         # _end_if_
 
+        # Ensure the items are shuffled.
+        self.rng.shuffle(chosen)
+
         return [population[k] for k in chosen]
     # _end_def_
 
