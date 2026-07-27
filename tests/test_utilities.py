@@ -75,23 +75,19 @@ class TestUtilities(unittest.TestCase):
         # Generate random points.
         points = np.random.randn(n_points, n_dim)
 
+        # Remove duplicates.
+        x_points = np.unique(points, axis=0)
+
         # Extract the pareto points.
-        p_front = np_pareto_front(points)
-
-        # Generate a new set of the same points.
-        new_points = np.zeros((n_points, n_dim+1))
-        new_points[:, :-1] = points.copy()
-
-        # In the last column add an artificial index.
-        new_points[:, -1] = np.arange(n_points)
+        p_front = np_pareto_front(x_points)
 
         # Extract the indices of the pareto points.
-        i_front = np_pareto_front_index(new_points)
+        i_front = np_pareto_front_index(x_points)
 
         # The indexes should point to the same pareto points.
         for pp, k in zip(p_front, i_front):
             self.assertAlmostEqual(0.0,
-                                   np.sum(pp-new_points[k,:-1]))
+                                   np.sum(pp-x_points[k]))
     # _end_def_
 
 # _end_class_
