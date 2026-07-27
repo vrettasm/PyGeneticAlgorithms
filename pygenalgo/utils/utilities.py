@@ -225,12 +225,8 @@ def np_pareto_front_index(points: NDArray,
         axis=0, return_index=True
     )
 
-    # Use broadcasting to get all pairwise differences
-    # ignoring the very last column. Shape transitions
-    # from:
-    # (N, D-1) -> (N, 1, D-1) and
-    # (1, N, D-1) -> (N, N, D-1).
-    diff = unique_points[:, None, :-1] - unique_points[None, :, :-1]
+    # Extract the unique points from the set.
+    unique_points = points[unique_indices]
 
     # Point 'i' dominates point 'j' if and only if:
     # 1) i <= j in all objectives, AND
