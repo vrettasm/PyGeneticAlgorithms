@@ -140,7 +140,8 @@ def pareto_front(points: list[Sequence[Real]]) -> list:
     return list(pareto_points)
 # _end_def_
 
-def np_pareto_front_slow(points: NDArray) -> NDArray:
+def np_pareto_front_slow(points: NDArray,
+                         mode: str = "max") -> NDArray:
     """
     Simple function that calculates the Pareto optimal
     front points from a given input points numpy array.
@@ -149,6 +150,9 @@ def np_pareto_front_slow(points: NDArray) -> NDArray:
                                     (fy1, fy2, ..., fyn),
                                     ....................,
                                     (fk1, fk2, ..., fkn)]
+
+    :param mode: "max" (maximize all objective) or
+                 "min" (minimize all objective).
 
     NOTE:  Its space (memory) complexity grows linearly
     with the number of points in the NDArray: O(N), but
@@ -161,33 +165,50 @@ def np_pareto_front_slow(points: NDArray) -> NDArray:
         raise RuntimeError("Points must be a 2-D array.")
     # _end_if_
 
-    # Get the number of points.
-    num_points: int = points.shape[0]
+    # Sanity check.
+    if mode not in ("max", "min"):
+        raise ValueError("Mode must be either 'max' or 'min'.")
+    # _end_if_
+
+    # First remove the duplicate points
+    # to speed up the loop.
+    unique_points = np.unique(points, axis=0)
+
+    # Get the number of unique points.
+    n_points: int = unique_points.shape[0]
+
+    # Normalize to a single convention:
+    # maximize in all objectives function values.
+    x_points = unique_points if mode == "max" else -unique_points
 
     # Create an array of boolean to track Pareto optimal points.
-    is_pareto_optimal: NDArray = np.ones(num_points, dtype=bool)
+    is_pareto_optimal: NDArray = np.ones(n_points, dtype=bool)
 
-    for i, point_i in enumerate(points):
+    for i, point_i in enumerate(x_points):
+        # Quick escape to the next.
+        if not is_pareto_optimal[i]:
+            continue
+
         # Condition 1:
-        # Less than or equal to all objectives.
-        le_all: NDArray = np.all(points <= point_i, axis=1)
+        # Greater than or equal to all objectives.
+        ge_all: NDArray = np.all(x_points >= point_i, axis=1)
 
         # Condition 2:
-        # Less than at least in one objective.
-        lt_any: NDArray = np.any(points < point_i, axis=1)
+        # Greater than at least in one objective.
+        gt_any: NDArray = np.any(x_points > point_i, axis=1)
 
         # Combine the two conditions.
-        dominates_i: NDArray = le_all & lt_any
+        is_dominated: NDArray = ge_all & gt_any
 
         # Explicit self-exclusion.
-        dominates_i[i] = False
+        is_dominated[i] = False
 
         # Set the i-th flag appropriately.
-        is_pareto_optimal[i] = not np.any(dominates_i)
+        is_pareto_optimal[i] = not np.any(is_dominated)
     # _end_for_
 
-    # Return only the unique Pareto optimal points.
-    return np.unique(points[is_pareto_optimal], axis=0)
+    # Return only the unique Pareto points.
+    return unique_points[is_pareto_optimal]
 # _end_def_
 
 def np_pareto_front_index(points: NDArray,
@@ -219,29 +240,26 @@ def np_pareto_front_index(points: NDArray,
         points = -points
     # _end_if_
 
-    # Remove duplicate points to speed up.
-    _, unique_indices = np.unique(
-        np.round(points, decimals=12),
-        axis=0, return_index=True
-    )
+    # Remove duplicate points to speed up the routine.
+    _, unique_indices = np.unique(points, axis=0,
+                                  return_index=True)
 
     # Extract the unique points from the set.
     unique_points = points[unique_indices]
 
-    # Point 'i' dominates point 'j' if and only if:
-    # 1) i <= j in all objectives, AND
-    # 2) i < j  in at least one objective.
-    le_all = np.all(diff <= 0, axis=-1)
-    lt_any = np.any(diff < 0, axis=-1)
+    # Subtract all points (from all other points).
+    # WARNING: This step is O(N^2) in memory allocation.
+    diff = unique_points[None, :, :] - unique_points[:, None, :]
 
-    # Prepare the joint condition.
-    strictly_better = le_all & lt_any
+    # This condition is for maximization problems.
+    strictly_better = np.all(diff >= 0.0, axis=-1) & \
+                      np.any(diff >  0.0, axis=-1)
 
-    # A point is Pareto optimal if NO other point dominates it.
+    # Get the pareto points mask.
     is_pareto_unique = ~np.any(strictly_better, axis=0)
 
-    # Get the pareto optimal (unique) indexes.
-    return unique_points[is_pareto_unique, -1].astype(int)
+    # Return the indexes.
+    return unique_indices[is_pareto_unique]
 # _end_def_
 
 def np_pareto_front(points: NDArray,
@@ -265,14 +283,12 @@ def np_pareto_front(points: NDArray,
     :return: array of points that lie on the Pareto front.
     """
 
-    # Prepare the joint condition.
-    strictly_better = le_all & lt_any
+    # First get the indexes of the pareto front points,
+    # using the helper function.
+    idx = np_pareto_front_index(points, minimize=minimize)
 
-    # A point is Pareto optimal if NO other point dominates it.
-    is_pareto_unique = ~np.any(strictly_better, axis=0)
-
-    # Get the pareto optimal (unique) points.
-    return unique_points[is_pareto_unique]
+    # Then return the actual points.
+    return points[idx]
 # _end_def_
 
 def cost_function(func: Callable = None, minimize: bool = False):
