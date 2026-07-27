@@ -44,24 +44,34 @@ class ParetoFrontSelector(SelectionOperator):
         # Extract original index positions directly.
         # Note: The fitness values have already been set for
         # maximization so here the default mode = "max" is assumed.
-        pareto_indices: NDArray = np_pareto_front_index(fitness_array)
+        pareto_idx: NDArray = np_pareto_front_index(fitness_array)
 
         # Remaining size.
-        r_size: int = n_size - pareto_indices.size
+        r_size: int = n_size - pareto_idx.size
 
         # Check if the remaining size is positive.
         if r_size > 0:
-            # Fast extraction of the remaining indices using delete.
-            remaining: NDArray = np.delete(np.arange(n_size), pareto_indices)
+            # Fast extraction of the remaining indices.
+            remaining_idx: NDArray = np.setdiff1d(np.arange(n_size),
+                                                  pareto_idx,
+                                                  assume_unique=True)
+            # Compute the half (of the remaining).
+            half_rem: int = r_size // 2
 
-            # Chose 'r_size' values directly from the remaining indices.
-            extra: NDArray = self.rng.choice(remaining, size=r_size, replace=True)
+            # Select randomly some elements from the remaining.
+            extra_1: NDArray = self.rng.choice(remaining_idx,
+                                               size=half_rem,
+                                               replace=True)
 
-            # Combined fast concatenation and array permutation.
-            chosen: NDArray = self.rng.permutation(np.concatenate((pareto_indices, extra)))
+            # Select randomly the other half from the pareto elements.
+            extra_2: NDArray = self.rng.choice(pareto_idx,
+                                               size=r_size - half_rem,
+                                               replace=True)
+            # Combined fast concatenation.
+            chosen: NDArray = np.concatenate((pareto_idx, extra_1, extra_2))
         else:
             # Getting here is highly unlikely.
-            chosen: NDArray = pareto_indices
+            chosen: NDArray = pareto_idx
         # _end_if_
 
         # Ensure the items are shuffled.
