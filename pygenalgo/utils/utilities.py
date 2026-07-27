@@ -129,8 +129,8 @@ def np_pareto_front_index(points: NDArray,
     :param mode: "max" (maximize all objective) or
                  "min" (minimize all objective).
 
-    :return: array of indexes (from the points that lie
-             on the Pareto front).
+    :return: array of indexes (from the points that lie on
+             the Pareto front).
     """
     # Sanity check.
     if points.ndim != 2:
