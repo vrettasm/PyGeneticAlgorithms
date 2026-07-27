@@ -31,57 +31,40 @@ class ParetoFrontSelector(SelectionOperator):
         Select the individuals, from the input population that will be passed on
         to the next genetic operations of crossover and mutation to form the new
         population of solutions.
-
-        :param population: a list of chromosomes to select the parents from.
-
-        :return: the selected parents population (as list of chromosomes).
         """
-
-        # Extract the population fitness to numpy array.
-        fitness: NDArray = np.asarray([
+        # Properly build a 2D array from
+        # the fitness tuples (objectives).
+        fitness_array: NDArray = np.array([
             p.fitness for p in population
         ], dtype=float)
 
-        # Size of the population.
-        n_size = len(population)
+        # Total size of the population.
+        n_size: int = len(population)
 
-        # Append a new column with the indexes.
-        x_fit = np.concatenate((fitness,
-                                np.arange(n_size, dtype=float)[:, None]),
-                               axis=1)
+        # Extract original index positions directly.
+        # Note: The fitness values have already been set for
+        # maximization so here the default mode = "max" is assumed.
+        pareto_indices: NDArray = np_pareto_front_index(fitness_array)
 
-        # Estimate the pareto front and get the indexes only.
-        pareto_front: NDArray = np_pareto_front_index(x_fit)
+        # Remaining size.
+        r_size: int = n_size - pareto_indices.size
 
-        print(pareto_front.size)
+        # Check if the remaining size is positive.
+        if r_size > 0:
+            # Fast extraction of the remaining indices using delete.
+            remaining: NDArray = np.delete(np.arange(n_size), pareto_indices)
 
-        # Check if we need more parents.
-        r = n_size - pareto_front.size
-        if r > 0:
-            # Make a boolean mask of size N.
-            mask = np.ones(n_size, dtype=bool)
+            # Chose 'r_size' values directly from the remaining indices.
+            extra: NDArray = self.rng.choice(remaining, size=r_size, replace=True)
 
-            # Set the values to False.
-            mask[pareto_front] = False
-
-            # This will hold the available.
-            remaining = np.nonzero(mask)[0]
-
-            # Sample with replacement from the
-            # remaining to fill the population.
-            extra = np.random.choice(remaining, size=r, replace=True)
-
-            # Append the extras to the population.
-            chosen = np.concatenate((pareto_front, extra), axis=0)
+            # Combined fast concatenation and array permutation.
+            chosen: NDArray = self.rng.permutation(np.concatenate((pareto_indices, extra)))
         else:
-            # This is highly unlikely but it could happen.
-            chosen = pareto_front
+            # Getting here is highly unlikely.
+            chosen: NDArray = pareto_indices
         # _end_if_
 
-        # Return the new parents.
-        return [
-            population[int(k)] for k in chosen
-        ]
+        return [population[k] for k in chosen]
     # _end_def_
 
 # _end_class_
