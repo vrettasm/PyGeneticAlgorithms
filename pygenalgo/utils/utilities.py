@@ -76,8 +76,7 @@ def np_pareto_front_slow(points: NDArray,
         raise ValueError("Mode must be either 'max' or 'min'.")
     # _end_if_
 
-    # First remove the duplicate points
-    # to speed up the loop.
+    # First remove the duplicate points to speed up the loop.
     unique_points = np.unique(points, axis=0)
 
     # Get the number of unique points.
