@@ -187,7 +187,7 @@ def np_pareto_front_slow(points: NDArray,
     for i, point_i in enumerate(x_points):
 
         # Condition 1:
-        # Greater than or equal to all objectives.
+        # Greater than or equal in all objectives.
         ge_all: NDArray = np.all(x_points >= point_i, axis=1)
 
         # Condition 2:
