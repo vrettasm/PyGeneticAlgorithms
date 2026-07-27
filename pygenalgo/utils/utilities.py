@@ -137,9 +137,9 @@ def np_pareto_front_index(points: NDArray,
         raise RuntimeError("Points must be a 2-D array.")
     # _end_if_
 
-    # Check objective.
-    if minimize:
-        points = -points
+    # Sanity check.
+    if mode not in ("max", "min"):
+        raise ValueError("Mode must be either 'max' or 'min'.")
     # _end_if_
 
     # Remove duplicate points to speed up the routine.
