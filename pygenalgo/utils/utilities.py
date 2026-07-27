@@ -185,9 +185,6 @@ def np_pareto_front_slow(points: NDArray,
     is_pareto_optimal: NDArray = np.ones(n_points, dtype=bool)
 
     for i, point_i in enumerate(x_points):
-        # Quick escape to the next.
-        if not is_pareto_optimal[i]:
-            continue
 
         # Condition 1:
         # Greater than or equal to all objectives.
