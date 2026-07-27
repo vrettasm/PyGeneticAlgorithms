@@ -203,8 +203,11 @@ def np_pareto_front_index(points: NDArray,
                                     ....................,
                                     (fk1, fk2, ..., fkn)]
 
-    :return: array of indexes (from the points that lie on
-             the Pareto front).
+    :param minimize: whether we are solving minimization
+                     or maximization problem.
+
+    :return: array of indexes (from the points that lie
+             on the Pareto front).
     """
     # Sanity check.
     if points.ndim != 2:
