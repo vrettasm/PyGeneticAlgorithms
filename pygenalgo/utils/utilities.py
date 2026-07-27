@@ -23,8 +23,8 @@ from numpy.typing import NDArray
 from numpy.random import Generator
 
 # Public interface.
-__all__ = ["pareto_front", "cost_function", "np_cdist", "np_pareto_front",
-           "clamp", "two_indices_fast", "np_pareto_front_index"]
+__all__ = ["cost_function", "np_cdist", "two_indices_fast",
+           "np_pareto_front", "clamp",  "np_pareto_front_index"]
 
 # Declare a union type.
 Number = Union[int, float]
