@@ -13,10 +13,8 @@ Metadata:
     License: GPL-3
 """
 
-from numbers import Real
 from typing import Callable, Union
 from functools import wraps, partial
-from collections.abc import Sequence
 
 import numpy as np
 from numpy.typing import NDArray
@@ -142,30 +140,33 @@ def np_pareto_front_index(points: NDArray,
         raise ValueError("Mode must be either 'max' or 'min'.")
     # _end_if_
 
-    # Remove duplicate points to speed up the routine.
-    _, unique_indices = np.unique(points, axis=0,
-                                  return_index=True)
+    # Normalize to a single convention. Here we
+    # maximize in all objectives function values.
+    x_points = points if mode == "max" else -points
 
-    # Extract the unique points from the set.
-    unique_points = points[unique_indices]
+    # Remove duplicate points to speed up the
+    # routine and keep track of their indices.
+    unique_points, unique_indices = np.unique(
+        x_points, axis=0, return_index=True
+    )
 
     # Subtract all points (from all other points).
     # WARNING: This step is O(N^2) in memory allocation.
-    diff = unique_points[None, :, :] - unique_points[:, None, :]
+    diff = unique_points[:, None, :] - unique_points[None, :, :]
 
     # This condition is for maximization problems.
     strictly_better = np.all(diff >= 0.0, axis=-1) & \
                       np.any(diff >  0.0, axis=-1)
 
     # Get the pareto points mask.
-    is_pareto_unique = ~np.any(strictly_better, axis=0)
+    is_pareto = ~np.any(strictly_better, axis=0)
 
     # Return the indexes.
-    return unique_indices[is_pareto_unique]
+    return unique_indices[is_pareto]
 # _end_def_
 
 def np_pareto_front(points: NDArray,
-                    minimize: bool = False) -> NDArray:
+                    mode: str = "max") -> NDArray:
     """
     Fast (numpy - vectorized) function that calculates
     the Pareto optimal front points from a given input
@@ -176,8 +177,8 @@ def np_pareto_front(points: NDArray,
                                     ....................,
                                     (fk1, fk2, ..., fkn)]
 
-    :param minimize: whether we are solving minimization
-                     or maximization problem.
+    :param mode: "max" (maximize all objective) or
+                 "min" (minimize all objective).
 
     NOTE: Its memory complexity grows quadratically
     with the number of points in the NDArray: O(N^2)!
@@ -187,7 +188,7 @@ def np_pareto_front(points: NDArray,
 
     # First get the indexes of the pareto front points,
     # using the helper function.
-    idx = np_pareto_front_index(points, minimize=minimize)
+    idx = np_pareto_front_index(points, mode=mode)
 
     # Then return the actual points.
     return points[idx]
