@@ -198,10 +198,10 @@ def np_pareto_front_index(points: NDArray,
     numpy array, but returns their indices instead  of
     their actual values.
 
-    :param points: array of points [(fx1, fx2, ..., fxn, 0),
-                                    (fy1, fy2, ..., fyn, 1),
-                                    .......................,
-                                    (fk1, fk2, ..., fkn, n)]
+    :param points: array of points [(fx1, fx2, ..., fxn),
+                                    (fy1, fy2, ..., fyn),
+                                    ....................,
+                                    (fk1, fk2, ..., fkn)]
 
     :return: array of indexes (from the points that lie on
              the Pareto front).
