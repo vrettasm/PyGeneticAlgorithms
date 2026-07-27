@@ -214,10 +214,15 @@ def np_pareto_front_index(points: NDArray,
         raise RuntimeError("Points must be a 2-D array.")
     # _end_if_
 
-    # Remove any duplicate points before
-    # continue to speed up the operations.
-    unique_points = np.unique(
-        np.round(points, decimals=12), axis=0
+    # Check objective.
+    if minimize:
+        points = -points
+    # _end_if_
+
+    # Remove duplicate points to speed up.
+    _, unique_indices = np.unique(
+        np.round(points, decimals=12),
+        axis=0, return_index=True
     )
 
     # Use broadcasting to get all pairwise differences
