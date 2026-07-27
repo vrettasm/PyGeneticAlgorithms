@@ -268,28 +268,6 @@ def np_pareto_front(points: NDArray,
 
     :return: array of points that lie on the Pareto front.
     """
-    # Sanity check.
-    if points.ndim != 2:
-        raise RuntimeError("Points must be a 2-D array.")
-    # _end_if_
-
-    # Remove any duplicate points before
-    # continue to speed up the operations.
-    unique_points = np.unique(
-        np.round(points, decimals=12), axis=0
-    )
-
-    # Use broadcasting to get all pairwise differences
-    # Shape transitions from:
-    # (N, D) -> (N, 1, D) and
-    # (1, N, D) -> (N, N, D).
-    diff = unique_points[:, None, :] - unique_points[None, :, :]
-
-    # Point 'i' dominates point 'j' if and only if:
-    # 1) i <= j in all objectives, AND
-    # 2) i < j  in at least one objective.
-    le_all = np.all(diff <= 0, axis=-1)
-    lt_any = np.any(diff < 0, axis=-1)
 
     # Prepare the joint condition.
     strictly_better = le_all & lt_any
