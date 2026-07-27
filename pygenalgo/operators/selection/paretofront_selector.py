@@ -42,8 +42,9 @@ class ParetoFrontSelector(SelectionOperator):
         n_size: int = len(population)
 
         # Extract original index positions directly.
-        # Note: The fitness values have already been set for
-        # maximization so here the default mode = "max" is assumed.
+        # Note: The fitness values have already been
+        # set for maximization : so here the default
+        # mode = "max" is assumed.
         pareto_idx: NDArray = np_pareto_front_index(fitness_array)
 
         # Remaining size.
