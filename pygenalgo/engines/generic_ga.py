@@ -496,7 +496,7 @@ class GenericGA:
         return fitness_values, found_solution
     # _end_def_
 
-    def run(self, **kwargs) -> None:
+    def run(self, *args, **kwargs) -> None:
         """
         Main method of the Generic GA class
         that implements the evolutionary routine.
@@ -505,11 +505,11 @@ class GenericGA:
                                   f"You should implement this method!")
     # _end_def_
 
-    def __call__(self, **kwargs) -> None:
+    def __call__(self, *args, **kwargs) -> None:
         """
         This method is only a wrapper of the "run" method.
         """
-        return self.run(**kwargs)
+        return self.run(*args, **kwargs)
     # _end_def_
 
 # _end_class_
