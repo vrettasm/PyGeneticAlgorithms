@@ -260,6 +260,9 @@ def np_pareto_front(points: NDArray,
                                     ....................,
                                     (fk1, fk2, ..., fkn)]
 
+    :param minimize: whether we are solving minimization
+                     or maximization problem.
+
     NOTE: Its memory complexity grows quadratically
     with the number of points in the NDArray: O(N^2)!
 
