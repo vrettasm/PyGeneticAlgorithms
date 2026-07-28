@@ -38,8 +38,8 @@ class ParetoFrontSelector(SelectionOperator):
         to the next genetic operations of crossover and mutation to form the new
         population of solutions.
         """
-        # Properly build a 2D array from
-        # the fitness tuples (objectives).
+        # Build a 2D array from the fitness
+        # tuples (optimization objectives).
         fitness_array: NDArray = np.array([
             p.fitness for p in population
         ], dtype=float)
