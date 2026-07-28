@@ -47,44 +47,6 @@ class ParetoFrontSelector(SelectionOperator):
         # Total size of the population.
         n_size: int = len(population)
 
-        # Local copy of random choice.
-        choose_randomly = self.rng.choice
-
-        # Number of contestants.
-        n_contestants = self._items
-
-        # Select the contestants for the tournaments.
-        contestants: NDArray = np.array([
-            choose_randomly(n_size, size=n_contestants,
-                            replace=False, shuffle=False)
-            for _ in range(n_size)
-        ], dtype=int)
-
-        # Select the new indices via Tournament selection.
-        chosen: list[int] = [
-            row[np_pareto_front_index(fitness_array[row])[0]]
-            for row in contestants
-        ]
-
-        return [population[k] for k in chosen]
-    # _end_def_
-
-    @increase_counter
-    def select_22(self, population: list[Chromosome]) -> list[Chromosome]:
-        """
-        Select the individuals, from the input population that will be passed on
-        to the next genetic operations of crossover and mutation to form the new
-        population of solutions.
-        """
-        # Properly build a 2D array from
-        # the fitness tuples (objectives).
-        fitness_array: NDArray = np.array([
-            p.fitness for p in population
-        ], dtype=float)
-
-        # Total size of the population.
-        n_size: int = len(population)
-
         # Extract original index positions directly.
         # Note: The fitness values have already been
         # set for maximization : so here the default
