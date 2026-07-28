@@ -1,4 +1,3 @@
-from math import isnan
 from os import cpu_count
 from operator import attrgetter
 from collections import defaultdict
