@@ -65,16 +65,9 @@ class ParetoFrontSelector(SelectionOperator):
             # Local copy of random choice.
             choose_randomly = self.rng.choice
 
-            # Number of contestants.
-            n_contestants = self._items
-
-            # Check if we have enough remaining indices.
-            if remaining_idx.size < n_contestants:
-
-                # Select all the remaining indices.
-                contestants: NDArray = np.tile(remaining_idx,
-                                               (r_size, 1))
-            else:
+            # Local number of contestants. Ensure that this
+            # number is not higher than the population size.
+            n_contestants: int = min(self._items, r_size)
 
                 # Select the contestants for the tournaments.
                 contestants: NDArray = np.array([
