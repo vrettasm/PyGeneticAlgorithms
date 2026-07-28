@@ -53,7 +53,7 @@ class ParetoTournamentSelector(SelectionOperator):
         # Local copy of random choice.
         choose_randomly = self.rng.choice
 
-        # Local number of contestants. We ensure that this
+        # Local number of contestants. Ensure that this
         # number is not higher than the population size.
         n_contestants: int = min(self._items, n_size)
 
