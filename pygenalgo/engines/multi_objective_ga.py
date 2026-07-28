@@ -5,10 +5,9 @@ from pygenalgo.engines import logger
 from pygenalgo.engines.generic_ga import GenericGA
 from pygenalgo.utils.auxiliary import (apply_corrections,
                                        average_hamming_distance)
-
-from pygenalgo.operators.mutation.meta_mutator import MetaMutator
-from pygenalgo.operators.crossover.meta_crossover import MetaCrossover
-from pygenalgo.operators.selection.paretofront_selector import ParetoFrontSelector
+# Supported operators.
+from pygenalgo.operators.selection.pareto_front_selector import ParetoFrontSelector
+from pygenalgo.operators.selection.pareto_tournament_selector import ParetoTournamentSelector
 
 # Public interface.
 __all__ = ["MultiObjectiveGA"]
@@ -24,17 +23,18 @@ class MultiObjectiveGA(GenericGA):
         the objective values).
     """
 
-    def __init__(self, select_probability: float, **kwargs) -> None:
+    def __init__(self, **kwargs) -> None:
         """
-        Default constructor of MultiObjectiveGA object, using fixed selection operator.
-
-        :param select_probability: (float) in [0, 1].
-
-        :param n_nearest: the number of the nearest neighbors to consider (int).
+        Default constructor of MultiObjectiveGA object.
         """
-        # Call the super constructor with all the input parameters.
-        super().__init__(select_op=ParetoFrontSelector(select_probability),
-                         **kwargs)
+        # Call the super constructor with the input parameters.
+        super().__init__(**kwargs)
+
+        # Here we will check if the select operator is supported.
+        if not isinstance(self._select_op, (ParetoFrontSelector,
+                                            ParetoTournamentSelector)):
+            raise ValueError(f"The select_op: {self._select_op.__class__.__name__} "
+                             f"is not supported in MultiObjectiveGA.")
     # _end_def_
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
