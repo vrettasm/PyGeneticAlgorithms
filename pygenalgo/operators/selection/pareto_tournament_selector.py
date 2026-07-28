@@ -65,7 +65,7 @@ class ParetoTournamentSelector(SelectionOperator):
             for _ in range(n_size)
         ], dtype=int)
 
-        #  Preallocate the chosen list.
+        # Preallocate the chosen list.
         chosen: list[int] = n_size * [None]
 
         # Select the new indices iteratively.
