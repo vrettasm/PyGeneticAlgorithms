@@ -1,6 +1,10 @@
 import time
 from typing import Optional
 
+from numpy.typing import NDArray
+from numpy import (array, nanmean, nanstd,
+                   isfinite, array2string)
+
 from pygenalgo.engines import logger
 from pygenalgo.engines.generic_ga import GenericGA
 from pygenalgo.utils.auxiliary import (apply_corrections,
