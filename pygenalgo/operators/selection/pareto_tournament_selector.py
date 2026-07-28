@@ -26,7 +26,8 @@ class ParetoTournamentSelector(SelectionOperator):
 
         :param select_probability: (float) in [0, 1].
 
-        :param n_contestants: the number of participants in the tournament (int).
+        :param n_contestants: the number of participants in
+                              the tournament (int).
         """
         # Call the super constructor with the provided initial value.
         super().__init__(selection_probability=select_probability)
