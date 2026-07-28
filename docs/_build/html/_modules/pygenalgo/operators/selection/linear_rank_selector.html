@@ -109,14 +109,18 @@
         <span class="c1"># Call the super constructor with the provided initial value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">selection_probability</span><span class="o">=</span><span class="n">select_probability</span><span class="p">)</span>
 
-        <span class="c1"># Sanity check for selection pressure parameter.</span>
+        <span class="c1"># Ensure input is float.</span>
+        <span class="c1"># WARNING: A value error will be raised if cast fails.</span>
+        <span class="n">eta</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">eta</span><span class="p">)</span>
+
+        <span class="c1"># Sanity check (correct range).</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="mf">1.0</span> <span class="o">&lt;=</span> <span class="n">eta</span> <span class="o">&lt;=</span> <span class="mf">2.0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                              <span class="sa">f</span><span class="s2">&quot;Selection pressure </span><span class="si">{</span><span class="n">eta</span><span class="si">}</span><span class="s2"> must be between 1.0 and 2.0.&quot;</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Store the pressure adjustable parameter.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">eta</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eta</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="LinearRankSelector.probabilities">

@@ -129,10 +129,11 @@
                 <span class="c1"># Perform the migration with a predefined probability.</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
+                    <span class="c1"># Get the population size of the island.</span>
+                    <span class="n">pop_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">island_i</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+
                     <span class="c1"># Select randomly one individual chromosome.</span>
-                    <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span>
-                                                 <span class="nb">len</span><span class="p">(</span><span class="n">island_i</span><span class="o">.</span><span class="n">population</span><span class="p">),</span>
-                                                 <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+                    <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pop_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
                     <span class="c1"># Replace the randomly selected chromosome with</span>
                     <span class="c1"># the pre-selected best one from the list above.</span>

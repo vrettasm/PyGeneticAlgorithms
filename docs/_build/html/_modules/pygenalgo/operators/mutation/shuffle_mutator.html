@@ -110,13 +110,11 @@
         <span class="c1"># a uniformly random value, make the changes.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
-            <span class="c1"># Select two random (distinct) values.</span>
-            <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">two_indices_fast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">))</span>
+            <span class="c1"># Get the size of the chromosome.</span>
+            <span class="n">n_genes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
 
-            <span class="c1"># Swap indices (if necessary).</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">j</span><span class="p">:</span>
-                <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span>
-            <span class="c1"># _end_if_</span>
+            <span class="c1"># Select two random (distinct) values in ascending order.</span>
+            <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">two_indices_fast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="p">,</span> <span class="n">n_genes</span><span class="p">,</span> <span class="n">in_order</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
             <span class="c1"># Make a slice list of the genes</span>
             <span class="c1"># we want to shuffle: i -&gt; j.</span>
@@ -128,7 +126,7 @@
             <span class="c1"># Put back the shuffled items.</span>
             <span class="n">individual</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">sliced_chromosome</span>
 
-            <span class="c1"># Set the fitness to NaN.</span>
+            <span class="c1"># Set the fitness to None.</span>
             <span class="n">individual</span><span class="o">.</span><span class="n">invalidate_fitness</span><span class="p">()</span>
 
             <span class="c1"># Increase the mutator counter.</span>

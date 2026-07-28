@@ -73,7 +73,7 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Description:</span>
 
-<span class="sd">    Includes utility functions that used throughout pygenalgo.</span>
+<span class="sd">    Includes utility functions that used throughout PyGenAlgo.</span>
 
 <span class="sd">Author:</span>
 <span class="sd">    Michail D. Vrettas, PhD</span>
@@ -85,18 +85,16 @@
 <span class="sd">    License: GPL-3</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Real</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span><span class="p">,</span> <span class="n">partial</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generator</span>
 
 <span class="c1"># Public interface.</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pareto_front&quot;</span><span class="p">,</span> <span class="s2">&quot;cost_function&quot;</span><span class="p">,</span> <span class="s2">&quot;np_cdist&quot;</span><span class="p">,</span> <span class="s2">&quot;clamp&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;pareto_dominance&quot;</span><span class="p">,</span> <span class="s2">&quot;np_pareto_front&quot;</span><span class="p">,</span> <span class="s2">&quot;two_indices_fast&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;cost_function&quot;</span><span class="p">,</span> <span class="s2">&quot;np_cdist&quot;</span><span class="p">,</span> <span class="s2">&quot;two_indices_fast&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;np_pareto_front&quot;</span><span class="p">,</span> <span class="s2">&quot;clamp&quot;</span><span class="p">,</span>  <span class="s2">&quot;np_pareto_front_index&quot;</span><span class="p">]</span>
 
 <span class="c1"># Declare a union type.</span>
 <span class="n">Number</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
@@ -121,117 +119,23 @@
 
 <span class="c1"># _end_def_</span>
 
-<div class="viewcode-block" id="pareto_dominance">
-<a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.pareto_dominance">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">pareto_dominance</span><span class="p">(</span><span class="n">point_a</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Real</span><span class="p">],</span>
-                     <span class="n">point_b</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Real</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">np_pareto_front_slow</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">,</span>
+                         <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;max&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Implements a shortcut version of the Pareto dominance condition:</span>
-
-<span class="sd">    all(p &lt;= q for p, q in zip(point_i, point_j)) &amp;&amp;</span>
-<span class="sd">    any(p &lt; q for p, q in zip(point_i, point_j))</span>
-
-<span class="sd">    NOTE: It is assumed that both points have the same size (length).</span>
-
-<span class="sd">    :param point_a: the  first point (as tuple or list).</span>
-
-<span class="sd">    :param point_b: the second point (as tuple or list).</span>
-
-<span class="sd">    :return: if the condition is satisfied.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Second condition.</span>
-    <span class="n">strictly_better</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-
-    <span class="c1"># Scan both points elementwise.</span>
-    <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">point_a</span><span class="p">,</span> <span class="n">point_b</span><span class="p">):</span>
-        <span class="c1"># Return immediately.</span>
-        <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">q</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="c1"># _end_if_</span>
-
-        <span class="c1"># Check if the second condition</span>
-        <span class="c1"># is satisfied.</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">strictly_better</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="n">q</span><span class="p">:</span>
-            <span class="c1"># Switch the flag value</span>
-            <span class="c1"># to avoid re-setting it.</span>
-            <span class="n">strictly_better</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="c1"># _end_for_</span>
-
-    <span class="c1"># If we got here return only the second condition.</span>
-    <span class="k">return</span> <span class="n">strictly_better</span></div>
-
-<span class="c1"># _end_def_</span>
-
-<div class="viewcode-block" id="pareto_front">
-<a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.pareto_front">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">pareto_front</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Simple function that calculates the Pareto (optimal)</span>
-<span class="sd">    front points from a given input points list.</span>
-
-<span class="sd">    NOTE: The function is working directly with lists,</span>
-<span class="sd">    even though it can be optimized using numpy arrays.</span>
-
-<span class="sd">    :param points: list of points [(fx1, fx2, ..., fxn),</span>
-<span class="sd">                                   (fy1, fy2, ..., fyn),</span>
-<span class="sd">                                   ....................,</span>
-<span class="sd">                                   (fk1, fk2, ..., fkn)]</span>
-
-<span class="sd">    :return: List of points that lie on the Pareto front.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Get the size of the first point.</span>
-    <span class="n">n_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">points</span> <span class="k">else</span> <span class="mi">0</span>
-
-    <span class="c1"># Sanity check.</span>
-    <span class="k">if</span> <span class="n">n_size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n_size</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;All points must have the same size.&quot;</span><span class="p">)</span>
-    <span class="c1"># _end_if_</span>
-
-    <span class="c1"># Create a set that will hold</span>
-    <span class="c1"># all the Pareto front points.</span>
-    <span class="n">pareto_points</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-
-    <span class="c1"># Iterate through every point in the list.</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
-
-        <span class="c1"># Set the pareto optimal flag to True.</span>
-        <span class="n">is_pareto_optimal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
-
-        <span class="c1"># Compare it against every other point.</span>
-        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">point_j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
-
-            <span class="c1"># Check if &quot;dominance&quot; condition is satisfied.</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span> <span class="ow">and</span> <span class="n">pareto_dominance</span><span class="p">(</span><span class="n">point_i</span><span class="p">,</span> <span class="n">point_j</span><span class="p">):</span>
-                <span class="c1"># We swap the flag value.</span>
-                <span class="n">is_pareto_optimal</span> <span class="o">=</span> <span class="kc">False</span>
-
-                <span class="c1"># Break the internal loop and</span>
-                <span class="c1"># continue to the next point.</span>
-                <span class="k">break</span>
-        <span class="c1"># _end_for_</span>
-
-        <span class="c1"># If we get here and the flag hasn&#39;t changed</span>
-        <span class="c1"># it means that &#39;point_i&#39; is on the frontier.</span>
-        <span class="k">if</span> <span class="n">is_pareto_optimal</span><span class="p">:</span>
-            <span class="n">pareto_points</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">point_i</span><span class="p">)</span>
-    <span class="c1"># _end_for_</span>
-
-    <span class="c1"># Return the points as list.</span>
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">pareto_points</span><span class="p">)</span></div>
-
-<span class="c1"># _end_def_</span>
-
-<div class="viewcode-block" id="np_pareto_front">
-<a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.np_pareto_front">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">np_pareto_front</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Simple function that calculates the Pareto (optimal)</span>
+<span class="sd">    Simple function that calculates the Pareto optimal</span>
 <span class="sd">    front points from a given input points numpy array.</span>
 
 <span class="sd">    :param points: array of points [(fx1, fx2, ..., fxn),</span>
 <span class="sd">                                    (fy1, fy2, ..., fyn),</span>
 <span class="sd">                                    ....................,</span>
 <span class="sd">                                    (fk1, fk2, ..., fkn)]</span>
+
+<span class="sd">    :param mode: &quot;max&quot; (maximize all objective) or</span>
+<span class="sd">                 &quot;min&quot; (minimize all objective).</span>
+
+<span class="sd">    NOTE:  Its space (memory) complexity grows linearly</span>
+<span class="sd">    with the number of points in the NDArray: O(N), but</span>
+<span class="sd">    it is much slower than its numpy vectorized version.</span>
 
 <span class="sd">    :return: array of points that lie on the Pareto front.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -240,33 +144,134 @@
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Points must be a 2-D array.&quot;</span><span class="p">)</span>
     <span class="c1"># _end_if_</span>
 
-    <span class="c1"># Get the number of points.</span>
-    <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># Sanity check.</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Mode must be either &#39;max&#39; or &#39;min&#39;.&quot;</span><span class="p">)</span>
+    <span class="c1"># _end_if_</span>
+
+    <span class="c1"># First remove the duplicate points to speed up the loop.</span>
+    <span class="n">unique_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Get the number of unique points.</span>
+    <span class="n">n_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">unique_points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Normalize to a single convention:</span>
+    <span class="c1"># maximize in all objectives function values.</span>
+    <span class="n">x_points</span> <span class="o">=</span> <span class="n">unique_points</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;max&quot;</span> <span class="k">else</span> <span class="o">-</span><span class="n">unique_points</span>
 
     <span class="c1"># Create an array of boolean to track Pareto optimal points.</span>
-    <span class="n">is_pareto_optimal</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">is_pareto_optimal</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x_points</span><span class="p">):</span>
+
         <span class="c1"># Condition 1:</span>
-        <span class="c1"># Less than or equal to all objectives.</span>
-        <span class="n">le_all</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">points</span> <span class="o">&lt;=</span> <span class="n">point_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Greater than or equal in all objectives.</span>
+        <span class="n">ge_all</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">x_points</span> <span class="o">&gt;=</span> <span class="n">point_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># Condition 2:</span>
-        <span class="c1"># Less than at least in one objective.</span>
-        <span class="n">lt_any</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">points</span> <span class="o">&lt;</span> <span class="n">point_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Greater than at least in one objective.</span>
+        <span class="n">gt_any</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">x_points</span> <span class="o">&gt;</span> <span class="n">point_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># Combine the two conditions.</span>
-        <span class="n">dominates_i</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">le_all</span> <span class="o">&amp;</span> <span class="n">lt_any</span>
+        <span class="n">is_dominated</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">ge_all</span> <span class="o">&amp;</span> <span class="n">gt_any</span>
 
         <span class="c1"># Explicit self-exclusion.</span>
-        <span class="n">dominates_i</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">is_dominated</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="c1"># Set the i-th flag appropriately.</span>
-        <span class="n">is_pareto_optimal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">dominates_i</span><span class="p">)</span>
+        <span class="n">is_pareto_optimal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">is_dominated</span><span class="p">)</span>
     <span class="c1"># _end_for_</span>
 
-    <span class="c1"># Return only the unique Pareto optimal points.</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="n">is_pareto_optimal</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+    <span class="c1"># Return only the unique Pareto points.</span>
+    <span class="k">return</span> <span class="n">unique_points</span><span class="p">[</span><span class="n">is_pareto_optimal</span><span class="p">]</span>
+<span class="c1"># _end_def_</span>
+
+<div class="viewcode-block" id="np_pareto_front_index">
+<a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.np_pareto_front_index">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">np_pareto_front_index</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">,</span>
+                          <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;max&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fast (numpy - vectorized) function that calculates</span>
+<span class="sd">    the Pareto optimal front from a given input points</span>
+<span class="sd">    numpy array, but returns their indices instead  of</span>
+<span class="sd">    their actual values.</span>
+
+<span class="sd">    :param points: array of points [(fx1, fx2, ..., fxn),</span>
+<span class="sd">                                    (fy1, fy2, ..., fyn),</span>
+<span class="sd">                                    ....................,</span>
+<span class="sd">                                    (fk1, fk2, ..., fkn)]</span>
+
+<span class="sd">    :param mode: &quot;max&quot; (maximize all objective) or</span>
+<span class="sd">                 &quot;min&quot; (minimize all objective).</span>
+
+<span class="sd">    :return: array of indexes (from the points that lie on</span>
+<span class="sd">             the Pareto front).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Sanity check.</span>
+    <span class="k">if</span> <span class="n">points</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Points must be a 2-D array.&quot;</span><span class="p">)</span>
+    <span class="c1"># _end_if_</span>
+
+    <span class="c1"># Sanity check.</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Mode must be either &#39;max&#39; or &#39;min&#39;.&quot;</span><span class="p">)</span>
+    <span class="c1"># _end_if_</span>
+
+    <span class="c1"># Normalize to a single convention. Here we</span>
+    <span class="c1"># maximize in all objectives function values.</span>
+    <span class="n">x_points</span> <span class="o">=</span> <span class="n">points</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;max&quot;</span> <span class="k">else</span> <span class="o">-</span><span class="n">points</span>
+
+    <span class="c1"># Remove duplicate points to speed up the</span>
+    <span class="c1"># routine and keep track of their indices.</span>
+    <span class="n">unique_points</span><span class="p">,</span> <span class="n">unique_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+        <span class="n">x_points</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Subtract all points (from all other points).</span>
+    <span class="c1"># WARNING: This step is O(N^2) in memory allocation.</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">unique_points</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">unique_points</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+
+    <span class="c1"># This condition is for maximization problems.</span>
+    <span class="n">strictly_better</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">diff</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> \
+                      <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">diff</span> <span class="o">&gt;</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Get the pareto points mask.</span>
+    <span class="n">is_pareto</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">strictly_better</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Return the indexes.</span>
+    <span class="k">return</span> <span class="n">unique_indices</span><span class="p">[</span><span class="n">is_pareto</span><span class="p">]</span></div>
+
+<span class="c1"># _end_def_</span>
+
+<div class="viewcode-block" id="np_pareto_front">
+<a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.np_pareto_front">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">np_pareto_front</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">,</span>
+                    <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;max&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fast (numpy - vectorized) function that calculates</span>
+<span class="sd">    the Pareto optimal front points from a given input</span>
+<span class="sd">    points numpy array.</span>
+
+<span class="sd">    :param points: array of points [(fx1, fx2, ..., fxn),</span>
+<span class="sd">                                    (fy1, fy2, ..., fyn),</span>
+<span class="sd">                                    ....................,</span>
+<span class="sd">                                    (fk1, fk2, ..., fkn)]</span>
+
+<span class="sd">    :param mode: &quot;max&quot; (maximize all objective) or</span>
+<span class="sd">                 &quot;min&quot; (minimize all objective).</span>
+
+<span class="sd">    NOTE: Its memory complexity grows quadratically</span>
+<span class="sd">    with the number of points in the NDArray: O(N^2)!</span>
+
+<span class="sd">    :return: array of points that lie on the Pareto front.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># First get the indexes of the pareto front points,</span>
+    <span class="c1"># using the helper function.</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np_pareto_front_index</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+
+    <span class="c1"># Then return the actual points.</span>
+    <span class="k">return</span> <span class="n">points</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span></div>
 
 <span class="c1"># _end_def_</span>
 
@@ -306,18 +311,32 @@
         <span class="c1"># Run the function we want to optimize.</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-        <span class="c1"># Check if the function returns a tuple (with two values)</span>
-        <span class="c1"># or a single output parameter. In the former, the second</span>
-        <span class="c1"># value should be boolean to signal that the solution meets</span>
+        <span class="c1"># Check if the function returns a tuple, with two values</span>
+        <span class="c1"># or a single output parameter. In the former the second</span>
+        <span class="c1"># value should be bool to signal that the solution meets</span>
         <span class="c1"># the termination requirements.</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span>\
+                <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)):</span>
 
-            <span class="n">f_value</span><span class="p">,</span> <span class="n">solution_is_found</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">bool</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">f_value</span><span class="p">,</span> <span class="n">solution_is_found</span> <span class="o">=</span> <span class="n">result</span>
         <span class="k">else</span><span class="p">:</span>
 
             <span class="n">f_value</span><span class="p">,</span> <span class="n">solution_is_found</span> <span class="o">=</span> <span class="n">result</span><span class="p">,</span> <span class="kc">False</span>
         <span class="c1"># _end_if_</span>
 
+        <span class="c1"># Multi-objective functions return a tuple</span>
+        <span class="c1"># with all the objective function values.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f_value</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="n">minimize</span><span class="p">:</span>
+                <span class="c1"># Reverse the sign of the objectives.</span>
+                <span class="n">f_value</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="o">-</span><span class="n">fx</span> <span class="k">for</span> <span class="n">fx</span> <span class="ow">in</span> <span class="n">f_value</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;f_value&quot;</span><span class="p">:</span> <span class="n">f_value</span><span class="p">,</span>
+                    <span class="s2">&quot;solution_is_found&quot;</span><span class="p">:</span> <span class="n">solution_is_found</span><span class="p">}</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Standard return statement.</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;f_value&quot;</span><span class="p">:</span> <span class="o">-</span><span class="n">f_value</span> <span class="k">if</span> <span class="n">minimize</span> <span class="k">else</span> <span class="n">f_value</span><span class="p">,</span>
                 <span class="s2">&quot;solution_is_found&quot;</span><span class="p">:</span> <span class="n">solution_is_found</span><span class="p">}</span>
     <span class="c1"># _end_def_</span>
@@ -380,7 +399,8 @@
 
 <div class="viewcode-block" id="two_indices_fast">
 <a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.two_indices_fast">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">two_indices_fast</span><span class="p">(</span><span class="n">rng</span><span class="p">:</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">num</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">two_indices_fast</span><span class="p">(</span><span class="n">rng</span><span class="p">:</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                     <span class="n">in_order</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Select two distinct random indices in the range [0, num)</span>
 <span class="sd">    without allocating, or shuffling a np.arange(num) array.</span>
@@ -391,8 +411,10 @@
 <span class="sd">    :param num: Exclusive upper bound of the index range.</span>
 <span class="sd">                Must be greater than 1.</span>
 
-<span class="sd">    :return: two distinct integer values &#39;i&#39; and &#39;j&#39; from the</span>
-<span class="sd">             range [0, num-1].</span>
+<span class="sd">    :param in_order: Boolean flag that allows the output</span>
+<span class="sd">                     values to be sorted in ascending order.</span>
+
+<span class="sd">    :return: Two distinct integer values from the range [0, num).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Sanity check.</span>
     <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
@@ -401,11 +423,17 @@
     <span class="c1"># Pick a random &#39;i&#39; in [0, num).</span>
     <span class="n">i</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
-    <span class="c1"># Pick another random &#39;j&#39; in [0, num-1).</span>
-    <span class="n">j</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="c1"># Pick another random &#39;k&#39; in [0, num-1).</span>
+    <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
-    <span class="c1"># Set &#39;j&#39; by excluding &#39;i&#39; via a mapped draw.</span>
-    <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="k">else</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span></div>
+    <span class="c1"># If the flag is set to True.</span>
+    <span class="k">if</span> <span class="n">in_order</span><span class="p">:</span>
+        <span class="c1"># Return in ascending order.</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="k">else</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Default is random order.</span>
+    <span class="c1"># Exclude &#39;i&#39; from the second index via a mapped draw.</span>
+    <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span> <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="k">else</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span></div>
 
 <span class="c1"># _end_def_</span>
 </pre></div>

@@ -164,6 +164,10 @@ This is used to measure the similarity in the whole population
 of chromosomes. The complexity is O(N * L), but works only when
 all the chromosomes have the same length. If they are not, then
 the slower version is called _average_hamming_distance_vcl().</p>
+<ul class="simple">
+<li><p>N: number of chromosomes</p></li>
+<li><p>L: length of chromosomes.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -201,7 +205,7 @@ for choosing 2 items from a set.</p>
 <span id="pygenalgo-utils-utilities-module"></span><h2>pygenalgo.utils.utilities module<a class="headerlink" href="#module-pygenalgo.utils.utilities" title="Link to this heading"></a></h2>
 <p>Description:</p>
 <blockquote>
-<div><p>Includes utility functions that used throughout pygenalgo.</p>
+<div><p>Includes utility functions that used throughout PyGenAlgo.</p>
 </div></blockquote>
 <dl class="simple">
 <dt>Author:</dt><dd><p>Michail D. Vrettas, PhD</p>
@@ -275,65 +279,59 @@ MaxAbsScaler, before computing the distances.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pygenalgo.utils.utilities.np_pareto_front">
-<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">np_pareto_front</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">_ScalarType_co</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">_ScalarType_co</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#np_pareto_front"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.np_pareto_front" title="Link to this definition"></a></dt>
-<dd><p>Simple function that calculates the Pareto (optimal)
-front points from a given input points numpy array.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>points</strong> – array of points [(fx1, fx2, …, fxn),
-(fy1, fy2, …, fyn),
-………………..,
-(fk1, fk2, …, fkn)]</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>array of points that lie on the Pareto front.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pygenalgo.utils.utilities.pareto_dominance">
-<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">pareto_dominance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Real</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Real</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#pareto_dominance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.pareto_dominance" title="Link to this definition"></a></dt>
-<dd><p>Implements a shortcut version of the Pareto dominance condition:</p>
-<p>all(p &lt;= q for p, q in zip(point_i, point_j)) &amp;&amp;
-any(p &lt; q for p, q in zip(point_i, point_j))</p>
-<p>NOTE: It is assumed that both points have the same size (length).</p>
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">np_pareto_front</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">_ScalarType_co</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'max'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">_ScalarType_co</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#np_pareto_front"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.np_pareto_front" title="Link to this definition"></a></dt>
+<dd><p>Fast (numpy - vectorized) function that calculates
+the Pareto optimal front points from a given input
+points numpy array.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>point_a</strong> – the  first point (as tuple or list).</p></li>
-<li><p><strong>point_b</strong> – the second point (as tuple or list).</p></li>
+<li><p><strong>points</strong> – array of points [(fx1, fx2, …, fxn),
+(fy1, fy2, …, fyn),
+………………..,
+(fk1, fk2, …, fkn)]</p></li>
+<li><p><strong>mode</strong> – “max” (maximize all objective) or
+“min” (minimize all objective).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>if the condition is satisfied.</p>
+</dl>
+<p>NOTE: Its memory complexity grows quadratically
+with the number of points in the NDArray: O(N^2)!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array of points that lie on the Pareto front.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pygenalgo.utils.utilities.pareto_front">
-<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">pareto_front</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#pareto_front"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.pareto_front" title="Link to this definition"></a></dt>
-<dd><p>Simple function that calculates the Pareto (optimal)
-front points from a given input points list.</p>
-<p>NOTE: The function is working directly with lists,
-even though it can be optimized using numpy arrays.</p>
+<dt class="sig sig-object py" id="pygenalgo.utils.utilities.np_pareto_front_index">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">np_pareto_front_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">_ScalarType_co</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'max'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">_ScalarType_co</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#np_pareto_front_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.np_pareto_front_index" title="Link to this definition"></a></dt>
+<dd><p>Fast (numpy - vectorized) function that calculates
+the Pareto optimal front from a given input points
+numpy array, but returns their indices instead  of
+their actual values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>points</strong> – list of points [(fx1, fx2, …, fxn),
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> – array of points [(fx1, fx2, …, fxn),
 (fy1, fy2, …, fyn),
 ………………..,
-(fk1, fk2, …, fkn)]</p>
+(fk1, fk2, …, fkn)]</p></li>
+<li><p><strong>mode</strong> – “max” (maximize all objective) or
+“min” (minimize all objective).</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>List of points that lie on the Pareto front.</p>
+<dd class="field-even"><p>array of indexes (from the points that lie on
+the Pareto front).</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pygenalgo.utils.utilities.two_indices_fast">
-<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">two_indices_fast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Generator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#two_indices_fast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.two_indices_fast" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">two_indices_fast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Generator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#two_indices_fast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.two_indices_fast" title="Link to this definition"></a></dt>
 <dd><p>Select two distinct random indices in the range [0, num)
 without allocating, or shuffling a np.arange(num) array.</p>
 <dl class="field-list simple">
@@ -343,11 +341,12 @@ without allocating, or shuffling a np.arange(num) array.</p>
 integers.</p></li>
 <li><p><strong>num</strong> – Exclusive upper bound of the index range.
 Must be greater than 1.</p></li>
+<li><p><strong>in_order</strong> – Boolean flag that allows the output
+values to be sorted in ascending order.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>two distinct integer values ‘i’ and ‘j’ from the
-range [0, num-1].</p>
+<dd class="field-even"><p>Two distinct integer values from the range [0, num).</p>
 </dd>
 </dl>
 </dd></dl>
