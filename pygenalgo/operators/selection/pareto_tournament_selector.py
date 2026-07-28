@@ -37,9 +37,9 @@ class ParetoTournamentSelector(SelectionOperator):
     @increase_counter
     def select(self, population: list[Chromosome]) -> list[Chromosome]:
         """
-        Select the individuals, from the input population that will be passed on
-        to the next genetic operations of crossover and mutation to form the new
-        population of solutions.
+        Select the individuals from the population that will be passed
+        on to the next genetic operations of crossover and mutation to
+        form the new population of solutions.
         """
         # Build a 2D array from the fitness
         # tuples (optimization objectives).
