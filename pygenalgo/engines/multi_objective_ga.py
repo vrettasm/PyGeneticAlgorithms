@@ -110,6 +110,9 @@ class MultiObjectiveGA(GenericGA):
         # Get the fitness values before optimization.
         fit_list_0, _ = self.evaluate_fitness(self.population, parallel)
 
+        # Update the average statistics in the dictionary.
+        avg_fitness_0, _ = self.update_stats(fit_list_0)
+
         # Local variable to display information on the screen.
         # To avoid cluttering the screen we print info only 10
         # times regardless of the total number of epochs.
