@@ -22,7 +22,7 @@ from pygenalgo.genome.chromosome import Chromosome
 
 # Public interface.
 __all__ = ["average_hamming_distance", "unique_pairs",
-           "apply_corrections", "SubPopulation"]
+           "correct_chromosomes", "SubPopulation"]
 
 @lru_cache(maxsize=64)
 def unique_pairs(n_size: int) -> int:

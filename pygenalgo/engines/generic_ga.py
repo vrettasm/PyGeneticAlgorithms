@@ -8,6 +8,8 @@ from numpy.random import default_rng, Generator
 
 from pygenalgo.engines import logger
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.utils.auxiliary import correct_chromosomes
+
 from pygenalgo.operators.genetic_operator import GeneticOperator
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
@@ -500,6 +502,39 @@ class GenericGA:
 
         # Return the fitness values.
         return fitness_values, found_solution
+    # _end_def_
+
+    def correct_genome(self, input_population: list[Chromosome]) -> bool:
+        """
+        Applies the correction mechanis, to the input population
+        (the population is changed by reference).
+
+        :param input_population: list of Chromosomes.
+
+        :return: True if changes were made, False otherwise.
+        """
+        # Return flag.
+        has_been_corrected: bool = False
+
+        # Apply the "correct_chromosomes" function.
+        total_corrections, f_counts = correct_chromosomes(input_population,
+                                                          self.fitness_func)
+
+        # If corrections were made, we will need to make some updates.
+        if total_corrections > 0:
+            # Update the function evaluation counter.
+            self._f_evals += f_counts
+
+            # Log the corrections.
+            logger.debug(
+                "> %d correction(s) took place at epoch: %d",
+                total_corrections, i
+            )
+
+            # Enable the flag.
+            has_been_corrected = True
+
+        return has_been_corrected
     # _end_def_
 
     def print_operator_stats(self) -> None:

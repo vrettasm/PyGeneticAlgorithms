@@ -2,13 +2,15 @@ import time
 from math import isclose
 from typing import Optional
 
-from numpy import (array, nanmean, nanstd, isfinite)
+# Third party numpy.
 from numpy.typing import NDArray
+from numpy import (array, nanmean,
+                   nanstd, isfinite)
 
+# Custom PyGenaAlgo code.
 from pygenalgo.engines import logger
 from pygenalgo.engines.generic_ga import GenericGA
-from pygenalgo.utils.auxiliary import (apply_corrections,
-                                       average_hamming_distance)
+from pygenalgo.utils.auxiliary import average_hamming_distance
 
 # Public interface.
 __all__ = ["StandardGA"]
@@ -150,24 +152,10 @@ class StandardGA(GenericGA):
             fit_list_i, found_solution = self.evaluate_fitness(population_i, parallel)
 
             # Check if 'corrections' are enabled.
-            if correction:
-                # Apply the function.
-                total_corrections, f_counts = apply_corrections(population_i, self.fitness_func)
+            if correction and self.correct_genome(population_i):
 
-                # If corrections were made, we will need to make some updates.
-                if total_corrections > 0:
-
-                    # Update the function evaluation counter.
-                    self.f_eval_increase_by(f_counts)
-
-                    # Update the fitness list to ensure consistency.
-                    fit_list_i = [p.fitness for p in population_i]
-
-                    # Log the corrections.
-                    logger.debug(
-                        "> %d correction(s) took place at epoch: %d",
-                        total_corrections, i
-                    )
+                # Update the fitness list to ensure consistency.
+                fit_list_i = [p.fitness for p in population_i]
             # _end_if_
 
             # Check if 'elitism' is enabled.
