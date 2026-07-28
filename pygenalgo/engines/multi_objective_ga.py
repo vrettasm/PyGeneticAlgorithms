@@ -145,7 +145,7 @@ class MultiObjectiveGA(GenericGA):
 
         # Display an information message.
         logger.info("Initial Avg. Fitness = %s",
-                    array2string(avg_fitness_0, precision=4))
+                    _to_str(avg_fitness_0))
 
         # Initial time instant.
         time_t0: float = time.perf_counter()
@@ -221,9 +221,7 @@ class MultiObjectiveGA(GenericGA):
             if verbose and (i % its_time_to_print) == 0:
                 logger.info(
                     "Epoch: %5d -> Avg. Fitness = %s, Spread = %s",
-                    i + 1,
-                    array2string(avg_fitness_i, precision=4),
-                    array2string(std_fitness_i, precision=4)
+                    i+1, _to_str(avg_fitness_i), _to_str(std_fitness_i)
                 )
             # _end_if_
 
@@ -279,7 +277,7 @@ class MultiObjectiveGA(GenericGA):
 
         # Display the final average fitness value.
         logger.info(
-            "Final Avg. Fitness = %s", array2string(avg_fitness_0, precision=4)
+            "Final Avg. Fitness = %s", _to_str(avg_fitness_0)
         )
 
         # Print final duration in seconds.
