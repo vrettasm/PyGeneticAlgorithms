@@ -226,6 +226,17 @@ class MultiObjectiveGA(GenericGA):
                 break
             # _end_if_
 
+            # Check for convergence (in all the objectives).
+            if f_tol is not None and all(isclose(avg_fitness_i,
+                                                 avg_fitness_0,
+                                                 atol=f_tol)):
+                # Display a warning message.
+                logger.warning("%s converged in %d iterations.",
+                               self.__class__.__name__, i + 1)
+                # Exit.
+                break
+            # _end_if_
+
             # Check the adaptive flag.
             if adapt_probs:
                 # Compute the current average Hamming distance.
