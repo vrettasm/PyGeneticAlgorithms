@@ -14,6 +14,10 @@ from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
+# Meta-operators.
+from pygenalgo.operators.mutation.meta_mutator import MetaMutator
+from pygenalgo.operators.crossover.meta_crossover import MetaCrossover
+
 # Define a fitness type.
 Fitness = float | tuple[float, ...]
 
