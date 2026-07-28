@@ -122,17 +122,17 @@ Step 3: Set the GA parameters
 
     # Initial population.
     population = [Chromosome([Gene(xy_init[i, 0], boundary_xy),
-                              Gene(xy_init[i, 1], boundary_xy)], np.nan, True)
+                              Gene(xy_init[i, 1], boundary_xy)], None, True)
                   for i in range(n_pop)]
 
     # Create the StandardGA object that will carry on the optimization.
     test_GA = StandardGA(initial_pop=population,
                          fit_func=fun_test2D,
                          select_op=NeighborhoodSelector(),
-                         mutate_op=GaussianMutator(lower_val=-15.0,
-                                                   upper_val=+15.0),
-                         crossx_op=BlendCrossover(lower_val=-15.0,
-                                                  upper_val=+15.0))
+                         mutate_op=GaussianMutator(lower_lim=[-15.0, -15.0],
+                                                   upper_lim=[+15.0, +15.0]),
+                         crossx_op=BlendCrossover(lower_lim=[-15.0, -15.0],
+                                                  upper_lim=[+15.0, +15.0]))
 
 Step 4: Run the optimization
 ----------------------------
