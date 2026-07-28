@@ -10,9 +10,10 @@ from pygenalgo.operators.selection.select_operator import SelectionOperator
 class ParetoFrontSelector(SelectionOperator):
     """
     Description:
-
-        TBD ...
-
+        This selector is used exclusively by the MultiObjectiveGA class.
+        It selects first individuals that lie on the pareto front of the
+        objectives space (fitness objectives) and if there are remaining
+        slots it uses a Tournament selection logic to fill up the spaces.
     """
 
     def __init__(self, select_probability: float = 1.0,
