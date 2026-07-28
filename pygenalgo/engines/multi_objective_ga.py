@@ -188,8 +188,10 @@ class MultiObjectiveGA(GenericGA):
             # Log the information message.
             if verbose and (i % its_time_to_print) == 0:
                 logger.info(
-                    "Epoch: %5d -> Avg. Fitness = %.4f, Spread = %.4f",
-                    i + 1, avg_fitness_i, std_fitness_i
+                    "Epoch: %5d -> Avg. Fitness = %s, Spread = %s",
+                    i + 1,
+                    array2string(avg_fitness_i, precision=4),
+                    array2string(std_fitness_i, precision=4)
                 )
             # _end_if_
 
