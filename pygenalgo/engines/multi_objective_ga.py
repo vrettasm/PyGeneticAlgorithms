@@ -35,7 +35,7 @@ class MultiObjectiveGA(GenericGA):
         # Call the super constructor with the input parameters.
         super().__init__(**kwargs)
 
-        # Here we will check if the select operator is supported.
+        # Here we check if the select operator is supported.
         if not isinstance(self._select_op, (ParetoFrontSelector,
                                             ParetoTournamentSelector)):
             raise ValueError(f"The select_op: {self._select_op.__class__.__name__} "
