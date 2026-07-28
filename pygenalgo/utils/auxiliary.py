@@ -205,8 +205,9 @@ def average_hamming_distance(population: list[Chromosome],
         # Return according to the normal flag.
         if normal:
             return total_diffs / total_genes_compared
-        else:
-            return total_diffs / total_pairs
+
+        # Absolute return statement.
+        return total_diffs / total_pairs
     # _end_if_
 
     # Fallback: variable chromosome length (rare case).
