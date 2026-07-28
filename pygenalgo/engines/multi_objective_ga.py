@@ -18,8 +18,10 @@ class MultiObjectiveGA(GenericGA):
     """
     Description:
 
-        MultiObjectiveGA model provides a basic implementation of the "GenericGA"
-        which specializes for multi-objective optimization problems.
+        MultiObjectiveGA model provides a basic implementation of the GenericGA
+        which specializes in multi-objective optimization problems. The fitness
+        in these problems is not a float but a tuple of floats (one for each of
+        the objective values).
     """
 
     def __init__(self, select_probability: float, **kwargs) -> None:
