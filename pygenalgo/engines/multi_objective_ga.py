@@ -77,7 +77,7 @@ class MultiObjectiveGA(GenericGA):
             f_tol: Optional[float] = None, f_max_eval: Optional[int] = None,
             verbose: bool = False) -> None:
         """
-        Main method of the StandardGA class, that implements the evolutionary routine.
+        Main method of the MultiObjectiveGA class, that implements the evolutionary routine.
 
         :param epochs: (int) maximum number of iterations in the evolution process.
 
