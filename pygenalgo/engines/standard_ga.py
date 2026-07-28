@@ -10,10 +10,6 @@ from pygenalgo.engines.generic_ga import GenericGA
 from pygenalgo.utils.auxiliary import (apply_corrections,
                                        average_hamming_distance)
 
-from pygenalgo.operators.mutation.meta_mutator import MetaMutator
-from pygenalgo.operators.crossover.meta_crossover import MetaCrossover
-
-
 # Public interface.
 __all__ = ["StandardGA"]
 
