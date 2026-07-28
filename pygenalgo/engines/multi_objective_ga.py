@@ -128,11 +128,18 @@ class MultiObjectiveGA(GenericGA):
         # times regardless of the total number of epochs.
         its_time_to_print = epochs // 10 if epochs > 10 else 2
 
+        # Display an information message.
+        logger.info("Initial Avg. Fitness = %s",
+                    array2string(avg_fitness_0))
+
         # Initial time instant.
         time_t0: float = time.perf_counter()
 
         # Repeat 'epoch' times.
         for i in range(epochs):
+
+            # Update current iteration.
+            self.iteration = i
 
             # SELECT the parents.
             population_i = self.select_op(self.population)
