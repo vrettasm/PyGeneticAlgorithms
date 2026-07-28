@@ -233,7 +233,7 @@ and returns to the origin city?</p>
 
     <span class="c1"># Create the Chromosome and add it into the population.</span>
     <span class="n">population</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Chromosome</span><span class="p">([</span><span class="n">Gene</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">rand_fc</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">init_list</span><span class="p">],</span>
-                                 <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+                                 <span class="kc">None</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
 <span class="c1"># _end_for_</span>
 
 <span class="c1"># Create the StandardGA object that will carry on the optimization.</span>

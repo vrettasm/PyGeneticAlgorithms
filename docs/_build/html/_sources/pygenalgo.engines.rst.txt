@@ -29,7 +29,7 @@ pygenalgo.engines.standard\_ga module
    :show-inheritance:
 
 pygenalgo.engines.multi\_objective\_ga module
--------------------------------------
+---------------------------------------------
 
 .. automodule:: pygenalgo.engines.multi_objective_ga
    :members:

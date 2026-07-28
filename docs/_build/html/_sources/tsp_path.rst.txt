@@ -145,7 +145,7 @@ Step 4: Set the GA parameters
 
         # Create the Chromosome and add it into the population.
         population.append(Chromosome([Gene(c, rand_fc) for c in init_list],
-                                     np.nan, True))
+                                     None, True))
     # _end_for_
 
     # Create the StandardGA object that will carry on the optimization.

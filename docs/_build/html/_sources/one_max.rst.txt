@@ -88,7 +88,7 @@ Step 3: Set the GA parameters
 
     # Initial population.
     population = [Chromosome([Gene(x_init[i, j], boundary_x)
-                              for j in range(M)], np.nan, True)
+                              for j in range(M)], None, True)
                   for i in range(N)]
 
     # Create the StandardGA object that will carry on the optimization.
