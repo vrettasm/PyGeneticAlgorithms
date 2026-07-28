@@ -198,7 +198,9 @@ class IslandModelGA(GenericGA):
                 local_stats["avg"].append(avg_fitness_i)
                 local_stats["std"].append(std_fitness_i)
             else:
-                raise RuntimeError(f"{i + 1}: Mean={avg_fitness_i:.5f}, Std={std_fitness_i:.5f}.")
+                raise RuntimeError(f"{i + 1}:"
+                                   f"Mean={avg_fitness_i:.5f}, "
+                                   f"Std={std_fitness_i:.5f}.")
             # _end_if_
 
             # Update the old population with the new chromosomes.
