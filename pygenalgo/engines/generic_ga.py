@@ -503,6 +503,36 @@ class GenericGA:
         return fitness_values, found_solution
     # _end_def_
 
+    def print_operator_stats(self) -> None:
+        """
+        Print the genetic operators stats.
+
+        :return: None.
+        """
+        # First print the selection operator.
+        print(self._select_op)
+
+        # Second print the crossover operator.
+        print(self._crossx_op)
+
+        # Check if we used the MetaCrossover.
+        if isinstance(self._crossx_op, MetaCrossover):
+            # Call internally all operators.
+            for op in self._crossx_op.items:
+                print(op)
+        # _end_if_
+
+        # Lastly print the mutation operator.
+        print(self._mutate_op)
+
+        # Check if we used the MetaMutator.
+        if isinstance(self._mutate_op, MetaMutator):
+            # Call internally all operators.
+            for op in self._mutate_op.items:
+                print(op)
+            # _end_for_
+    # _end_def_
+
     def run(self, *args, **kwargs) -> None:
         """
         Main method of the Generic GA class
