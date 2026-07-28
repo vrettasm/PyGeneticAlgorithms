@@ -3,7 +3,7 @@ from typing import Optional
 
 from numpy.typing import NDArray
 from numpy import (array, nanmean, nanstd,
-                   isfinite, array2string)
+                   isfinite, isclose, array2string)
 
 from pygenalgo.engines import logger
 from pygenalgo.engines.generic_ga import GenericGA
