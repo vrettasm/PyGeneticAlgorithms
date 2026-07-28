@@ -37,7 +37,6 @@ class MultiObjectiveGA(GenericGA):
                          **kwargs)
     # _end_def_
 
-    # pylint: disable=arguments-differ
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
             parallel: bool = False, adapt_probs: bool = False, shuffle: bool = True,
             f_max_eval: Optional[int] = None, verbose: bool = False) -> None:
