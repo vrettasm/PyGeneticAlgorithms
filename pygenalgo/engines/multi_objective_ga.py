@@ -17,6 +17,20 @@ from pygenalgo.operators.selection.pareto_tournament_selector import ParetoTourn
 # Public interface.
 __all__ = ["MultiObjectiveGA"]
 
+def to_str(x: NDArray, precision: int = 4) -> str:
+    """
+    Auxiliary function that converts an NDArray
+    into a string, with fixed precision.
+
+    :param x: (ndarray) the array to be converted.
+    :param precision: (int) the precision of the
+                       output string
+
+    :return: (str) the converted string.
+    """
+    return array2string(x, precision=precision)
+# _end_def_
+
 
 class MultiObjectiveGA(GenericGA):
     """
