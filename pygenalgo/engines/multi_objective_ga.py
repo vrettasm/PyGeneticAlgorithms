@@ -37,6 +37,37 @@ class MultiObjectiveGA(GenericGA):
                              f"is not supported in MultiObjectiveGA.")
     # _end_def_
 
+    def update_stats(self, fit_list: list[tuple[float,...]]) -> tuple:
+        """
+        Update the stats dictionary with the mean and std values
+        of the population fitness values.
+
+        :param fit_list: (list) fitness values of the population.
+
+        :return: the mean and std of the fitness values.
+        """
+        # Convert the fitness list in a numpy array.
+        arr: NDArray = array(fit_list, dtype=float)
+
+        # Get the mean and std values (row-wise).
+        avg_fitness: NDArray = nanmean(arr, axis=0, dtype=float)
+        std_fitness: NDArray = nanstd(arr, axis=0, dtype=float)
+
+        # Make sure the stat values are finite.
+        if all(isfinite(avg_fitness, std_fitness)):
+
+            # Store them in the dictionary.
+            self._stats["avg"].append(avg_fitness)
+            self._stats["std"].append(std_fitness)
+        else:
+            raise RuntimeError(f"{self.__class__.__name__}: Something went wrong with current "
+                               f"population. Mean={avg_fitness}, Std={std_fitness}.")
+        # _end_if_
+
+        # Return the average statistics.
+        return avg_fitness, std_fitness
+    # _end_def_
+
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
             parallel: bool = False, adapt_probs: bool = False, shuffle: bool = True,
             f_max_eval: Optional[int] = None, verbose: bool = False) -> None:
