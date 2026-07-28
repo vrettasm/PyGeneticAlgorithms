@@ -81,7 +81,7 @@ class MultiObjectiveGA(GenericGA):
 
         :param epochs: (int) maximum number of iterations in the evolution process.
 
-        :param elitism: (bool) flag that enables elitism. If True then the chromosome with
+        :param elitism: (bool) flag that enables elitism. If True the chromosome with
                         the highest fitness will always be copied to the next generation
                         (unaltered).
 
