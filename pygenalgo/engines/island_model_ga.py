@@ -4,15 +4,16 @@ from operator import attrgetter
 from collections import defaultdict
 from typing import (Optional, Callable)
 
+# Third party code.
 from joblib import (Parallel, delayed)
 from numpy import (nanmean, nanstd, isfinite)
 
+# Custom PyGenaAlgo code.
 from pygenalgo.engines import logger
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.auxiliary import (SubPopulation,
-                                       apply_corrections,
                                        average_hamming_distance)
-
+# Custom PyGenaAlgo code.
 from pygenalgo.engines.generic_ga import GenericGA
 from pygenalgo.operators.migration.meta_migration import MetaMigration
 from pygenalgo.operators.migration.migration_operator import MigrationOperator
@@ -147,19 +148,9 @@ class IslandModelGA(GenericGA):
             fit_list_i, found_solution = self.evaluate_fitness(population_i)
 
             # Check if 'corrections' are enabled.
-            if correction:
-                # Apply the function.
-                total_corrections, _ = apply_corrections(population_i, self.fitness_func)
-
-                # If corrections were made we will
-                # need to update the fitness list.
-                if total_corrections > 0:
-
-                    # Update the fitness list to
-                    # ensure consistency.
-                    fit_list_i: list[float] = [
-                        p.fitness for p in population_i
-                    ]
+            if correction and self.correct_genome(population_i):
+                # Update the fitness list to ensure consistency.
+                fit_list_i = [p.fitness for p in population_i]
             # _end_if_
 
             # Check if 'elitism' is enabled.
