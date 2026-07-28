@@ -256,7 +256,7 @@ class StandardGA(GenericGA):
         time_tf: float = time.perf_counter()
 
         # Display the final average fitness value.
-        logger.info("Final   Avg. Fitness = %.4f", avg_fitness_0)
+        logger.info("Final: Avg. Fitness = %.4f", avg_fitness_0)
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
