@@ -21,7 +21,8 @@ class ParetoTournamentSelector(SelectionOperator):
     def __init__(self, select_probability: float = 1.0,
                  n_contestants: int = 5) -> None:
         """
-        Construct a 'ParetoTournamentSelector' object with a given probability value.
+        Construct a 'ParetoTournamentSelector' object with a
+        given probability value.
 
         :param select_probability: (float) in [0, 1].
 
