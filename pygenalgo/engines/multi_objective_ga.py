@@ -99,6 +99,11 @@ class MultiObjectiveGA(GenericGA):
                         the application of the crossover and mutation operations. The default
                         is set to True.
 
+        :param f_tol: (float) tolerance in the difference between the average values of two
+                              consecutive populations. It is used to determine the convergence
+                              of the population. If this value is None (default) the algorithm
+                              will terminate using the epochs value.
+
         :param f_max_eval: (int) it sets an upper limit of function evaluations. If the number
                            is exceeded the genetic algorithm stops.
 
