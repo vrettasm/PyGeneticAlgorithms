@@ -114,10 +114,10 @@ def _average_hamming_distance_vcl(population: list[Chromosome],
         # Normalized: Total differences divided
         # by the total gene positions counted.
         return total_diffs / total_genes_compared
-    else:
-        # Absolute: Average number of differences
-        # per unique pair.
-        return total_diffs / unique_pairs(n_chromosomes)
+
+    # Absolute: Average number of differences
+    # per unique pair.
+    return total_diffs / unique_pairs(n_chromosomes)
 # _end_def_
 
 def average_hamming_distance(population: list[Chromosome],
