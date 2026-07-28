@@ -593,12 +593,12 @@ class IslandModelGA(GenericGA):
         :return: None.
         """
         # First print the migration operator.
-        print(self.migrate_op)
+        print(self._migrate_op)
 
         # Check if we used the MetaMigration.
-        if isinstance(self.migrate_op, MetaMigration):
+        if isinstance(self._migrate_op, MetaMigration):
             # Call internally all operators.
-            for op in self.migrate_op.items:
+            for op in self._migrate_op.items:
                 print(op)
     # _end_def_
 
