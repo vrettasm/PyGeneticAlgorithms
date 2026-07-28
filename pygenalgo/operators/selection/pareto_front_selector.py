@@ -69,12 +69,12 @@ class ParetoFrontSelector(SelectionOperator):
             # number is not higher than the population size.
             n_contestants: int = min(self._items, r_size)
 
-                # Select the contestants for the tournaments.
-                contestants: NDArray = np.array([
-                    choose_randomly(remaining_idx, size=n_contestants,
-                                    replace=False, shuffle=False)
-                    for _ in range(r_size)
-                ], dtype=int)
+            # Select the contestants for the tournaments.
+            contestants: NDArray = np.array([
+                choose_randomly(remaining_idx, size=n_contestants,
+                                replace=False, shuffle=False)
+                for _ in range(r_size)
+            ], dtype=int)
 
             # Select the extras via Tournament selection.
             extras = [
