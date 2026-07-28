@@ -71,6 +71,7 @@ class ParetoFrontSelector(SelectionOperator):
 
             # Select the contestants for the tournaments.
             contestants: NDArray = np.array([
+                # Set 'replace=False' to avoid duplicates.
                 choose_randomly(remaining_idx, size=n_contestants,
                                 replace=False, shuffle=False)
                 for _ in range(r_size)
