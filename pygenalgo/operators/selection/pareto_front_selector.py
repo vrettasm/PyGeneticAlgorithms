@@ -16,7 +16,7 @@ class ParetoFrontSelector(SelectionOperator):
     """
 
     def __init__(self, select_probability: float = 1.0,
-                 n_contestants: int = 2) -> None:
+                 n_contestants: int = 5) -> None:
         """
         Construct a 'ParetoFrontSelector' object with a given probability value.
 
@@ -28,15 +28,15 @@ class ParetoFrontSelector(SelectionOperator):
         super().__init__(selection_probability=select_probability)
 
         # Set the value of the contestants in the placeholder _items.
-        self._items: int = max(2, int(n_contestants))
+        self._items: int = max(5, int(n_contestants))
     # _end_def_
 
     @increase_counter
     def select(self, population: list[Chromosome]) -> list[Chromosome]:
         """
-        Select the individuals, from the input population that will be passed on
-        to the next genetic operations of crossover and mutation to form the new
-        population of solutions.
+        Select the individuals from the population that will be passed
+        on to the next genetic operations of crossover and mutation to
+        form the new population of solutions.
         """
         # Build a 2D array from the fitness
         # tuples (optimization objectives).
@@ -77,11 +77,21 @@ class ParetoFrontSelector(SelectionOperator):
                 for _ in range(r_size)
             ], dtype=int)
 
-            # Select the extras via Tournament selection.
-            extras: list[int] = [
-                row[np_pareto_front_index(fitness_array[row])[0]]
-                for row in contestants
-            ]
+            #  Preallocate the extras list.
+            extras: list[int] = r_size * [None]
+
+            # Select the new indices iteratively.
+            for i, row in enumerate(contestants):
+                # Get the indexes on the Pareto front.
+                pf_idx = np_pareto_front_index(fitness_array[row])
+
+                # If more than one, choose at random.
+                idx = choose_randomly(pf_idx) if pf_idx.size > 1 else pf_idx[0]
+
+                # Dereference the position in the
+                # population through "row" vector.
+                extras[i] = row[idx]
+            # _end_for_
 
             # Combined fast concatenation.
             chosen: NDArray = np.concatenate((pareto_idx, extras))

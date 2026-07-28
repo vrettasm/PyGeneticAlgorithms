@@ -17,7 +17,7 @@ class ParetoTournamentSelector(SelectionOperator):
     """
 
     def __init__(self, select_probability: float = 1.0,
-                 n_contestants: int = 5) -> None:
+                 n_contestants: int = 10) -> None:
         """
         Construct a 'ParetoTournamentSelector' object with a
         given probability value.
@@ -31,7 +31,7 @@ class ParetoTournamentSelector(SelectionOperator):
         super().__init__(selection_probability=select_probability)
 
         # Set the value of the contestants in the placeholder _items.
-        self._items: int = max(5, int(n_contestants))
+        self._items: int = max(10, int(n_contestants))
     # _end_def_
 
     @increase_counter
@@ -65,13 +65,22 @@ class ParetoTournamentSelector(SelectionOperator):
             for _ in range(n_size)
         ], dtype=int)
 
-        # Select the new indices via Tournament selection.
-        chosen: list[int] = [
-            # We need to 'dereference' the returned index of
-            # pareto back to the population index (via row).
-            row[np_pareto_front_index(fitness_array[row])[0]]
-            for row in contestants
-        ]
+        #  Preallocate the chosen list.
+        chosen: list[int] = n_size * [None]
+
+        # Select the new indices iteratively.
+        for i, row in enumerate(contestants):
+
+            # Get the indexes on the Pareto front.
+            pf_idx = np_pareto_front_index(fitness_array[row])
+
+            # If more than one, choose at random.
+            idx = choose_randomly(pf_idx) if pf_idx.size > 1 else pf_idx[0]
+
+            # Dereference the position in the
+            # population through "row" vector.
+            chosen[i] = row[idx]
+        # _end_for_
 
         return [
             # Ensure 'k' is passed as integer.
