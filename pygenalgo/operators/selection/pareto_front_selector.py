@@ -78,7 +78,7 @@ class ParetoFrontSelector(SelectionOperator):
                 for _ in range(r_size)
             ], dtype=int)
 
-            #  Preallocate the extras list.
+            # Preallocate the extras list.
             extras: list[int] = r_size * [None]
 
             # Select the new indices iteratively.
