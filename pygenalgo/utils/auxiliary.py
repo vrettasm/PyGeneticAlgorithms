@@ -214,8 +214,8 @@ def average_hamming_distance(population: list[Chromosome],
     return _average_hamming_distance_vcl(population, normal)
 # _end_def_
 
-def apply_corrections(input_population: list[Chromosome],
-                      fit_func: Callable = None) -> tuple[int, int]:
+def correct_chromosomes(input_population: list[Chromosome],
+                        fit_func: Callable = None) -> tuple[int, int]:
     """
     Check the population  for invalid genes and correct them by applying directly
     the random method. It is assumed that the random method of the Gene is always
