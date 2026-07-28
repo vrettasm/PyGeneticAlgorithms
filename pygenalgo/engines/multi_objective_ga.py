@@ -237,6 +237,9 @@ class MultiObjectiveGA(GenericGA):
                 break
             # _end_if_
 
+            # Update the average value for the next iteration.
+            avg_fitness_0 = avg_fitness_i
+
             # Check the adaptive flag.
             if adapt_probs:
                 # Compute the current average Hamming distance.
