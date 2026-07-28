@@ -89,7 +89,10 @@ class ParetoFrontSelector(SelectionOperator):
             chosen: NDArray = pareto_idx
         # _end_if_
 
-        return [population[k] for k in chosen]
+        return [
+            # Ensure 'k' is passed as integer.
+            population[int(k)] for k in chosen
+        ]
     # _end_def_
 
 # _end_class_
