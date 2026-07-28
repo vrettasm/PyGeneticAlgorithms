@@ -131,7 +131,7 @@ class MultiObjectiveGA(GenericGA):
 
         # Display an information message.
         logger.info("Initial Avg. Fitness = %s",
-                    array2string(avg_fitness_0))
+                    array2string(avg_fitness_0, precision=4))
 
         # Initial time instant.
         time_t0: float = time.perf_counter()
