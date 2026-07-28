@@ -231,6 +231,11 @@ class MultiObjectiveGA(GenericGA):
         # Final time instant.
         time_tf: float = time.perf_counter()
 
+        # Display the final average fitness value.
+        logger.info(
+            "Final: Avg. Fitness = %s", array2string(avg_fitness_0, precision=4)
+        )
+
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
     # _end_def_
