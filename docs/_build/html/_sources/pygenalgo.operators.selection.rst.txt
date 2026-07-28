@@ -76,6 +76,22 @@ pygenalgo.operators.selection.neighborhood\_selector module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.selection.pareto\_front\_selector module
+-----------------------------------------------------------
+
+.. automodule:: pygenalgo.operators.selection.pareto_front_selector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pygenalgo.operators.selection.pareto\_tournament\_selector module
+-----------------------------------------------------------
+
+.. automodule:: pygenalgo.operators.selection.pareto_tournament_selector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pygenalgo.operators.selection.meta\_selector module
 ---------------------------------------------------
 

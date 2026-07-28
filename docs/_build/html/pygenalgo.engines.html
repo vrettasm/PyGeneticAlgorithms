@@ -339,7 +339,7 @@ to add on the current f_eval.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.rng_GA">
-<span class="sig-name descname"><span class="pre">rng_GA</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Generator(PCG64)</span> <span class="pre">at</span> <span class="pre">0x106DFD380</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.rng_GA" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rng_GA</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Generator(PCG64)</span> <span class="pre">at</span> <span class="pre">0x1062B5380</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.rng_GA" title="Link to this definition"></a></dt>
 <dd><p>Random Number Generator for the whole class.</p>
 </dd></dl>
 
@@ -545,6 +545,84 @@ current average fitness and spread of the population.</p></li>
 <span class="sig-name descname"><span class="pre">update_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fit_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/standard_ga.html#StandardGA.update_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.update_stats" title="Link to this definition"></a></dt>
 <dd><p>Update the stats dictionary with the mean/std values of the
 population fitness values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fit_list</strong> – (list) fitness values of the population.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the mean and std of the fitness values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="pygenalgo-engines-multi-objective-ga-module">
+<h2>pygenalgo.engines.multi_objective_ga module<a class="headerlink" href="#pygenalgo-engines-multi-objective-ga-module" title="Link to this heading"></a></h2>
+<dl class="py class" id="module-pygenalgo.engines.multi_objective_ga">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.MultiObjectiveGA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.multi_objective_ga.</span></span><span class="sig-name descname"><span class="pre">MultiObjectiveGA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/multi_objective_ga.html#MultiObjectiveGA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA" title="pygenalgo.engines.generic_ga.GenericGA"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGA</span></code></a></p>
+<p>Description:</p>
+<blockquote>
+<div><p>MultiObjectiveGA model provides a basic implementation of the GenericGA
+which specializes in multi-objective optimization problems. The fitness
+in these problems is not a float but a tuple of floats (one for each of
+the objective values).</p>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.fitness_func">
+<span class="sig-name descname"><span class="pre">fitness_func</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span></em><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.fitness_func" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.population">
+<span class="sig-name descname"><span class="pre">population</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.population" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapt_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_max_eval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/multi_objective_ga.html#MultiObjectiveGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.run" title="Link to this definition"></a></dt>
+<dd><p>Main method of the MultiObjectiveGA class, that implements the evolutionary routine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epochs</strong> – (int) maximum number of iterations in the evolution process.</p></li>
+<li><p><strong>elitism</strong> – (bool) flag that enables elitism. If True the chromosome with
+the highest fitness will always be copied to the next generation
+(unaltered).</p></li>
+<li><p><strong>correction</strong> – (bool) flag that if set to ‘True’ will check the validity of
+the population (at the gene level) and attempt to correct the
+genome by calling the random() method of the flawed gene.</p></li>
+<li><p><strong>parallel</strong> – (bool) Flag that enables parallel computation of the fitness function.</p></li>
+<li><p><strong>adapt_probs</strong> – (bool) If enabled (set to True), it will allow the crossover and
+mutation probabilities to adapt according to the convergence of
+the population to a single solution. Default is set to False.</p></li>
+<li><p><strong>shuffle</strong> – (bool) If enabled (set to True), it will shuffle the population before
+the application of the crossover and mutation operations. The default
+is set to True.</p></li>
+<li><p><strong>f_tol</strong> – (float) tolerance in the difference between the average values of two
+consecutive populations. It is used to determine the convergence
+of the population. If this value is None (default) the algorithm
+will terminate using the epochs value.</p></li>
+<li><p><strong>f_max_eval</strong> – (int) it sets an upper limit of function evaluations. If the number
+is exceeded the genetic algorithm stops.</p></li>
+<li><p><strong>verbose</strong> – (bool) if ‘True’ it will display periodically information about the
+current average fitness and spread of the population.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.update_stats">
+<span class="sig-name descname"><span class="pre">update_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fit_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/multi_objective_ga.html#MultiObjectiveGA.update_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.update_stats" title="Link to this definition"></a></dt>
+<dd><p>Update the stats dictionary with the mean and std values
+of the population fitness values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>fit_list</strong> – (list) fitness values of the population.</p>
