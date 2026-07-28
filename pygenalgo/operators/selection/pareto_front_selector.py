@@ -77,7 +77,7 @@ class ParetoFrontSelector(SelectionOperator):
             ], dtype=int)
 
             # Select the extras via Tournament selection.
-            extras = [
+            extras: list[int] = [
                 row[np_pareto_front_index(fitness_array[row])[0]]
                 for row in contestants
             ]
