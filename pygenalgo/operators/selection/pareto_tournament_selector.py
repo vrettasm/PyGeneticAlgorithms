@@ -13,7 +13,7 @@ class ParetoTournamentSelector(SelectionOperator):
         This selector follows the same logic of the TournamentSelector
         but instead of choosing the one with the optimal fitness value
         it passes the contestants to the pareto_front_index function,
-        and selects the first one that is on the Pareto frontier.
+        and selects a random one that lies on the Pareto front.
     """
 
     def __init__(self, select_probability: float = 1.0,
