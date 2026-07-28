@@ -54,8 +54,10 @@ class StandardGA(GenericGA):
             self._stats["avg"].append(avg_fitness)
             self._stats["std"].append(std_fitness)
         else:
-            raise RuntimeError(f"{self.__class__.__name__}: Something went wrong with current "
-                               f"population. Mean={avg_fitness:.5f}, Std={std_fitness:.5f}.")
+            raise RuntimeError(f"{self.__class__.__name__}:"
+                               f"Something went wrong with current "
+                               f"population. Mean={avg_fitness:.5f},"
+                               f"Std={std_fitness:.5f}.")
         # _end_if_
 
         # Return the average statistics.
