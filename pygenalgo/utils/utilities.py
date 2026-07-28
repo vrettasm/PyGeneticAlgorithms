@@ -233,7 +233,7 @@ def cost_function(func: Callable = None, minimize: bool = False):
         # value should be bool to signal that the solution meets
         # the termination requirements.
         if isinstance(result, tuple) and len(result) == 2 and\
-                isinstance(result[1], bool):
+                isinstance(result[1], (bool, np.bool_)):
 
             f_value, solution_is_found = result
         else:
