@@ -197,34 +197,4 @@ class MultiObjectiveGA(GenericGA):
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
     # _end_def_
 
-    def print_operator_stats(self) -> None:
-        """
-        Print the genetic operators stats.
-
-        :return: None.
-        """
-        # First print the selection operator.
-        print(self.select_op)
-
-        # Second print the crossover operator.
-        print(self.crossx_op)
-
-        # Check if we used the MetaCrossover.
-        if isinstance(self.crossx_op, MetaCrossover):
-            # Call internally all operators.
-            for op in self.crossx_op.items:
-                print(op)
-        # _end_if_
-
-        # Lastly print the mutation operator.
-        print(self.mutate_op)
-
-        # Check if we used the MetaMutator.
-        if isinstance(self.mutate_op, MetaMutator):
-            # Call internally all operators.
-            for op in self.mutate_op.items:
-                print(op)
-            # _end_for_
-    # _end_def_
-
 # _end_class_
