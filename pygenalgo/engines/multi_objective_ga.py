@@ -265,7 +265,7 @@ class MultiObjectiveGA(GenericGA):
 
         # Display the final average fitness value.
         logger.info(
-            "Final: Avg. Fitness = %s", array2string(avg_fitness_0, precision=4)
+            "Final Avg. Fitness = %s", array2string(avg_fitness_0, precision=4)
         )
 
         # Print final duration in seconds.
