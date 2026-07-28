@@ -182,6 +182,9 @@ class MultiObjectiveGA(GenericGA):
                 # _end_if_
             # _end_if_
 
+            # Update the mean / std in the dictionary.
+            avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i)
+
             # Log the information message.
             if verbose and (i % its_time_to_print) == 0:
                 logger.info(
