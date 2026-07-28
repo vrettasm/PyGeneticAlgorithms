@@ -1,15 +1,16 @@
 import time
 from typing import Optional
 
+# Third party numpy.
 from numpy.typing import NDArray
 from numpy import (array, nanmean, nanstd,
                    isfinite, isclose, array2string)
-
+# Custom PyGenaAlgo code.
 from pygenalgo.engines import logger
 from pygenalgo.engines.generic_ga import GenericGA
 from pygenalgo.utils.auxiliary import (apply_corrections,
                                        average_hamming_distance)
-# Supported operators.
+# Supported selection operators.
 from pygenalgo.operators.selection.pareto_front_selector import ParetoFrontSelector
 from pygenalgo.operators.selection.pareto_tournament_selector import ParetoTournamentSelector
 
