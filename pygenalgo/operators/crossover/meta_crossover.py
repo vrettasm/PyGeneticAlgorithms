@@ -72,19 +72,24 @@ class MetaCrossover(CrossoverOperator):
     @property
     def all_counters(self) -> dict:
         """
-        Accessor (getter) of the application counter from all the internal crossovers.
-        This is mostly to verify that everything is working as expected.
+        Accessor (getter) of the application counter from all
+        the internal crossovers. This is mostly to verify that
+        everything is working as expected.
 
-        :return: a dictionary with the counter calls for all crossover methods.
+        :return: a dictionary with the counter calls for all
+                 crossover methods.
         """
-        return {cross_op.__class__.__name__: cross_op.counter for cross_op in self.items}
+        return {
+            cross_op.__class__.__name__: cross_op.counter
+            for cross_op in self.items
+        }
     # _end_def_
 
     def reset_counter(self) -> None:
         """
-        Sets ALL the counters to 'zero'. We have to override the super().reset_counter()
-        method, because we have to call explicitly the reset_counter on all the internal
-        operators.
+        Sets ALL the counters to 'zero'. We have to override the
+        super().reset_counter() method,  because we have to call
+        explicitly the reset_counter on all the internal operators.
 
         :return: None.
         """
