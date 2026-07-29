@@ -214,7 +214,7 @@ class StandardGA(GenericGA):
                 )
             # _end_if_
 
-            # Update the old population with the new chromosomes.
+            # Update the old population with current.
             self.population = population_i
 
             # Check for termination.
