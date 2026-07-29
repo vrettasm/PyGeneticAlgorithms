@@ -56,8 +56,8 @@ class StochasticUniversalSelector(SelectionOperator):
         # individual has equal chance.
         if isclose(sum_fitness, 0.0):
             # Select the new individuals with equal probability.
-            safe_index = self.rng.choice(pop_size, size=pop_size,
-                                         replace=True, shuffle=False)
+            safe_index = self.rng.choice(pop_size,
+                                         size=pop_size, replace=True)
 
             # Return the new parents to a list.
             return [population[i] for i in safe_index]
