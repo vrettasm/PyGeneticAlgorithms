@@ -81,7 +81,7 @@ class BlendCrossover(CrossoverOperator):
         if (parent1 != parent2) and self.is_operator_applicable():
 
             # Extract the values from the placeholder variable.
-            p_alpha, xl, xu = self._items
+            p_alpha, x_lower, x_upper = self._items
 
             # Get the length of the chromosome.
             # Here we assume that both parents
@@ -135,12 +135,12 @@ class BlendCrossover(CrossoverOperator):
                 new_value_2 = min_value + (diff * rv_2)
 
                 # Local bounds lookups.
-                x_lower = xl[i]
-                x_upper = xu[i]
+                xl: float = x_lower[i]
+                xu: float = x_upper[i]
 
                 # Ensure the new values are within limits.
-                new_value_1 = min(max(new_value_1, x_lower), x_upper)
-                new_value_2 = min(max(new_value_2, x_lower), x_upper)
+                new_value_1 = min(max(new_value_1, xl), xu)
+                new_value_2 = min(max(new_value_2, xl), xu)
 
                 # Extract the gene function. Note that at index 'i'
                 # both children will always have the exact same logic.
