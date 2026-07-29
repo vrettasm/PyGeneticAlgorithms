@@ -58,12 +58,17 @@ class MetaMigration(MigrationOperator):
     @property
     def all_counters(self) -> dict:
         """
-        Accessor (getter) of the application counter from all the internal migrators.
-        This is mostly to verify that everything is working as expected.
+        Accessor (getter) of the application counter from all
+        the internal migrators. This is mostly to verify that
+        everything is working as expected.
 
-        :return: a dictionary with the counter calls for all migrator methods.
+        :return: a dictionary with the counter calls for all
+                 migrator methods.
         """
-        return {mig_op.__class__.__name__: mig_op.counter for mig_op in self.items}
+        return {
+            mig_op.__class__.__name__: mig_op.counter
+            for mig_op in self.items
+        }
     # _end_def_
 
     def reset_counter(self) -> None:
