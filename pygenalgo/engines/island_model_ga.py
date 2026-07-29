@@ -311,7 +311,7 @@ class IslandModelGA(GenericGA):
         :return: None.
         """
         # Reset stats dictionary.
-        self._stats.clear()
+        self.stats.clear()
 
         # Initial random split of the total population
         # in (active) subpopulations. Active here means
@@ -325,7 +325,7 @@ class IslandModelGA(GenericGA):
         for pop_n in active_population:
 
             # Initialize the statistics dictionary.
-            self._stats[pop_n.id]: dict = {
+            self.stats[pop_n.id]: dict = {
                 "avg": [], "std": [], "prob_crossx": [], "prob_mutate": []
             }
 
@@ -334,8 +334,8 @@ class IslandModelGA(GenericGA):
                                                   parallel_mode=True,
                                                   backend="loky")
             # Compute the initial mean/std values
-            # and update the _stats[pop_n.id].
-            _, _ = self.update_stats(fit_list_0, self._stats[pop_n.id])
+            # and update the stats[pop_n.id].
+            _, _ = self.update_stats(fit_list_0, self.stats[pop_n.id])
 
             # Store the initial crossover and mutation probabilities.
             self.stats[pop_n.id]["prob_crossx"].append(self.crossx_op.probability)
