@@ -220,8 +220,14 @@ class StandardGA(GenericGA):
             # Check for the maximum function evaluations.
             if f_max_eval is not None and self.f_evals >= f_max_eval:
                 # Log a warning message.
-                logger.warning("%s reached the maximum number of function evaluations.",
-                               self.__class__.__name__)
+                logger.warning(
+                    "%s reached the maximum number of function evaluations.",
+                    self.__class__.__name__
+                )
+
+                # Final update the mean value.
+                avg_fitness_0 = avg_fitness_i
+
                 # Exit.
                 break
             # _end_if_
