@@ -5,9 +5,8 @@ from collections import defaultdict
 from typing import (Optional, Callable)
 
 # Third party code.
-from numpy import all as np_all
+from numpy import nanmean
 from joblib import (Parallel, delayed)
-from numpy import (nanmean, nanstd, isfinite)
 
 # Custom PyGenaAlgo code.
 from pygenalgo.engines import logger
@@ -87,40 +86,6 @@ class IslandModelGA(GenericGA):
         :return: the MigrationOperator.
         """
         return self._migrate_op
-    # _end_def_
-
-    def update_stats(self, fit_list: list[float], local_stats: dict) -> tuple:
-        """
-        Update the input stats dictionary with the mean / std
-        values of the population fitness values.
-
-        :param fit_list: (list) fitness values of the population.
-
-        :param local_stats: (dict) stats dictionary.
-
-        :return: the mean and std of the fitness values.
-        """
-        # Compute the mean value.
-        avg_fitness = nanmean(fit_list, dtype=float)
-
-        # Compute the standard deviation value.
-        std_fitness = nanstd(fit_list, dtype=float)
-
-        # Update the population mean / std.
-        if np_all(isfinite([avg_fitness, std_fitness])):
-
-            # Store them in the input dictionary.
-            local_stats["avg"].append(avg_fitness)
-            local_stats["std"].append(std_fitness)
-        else:
-            raise RuntimeError(f"{self.__class__.__name__}:"
-                               f"Something went wrong with current "
-                               f"population. Mean={avg_fitness:.5f},"
-                               f"Std={std_fitness:.5f}.")
-        # _end_if_
-
-        # Return the average statistics.
-        return avg_fitness, std_fitness
     # _end_def_
 
     def _evolve_population(self, island: SubPopulation, epochs: int, shuffle: bool,

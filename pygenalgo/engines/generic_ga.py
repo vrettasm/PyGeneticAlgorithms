@@ -3,8 +3,11 @@ from operator import attrgetter
 from collections import defaultdict
 from typing import Callable, Optional
 
-from joblib import Parallel, delayed
-from numpy.random import default_rng, Generator
+from numpy import all as np_all
+from numpy.typing import NDArray
+from joblib import (Parallel, delayed)
+from numpy.random import (default_rng, Generator)
+from numpy import (array, nanmean, nanstd, isfinite)
 
 from pygenalgo.engines import logger
 from pygenalgo.genome.chromosome import Chromosome
@@ -250,6 +253,49 @@ class GenericGA:
 
         # Log the cleanup.
         logger.debug("%s cleared.", self.__class__.__name__)
+    # _end_def_
+
+    def update_stats(self, fit_list: list[float],
+                     other_stats: dict = None) -> tuple:
+        """
+        Update the input stats dictionary with the mean / std
+        values of the population fitness values.
+
+        :param fit_list: (list) fitness values of the population.
+
+        :param other_stats: (dict) stats dictionary.
+
+        :return: the mean and std of the fitness values.
+        """
+        # Convert the fitness list in a numpy array.
+        arr: NDArray = array(fit_list, dtype=float)
+
+        # Compute the mean value.
+        avg_fitness: NDArray = nanmean(arr, axis=0, dtype=float)
+
+        # Compute the standard deviation value.
+        std_fitness: NDArray = nanstd(arr, axis=0, dtype=float)
+
+        # Update the population mean / std.
+        if np_all(isfinite([avg_fitness, std_fitness])):
+
+            if other_stats:
+                # Store them in the input dictionary.
+                other_stats["avg"].append(avg_fitness)
+                other_stats["std"].append(std_fitness)
+            else:
+                # Store them in the self dictionary.
+                self._stats["avg"].append(avg_fitness)
+                self._stats["std"].append(std_fitness)
+        else:
+            raise RuntimeError(f"{self.__class__.__name__}:"
+                               f"Something went wrong with current "
+                               f"population. Mean={avg_fitness:.5f},"
+                               f"Std={std_fitness:.5f}.")
+        # _end_if_
+
+        # Return the average statistics.
+        return avg_fitness, std_fitness
     # _end_def_
 
     def best_chromosome(self) -> Optional[Chromosome]:

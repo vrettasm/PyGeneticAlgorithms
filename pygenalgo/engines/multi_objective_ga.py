@@ -2,10 +2,9 @@ import time
 from typing import Optional
 
 # Third party numpy.
-from numpy import all as np_all
 from numpy.typing import NDArray
-from numpy import (array, nanmean, nanstd,
-                   isfinite, isclose, array2string)
+from numpy import (isclose, array2string)
+
 # Custom PyGenaAlgo code.
 from pygenalgo.engines import logger
 from pygenalgo.engines.generic_ga import GenericGA
@@ -55,39 +54,6 @@ class MultiObjectiveGA(GenericGA):
                                             ParetoTournamentSelector)):
             raise ValueError(f"The select_op: {self._select_op.__class__.__name__} "
                              f"is not supported in MultiObjectiveGA.")
-    # _end_def_
-
-    def update_stats(self, fit_list: list[tuple[float,...]]) -> tuple:
-        """
-        Update the stats dictionary with the mean and std values
-        of the population fitness values.
-
-        :param fit_list: (list) fitness values of the population.
-
-        :return: the mean and std of the fitness values.
-        """
-        # Convert the fitness list in a numpy array.
-        arr: NDArray = array(fit_list, dtype=float)
-
-        # Get the mean and std values (row-wise).
-        avg_fitness: NDArray = nanmean(arr, axis=0, dtype=float)
-        std_fitness: NDArray = nanstd(arr, axis=0, dtype=float)
-
-        # Make sure the stat values are finite.
-        if np_all(isfinite([avg_fitness, std_fitness])):
-
-            # Store them in the dictionary.
-            self.stats["avg"].append(avg_fitness)
-            self.stats["std"].append(std_fitness)
-        else:
-            raise RuntimeError(f"{self.__class__.__name__}:"
-                               f"Something went wrong with current "
-                               f"population. Mean={avg_fitness},"
-                               f"Std={std_fitness}.")
-        # _end_if_
-
-        # Return the average statistics.
-        return avg_fitness, std_fitness
     # _end_def_
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,

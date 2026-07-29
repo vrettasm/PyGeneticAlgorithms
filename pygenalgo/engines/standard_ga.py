@@ -2,12 +2,6 @@ import time
 from math import isclose
 from typing import Optional
 
-# Third party numpy.
-from numpy import all as np_all
-from numpy.typing import NDArray
-from numpy import (nanmean, nanstd,
-                   fromiter, isfinite)
-
 # Custom PyGenaAlgo code.
 from pygenalgo.engines import logger
 from pygenalgo.engines.generic_ga import GenericGA
@@ -32,39 +26,6 @@ class StandardGA(GenericGA):
         """
         # Call the super constructor with all the input parameters.
         super().__init__(**kwargs)
-    # _end_def_
-
-    def update_stats(self, fit_list: list[float]) -> tuple[float, float]:
-        """
-        Update the stats dictionary with the mean/std values of the
-        population fitness values.
-
-        :param fit_list: (list) fitness values of the population.
-
-        :return: the mean and std of the fitness values.
-        """
-        # Convert the fitness list in a numpy array.
-        arr: NDArray = fromiter(fit_list, dtype=float)
-
-        # Get the mean and std values.
-        avg_fitness: float = nanmean(arr, dtype=float)
-        std_fitness: float = nanstd(arr, dtype=float)
-
-        # Make sure the stat values are finite.
-        if np_all(isfinite([avg_fitness, std_fitness])):
-
-            # Store them in the dictionary.
-            self.stats["avg"].append(avg_fitness)
-            self.stats["std"].append(std_fitness)
-        else:
-            raise RuntimeError(f"{self.__class__.__name__}:"
-                               f"Something went wrong with current "
-                               f"population. Mean={avg_fitness:.5f},"
-                               f"Std={std_fitness:.5f}.")
-        # _end_if_
-
-        # Return the average statistics.
-        return avg_fitness, std_fitness
     # _end_def_
 
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
