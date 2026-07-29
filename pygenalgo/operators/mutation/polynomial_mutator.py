@@ -36,9 +36,6 @@ class PolynomialMutator(MutationOperator):
         # Call the super constructor with the provided initial value.
         super().__init__(mutation_probability=mutate_probability)
 
-        # Ensure eta_pm parameter is float.
-        eta_pm = float(eta_pm)
-
         # Check if the lower and upper bounds are set.
         if (lower_lim is None) or (upper_lim is None):
             raise ValueError(f"{self.__class__.__name__}: "
@@ -58,6 +55,9 @@ class PolynomialMutator(MutationOperator):
         if np_any(upper_lim <= lower_lim):
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Lower and Upper limits are set incorrectly.")
+
+        # Ensure eta_pm parameter is float.
+        eta_pm = float(eta_pm)
 
         # Assign variables to the _items placeholder.
         self._items: tuple[float, ...] = (
