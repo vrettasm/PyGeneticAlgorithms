@@ -528,7 +528,7 @@ class GenericGA:
             # Log the corrections.
             logger.debug(
                 "> %d correction(s) took place at epoch: %d",
-                total_corrections, i
+                total_corrections, self._iteration
             )
 
             # Enable the flag.
