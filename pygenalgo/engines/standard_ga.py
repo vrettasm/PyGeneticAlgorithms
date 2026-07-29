@@ -43,7 +43,7 @@ class StandardGA(GenericGA):
         :return: the mean and std of the fitness values.
         """
         # Convert the fitness list in a numpy array.
-        arr: NDArray = array(fit_list, dtype=float)
+        arr: NDArray = fromiter(fit_list, dtype=float)
 
         # Get the mean and std values.
         avg_fitness: float = nanmean(arr, dtype=float)
