@@ -275,7 +275,7 @@ class GenericGA:
     def best_chromosome(self) -> Optional[Chromosome]:
         """
         Auxiliary method that returns the chromosome with the
-        highest fitness value. Safeguarded with ignoring NaNs.
+        highest fitness value. Safeguarded with ignoring None.
 
         :return: Return the chromosome with the highest fitness.
         """
