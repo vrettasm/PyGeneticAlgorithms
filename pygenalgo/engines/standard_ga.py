@@ -217,15 +217,6 @@ class StandardGA(GenericGA):
             # Update the old population with current.
             self.population = population_i
 
-            # Check for termination.
-            if found_solution:
-                # Log a warning message.
-                logger.warning("%s finished in %d iterations.",
-                               self.__class__.__name__, i + 1)
-                # Exit.
-                break
-            # _end_if_
-
             # Check for the maximum function evaluations.
             if f_max_eval is not None and self.f_evals >= f_max_eval:
                 # Log a warning message.
