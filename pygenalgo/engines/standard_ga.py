@@ -123,8 +123,8 @@ class StandardGA(GenericGA):
         avg_fitness_0, _ = self.update_stats(fit_list_0)
 
         # Store the initial crossover and mutation probabilities.
-        self._stats["prob_crossx"].append(self._crossx_op.probability)
-        self._stats["prob_mutate"].append(self._mutate_op.probability)
+        self.stats["prob_crossx"].append(self._crossx_op.probability)
+        self.stats["prob_mutate"].append(self._mutate_op.probability)
 
         # Local variable to display information on the screen.
         # To avoid cluttering the screen we print info only 10
