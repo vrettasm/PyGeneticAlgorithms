@@ -68,7 +68,10 @@ class MetaMutator(MutationOperator):
         :return: a dictionary with the counter calls for all
                  mutator methods.
         """
-        return {mut_op.__class__.__name__: mut_op.counter for mut_op in self.items}
+        return {
+            mut_op.__class__.__name__: mut_op.counter
+            for mut_op in self.items
+        }
     # _end_def_
 
     def reset_counter(self) -> None:
