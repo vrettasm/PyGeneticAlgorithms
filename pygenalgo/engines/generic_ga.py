@@ -379,7 +379,7 @@ class GenericGA:
         # Sanity check.
         if not (isinstance(threshold, float) and 0.0 < threshold <= 1.0):
             raise ValueError(f"{self.__class__.__name__}: "
-                             f"Threshold value must be float in [0.0, 1.0].")
+                             f"Threshold value must be float in (0.0, 1.0].")
         # _end_if_
 
         # Initialize the trial values with the current
