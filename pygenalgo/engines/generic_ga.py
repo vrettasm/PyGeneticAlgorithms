@@ -290,7 +290,7 @@ class GenericGA:
         else:
             raise RuntimeError(f"{self.__class__.__name__}:"
                                f"Something went wrong at {self._iteration} "
-                               f"iteration. Mean={avg_fitness:.5f},"
+                               f"iteration. Mean={avg_fitness:.5f}, "
                                f"Std={std_fitness:.5f}.")
         # _end_if_
 
