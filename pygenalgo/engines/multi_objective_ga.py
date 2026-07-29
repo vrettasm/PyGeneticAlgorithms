@@ -261,8 +261,8 @@ class MultiObjectiveGA(GenericGA):
                 # Update the genetic probabilities.
                 if self.adapt_probabilities(threshold=avg_distance):
                     # Store the updated crossover and mutation probabilities.
-                    self._stats["prob_crossx"].append(self._crossx_op.probability)
-                    self._stats["prob_mutate"].append(self._mutate_op.probability)
+                    self.stats["prob_crossx"].append(self._crossx_op.probability)
+                    self.stats["prob_mutate"].append(self._mutate_op.probability)
         # _end_for_
 
         # Final time instant.
