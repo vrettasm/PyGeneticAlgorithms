@@ -1,6 +1,5 @@
 import unittest
 
-import numpy as np
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.selection.select_operator import ensure_positive_fitness
@@ -56,7 +55,7 @@ class TestPositiveFitness(unittest.TestCase):
         result = ensure_positive_fitness(self.population,
                                          mode="shift_up")
 
-        self.assertTrue(np.all(result == expected))
+        self.assertEqual(result, expected)
     # _end_def_
 
     def test_shift_up_all_negative(self):
@@ -83,7 +82,7 @@ class TestPositiveFitness(unittest.TestCase):
         result = ensure_positive_fitness(self.population,
                                          mode="shift_up")
 
-        self.assertTrue(np.all(result == expected))
+        self.assertEqual(result, expected)
     # _end_def_
 
     def test_shift_up_all_zero(self):
@@ -107,7 +106,57 @@ class TestPositiveFitness(unittest.TestCase):
         result = ensure_positive_fitness(self.population,
                                          mode="shift_up")
 
-        self.assertTrue(np.all(result == expected))
+        self.assertEqual(result, expected)
+    # _end_def_
+
+    def test_linear_scaled_normalizes_relative_to_worst(self) -> None:
+        """
+        Checks if linear scaling forces the worst performer to a baseline of 1.0.
+        """
+        # Minimum is 10.5.
+        # Expected: [10.5-10.5+1, 100-10.5+1, 55.2-10.5+1]
+        expected = [1.0, 90.5, 45.7]
+
+        # Local dummy function.
+        def func():
+            pass
+
+        population = [
+            Chromosome(Gene(0, func), f_value, True)
+            for f_value in expected
+        ]
+
+        result = ensure_positive_fitness(population, mode="linear_scaled")
+
+        self.assertEqual(result, expected)
+    # _end_def_
+
+    def test_linear_scaled_handles_uniform_populations(self) -> None:
+        """
+        Ensures division by zero is safely avoided if everyone has equal scores.
+        """
+        expected = [1.0, 1.0]
+
+        # Local dummy function.
+        def func():
+            pass
+
+        population = [
+            Chromosome(Gene(0, func), f_value, True)
+            for f_value in expected
+        ]
+
+        result = ensure_positive_fitness(population, mode="linear_scaled")
+
+        self.assertEqual(result, expected)
+    # _end_def_
+
+    def test_invalid_mode_raises_value_error(self) -> None:
+        """
+        Ensures an unrecognized processing mode forces a clear failure.
+        """
+        with self.assertRaises(ValueError):
+            ensure_positive_fitness(self.population, mode="unsupported_mode")
     # _end_def_
 
 # _end_class_
