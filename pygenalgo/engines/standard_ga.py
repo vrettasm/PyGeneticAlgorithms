@@ -247,9 +247,6 @@ class StandardGA(GenericGA):
                 break
             # _end_if_
 
-            # Update the average value for the next iteration.
-            avg_fitness_0 = avg_fitness_i
-
             # Check the adaptive flag.
             if adapt_probs:
                 # Compute the current average Hamming distance.
@@ -260,6 +257,10 @@ class StandardGA(GenericGA):
                     # Store the updated crossover and mutation probabilities.
                     self._stats["prob_crossx"].append(self._crossx_op.probability)
                     self._stats["prob_mutate"].append(self._mutate_op.probability)
+            # _end_if_
+
+            # Update the average value for the next iteration.
+            avg_fitness_0 = avg_fitness_i
         # _end_for_
 
         # Final time instant.
