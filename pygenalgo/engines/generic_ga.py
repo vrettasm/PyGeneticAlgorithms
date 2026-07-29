@@ -519,8 +519,8 @@ class GenericGA:
         # Apply the "correct_chromosomes" function.
         total_corrections, f_counts = correct_chromosomes(input_population,
                                                           self.fitness_func)
-
-        # If corrections were made, we will need to make some updates.
+        # If corrections were made we will
+        # need to update the f_evals value.
         if total_corrections > 0:
             # Update the function evaluation counter.
             self._f_evals += f_counts
