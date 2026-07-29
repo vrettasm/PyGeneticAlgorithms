@@ -2,6 +2,7 @@ import time
 from typing import Optional
 
 # Third party numpy.
+from numpy import all as np_all
 from numpy.typing import NDArray
 from numpy import (array, nanmean, nanstd,
                    isfinite, isclose, array2string)
@@ -73,7 +74,7 @@ class MultiObjectiveGA(GenericGA):
         std_fitness: NDArray = nanstd(arr, axis=0, dtype=float)
 
         # Make sure the stat values are finite.
-        if all(isfinite(avg_fitness, std_fitness)):
+        if np_all(isfinite([avg_fitness, std_fitness])):
 
             # Store them in the dictionary.
             self.stats["avg"].append(avg_fitness)

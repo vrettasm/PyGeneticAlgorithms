@@ -5,6 +5,7 @@ from collections import defaultdict
 from typing import (Optional, Callable)
 
 # Third party code.
+from numpy import all as np_all
 from joblib import (Parallel, delayed)
 from numpy import (nanmean, nanstd, isfinite)
 
@@ -106,7 +107,7 @@ class IslandModelGA(GenericGA):
         std_fitness = nanstd(fit_list, dtype=float)
 
         # Update the population mean / std.
-        if all(isfinite([avg_fitness, std_fitness])):
+        if np_all(isfinite([avg_fitness, std_fitness])):
 
             # Store them in the input dictionary.
             local_stats["avg"].append(avg_fitness)

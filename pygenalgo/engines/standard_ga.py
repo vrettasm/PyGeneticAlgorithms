@@ -3,6 +3,7 @@ from math import isclose
 from typing import Optional
 
 # Third party numpy.
+from numpy import all as np_all
 from numpy.typing import NDArray
 from numpy import (nanmean, nanstd,
                    fromiter, isfinite)
@@ -50,7 +51,7 @@ class StandardGA(GenericGA):
         std_fitness: float = nanstd(arr, dtype=float)
 
         # Make sure the stat values are finite.
-        if all(isfinite([avg_fitness, std_fitness])):
+        if np_all(isfinite([avg_fitness, std_fitness])):
 
             # Store them in the dictionary.
             self.stats["avg"].append(avg_fitness)
