@@ -506,8 +506,8 @@ class GenericGA:
 
     def correct_genome(self, input_population: list[Chromosome]) -> bool:
         """
-        Applies the correction mechanis, to the input population
-        (the population is changed by reference).
+        Applies the correction mechanism to the input population
+        (the changes in the population are passed by reference).
 
         :param input_population: list of Chromosomes.
 
