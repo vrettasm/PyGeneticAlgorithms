@@ -3,9 +3,10 @@ from operator import attrgetter
 from collections import defaultdict
 from typing import Callable, Optional
 
+from joblib import (Parallel, delayed)
+
 from numpy import all as np_all
 from numpy.typing import NDArray
-from joblib import (Parallel, delayed)
 from numpy.random import (default_rng, Generator)
 from numpy import (array, nanmean, nanstd, isfinite)
 
