@@ -1,18 +1,17 @@
-from math import fabs
+from math import fabs, isclose
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import GeneticOperator
 
 # Public interface.
 __all__ = ["SelectionOperator", "ensure_positive_fitness"]
 
-def ensure_positive_fitness(population: list[Chromosome]) -> list[float]:
+
+def _shift_up_values(population: list[Chromosome]) -> list[float]:
     """
     Ensures that the fitness value of each chromosome is a positive number.
 
     This is useful because some of the selection methods require a positive
-    fitness to operate. Also in minimization problems the fitness values are
-    negated, therefore by using this transformation the methods that require
-    positive values are guaranteed to work.
+    fitness to operate.
 
     :param population: (list) of chromosomes.
 
@@ -23,10 +22,14 @@ def ensure_positive_fitness(population: list[Chromosome]) -> list[float]:
         p.fitness for p in population
     ]
 
+    # Sanity check.
+    if not all_fitness:
+        return []
+
     # If there are negative values we perform a shift
     # transformation where all the values are shifted
     # so that the minimum fitness is going to be one.
-    if any(fit_value < 0.0 for fit_value in all_fitness):
+    if any(fit_value <= 0.0 for fit_value in all_fitness):
         # Compute the shift value.
         shift_value: float = fabs(min(all_fitness)) + 1.0
 
@@ -36,6 +39,63 @@ def ensure_positive_fitness(population: list[Chromosome]) -> list[float]:
 
     return all_fitness
 # _end_def_
+
+def _linear_scaled_values(population: list[Chromosome]) -> list[float]:
+    """
+    Ensures fitness values are positive for maximization selection methods.
+    The worst individual is assigned a baseline fitness of 1.0, and others
+    are scaled relative to it.
+
+    :param population: (list) of chromosomes.
+
+    :return: (list) of positive fitness values
+    """
+    # Extract all the fitness values.
+    all_fitness: list[float] = [
+        p.fitness for p in population
+    ]
+
+    # Sanity check.
+    if not all_fitness:
+        return []
+
+    # Extract min/max values.
+    min_fitness = min(all_fitness)
+    max_fitness = max(all_fitness)
+
+    # If all individuals have the exact same
+    # fitness, give them equal weight.
+    if isclose(min_fitness, max_fitness):
+        return [1.0] * len(population)
+
+    # Shift everything so the worst individual is always 1.0.
+    # This works whether values are positive, negative, zero.
+    return [
+        f - min_fitness + 1.0 for f in all_fitness
+    ]
+# _end_def_
+
+def ensure_positive_fitness(population: list[Chromosome],
+                            mode: str = "shift_up") -> list[float]:
+    """
+    Ensures fitness values are positive, using a predefined
+    selected method.
+
+    :param population: (list) of chromosomes.
+
+    :param mode: (str) method of calculating fitness.
+
+    :return: (list) of fitness values.
+    """
+
+    if mode == "shift_up":
+        return _shift_up_values(population)
+
+    if mode == "linear_scaled":
+        return _linear_scaled_values(population)
+
+    raise ValueError(f"{mode} is not implemented.")
+# _end_if_
 
 
 class SelectionOperator(GeneticOperator):
