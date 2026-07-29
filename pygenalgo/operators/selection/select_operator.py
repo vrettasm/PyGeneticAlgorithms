@@ -48,7 +48,7 @@ def _linear_scaled_values(population: list[Chromosome]) -> list[float]:
 
     :param population: (list) of chromosomes.
 
-    :return: (list) of positive fitness values
+    :return: (list) of positive fitness values.
     """
     # Extract all the fitness values.
     all_fitness: list[float] = [
