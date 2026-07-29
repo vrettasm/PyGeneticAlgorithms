@@ -4,8 +4,8 @@ from typing import Optional
 
 # Third party numpy.
 from numpy.typing import NDArray
-from numpy import (array, nanmean,
-                   nanstd, isfinite)
+from numpy import (nanmean, nanstd,
+                   fromiter, isfinite)
 
 # Custom PyGenaAlgo code.
 from pygenalgo.engines import logger
