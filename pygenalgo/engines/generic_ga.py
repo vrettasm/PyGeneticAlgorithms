@@ -27,7 +27,7 @@ from pygenalgo.operators.crossover.meta_crossover import MetaCrossover
 Fitness = float | tuple[float, ...]
 
 # Public interface.
-__all__ = ["GenericGA"]
+__all__ = ["GenericGA", "Fitness"]
 
 
 class GenericGA:
