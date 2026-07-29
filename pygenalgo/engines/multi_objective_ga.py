@@ -135,7 +135,13 @@ class MultiObjectiveGA(GenericGA):
         pop_size: int = len(self.population)
 
         # Get the fitness values before optimization.
-        fit_list_0, _ = self.evaluate_fitness(self.population, parallel)
+        fit_list_0, found_solution = self.evaluate_fitness(self.population,
+                                                           parallel_mode=parallel)
+        # Initial termination check.
+        if found_solution:
+            # Display the message for the user.
+            logger.info("Optimization Finished!")
+            return
 
         # Update the average statistics in the dictionary.
         avg_fitness_0, _ = self.update_stats(fit_list_0)
