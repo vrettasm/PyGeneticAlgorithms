@@ -147,6 +147,21 @@ class IslandModelGA(GenericGA):
             # EVALUATE the i-th population.
             fit_list_i, found_solution = self.evaluate_fitness(population_i)
 
+            # Check for termination.
+            if found_solution:
+                # Switch the convergence flag and track the current iteration.
+                has_converged = (True, i + 1)
+
+                # Update the old population with the current.
+                island.population = population_i
+
+                # Update the average statistics in the local_stats.
+                _, _ = self.update_stats(fit_list_i, local_stats)
+
+                # Exit from the loop.
+                break
+            # _end_if_
+
             # Check if 'corrections' are enabled.
             if correction and self.correct_genome(population_i):
                 # Update the fitness list to ensure consistency.
