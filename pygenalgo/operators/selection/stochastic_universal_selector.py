@@ -80,7 +80,7 @@ class StochasticUniversalSelector(SelectionOperator):
 
         # Use optimized C-level binary search to extract individuals.
         new_parents: list[Chromosome] = [
-            population[bisect_left(cum_sum_fit, p)]
+            population[min(bisect_left(cum_sum_fit, p), pop_size - 1)]
             for p in pointers
         ]
 
