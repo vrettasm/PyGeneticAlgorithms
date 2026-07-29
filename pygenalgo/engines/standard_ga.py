@@ -53,8 +53,8 @@ class StandardGA(GenericGA):
         if all(isfinite([avg_fitness, std_fitness])):
 
             # Store them in the dictionary.
-            self._stats["avg"].append(avg_fitness)
-            self._stats["std"].append(std_fitness)
+            self.stats["avg"].append(avg_fitness)
+            self.stats["std"].append(std_fitness)
         else:
             raise RuntimeError(f"{self.__class__.__name__}:"
                                f"Something went wrong with current "
