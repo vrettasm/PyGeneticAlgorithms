@@ -289,8 +289,8 @@ class GenericGA:
                 self._stats["std"].append(std_fitness)
         else:
             raise RuntimeError(f"{self.__class__.__name__}:"
-                               f"Something went wrong with current "
-                               f"population. Mean={avg_fitness:.5f},"
+                               f"Something went wrong at {self._iteration} "
+                               f"iteration. Mean={avg_fitness:.5f},"
                                f"Std={std_fitness:.5f}.")
         # _end_if_
 
