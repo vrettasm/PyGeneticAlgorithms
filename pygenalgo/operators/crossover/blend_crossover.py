@@ -42,9 +42,6 @@ class BlendCrossover(CrossoverOperator):
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Lower or Upper limits are missing.")
 
-        # Ensure p_alpha parameter is float.
-        p_alpha = clamp(float(p_alpha), 0.0, 1.0)
-
         # Make sure the limits are numpy arrays.
         lower_lim = asarray(lower_lim, dtype=float)
         upper_lim = asarray(upper_lim, dtype=float)
@@ -58,6 +55,9 @@ class BlendCrossover(CrossoverOperator):
         if np_any(upper_lim <= lower_lim):
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Lower and Upper limits are set incorrectly.")
+
+        # Ensure p_alpha parameter is float.
+        p_alpha = clamp(float(p_alpha), 0.0, 1.0)
 
         # Assign variables to the _items placeholder.
         self._items: tuple[float, NDArray, NDArray] = (
