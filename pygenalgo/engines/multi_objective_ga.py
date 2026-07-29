@@ -246,6 +246,10 @@ class MultiObjectiveGA(GenericGA):
                 # Display a warning message.
                 logger.warning("%s converged in %d iterations.",
                                self.__class__.__name__, i + 1)
+
+                # Final update the mean value.
+                avg_fitness_0 = avg_fitness_i
+
                 # Exit.
                 break
             # _end_if_
