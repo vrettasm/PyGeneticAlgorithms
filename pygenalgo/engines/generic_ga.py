@@ -102,7 +102,7 @@ class GenericGA:
         logger.debug("%s uses %s CPUs.", self.__class__.__name__, self._n_cpus)
 
         # Dictionary with statistics.
-        self._stats: dict = defaultdict[str, list](list)
+        self._stats: dict = defaultdict(list)
 
         # Set the function evaluation to zero.
         self._f_evals: int = 0
