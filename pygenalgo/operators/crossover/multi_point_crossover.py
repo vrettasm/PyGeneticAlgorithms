@@ -1,6 +1,6 @@
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
+from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, pair_t)
 
 
 class MultiPointCrossover(CrossoverOperator):
@@ -29,7 +29,7 @@ class MultiPointCrossover(CrossoverOperator):
         self._items: int = max(int(n_points), 2)
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> pair_t:
         """
         Perform the crossover operation on the two input parent
         chromosomes, using multiple cutting points (num_loci).

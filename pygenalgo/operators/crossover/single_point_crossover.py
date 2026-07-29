@@ -1,6 +1,6 @@
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
+from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, pair_t)
 
 
 class SinglePointCrossover(CrossoverOperator):
@@ -25,7 +25,7 @@ class SinglePointCrossover(CrossoverOperator):
         super().__init__(crossover_probability=crossover_probability)
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> pair_t:
         """
         Perform the crossover operation on the two input parent chromosomes.
 

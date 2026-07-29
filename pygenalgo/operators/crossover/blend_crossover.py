@@ -5,7 +5,7 @@ from numpy.typing import ArrayLike, NDArray
 from pygenalgo.genome.gene import Gene
 from pygenalgo.utils.utilities import clamp
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
+from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, pair_t)
 
 
 class BlendCrossover(CrossoverOperator):
@@ -65,7 +65,7 @@ class BlendCrossover(CrossoverOperator):
         )
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> pair_t:
         """
         Perform the crossover operation on the two input parent chromosomes.
 
