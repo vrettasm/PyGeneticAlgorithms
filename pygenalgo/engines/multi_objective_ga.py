@@ -178,6 +178,22 @@ class MultiObjectiveGA(GenericGA):
             # Calculate the new fitness values.
             fit_list_i, found_solution = self.evaluate_fitness(population_i, parallel)
 
+            # Check for termination.
+            if found_solution:
+                # Log a warning message.
+                logger.warning("%s finished in %d iterations.",
+                               self.__class__.__name__, i + 1)
+
+                # Update the old population with the current.
+                self.population = population_i
+
+                # Final update the mean/std in the dictionary.
+                avg_fitness_0, _ = self.update_stats(fit_list_i)
+
+                # Exit.
+                break
+            # _end_if_
+
             # Check if 'corrections' are enabled.
             if correction and self.correct_genome(population_i):
                 # Update the fitness list to ensure consistency.
@@ -218,17 +234,8 @@ class MultiObjectiveGA(GenericGA):
                 )
             # _end_if_
 
-            # Update the old population with the new chromosomes.
+            # Update the old population with the current.
             self.population = population_i
-
-            # Check for termination.
-            if found_solution:
-                # Log a warning message.
-                logger.warning("%s finished in %d iterations.",
-                               self.__class__.__name__, i + 1)
-                # Exit.
-                break
-            # _end_if_
 
             # Check for the maximum function evaluations.
             if f_max_eval is not None and self.f_evals >= f_max_eval:
