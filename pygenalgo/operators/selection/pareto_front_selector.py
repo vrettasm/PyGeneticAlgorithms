@@ -55,10 +55,10 @@ class ParetoFrontSelector(SelectionOperator):
         pareto_idx: NDArray = np_pareto_front_index(fitness_array)
 
         # Remaining size.
-        r_size: int = n_size - pareto_idx.size
+        rem_size: int = n_size - pareto_idx.size
 
         # Check if the remaining size is positive.
-        if r_size > 0:
+        if rem_size > 0:
             # Fast extraction of the remaining indices.
             remaining_idx: NDArray = np.setdiff1d(np.arange(n_size),
                                                   pareto_idx,
@@ -68,18 +68,18 @@ class ParetoFrontSelector(SelectionOperator):
 
             # Local number of contestants. Ensure that this
             # number is not higher than the population size.
-            n_contestants: int = min(self._items, r_size)
+            n_contestants: int = min(self._items, rem_size)
 
             # Select the contestants for the tournaments.
             contestants: NDArray = np.array([
                 # Set 'replace=False' to avoid duplicates.
                 choose_randomly(remaining_idx, size=n_contestants,
                                 replace=False, shuffle=False)
-                for _ in range(r_size)
+                for _ in range(rem_size)
             ], dtype=int)
 
             # Preallocate the extras list.
-            extras: list[int] = r_size * [None]
+            extras: list[int] = rem_size * [None]
 
             # Select the new indices iteratively.
             for i, row in enumerate(contestants):
