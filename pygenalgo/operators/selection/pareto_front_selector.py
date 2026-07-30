@@ -13,23 +13,17 @@ class ParetoFrontSelector(SelectionOperator):
         This selector is used exclusively by the MultiObjectiveGA class.
         It selects first individuals that lie on the pareto front of the
         objectives space (fitness objectives) and if there are remaining
-        slots it uses a Tournament selection logic to fill up the spaces.
+        slots it uses Adaptive Stochastic Sampling to fill up the slots.
     """
 
-    def __init__(self, select_probability: float = 1.0,
-                 n_contestants: int = 5) -> None:
+    def __init__(self, select_probability: float = 1.0) -> None:
         """
         Construct a 'ParetoFrontSelector' object with a given probability value.
 
         :param select_probability: (float) in [0, 1].
-
-        :param n_contestants: the number of participants in the tournament (int).
         """
         # Call the super constructor with the provided initial value.
         super().__init__(selection_probability=select_probability)
-
-        # Set the value of the contestants in the placeholder _items.
-        self._items: int = max(5, int(n_contestants))
     # _end_def_
 
     @increase_counter
@@ -54,8 +48,11 @@ class ParetoFrontSelector(SelectionOperator):
         # mode = "max" is assumed.
         pareto_idx: NDArray = np_pareto_front_index(fitness_array)
 
-        # Remaining size.
-        rem_size: int = n_size - pareto_idx.size
+        # Size of the pareto array.
+        n_pareto: int = pareto_idx.size
+
+        # Remaining size (non-pareto).
+        rem_size: int = n_size - n_pareto
 
         # Edge case no.1:
         if rem_size == 0:
@@ -77,40 +74,24 @@ class ParetoFrontSelector(SelectionOperator):
             chosen: NDArray = np.append(pareto_idx, extra_idx)
         else:
 
-            # Fast extraction of the remaining indices.
+            # Extract the remaining (non-pareto) indices.
             remaining_idx: NDArray = np.setdiff1d(np.arange(n_size),
                                                   pareto_idx,
                                                   assume_unique=True)
 
-            # Local number of contestants. Ensure that this
-            # number is not higher than the population size.
-            n_contestants: int = min(self._items, rem_size)
+            # Compute dynamically the pareto probability.
+            pareto_probability: float = n_pareto / n_size
 
-            # Select the contestants for the tournaments.
-            contestants: NDArray = np.array([
-                # Set 'replace=False' to avoid duplicates.
-                choose_randomly(remaining_idx, size=n_contestants,
-                                replace=False, shuffle=False)
-                for _ in range(rem_size)
-            ], dtype=int)
+            # Generate uniform random numbers and convert them to bool.
+            pareto_flag: NDArray = self.rng.random(size=rem_size) > pareto_probability
 
-            # Preallocate the extras list.
-            extras: list[int] = rem_size * [None]
+            # Fill the extras list.
+            extras: list[int] = [
+                choose_randomly(remaining_idx) if flag else choose_randomly(pareto_idx)
+                for flag in pareto_flag
+            ]
 
-            # Select the new indices iteratively.
-            for i, row in enumerate(contestants):
-                # Get the indexes on the Pareto front.
-                pf_idx = np_pareto_front_index(fitness_array[row])
-
-                # If more than one, choose at random.
-                idx = choose_randomly(pf_idx) if pf_idx.size > 1 else pf_idx[0]
-
-                # Dereference the position in the
-                # population through "row" vector.
-                extras[i] = row[idx]
-            # _end_for_
-
-            # Combined fast concatenation.
+            # Combined both results in one array.
             chosen: NDArray = np.concatenate((pareto_idx, extras))
 
         return [
