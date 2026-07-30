@@ -58,9 +58,12 @@ class ParetoFrontSelector(SelectionOperator):
         rem_size: int = n_size - pareto_idx.size
 
         # Quick exit if all parents are on the Pareto front.
-        if rem_size <= 1:
-            # This rarely happens.
-            return self.rng.shuffle(population)
+        if rem_size == 0:
+            # Shuffle in place.
+            self.rng.shuffle(population)
+
+            # Return the same.
+            return population
         # _end_if_
 
         # Fast extraction of the remaining indices.
