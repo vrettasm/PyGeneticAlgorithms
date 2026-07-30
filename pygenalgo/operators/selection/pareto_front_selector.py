@@ -57,7 +57,7 @@ class ParetoFrontSelector(SelectionOperator):
         # Remaining size.
         rem_size: int = n_size - pareto_idx.size
 
-        # Quick exit if all parents are on the Pareto front.
+        # Edge case no.1:
         if rem_size == 0:
             # Shuffle in place.
             self.rng.shuffle(population)
@@ -66,43 +66,54 @@ class ParetoFrontSelector(SelectionOperator):
             return population
         # _end_if_
 
-        # Fast extraction of the remaining indices.
-        remaining_idx: NDArray = np.setdiff1d(np.arange(n_size),
-                                              pareto_idx,
-                                              assume_unique=True)
         # Local copy of random choice.
         choose_randomly = self.rng.choice
 
-        # Local number of contestants. Ensure that this
-        # number is not higher than the population size.
-        n_contestants: int = min(self._items, rem_size)
+        # Edge case no.2:
+        if rem_size == 1:
 
-        # Select the contestants for the tournaments.
-        contestants: NDArray = np.array([
-            # Set 'replace=False' to avoid duplicates.
-            choose_randomly(remaining_idx, size=n_contestants,
-                            replace=False, shuffle=False)
-            for _ in range(rem_size)
-        ], dtype=int)
+            # Select one pareto index at random.
+            extra_idx: int = choose_randomly(pareto_idx)
 
-        # Preallocate the extras list.
-        extras: list[int] = rem_size * [None]
+            # Set up the chosen array.
+            chosen: NDArray = np.append(pareto_idx, extra_idx)
+        else:
 
-        # Select the new indices iteratively.
-        for i, row in enumerate(contestants):
-            # Get the indexes on the Pareto front.
-            pf_idx = np_pareto_front_index(fitness_array[row])
+            # Fast extraction of the remaining indices.
+            remaining_idx: NDArray = np.setdiff1d(np.arange(n_size),
+                                                  pareto_idx,
+                                                  assume_unique=True)
 
-            # If more than one, choose at random.
-            idx = choose_randomly(pf_idx) if pf_idx.size > 1 else pf_idx[0]
+            # Local number of contestants. Ensure that this
+            # number is not higher than the population size.
+            n_contestants: int = min(self._items, rem_size)
 
-            # Dereference the position in the
-            # population through "row" vector.
-            extras[i] = row[idx]
-        # _end_for_
+            # Select the contestants for the tournaments.
+            contestants: NDArray = np.array([
+                # Set 'replace=False' to avoid duplicates.
+                choose_randomly(remaining_idx, size=n_contestants,
+                                replace=False, shuffle=False)
+                for _ in range(rem_size)
+            ], dtype=int)
 
-        # Combined fast concatenation.
-        chosen: NDArray = np.concatenate((pareto_idx, extras))
+            # Preallocate the extras list.
+            extras: list[int] = rem_size * [None]
+
+            # Select the new indices iteratively.
+            for i, row in enumerate(contestants):
+                # Get the indexes on the Pareto front.
+                pf_idx = np_pareto_front_index(fitness_array[row])
+
+                # If more than one, choose at random.
+                idx = choose_randomly(pf_idx) if pf_idx.size > 1 else pf_idx[0]
+
+                # Dereference the position in the
+                # population through "row" vector.
+                extras[i] = row[idx]
+            # _end_for_
+
+            # Combined fast concatenation.
+            chosen: NDArray = np.concatenate((pareto_idx, extras))
 
         return [
             # Ensure 'k' is passed as integer.
