@@ -59,8 +59,6 @@ class ParetoFrontSelector(SelectionOperator):
 
         # Edge case no.1:
         if rem_size == 0:
-            # Shuffle in place.
-            self.rng.shuffle(population)
 
             # Return the same.
             return population
