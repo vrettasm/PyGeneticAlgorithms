@@ -87,7 +87,8 @@ def np_pareto_front_index(points: NDArray,
     n_points, n_dims = unique_points.shape
 
     # Rough calculation of occupied memory.
-    memory_mb: float =  n_points * n_points * n_dims * 8.0
+    memory_bytes: int =  (n_points * n_points * n_dims *
+                          unique_points.dtype.itemsize)
 
     # Compare it against ~500MB.
     if memory_mb <= 500_000_000:
