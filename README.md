@@ -6,7 +6,7 @@
 
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 
-**Pylint score: 9.45 / 10**
+**Pylint score: 9.47 / 10**
 
 This repository implements a genetic algorithm toolbox in Python3 programming language, using only *Numpy* and *Joblib*
 as additional libraries. The toolbox offers the following implementations (as engines):
@@ -18,9 +18,11 @@ of the best individuals among the (co-evolving) different island populations. Th
 in parallel using separate CPUs.
 - A brand new **MultiObjectiveGA** class is added that allows the user to solve more complex multiobjective optimization
 problems. The major difference in the new class is that the fitness function is expected to return a tuple with all the
-objective function values, e.g. (fx1, fx2, ..., fxn) rather a single function value fx.
-  
-**NOTE**:
+objective function values, e.g. (fx1, fx2, ..., fxn) rather a single function value fx. Note, that if the problems has
+additional constraints to satisfy, as is usually the case, they should be summed in one 'penalty 'variable and included
+in the tuple _before_ any other objective value i.e. (sum_penalty, fx1, fx2, ..., fxn). This way, when the chromosomes
+are sorted those that minimize all constraints (sum_penalty == 0) will be placed higher in the rank.
+
 For computationally expensive fitness functions the StandardGA and MultiObjectiveGA classes provide the option of
 parallel evaluation (of the individual chromosomes), by setting in the method run(..., parallel=True). However, for
 fast fitness functions this will actually cause the algorithm to execute slower (due to the time required to open and
@@ -50,13 +52,13 @@ The current implementation provides (out of the box) a variety of genetic operat
   - [Pareto Tournament Selector](pygenalgo/operators/selection/pareto_tournament_selector.py)
 
 - **Crossover operators**:
-  - [Single-Point Crossover](pygenalgo/operators/crossover/single_point_crossover.py)
-  - [Multi-Point Crossover](pygenalgo/operators/crossover/multi_point_crossover.py)
-  - [Uniform Crossover](pygenalgo/operators/crossover/uniform_crossover.py)
+  - [Single-Point Crossover*](pygenalgo/operators/crossover/single_point_crossover.py)
+  - [Multi-Point Crossover*](pygenalgo/operators/crossover/multi_point_crossover.py)
+  - [Uniform Crossover*](pygenalgo/operators/crossover/uniform_crossover.py)
   - [Order Crossover (OX1)](pygenalgo/operators/crossover/order_crossover.py)
   - [Partially Mapped Crossover (PMX)](pygenalgo/operators/crossover/partially_mapped_crossover.py)
   - [Position Based Crossover (POS)](pygenalgo/operators/crossover/position_based_crossover.py)
-  - [Blend-α Crossover (BLX-α)](pygenalgo/operators/crossover/blend_crossover.py)
+  - [Blend-α Crossover (BLX-α)*](pygenalgo/operators/crossover/blend_crossover.py)
 
 - **Mutation operators**:
   - [Random Mutator](pygenalgo/operators/mutation/random_mutator.py)
@@ -77,8 +79,11 @@ The current implementation provides (out of the box) a variety of genetic operat
   - [Meta Mutator](pygenalgo/operators/mutation/meta_mutator.py)
   - [Meta Migration](pygenalgo/operators/migration/meta_migration.py)
 
-(**NOTE:** Meta operators call randomly other compatible operators (selection/crossover/mutation/migration)
-from a predefined set, with equal probability.)
+**NOTE(1):** Meta operators call randomly other compatible operators (selection/crossover/mutation/migration)
+from a predefined set, with equal probability.
+
+**NOTE(2):** Crossover operators marked by '*' support variable chromosome lengths (VLC). By definition all
+mutation operators support VCL too, because they operate on a single chromosome at a time.
 
 Incorporating additional genetic operators is easily facilitated by inheriting from the base classes:
 - [SelectionOperator](pygenalgo/operators/selection/select_operator.py)
@@ -117,10 +122,10 @@ The recommended version is Python 3.10 (and above). To simplify the required pac
 
 ### Fitness function
 
-The most important thing the user has to do is to define the "fitness function". A template is provided here,
-in addition to the examples below. The cost_function decorator is used to indicate whether the function will
-be maximized (default), or minimized. The second output parameter ("solution_found") is optional; only in the
-cases where we can evaluate if a termination condition is satisfied.
+The most important thing the user has to do is to define the fitness function. A template for single objective function
+is provided here in addition to the examples below. The cost_function decorator is used to indicate whether the function
+will be maximized (default), or minimized. The second output parameter ("solution_found") is optional; only in the cases
+where we can evaluate if a termination condition is satisfied.
 
 ```python
 from pygenalgo.genome.chromosome import Chromosome
