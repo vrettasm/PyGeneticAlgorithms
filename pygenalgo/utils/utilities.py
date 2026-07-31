@@ -83,16 +83,61 @@ def np_pareto_front_index(points: NDArray,
         x_points, axis=0, return_index=True
     )
 
-    # Subtract all points (from all other points).
-    # WARNING: This step is O(N^2) in memory allocation.
-    diff = unique_points[:, None, :] - unique_points[None, :, :]
+    # Get the dimensions of unique points.
+    n_points, n_dims = unique_points.shape
 
-    # This condition is for maximization problems.
-    strictly_better = np.all(diff >= 0.0, axis=-1) & \
-                      np.any(diff >  0.0, axis=-1)
+    # Rough calculation of occupied memory.
+    memory_mb: float =  n_points * n_points * n_dims * 8.0
 
-    # Get the pareto points mask.
-    is_pareto = ~np.any(strictly_better, axis=0)
+    # Compare it against ~500MB.
+    if memory_mb <= 500_000_000:
+        #
+        # WARNING: This step is O(N^2 x D) in memory allocation.
+        #
+
+        # Subtract all points (from all other points).
+        diff: NDArray = unique_points[:, None, :] - unique_points[None, :, :]
+
+        # This condition is for maximization problems.
+        strictly_better: NDArray = np.all(diff >= 0.0, axis=-1) & \
+                                   np.any(diff >  0.0, axis=-1)
+
+        # Get the pareto points mask.
+        is_pareto: NDArray = ~np.any(strictly_better, axis=0)
+    else:
+        #
+        # WARNING: This step is O(N x D) in memory allocation,
+        #          but slow due to the loop!
+
+        # Initialize all unique points as Pareto optimal.
+        is_pareto: NDArray = np.ones(n_points, dtype=bool)
+
+        # Check point by point.
+        for i in range(n_points):
+            # If i-th point is already dominated,
+            # no need to check what it dominates.
+            if not is_pareto[i]:
+                continue
+
+            # Only compare against points that haven't been dominated
+            # yet and are further down the list to avoid duplicate checks.
+            remaining_indices: NDArray = np.where(is_pareto)[0]
+            remaining_indices = remaining_indices[remaining_indices > i]
+
+            # Quick exit.
+            if len(remaining_indices) == 0:
+                break
+
+            # Compare the i-th point against the surviving future points.
+            diff: NDArray = unique_points[i] - unique_points[remaining_indices]
+
+            # Find which of the remaining points are dominated
+            # by current point i.
+            dominating_others: NDArray = np.all(diff >= 0.0, axis=-1) &\
+                                         np.any(diff > 0.0, axis=-1)
+            # Mark them as False.
+            is_pareto[remaining_indices[dominating_others]] = False
+    # _end_if_
 
     # Return the indexes.
     return unique_indices[is_pareto]
