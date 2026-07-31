@@ -2,17 +2,10 @@ import time
 from math import isclose
 from typing import Optional
 
-from numpy import (array, nanmean, nanstd, isfinite)
-from numpy.typing import NDArray
-
+# Custom PyGenaAlgo code.
 from pygenalgo.engines import logger
 from pygenalgo.engines.generic_ga import GenericGA
-from pygenalgo.utils.auxiliary import (apply_corrections,
-                                       average_hamming_distance)
-
-from pygenalgo.operators.mutation.meta_mutator import MetaMutator
-from pygenalgo.operators.crossover.meta_crossover import MetaCrossover
-
+from pygenalgo.utils.auxiliary import average_hamming_distance
 
 # Public interface.
 __all__ = ["StandardGA"]
@@ -35,41 +28,10 @@ class StandardGA(GenericGA):
         super().__init__(**kwargs)
     # _end_def_
 
-    def update_stats(self, fit_list: list[float]) -> tuple[float, float]:
-        """
-        Update the stats dictionary with the mean/std values of the
-        population fitness values.
-
-        :param fit_list: (list) fitness values of the population.
-
-        :return: the mean and std of the fitness values.
-        """
-        # Convert the fitness list in a numpy array.
-        arr: NDArray = array(fit_list, dtype=float)
-
-        # Get the mean and std values.
-        avg_fitness: float = nanmean(arr, dtype=float)
-        std_fitness: float = nanstd(arr, dtype=float)
-
-        # Make sure the stat values are finite.
-        if all(isfinite([avg_fitness, std_fitness])):
-
-            # Store them in the dictionary.
-            self._stats["avg"].append(avg_fitness)
-            self._stats["std"].append(std_fitness)
-        else:
-            raise RuntimeError(f"{self.__class__.__name__}: Something went wrong with current "
-                               f"population. Mean={avg_fitness:.5f}, Std={std_fitness:.5f}.")
-        # _end_if_
-
-        # Return the average statistics.
-        return avg_fitness, std_fitness
-    # _end_def_
-
-    # pylint: disable=arguments-differ
     def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
-            f_tol: Optional[float] = None, parallel: bool = False, adapt_probs: bool = False,
-            shuffle: bool = True, f_max_eval: Optional[int] = None, verbose: bool = False) -> None:
+            parallel: bool = False, adapt_probs: bool = False, shuffle: bool = True,
+            f_tol: Optional[float] = None, f_max_eval: Optional[int] = None,
+            verbose: bool = False) -> None:
         """
         Main method of the StandardGA class, that implements the evolutionary routine.
 
@@ -112,14 +74,20 @@ class StandardGA(GenericGA):
         pop_size: int = len(self.population)
 
         # Get the fitness values before optimization.
-        fit_list_0, _ = self.evaluate_fitness(self.population, parallel)
+        fit_list_0, found_solution = self.evaluate_fitness(self.population,
+                                                           parallel_mode=parallel)
+        # Initial termination check.
+        if found_solution:
+            # Display the message for the user.
+            logger.info("Optimization Finished!")
+            return
 
         # Update the average statistics in the dictionary.
         avg_fitness_0, _ = self.update_stats(fit_list_0)
 
         # Store the initial crossover and mutation probabilities.
-        self._stats["prob_crossx"].append(self._crossx_op.probability)
-        self._stats["prob_mutate"].append(self._mutate_op.probability)
+        self.stats["prob_crossx"].append(self._crossx_op.probability)
+        self.stats["prob_mutate"].append(self._mutate_op.probability)
 
         # Local variable to display information on the screen.
         # To avoid cluttering the screen we print info only 10
@@ -152,25 +120,27 @@ class StandardGA(GenericGA):
             # Calculate the new fitness values.
             fit_list_i, found_solution = self.evaluate_fitness(population_i, parallel)
 
+            # Check for termination.
+            if found_solution:
+                # Log a warning message.
+                logger.warning("%s finished in %d iterations.",
+                               self.__class__.__name__, i + 1)
+
+                # Update the old population with the current.
+                self.population = population_i
+
+                # Final update the mean/std in the dictionary.
+                avg_fitness_0, _ = self.update_stats(fit_list_i)
+
+                # Exit.
+                break
+            # _end_if_
+
             # Check if 'corrections' are enabled.
-            if correction:
-                # Apply the function.
-                total_corrections, f_counts = apply_corrections(population_i, self.fitness_func)
+            if correction and self.correct_genome(population_i):
 
-                # If corrections were made, we will need to make some updates.
-                if total_corrections > 0:
-
-                    # Update the function evaluation counter.
-                    self.f_eval_increase_by(f_counts)
-
-                    # Update the fitness list to ensure consistency.
-                    fit_list_i = [p.fitness for p in population_i]
-
-                    # Log the corrections.
-                    logger.debug(
-                        "> %d correction(s) took place at epoch: %d",
-                        total_corrections, i
-                    )
+                # Update the fitness list to ensure consistency.
+                fit_list_i = [p.fitness for p in population_i]
             # _end_if_
 
             # Check if 'elitism' is enabled.
@@ -207,38 +177,38 @@ class StandardGA(GenericGA):
                 )
             # _end_if_
 
-            # Update the old population with the new chromosomes.
+            # Update the old population with current.
             self.population = population_i
-
-            # Check for termination.
-            if found_solution:
-                # Log a warning message.
-                logger.warning("%s finished in %d iterations.",
-                               self.__class__.__name__, i + 1)
-                # Exit.
-                break
-            # _end_if_
 
             # Check for the maximum function evaluations.
             if f_max_eval is not None and self.f_evals >= f_max_eval:
                 # Log a warning message.
-                logger.warning("%s reached the maximum number of function evaluations.",
-                               self.__class__.__name__)
+                logger.warning(
+                    "%s reached the maximum number of function evaluations.",
+                    self.__class__.__name__
+                )
+
+                # Final update the mean value.
+                avg_fitness_0 = avg_fitness_i
+
                 # Exit.
                 break
             # _end_if_
 
             # Check for convergence.
-            if f_tol is not None and isclose(avg_fitness_i, avg_fitness_0, abs_tol=f_tol):
+            if f_tol is not None and isclose(avg_fitness_i,
+                                             avg_fitness_0,
+                                             abs_tol=f_tol):
                 # Display a warning message.
                 logger.warning("%s converged in %d iterations.",
                                self.__class__.__name__, i + 1)
+
+                # Final update the mean value.
+                avg_fitness_0 = avg_fitness_i
+
                 # Exit.
                 break
             # _end_if_
-
-            # Update the average value for the next iteration.
-            avg_fitness_0 = avg_fitness_i
 
             # Check the adaptive flag.
             if adapt_probs:
@@ -248,48 +218,22 @@ class StandardGA(GenericGA):
                 # Update the genetic probabilities.
                 if self.adapt_probabilities(threshold=avg_distance):
                     # Store the updated crossover and mutation probabilities.
-                    self._stats["prob_crossx"].append(self._crossx_op.probability)
-                    self._stats["prob_mutate"].append(self._mutate_op.probability)
+                    self.stats["prob_crossx"].append(self._crossx_op.probability)
+                    self.stats["prob_mutate"].append(self._mutate_op.probability)
+            # _end_if_
+
+            # Update the average value for the next iteration.
+            avg_fitness_0 = avg_fitness_i
         # _end_for_
 
         # Final time instant.
         time_tf: float = time.perf_counter()
 
         # Display the final average fitness value.
-        logger.info("Final   Avg. Fitness = %.4f", avg_fitness_0)
+        logger.info("Final: Avg. Fitness = %.4f", avg_fitness_0)
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
-    # _end_def_
-
-    def print_operator_stats(self) -> None:
-        """
-        Print the genetic operators stats.
-
-        :return: None.
-        """
-        # First print the selection operator.
-        print(self.select_op)
-
-        # Second print the crossover operator.
-        print(self.crossx_op)
-
-        # Check if we used the MetaCrossover.
-        if isinstance(self.crossx_op, MetaCrossover):
-            # Call internally all operators.
-            for op in self.crossx_op.items:
-                print(op)
-        # _end_if_
-
-        # Lastly print the mutation operator.
-        print(self.mutate_op)
-
-        # Check if we used the MetaMutator.
-        if isinstance(self.mutate_op, MetaMutator):
-            # Call internally all operators.
-            for op in self.mutate_op.items:
-                print(op)
-            # _end_for_
     # _end_def_
 
 # _end_class_

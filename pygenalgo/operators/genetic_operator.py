@@ -1,6 +1,7 @@
-from typing import Any
 from threading import Lock
 from functools import wraps
+from typing import Any, Optional
+
 from numpy.random import default_rng, Generator
 
 # Public interface.
@@ -72,15 +73,8 @@ class GeneticOperator:
 
         :param probability: (float) in [0, 1].
         """
-        # Ensure correct type.
-        probability = float(probability)
-
-        # Ensure correct range [0, 1].
-        if not 0.0 <= probability <= 1.0:
-            raise ValueError(f"{self.__class__.__name__} the value "
-                             f"{probability} is not within valid range.")
         # Assign the value.
-        self._probability: float = probability
+        self._probability = self._validate_probability(probability)
 
         # Initialize the application counter to zero.
         self._counter: int = 0
@@ -89,7 +83,33 @@ class GeneticOperator:
         self._lock: Lock = Lock()
 
         # Place holder.
-        self._items: Any = None
+        self._items: Optional[Any] = None
+    # _end_def_
+
+    @classmethod
+    def _validate_probability(cls, probability: int | float) -> float:
+        """
+        Helper function to validate the probability values.
+
+        NOTE: String inputs are also 'accepted' as long as
+        they can be cast correctly. But they should really
+        be avoided.
+
+        :param probability: (int or float) in [0, 1].
+
+        :return: float in [0, 1].
+        """
+        # Ensure correct type.
+        # WARNING: If cast fails a ValueError will be raised!
+        probability = float(probability)
+
+        # Ensure correct range is [0, 1].
+        if not 0.0 <= probability <= 1.0:
+            raise ValueError(f"{cls.__name__} the value "
+                             f"{probability} is not within valid range.")
+        # _end_if_
+
+        return probability
     # _end_def_
 
     @classmethod
@@ -133,7 +153,7 @@ class GeneticOperator:
     # _end_def_
 
     @property
-    def items(self) -> Any:
+    def items(self) -> Optional[Any]:
         """
         Accessor (getter) of the _items container.
 
@@ -192,20 +212,8 @@ class GeneticOperator:
 
         :param new_value: (float) in [0, 1].
         """
-        # Check for the correct type.
-        if not isinstance(new_value, float):
-            raise TypeError(f"{self.__class__.__name__}: Probability value"
-                            f"should be 'float': {new_value.__class__.__name__}.")
-        # _end_if_
-
-        # Ensure the correct range.
-        if not 0.0 <= new_value <= 1.0:
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"Probability should be in [0, 1].")
-        # _end_if_
-
         # Update the probability value.
-        self._probability = new_value
+        self._probability = self._validate_probability(new_value)
     # _end_def_
 
     @property

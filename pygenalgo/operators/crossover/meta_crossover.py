@@ -1,8 +1,8 @@
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.uniform_crossover import UniformCrossover
-from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 from pygenalgo.operators.crossover.multi_point_crossover import MultiPointCrossover
 from pygenalgo.operators.crossover.single_point_crossover import SinglePointCrossover
+from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, pair_t)
 
 
 class MetaCrossover(CrossoverOperator):
@@ -31,7 +31,7 @@ class MetaCrossover(CrossoverOperator):
         )
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> pair_t:
         """
         Perform the crossover operation on the two input parent
         chromosomes, by selecting randomly a predefined method.
@@ -72,19 +72,24 @@ class MetaCrossover(CrossoverOperator):
     @property
     def all_counters(self) -> dict:
         """
-        Accessor (getter) of the application counter from all the internal crossovers.
-        This is mostly to verify that everything is working as expected.
+        Accessor (getter) of the application counter from all
+        the internal crossovers. This is mostly to verify that
+        everything is working as expected.
 
-        :return: a dictionary with the counter calls for all crossover methods.
+        :return: a dictionary with the counter calls for all
+                 crossover methods.
         """
-        return {cross_op.__class__.__name__: cross_op.counter for cross_op in self.items}
+        return {
+            cross_op.__class__.__name__: cross_op.counter
+            for cross_op in self.items
+        }
     # _end_def_
 
     def reset_counter(self) -> None:
         """
-        Sets ALL the counters to 'zero'. We have to override the super().reset_counter()
-        method, because we have to call explicitly the reset_counter on all the internal
-        operators.
+        Sets ALL the counters to 'zero'. We have to override the
+        super().reset_counter() method,  because we have to call
+        explicitly the reset_counter on all the internal operators.
 
         :return: None.
         """

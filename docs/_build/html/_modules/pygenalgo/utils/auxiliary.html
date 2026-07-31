@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.utils.auxiliary &mdash; PyGenAlgo 1.9.1 documentation</title>
+  <title>pygenalgo.utils.auxiliary &mdash; PyGenAlgo 2.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=60b3a732"></script>
+      <script src="../../../_static/documentation_options.js?v=51b770b3"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -94,7 +94,7 @@
 
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;average_hamming_distance&quot;</span><span class="p">,</span> <span class="s2">&quot;unique_pairs&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;apply_corrections&quot;</span><span class="p">,</span> <span class="s2">&quot;SubPopulation&quot;</span><span class="p">]</span>
+           <span class="s2">&quot;correct_chromosomes&quot;</span><span class="p">,</span> <span class="s2">&quot;SubPopulation&quot;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="unique_pairs">
 <a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.auxiliary.unique_pairs">[docs]</a>
@@ -133,7 +133,9 @@
 
 <span class="sd">    Even though this implementation covers also the case with</span>
 <span class="sd">    equal chromosome lengths, it should be avoided because it</span>
-<span class="sd">    is O(N^2 * L).</span>
+<span class="sd">    is O(N^2 * L) where:</span>
+<span class="sd">    - N: number of chromosomes</span>
+<span class="sd">    - L: length of chromosomes.</span>
 
 <span class="sd">    :param population: List(Chromosome) the population we want</span>
 <span class="sd">                       to compute the average Hamming distance.</span>
@@ -187,10 +189,10 @@
         <span class="c1"># Normalized: Total differences divided</span>
         <span class="c1"># by the total gene positions counted.</span>
         <span class="k">return</span> <span class="n">total_diffs</span> <span class="o">/</span> <span class="n">total_genes_compared</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Absolute: Average number of differences</span>
-        <span class="c1"># per unique pair.</span>
-        <span class="k">return</span> <span class="n">total_diffs</span> <span class="o">/</span> <span class="n">unique_pairs</span><span class="p">(</span><span class="n">n_chromosomes</span><span class="p">)</span>
+
+    <span class="c1"># Absolute: Average number of differences</span>
+    <span class="c1"># per unique pair.</span>
+    <span class="k">return</span> <span class="n">total_diffs</span> <span class="o">/</span> <span class="n">unique_pairs</span><span class="p">(</span><span class="n">n_chromosomes</span><span class="p">)</span>
 <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="average_hamming_distance">
@@ -203,6 +205,9 @@
 <span class="sd">    of chromosomes. The complexity is O(N * L), but works only when</span>
 <span class="sd">    all the chromosomes have the same length. If they are not, then</span>
 <span class="sd">    the slower version is called _average_hamming_distance_vcl().</span>
+
+<span class="sd">    - N: number of chromosomes</span>
+<span class="sd">    - L: length of chromosomes.</span>
 
 <span class="sd">    :param population: List(Chromosome) the population we want to compute</span>
 <span class="sd">                       the average Hamming distance.</span>
@@ -277,8 +282,9 @@
         <span class="c1"># Return according to the normal flag.</span>
         <span class="k">if</span> <span class="n">normal</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">total_diffs</span> <span class="o">/</span> <span class="n">total_genes_compared</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">total_diffs</span> <span class="o">/</span> <span class="n">total_pairs</span>
+
+        <span class="c1"># Absolute return statement.</span>
+        <span class="k">return</span> <span class="n">total_diffs</span> <span class="o">/</span> <span class="n">total_pairs</span>
     <span class="c1"># _end_if_</span>
 
     <span class="c1"># Fallback: variable chromosome length (rare case).</span>
@@ -286,10 +292,10 @@
 
 <span class="c1"># _end_def_</span>
 
-<div class="viewcode-block" id="apply_corrections">
-<a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.auxiliary.apply_corrections">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">apply_corrections</span><span class="p">(</span><span class="n">input_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span>
-                      <span class="n">fit_func</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<div class="viewcode-block" id="correct_chromosomes">
+<a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.auxiliary.correct_chromosomes">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">correct_chromosomes</span><span class="p">(</span><span class="n">input_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span>
+                        <span class="n">fit_func</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check the population  for invalid genes and correct them by applying directly</span>
 <span class="sd">    the random method. It is assumed that the random method of the Gene is always</span>

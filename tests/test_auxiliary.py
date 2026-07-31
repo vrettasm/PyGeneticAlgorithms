@@ -5,7 +5,7 @@ from pygenalgo.genome.chromosome import Chromosome
 
 from pygenalgo.utils.utilities import cost_function, clamp
 from pygenalgo.utils.auxiliary import (unique_pairs,
-                                       apply_corrections,
+                                       correct_chromosomes,
                                        average_hamming_distance)
 
 
@@ -106,7 +106,7 @@ class TestAuxiliary(unittest.TestCase):
                            ]
 
         # Run the corrections algorithms.
-        t0_corrections, _ = apply_corrections(test_population, fit_func)
+        t0_corrections, _ = correct_chromosomes(test_population, fit_func)
 
         # There should be exactly '0' corrected Genes.
         self.assertEqual(0, t0_corrections)
@@ -122,7 +122,7 @@ class TestAuxiliary(unittest.TestCase):
                                          Gene(None, rand_func)])
 
         # Run the corrections algorithms.
-        t3_corrections, _ = apply_corrections(test_population, fit_func)
+        t3_corrections, _ = correct_chromosomes(test_population, fit_func)
 
         # There should be exactly '3' corrected Genes.
         self.assertEqual(3, t3_corrections)

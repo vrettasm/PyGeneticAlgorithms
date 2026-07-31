@@ -52,9 +52,9 @@ class TestGeneticOperator(unittest.TestCase):
         # _end_with_
 
         # Check the input type.
-        with self.assertRaises(TypeError):
-            # Try to set the probability to an invalid type.
-            self.gen_op.probability = int(0)
+        with self.assertRaises(ValueError):
+            # Try to set the probability to an invalid cast.
+            self.gen_op.probability = "2x"
         # _end_with_
     # _end_def_
 

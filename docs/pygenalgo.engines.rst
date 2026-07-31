@@ -28,6 +28,14 @@ pygenalgo.engines.standard\_ga module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.engines.multi\_objective\_ga module
+---------------------------------------------
+
+.. automodule:: pygenalgo.engines.multi_objective_ga
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

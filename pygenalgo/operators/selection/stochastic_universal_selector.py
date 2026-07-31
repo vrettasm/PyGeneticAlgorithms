@@ -1,5 +1,6 @@
 from typing import Generator
 from math import fsum, isclose
+from bisect import bisect_left
 from itertools import accumulate
 
 from pygenalgo.genome.chromosome import Chromosome
@@ -55,8 +56,8 @@ class StochasticUniversalSelector(SelectionOperator):
         # individual has equal chance.
         if isclose(sum_fitness, 0.0):
             # Select the new individuals with equal probability.
-            safe_index = self.rng.choice(pop_size, size=pop_size,
-                                         replace=True, shuffle=False)
+            safe_index = self.rng.choice(pop_size,
+                                         size=pop_size, replace=True)
 
             # Return the new parents to a list.
             return [population[i] for i in safe_index]
@@ -70,32 +71,18 @@ class StochasticUniversalSelector(SelectionOperator):
 
         # Create a generator to calculate the pointers at
         # equal distances 'dist_p' starting from 'start_0'.
-        pointers: Generator[float] = (
+        pointers: Generator[float, None, None] = (
             start_0 + i*dist_p for i in range(pop_size)
         )
-
-        # Create a list that will contain the new parents.
-        new_parents: list[Chromosome] = []
 
         # Compute the cumulative sum of the fitness values.
         cum_sum_fit: list[float] = list(accumulate(all_fitness))
 
-        # Set the index to '0'.
-        i: int = 0
-
-        # Collect the new parents.
-        for p in pointers:
-
-            # Find the cumulative value
-            # that is smaller than 'p'.
-            while cum_sum_fit[i] < p:
-                i += 1
-            # _end_while_
-
-            # Add the individual at position
-            # 'i' in the new parents list.
-            new_parents.append(population[i])
-        # _end_for_
+        # Use optimized C-level binary search to extract individuals.
+        new_parents: list[Chromosome] = [
+            population[min(bisect_left(cum_sum_fit, p), pop_size - 1)]
+            for p in pointers
+        ]
 
         # Return the new parents (individuals).
         return new_parents

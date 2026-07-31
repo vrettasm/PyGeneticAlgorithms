@@ -6,6 +6,7 @@ from pygenalgo.operators.selection.random_selector import RandomSelector
 from pygenalgo.operators.selection.tournament_selector import TournamentSelector
 from pygenalgo.operators.selection.linear_rank_selector import LinearRankSelector
 from pygenalgo.operators.selection.roulette_wheel_selector import RouletteWheelSelector
+from pygenalgo.operators.selection.stochastic_universal_selector import StochasticUniversalSelector
 
 
 class MetaSelector(SelectionOperator):
@@ -31,7 +32,8 @@ class MetaSelector(SelectionOperator):
         # are set to 1.0.
         self._items: tuple[SelectionOperator, ...] = (
             RandomSelector(1.0), LinearRankSelector(1.0),
-            RouletteWheelSelector(1.0), TournamentSelector(1.0)
+            RouletteWheelSelector(1.0), TournamentSelector(1.0),
+            StochasticUniversalSelector(1.0)
         )
     # _end_def_
 

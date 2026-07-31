@@ -22,7 +22,7 @@ from pygenalgo.genome.chromosome import Chromosome
 
 # Public interface.
 __all__ = ["average_hamming_distance", "unique_pairs",
-           "apply_corrections", "SubPopulation"]
+           "correct_chromosomes", "SubPopulation"]
 
 @lru_cache(maxsize=64)
 def unique_pairs(n_size: int) -> int:
@@ -58,7 +58,9 @@ def _average_hamming_distance_vcl(population: list[Chromosome],
 
     Even though this implementation covers also the case with
     equal chromosome lengths, it should be avoided because it
-    is O(N^2 * L).
+    is O(N^2 * L) where:
+    - N: number of chromosomes
+    - L: length of chromosomes.
 
     :param population: List(Chromosome) the population we want
                        to compute the average Hamming distance.
@@ -112,10 +114,10 @@ def _average_hamming_distance_vcl(population: list[Chromosome],
         # Normalized: Total differences divided
         # by the total gene positions counted.
         return total_diffs / total_genes_compared
-    else:
-        # Absolute: Average number of differences
-        # per unique pair.
-        return total_diffs / unique_pairs(n_chromosomes)
+
+    # Absolute: Average number of differences
+    # per unique pair.
+    return total_diffs / unique_pairs(n_chromosomes)
 # _end_def_
 
 def average_hamming_distance(population: list[Chromosome],
@@ -126,6 +128,9 @@ def average_hamming_distance(population: list[Chromosome],
     of chromosomes. The complexity is O(N * L), but works only when
     all the chromosomes have the same length. If they are not, then
     the slower version is called _average_hamming_distance_vcl().
+
+    - N: number of chromosomes
+    - L: length of chromosomes.
 
     :param population: List(Chromosome) the population we want to compute
                        the average Hamming distance.
@@ -200,16 +205,17 @@ def average_hamming_distance(population: list[Chromosome],
         # Return according to the normal flag.
         if normal:
             return total_diffs / total_genes_compared
-        else:
-            return total_diffs / total_pairs
+
+        # Absolute return statement.
+        return total_diffs / total_pairs
     # _end_if_
 
     # Fallback: variable chromosome length (rare case).
     return _average_hamming_distance_vcl(population, normal)
 # _end_def_
 
-def apply_corrections(input_population: list[Chromosome],
-                      fit_func: Callable = None) -> tuple[int, int]:
+def correct_chromosomes(input_population: list[Chromosome],
+                        fit_func: Callable = None) -> tuple[int, int]:
     """
     Check the population  for invalid genes and correct them by applying directly
     the random method. It is assumed that the random method of the Gene is always

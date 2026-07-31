@@ -1,7 +1,7 @@
 """
 Description:
 
-    Includes utility functions that used throughout pygenalgo.
+    Includes utility functions that used throughout PyGenAlgo.
 
 Author:
     Michail D. Vrettas, PhD
@@ -13,18 +13,16 @@ Metadata:
     License: GPL-3
 """
 
-from numbers import Real
 from typing import Callable, Union
 from functools import wraps, partial
-from collections.abc import Sequence
 
 import numpy as np
 from numpy.typing import NDArray
 from numpy.random import Generator
 
 # Public interface.
-__all__ = ["pareto_front", "cost_function", "np_cdist",
-           "clamp", "np_pareto_front", "two_indices_fast"]
+__all__ = ["cost_function", "np_cdist", "two_indices_fast",
+           "np_pareto_front", "clamp",  "np_pareto_front_index"]
 
 # Declare a union type.
 Number = Union[int, float]
@@ -46,151 +44,108 @@ def clamp(x: Number,
     return min(max(x, x_lower), x_upper)
 # _end_def_
 
-def _pareto_dominance(point_a: Sequence[Real],
-                     point_b: Sequence[Real]) -> bool:
+def np_pareto_front_index(points: NDArray,
+                          mode: str = "max") -> NDArray:
     """
-    Implements a shortcut version of the Pareto dominance condition:
-
-    all(p <= q for p, q in zip(point_i, point_j)) &&
-    any(p < q for p, q in zip(point_i, point_j))
-
-    NOTE: It is assumed that both points have the same size (length).
-
-    :param point_a: the  first point (as tuple or list).
-
-    :param point_b: the second point (as tuple or list).
-
-    :return: if the condition is satisfied.
-    """
-    # Second condition.
-    strictly_better: bool = False
-
-    # Scan both points elementwise.
-    for p, q in zip(point_a, point_b):
-        # Return immediately.
-        if p < q:
-            return False
-        # _end_if_
-
-        # Check if the second condition
-        # is satisfied.
-        if not strictly_better and p > q:
-            # Switch the flag value
-            # to avoid re-setting it.
-            strictly_better = True
-    # _end_for_
-
-    # If we got here return only the second condition.
-    return strictly_better
-# _end_def_
-
-def pareto_front(points: list) -> list:
-    """
-    Simple function that calculates the Pareto (optimal)
-    front points from a given input points list.
-
-    NOTE: The function is working directly with lists,
-    even though it can be optimized using numpy arrays.
-
-    :param points: list of points [(fx1, fx2, ..., fxn),
-                                   (fy1, fy2, ..., fyn),
-                                   ....................,
-                                   (fk1, fk2, ..., fkn)]
-
-    :return: List of points that lie on the Pareto front.
-    """
-    # Get the size of the first point.
-    n_size = len(points[0]) if points else 0
-
-    # Sanity check.
-    if n_size == 0 or any(len(p) != n_size for p in points[1:]):
-        raise RuntimeError("All points must have the same size.")
-    # _end_if_
-
-    # Create a set that will hold
-    # all the Pareto front points.
-    pareto_points = set()
-
-    # Iterate through every point in the list.
-    for i, point_i in enumerate(points):
-
-        # Set the pareto optimal flag to True.
-        is_pareto_optimal: bool = True
-
-        # Compare it against every other point.
-        for j, point_j in enumerate(points):
-
-            # Check if "dominance" condition is satisfied.
-            if i != j and _pareto_dominance(point_i, point_j):
-                # We swap the flag value.
-                is_pareto_optimal = False
-
-                # Break the internal loop and
-                # continue to the next point.
-                break
-        # _end_for_
-
-        # If we get here and the flag hasn't changed
-        # it means that 'point_i' is on the frontier.
-        if is_pareto_optimal:
-            pareto_points.add(point_i)
-    # _end_for_
-
-    # Return the points as list.
-    return list(pareto_points)
-# _end_def_
-
-def np_pareto_front_slow(points: NDArray) -> NDArray:
-    """
-    Simple function that calculates the Pareto optimal
-    front points from a given input points numpy array.
+    Fast (numpy - vectorized) function that calculates
+    the Pareto optimal front from a given input points
+    numpy array, but returns their indices instead  of
+    their actual values.
 
     :param points: array of points [(fx1, fx2, ..., fxn),
                                     (fy1, fy2, ..., fyn),
                                     ....................,
                                     (fk1, fk2, ..., fkn)]
 
-    NOTE:  Its space (memory) complexity grows linearly
-    with the number of points in the NDArray: O(N), but
-    it is much slower than its numpy vectorized version.
+    :param mode: "max" (maximize all objective) or
+                 "min" (minimize all objective).
 
-    :return: array of points that lie on the Pareto front.
+    :return: array of indexes (from the points that lie on
+             the Pareto front).
     """
     # Sanity check.
     if points.ndim != 2:
         raise RuntimeError("Points must be a 2-D array.")
     # _end_if_
 
-    # Get the number of points.
-    num_points: int = points.shape[0]
+    # Sanity check.
+    if mode not in ("max", "min"):
+        raise ValueError("Mode must be either 'max' or 'min'.")
+    # _end_if_
 
-    # Create an array of boolean to track Pareto optimal points.
-    is_pareto_optimal: NDArray = np.ones(num_points, dtype=bool)
+    # Normalize to a single convention. Here we
+    # maximize in all objectives function values.
+    x_points = points if mode == "max" else -points
 
-    for i, point_i in enumerate(points):
-        # Condition 1:
-        # Less than or equal to all objectives.
-        le_all: NDArray = np.all(points <= point_i, axis=1)
+    # Remove duplicate points to speed up the
+    # routine and keep track of their indices.
+    unique_points, unique_indices = np.unique(
+        x_points, axis=0, return_index=True
+    )
 
-        # Condition 2:
-        # Less than at least in one objective.
-        lt_any: NDArray = np.any(points < point_i, axis=1)
+    # Get the dimensions of unique points.
+    n_points, n_dims = unique_points.shape
 
-        # Combine the two conditions.
-        dominates_i: NDArray = le_all & lt_any
+    # Rough calculation of occupied memory.
+    memory_bytes: int =  (n_points * n_points * n_dims *
+                          unique_points.dtype.itemsize)
 
-        # Explicit self-exclusion.
-        dominates_i[i] = False
+    # Compare it against ~500MB.
+    if memory_bytes <= 500_000_000:
+        #
+        # WARNING: This step is O(N^2 x D) in memory allocation.
+        #
 
-        # Set the i-th flag appropriately.
-        is_pareto_optimal[i] = not np.any(dominates_i)
-    # _end_for_
+        # Subtract all points (from all other points).
+        diff: NDArray = unique_points[:, None, :] - unique_points[None, :, :]
 
-    # Return only the unique Pareto optimal points.
-    return np.unique(points[is_pareto_optimal], axis=0)
+        # This condition is for maximization problems.
+        strictly_better: NDArray = np.all(diff >= 0.0, axis=-1) & \
+                                   np.any(diff >  0.0, axis=-1)
+
+        # Get the pareto points mask.
+        is_pareto: NDArray = ~np.any(strictly_better, axis=0)
+    else:
+        #
+        # WARNING: This step is O(N x D) in memory allocation,
+        #          but slow due to the loop!
+
+        # Initialize all unique points as Pareto optimal.
+        is_pareto: NDArray = np.ones(n_points, dtype=bool)
+
+        # Check point by point.
+        for i in range(n_points):
+            # If i-th point is already dominated,
+            # no need to check what it dominates.
+            if not is_pareto[i]:
+                continue
+
+            # Only compare against points that haven't been dominated
+            # yet and are further down the list to avoid duplicate checks.
+            remaining_indices: NDArray = np.where(is_pareto)[0]
+            remaining_indices = remaining_indices[remaining_indices > i]
+
+            # Quick exit.
+            if len(remaining_indices) == 0:
+                break
+
+            # Compare the i-th point against the surviving future points.
+            diff: NDArray = unique_points[i] - unique_points[remaining_indices]
+
+            # Find which of the remaining points are dominated
+            # by current point i.
+            dominating_others: NDArray = np.all(diff >= 0.0, axis=-1) &\
+                                         np.any(diff > 0.0, axis=-1)
+            # Mark them as False.
+            is_pareto[remaining_indices[dominating_others]] = False
+    # _end_if_
+
+    # Return the indexes.
+    return unique_indices[is_pareto]
 # _end_def_
 
-def np_pareto_front(points: NDArray, return_index: bool = False) -> NDArray:
+def np_pareto_front(points: NDArray,
+                    mode: str = "max") -> NDArray:
     """
     Fast (numpy - vectorized) function that calculates
     the Pareto optimal front points from a given input
@@ -201,51 +156,21 @@ def np_pareto_front(points: NDArray, return_index: bool = False) -> NDArray:
                                     ....................,
                                     (fk1, fk2, ..., fkn)]
 
-    :param return_index: if 'True' it will return the indexes
-                         of the points instead of their values.
+    :param mode: "max" (maximize all objective) or
+                 "min" (minimize all objective).
 
     NOTE: Its memory complexity grows quadratically
     with the number of points in the NDArray: O(N^2)!
 
     :return: array of points that lie on the Pareto front.
     """
-    # Sanity check.
-    if points.ndim != 2:
-        raise RuntimeError("Points must be a 2-D array.")
-    # _end_if_
 
-    # Remove any duplicate points before
-    # continue to speed up the operations.
-    unique_points, rep_idx = np.unique(
-        np.round(points, decimals=12),
-        axis=0, return_index=True
-    )
+    # First get the indexes of the pareto front points,
+    # using the helper function.
+    idx = np_pareto_front_index(points, mode=mode)
 
-    # Use broadcasting to get all pairwise differences
-    # Shape transitions from:
-    # (N, D) -> (N, 1, D) and
-    # (1, N, D) -> (N, N, D).
-    diff = unique_points[:, None, :] - unique_points[None, :, :]
-
-    # Point 'i' dominates point 'j' if and only if:
-    # 1) i <= j in all objectives, AND
-    # 2) i < j  in at least one objective.
-    le_all = np.all(diff <= 0, axis=-1)
-    lt_any = np.any(diff < 0, axis=-1)
-
-    # Prepare the joint condition.
-    strictly_better = le_all & lt_any
-
-    # A point is Pareto optimal if NO other point dominates it.
-    is_pareto_unique = ~np.any(strictly_better, axis=0)
-
-    # Check return flag value.
-    if return_index:
-        # Return the indexes instead.
-        return rep_idx[is_pareto_unique]
-
-    # Get the pareto optimal (unique) points.
-    return unique_points[is_pareto_unique]
+    # Then return the actual points.
+    return points[idx]
 # _end_def_
 
 def cost_function(func: Callable = None, minimize: bool = False):
@@ -282,18 +207,32 @@ def cost_function(func: Callable = None, minimize: bool = False):
         # Run the function we want to optimize.
         result = func(*args, **kwargs)
 
-        # Check if the function returns a tuple (with two values)
-        # or a single output parameter. In the former, the second
-        # value should be boolean to signal that the solution meets
+        # Check if the function returns a tuple, with two values
+        # or a single output parameter. In the former the second
+        # value should be bool to signal that the solution meets
         # the termination requirements.
-        if isinstance(result, tuple) and len(result) == 2:
+        if isinstance(result, tuple) and len(result) == 2 and\
+                isinstance(result[1], (bool, np.bool_)):
 
-            f_value, solution_is_found = result[0], bool(result[1])
+            f_value, solution_is_found = result
         else:
 
             f_value, solution_is_found = result, False
         # _end_if_
 
+        # Multi-objective functions return a tuple
+        # with all the objective function values.
+        if isinstance(f_value, tuple):
+
+            if minimize:
+                # Reverse the sign of the objectives.
+                f_value = tuple(-fx for fx in f_value)
+
+            return {"f_value": f_value,
+                    "solution_is_found": solution_is_found}
+        # _end_if_
+
+        # Standard return statement.
         return {"f_value": -f_value if minimize else f_value,
                 "solution_is_found": solution_is_found}
     # _end_def_
@@ -350,7 +289,8 @@ def np_cdist(x_pos: NDArray, scaled: bool = False) -> NDArray:
     return dist_x
 # _end_def_
 
-def two_indices_fast(rng: Generator, num: int) -> tuple[int, int]:
+def two_indices_fast(rng: Generator, num: int,
+                     in_order: bool = False) -> tuple[int, int]:
     """
     Select two distinct random indices in the range [0, num)
     without allocating, or shuffling a np.arange(num) array.
@@ -361,8 +301,10 @@ def two_indices_fast(rng: Generator, num: int) -> tuple[int, int]:
     :param num: Exclusive upper bound of the index range.
                 Must be greater than 1.
 
-    :return: two distinct integer values 'i' and 'j' from the
-             range [0, num-1].
+    :param in_order: Boolean flag that allows the output
+                     values to be sorted in ascending order.
+
+    :return: Two distinct integer values from the range [0, num).
     """
     # Sanity check.
     if num <= 1:
@@ -371,9 +313,15 @@ def two_indices_fast(rng: Generator, num: int) -> tuple[int, int]:
     # Pick a random 'i' in [0, num).
     i: int = rng.integers(num, dtype=int)
 
-    # Pick another random 'j' in [0, num-1).
-    j: int = rng.integers(num-1, dtype=int)
+    # Pick another random 'k' in [0, num-1).
+    k: int = rng.integers(num-1, dtype=int)
 
-    # Set 'j' by excluding 'i' via a mapped draw.
-    return i, j if j < i else j + 1
+    # If the flag is set to True.
+    if in_order:
+        # Return in ascending order.
+        return (k, i) if k < i else (i, k + 1)
+
+    # Default is random order.
+    # Exclude 'i' from the second index via a mapped draw.
+    return i, k if k < i else k + 1
 # _end_def_

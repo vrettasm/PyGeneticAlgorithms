@@ -1,18 +1,19 @@
 import time
-from math import isnan, isclose
+from math import isclose
 from operator import attrgetter
 from collections import defaultdict
 from typing import (Optional, Callable)
 
+# Third party code.
+from numpy import nanmean
 from joblib import (Parallel, delayed)
-from numpy import (nanmean, nanstd, isfinite)
 
+# Custom PyGenaAlgo code.
 from pygenalgo.engines import logger
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.auxiliary import (SubPopulation,
-                                       apply_corrections,
                                        average_hamming_distance)
-
+# Custom PyGenaAlgo code.
 from pygenalgo.engines.generic_ga import GenericGA
 from pygenalgo.operators.migration.meta_migration import MetaMigration
 from pygenalgo.operators.migration.migration_operator import MigrationOperator
@@ -48,6 +49,9 @@ class IslandModelGA(GenericGA):
         # Call the super constructor with all the input parameters.
         super().__init__(**kwargs)
 
+        # Ensure the number of islands is integer.
+        num_islands = int(num_islands)
+
         # Sanity check.
         if num_islands > len(self.population):
             # Raise an error if number of islands is too high.
@@ -56,8 +60,8 @@ class IslandModelGA(GenericGA):
                              f"exceeds the size of the population.")
         # _end_if_
 
-        # Assign the number of islands.
-        self._num_islands: int = max(1, int(num_islands))
+        # Assign the number of islands to the object.
+        self._num_islands: int = max(1, num_islands)
 
         # Get Migration Operator.
         self._migrate_op: MigrationOperator = migrate_op
@@ -119,8 +123,8 @@ class IslandModelGA(GenericGA):
 
         # Check if initial probabilities have been given.
         if prob_crossx is not None and prob_mutate is not None:
-            self._crossx_op.probability = prob_crossx
-            self._mutate_op.probability = prob_mutate
+            self.crossx_op.probability = prob_crossx
+            self.mutate_op.probability = prob_mutate
         # _end_if_
 
         # Start timing the loop.
@@ -146,72 +150,54 @@ class IslandModelGA(GenericGA):
             # EVALUATE the i-th population.
             fit_list_i, found_solution = self.evaluate_fitness(population_i)
 
+            # Check for termination.
+            if found_solution:
+                # Switch the convergence flag and track the current iteration.
+                has_converged = (True, i + 1)
+
+                # Update the old population with the current.
+                island.population = population_i
+
+                # Update the average statistics in the local_stats.
+                _, _ = self.update_stats(fit_list_i, local_stats)
+
+                # Exit from the loop.
+                break
+            # _end_if_
+
             # Check if 'corrections' are enabled.
-            if correction:
-                # Apply the function.
-                total_corrections, _ = apply_corrections(population_i, self.fitness_func)
-
-                # If corrections were made we will
-                # need to update the fitness list.
-                if total_corrections > 0:
-
-                    # Update the fitness list to
-                    # ensure consistency.
-                    fit_list_i: list[float] = [
-                        p.fitness for p in population_i
-                    ]
+            if correction and self.correct_genome(population_i):
+                # Update the fitness list to ensure consistency.
+                fit_list_i = [p.fitness for p in population_i]
             # _end_if_
 
             # Check if 'elitism' is enabled.
             if elitism:
                 # Find the individual chromosome with the highest fitness
                 # value from the old subpopulation of the current island.
-                best_chromosome: Chromosome = max(
-                    (p for p in island.population if not isnan(p.fitness)),
+                previous_best: Chromosome = max(
+                    (p for p in island.population if p.fitness is not None),
                     key=attrgetter("fitness"), default=None
                 )
 
                 # Check if the chromosome already exists.
-                if (best_chromosome is not None and
-                        best_chromosome not in population_i):
+                if (previous_best is not None and
+                        previous_best not in population_i):
                     # Select a position at random.
                     locus: int = self.rng_GA.integers(pop_size, dtype=int)
 
                     # Replace it with the previous best.
-                    population_i[locus] = best_chromosome
+                    population_i[locus] = previous_best
 
                     # Update the list of fitness values to reflect the update.
                     fit_list_i[locus] = population_i[locus].fitness
-                # _end_if_
             # _end_if_
 
-            # Compute the mean value.
-            avg_fitness_i = nanmean(fit_list_i, dtype=float)
-
-            # Compute the standard deviation value.
-            std_fitness_i = nanstd(fit_list_i, dtype=float)
-
-            # Update the i-th population mean/std.
-            if all(isfinite([avg_fitness_i, std_fitness_i])):
-
-                # Store them in the dictionary.
-                local_stats["avg"].append(avg_fitness_i)
-                local_stats["std"].append(std_fitness_i)
-            else:
-                raise RuntimeError(f"{i + 1}: Mean={avg_fitness_i:.5f}, Std={std_fitness_i:.5f}.")
-            # _end_if_
-
-            # Update the old population with the new chromosomes.
+            # Update the i-th population mean / std.
+            avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i,
+                                                             local_stats)
+            # Update the old population with the current.
             island.population = population_i
-
-            # Check for termination.
-            if found_solution:
-                # Switch the convergence flag and track the current iteration.
-                has_converged = (True, i + 1)
-
-                # Exit from the loop.
-                break
-            # _end_if_
 
             # Check for convergence.
             if f_tol and isclose(avg_fitness_i, avg_fitness_0, abs_tol=f_tol):
@@ -230,8 +216,8 @@ class IslandModelGA(GenericGA):
                 # Update the genetic probabilities.
                 if self.adapt_probabilities(threshold=avg_distance):
                     # Store the updated crossover and mutation probabilities.
-                    local_stats["prob_crossx"].append(self._crossx_op.probability)
-                    local_stats["prob_mutate"].append(self._mutate_op.probability)
+                    local_stats["prob_crossx"].append(self.crossx_op.probability)
+                    local_stats["prob_mutate"].append(self.mutate_op.probability)
             # _end_if_
 
             # Update the average value for the next iteration.
@@ -244,7 +230,6 @@ class IslandModelGA(GenericGA):
         return island, has_converged, local_stats, elapsed_time
     # _end_def_
 
-    # pylint: disable=arguments-differ
     def run(self, epochs: int = 500, elitism: bool = True, correction: bool = False,
             f_tol: Optional[float] = None, allow_migration: bool = False, n_periods: int = 10,
             adapt_probs: bool = False, shuffle: bool = True, f_max_eval: Optional[int] = None,
@@ -292,12 +277,7 @@ class IslandModelGA(GenericGA):
         :return: None.
         """
         # Reset stats dictionary.
-        self._stats.clear()
-
-        # Randomly shuffle (in place) the original population.
-        if shuffle:
-            self.rng_GA.shuffle(self.population)
-        # _end_if_
+        self.stats.clear()
 
         # Initial random split of the total population
         # in (active) subpopulations. Active here means
@@ -311,34 +291,21 @@ class IslandModelGA(GenericGA):
         for pop_n in active_population:
 
             # Initialize the statistics dictionary.
-            self._stats[pop_n.id]: dict = {
+            self.stats[pop_n.id]: dict = {
                 "avg": [], "std": [], "prob_crossx": [], "prob_mutate": []
             }
 
-            # Initial evaluation of the population. This can run also in parallel.
-            fit_list_0, _ = self.evaluate_fitness(pop_n.population, parallel_mode=True,
+            # Initial evaluation of the population.
+            fit_list_0, _ = self.evaluate_fitness(pop_n.population,
+                                                  parallel_mode=True,
                                                   backend="loky")
-            # Compute the mean value.
-            avg_fitness_0 = nanmean(fit_list_0, dtype=float)
-
-            # Compute the standard deviation value.
-            std_fitness_0 = nanstd(fit_list_0, dtype=float)
-
-            # Check for initial errors.
-            if all(isfinite([avg_fitness_0, std_fitness_0])):
-
-                # Store them in the dictionary.
-                self._stats[pop_n.id]["avg"].append(avg_fitness_0)
-                self._stats[pop_n.id]["std"].append(std_fitness_0)
-            else:
-
-                raise RuntimeError(f"{pop_n.id}: Mean={avg_fitness_0:.5f}, "
-                                   f"Std={std_fitness_0:.5f}.")
-            # _end_if_
+            # Compute the initial mean/std values
+            # and update the stats[pop_n.id].
+            _, _ = self.update_stats(fit_list_0, self.stats[pop_n.id])
 
             # Store the initial crossover and mutation probabilities.
-            self._stats[pop_n.id]["prob_crossx"].append(self._crossx_op.probability)
-            self._stats[pop_n.id]["prob_mutate"].append(self._mutate_op.probability)
+            self.stats[pop_n.id]["prob_crossx"].append(self.crossx_op.probability)
+            self.stats[pop_n.id]["prob_mutate"].append(self.mutate_op.probability)
         # _end_for_
 
         # Check if we have set a maximum number on function
@@ -369,6 +336,16 @@ class IslandModelGA(GenericGA):
         # Local copy of evolve population.
         fn_evolve: Callable = self._evolve_population
 
+        # Local copy of common parameters.
+        common_parameters: dict = {
+            "f_tol": f_tol,
+            "epochs": epochs,
+            "shuffle": shuffle,
+            "elitism": elitism,
+            "correction": correction,
+            "adapt_probs": adapt_probs
+        }
+
         # Initial time instant.
         time_t0 = time.perf_counter()
 
@@ -383,8 +360,8 @@ class IslandModelGA(GenericGA):
             for pop_n in active_population:
 
                 # Use the values of the object operators itself.
-                genetic_probs[pop_n.id]["crossx"] = self._crossx_op.probability
-                genetic_probs[pop_n.id]["mutate"] = self._mutate_op.probability
+                genetic_probs[pop_n.id]["crossx"] = self.crossx_op.probability
+                genetic_probs[pop_n.id]["mutate"] = self.mutate_op.probability
             # _end_for_
 
             # Make sure 'n_periods' is integer.
@@ -418,22 +395,15 @@ class IslandModelGA(GenericGA):
                         n_epochs += rem_epochs
                     # _end_if_
 
-                    # Local copy of common parameters.
-                    common: dict = {
-                        "f_tol": f_tol,
-                        "epochs": n_epochs,
-                        "shuffle": shuffle,
-                        "elitism": elitism,
-                        "correction": correction,
-                        "adapt_probs": adapt_probs
-                    }
+                    # Update epochs to 'n_epochs'.
+                    common_parameters["epochs"] = n_epochs
 
                     # Evolve the subpopulations in parallel for 'n_epochs'.
                     results_i = work_parallel(
                         delayed(fn_evolve)(island=pop_i,
                                            prob_crossx=genetic_probs[pop_i.id]["crossx"],
                                            prob_mutate=genetic_probs[pop_i.id]["mutate"],
-                                           **common)
+                                           **common_parameters)
                         for pop_i in active_population
                     )
 
@@ -450,8 +420,10 @@ class IslandModelGA(GenericGA):
                         if verbose:
 
                             # Find the current highest fitness.
-                            best_fitness = max((p.fitness for p in island.population
-                                                if not isnan(p.fitness)))
+                            best_fitness = max(
+                                (p.fitness for p in island.population
+                                 if p.fitness is not None)
+                            )
 
                             # Log an update of the progress.
                             logger.info(
@@ -482,8 +454,8 @@ class IslandModelGA(GenericGA):
                         # _end_if_
 
                         # Update statistics.
-                        self._stats[island.id]["avg"].extend(local_stats["avg"])
-                        self._stats[island.id]["std"].extend(local_stats["std"])
+                        self.stats[island.id]["avg"].extend(local_stats["avg"])
+                        self.stats[island.id]["std"].extend(local_stats["std"])
 
                         # Check if we were adapting the probabilities.
                         if adapt_probs:
@@ -498,8 +470,8 @@ class IslandModelGA(GenericGA):
                             # _end_if_
 
                             # Store the updated crossover and mutation values.
-                            self._stats[island.id]["prob_crossx"].extend(local_stats["prob_crossx"])
-                            self._stats[island.id]["prob_mutate"].extend(local_stats["prob_mutate"])
+                            self.stats[island.id]["prob_crossx"].extend(local_stats["prob_crossx"])
+                            self.stats[island.id]["prob_mutate"].extend(local_stats["prob_mutate"])
                         # _end_if_
 
                     # _end_for_
@@ -523,19 +495,9 @@ class IslandModelGA(GenericGA):
 
         else:
 
-            # Local copy of common parameters.
-            common: dict = {
-                "f_tol": f_tol,
-                "epochs": epochs,
-                "shuffle": shuffle,
-                "elitism": elitism,
-                "correction": correction,
-                "adapt_probs": adapt_probs
-            }
-
             # Evolve the subpopulations in parallel for 'epoch' iterations.
             results = Parallel(n_jobs=self.n_cpus, backend="loky")(
-                delayed(fn_evolve)(island=pop_n, **common)
+                delayed(fn_evolve)(island=pop_n, **common_parameters)
                 for pop_n in active_population
             )
 
@@ -556,14 +518,14 @@ class IslandModelGA(GenericGA):
                 final_population.extend(island.population)
 
                 # Update the statistics.
-                self._stats[island.id]["avg"].extend(local_stats["avg"])
-                self._stats[island.id]["std"].extend(local_stats["std"])
+                self.stats[island.id]["avg"].extend(local_stats["avg"])
+                self.stats[island.id]["std"].extend(local_stats["std"])
 
                 # Check if we were adapting the probabilities.
                 if adapt_probs:
                     # Store the updated crossover and mutation values.
-                    self._stats[island.id]["prob_crossx"].extend(local_stats["prob_crossx"])
-                    self._stats[island.id]["prob_mutate"].extend(local_stats["prob_mutate"])
+                    self.stats[island.id]["prob_crossx"].extend(local_stats["prob_crossx"])
+                    self.stats[island.id]["prob_mutate"].extend(local_stats["prob_mutate"])
             # _end_for_
 
         # _end_if_
@@ -573,7 +535,8 @@ class IslandModelGA(GenericGA):
 
         # Make a final fitness evaluation (to ensure consistency).
         fit_list_final, _ = self.evaluate_fitness(self.population,
-                                                  parallel_mode=True, backend="loky")
+                                                  parallel_mode=True,
+                                                  backend="loky")
         # Compute the mean value.
         avg_fitness_final = nanmean(fit_list_final, dtype=float)
 
@@ -594,12 +557,12 @@ class IslandModelGA(GenericGA):
         :return: None.
         """
         # First print the migration operator.
-        print(self.migrate_op)
+        print(self._migrate_op)
 
         # Check if we used the MetaMigration.
-        if isinstance(self.migrate_op, MetaMigration):
+        if isinstance(self._migrate_op, MetaMigration):
             # Call internally all operators.
-            for op in self.migrate_op.items:
+            for op in self._migrate_op.items:
                 print(op)
     # _end_def_
 

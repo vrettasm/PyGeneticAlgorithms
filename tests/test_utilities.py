@@ -1,8 +1,9 @@
 import unittest
 import numpy as np
 
-from pygenalgo.utils.utilities import (np_pareto_front,
-                                       two_indices_fast)
+from utils.utilities import (np_pareto_front,
+                             np_pareto_front_index)
+from pygenalgo.utils.utilities import two_indices_fast
 
 
 class TestUtilities(unittest.TestCase):
@@ -41,6 +42,24 @@ class TestUtilities(unittest.TestCase):
             self.assertNotEqual(i, j)
     # _end_def_
 
+    def test_two_indices_fast_in_order(self) -> None:
+        """
+        Test the functionality in_order functionality
+        of two_indices_fast function.
+        """
+
+        # Call the function 1000 times.
+        for _ in range(1000):
+            # Generate a random size >= 2.
+            n_size = self.rng.integers(low=2, high=100)
+
+            # Get two random numbers.
+            i, j = two_indices_fast(rng=self.rng, num=n_size, in_order=True)
+
+            # Output must be ordered.
+            self.assertLess(i, j)
+    # _end_def_
+
     def test_np_pareto_front(self) -> None:
         """
         Test the functionality of np_pareto_from_index.
@@ -56,14 +75,19 @@ class TestUtilities(unittest.TestCase):
         # Generate random points.
         points = np.random.randn(n_points, n_dim)
 
+        # Remove duplicates.
+        x_points = np.unique(points, axis=0)
+
         # Extract the pareto points.
-        p_front = np_pareto_front(points, return_index=False)
+        p_front = np_pareto_front(x_points)
 
-        # Extract the indices.
-        i_front = np_pareto_front(points, return_index=True)
+        # Extract the indices of the pareto points.
+        i_front = np_pareto_front_index(x_points)
 
-        for k, l in zip(i_front, p_front):
-            self.assertAlmostEqual(0.0, np.sum(l - points[k]))
+        # The indexes should point to the same pareto points.
+        for pp, k in zip(p_front, i_front):
+            self.assertAlmostEqual(0.0,
+                                   np.sum(pp-x_points[k]))
     # _end_def_
 
 # _end_class_

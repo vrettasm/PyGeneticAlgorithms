@@ -6,27 +6,38 @@
 
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 
-**Pylint score: 9.48 / 10**
+**Pylint score: 9.47 / 10**
 
-This repository implements a genetic algorithm toolbox in Python3 programming language, using only **Numpy** and **Joblib**
-as additional libraries. The basic approach offers a "StandardGA" class, where the whole population of chromosomes is
-replaced by a new one at the end of each iteration (or epoch). More recently, a new computational model was added named
-"IslandModelGA" class that offers a new genetic operator (MigrationOperator), that allows for periodic migration of the
-best individuals, among the (co-evolving) different island populations.
-  
-**NOTE**:
-For computationally expensive fitness functions the StandardGA class provides the option of parallel evaluation
-(of the individual chromosomes), by setting in the method run(..., parallel=True). However, for fast fitness
-functions this will actually cause the algorithm to execute slower (due to the time required to open and close the
-parallel pool). So the default setting here is "parallel=False". Regarding the IslandModelGA, this is running in
-parallel mode by definition.
+This repository implements a genetic algorithm toolbox in Python3 programming language, using only *Numpy* and *Joblib*
+as additional libraries. The toolbox offers the following implementations (as engines):
+
+- A **StandardGA** class, where the whole population of chromosomes is replaced by a new one at the end of each
+iteration (or epoch).
+- An **IslandModelGA** class offers a new genetic operator (MigrationOperator), which allows for periodic migration
+of the best individuals among the (co-evolving) different island populations. The island populations are coevolving
+in parallel using separate CPUs.
+- A brand new **MultiObjectiveGA** class is added that allows the user to solve more complex multiobjective optimization
+problems. The major difference in the new class is that the fitness function is expected to return a tuple with all the
+objective function values, e.g. (fx1, fx2, ..., fxn) rather a single function value fx. Note, that if the problems has
+additional constraints to satisfy, as is usually the case, they should be summed in one 'penalty' variable and included
+in the tuple _before_ any other objective value i.e. (sum_penalty, fx1, fx2, ..., fxn). This way, when the chromosomes
+are sorted those that minimize all constraints (sum_penalty == 0) will be placed higher in the rank.
+
+For computationally expensive fitness functions the StandardGA and MultiObjectiveGA classes provide the option of
+parallel evaluation (of the individual chromosomes), by setting in the method run(..., parallel=True). However, for
+fast fitness functions this will actually cause the algorithm to execute slower (due to the time required to open and
+close the parallel pool). So the default setting here is "parallel=False". Regarding the IslandModelGA this is running
+in parallel mode by definition.
 
   > **NEWS**:
-  > In this new release three crossover operators (SinglePointCrossover, MultiPointCrossover and UniformCrossover)
-  > got an update that: i) makes them faster and ii) allows them to be used with chromosomes of different lengths.
+  > In this new release two additional selection operators have been implemented (i.e. ParetoFrontSelector and
+  > ParetoTournamentSelector) that are used exclusively with the 'MultiObjectiveGA' and select the new parents
+  > using pareto-front selection techniques. Note that both of these classes provide a base for the development
+  > of possible new selection methodologies for multi-objective problems. Examples that use the new techniques
+  > have also been added to demonstrate their use.
   > 
 
-The current implementation offers a variety of genetic operators including:
+The current implementation provides (out of the box) a variety of genetic operators, including:
 
 - **Selection operators**:
   - [Linear Rank Selector](pygenalgo/operators/selection/linear_rank_selector.py)
@@ -37,15 +48,17 @@ The current implementation offers a variety of genetic operators including:
   - [Tournament Selector](pygenalgo/operators/selection/tournament_selector.py)
   - [Truncation Selector](pygenalgo/operators/selection/truncation_selector.py)
   - [Boltzmann Selector](pygenalgo/operators/selection/boltzmann_selector.py)
+  - [Pareto Front Selector](pygenalgo/operators/selection/pareto_front_selector.py)
+  - [Pareto Tournament Selector](pygenalgo/operators/selection/pareto_tournament_selector.py)
 
 - **Crossover operators**:
-  - [Single-Point Crossover](pygenalgo/operators/crossover/single_point_crossover.py)
-  - [Multi-Point Crossover](pygenalgo/operators/crossover/multi_point_crossover.py)
-  - [Uniform Crossover](pygenalgo/operators/crossover/uniform_crossover.py)
+  - [Single-Point Crossover*](pygenalgo/operators/crossover/single_point_crossover.py)
+  - [Multi-Point Crossover*](pygenalgo/operators/crossover/multi_point_crossover.py)
+  - [Uniform Crossover*](pygenalgo/operators/crossover/uniform_crossover.py)
   - [Order Crossover (OX1)](pygenalgo/operators/crossover/order_crossover.py)
   - [Partially Mapped Crossover (PMX)](pygenalgo/operators/crossover/partially_mapped_crossover.py)
   - [Position Based Crossover (POS)](pygenalgo/operators/crossover/position_based_crossover.py)
-  - [Blend-α Crossover (BLX-α)](pygenalgo/operators/crossover/blend_crossover.py)
+  - [Blend-α Crossover (BLX-α)*](pygenalgo/operators/crossover/blend_crossover.py)
 
 - **Mutation operators**:
   - [Random Mutator](pygenalgo/operators/mutation/random_mutator.py)
@@ -66,8 +79,11 @@ The current implementation offers a variety of genetic operators including:
   - [Meta Mutator](pygenalgo/operators/mutation/meta_mutator.py)
   - [Meta Migration](pygenalgo/operators/migration/meta_migration.py)
 
-(**NOTE:** Meta operators call randomly other compatible operators (selection/crossover/mutation/migration)
-from a predefined set, with equal probability.)
+**NOTE(1):** Meta operators call randomly other compatible operators (selection/crossover/mutation/migration)
+from a predefined set, with equal probability.
+
+**NOTE(2):** Crossover operators marked by '*' support variable chromosome lengths (VLC). By definition all
+mutation operators support VCL too, because they operate on a single chromosome at a time.
 
 Incorporating additional genetic operators is easily facilitated by inheriting from the base classes:
 - [SelectionOperator](pygenalgo/operators/selection/select_operator.py)
@@ -106,10 +122,10 @@ The recommended version is Python 3.10 (and above). To simplify the required pac
 
 ### Fitness function
 
-The most important thing the user has to do is to define the "fitness function". A template is provided here,
-in addition to the examples below. The cost_function decorator is used to indicate whether the function will
-be maximized (default), or minimized. The second output parameter ("solution_found") is optional; only in the
-cases where we can evaluate if a termination condition is satisfied.
+The most important thing the user has to do is to define the fitness function. A template for single objective function
+is provided here in addition to the examples below. The cost_function decorator is used to indicate whether the function
+will be maximized (default), or minimized. The second output parameter ("solution_found") is optional; only in the cases
+where we can evaluate if a termination condition is satisfied.
 
 ```python
 from pygenalgo.genome.chromosome import Chromosome
@@ -162,17 +178,15 @@ Some optimization examples on how to use these algorithms:
 | [Traveling Salesman](examples/tsp.ipynb)                      |    M (=10)    |       1        |       yes       |   single   |
 | [N-Queens](examples/queens_puzzle.ipynb)                      |    M (=8)     |       1        |       yes       |   single   |
 | [OneMax](examples/one_max.ipynb)                              |    M (=50)    |       1        |       no        |   single   |
-| [Tanaka](examples/tanaka_multiobjective.ipynb)                |    M (=2)     |       2        |        2        |   single   |
 | [Zakharov](examples/zakharov.ipynb)                           |    M (=8)     |       1        |       no        |   single   |
-| [Osyczka](examples/osyczka_kundu_multiobjective.ipynb)        |       6       |       2        |        6        |   single   |
 | [Shubert](examples/shubert_2D.ipynb)                          |       2       |       1        |       no        |  multiple  |
 | [Gaussian Mixture](examples/gaussian_mixture_2D.ipynb)        |       2       |       1        |       no        |  multiple  |
 | [Multi-Depot VRP](examples/mdvrp/mdvrp_with_clustering.ipynb) |       M       |       1        |       yes       |  multiple  |
-
+| [MOO: Binh & Korn](examples/moo_binh_and_korn.ipynb)          |    M (=2)     |       2        |        2        |   single   |
+| [MOO: Tanaka](examples/moo_tanaka.ipynb)                      |    M (=2)     |       2        |        2        |   single   |
+| [MOO: Osyczka & Kundu](examples/moo_osyczka_kundu.ipynb)      |       6       |       2        |        6        |   single   |
 
 Constraint optimization problems can be easily addressed using the [Penalty Method](https://en.wikipedia.org/wiki/Penalty_method).
-Moreover, multi-objective optimizations (with or without constraints) can also be solved, using the _weighted sum method_,
-as shown in the examples above. For multimodal optimizations check examples **Shubert** and **Gaussian Mixture**.
 
 ## References and Documentation
 

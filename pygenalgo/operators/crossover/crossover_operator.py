@@ -1,6 +1,12 @@
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import GeneticOperator
 
+# Define a pair of Chromosomes type.
+pair_t: type[tuple] = tuple[Chromosome, Chromosome]
+
+# Public interface.
+__all__ = ["CrossoverOperator", "pair_t"]
+
 
 class CrossoverOperator(GeneticOperator):
     """
@@ -21,7 +27,7 @@ class CrossoverOperator(GeneticOperator):
         super().__init__(probability=crossover_probability)
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> pair_t:
         """
         Abstract method that "reminds" the user that if they want to
         create a Crossover Class that inherits from here they should

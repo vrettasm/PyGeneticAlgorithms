@@ -35,8 +35,8 @@ class TournamentSelector(SelectionOperator):
         # Call the super constructor with the provided initial value.
         super().__init__(selection_probability=select_probability)
 
-        # Number of participants of the tournament should be more than 2.
-        self._items: int = max(2, int(k))
+        # Number of participants of the tournament should be more than 5.
+        self._items: int = max(5, int(k))
     # _end_def_
 
     @increase_counter
@@ -56,15 +56,16 @@ class TournamentSelector(SelectionOperator):
         # Local copy of random choice.
         random_choice = self.rng.choice
 
-        # Number of contestants.
-        n_contestants = self._items
+        # Local number of contestants. Ensure that this
+        # number is not higher than the population size.
+        n_contestants: int = min(self._items, pop_size)
 
         # Select the contestants for each tournament.
         contestants: NDArray = np_array([
             random_choice(pop_size, size=n_contestants,
                           replace=False, shuffle=False)
             for _ in range(pop_size)
-        ])
+        ], dtype=int)
 
         # Define the key.
         key_sort = attrgetter("fitness")

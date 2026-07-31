@@ -1,21 +1,33 @@
-from math import isnan
 from os import cpu_count
 from operator import attrgetter
 from collections import defaultdict
 from typing import Callable, Optional
 
-from joblib import Parallel, delayed
-from numpy.random import default_rng, Generator
+from joblib import (Parallel, delayed)
+
+from numpy import all as np_all
+from numpy.typing import NDArray
+from numpy.random import (default_rng, Generator)
+from numpy import (array, nanmean, nanstd, isfinite)
 
 from pygenalgo.engines import logger
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.utils.auxiliary import correct_chromosomes
+
 from pygenalgo.operators.genetic_operator import GeneticOperator
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
 
+# Meta-operators.
+from pygenalgo.operators.mutation.meta_mutator import MetaMutator
+from pygenalgo.operators.crossover.meta_crossover import MetaCrossover
+
+# Define a fitness type.
+Fitness = float | tuple[float, ...]
+
 # Public interface.
-__all__ = ["GenericGA"]
+__all__ = ["GenericGA", "Fitness"]
 
 
 class GenericGA:
@@ -222,26 +234,6 @@ class GenericGA:
         return self._n_cpus
     # _end_def_
 
-    def f_eval_increase_by(self, new_counts: int) -> None:
-        """
-        Utility method to allow the '_f_eval' to be updated with
-        new counts outside the main class. This can happen during
-        gene correction.
-
-        :param new_counts: the new value of 'counts' that we want
-                           to add on the current f_eval.
-        :return: None.
-        """
-        # Sanity check.
-        if not isinstance(new_counts, int) or new_counts < 0:
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"New counts must be positive integer.")
-        # _end_if_
-
-        # Update the function evaluation counter.
-        self._f_evals += new_counts
-    # _end_def_
-
     def clear_all(self) -> None:
         """
         Make sure all the genetic operator counters and the stats
@@ -264,16 +256,59 @@ class GenericGA:
         logger.debug("%s cleared.", self.__class__.__name__)
     # _end_def_
 
+    def update_stats(self, fit_list: list[float],
+                     other_stats: dict = None) -> tuple:
+        """
+        Update the input stats dictionary with the mean / std
+        values of the population fitness values.
+
+        :param fit_list: (list) fitness values of the population.
+
+        :param other_stats: (dict) stats dictionary.
+
+        :return: the mean and std of the fitness values.
+        """
+        # Convert the fitness list in a numpy array.
+        arr: NDArray = array(fit_list, dtype=float)
+
+        # Compute the mean value.
+        avg_fitness: NDArray = nanmean(arr, axis=0, dtype=float)
+
+        # Compute the standard deviation value.
+        std_fitness: NDArray = nanstd(arr, axis=0, dtype=float)
+
+        # Update the population mean / std.
+        if np_all(isfinite([avg_fitness, std_fitness])):
+
+            if other_stats:
+                # Store them in the input dictionary.
+                other_stats["avg"].append(avg_fitness)
+                other_stats["std"].append(std_fitness)
+            else:
+                # Store them in the self dictionary.
+                self._stats["avg"].append(avg_fitness)
+                self._stats["std"].append(std_fitness)
+        else:
+            raise RuntimeError(f"{self.__class__.__name__}:"
+                               f"Something went wrong at {self._iteration} "
+                               f"iteration. Mean={avg_fitness:.5f}, "
+                               f"Std={std_fitness:.5f}.")
+        # _end_if_
+
+        # Return the average statistics.
+        return avg_fitness, std_fitness
+    # _end_def_
+
     def best_chromosome(self) -> Optional[Chromosome]:
         """
         Auxiliary method that returns the chromosome with the
-        highest fitness value. Safeguarded with ignoring NaNs.
+        highest fitness value. Safeguarded with ignoring None.
 
         :return: Return the chromosome with the highest fitness.
         """
         # Return the chromosome with the highest fitness.
         return max(
-            (p for p in self.population if not isnan(p.fitness)),
+            (p for p in self.population if p.fitness is not None),
             key=attrgetter("fitness"), default=None
         )
     # _end_def_
@@ -302,7 +337,7 @@ class GenericGA:
 
         # Sort the population in descending order.
         sorted_population: list[Chromosome] = sorted(
-            [p for p in self.population if not isnan(p.fitness)],
+            [p for p in self.population if p.fitness is not None],
             key=attrgetter("fitness"), reverse=True
         )
 
@@ -369,7 +404,7 @@ class GenericGA:
         # _end_if_
 
         # Sanity check.
-        if not isinstance(threshold, float) or threshold < 0.0 or threshold > 1.0:
+        if not (isinstance(threshold, float) and 0.0 <= threshold <= 1.0):
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Threshold value must be float in [0.0, 1.0].")
         # _end_if_
@@ -434,7 +469,7 @@ class GenericGA:
 
     def evaluate_fitness(self, input_population: list[Chromosome],
                          parallel_mode: bool = False,
-                         backend: str = "threading") -> tuple[list[float], bool]:
+                         backend: str = "threading") -> tuple[list[Fitness], bool]:
         """
         Evaluate all the chromosomes of the input list with the custom
         fitness function. The parallel_mode is optional. Moreover, the
@@ -471,13 +506,13 @@ class GenericGA:
         p_size: int = len(fitness_i)
 
         # Preallocate the fitness list.
-        fitness_values: list[float] = p_size * [float("NaN")]
+        fitness_values: list[Fitness] = [None] * p_size
 
         # Flag to indicate if a solution has been found.
         found_solution: bool = False
 
-        # Update all chromosomes with their fitness and check if a solution
-        # has been found.
+        # Update all chromosomes with their fitness and
+        # check if a solution has been found.
         for n, (p, fit_result) in enumerate(zip(input_population, fitness_i)):
             # Attach the fitness to each chromosome.
             p.fitness = fit_result["f_value"]

@@ -1,6 +1,6 @@
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.utilities import two_indices_fast
-from pygenalgo.operators.crossover.crossover_operator import CrossoverOperator
+from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, pair_t)
 
 
 class PartiallyMappedCrossover(CrossoverOperator):
@@ -25,7 +25,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
         super().__init__(crossover_probability=crossover_probability)
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> tuple[Chromosome, Chromosome]:
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> pair_t:
         """
         Perform the crossover operation on the two input parent chromosomes.
 
@@ -49,12 +49,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
             genome_2: list = number_of_genes * [None]
 
             # Select two random (distinct) crossover points.
-            i, j = two_indices_fast(self.rng, number_of_genes)
-
-            # Swap indices (if necessary).
-            if i > j:
-                i, j = j, i
-            # _end_if_
+            i, j = two_indices_fast(self.rng, number_of_genes, in_order=True)
 
             # Make a set of indices for the middle segment.
             id_segment: set[int] = set(range(i, j))

@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Genome &mdash; PyGenAlgo 1.9.1 documentation</title>
+  <title>Genome &mdash; PyGenAlgo 2.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=60b3a732"></script>
+      <script src="_static/documentation_options.js?v=51b770b3"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -96,7 +96,7 @@
 <span id="pygenalgo-genome-chromosome-module"></span><h2>pygenalgo.genome.chromosome module<a class="headerlink" href="#module-pygenalgo.genome.chromosome" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pygenalgo.genome.chromosome.Chromosome">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.genome.chromosome.</span></span><span class="sig-name descname"><span class="pre">Chromosome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pygenalgo.genome.gene.Gene" title="pygenalgo.genome.gene.Gene"><span class="pre">Gene</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/genome/chromosome.html#Chromosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.genome.chromosome.Chromosome" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.genome.chromosome.</span></span><span class="sig-name descname"><span class="pre">Chromosome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pygenalgo.genome.gene.Gene" title="pygenalgo.genome.gene.Gene"><span class="pre">Gene</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/genome/chromosome.html#Chromosome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.genome.chromosome.Chromosome" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Description:</p>
 <blockquote>
@@ -118,11 +118,12 @@ by deep-coping only the genome field.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pygenalgo.genome.chromosome.Chromosome.fitness">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fitness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#pygenalgo.genome.chromosome.Chromosome.fitness" title="Link to this definition"></a></dt>
-<dd><p>Accessor of the fitness value of the chromosome.</p>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fitness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pygenalgo.genome.chromosome.Chromosome.fitness" title="Link to this definition"></a></dt>
+<dd><p>Accessor of the fitness variable of
+the chromosome.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>the fitness (float) of the genome.</p>
+<dd class="field-odd"><p>the fitness of the genome.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -141,17 +142,17 @@ by deep-coping only the genome field.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.genome.chromosome.Chromosome.hamming_distance">
 <span class="sig-name descname"><span class="pre">hamming_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/pygenalgo/genome/chromosome.html#Chromosome.hamming_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.genome.chromosome.Chromosome.hamming_distance" title="Link to this definition"></a></dt>
-<dd><p>Compute the Hamming distance of the “self” object,
-with the “other” chromosome. In practice, it’s the
-number of positions at which the corresponding genes
-are different.</p>
+<dd><p>Compute the Hamming distance of the “self” object, with the “other”
+chromosome. In practice, it’s the number of positions at which the
+corresponding genes are different.</p>
+<p>NOTE: It assumes that both chromosomes have the same length.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> – (Chromosome) to compare the Hamming distance.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(int) the number of dissimilarities between
-the two input chromosomes.</p>
+<dd class="field-even"><p>(int) the number of dissimilarities between the two input
+chromosomes.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -171,8 +172,8 @@ calling individually all genes is_valid method.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.genome.chromosome.Chromosome.invalidate_fitness">
 <span class="sig-name descname"><span class="pre">invalidate_fitness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/genome/chromosome.html#Chromosome.invalidate_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.genome.chromosome.Chromosome.invalidate_fitness" title="Link to this definition"></a></dt>
-<dd><p>Invalidates the fitness of the chromosome
-by setting the value to NaN. This is used
+<dd><p>Invalidates the fitness  of the chromosome
+by setting its value to None. This is used
 during the evolution process (mutation).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>

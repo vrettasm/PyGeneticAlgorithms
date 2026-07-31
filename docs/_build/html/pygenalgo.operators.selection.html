@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Selection operators &mdash; PyGenAlgo 1.9.1 documentation</title>
+  <title>Selection operators &mdash; PyGenAlgo 2.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=60b3a732"></script>
+      <script src="_static/documentation_options.js?v=51b770b3"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -97,7 +97,7 @@
 <span id="pygenalgo-operators-selection-boltzmann-selector-module"></span><h2>pygenalgo.operators.selection.boltzmann_selector module<a class="headerlink" href="#module-pygenalgo.operators.selection.boltzmann_selector" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.boltzmann_selector.BoltzmannSelector">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.selection.boltzmann_selector.</span></span><span class="sig-name descname"><span class="pre">BoltzmannSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">select_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/selection/boltzmann_selector.html#BoltzmannSelector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.boltzmann_selector.BoltzmannSelector" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.selection.boltzmann_selector.</span></span><span class="sig-name descname"><span class="pre">BoltzmannSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">select_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/selection/boltzmann_selector.html#BoltzmannSelector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.boltzmann_selector.BoltzmannSelector" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
@@ -297,18 +297,18 @@ he parents for the next generation</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.select_operator.ensure_positive_fitness">
-<span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.selection.select_operator.</span></span><span class="sig-name descname"><span class="pre">ensure_positive_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/selection/select_operator.html#ensure_positive_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.select_operator.ensure_positive_fitness" title="Link to this definition"></a></dt>
-<dd><p>Ensures that the fitness value of each chromosome is a positive number.</p>
-<p>This is useful because some of the selection methods require a positive
-fitness to operate. Also in minimization problems the fitness values are
-negated, therefore by using this transformation the methods that require
-positive values are guaranteed to work.</p>
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.selection.select_operator.</span></span><span class="sig-name descname"><span class="pre">ensure_positive_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'shift_up'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/selection/select_operator.html#ensure_positive_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.select_operator.ensure_positive_fitness" title="Link to this definition"></a></dt>
+<dd><p>Ensures fitness values are positive, using a predefined
+selected method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>population</strong> – (list) of chromosomes.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>population</strong> – (list) of chromosomes.</p></li>
+<li><p><strong>mode</strong> – (str) method of calculating fitness.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(list) of positive fitness values.</p>
+<dd class="field-even"><p>(list) of fitness values.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -455,6 +455,54 @@ population of solutions.</p>
 <dd class="field-even"><p>the selected parents population (as list of chromosomes).</p>
 </dd>
 </dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pygenalgo.operators.selection.pareto_front_selector">
+<span id="pygenalgo-operators-selection-pareto-front-selector-module"></span><h2>pygenalgo.operators.selection.pareto_front_selector module<a class="headerlink" href="#module-pygenalgo.operators.selection.pareto_front_selector" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pygenalgo.operators.selection.pareto_front_selector.ParetoFrontSelector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.selection.pareto_front_selector.</span></span><span class="sig-name descname"><span class="pre">ParetoFrontSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">select_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/selection/pareto_front_selector.html#ParetoFrontSelector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.pareto_front_selector.ParetoFrontSelector" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
+<dl class="simple">
+<dt>Description:</dt><dd><p>This selector is used exclusively by the MultiObjectiveGA class.
+It selects first individuals that lie on the pareto front of the
+objectives space (fitness objectives) and if there are remaining
+slots it uses Adaptive Stochastic Sampling to fill up the slots.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.operators.selection.pareto_front_selector.ParetoFrontSelector.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/selection/pareto_front_selector.html#ParetoFrontSelector.select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.pareto_front_selector.ParetoFrontSelector.select" title="Link to this definition"></a></dt>
+<dd><p>Select the individuals from the population that will be passed
+on to the next genetic operations of crossover and mutation to
+form the new population of solutions.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pygenalgo.operators.selection.pareto_tournament_selector">
+<span id="pygenalgo-operators-selection-pareto-tournament-selector-module"></span><h2>pygenalgo.operators.selection.pareto_tournament_selector module<a class="headerlink" href="#module-pygenalgo.operators.selection.pareto_tournament_selector" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pygenalgo.operators.selection.pareto_tournament_selector.ParetoTournamentSelector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.selection.pareto_tournament_selector.</span></span><span class="sig-name descname"><span class="pre">ParetoTournamentSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">select_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_contestants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/selection/pareto_tournament_selector.html#ParetoTournamentSelector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.pareto_tournament_selector.ParetoTournamentSelector" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
+<dl class="simple">
+<dt>Description:</dt><dd><p>This selector follows the same logic of the TournamentSelector
+but instead of choosing the one with the optimal fitness value
+it passes the contestants to the pareto_front_index function,
+and selects a random one that lies on the Pareto front.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.operators.selection.pareto_tournament_selector.ParetoTournamentSelector.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/selection/pareto_tournament_selector.html#ParetoTournamentSelector.select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.pareto_tournament_selector.ParetoTournamentSelector.select" title="Link to this definition"></a></dt>
+<dd><p>Select the individuals from the population that will be passed
+on to the next genetic operations of crossover and mutation to
+form the new population of solutions.</p>
 </dd></dl>
 
 </dd></dl>

@@ -39,7 +39,7 @@ class FlipMutator(MutationOperator):
             # flip the old gene value.
             individual[self.rng.integers(n_genes,
                                          dtype=int)].flip()
-            # Set the fitness to NaN.
+            # Set the fitness to None.
             individual.invalidate_fitness()
 
             # Increase the mutator counter.

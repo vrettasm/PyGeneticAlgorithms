@@ -40,7 +40,7 @@ class SwapMutator(MutationOperator):
             # Swap in place between the two positions.
             individual[i], individual[j] = individual[j], individual[i]
 
-            # Set the fitness to NaN.
+            # Set the fitness to None.
             individual.invalidate_fitness()
 
             # Increase the mutator counter.

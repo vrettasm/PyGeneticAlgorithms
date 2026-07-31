@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; PyGenAlgo 1.9.1 documentation</title>
+  <title>Index &mdash; PyGenAlgo 2.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=60b3a732"></script>
+      <script src="_static/documentation_options.js?v=51b770b3"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -109,8 +109,6 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.apply_corrections">apply_corrections() (in module pygenalgo.utils.auxiliary)</a>
-</li>
       <li><a href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.average_hamming_distance">average_hamming_distance() (in module pygenalgo.utils.auxiliary)</a>
 </li>
   </ul></td>
@@ -149,6 +147,10 @@
         <li><a href="pygenalgo.genome.html#pygenalgo.genome.gene.Gene.clone">(pygenalgo.genome.gene.Gene method)</a>
 </li>
       </ul></li>
+      <li><a href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.correct_chromosomes">correct_chromosomes() (in module pygenalgo.utils.auxiliary)</a>
+</li>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.correct_genome">correct_genome() (pygenalgo.engines.generic_ga.GenericGA method)</a>
+</li>
       <li><a href="pygenalgo.utils.html#pygenalgo.utils.utilities.cost_function">cost_function() (in module pygenalgo.utils.utilities)</a>
 </li>
       <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.counter">counter (pygenalgo.operators.genetic_operator.GeneticOperator property)</a>
@@ -199,8 +201,6 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.f_eval_increase_by">f_eval_increase_by() (pygenalgo.engines.generic_ga.GenericGA method)</a>
-</li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.f_evals">f_evals (pygenalgo.engines.generic_ga.GenericGA property)</a>
 </li>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.fitness">fitness (pygenalgo.genome.chromosome.Chromosome property)</a>
@@ -208,6 +208,8 @@
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.fitness_func">fitness_func (pygenalgo.engines.generic_ga.GenericGA attribute)</a>
 
       <ul>
+        <li><a href="pygenalgo.engines.html#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.fitness_func">(pygenalgo.engines.multi_objective_ga.MultiObjectiveGA attribute)</a>
+</li>
         <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.fitness_func">(pygenalgo.engines.standard_ga.StandardGA attribute)</a>
 </li>
       </ul></li>
@@ -333,6 +335,8 @@
 </li>
         <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.island_model_ga">pygenalgo.engines.island_model_ga</a>
 </li>
+        <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.multi_objective_ga">pygenalgo.engines.multi_objective_ga</a>
+</li>
         <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.standard_ga">pygenalgo.engines.standard_ga</a>
 </li>
         <li><a href="pygenalgo.genome.html#module-pygenalgo.genome">pygenalgo.genome</a>
@@ -405,6 +409,10 @@
 </li>
         <li><a href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.neighborhood_selector">pygenalgo.operators.selection.neighborhood_selector</a>
 </li>
+        <li><a href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.pareto_front_selector">pygenalgo.operators.selection.pareto_front_selector</a>
+</li>
+        <li><a href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.pareto_tournament_selector">pygenalgo.operators.selection.pareto_tournament_selector</a>
+</li>
         <li><a href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.random_selector">pygenalgo.operators.selection.random_selector</a>
 </li>
         <li><a href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.roulette_wheel_selector">pygenalgo.operators.selection.roulette_wheel_selector</a>
@@ -426,6 +434,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA">MultiObjectiveGA (class in pygenalgo.engines.multi_objective_ga)</a>
+</li>
       <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.multi_point_crossover.MultiPointCrossover">MultiPointCrossover (class in pygenalgo.operators.crossover.multi_point_crossover)</a>
 </li>
       <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.flip_mutator.FlipMutator.mutate">mutate() (pygenalgo.operators.mutation.flip_mutator.FlipMutator method)</a>
@@ -462,11 +472,13 @@
 </li>
       <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.neighborhood_selector.NeighborhoodSelector">NeighborhoodSelector (class in pygenalgo.operators.selection.neighborhood_selector)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.utils.html#pygenalgo.utils.utilities.np_cdist">np_cdist() (in module pygenalgo.utils.utilities)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.utils.html#pygenalgo.utils.utilities.np_pareto_front">np_pareto_front() (in module pygenalgo.utils.utilities)</a>
+</li>
+      <li><a href="pygenalgo.utils.html#pygenalgo.utils.utilities.np_pareto_front_index">np_pareto_front_index() (in module pygenalgo.utils.utilities)</a>
 </li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.num_islands">num_islands (pygenalgo.engines.island_model_ga.IslandModelGA property)</a>
 </li>
@@ -484,9 +496,11 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pygenalgo.utils.html#pygenalgo.utils.utilities.pareto_dominance">pareto_dominance() (in module pygenalgo.utils.utilities)</a>
+      <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.crossover_operator.pair_t">pair_t (in module pygenalgo.operators.crossover.crossover_operator)</a>
 </li>
-      <li><a href="pygenalgo.utils.html#pygenalgo.utils.utilities.pareto_front">pareto_front() (in module pygenalgo.utils.utilities)</a>
+      <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.pareto_front_selector.ParetoFrontSelector">ParetoFrontSelector (class in pygenalgo.operators.selection.pareto_front_selector)</a>
+</li>
+      <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.pareto_tournament_selector.ParetoTournamentSelector">ParetoTournamentSelector (class in pygenalgo.operators.selection.pareto_tournament_selector)</a>
 </li>
       <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.partially_mapped_crossover.PartiallyMappedCrossover">PartiallyMappedCrossover (class in pygenalgo.operators.crossover.partially_mapped_crossover)</a>
 </li>
@@ -497,6 +511,8 @@
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.population">population (pygenalgo.engines.generic_ga.GenericGA attribute)</a>
 
       <ul>
+        <li><a href="pygenalgo.engines.html#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.population">(pygenalgo.engines.multi_objective_ga.MultiObjectiveGA attribute)</a>
+</li>
         <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.population">(pygenalgo.engines.standard_ga.StandardGA attribute)</a>
 </li>
         <li><a href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.SubPopulation.population">(pygenalgo.utils.auxiliary.SubPopulation attribute)</a>
@@ -508,7 +524,7 @@
 </li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.print_migration_stats">print_migration_stats() (pygenalgo.engines.island_model_ga.IslandModelGA method)</a>
 </li>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.print_operator_stats">print_operator_stats() (pygenalgo.engines.standard_ga.StandardGA method)</a>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.print_operator_stats">print_operator_stats() (pygenalgo.engines.generic_ga.GenericGA method)</a>
 </li>
       <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.probabilities">probabilities() (pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector static method)</a>
 </li>
@@ -540,6 +556,13 @@
 
       <ul>
         <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.island_model_ga">module</a>
+</li>
+      </ul></li>
+      <li>
+    pygenalgo.engines.multi_objective_ga
+
+      <ul>
+        <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.multi_objective_ga">module</a>
 </li>
       </ul></li>
       <li>
@@ -797,6 +820,20 @@
 </li>
       </ul></li>
       <li>
+    pygenalgo.operators.selection.pareto_front_selector
+
+      <ul>
+        <li><a href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.pareto_front_selector">module</a>
+</li>
+      </ul></li>
+      <li>
+    pygenalgo.operators.selection.pareto_tournament_selector
+
+      <ul>
+        <li><a href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.pareto_tournament_selector">module</a>
+</li>
+      </ul></li>
+      <li>
     pygenalgo.operators.selection.random_selector
 
       <ul>
@@ -902,6 +939,8 @@
       <ul>
         <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.run">(pygenalgo.engines.island_model_ga.IslandModelGA method)</a>
 </li>
+        <li><a href="pygenalgo.engines.html#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.run">(pygenalgo.engines.multi_objective_ga.MultiObjectiveGA method)</a>
+</li>
         <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.run">(pygenalgo.engines.standard_ga.StandardGA method)</a>
 </li>
       </ul></li>
@@ -920,6 +959,10 @@
 </li>
         <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.neighborhood_selector.NeighborhoodSelector.select">(pygenalgo.operators.selection.neighborhood_selector.NeighborhoodSelector method)</a>
 </li>
+        <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.pareto_front_selector.ParetoFrontSelector.select">(pygenalgo.operators.selection.pareto_front_selector.ParetoFrontSelector method)</a>
+</li>
+        <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.pareto_tournament_selector.ParetoTournamentSelector.select">(pygenalgo.operators.selection.pareto_tournament_selector.ParetoTournamentSelector method)</a>
+</li>
         <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.random_selector.RandomSelector.select">(pygenalgo.operators.selection.random_selector.RandomSelector method)</a>
 </li>
         <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.roulette_wheel_selector.RouletteWheelSelector.select">(pygenalgo.operators.selection.roulette_wheel_selector.RouletteWheelSelector method)</a>
@@ -933,10 +976,10 @@
         <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.truncation_selector.TruncationSelector.select">(pygenalgo.operators.selection.truncation_selector.TruncationSelector method)</a>
 </li>
       </ul></li>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.select_op">select_op (pygenalgo.engines.generic_ga.GenericGA property)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.select_op">select_op (pygenalgo.engines.generic_ga.GenericGA property)</a>
+</li>
       <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.select_operator.SelectionOperator">SelectionOperator (class in pygenalgo.operators.selection.select_operator)</a>
 </li>
       <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.set_iteration">set_iteration() (pygenalgo.operators.genetic_operator.GeneticOperator class method)</a>
@@ -987,7 +1030,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.unique_pairs">unique_pairs() (in module pygenalgo.utils.auxiliary)</a>
 </li>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.update_stats">update_stats() (pygenalgo.engines.standard_ga.StandardGA method)</a>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.update_stats">update_stats() (pygenalgo.engines.generic_ga.GenericGA method)</a>
 </li>
   </ul></td>
 </tr></table>

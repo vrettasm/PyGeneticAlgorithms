@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.operators.selection.select_operator &mdash; PyGenAlgo 1.9.1 documentation</title>
+  <title>pygenalgo.operators.selection.select_operator &mdash; PyGenAlgo 2.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=60b3a732"></script>
+      <script src="../../../../_static/documentation_options.js?v=51b770b3"></script>
       <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -70,23 +70,20 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygenalgo.operators.selection.select_operator</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">fabs</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">fabs</span><span class="p">,</span> <span class="n">isclose</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.genetic_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeneticOperator</span>
 
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SelectionOperator&quot;</span><span class="p">,</span> <span class="s2">&quot;ensure_positive_fitness&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="ensure_positive_fitness">
-<a class="viewcode-back" href="../../../../pygenalgo.operators.selection.html#pygenalgo.operators.selection.select_operator.ensure_positive_fitness">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">ensure_positive_fitness</span><span class="p">(</span><span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_shift_up_values</span><span class="p">(</span><span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Ensures that the fitness value of each chromosome is a positive number.</span>
 
 <span class="sd">    This is useful because some of the selection methods require a positive</span>
-<span class="sd">    fitness to operate. Also in minimization problems the fitness values are</span>
-<span class="sd">    negated, therefore by using this transformation the methods that require</span>
-<span class="sd">    positive values are guaranteed to work.</span>
+<span class="sd">    fitness to operate.</span>
 
 <span class="sd">    :param population: (list) of chromosomes.</span>
 
@@ -97,10 +94,14 @@
         <span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">population</span>
     <span class="p">]</span>
 
+    <span class="c1"># Sanity check.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">all_fitness</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
     <span class="c1"># If there are negative values we perform a shift</span>
     <span class="c1"># transformation where all the values are shifted</span>
     <span class="c1"># so that the minimum fitness is going to be one.</span>
-    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">fit_value</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="k">for</span> <span class="n">fit_value</span> <span class="ow">in</span> <span class="n">all_fitness</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">fit_value</span> <span class="o">&lt;=</span> <span class="mf">0.0</span> <span class="k">for</span> <span class="n">fit_value</span> <span class="ow">in</span> <span class="n">all_fitness</span><span class="p">):</span>
         <span class="c1"># Compute the shift value.</span>
         <span class="n">shift_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">fabs</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">all_fitness</span><span class="p">))</span> <span class="o">+</span> <span class="mf">1.0</span>
 
@@ -108,9 +109,68 @@
         <span class="n">all_fitness</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="o">+</span> <span class="n">shift_value</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">all_fitness</span><span class="p">]</span>
     <span class="c1"># _end_if_</span>
 
-    <span class="k">return</span> <span class="n">all_fitness</span></div>
-
+    <span class="k">return</span> <span class="n">all_fitness</span>
 <span class="c1"># _end_def_</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_linear_scaled_values</span><span class="p">(</span><span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ensures fitness values are positive for maximization selection methods.</span>
+<span class="sd">    The worst individual is assigned a baseline fitness of 1.0, and others</span>
+<span class="sd">    are scaled relative to it.</span>
+
+<span class="sd">    :param population: (list) of chromosomes.</span>
+
+<span class="sd">    :return: (list) of positive fitness values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Extract all the fitness values.</span>
+    <span class="n">all_fitness</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">fitness</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">population</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Sanity check.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">all_fitness</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="c1"># Extract min/max values.</span>
+    <span class="n">min_fitness</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">all_fitness</span><span class="p">)</span>
+    <span class="n">max_fitness</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">all_fitness</span><span class="p">)</span>
+
+    <span class="c1"># If all individuals have the exact same</span>
+    <span class="c1"># fitness, give them equal weight.</span>
+    <span class="k">if</span> <span class="n">isclose</span><span class="p">(</span><span class="n">min_fitness</span><span class="p">,</span> <span class="n">max_fitness</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+
+    <span class="c1"># Shift everything so the worst individual is always 1.0.</span>
+    <span class="c1"># This works whether values are positive, negative, zero.</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">f</span> <span class="o">-</span> <span class="n">min_fitness</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">all_fitness</span>
+    <span class="p">]</span>
+<span class="c1"># _end_def_</span>
+
+<div class="viewcode-block" id="ensure_positive_fitness">
+<a class="viewcode-back" href="../../../../pygenalgo.operators.selection.html#pygenalgo.operators.selection.select_operator.ensure_positive_fitness">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ensure_positive_fitness</span><span class="p">(</span><span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span>
+                            <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;shift_up&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ensures fitness values are positive, using a predefined</span>
+<span class="sd">    selected method.</span>
+
+<span class="sd">    :param population: (list) of chromosomes.</span>
+
+<span class="sd">    :param mode: (str) method of calculating fitness.</span>
+
+<span class="sd">    :return: (list) of fitness values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;shift_up&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_shift_up_values</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;linear_scaled&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_linear_scaled_values</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2"> is not implemented.&quot;</span><span class="p">)</span></div>
+
+<span class="c1"># _end_if_</span>
 
 
 <div class="viewcode-block" id="SelectionOperator">

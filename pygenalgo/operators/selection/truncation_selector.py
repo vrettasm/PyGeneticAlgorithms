@@ -54,9 +54,12 @@ class TruncationSelector(SelectionOperator):
             population, key=attrgetter("fitness"), reverse=True
         )
 
+        # Set the upper value for the sample range.
+        upper_value: int = int(pop_size * self._items)
+
         # Select tne new parents using only the higher
         # percentage '%' of the old population indexes.
-        index = self.rng.choice(int(pop_size*self._items), size=pop_size,
+        index = self.rng.choice(upper_value, size=pop_size,
                                 replace=True, shuffle=True)
 
         # Return the new parents (individuals).

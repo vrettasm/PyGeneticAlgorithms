@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Travelling Salesman Problem &mdash; PyGenAlgo 1.9.1 documentation</title>
+  <title>Travelling Salesman Problem &mdash; PyGenAlgo 2.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=60b3a732"></script>
+      <script src="_static/documentation_options.js?v=51b770b3"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -61,6 +61,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#multimodal-function">Multimodal function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#multiobjective-function">Multiobjective function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#more-examples">More examples</a></li>
 </ul>
 </li>
@@ -233,7 +234,7 @@ and returns to the origin city?</p>
 
     <span class="c1"># Create the Chromosome and add it into the population.</span>
     <span class="n">population</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Chromosome</span><span class="p">([</span><span class="n">Gene</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">rand_fc</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">init_list</span><span class="p">],</span>
-                                 <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+                                 <span class="kc">None</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
 <span class="c1"># _end_for_</span>
 
 <span class="c1"># Create the StandardGA object that will carry on the optimization.</span>
