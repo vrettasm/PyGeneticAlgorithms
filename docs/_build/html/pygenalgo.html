@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PyGenAlgo &mdash; PyGenAlgo 1.9.1 documentation</title>
+  <title>PyGenAlgo &mdash; PyGenAlgo 2.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=60b3a732"></script>
+      <script src="_static/documentation_options.js?v=51b770b3"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -101,10 +101,10 @@
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.best_chromosome"><code class="docutils literal notranslate"><span class="pre">GenericGA.best_chromosome()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.best_n"><code class="docutils literal notranslate"><span class="pre">GenericGA.best_n()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.clear_all"><code class="docutils literal notranslate"><span class="pre">GenericGA.clear_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.correct_genome"><code class="docutils literal notranslate"><span class="pre">GenericGA.correct_genome()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.crossover_mutate"><code class="docutils literal notranslate"><span class="pre">GenericGA.crossover_mutate()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.crossx_op"><code class="docutils literal notranslate"><span class="pre">GenericGA.crossx_op</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.evaluate_fitness"><code class="docutils literal notranslate"><span class="pre">GenericGA.evaluate_fitness()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.f_eval_increase_by"><code class="docutils literal notranslate"><span class="pre">GenericGA.f_eval_increase_by()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.f_evals"><code class="docutils literal notranslate"><span class="pre">GenericGA.f_evals</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.fitness_func"><code class="docutils literal notranslate"><span class="pre">GenericGA.fitness_func</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.individual_fitness"><code class="docutils literal notranslate"><span class="pre">GenericGA.individual_fitness()</span></code></a></li>
@@ -120,6 +120,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.select_op"><code class="docutils literal notranslate"><span class="pre">GenericGA.select_op</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.set_seed"><code class="docutils literal notranslate"><span class="pre">GenericGA.set_seed()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.stats"><code class="docutils literal notranslate"><span class="pre">GenericGA.stats</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.update_stats"><code class="docutils literal notranslate"><span class="pre">GenericGA.update_stats()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -139,7 +140,6 @@
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.fitness_func"><code class="docutils literal notranslate"><span class="pre">StandardGA.fitness_func</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.population"><code class="docutils literal notranslate"><span class="pre">StandardGA.population</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.run"><code class="docutils literal notranslate"><span class="pre">StandardGA.run()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA.update_stats"><code class="docutils literal notranslate"><span class="pre">StandardGA.update_stats()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -149,7 +149,6 @@
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.fitness_func"><code class="docutils literal notranslate"><span class="pre">MultiObjectiveGA.fitness_func</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.population"><code class="docutils literal notranslate"><span class="pre">MultiObjectiveGA.population</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.run"><code class="docutils literal notranslate"><span class="pre">MultiObjectiveGA.run()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.update_stats"><code class="docutils literal notranslate"><span class="pre">MultiObjectiveGA.update_stats()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -276,8 +275,8 @@
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.SubPopulation.population"><code class="docutils literal notranslate"><span class="pre">SubPopulation.population</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.apply_corrections"><code class="docutils literal notranslate"><span class="pre">apply_corrections()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.average_hamming_distance"><code class="docutils literal notranslate"><span class="pre">average_hamming_distance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.correct_chromosomes"><code class="docutils literal notranslate"><span class="pre">correct_chromosomes()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.unique_pairs"><code class="docutils literal notranslate"><span class="pre">unique_pairs()</span></code></a></li>
 </ul>
 </li>

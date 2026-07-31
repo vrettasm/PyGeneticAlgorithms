@@ -6,7 +6,7 @@ Description:
     - Optimization (max)
     - Multimodal (yes)
 
-This function provides a 2D Gaussian mixture model.
+    This function provides a 2D Gaussian mixture model.
 
     The equations are given by the Multivariate Normal Distribution,
     with four modes (2 global and 2 local):

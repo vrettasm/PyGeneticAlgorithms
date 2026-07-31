@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Crossover Operators &mdash; PyGenAlgo 1.9.1 documentation</title>
+  <title>Crossover Operators &mdash; PyGenAlgo 2.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=60b3a732"></script>
+      <script src="_static/documentation_options.js?v=51b770b3"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -124,6 +124,12 @@ implement a crossover method.</p>
 
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.operators.crossover.crossover_operator.pair_t">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.crossover.crossover_operator.</span></span><span class="sig-name descname"><span class="pre">pair_t</span></span><a class="headerlink" href="#pygenalgo.operators.crossover.crossover_operator.pair_t" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, <a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>]</p>
+</dd></dl>
+
 </section>
 <section id="module-pygenalgo.operators.crossover.meta_crossover">
 <span id="pygenalgo-operators-crossover-meta-crossover-module"></span><h2>pygenalgo.operators.crossover.meta_crossover module<a class="headerlink" href="#module-pygenalgo.operators.crossover.meta_crossover" title="Link to this heading"></a></h2>
@@ -139,11 +145,13 @@ all other crossovers (one at a time), with equal probability.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pygenalgo.operators.crossover.meta_crossover.MetaCrossover.all_counters">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_counters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#pygenalgo.operators.crossover.meta_crossover.MetaCrossover.all_counters" title="Link to this definition"></a></dt>
-<dd><p>Accessor (getter) of the application counter from all the internal crossovers.
-This is mostly to verify that everything is working as expected.</p>
+<dd><p>Accessor (getter) of the application counter from all
+the internal crossovers. This is mostly to verify that
+everything is working as expected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>a dictionary with the counter calls for all crossover methods.</p>
+<dd class="field-odd"><p>a dictionary with the counter calls for all
+crossover methods.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -169,9 +177,9 @@ chromosomes, by selecting randomly a predefined method.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.crossover.meta_crossover.MetaCrossover.reset_counter">
 <span class="sig-name descname"><span class="pre">reset_counter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/crossover/meta_crossover.html#MetaCrossover.reset_counter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.crossover.meta_crossover.MetaCrossover.reset_counter" title="Link to this definition"></a></dt>
-<dd><p>Sets ALL the counters to ‘zero’. We have to override the super().reset_counter()
-method, because we have to call explicitly the reset_counter on all the internal
-operators.</p>
+<dd><p>Sets ALL the counters to ‘zero’. We have to override the
+super().reset_counter() method,  because we have to call
+explicitly the reset_counter on all the internal operators.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None.</p>

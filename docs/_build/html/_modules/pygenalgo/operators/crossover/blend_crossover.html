@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.operators.crossover.blend_crossover &mdash; PyGenAlgo 1.9.1 documentation</title>
+  <title>pygenalgo.operators.crossover.blend_crossover &mdash; PyGenAlgo 2.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=60b3a732"></script>
+      <script src="../../../../_static/documentation_options.js?v=51b770b3"></script>
       <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -77,7 +77,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.gene</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gene</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">clamp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.crossover.crossover_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">CrossoverOperator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.crossover.crossover_operator</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">CrossoverOperator</span><span class="p">,</span> <span class="n">pair_t</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="BlendCrossover">
@@ -116,9 +116,6 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                              <span class="sa">f</span><span class="s2">&quot;Lower or Upper limits are missing.&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Ensure p_alpha parameter is float.</span>
-        <span class="n">p_alpha</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">p_alpha</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
-
         <span class="c1"># Make sure the limits are numpy arrays.</span>
         <span class="n">lower_lim</span> <span class="o">=</span> <span class="n">asarray</span><span class="p">(</span><span class="n">lower_lim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
         <span class="n">upper_lim</span> <span class="o">=</span> <span class="n">asarray</span><span class="p">(</span><span class="n">upper_lim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
@@ -133,6 +130,9 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                              <span class="sa">f</span><span class="s2">&quot;Lower and Upper limits are set incorrectly.&quot;</span><span class="p">)</span>
 
+        <span class="c1"># Ensure p_alpha parameter is float.</span>
+        <span class="n">p_alpha</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">p_alpha</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
         <span class="c1"># Assign variables to the _items placeholder.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">p_alpha</span><span class="p">,</span> <span class="n">lower_lim</span><span class="p">,</span> <span class="n">upper_lim</span>
@@ -141,7 +141,7 @@
 
 <div class="viewcode-block" id="BlendCrossover.crossover">
 <a class="viewcode-back" href="../../../../pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.blend_crossover.BlendCrossover.crossover">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent1</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">,</span> <span class="n">parent2</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">,</span> <span class="n">Chromosome</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent1</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">,</span> <span class="n">parent2</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pair_t</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform the crossover operation on the two input parent chromosomes.</span>
 
@@ -156,29 +156,31 @@
         <span class="c1"># changes.</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">parent1</span> <span class="o">!=</span> <span class="n">parent2</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
 
-            <span class="c1"># Extract the values from the placeholder variable.</span>
-            <span class="n">p_alpha</span><span class="p">,</span> <span class="n">xl</span><span class="p">,</span> <span class="n">xu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span>
+            <span class="c1"># Extract the values from the placeholder.</span>
+            <span class="n">p_alpha</span><span class="p">,</span> <span class="n">x_lower</span><span class="p">,</span> <span class="n">x_upper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span>
 
-            <span class="c1"># Get the length of the chromosome.</span>
-            <span class="c1"># Here we assume that both parents</span>
-            <span class="c1"># have the same lengths.</span>
-            <span class="n">number_of_genes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span>
+            <span class="c1"># Get the lengths of both parents.</span>
+            <span class="n">len_1</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">)</span>
+            <span class="n">len_2</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">)</span>
 
             <span class="c1"># Preallocate 1st child&#39;s genome.</span>
-            <span class="n">genome_1</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">number_of_genes</span>
+            <span class="n">genome_1</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">len_1</span>
 
             <span class="c1"># Preallocate 2nd child&#39;s genome.</span>
-            <span class="n">genome_2</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">number_of_genes</span>
+            <span class="n">genome_2</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">len_2</span>
+
+            <span class="c1"># Find the minimum length of the two chromosomes.</span>
+            <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">len_1</span><span class="p">,</span> <span class="n">len_2</span><span class="p">)</span>
 
             <span class="c1"># Generate uniform random numbers in the [0.0, 1.0).</span>
-            <span class="n">random_uniform</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">number_of_genes</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="n">random_uniform</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">min_length</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 
-            <span class="c1"># Extract locally the genomes of both parents.</span>
+            <span class="c1"># Extract locally the parents genomes.</span>
             <span class="n">parent_1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span>
             <span class="n">parent_2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span>
 
             <span class="c1"># Set the new gene values iteratively.</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_genes</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">min_length</span><span class="p">):</span>
 
                 <span class="c1"># Extract the gene values once.</span>
                 <span class="n">g1</span> <span class="o">=</span> <span class="n">parent_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
@@ -211,12 +213,12 @@
                 <span class="n">new_value_2</span> <span class="o">=</span> <span class="n">min_value</span> <span class="o">+</span> <span class="p">(</span><span class="n">diff</span> <span class="o">*</span> <span class="n">rv_2</span><span class="p">)</span>
 
                 <span class="c1"># Local bounds lookups.</span>
-                <span class="n">x_lower</span> <span class="o">=</span> <span class="n">xl</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                <span class="n">x_upper</span> <span class="o">=</span> <span class="n">xu</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">xl</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">x_lower</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">xu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">x_upper</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
                 <span class="c1"># Ensure the new values are within limits.</span>
-                <span class="n">new_value_1</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">new_value_1</span><span class="p">,</span> <span class="n">x_lower</span><span class="p">),</span> <span class="n">x_upper</span><span class="p">)</span>
-                <span class="n">new_value_2</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">new_value_2</span><span class="p">,</span> <span class="n">x_lower</span><span class="p">),</span> <span class="n">x_upper</span><span class="p">)</span>
+                <span class="n">new_value_1</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">new_value_1</span><span class="p">,</span> <span class="n">xl</span><span class="p">),</span> <span class="n">xu</span><span class="p">)</span>
+                <span class="n">new_value_2</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">new_value_2</span><span class="p">,</span> <span class="n">xl</span><span class="p">),</span> <span class="n">xu</span><span class="p">)</span>
 
                 <span class="c1"># Extract the gene function. Note that at index &#39;i&#39;</span>
                 <span class="c1"># both children will always have the exact same logic.</span>

@@ -22,6 +22,13 @@ Multimodal function
 
     gaussian_2d
 
+Multiobjective function
+-----------------------
+
+.. toctree::
+
+    moo_binh_korn
+
 More examples
 -------------
 For more example please visit `this <https://github.com/vrettasm/PyGeneticAlgorithms/tree/master/examples>`_
