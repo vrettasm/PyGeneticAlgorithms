@@ -17,7 +17,7 @@ class ParetoTournamentSelector(SelectionOperator):
     """
 
     def __init__(self, select_probability: float = 1.0,
-                 n_contestants: int = 10) -> None:
+                 n_contestants: int = 2) -> None:
         """
         Construct a 'ParetoTournamentSelector' object with a
         given probability value.
@@ -31,7 +31,7 @@ class ParetoTournamentSelector(SelectionOperator):
         super().__init__(selection_probability=select_probability)
 
         # Set the value of the contestants in the placeholder _items.
-        self._items: int = max(10, int(n_contestants))
+        self._items: int = max(2, int(n_contestants))
     # _end_def_
 
     @increase_counter
