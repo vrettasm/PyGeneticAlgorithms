@@ -194,8 +194,8 @@ class IslandModelGA(GenericGA):
             # _end_if_
 
             # Update the i-th population mean / std.
-            avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i,
-                                                             local_stats)
+            avg_fitness_i, _ = self.update_stats(fit_list_i,
+                                                 local_stats)
             # Update the old population with the current.
             island.population = population_i
 
