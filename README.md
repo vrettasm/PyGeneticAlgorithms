@@ -19,7 +19,7 @@ in parallel using separate CPUs.
 - A brand new **MultiObjectiveGA** class is added that allows the user to solve more complex multiobjective optimization
 problems. The major difference in the new class is that the fitness function is expected to return a tuple with all the
 objective function values, e.g. (fx1, fx2, ..., fxn) rather a single function value fx. Note, that if the problems has
-additional constraints to satisfy, as is usually the case, they should be summed in one 'penalty 'variable and included
+additional constraints to satisfy, as is usually the case, they should be summed in one 'penalty' variable and included
 in the tuple _before_ any other objective value i.e. (sum_penalty, fx1, fx2, ..., fxn). This way, when the chromosomes
 are sorted those that minimize all constraints (sum_penalty == 0) will be placed higher in the rank.
 
