@@ -80,29 +80,31 @@ class BlendCrossover(CrossoverOperator):
         # changes.
         if (parent1 != parent2) and self.is_operator_applicable():
 
-            # Extract the values from the placeholder variable.
+            # Extract the values from the placeholder.
             p_alpha, x_lower, x_upper = self._items
 
-            # Get the length of the chromosome.
-            # Here we assume that both parents
-            # have the same lengths.
-            number_of_genes: int = len(parent1)
+            # Get the lengths of both parents.
+            len_1: int = len(parent1.genome)
+            len_2: int = len(parent2.genome)
 
             # Preallocate 1st child's genome.
-            genome_1: list = [None] * number_of_genes
+            genome_1: list = [None] * len_1
 
             # Preallocate 2nd child's genome.
-            genome_2: list = [None] * number_of_genes
+            genome_2: list = [None] * len_2
+
+            # Find the minimum length of the two chromosomes.
+            min_length: int = min(len_1, len_2)
 
             # Generate uniform random numbers in the [0.0, 1.0).
-            random_uniform: NDArray = self.rng.random(size=(number_of_genes, 2))
+            random_uniform: NDArray = self.rng.random(size=(min_length, 2))
 
-            # Extract locally the genomes of both parents.
+            # Extract locally the parents genomes.
             parent_1: list[Gene] = parent1.genome
             parent_2: list[Gene] = parent2.genome
 
             # Set the new gene values iteratively.
-            for i in range(number_of_genes):
+            for i in range(min_length):
 
                 # Extract the gene values once.
                 g1 = parent_1[i].value
