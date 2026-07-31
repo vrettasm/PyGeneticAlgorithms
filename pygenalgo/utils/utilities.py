@@ -91,7 +91,7 @@ def np_pareto_front_index(points: NDArray,
                           unique_points.dtype.itemsize)
 
     # Compare it against ~500MB.
-    if memory_mb <= 500_000_000:
+    if memory_bytes <= 500_000_000:
         #
         # WARNING: This step is O(N^2 x D) in memory allocation.
         #
