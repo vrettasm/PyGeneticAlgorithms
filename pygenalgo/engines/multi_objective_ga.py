@@ -185,8 +185,10 @@ class MultiObjectiveGA(GenericGA):
             if config.f_max_eval is not None and\
                     self.f_evals >= config.f_max_eval:
                 # Log a warning message.
-                logger.warning("%s reached the maximum number of function evaluations.",
-                               self.__class__.__name__)
+                logger.warning(
+                    "%s reached the maximum number of function evaluations: %d",
+                    self.__class__.__name__, config.f_max_eval
+                )
 
                 # Final update the mean value.
                 avg_fitness_0 = avg_fitness_i
