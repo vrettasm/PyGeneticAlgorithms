@@ -274,6 +274,9 @@ class IslandModelGA(GenericGA):
             self.stats[pop_n.id]["prob_mutate"].append(self.mutate_op.probability)
         # _end_for_
 
+        # Set the predefined value.
+        new_epochs: int = config.epochs
+
         # Check if we have set a maximum number on function
         # evaluations and re-adjust the number of epochs.
         if config.f_max_eval is not None:
@@ -290,9 +293,6 @@ class IslandModelGA(GenericGA):
                 "The 'f_max_eval' parameter has been set to: %s. "
                 "The 'epochs' value has been re-adjusted to: %s\n",
                 config.f_max_eval, new_epochs)
-        else:
-            # Here set the predefined.
-            new_epochs = config.epochs
         # _end_if_
 
         # Display an information message.
@@ -305,7 +305,8 @@ class IslandModelGA(GenericGA):
         # Local copy of evolve population.
         fn_evolve: Callable = self._evolve_population
 
-        # Local copy of common parameters.
+        # Local copy of all the common parameters.
+        # NOTE: 'epochs' value might have changed!
         common_parameters: dict = {
             "f_tol": config.f_tol,
             "epochs": new_epochs,
