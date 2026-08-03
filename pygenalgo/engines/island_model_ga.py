@@ -14,12 +14,12 @@ from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.auxiliary import (SubPopulation,
                                        average_hamming_distance)
 # Custom PyGenaAlgo code.
-from pygenalgo.engines.generic_ga import GenericGA
+from pygenalgo.engines.generic_ga import GenericGA, RunConfig
 from pygenalgo.operators.migration.meta_migration import MetaMigration
 from pygenalgo.operators.migration.migration_operator import MigrationOperator
 
 # Public interface.
-__all__ = ["IslandModelGA"]
+__all__ = ["IslandModelGA", "RunConfig"]
 
 
 class IslandModelGA(GenericGA):
@@ -230,52 +230,18 @@ class IslandModelGA(GenericGA):
         return island, has_converged, local_stats, elapsed_time
     # _end_def_
 
-    def run(self, epochs: int = 500, elitism: bool = True, correction: bool = False,
-            f_tol: Optional[float] = None, allow_migration: bool = False, n_periods: int = 10,
-            adapt_probs: bool = False, shuffle: bool = True, f_max_eval: Optional[int] = None,
-            verbose: bool = False) -> None:
+    def run(self, config: Optional[RunConfig] = None) -> None:
         """
-        Main method of the IslandModelGA class, that implements the evolutionary routine.
+        Main method of the IslandModelGA class that implements
+        the evolutionary routine.
 
-        :param epochs: (int) maximum number of iterations in the evolution process.
+        :param config: (RunConfig) the configuration params.
 
-        :param correction: (bool) flag that if set to 'True' will check the validity of
-                           the population (at the gene level) and attempt to correct the
-                           genome by calling the random() method of the flawed gene.
-
-        :param elitism: (bool) flag that enables elitism. If set to True then the chromosome
-                        with the highest fitness will always be copied to the next generation
-                        (unaltered).
-
-        :param f_tol: (float) tolerance in the difference between the average values of two
-                      consecutive populations. It is used to determine the convergence of the
-                      population. If this value is None (default) the algorithm will terminate
-                      using the epochs value.
-
-        :param allow_migration: (bool) flag that if set to 'True' will allow the migration
-                                of the best individuals among the different islands.
-
-        :param n_periods: (int) the number of times that we will break the main evolution
-                          to allow for chromosomes to migrate. NB: This setting is active
-                          only when the option allow_migration == True. Otherwise, is ignored.
-
-        :param adapt_probs: (bool) If enabled (set to True), it will allow the crossover and
-                            mutation probabilities to adapt according to the convergence of
-                            the population to a single solution. Default is set to False.
-
-        :param shuffle: (bool) If enabled (set to True), it will shuffle the population before
-                        the application of the crossover and mutation operations. The default
-                        is set to True.
-
-        :param f_max_eval: (int) it sets an upper limit of function evaluations. If the number
-                           is exceeded the genetic algorithm stops. If this value is set, the
-                           epochs will be ignored and re-adjusted to meet the new requirement.
-
-        :param verbose: (bool) if 'True' it will display periodically information about the
-                        current stats of the subpopulations. NB: This setting is active only
-                        when the option allow_migration == True. Otherwise, is ignored.
         :return: None.
         """
+        # Initialize the configuration parameters.
+        config = config or RunConfig()
+
         # Reset stats dictionary.
         self.stats.clear()
 
@@ -309,21 +275,24 @@ class IslandModelGA(GenericGA):
         # _end_for_
 
         # Check if we have set a maximum number on function
-        # evaluations and re-adjust the epochs.
-        if f_max_eval is not None:
+        # evaluations and re-adjust the number of epochs.
+        if config.f_max_eval is not None:
 
-            # First remove the counts from the initial
-            # evaluation of the population.
-            total_f_counts = int(f_max_eval) - self.f_evals
+            # First remove the counts from the initial evaluation
+            # of the population.
+            total_f_counts = int(config.f_max_eval) - self.f_evals
 
             # Assuming each epoch performs N function evaluations.
-            epochs = int(total_f_counts / len(self.population))
+            new_epochs = int(total_f_counts / len(self.population))
 
             # Display a warning message.
             logger.warning(
                 "The 'f_max_eval' parameter has been set to: %s. "
                 "The 'epochs' value has been re-adjusted to: %s\n",
-                f_max_eval, epochs)
+                config.f_max_eval, new_epochs)
+        else:
+            # Here set the predefined.
+            new_epochs = config.epochs
         # _end_if_
 
         # Display an information message.
@@ -338,19 +307,19 @@ class IslandModelGA(GenericGA):
 
         # Local copy of common parameters.
         common_parameters: dict = {
-            "f_tol": f_tol,
-            "epochs": epochs,
-            "shuffle": shuffle,
-            "elitism": elitism,
-            "correction": correction,
-            "adapt_probs": adapt_probs
+            "f_tol": config.f_tol,
+            "epochs": new_epochs,
+            "shuffle": config.shuffle,
+            "elitism": config.elitism,
+            "correction": config.correction,
+            "adapt_probs": config.adapt_probs
         }
 
         # Initial time instant.
         time_t0 = time.perf_counter()
 
         # Check if we allow migration among the populations.
-        if allow_migration:
+        if config.allow_migration:
 
             # Initial values for the crossover and mutation operators will be used
             # to ensure continuity in the case of adaptable probabilities.
@@ -365,13 +334,13 @@ class IslandModelGA(GenericGA):
             # _end_for_
 
             # Make sure 'n_periods' is integer.
-            n_periods = int(n_periods)
+            n_periods = int(config.n_periods)
 
             # Compute the in-between evolving epochs.
-            n_epochs = int(float(epochs)/n_periods)
+            n_epochs = int(new_epochs / n_periods)
 
             # Compute the remainder epochs (if any).
-            rem_epochs = int(epochs % n_periods)
+            rem_epochs = int(new_epochs % n_periods)
 
             # Type hint the work_parallel to avoid warnings.
             work_parallel: Parallel
@@ -383,7 +352,7 @@ class IslandModelGA(GenericGA):
                 for i in range(n_periods):
 
                     # Check if we want information on to be logged.
-                    if verbose:
+                    if config.verbose:
                         logger.info("Current period %s / %s:", i + 1, n_periods)
                     # _end_if_
 
@@ -417,7 +386,7 @@ class IslandModelGA(GenericGA):
                         island, has_converged, local_stats, _ = res
 
                         # Check if we want information on the screen.
-                        if verbose:
+                        if config.verbose:
 
                             # Find the current highest fitness.
                             best_fitness = max(
@@ -438,7 +407,7 @@ class IslandModelGA(GenericGA):
                             final_population.extend(island.population)
 
                             # Check for verbosity.
-                            if verbose:
+                            if config.verbose:
                                 # Compute the total number of iterations.
                                 itr = int(i*n_epochs + has_converged[1])
 
@@ -458,7 +427,7 @@ class IslandModelGA(GenericGA):
                         self.stats[island.id]["std"].extend(local_stats["std"])
 
                         # Check if we were adapting the probabilities.
-                        if adapt_probs:
+                        if config.adapt_probs:
 
                             # Make sure there is at least one entry
                             # to avoid "index out of bound" errors.
@@ -522,7 +491,7 @@ class IslandModelGA(GenericGA):
                 self.stats[island.id]["std"].extend(local_stats["std"])
 
                 # Check if we were adapting the probabilities.
-                if adapt_probs:
+                if config.adapt_probs:
                     # Store the updated crossover and mutation values.
                     self.stats[island.id]["prob_crossx"].extend(local_stats["prob_crossx"])
                     self.stats[island.id]["prob_mutate"].extend(local_stats["prob_mutate"])

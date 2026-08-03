@@ -7,7 +7,7 @@ from numpy import (isclose, array2string)
 
 # Custom PyGenaAlgo code.
 from pygenalgo.engines import logger
-from pygenalgo.engines.generic_ga import GenericGA
+from pygenalgo.engines.generic_ga import GenericGA, RunConfig
 from pygenalgo.utils.auxiliary import average_hamming_distance
 
 # Supported selection operators.
@@ -15,7 +15,7 @@ from pygenalgo.operators.selection.pareto_front_selector import ParetoFrontSelec
 from pygenalgo.operators.selection.pareto_tournament_selector import ParetoTournamentSelector
 
 # Public interface.
-__all__ = ["MultiObjectiveGA"]
+__all__ = ["MultiObjectiveGA", "RunConfig"]
 
 def _to_str(x: NDArray, precision: int = 4) -> str:
     """
@@ -56,45 +56,18 @@ class MultiObjectiveGA(GenericGA):
                              f"is not supported in MultiObjectiveGA.")
     # _end_def_
 
-    def run(self, epochs: int = 100, elitism: bool = True, correction: bool = False,
-            parallel: bool = False, adapt_probs: bool = False, shuffle: bool = True,
-            f_tol: Optional[float] = None, f_max_eval: Optional[int] = None,
-            verbose: bool = False) -> None:
+    def run(self, config: Optional[RunConfig] = None) -> None:
         """
-        Main method of the MultiObjectiveGA class, that implements the evolutionary routine.
+        Main method of the MultiObjectiveGA class that implements
+        the evolutionary routine.
 
-        :param epochs: (int) maximum number of iterations in the evolution process.
+        :param config: (RunConfig) the configuration params.
 
-        :param elitism: (bool) flag that enables elitism. If True the chromosome with
-                        the highest fitness will always be copied to the next generation
-                        (unaltered).
-
-        :param correction: (bool) flag that if set to 'True' will check the validity of
-                           the population (at the gene level) and attempt to correct the
-                           genome by calling the random() method of the flawed gene.
-
-        :param parallel: (bool) Flag that enables parallel computation of the fitness function.
-
-        :param adapt_probs: (bool) If enabled (set to True), it will allow the crossover and
-                            mutation probabilities to adapt according to the convergence of
-                            the population to a single solution. Default is set to False.
-
-        :param shuffle: (bool) If enabled (set to True), it will shuffle the population before
-                        the application of the crossover and mutation operations. The default
-                        is set to True.
-
-        :param f_tol: (float) tolerance in the difference between the average values of two
-                              consecutive populations. It is used to determine the convergence
-                              of the population. If this value is None (default) the algorithm
-                              will terminate using the epochs value.
-
-        :param f_max_eval: (int) it sets an upper limit of function evaluations. If the number
-                           is exceeded the genetic algorithm stops.
-
-        :param verbose: (bool) if 'True' it will display periodically information about the
-                        current average fitness and spread of the population.
         :return: None.
         """
+        # Initialize the configuration parameters.
+        config = config or RunConfig()
+
         # Make sure everything is cleared.
         self.clear_all()
 
@@ -103,7 +76,7 @@ class MultiObjectiveGA(GenericGA):
 
         # Get the fitness values before optimization.
         fit_list_0, found_solution = self.evaluate_fitness(self.population,
-                                                           parallel_mode=parallel)
+                                                           config.parallel)
         # Initial termination check.
         if found_solution:
             # Display the message for the user.
@@ -113,10 +86,14 @@ class MultiObjectiveGA(GenericGA):
         # Update the average statistics in the dictionary.
         avg_fitness_0, _ = self.update_stats(fit_list_0)
 
+        # Store the initial crossover and mutation probabilities.
+        self.stats["prob_crossx"].append(self.crossx_op.probability)
+        self.stats["prob_mutate"].append(self.mutate_op.probability)
+
         # Local variable to display information on the screen.
         # To avoid cluttering the screen we print info only 10
         # times regardless of the total number of epochs.
-        its_time_to_print = epochs // 10 if epochs > 10 else 2
+        its_time_to_print = config.epochs // 10 if config.epochs > 10 else 2
 
         # Display an information message.
         logger.info("Initial Avg. Fitness = %s",
@@ -126,7 +103,7 @@ class MultiObjectiveGA(GenericGA):
         time_t0: float = time.perf_counter()
 
         # Repeat 'epoch' times.
-        for i in range(epochs):
+        for i in range(config.epochs):
 
             # Update current iteration.
             self.iteration = i
@@ -135,7 +112,7 @@ class MultiObjectiveGA(GenericGA):
             population_i = self.select_op(self.population)
 
             # Shuffle the selected parents.
-            if shuffle:
+            if config.shuffle:
                 self.rng_GA.shuffle(population_i)
             # _end_def_
 
@@ -143,8 +120,8 @@ class MultiObjectiveGA(GenericGA):
             self.crossover_mutate(population_i)
 
             # Calculate the new fitness values.
-            fit_list_i, found_solution = self.evaluate_fitness(population_i, parallel)
-
+            fit_list_i, found_solution = self.evaluate_fitness(population_i,
+                                                               config.parallel)
             # Check for termination.
             if found_solution:
                 # Log a warning message.
@@ -162,13 +139,13 @@ class MultiObjectiveGA(GenericGA):
             # _end_if_
 
             # Check if 'corrections' are enabled.
-            if correction and self.correct_genome(population_i):
+            if config.correction and self.correct_genome(population_i):
                 # Update the fitness list to ensure consistency.
                 fit_list_i = [p.fitness for p in population_i]
             # _end_if_
 
             # Check if 'elitism' is enabled.
-            if elitism:
+            if config.elitism:
                 # Get the reference of the best chromosome
                 # from the previous generation.
                 previous_best = self.best_chromosome()
@@ -194,7 +171,7 @@ class MultiObjectiveGA(GenericGA):
             avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i)
 
             # Log the information message.
-            if verbose and (i % its_time_to_print) == 0:
+            if config.verbose and (i % its_time_to_print) == 0:
                 logger.info(
                     "Epoch: %5d -> Avg. Fitness = %s, Spread = %s",
                     i+1, _to_str(avg_fitness_i), _to_str(std_fitness_i)
@@ -205,7 +182,8 @@ class MultiObjectiveGA(GenericGA):
             self.population = population_i
 
             # Check for the maximum function evaluations.
-            if f_max_eval is not None and self.f_evals >= f_max_eval:
+            if config.f_max_eval is not None and\
+                    self.f_evals >= config.f_max_eval:
                 # Log a warning message.
                 logger.warning("%s reached the maximum number of function evaluations.",
                                self.__class__.__name__)
@@ -218,9 +196,9 @@ class MultiObjectiveGA(GenericGA):
             # _end_if_
 
             # Check for convergence (in all the objectives).
-            if f_tol is not None and all(isclose(avg_fitness_i,
-                                                 avg_fitness_0,
-                                                 atol=f_tol)):
+            if config.f_tol is not None and all(isclose(avg_fitness_i,
+                                                        avg_fitness_0,
+                                                        atol=config.f_tol)):
                 # Display a warning message.
                 logger.warning("%s converged in %d iterations.",
                                self.__class__.__name__, i + 1)
@@ -233,15 +211,15 @@ class MultiObjectiveGA(GenericGA):
             # _end_if_
 
             # Check the adaptive flag.
-            if adapt_probs:
+            if config.adapt_probs:
                 # Compute the current average Hamming distance.
                 avg_distance = average_hamming_distance(population_i)
 
                 # Update the genetic probabilities.
                 if self.adapt_probabilities(threshold=avg_distance):
                     # Store the updated crossover and mutation probabilities.
-                    self.stats["prob_crossx"].append(self._crossx_op.probability)
-                    self.stats["prob_mutate"].append(self._mutate_op.probability)
+                    self.stats["prob_crossx"].append(self.crossx_op.probability)
+                    self.stats["prob_mutate"].append(self.mutate_op.probability)
             # _end_if_
 
             # Update the average value for the next iteration.

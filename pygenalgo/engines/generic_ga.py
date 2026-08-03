@@ -1,5 +1,6 @@
 from os import cpu_count
 from operator import attrgetter
+from dataclasses import dataclass
 from collections import defaultdict
 from typing import Callable, Optional
 
@@ -26,8 +27,90 @@ from pygenalgo.operators.crossover.meta_crossover import MetaCrossover
 # Define a fitness type.
 Fitness = float | tuple[float, ...]
 
+@dataclass(frozen=True)
+class RunConfig:
+    """
+    Auxiliary dataclass to set the confirugration parameters
+    for all the GA engines.
+    """
+
+    # Number of iterations.
+    epochs: int = 100
+    '''
+    Maximum number of iterations in the evolution process.
+    '''
+
+    # Algorithmic settings.
+    elitism: bool = True
+    '''
+    If enabled then the chromosome with the highest fitness
+    will always be copied unaltered to the next generation.
+    '''
+
+    shuffle: bool = True
+    '''
+    If enabled it will shuffle the population after
+    the selection process. Default is set to True.
+    '''
+
+    correction: bool = False
+    '''
+    If enbled it will check the validity of the population
+    at the gene level and attempt to correct the genome by
+    calling the random() method of the flawed gene.
+    '''
+
+    adapt_probs: bool = False
+    '''
+    If enabled it will allow the crossover and mutation probabilities
+    to adapt according to the convergence ofthe population to a single
+    solution. Default is set to False.
+    '''
+
+    # Runtime settings.
+    parallel: bool = False
+    '''
+    Enables parallel computation of the fitness function.
+    '''
+
+    verbose: bool = False
+    '''
+    If 'True' it will display periodically information about
+    the current average fitness and spread of the population.
+    '''
+
+    # Stop criteria.
+    f_tol: Optional[float] = None
+    '''
+    Tolerance in the difference between the average values of two
+    consecutive populations. It is used to determine the convergence
+    of the population. If this value is None (default) the algorithm
+    will terminate using the epochs value.
+    '''
+
+    f_max_eval: Optional[int] = None
+    '''
+    Sets an upper limit of function evaluations. If this number is
+    exceeded the genetic algorithm will terminate.
+    '''
+
+    # Migration ONLY parameters.
+    allow_migration: bool = False
+    '''
+    If enabled it will allow the migration of the best individuals
+    among the different co-evolving island populations.
+    '''
+
+    n_periods: int = 10
+    '''
+    The number of times that we will break the main evolution to allow
+    for chromosomes to migrate. This setting is used only when the option
+    allow_migration == True. Otherwise, is ignored.
+    '''
+# _end_class_
+
 # Public interface.
-__all__ = ["GenericGA", "Fitness"]
+__all__ = ["GenericGA", "RunConfig", "Fitness"]
 
 
 class GenericGA:
@@ -595,20 +678,20 @@ class GenericGA:
 
     # _end_def_
 
-    def run(self, *args, **kwargs) -> None:
+    def run(self, config: Optional[RunConfig] = None) -> None:
         """
-        Main method of the Generic GA class
-        that implements the evolutionary routine.
+        Main method of the Generic GA class that implements
+        the evolutionary routine.
         """
         raise NotImplementedError(f"{self.__class__.__name__}: "
                                   f"You should implement this method!")
     # _end_def_
 
-    def __call__(self, *args, **kwargs) -> None:
+    def __call__(self, config: Optional[RunConfig] = None) -> None:
         """
         This method is only a wrapper of the "run" method.
         """
-        return self.run(*args, **kwargs)
+        return self.run(config)
     # _end_def_
 
 # _end_class_
