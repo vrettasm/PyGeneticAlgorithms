@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.engines.island_model_ga &mdash; PyGenAlgo 2.0.0 documentation</title>
+  <title>pygenalgo.engines.island_model_ga &mdash; PyGenAlgo 2.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=51b770b3"></script>
+      <script src="../../../_static/documentation_options.js?v=841abef3"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -86,12 +86,12 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.auxiliary</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">SubPopulation</span><span class="p">,</span>
                                        <span class="n">average_hamming_distance</span><span class="p">)</span>
 <span class="c1"># Custom PyGenaAlgo code.</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.engines.generic_ga</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenericGA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.engines.generic_ga</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenericGA</span><span class="p">,</span> <span class="n">RunConfig</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.migration.meta_migration</span><span class="w"> </span><span class="kn">import</span> <span class="n">MetaMigration</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.migration.migration_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MigrationOperator</span>
 
 <span class="c1"># Public interface.</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;IslandModelGA&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;IslandModelGA&quot;</span><span class="p">,</span> <span class="s2">&quot;RunConfig&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="IslandModelGA">
@@ -268,8 +268,8 @@
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Update the i-th population mean / std.</span>
-            <span class="n">avg_fitness_i</span><span class="p">,</span> <span class="n">std_fitness_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_stats</span><span class="p">(</span><span class="n">fit_list_i</span><span class="p">,</span>
-                                                             <span class="n">local_stats</span><span class="p">)</span>
+            <span class="n">avg_fitness_i</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_stats</span><span class="p">(</span><span class="n">fit_list_i</span><span class="p">,</span>
+                                                 <span class="n">local_stats</span><span class="p">)</span>
             <span class="c1"># Update the old population with the current.</span>
             <span class="n">island</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">population_i</span>
 
@@ -306,52 +306,18 @@
 
 <div class="viewcode-block" id="IslandModelGA.run">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.run">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">f_tol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allow_migration</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">n_periods</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-            <span class="n">adapt_probs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">f_max_eval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RunConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Main method of the IslandModelGA class, that implements the evolutionary routine.</span>
+<span class="sd">        Main method of the IslandModelGA class that implements</span>
+<span class="sd">        the evolutionary routine.</span>
 
-<span class="sd">        :param epochs: (int) maximum number of iterations in the evolution process.</span>
+<span class="sd">        :param config: (RunConfig) the configuration params.</span>
 
-<span class="sd">        :param correction: (bool) flag that if set to &#39;True&#39; will check the validity of</span>
-<span class="sd">                           the population (at the gene level) and attempt to correct the</span>
-<span class="sd">                           genome by calling the random() method of the flawed gene.</span>
-
-<span class="sd">        :param elitism: (bool) flag that enables elitism. If set to True then the chromosome</span>
-<span class="sd">                        with the highest fitness will always be copied to the next generation</span>
-<span class="sd">                        (unaltered).</span>
-
-<span class="sd">        :param f_tol: (float) tolerance in the difference between the average values of two</span>
-<span class="sd">                      consecutive populations. It is used to determine the convergence of the</span>
-<span class="sd">                      population. If this value is None (default) the algorithm will terminate</span>
-<span class="sd">                      using the epochs value.</span>
-
-<span class="sd">        :param allow_migration: (bool) flag that if set to &#39;True&#39; will allow the migration</span>
-<span class="sd">                                of the best individuals among the different islands.</span>
-
-<span class="sd">        :param n_periods: (int) the number of times that we will break the main evolution</span>
-<span class="sd">                          to allow for chromosomes to migrate. NB: This setting is active</span>
-<span class="sd">                          only when the option allow_migration == True. Otherwise, is ignored.</span>
-
-<span class="sd">        :param adapt_probs: (bool) If enabled (set to True), it will allow the crossover and</span>
-<span class="sd">                            mutation probabilities to adapt according to the convergence of</span>
-<span class="sd">                            the population to a single solution. Default is set to False.</span>
-
-<span class="sd">        :param shuffle: (bool) If enabled (set to True), it will shuffle the population before</span>
-<span class="sd">                        the application of the crossover and mutation operations. The default</span>
-<span class="sd">                        is set to True.</span>
-
-<span class="sd">        :param f_max_eval: (int) it sets an upper limit of function evaluations. If the number</span>
-<span class="sd">                           is exceeded the genetic algorithm stops. If this value is set, the</span>
-<span class="sd">                           epochs will be ignored and re-adjusted to meet the new requirement.</span>
-
-<span class="sd">        :param verbose: (bool) if &#39;True&#39; it will display periodically information about the</span>
-<span class="sd">                        current stats of the subpopulations. NB: This setting is active only</span>
-<span class="sd">                        when the option allow_migration == True. Otherwise, is ignored.</span>
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Initialize the configuration parameters.</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">config</span> <span class="ow">or</span> <span class="n">RunConfig</span><span class="p">()</span>
+
         <span class="c1"># Reset stats dictionary.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
@@ -384,22 +350,25 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="n">pop_n</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutate_op</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
         <span class="c1"># _end_for_</span>
 
-        <span class="c1"># Check if we have set a maximum number on function</span>
-        <span class="c1"># evaluations and re-adjust the epochs.</span>
-        <span class="k">if</span> <span class="n">f_max_eval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Set the predefined value.</span>
+        <span class="n">new_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">epochs</span>
 
-            <span class="c1"># First remove the counts from the initial</span>
-            <span class="c1"># evaluation of the population.</span>
-            <span class="n">total_f_counts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">f_max_eval</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_evals</span>
+        <span class="c1"># Check if we have set a maximum number on function</span>
+        <span class="c1"># evaluations and re-adjust the number of epochs.</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">f_max_eval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="c1"># First remove the counts from the initial evaluation</span>
+            <span class="c1"># of the population.</span>
+            <span class="n">total_f_counts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">f_max_eval</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_evals</span>
 
             <span class="c1"># Assuming each epoch performs N function evaluations.</span>
-            <span class="n">epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_f_counts</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">))</span>
+            <span class="n">new_epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_f_counts</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">))</span>
 
             <span class="c1"># Display a warning message.</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="s2">&quot;The &#39;f_max_eval&#39; parameter has been set to: </span><span class="si">%s</span><span class="s2">. &quot;</span>
                 <span class="s2">&quot;The &#39;epochs&#39; value has been re-adjusted to: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="n">f_max_eval</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">f_max_eval</span><span class="p">,</span> <span class="n">new_epochs</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Display an information message.</span>
@@ -412,21 +381,22 @@
         <span class="c1"># Local copy of evolve population.</span>
         <span class="n">fn_evolve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evolve_population</span>
 
-        <span class="c1"># Local copy of common parameters.</span>
+        <span class="c1"># Local copy of all the common parameters.</span>
+        <span class="c1"># NOTE: &#39;epochs&#39; value might have changed!</span>
         <span class="n">common_parameters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;f_tol&quot;</span><span class="p">:</span> <span class="n">f_tol</span><span class="p">,</span>
-            <span class="s2">&quot;epochs&quot;</span><span class="p">:</span> <span class="n">epochs</span><span class="p">,</span>
-            <span class="s2">&quot;shuffle&quot;</span><span class="p">:</span> <span class="n">shuffle</span><span class="p">,</span>
-            <span class="s2">&quot;elitism&quot;</span><span class="p">:</span> <span class="n">elitism</span><span class="p">,</span>
-            <span class="s2">&quot;correction&quot;</span><span class="p">:</span> <span class="n">correction</span><span class="p">,</span>
-            <span class="s2">&quot;adapt_probs&quot;</span><span class="p">:</span> <span class="n">adapt_probs</span>
+            <span class="s2">&quot;f_tol&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">f_tol</span><span class="p">,</span>
+            <span class="s2">&quot;epochs&quot;</span><span class="p">:</span> <span class="n">new_epochs</span><span class="p">,</span>
+            <span class="s2">&quot;shuffle&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">shuffle</span><span class="p">,</span>
+            <span class="s2">&quot;elitism&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">elitism</span><span class="p">,</span>
+            <span class="s2">&quot;correction&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">correction</span><span class="p">,</span>
+            <span class="s2">&quot;adapt_probs&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">adapt_probs</span>
         <span class="p">}</span>
 
         <span class="c1"># Initial time instant.</span>
         <span class="n">time_t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
 
         <span class="c1"># Check if we allow migration among the populations.</span>
-        <span class="k">if</span> <span class="n">allow_migration</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">allow_migration</span><span class="p">:</span>
 
             <span class="c1"># Initial values for the crossover and mutation operators will be used</span>
             <span class="c1"># to ensure continuity in the case of adaptable probabilities.</span>
@@ -441,13 +411,13 @@
             <span class="c1"># _end_for_</span>
 
             <span class="c1"># Make sure &#39;n_periods&#39; is integer.</span>
-            <span class="n">n_periods</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_periods</span><span class="p">)</span>
+            <span class="n">n_periods</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">n_periods</span><span class="p">)</span>
 
             <span class="c1"># Compute the in-between evolving epochs.</span>
-            <span class="n">n_epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">epochs</span><span class="p">)</span><span class="o">/</span><span class="n">n_periods</span><span class="p">)</span>
+            <span class="n">n_epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">new_epochs</span> <span class="o">/</span> <span class="n">n_periods</span><span class="p">)</span>
 
             <span class="c1"># Compute the remainder epochs (if any).</span>
-            <span class="n">rem_epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">epochs</span> <span class="o">%</span> <span class="n">n_periods</span><span class="p">)</span>
+            <span class="n">rem_epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">new_epochs</span> <span class="o">%</span> <span class="n">n_periods</span><span class="p">)</span>
 
             <span class="c1"># Type hint the work_parallel to avoid warnings.</span>
             <span class="n">work_parallel</span><span class="p">:</span> <span class="n">Parallel</span>
@@ -459,7 +429,7 @@
                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_periods</span><span class="p">):</span>
 
                     <span class="c1"># Check if we want information on to be logged.</span>
-                    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Current period </span><span class="si">%s</span><span class="s2"> / </span><span class="si">%s</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_periods</span><span class="p">)</span>
                     <span class="c1"># _end_if_</span>
 
@@ -493,7 +463,7 @@
                         <span class="n">island</span><span class="p">,</span> <span class="n">has_converged</span><span class="p">,</span> <span class="n">local_stats</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">res</span>
 
                         <span class="c1"># Check if we want information on the screen.</span>
-                        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
 
                             <span class="c1"># Find the current highest fitness.</span>
                             <span class="n">best_fitness</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
@@ -514,7 +484,7 @@
                             <span class="n">final_population</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
 
                             <span class="c1"># Check for verbosity.</span>
-                            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                                 <span class="c1"># Compute the total number of iterations.</span>
                                 <span class="n">itr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">n_epochs</span> <span class="o">+</span> <span class="n">has_converged</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
@@ -534,7 +504,7 @@
                         <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">])</span>
 
                         <span class="c1"># Check if we were adapting the probabilities.</span>
-                        <span class="k">if</span> <span class="n">adapt_probs</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">adapt_probs</span><span class="p">:</span>
 
                             <span class="c1"># Make sure there is at least one entry</span>
                             <span class="c1"># to avoid &quot;index out of bound&quot; errors.</span>
@@ -598,7 +568,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">])</span>
 
                 <span class="c1"># Check if we were adapting the probabilities.</span>
-                <span class="k">if</span> <span class="n">adapt_probs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">adapt_probs</span><span class="p">:</span>
                     <span class="c1"># Store the updated crossover and mutation values.</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_crossx&quot;</span><span class="p">])</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">local_stats</span><span class="p">[</span><span class="s2">&quot;prob_mutate&quot;</span><span class="p">])</span>

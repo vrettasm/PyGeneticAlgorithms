@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.engines.generic_ga &mdash; PyGenAlgo 2.0.0 documentation</title>
+  <title>pygenalgo.engines.generic_ga &mdash; PyGenAlgo 2.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=51b770b3"></script>
+      <script src="../../../_static/documentation_options.js?v=841abef3"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -72,6 +72,7 @@
   <h1>Source code for pygenalgo.engines.generic_ga</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">cpu_count</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">attrgetter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
 
@@ -98,8 +99,93 @@
 <span class="c1"># Define a fitness type.</span>
 <span class="n">Fitness</span> <span class="o">=</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 
+<div class="viewcode-block" id="RunConfig">
+<a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.RunConfig">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RunConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Auxiliary dataclass to set the confirugration parameters</span>
+<span class="sd">    for all the GA engines.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Number of iterations.</span>
+    <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Maximum number of iterations in the evolution process.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># Algorithmic settings.</span>
+    <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    If enabled then the chromosome with the highest fitness</span>
+<span class="sd">    will always be copied unaltered to the next generation.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    If enabled it will shuffle the population after</span>
+<span class="sd">    the selection process. Default is set to True.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">correction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    If enbled it will check the validity of the population</span>
+<span class="sd">    at the gene level and attempt to correct the genome by</span>
+<span class="sd">    calling the random() method of the flawed gene.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">adapt_probs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    If enabled it will allow the crossover and mutation probabilities</span>
+<span class="sd">    to adapt according to the convergence ofthe population to a single</span>
+<span class="sd">    solution. Default is set to False.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># Runtime settings.</span>
+    <span class="n">parallel</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Enables parallel computation of the fitness function.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    If &#39;True&#39; it will display periodically information about</span>
+<span class="sd">    the current average fitness and spread of the population.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># Stop criteria.</span>
+    <span class="n">f_tol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Tolerance in the difference between the average values of two</span>
+<span class="sd">    consecutive populations. It is used to determine the convergence</span>
+<span class="sd">    of the population. If this value is None (default) the algorithm</span>
+<span class="sd">    will terminate using the epochs value.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">f_max_eval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Sets an upper limit of function evaluations. If this number is</span>
+<span class="sd">    exceeded the genetic algorithm will terminate.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># Migration ONLY parameters.</span>
+    <span class="n">allow_migration</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    If enabled it will allow the migration of the best individuals</span>
+<span class="sd">    among the different co-evolving island populations.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">n_periods</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    The number of times that we will break the main evolution to allow</span>
+<span class="sd">    for chromosomes to migrate. This setting is used only when the option</span>
+<span class="sd">    allow_migration == True. Otherwise, is ignored.</span>
+<span class="sd">    &#39;&#39;&#39;</span></div>
+
+<span class="c1"># _end_class_</span>
+
 <span class="c1"># Public interface.</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GenericGA&quot;</span><span class="p">,</span> <span class="s2">&quot;Fitness&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GenericGA&quot;</span><span class="p">,</span> <span class="s2">&quot;RunConfig&quot;</span><span class="p">,</span> <span class="s2">&quot;Fitness&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="GenericGA">
@@ -702,25 +788,26 @@
                 <span class="nb">print</span><span class="p">(</span><span class="n">op</span><span class="p">)</span></div>
 
             <span class="c1"># _end_for_</span>
+
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="GenericGA.run">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.run">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RunConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Main method of the Generic GA class</span>
-<span class="sd">        that implements the evolutionary routine.</span>
+<span class="sd">        Main method of the Generic GA class that implements</span>
+<span class="sd">        the evolutionary routine.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                                   <span class="sa">f</span><span class="s2">&quot;You should implement this method!&quot;</span><span class="p">)</span></div>
 
     <span class="c1"># _end_def_</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RunConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method is only a wrapper of the &quot;run&quot; method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
 
     <span class="c1"># _end_def_</span>
 

@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Engines &mdash; PyGenAlgo 2.0.0 documentation</title>
+  <title>Engines &mdash; PyGenAlgo 2.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=51b770b3"></script>
+      <script src="_static/documentation_options.js?v=841abef3"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -337,15 +337,15 @@ the fitness function.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.rng_GA">
-<span class="sig-name descname"><span class="pre">rng_GA</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Generator(PCG64)</span> <span class="pre">at</span> <span class="pre">0x1090698C0</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.rng_GA" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rng_GA</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Generator(PCG64)</span> <span class="pre">at</span> <span class="pre">0x1065D9E00</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.rng_GA" title="Link to this definition"></a></dt>
 <dd><p>Random Number Generator for the whole class.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#GenericGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.run" title="Link to this definition"></a></dt>
-<dd><p>Main method of the Generic GA class
-that implements the evolutionary routine.</p>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig" title="pygenalgo.engines.generic_ga.RunConfig"><span class="pre">RunConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#GenericGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.run" title="Link to this definition"></a></dt>
+<dd><p>Main method of the Generic GA class that implements
+the evolutionary routine.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -404,6 +404,94 @@ values of the population fitness values.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.RunConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.generic_ga.</span></span><span class="sig-name descname"><span class="pre">RunConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapt_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_max_eval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_migration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_periods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#RunConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.generic_ga.RunConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Auxiliary dataclass to set the confirugration parameters
+for all the GA engines.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.RunConfig.adapt_probs">
+<span class="sig-name descname"><span class="pre">adapt_probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.RunConfig.adapt_probs" title="Link to this definition"></a></dt>
+<dd><p>If enabled it will allow the crossover and mutation probabilities
+to adapt according to the convergence ofthe population to a single
+solution. Default is set to False.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.RunConfig.allow_migration">
+<span class="sig-name descname"><span class="pre">allow_migration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.RunConfig.allow_migration" title="Link to this definition"></a></dt>
+<dd><p>If enabled it will allow the migration of the best individuals
+among the different co-evolving island populations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.RunConfig.correction">
+<span class="sig-name descname"><span class="pre">correction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.RunConfig.correction" title="Link to this definition"></a></dt>
+<dd><p>If enbled it will check the validity of the population
+at the gene level and attempt to correct the genome by
+calling the random() method of the flawed gene.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.RunConfig.elitism">
+<span class="sig-name descname"><span class="pre">elitism</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.RunConfig.elitism" title="Link to this definition"></a></dt>
+<dd><p>If enabled then the chromosome with the highest fitness
+will always be copied unaltered to the next generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.RunConfig.epochs">
+<span class="sig-name descname"><span class="pre">epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.RunConfig.epochs" title="Link to this definition"></a></dt>
+<dd><p>Maximum number of iterations in the evolution process.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.RunConfig.f_max_eval">
+<span class="sig-name descname"><span class="pre">f_max_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.RunConfig.f_max_eval" title="Link to this definition"></a></dt>
+<dd><p>Sets an upper limit of function evaluations. If this number is
+exceeded the genetic algorithm will terminate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.RunConfig.f_tol">
+<span class="sig-name descname"><span class="pre">f_tol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.RunConfig.f_tol" title="Link to this definition"></a></dt>
+<dd><p>Tolerance in the difference between the average values of two
+consecutive populations. It is used to determine the convergence
+of the population. If this value is None (default) the algorithm
+will terminate using the epochs value.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.RunConfig.n_periods">
+<span class="sig-name descname"><span class="pre">n_periods</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.RunConfig.n_periods" title="Link to this definition"></a></dt>
+<dd><p>The number of times that we will break the main evolution to allow
+for chromosomes to migrate. This setting is used only when the option
+allow_migration == True. Otherwise, is ignored.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.RunConfig.parallel">
+<span class="sig-name descname"><span class="pre">parallel</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.RunConfig.parallel" title="Link to this definition"></a></dt>
+<dd><p>Enables parallel computation of the fitness function.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.RunConfig.shuffle">
+<span class="sig-name descname"><span class="pre">shuffle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.RunConfig.shuffle" title="Link to this definition"></a></dt>
+<dd><p>If enabled it will shuffle the population after
+the selection process. Default is set to True.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.RunConfig.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.RunConfig.verbose" title="Link to this definition"></a></dt>
+<dd><p>If ‘True’ it will display periodically information about
+the current average fitness and spread of the population.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-pygenalgo.engines.island_model_ga">
 <span id="pygenalgo-engines-island-model-ga-module"></span><h2>pygenalgo.engines.island_model_ga module<a class="headerlink" href="#module-pygenalgo.engines.island_model_ga" title="Link to this heading"></a></h2>
@@ -453,40 +541,12 @@ number of islands in the model.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.IslandModelGA.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_migration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_periods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapt_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_max_eval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/island_model_ga.html#IslandModelGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.run" title="Link to this definition"></a></dt>
-<dd><p>Main method of the IslandModelGA class, that implements the evolutionary routine.</p>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig" title="pygenalgo.engines.generic_ga.RunConfig"><span class="pre">RunConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/island_model_ga.html#IslandModelGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.island_model_ga.IslandModelGA.run" title="Link to this definition"></a></dt>
+<dd><p>Main method of the IslandModelGA class that implements
+the evolutionary routine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>epochs</strong> – (int) maximum number of iterations in the evolution process.</p></li>
-<li><p><strong>correction</strong> – (bool) flag that if set to ‘True’ will check the validity of
-the population (at the gene level) and attempt to correct the
-genome by calling the random() method of the flawed gene.</p></li>
-<li><p><strong>elitism</strong> – (bool) flag that enables elitism. If set to True then the chromosome
-with the highest fitness will always be copied to the next generation
-(unaltered).</p></li>
-<li><p><strong>f_tol</strong> – (float) tolerance in the difference between the average values of two
-consecutive populations. It is used to determine the convergence of the
-population. If this value is None (default) the algorithm will terminate
-using the epochs value.</p></li>
-<li><p><strong>allow_migration</strong> – (bool) flag that if set to ‘True’ will allow the migration
-of the best individuals among the different islands.</p></li>
-<li><p><strong>n_periods</strong> – (int) the number of times that we will break the main evolution
-to allow for chromosomes to migrate. NB: This setting is active
-only when the option allow_migration == True. Otherwise, is ignored.</p></li>
-<li><p><strong>adapt_probs</strong> – (bool) If enabled (set to True), it will allow the crossover and
-mutation probabilities to adapt according to the convergence of
-the population to a single solution. Default is set to False.</p></li>
-<li><p><strong>shuffle</strong> – (bool) If enabled (set to True), it will shuffle the population before
-the application of the crossover and mutation operations. The default
-is set to True.</p></li>
-<li><p><strong>f_max_eval</strong> – (int) it sets an upper limit of function evaluations. If the number
-is exceeded the genetic algorithm stops. If this value is set, the
-epochs will be ignored and re-adjusted to meet the new requirement.</p></li>
-<li><p><strong>verbose</strong> – (bool) if ‘True’ it will display periodically information about the
-current stats of the subpopulations. NB: This setting is active only
-when the option allow_migration == True. Otherwise, is ignored.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>config</strong> – (RunConfig) the configuration params.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None.</p>
@@ -496,9 +556,185 @@ when the option allow_migration == True. Otherwise, is ignored.</p></li>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.RunConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.island_model_ga.</span></span><span class="sig-name descname"><span class="pre">RunConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapt_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_max_eval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_migration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_periods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#RunConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.island_model_ga.RunConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Auxiliary dataclass to set the confirugration parameters
+for all the GA engines.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.RunConfig.adapt_probs">
+<span class="sig-name descname"><span class="pre">adapt_probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.RunConfig.adapt_probs" title="Link to this definition"></a></dt>
+<dd><p>If enabled it will allow the crossover and mutation probabilities
+to adapt according to the convergence ofthe population to a single
+solution. Default is set to False.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.RunConfig.allow_migration">
+<span class="sig-name descname"><span class="pre">allow_migration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.RunConfig.allow_migration" title="Link to this definition"></a></dt>
+<dd><p>If enabled it will allow the migration of the best individuals
+among the different co-evolving island populations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.RunConfig.correction">
+<span class="sig-name descname"><span class="pre">correction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.RunConfig.correction" title="Link to this definition"></a></dt>
+<dd><p>If enbled it will check the validity of the population
+at the gene level and attempt to correct the genome by
+calling the random() method of the flawed gene.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.RunConfig.elitism">
+<span class="sig-name descname"><span class="pre">elitism</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.RunConfig.elitism" title="Link to this definition"></a></dt>
+<dd><p>If enabled then the chromosome with the highest fitness
+will always be copied unaltered to the next generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.RunConfig.epochs">
+<span class="sig-name descname"><span class="pre">epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.RunConfig.epochs" title="Link to this definition"></a></dt>
+<dd><p>Maximum number of iterations in the evolution process.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.RunConfig.f_max_eval">
+<span class="sig-name descname"><span class="pre">f_max_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.RunConfig.f_max_eval" title="Link to this definition"></a></dt>
+<dd><p>Sets an upper limit of function evaluations. If this number is
+exceeded the genetic algorithm will terminate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.RunConfig.f_tol">
+<span class="sig-name descname"><span class="pre">f_tol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.RunConfig.f_tol" title="Link to this definition"></a></dt>
+<dd><p>Tolerance in the difference between the average values of two
+consecutive populations. It is used to determine the convergence
+of the population. If this value is None (default) the algorithm
+will terminate using the epochs value.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.RunConfig.n_periods">
+<span class="sig-name descname"><span class="pre">n_periods</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.RunConfig.n_periods" title="Link to this definition"></a></dt>
+<dd><p>The number of times that we will break the main evolution to allow
+for chromosomes to migrate. This setting is used only when the option
+allow_migration == True. Otherwise, is ignored.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.RunConfig.parallel">
+<span class="sig-name descname"><span class="pre">parallel</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.RunConfig.parallel" title="Link to this definition"></a></dt>
+<dd><p>Enables parallel computation of the fitness function.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.RunConfig.shuffle">
+<span class="sig-name descname"><span class="pre">shuffle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.RunConfig.shuffle" title="Link to this definition"></a></dt>
+<dd><p>If enabled it will shuffle the population after
+the selection process. Default is set to True.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.island_model_ga.RunConfig.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.island_model_ga.RunConfig.verbose" title="Link to this definition"></a></dt>
+<dd><p>If ‘True’ it will display periodically information about
+the current average fitness and spread of the population.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-pygenalgo.engines.standard_ga">
 <span id="pygenalgo-engines-standard-ga-module"></span><h2>pygenalgo.engines.standard_ga module<a class="headerlink" href="#module-pygenalgo.engines.standard_ga" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.RunConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.standard_ga.</span></span><span class="sig-name descname"><span class="pre">RunConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapt_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_max_eval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_migration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_periods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#RunConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.RunConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Auxiliary dataclass to set the confirugration parameters
+for all the GA engines.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.RunConfig.adapt_probs">
+<span class="sig-name descname"><span class="pre">adapt_probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.RunConfig.adapt_probs" title="Link to this definition"></a></dt>
+<dd><p>If enabled it will allow the crossover and mutation probabilities
+to adapt according to the convergence ofthe population to a single
+solution. Default is set to False.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.RunConfig.allow_migration">
+<span class="sig-name descname"><span class="pre">allow_migration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.RunConfig.allow_migration" title="Link to this definition"></a></dt>
+<dd><p>If enabled it will allow the migration of the best individuals
+among the different co-evolving island populations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.RunConfig.correction">
+<span class="sig-name descname"><span class="pre">correction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.RunConfig.correction" title="Link to this definition"></a></dt>
+<dd><p>If enbled it will check the validity of the population
+at the gene level and attempt to correct the genome by
+calling the random() method of the flawed gene.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.RunConfig.elitism">
+<span class="sig-name descname"><span class="pre">elitism</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.RunConfig.elitism" title="Link to this definition"></a></dt>
+<dd><p>If enabled then the chromosome with the highest fitness
+will always be copied unaltered to the next generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.RunConfig.epochs">
+<span class="sig-name descname"><span class="pre">epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.RunConfig.epochs" title="Link to this definition"></a></dt>
+<dd><p>Maximum number of iterations in the evolution process.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.RunConfig.f_max_eval">
+<span class="sig-name descname"><span class="pre">f_max_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.RunConfig.f_max_eval" title="Link to this definition"></a></dt>
+<dd><p>Sets an upper limit of function evaluations. If this number is
+exceeded the genetic algorithm will terminate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.RunConfig.f_tol">
+<span class="sig-name descname"><span class="pre">f_tol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.RunConfig.f_tol" title="Link to this definition"></a></dt>
+<dd><p>Tolerance in the difference between the average values of two
+consecutive populations. It is used to determine the convergence
+of the population. If this value is None (default) the algorithm
+will terminate using the epochs value.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.RunConfig.n_periods">
+<span class="sig-name descname"><span class="pre">n_periods</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.RunConfig.n_periods" title="Link to this definition"></a></dt>
+<dd><p>The number of times that we will break the main evolution to allow
+for chromosomes to migrate. This setting is used only when the option
+allow_migration == True. Otherwise, is ignored.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.RunConfig.parallel">
+<span class="sig-name descname"><span class="pre">parallel</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.RunConfig.parallel" title="Link to this definition"></a></dt>
+<dd><p>Enables parallel computation of the fitness function.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.RunConfig.shuffle">
+<span class="sig-name descname"><span class="pre">shuffle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.RunConfig.shuffle" title="Link to this definition"></a></dt>
+<dd><p>If enabled it will shuffle the population after
+the selection process. Default is set to True.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.RunConfig.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.standard_ga.RunConfig.verbose" title="Link to this definition"></a></dt>
+<dd><p>If ‘True’ it will display periodically information about
+the current average fitness and spread of the population.</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.standard_ga.</span></span><span class="sig-name descname"><span class="pre">StandardGA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/standard_ga.html#StandardGA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA" title="Link to this definition"></a></dt>
@@ -521,34 +757,12 @@ the genetic operators (crossover and mutation).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.engines.standard_ga.StandardGA.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapt_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_max_eval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/standard_ga.html#StandardGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.run" title="Link to this definition"></a></dt>
-<dd><p>Main method of the StandardGA class, that implements the evolutionary routine.</p>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig" title="pygenalgo.engines.generic_ga.RunConfig"><span class="pre">RunConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/standard_ga.html#StandardGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.standard_ga.StandardGA.run" title="Link to this definition"></a></dt>
+<dd><p>Main method of the StandardGA class that implements
+the evolutionary routine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>epochs</strong> – (int) maximum number of iterations in the evolution process.</p></li>
-<li><p><strong>elitism</strong> – (bool) flag that enables elitism. If True then the chromosome with
-the highest fitness will always be copied to the next generation
-(unaltered).</p></li>
-<li><p><strong>correction</strong> – (bool) flag that if set to ‘True’ will check the validity of
-the population (at the gene level) and attempt to correct the
-genome by calling the random() method of the flawed gene.</p></li>
-<li><p><strong>f_tol</strong> – (float) tolerance in the difference between the average values of two
-consecutive populations. It is used to determine the convergence of the
-population. If this value is None (default) the algorithm will terminate
-using the epochs value.</p></li>
-<li><p><strong>parallel</strong> – (bool) Flag that enables parallel computation of the fitness function.</p></li>
-<li><p><strong>adapt_probs</strong> – (bool) If enabled (set to True), it will allow the crossover and
-mutation probabilities to adapt according to the convergence of
-the population to a single solution. Default is set to False.</p></li>
-<li><p><strong>shuffle</strong> – (bool) If enabled (set to True), it will shuffle the population before
-the application of the crossover and mutation operations. The default
-is set to True.</p></li>
-<li><p><strong>f_max_eval</strong> – (int) it sets an upper limit of function evaluations. If the number
-is exceeded the genetic algorithm stops.</p></li>
-<li><p><strong>verbose</strong> – (bool) if ‘True’ it will display periodically information about the
-current average fitness and spread of the population.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>config</strong> – (RunConfig) the configuration params.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None.</p>
@@ -584,39 +798,105 @@ the objective values).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapt_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_max_eval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/multi_objective_ga.html#MultiObjectiveGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.run" title="Link to this definition"></a></dt>
-<dd><p>Main method of the MultiObjectiveGA class, that implements the evolutionary routine.</p>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig" title="pygenalgo.engines.generic_ga.RunConfig"><span class="pre">RunConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/engines/multi_objective_ga.html#MultiObjectiveGA.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.run" title="Link to this definition"></a></dt>
+<dd><p>Main method of the MultiObjectiveGA class that implements
+the evolutionary routine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>epochs</strong> – (int) maximum number of iterations in the evolution process.</p></li>
-<li><p><strong>elitism</strong> – (bool) flag that enables elitism. If True the chromosome with
-the highest fitness will always be copied to the next generation
-(unaltered).</p></li>
-<li><p><strong>correction</strong> – (bool) flag that if set to ‘True’ will check the validity of
-the population (at the gene level) and attempt to correct the
-genome by calling the random() method of the flawed gene.</p></li>
-<li><p><strong>parallel</strong> – (bool) Flag that enables parallel computation of the fitness function.</p></li>
-<li><p><strong>adapt_probs</strong> – (bool) If enabled (set to True), it will allow the crossover and
-mutation probabilities to adapt according to the convergence of
-the population to a single solution. Default is set to False.</p></li>
-<li><p><strong>shuffle</strong> – (bool) If enabled (set to True), it will shuffle the population before
-the application of the crossover and mutation operations. The default
-is set to True.</p></li>
-<li><p><strong>f_tol</strong> – (float) tolerance in the difference between the average values of two
-consecutive populations. It is used to determine the convergence
-of the population. If this value is None (default) the algorithm
-will terminate using the epochs value.</p></li>
-<li><p><strong>f_max_eval</strong> – (int) it sets an upper limit of function evaluations. If the number
-is exceeded the genetic algorithm stops.</p></li>
-<li><p><strong>verbose</strong> – (bool) if ‘True’ it will display periodically information about the
-current average fitness and spread of the population.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>config</strong> – (RunConfig) the configuration params.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None.</p>
 </dd>
 </dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.RunConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.engines.multi_objective_ga.</span></span><span class="sig-name descname"><span class="pre">RunConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapt_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_max_eval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_migration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_periods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/engines/generic_ga.html#RunConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.RunConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Auxiliary dataclass to set the confirugration parameters
+for all the GA engines.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.RunConfig.adapt_probs">
+<span class="sig-name descname"><span class="pre">adapt_probs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.RunConfig.adapt_probs" title="Link to this definition"></a></dt>
+<dd><p>If enabled it will allow the crossover and mutation probabilities
+to adapt according to the convergence ofthe population to a single
+solution. Default is set to False.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.RunConfig.allow_migration">
+<span class="sig-name descname"><span class="pre">allow_migration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.RunConfig.allow_migration" title="Link to this definition"></a></dt>
+<dd><p>If enabled it will allow the migration of the best individuals
+among the different co-evolving island populations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.RunConfig.correction">
+<span class="sig-name descname"><span class="pre">correction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.RunConfig.correction" title="Link to this definition"></a></dt>
+<dd><p>If enbled it will check the validity of the population
+at the gene level and attempt to correct the genome by
+calling the random() method of the flawed gene.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.RunConfig.elitism">
+<span class="sig-name descname"><span class="pre">elitism</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.RunConfig.elitism" title="Link to this definition"></a></dt>
+<dd><p>If enabled then the chromosome with the highest fitness
+will always be copied unaltered to the next generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.RunConfig.epochs">
+<span class="sig-name descname"><span class="pre">epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.RunConfig.epochs" title="Link to this definition"></a></dt>
+<dd><p>Maximum number of iterations in the evolution process.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.RunConfig.f_max_eval">
+<span class="sig-name descname"><span class="pre">f_max_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.RunConfig.f_max_eval" title="Link to this definition"></a></dt>
+<dd><p>Sets an upper limit of function evaluations. If this number is
+exceeded the genetic algorithm will terminate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.RunConfig.f_tol">
+<span class="sig-name descname"><span class="pre">f_tol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.RunConfig.f_tol" title="Link to this definition"></a></dt>
+<dd><p>Tolerance in the difference between the average values of two
+consecutive populations. It is used to determine the convergence
+of the population. If this value is None (default) the algorithm
+will terminate using the epochs value.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.RunConfig.n_periods">
+<span class="sig-name descname"><span class="pre">n_periods</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.RunConfig.n_periods" title="Link to this definition"></a></dt>
+<dd><p>The number of times that we will break the main evolution to allow
+for chromosomes to migrate. This setting is used only when the option
+allow_migration == True. Otherwise, is ignored.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.RunConfig.parallel">
+<span class="sig-name descname"><span class="pre">parallel</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.RunConfig.parallel" title="Link to this definition"></a></dt>
+<dd><p>Enables parallel computation of the fitness function.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.RunConfig.shuffle">
+<span class="sig-name descname"><span class="pre">shuffle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.RunConfig.shuffle" title="Link to this definition"></a></dt>
+<dd><p>If enabled it will shuffle the population after
+the selection process. Default is set to True.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pygenalgo.engines.multi_objective_ga.RunConfig.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#pygenalgo.engines.multi_objective_ga.RunConfig.verbose" title="Link to this definition"></a></dt>
+<dd><p>If ‘True’ it will display periodically information about
+the current average fitness and spread of the population.</p>
 </dd></dl>
 
 </dd></dl>
