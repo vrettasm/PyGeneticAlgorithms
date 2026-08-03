@@ -159,8 +159,8 @@ class StandardGA(GenericGA):
                     self.f_evals >= config.f_max_eval:
                 # Log a warning message.
                 logger.warning(
-                    "%s reached the maximum number of function evaluations.",
-                    self.__class__.__name__
+                    "%s reached the maximum number of function evaluations: %d",
+                    self.__class__.__name__, config.f_max_eval
                 )
 
                 # Final update the mean value.
