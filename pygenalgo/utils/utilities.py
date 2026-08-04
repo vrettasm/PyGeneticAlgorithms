@@ -45,7 +45,9 @@ def clamp(x: Number,
 # _end_def_
 
 def np_pareto_front_index(points: NDArray,
-                          mode: str = "max") -> NDArray:
+                          mode: str = "max",
+                          rel_eps: float = 1.0e-6,
+                          exclude_duplicates: bool = True) -> NDArray:
     """
     Fast (numpy - vectorized) function that calculates
     the Pareto optimal front from a given input points
@@ -59,6 +61,11 @@ def np_pareto_front_index(points: NDArray,
 
     :param mode: "max" (maximize all objective) or
                  "min" (minimize all objective).
+
+    :param rel_eps: relative eps threshold tolerance.
+
+    :param exclude_duplicates: whether to exclude duplicate
+                               points.
 
     :return: array of indexes (from the points that lie on
              the Pareto front).
@@ -77,18 +84,29 @@ def np_pareto_front_index(points: NDArray,
     # maximize in all objectives function values.
     x_points = points if mode == "max" else -points
 
-    # Remove duplicate points to speed up the
-    # routine and keep track of their indices.
-    unique_points, unique_indices = np.unique(
-        x_points, axis=0, return_index=True
-    )
+    # Check for deduplicates.
+    if exclude_duplicates:
+
+        # Remove duplicate points to speed up the
+        # routine and keep track of their indices.
+        sample_points, sample_indices = np.unique(
+            x_points, axis=0, return_index=True
+        )
+    else:
+        # Keep all points in the Pareto calculation.
+        sample_points = x_points
+        sample_indices = np.arange(x_points.shape[0])
+    # _end_if_
 
     # Get the dimensions of unique points.
-    n_points, n_dims = unique_points.shape
+    n_points, n_dims = sample_points.shape
 
-    # Rough calculation of occupied memory.
-    memory_bytes: int =  (n_points * n_points * n_dims *
-                          unique_points.dtype.itemsize)
+    # Compute an eps value per objective: (n_dims,).
+    eps_arr: NDArray = rel_eps * np.max(np.abs(sample_points), axis=0)
+
+    # Rough calculation of sample_points memory.
+    memory_bytes: int = (n_points * n_points * n_dims *
+                         sample_points.dtype.itemsize)
 
     # Compare it against ~500MB.
     if memory_bytes <= 500_000_000:
@@ -97,12 +115,14 @@ def np_pareto_front_index(points: NDArray,
         #
 
         # Subtract all points (from all other points).
-        diff: NDArray = unique_points[:, None, :] - unique_points[None, :, :]
+        diff: NDArray = sample_points[:, None, :] - sample_points[None, :, :]
+
+        # Covert eps to [1, 1, n_dims].
+        eps_batch = eps_arr[None, None, :]
 
         # This condition is for maximization problems.
-        strictly_better: NDArray = np.all(diff >= 0.0, axis=-1) & \
-                                   np.any(diff >  0.0, axis=-1)
-
+        strictly_better: NDArray = np.all(diff >= -eps_batch, axis=-1) & \
+                                   np.any(diff > eps_batch, axis=-1)
         # Get the pareto points mask.
         is_pareto: NDArray = ~np.any(strictly_better, axis=0)
     else:
@@ -110,42 +130,57 @@ def np_pareto_front_index(points: NDArray,
         # WARNING: This step is O(N x D) in memory allocation,
         #          but slow due to the loop!
 
-        # Initialize all unique points as Pareto optimal.
+        # For the loop branch eps [1, n_dims].
+        eps_loop: NDArray = eps_arr[None, :]
+
+        # Initialize all sample points as Pareto optimal.
         is_pareto: NDArray = np.ones(n_points, dtype=bool)
 
-        # Check point by point.
+        # Check all pairs once, bidirectionally.
         for i in range(n_points):
-            # If i-th point is already dominated,
-            # no need to check what it dominates.
+
+            # If i-th point is already dominated.
             if not is_pareto[i]:
+                # Skip.
                 continue
 
-            # Only compare against points that haven't been dominated
-            # yet and are further down the list to avoid duplicate checks.
-            remaining_indices: NDArray = np.where(is_pareto)[0]
-            remaining_indices = remaining_indices[remaining_indices > i]
+            # Compare i against all later points (j > i).
+            for j in range(i + 1, n_points):
 
-            # Quick exit.
-            if len(remaining_indices) == 0:
-                break
+                # If j is already dominated.
+                if not is_pareto[j]:
+                    # Skip.
+                    continue
 
-            # Compare the i-th point against the surviving future points.
-            diff: NDArray = unique_points[i] - unique_points[remaining_indices]
+                # Compute difference once (reuse for both checks).
+                diff: NDArray = sample_points[i] - sample_points[j]
 
-            # Find which of the remaining points are dominated
-            # by current point i.
-            dominating_others: NDArray = np.all(diff >= 0.0, axis=-1) &\
-                                         np.any(diff > 0.0, axis=-1)
-            # Mark them as False.
-            is_pareto[remaining_indices[dominating_others]] = False
+                # Check if i dominates j.
+                i_dominates_j = (np.all(diff >= -eps_loop) &
+                                 np.any(diff > eps_loop))
+
+                # Check if j dominates i (reverse the comparison).
+                j_dominates_i = (np.all(-diff >= -eps_loop) &
+                                 np.any(-diff > eps_loop))
+
+                if i_dominates_j:
+                    # Flag for skipping.
+                    is_pareto[j] = False
+
+                elif j_dominates_i:
+                    # Flag for skipping.
+                    is_pareto[i] = False
+                    break
+        # _end_for_
     # _end_if_
 
     # Return the indexes.
-    return unique_indices[is_pareto]
+    return sample_indices[is_pareto]
 # _end_def_
 
-def np_pareto_front(points: NDArray,
-                    mode: str = "max") -> NDArray:
+def np_pareto_front(points: NDArray, mode: str = "max",
+                    rel_eps: float = 1.0e-6,
+                    exclude_duplicates: bool = True) -> NDArray:
     """
     Fast (numpy - vectorized) function that calculates
     the Pareto optimal front points from a given input
@@ -159,17 +194,22 @@ def np_pareto_front(points: NDArray,
     :param mode: "max" (maximize all objective) or
                  "min" (minimize all objective).
 
+    :param rel_eps: relative eps threshold tolerance.
+
+    :param exclude_duplicates: whether to exclude duplicate
+                               points.
+
     NOTE: Its memory complexity grows quadratically
     with the number of points in the NDArray: O(N^2)!
 
     :return: array of points that lie on the Pareto front.
     """
 
-    # First get the indexes of the pareto front points,
-    # using the helper function.
-    idx = np_pareto_front_index(points, mode=mode)
+    # Get the indices of the points that lie on the pareto front.
+    idx = np_pareto_front_index(points, mode=mode, rel_eps=rel_eps,
+                                exclude_duplicates=exclude_duplicates)
 
-    # Then return the actual points.
+    # Return the actual points.
     return points[idx]
 # _end_def_
 
