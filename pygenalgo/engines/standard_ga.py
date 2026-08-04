@@ -65,7 +65,7 @@ class StandardGA(GenericGA):
         # Local variable to display information on the screen.
         # To avoid cluttering the screen we print info only 10
         # times regardless of the total number of epochs.
-        its_time_to_print = config.epochs // 10 if config.epochs > 10 else 2
+        print_interval: int = config.epochs // 10 if config.epochs > 10 else 2
 
         # Display an information message.
         logger.info("Initial Avg. Fitness = %.4f", avg_fitness_0)
@@ -144,7 +144,7 @@ class StandardGA(GenericGA):
             avg_fitness_i, std_fitness_i = self.update_stats(fit_list_i)
 
             # Log the information message.
-            if config.verbose and (i % its_time_to_print) == 0:
+            if config.verbose and (i % print_interval) == 0:
                 logger.info(
                     "Epoch: %5d -> Avg. Fitness = %.4f, Spread = %.4f",
                     i + 1, avg_fitness_i, std_fitness_i
