@@ -37,7 +37,7 @@ in parallel mode by definition.
   > have also been added to demonstrate their use.
   > 
 
-The current implementation provides (out of the box) a variety of genetic operators, including:
+The current implementation provides (out of the box) a wide variety of genetic operators, including:
 
 - **Selection operators**:
   - [Linear Rank Selector](pygenalgo/operators/selection/linear_rank_selector.py)
