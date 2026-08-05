@@ -36,7 +36,7 @@ Description:
 
         \Sigma_4 = [ [ 1.2, 0.3 ], [ 0.3, 1.2 ] ]
 
-Step 1: Import python libraries and PyGenAlgo classes
+Step 1: Import Python libraries and PyGenAlgo classes
 -----------------------------------------------------
 
 .. code-block:: python
@@ -68,9 +68,9 @@ Step 2: Define the objective function
 
 .. code-block:: python
 
-    # Setup the 2D Gaussian functions.
+    # Set up the 2D Gaussian functions.
     # NOTE: Because of their covariance setup, the first two (mvn_1 and mvn_2)
-    # will have higher modes then the other two. So the maximum will be in one
+    # will have higher modes than the other two. So the maximum will be in one
     # of these two modes.
 
     # Each one with different mean and covariance matrix.

@@ -30,7 +30,7 @@ Fitness = float | tuple[float, ...]
 @dataclass(frozen=True)
 class RunConfig:
     """
-    Auxiliary dataclass to set the confirugration parameters
+    Auxiliary dataclass to set the configuration parameters
     for all the GA engines.
     """
 
@@ -55,7 +55,7 @@ class RunConfig:
 
     correction: bool = False
     '''
-    If enbled it will check the validity of the population
+    If enabled it will check the validity of the population
     at the gene level and attempt to correct the genome by
     calling the random() method of the flawed gene.
     '''
@@ -63,7 +63,7 @@ class RunConfig:
     adapt_probs: bool = False
     '''
     If enabled it will allow the crossover and mutation probabilities
-    to adapt according to the convergence ofthe population to a single
+    to adapt according to the convergence of the population to a single
     solution. Default is set to False.
     '''
 
