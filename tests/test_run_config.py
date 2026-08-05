@@ -4,7 +4,23 @@ from pygenalgo.engines.generic_ga import RunConfig
 
 class TestRunConfig(unittest.TestCase):
 
-    def test_default_values(self):
+    def test_is_frozen(self) -> None:
+        """
+        Test if RunConfig is frozen.
+
+        :return: None.
+        """
+        config = RunConfig()
+        self.assertTrue(is_dataclass(config))
+        self.assertTrue(config.__class__.__dataclass_params__.frozen)
+    # _end_def_
+
+    def test_default_values(self) -> None:
+        """
+        Test if RunConfig is initialized with default values.
+
+        :return: None.
+        """
         config = RunConfig()
 
         self.assertEqual(config.epochs, 100)
@@ -19,7 +35,12 @@ class TestRunConfig(unittest.TestCase):
         self.assertFalse(config.allow_migration)
     # _end_def_
 
-    def test_custom_values(self):
+    def test_custom_values(self) -> None:
+        """
+        Test if RunConfig is initialized with custom values.
+
+        :return: None.
+        """
         config = RunConfig(
             epochs=50,
             elitism=False,
@@ -45,11 +66,32 @@ class TestRunConfig(unittest.TestCase):
         self.assertTrue(config.allow_migration)
     # _end_def_
 
-    def test_is_frozen(self):
-        config = RunConfig()
-        self.assertTrue(is_dataclass(config))
-        self.assertTrue(config.__class__.__dataclass_params__.frozen)
+    def test_wrong_values(self) -> None:
+        """
+        Test if RunConfig is initialized with wrong values.
+
+        :return: None.
+        """
+        with self.assertRaises(ValueError):
+            _ = RunConfig(epochs=-50)
+
+        with self.assertRaises(ValueError):
+            _ = RunConfig(f_tol=-0.1)
+
+        with self.assertRaises(TypeError):
+            _ = RunConfig(epochs=5.0)
+
+        with self.assertRaises(TypeError):
+            _ = RunConfig(f_tol=0j+1)
+
+        with self.assertRaises(TypeError):
+            _ = RunConfig(f_max_eval=0j+1)
+
+        with self.assertRaises(TypeError):
+            _ = RunConfig(shuffle=10)
     # _end_def_
+
+# _end_class_
 
 if __name__ == '__main__':
     unittest.main()
