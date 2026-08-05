@@ -14,7 +14,7 @@ object-oriented paradigm it provides a set of classes that can be used
 to solve general purpose optimization problems (constrained and unconstrained).
 
 * **Free software:** GNU GPL Version 3
-* **GitHub repository:** https://github.com/vrettasm/pygeneticalgorithms
+* **Github repository:** https://github.com/vrettasm/pygeneticalgorithms
 * **Python version(s):** 3.10+
 * **Python dependencies:** NumPy, JobLib
 

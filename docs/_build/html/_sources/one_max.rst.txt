@@ -22,7 +22,7 @@ We have a state vector :math:`\mathbf{x} \in [0, 1]^M` of bits, such as: :math:`
         f(1, 1, ..., 1) = M
 
 
-Step 1: Import Python libraries and PyGenAlgo classes
+Step 1: Import python libraries and PyGenAlgo classes
 -----------------------------------------------------
 
 .. code-block:: python
