@@ -12,7 +12,7 @@ Email:
 Metadata:
     License: GPL-3
 """
-
+from math import isfinite
 from typing import Callable
 from functools import lru_cache
 from itertools import zip_longest
@@ -21,8 +21,8 @@ from dataclasses import dataclass, field
 from pygenalgo.genome.chromosome import Chromosome
 
 # Public interface.
-__all__ = ["average_hamming_distance", "unique_pairs",
-           "correct_chromosomes", "SubPopulation"]
+__all__ = ["average_hamming_distance", "correct_chromosomes",
+           "unique_pairs", "SubPopulation", "Probability"]
 
 @lru_cache(maxsize=64)
 def unique_pairs(n_size: int) -> int:
@@ -342,4 +342,52 @@ class SubPopulation:
         """
         return item in self.population
     # _end_def_
+# _end_class_
+
+@dataclass(frozen=True)
+class Probability:
+    """
+    Auxiliary class that models a probability value.
+    """
+
+    # The probability value.
+    value: float
+
+    def __post_init__(self) -> None:
+        """
+        Make sure the probability value has the correct
+        type (float) and its value is between 0 and 1.
+
+        :return: None.
+        """
+        # Sanity check (correct type).
+        if not isinstance(self.value, (float, int)) or \
+                isinstance(self.value, bool):
+            raise TypeError(f"Probability must be a float, not {type(self.value)}.")
+
+        # Convert the value to float.
+        tmp_value: float = float(self.value)
+
+        # Sanity check (finite value).
+        if not isfinite(tmp_value):
+            raise ValueError(f"Probability must finite, not {tmp_value}.")
+
+        # Sanity check (correct range).
+        if not 0.0 <= tmp_value <= 1.0:
+            raise ValueError(f"The probability value {tmp_value} "
+                             f"is not within valid range [0, 1]. ")
+
+        # Ensure that the object's value is float.
+        object.__setattr__(self, "value", tmp_value)
+    # _end_def_
+
+    def __str__(self) -> str:
+        """
+        A string representation of the probability.
+
+        :return: a string with the probability value.
+        """
+        return f"Probability({self.value})"
+    # _end_def_
+
 # _end_class_
