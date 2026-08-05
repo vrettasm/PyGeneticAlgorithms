@@ -6,7 +6,7 @@
 
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 
-**Pylint score: 9.52 / 10**
+**Pylint score: 9.54 / 10**
 
 This repository implements a genetic algorithm toolbox in Python3 programming language, using only *Numpy* and *Joblib*
 as additional libraries. The toolbox offers the following implementations (as engines):
