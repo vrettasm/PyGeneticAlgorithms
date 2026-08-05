@@ -107,6 +107,93 @@ class RunConfig:
     for chromosomes to migrate. This setting is used only when the option
     allow_migration == True. Otherwise, is ignored.
     '''
+
+    @staticmethod
+    def _check_bool(name: str, var: bool) -> None:
+        """
+        Helper method to check if a value is True or False.
+
+        :param name: variable name.
+        :param var: variable value.
+        :return: None.
+        """
+        if not isinstance(var, bool):
+            raise TypeError(f"{name} must be bool, "
+                            f"got {type(var).__name__}.")
+    # _end_def_
+
+    @staticmethod
+    def _check_int_positive(name: str, var: Optional[int]) -> None:
+        """
+        Helper method to check if a value is a positive integer.
+
+        :param name: variable name.
+        :param var: variable value.
+        :return: None.
+        """
+        # Sanity check 1.
+        if var is None:
+            return
+
+        # Sanity check 2.
+        # NOTE: In Python bool is a subclass of int!
+        if not isinstance(var, int) or isinstance(var, bool):
+            raise TypeError(f"{name} must be int, "
+                            f"got {type(var).__name__}.")
+        # Sanity check 3.
+        if var <= 0:
+            raise ValueError(f"{name} must be positive, "
+                             f"got {var}.")
+    # _end_def_
+
+    @staticmethod
+    def _check_float_non_negative(name: str, var: Optional[float | int]) -> None:
+        """
+        Helper method to check if a value is a non-negative float.
+
+        :param name: variable name.
+        :param var: variable value.
+        :return: None.
+        """
+        # Sanity check 1.
+        if var is None:
+            return
+
+        # Sanity check 2.
+        # NOTE: In Python bool is a subclass of int!
+        if not isinstance(var, (float, int)) or isinstance(var, bool):
+            raise TypeError(f"{name} must be float or int, "
+                            f"got {type(var).__name__}.")
+        # Sanity check 3.
+        if var < 0.0:
+            raise ValueError(f"{name} must be non-negative, "
+                             f"got {var}.")
+    # _end_def_
+
+    def __post_init__(self) -> None:
+        """
+        Post initialization checks.
+
+        :return: None.
+        """
+
+        # Check bool parameters.
+        self._check_bool("elitism", self.elitism)
+        self._check_bool("shuffle", self.shuffle)
+        self._check_bool("verbose", self.verbose)
+        self._check_bool("parallel", self.parallel)
+        self._check_bool("correction", self.correction)
+        self._check_bool("adapt_probs", self.adapt_probs)
+        self._check_bool("allow_migration", self.allow_migration)
+
+        # Check integer parameters.
+        self._check_int_positive("epochs", self.epochs)
+        self._check_int_positive("n_periods", self.n_periods)
+        self._check_int_positive("f_max_eval", self.f_max_eval)
+
+        # Check float parameters.
+        self._check_float_non_negative("f_tol", self.f_tol)
+    # _end_def_
 # _end_class_
 
 # Public interface.
