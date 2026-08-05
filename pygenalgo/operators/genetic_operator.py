@@ -2,7 +2,11 @@ from threading import Lock
 from functools import wraps
 from typing import Any, Optional
 
+# Third party imports.
 from numpy.random import default_rng, Generator
+
+# Custom code imports.
+from pygenalgo.utils.auxiliary import Probability
 
 # Public interface.
 __all__ = ["GeneticOperator", "increase_counter"]
@@ -68,13 +72,13 @@ class GeneticOperator:
 
     def __init__(self, probability: float) -> None:
         """
-        Construct a 'GeneticOperator' object with
-        a given probability value.
+        Construct a 'GeneticOperator' object with a given
+        probability value.
 
         :param probability: (float) in [0, 1].
         """
         # Assign the value.
-        self._probability = self._validate_probability(probability)
+        self._probability: Probability = Probability(probability)
 
         # Initialize the application counter to zero.
         self._counter: int = 0
@@ -84,35 +88,6 @@ class GeneticOperator:
 
         # Place holder.
         self._items: Optional[Any] = None
-    # _end_def_
-
-    @classmethod
-    def _validate_probability(cls, probability: float | int) -> float:
-        """
-        Helper function to validate the probability values.
-
-        NOTE: String inputs are also 'accepted' as long as
-        they can be cast correctly. But they should really
-        be avoided.
-
-        :param probability: (int or float) in [0, 1].
-
-        :return: float in [0, 1].
-        """
-        # Sanity check (correct type).
-        if not isinstance(probability, (float, int)) or\
-                isinstance(probability, bool):
-            raise TypeError(f"{cls.__name__}: Probability must be a float, "
-                            f"not {type(probability)}.")
-        # _end_if_
-
-        # Sanity check (correct range).
-        if not 0.0 <= probability <= 1.0:
-            raise ValueError(f"{cls.__name__}: The probability value "
-                             f"{probability} is not within valid range [0, 1].")
-        # _end_if_
-
-        return probability
     # _end_def_
 
     @classmethod
@@ -205,7 +180,7 @@ class GeneticOperator:
 
         :return: the float value of the probability.
         """
-        return self._probability
+        return self._probability.value
     # _end_def_
 
     @probability.setter
@@ -215,8 +190,8 @@ class GeneticOperator:
 
         :param new_value: (float) in [0, 1].
         """
-        # Update the probability value.
-        self._probability = self._validate_probability(new_value)
+        # Create a new Probability(value) object.
+        self._probability = Probability(new_value)
     # _end_def_
 
     @property
@@ -241,7 +216,7 @@ class GeneticOperator:
 
         :return: (bool) the output of the: probability > U(0,1).
         """
-        return self._probability > self._rng.random()
+        return self._probability.value > self._rng.random()
     # _end_def_
 
     def __str__(self) -> str:
@@ -273,7 +248,7 @@ class GeneticOperator:
             Override to provide a simple string that’s a valid Python expression
             which could be used to recreate the object: ClassName(_probability).
         """
-        return f"{self.__class__.__name__}({self._probability})"
+        return f"{self.__class__.__name__}({self._probability.value})"
     # _end_def_
 
     def __getstate__(self) -> dict:
