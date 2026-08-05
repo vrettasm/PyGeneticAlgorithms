@@ -84,7 +84,7 @@
 <span class="sd">Metadata:</span>
 <span class="sd">    License: GPL-3</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">isfinite</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">zip_longest</span>
@@ -93,8 +93,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
 
 <span class="c1"># Public interface.</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;average_hamming_distance&quot;</span><span class="p">,</span> <span class="s2">&quot;unique_pairs&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;correct_chromosomes&quot;</span><span class="p">,</span> <span class="s2">&quot;SubPopulation&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;average_hamming_distance&quot;</span><span class="p">,</span> <span class="s2">&quot;correct_chromosomes&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;unique_pairs&quot;</span><span class="p">,</span> <span class="s2">&quot;SubPopulation&quot;</span><span class="p">,</span> <span class="s2">&quot;Probability&quot;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="unique_pairs">
 <a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.auxiliary.unique_pairs">[docs]</a>
@@ -426,6 +426,66 @@
         <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span></div>
 
     <span class="c1"># _end_def_</span>
+<span class="c1"># _end_class_</span>
+
+<div class="viewcode-block" id="Probability">
+<a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.auxiliary.Probability">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Probability</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Auxiliary class that models a probability value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># The probability value.</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make sure the probability value has the correct</span>
+<span class="sd">        type (float) and its value is between 0 and 1.</span>
+
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Sanity check (correct type).</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">or</span> \
+                <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Probability must be a float, not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Convert the value to float.</span>
+        <span class="n">tmp_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># Sanity check (finite value).</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isfinite</span><span class="p">(</span><span class="n">tmp_value</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Probability must finite, not </span><span class="si">{</span><span class="n">tmp_value</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Sanity check (correct range).</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">tmp_value</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The probability value </span><span class="si">{</span><span class="n">tmp_value</span><span class="si">}</span><span class="s2"> &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;is not within valid range [0, 1]. &quot;</span><span class="p">)</span>
+
+        <span class="c1"># Ensure that the object&#39;s value is float.</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">tmp_value</span><span class="p">)</span>
+    <span class="c1"># _end_def_</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The value of probability as string.</span>
+
+<span class="sd">        :return: a string with the probability value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="c1"># _end_def_</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A string representation of the probability.</span>
+
+<span class="sd">        :return: a string Probability(value).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Probability(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+
+    <span class="c1"># _end_def_</span>
+
 <span class="c1"># _end_class_</span>
 </pre></div>
 

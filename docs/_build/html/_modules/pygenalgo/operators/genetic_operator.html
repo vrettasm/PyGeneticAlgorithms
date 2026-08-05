@@ -74,7 +74,11 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
+<span class="c1"># Third party imports.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_rng</span><span class="p">,</span> <span class="n">Generator</span>
+
+<span class="c1"># Custom code imports.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.auxiliary</span><span class="w"> </span><span class="kn">import</span> <span class="n">Probability</span>
 
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GeneticOperator&quot;</span><span class="p">,</span> <span class="s2">&quot;increase_counter&quot;</span><span class="p">]</span>
@@ -145,13 +149,13 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Construct a &#39;GeneticOperator&#39; object with</span>
-<span class="sd">        a given probability value.</span>
+<span class="sd">        Construct a &#39;GeneticOperator&#39; object with a given</span>
+<span class="sd">        probability value.</span>
 
 <span class="sd">        :param probability: (float) in [0, 1].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Assign the value.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_probability</span><span class="p">(</span><span class="n">probability</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span><span class="p">:</span> <span class="n">Probability</span> <span class="o">=</span> <span class="n">Probability</span><span class="p">(</span><span class="n">probability</span><span class="p">)</span>
 
         <span class="c1"># Initialize the application counter to zero.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_counter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
@@ -161,32 +165,6 @@
 
         <span class="c1"># Place holder.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="c1"># _end_def_</span>
-
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_probability</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">probability</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Helper function to validate the probability values.</span>
-
-<span class="sd">        NOTE: String inputs are also &#39;accepted&#39; as long as</span>
-<span class="sd">        they can be cast correctly. But they should really</span>
-<span class="sd">        be avoided.</span>
-
-<span class="sd">        :param probability: (int or float) in [0, 1].</span>
-
-<span class="sd">        :return: float in [0, 1].</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Ensure correct type.</span>
-        <span class="c1"># WARNING: If cast fails a ValueError will be raised!</span>
-        <span class="n">probability</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">probability</span><span class="p">)</span>
-
-        <span class="c1"># Ensure correct range is [0, 1].</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">probability</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> the value &quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">probability</span><span class="si">}</span><span class="s2"> is not within valid range.&quot;</span><span class="p">)</span>
-        <span class="c1"># _end_if_</span>
-
-        <span class="k">return</span> <span class="n">probability</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="GeneticOperator.set_seed">
@@ -291,7 +269,7 @@
 
 <span class="sd">        :return: the float value of the probability.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span><span class="o">.</span><span class="n">value</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@probability</span><span class="o">.</span><span class="n">setter</span>
@@ -301,8 +279,8 @@
 
 <span class="sd">        :param new_value: (float) in [0, 1].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Update the probability value.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_probability</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+        <span class="c1"># Create a new Probability(value) object.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span> <span class="o">=</span> <span class="n">Probability</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -329,7 +307,7 @@
 
 <span class="sd">        :return: (bool) the output of the: probability &gt; U(0,1).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_probability</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span></div>
 
     <span class="c1"># _end_def_</span>
 
@@ -362,7 +340,7 @@
 <span class="sd">            Override to provide a simple string that’s a valid Python expression</span>
 <span class="sd">            which could be used to recreate the object: ClassName(_probability).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_probability</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_probability</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">)&quot;</span>
     <span class="c1"># _end_def_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
