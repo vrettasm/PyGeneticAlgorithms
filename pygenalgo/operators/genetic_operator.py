@@ -87,7 +87,7 @@ class GeneticOperator:
     # _end_def_
 
     @classmethod
-    def _validate_probability(cls, probability: int | float) -> float:
+    def _validate_probability(cls, probability: float | int) -> float:
         """
         Helper function to validate the probability values.
 
@@ -99,14 +99,17 @@ class GeneticOperator:
 
         :return: float in [0, 1].
         """
-        # Ensure correct type.
-        # WARNING: If cast fails a ValueError will be raised!
-        probability = float(probability)
+        # Sanity check (correct type).
+        if not isinstance(probability, (float, int)) or\
+                isinstance(probability, bool):
+            raise TypeError(f"{cls.__name__}: Probability must be a float, "
+                            f"not {type(probability)}.")
+        # _end_if_
 
-        # Ensure correct range is [0, 1].
+        # Sanity check (correct range).
         if not 0.0 <= probability <= 1.0:
-            raise ValueError(f"{cls.__name__} the value "
-                             f"{probability} is not within valid range.")
+            raise ValueError(f"{cls.__name__}: The probability value "
+                             f"{probability} is not within valid range [0, 1].")
         # _end_if_
 
         return probability
