@@ -44,6 +44,97 @@ def clamp(x: Number,
     return min(max(x, x_lower), x_upper)
 # _end_def_
 
+def _dominance_batch(sample_points: NDArray, eps_arr: NDArray) -> NDArray:
+    """
+    Uses the dominance condition on the sample points to find
+    those that are on the Pareto front. It's using vectorized
+    (numpy optimized) code to compute the dominance.
+
+    WARNING: This step is O(N^2 x D) in memory allocation.
+
+    :param sample_points: The points we want to find the Pareto
+                          front.
+    :param eps_arr: Threshold tolerance values (per objective).
+
+    :return: an array with the indices of the pareto samples.
+    """
+    # Subtract all points (from all other points).
+    diff: NDArray = sample_points[:, None, :] - sample_points[None, :, :]
+
+    # Covert eps to [1, 1, n_dims].
+    eps_batch = eps_arr[None, None, :]
+
+    # This condition is for maximization problems.
+    strictly_better: NDArray = np.all(diff >= -eps_batch, axis=-1) & \
+                               np.any(diff > eps_batch, axis=-1)
+    # Get the pareto points mask.
+    return ~np.any(strictly_better, axis=0)
+# _end_def_
+
+def _dominance_loop(sample_points: NDArray, eps_arr: NDArray) -> NDArray:
+    """
+    Uses the dominance condition on the sample points to find
+    those that are on the Pareto front. It is using a loop to
+    do that, and it's called when the size of the input array
+    exceeds 500MB in memory. This approach is safer in terms
+    of memory usage, but slower due to the loop.
+
+    NOTE: This function is O(N x D) in memory allocation.
+
+    :param sample_points: The points we want to find the Pareto
+                          front.
+    :param eps_arr: Threshold tolerance values (per objective).
+
+    :return: an array with the indices of the pareto samples.
+    """
+    # Get the number of sample points.
+    n_points = sample_points.shape[0]
+
+    # For the loop branch eps [1, n_dims].
+    eps_loop: NDArray = eps_arr[None, :]
+
+    # Initialize all sample points as Pareto optimal.
+    is_pareto: NDArray = np.ones(n_points, dtype=bool)
+
+    # Check all pairs once, bidirectionally.
+    for i in range(n_points):
+
+        # If i-th point is already dominated.
+        if not is_pareto[i]:
+            # Skip.
+            continue
+
+        # Compare i against all later points (j > i).
+        for j in range(i + 1, n_points):
+
+            # If j is already dominated.
+            if not is_pareto[j]:
+                # Skip.
+                continue
+
+            # Compute difference once (reuse for both checks).
+            diff: NDArray = sample_points[i] - sample_points[j]
+
+            # Check if i dominates j.
+            i_dominates_j: NDArray = (np.all(diff >= -eps_loop) &
+                                      np.any(diff > eps_loop))
+
+            # Check if j dominates i (reverse the comparison).
+            j_dominates_i: NDArray = (np.all(-diff >= -eps_loop) &
+                                      np.any(-diff > eps_loop))
+            if i_dominates_j:
+                # Flag for skipping.
+                is_pareto[j] = False
+
+            elif j_dominates_i:
+                # Flag for skipping.
+                is_pareto[i] = False
+                break
+    # _end_for_
+
+    return is_pareto
+# _end_def_
+
 def np_pareto_front_index(points: NDArray,
                           mode: str = "max",
                           rel_eps: float = 1.0e-6,
@@ -110,72 +201,11 @@ def np_pareto_front_index(points: NDArray,
 
     # Compare it against ~500MB.
     if memory_bytes <= 500_000_000:
-        #
-        # WARNING: This step is O(N^2 x D) in memory allocation.
-        #
+        # Return the pareto front indices (batch mode).
+        return sample_indices[_dominance_batch(sample_points, eps_arr)]
 
-        # Subtract all points (from all other points).
-        diff: NDArray = sample_points[:, None, :] - sample_points[None, :, :]
-
-        # Covert eps to [1, 1, n_dims].
-        eps_batch = eps_arr[None, None, :]
-
-        # This condition is for maximization problems.
-        strictly_better: NDArray = np.all(diff >= -eps_batch, axis=-1) & \
-                                   np.any(diff > eps_batch, axis=-1)
-        # Get the pareto points mask.
-        is_pareto: NDArray = ~np.any(strictly_better, axis=0)
-    else:
-        #
-        # WARNING: This step is O(N x D) in memory allocation,
-        #          but slow due to the loop!
-
-        # For the loop branch eps [1, n_dims].
-        eps_loop: NDArray = eps_arr[None, :]
-
-        # Initialize all sample points as Pareto optimal.
-        is_pareto: NDArray = np.ones(n_points, dtype=bool)
-
-        # Check all pairs once, bidirectionally.
-        for i in range(n_points):
-
-            # If i-th point is already dominated.
-            if not is_pareto[i]:
-                # Skip.
-                continue
-
-            # Compare i against all later points (j > i).
-            for j in range(i + 1, n_points):
-
-                # If j is already dominated.
-                if not is_pareto[j]:
-                    # Skip.
-                    continue
-
-                # Compute difference once (reuse for both checks).
-                diff: NDArray = sample_points[i] - sample_points[j]
-
-                # Check if i dominates j.
-                i_dominates_j = (np.all(diff >= -eps_loop) &
-                                 np.any(diff > eps_loop))
-
-                # Check if j dominates i (reverse the comparison).
-                j_dominates_i = (np.all(-diff >= -eps_loop) &
-                                 np.any(-diff > eps_loop))
-
-                if i_dominates_j:
-                    # Flag for skipping.
-                    is_pareto[j] = False
-
-                elif j_dominates_i:
-                    # Flag for skipping.
-                    is_pareto[i] = False
-                    break
-        # _end_for_
-    # _end_if_
-
-    # Return the indexes.
-    return sample_indices[is_pareto]
+    # Safeguard with loop mode.
+    return sample_indices[_dominance_loop(sample_points, eps_arr)]
 # _end_def_
 
 def np_pareto_front(points: NDArray, mode: str = "max",
