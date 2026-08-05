@@ -383,9 +383,18 @@ class Probability:
 
     def __str__(self) -> str:
         """
-        A string representation of the probability.
+        The value of probability as string.
 
         :return: a string with the probability value.
+        """
+        return str(self.value)
+    # _end_def_
+
+    def __repr__(self) -> str:
+        """
+        A string representation of the probability.
+
+        :return: a string Probability(value).
         """
         return f"Probability({self.value})"
     # _end_def_
