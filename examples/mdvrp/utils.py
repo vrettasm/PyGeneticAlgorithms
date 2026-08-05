@@ -2,6 +2,7 @@ import json
 from collections import namedtuple
 
 import numpy as np
+from numpy.typing import NDArray
 from scipy.spatial import distance
 from numpy.random import default_rng
 
@@ -37,12 +38,16 @@ def load_data(filepath: str) -> tuple[list[Customer], list[Depot]]:
         # _end_with_
 
         # Create the customers list.
-        customers = [Customer(c["ID"], c["X"], c["Y"], c["DEMAND"])
-                     for c in data["customers"]]
+        customers: list[Customer] = [
+            Customer(c["ID"], c["X"], c["Y"], c["DEMAND"])
+            for c in data["customers"]
+        ]
 
         # Extract the depots list.
-        depots = [Depot(d["ID"], d["X"], d["Y"], d["VEHICLES"], d["MAX_CAPACITY"])
-                  for d in data["depots"]]
+        depots: list[Depot] = [
+            Depot(d["ID"], d["X"], d["Y"], d["VEHICLES"], d["MAX_CAPACITY"])
+            for d in data["depots"]
+        ]
     except FileNotFoundError:
         # Raise an error message.
         raise RuntimeError(f"Cannot find file: {filepath}")
@@ -69,21 +74,27 @@ def cluster_customers_to_depots(depots: list[Depot],
     :return: a list with all the clusters.
     """
     # Extract the depot coordinates (as centroids).
-    centroids = np.array([(d.x, d.y) for d in depots])
+    centroids: NDArray = np.array([
+        (d.x, d.y) for d in depots
+    ], dtype=float)
 
     # Extract the customers coordinates.
-    customer_data = np.array([(c.x, c.y) for c in customers])
+    customer_data: NDArray = np.array([
+        (c.x, c.y) for c in customers
+    ], dtype=float)
 
     # Step 1: Compute the Euclidean distances.
-    distances = distance.cdist(customer_data, centroids, "euclidean")
+    distances: NDArray = distance.cdist(customer_data, centroids, "euclidean")
 
     # Step 2: Find the index of the closest points.
-    closest_indices = np.argmin(distances, axis=1)
+    closest_indices: NDArray = np.argmin(distances, axis=1)
 
     # Initialize the clusters.
-    clusters = [Cluster(ID=i, depot=dpt,
-                        customers=[customers[n] for n, k in enumerate(closest_indices) if k == i])
-                for i, dpt in enumerate(depots)]
+    clusters: list[Cluster] = [
+        Cluster(ID=i, depot=dpt, customers=[
+            customers[n] for n, k in enumerate(closest_indices) if k == i
+        ]) for i, dpt in enumerate(depots)
+    ]
 
     if verbose:
         # Display the information.
@@ -110,11 +121,15 @@ def initialize_population(customers: list[Customer], n_vehicles: int,
     local_rng = default_rng(seed)
 
     # Extract all the customer IDs.
-    customer_ids = [cx.ID for cx in customers]
+    customer_ids: list[int] = [
+        cx.ID for cx in customers
+    ]
 
     # Create a list with "invalid" values.
-    invalid_genes = [-(px + 1)
-                     for px in range(len(customer_ids) * (n_vehicles - 1))]
+    invalid_genes: list[int] = [
+        -(px + 1)
+        for px in range(len(customer_ids) * (n_vehicles - 1))
+    ]
 
     # Create an initial valid chromosome.
     valid_chromosome = customer_ids + invalid_genes
@@ -128,8 +143,10 @@ def initialize_population(customers: list[Customer], n_vehicles: int,
         local_rng.shuffle(valid_chromosome)
 
         # Create a Chromosome and add it to the population.
-        population.append(Chromosome([Gene(value, lambda: None)
-                                      for value in valid_chromosome], np.nan, True))
+        population.append(Chromosome([
+            Gene(value, lambda: None)
+            for value in valid_chromosome
+        ]))
     # _end_for_
 
     return population
@@ -161,13 +178,13 @@ def evaluate_solution(individual: Chromosome, assignment: Cluster,
     n_customers = len(customers)
 
     # Reshape the solution array.
-    x_solution = np.reshape(individual.values(),
-                            (n_customers, n_vehicles))
+    x_solution: NDArray = np.reshape(individual.values(),
+                                     (n_customers, n_vehicles))
     # Stores the distance.
-    total_distance = 0.0
+    total_distance: float = 0.0
 
     # Stores the penalty.
-    total_penalty = 0
+    total_penalty: int = 0
 
     # Start computing the total cost.
     for i in range(n_vehicles):
@@ -190,13 +207,13 @@ def evaluate_solution(individual: Chromosome, assignment: Cluster,
         # _end_for_
 
         # Length of the i-th route.
-        n_stops = len(route)
+        n_stops: int = len(route)
 
         # The distance of a single route.
-        route_distance = 0.0
+        route_distance: float = 0.0
 
         # The demand of a single route.
-        route_demand = 0
+        route_demand: int = 0
 
         # Iterate through the route.
         for j, start_point in enumerate(route):
