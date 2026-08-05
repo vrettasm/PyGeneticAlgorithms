@@ -46,17 +46,19 @@ def clamp(x: Number,
 
 def _dominance_batch(sample_points: NDArray, eps_arr: NDArray) -> NDArray:
     """
-    Uses the dominance condition on the sample points to find
-    those that are on the Pareto front. It's using vectorized
-    (numpy optimized) code to compute the dominance.
+    Uses the dominance condition on the sample points to find those
+    that are on the Pareto front.
 
-    WARNING: This step is O(N^2 x D) in memory allocation.
+    Complexity:
+        - time:   O(N^2 * D)
+        - memory: O(N^2 * D)
 
-    :param sample_points: The points we want to find the Pareto
-                          front.
+    But, it is using vectorized (C-optimized) code to compute the dominance.
+
+    :param sample_points: The points we want to find the Pareto front.
     :param eps_arr: Threshold tolerance values (per objective).
 
-    :return: an array with the indices of the pareto samples.
+    :return: Boolean mask of shape (N), where True indicates Pareto-optimal.
     """
     # Subtract all points (from all other points).
     diff: NDArray = sample_points[:, None, :] - sample_points[None, :, :]
@@ -73,19 +75,17 @@ def _dominance_batch(sample_points: NDArray, eps_arr: NDArray) -> NDArray:
 
 def _dominance_loop(sample_points: NDArray, eps_arr: NDArray) -> NDArray:
     """
-    Uses the dominance condition on the sample points to find
-    those that are on the Pareto front. It is using a loop to
-    do that, and it's called when the size of the input array
-    exceeds 500MB in memory. This approach is safer in terms
-    of memory usage, but slower due to the loop.
+    Identify Pareto-optimal points using an epsilon-dominance rule
+    (maximization convention) by comparing all point pairs in loops.
 
-    NOTE: This function is O(N x D) in memory allocation.
+    Complexity:
+        - time:   O(N^2 * D)
+        - memory: O(D)
 
-    :param sample_points: The points we want to find the Pareto
-                          front.
-    :param eps_arr: Threshold tolerance values (per objective).
+    :param sample_points: Array of shape (N, D) containing objective values.
+    :param eps_arr: Array of shape (D) containing per-objective tolerances.
 
-    :return: an array with the indices of the pareto samples.
+    :return: Boolean array of shape (N), True for Pareto-optimal points.
     """
     # Get the number of sample points.
     n_points = sample_points.shape[0]
