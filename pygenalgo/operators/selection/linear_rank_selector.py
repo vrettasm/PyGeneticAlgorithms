@@ -35,14 +35,16 @@ class LinearRankSelector(SelectionOperator):
         # Call the super constructor with the provided initial value.
         super().__init__(selection_probability=select_probability)
 
-        # Ensure input is float.
-        # WARNING: A value error will be raised if cast fails.
-        eta = float(eta)
+        # Sanity check (correct type).
+        if not isinstance(eta, (float, int)) or isinstance(eta, bool):
+            raise TypeError(f"{self.__class__.__name__}: "
+                            f"Selection pressure must be a float, not {type(eta)}.")
+        # _end_if_
 
         # Sanity check (correct range).
         if not 1.0 <= eta <= 2.0:
             raise ValueError(f"{self.__class__.__name__}: "
-                             f"Selection pressure {eta} must be between 1.0 and 2.0.")
+                             f"Selection pressure {eta} must be in [1.0, 2.0].")
         # _end_if_
 
         # Store the pressure adjustable parameter.
