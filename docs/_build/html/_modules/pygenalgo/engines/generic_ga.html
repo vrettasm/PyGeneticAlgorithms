@@ -180,8 +180,95 @@
 <span class="sd">    The number of times that we will break the main evolution to allow</span>
 <span class="sd">    for chromosomes to migrate. This setting is used only when the option</span>
 <span class="sd">    allow_migration == True. Otherwise, is ignored.</span>
-<span class="sd">    &#39;&#39;&#39;</span></div>
+<span class="sd">    &#39;&#39;&#39;</span>
 
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_bool</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">var</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper method to check if a value is True or False.</span>
+
+<span class="sd">        :param name: variable name.</span>
+<span class="sd">        :param var: variable value.</span>
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> must be bool, &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">var</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="c1"># _end_def_</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_int_positive</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">var</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper method to check if a value is a positive integer.</span>
+
+<span class="sd">        :param name: variable name.</span>
+<span class="sd">        :param var: variable value.</span>
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Sanity check 1.</span>
+        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Sanity check 2.</span>
+        <span class="c1"># NOTE: In Python bool is a subclass of int!</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> must be int, &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">var</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="c1"># Sanity check 3.</span>
+        <span class="k">if</span> <span class="n">var</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> must be positive, &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="c1"># _end_def_</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_float_non_negative</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">var</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper method to check if a value is a non-negative float.</span>
+
+<span class="sd">        :param name: variable name.</span>
+<span class="sd">        :param var: variable value.</span>
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Sanity check 1.</span>
+        <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Sanity check 2.</span>
+        <span class="c1"># NOTE: In Python bool is a subclass of int!</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> must be float or int, &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">var</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="c1"># Sanity check 3.</span>
+        <span class="k">if</span> <span class="n">var</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> must be non-negative, &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="c1"># _end_def_</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Post initialization checks.</span>
+
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check bool parameters.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_bool</span><span class="p">(</span><span class="s2">&quot;elitism&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">elitism</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_bool</span><span class="p">(</span><span class="s2">&quot;shuffle&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_bool</span><span class="p">(</span><span class="s2">&quot;verbose&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_bool</span><span class="p">(</span><span class="s2">&quot;parallel&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_bool</span><span class="p">(</span><span class="s2">&quot;correction&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">correction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_bool</span><span class="p">(</span><span class="s2">&quot;adapt_probs&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">adapt_probs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_bool</span><span class="p">(</span><span class="s2">&quot;allow_migration&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">allow_migration</span><span class="p">)</span>
+
+        <span class="c1"># Check integer parameters.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_int_positive</span><span class="p">(</span><span class="s2">&quot;epochs&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_int_positive</span><span class="p">(</span><span class="s2">&quot;n_periods&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_periods</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_int_positive</span><span class="p">(</span><span class="s2">&quot;f_max_eval&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_max_eval</span><span class="p">)</span>
+
+        <span class="c1"># Check float parameters.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_float_non_negative</span><span class="p">(</span><span class="s2">&quot;f_tol&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_tol</span><span class="p">)</span></div>
+
+    <span class="c1"># _end_def_</span>
 <span class="c1"># _end_class_</span>
 
 <span class="c1"># Public interface.</span>

@@ -122,7 +122,9 @@
 <div class="viewcode-block" id="np_pareto_front_index">
 <a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.np_pareto_front_index">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">np_pareto_front_index</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">,</span>
-                          <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;max&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">:</span>
+                          <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span>
+                          <span class="n">rel_eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-6</span><span class="p">,</span>
+                          <span class="n">exclude_duplicates</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fast (numpy - vectorized) function that calculates</span>
 <span class="sd">    the Pareto optimal front from a given input points</span>
@@ -136,6 +138,11 @@
 
 <span class="sd">    :param mode: &quot;max&quot; (maximize all objective) or</span>
 <span class="sd">                 &quot;min&quot; (minimize all objective).</span>
+
+<span class="sd">    :param rel_eps: relative eps threshold tolerance.</span>
+
+<span class="sd">    :param exclude_duplicates: whether to exclude duplicate</span>
+<span class="sd">                               points.</span>
 
 <span class="sd">    :return: array of indexes (from the points that lie on</span>
 <span class="sd">             the Pareto front).</span>
@@ -154,18 +161,29 @@
     <span class="c1"># maximize in all objectives function values.</span>
     <span class="n">x_points</span> <span class="o">=</span> <span class="n">points</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;max&quot;</span> <span class="k">else</span> <span class="o">-</span><span class="n">points</span>
 
-    <span class="c1"># Remove duplicate points to speed up the</span>
-    <span class="c1"># routine and keep track of their indices.</span>
-    <span class="n">unique_points</span><span class="p">,</span> <span class="n">unique_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
-        <span class="n">x_points</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span>
+    <span class="c1"># Check for deduplicates.</span>
+    <span class="k">if</span> <span class="n">exclude_duplicates</span><span class="p">:</span>
+
+        <span class="c1"># Remove duplicate points to speed up the</span>
+        <span class="c1"># routine and keep track of their indices.</span>
+        <span class="n">sample_points</span><span class="p">,</span> <span class="n">sample_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+            <span class="n">x_points</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Keep all points in the Pareto calculation.</span>
+        <span class="n">sample_points</span> <span class="o">=</span> <span class="n">x_points</span>
+        <span class="n">sample_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="c1"># _end_if_</span>
 
     <span class="c1"># Get the dimensions of unique points.</span>
-    <span class="n">n_points</span><span class="p">,</span> <span class="n">n_dims</span> <span class="o">=</span> <span class="n">unique_points</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">n_points</span><span class="p">,</span> <span class="n">n_dims</span> <span class="o">=</span> <span class="n">sample_points</span><span class="o">.</span><span class="n">shape</span>
 
-    <span class="c1"># Rough calculation of occupied memory.</span>
-    <span class="n">memory_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span>  <span class="p">(</span><span class="n">n_points</span> <span class="o">*</span> <span class="n">n_points</span> <span class="o">*</span> <span class="n">n_dims</span> <span class="o">*</span>
-                          <span class="n">unique_points</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">itemsize</span><span class="p">)</span>
+    <span class="c1"># Compute an eps value per objective: (n_dims,).</span>
+    <span class="n">eps_arr</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">rel_eps</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sample_points</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Rough calculation of sample_points memory.</span>
+    <span class="n">memory_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_points</span> <span class="o">*</span> <span class="n">n_points</span> <span class="o">*</span> <span class="n">n_dims</span> <span class="o">*</span>
+                         <span class="n">sample_points</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">itemsize</span><span class="p">)</span>
 
     <span class="c1"># Compare it against ~500MB.</span>
     <span class="k">if</span> <span class="n">memory_bytes</span> <span class="o">&lt;=</span> <span class="mi">500_000_000</span><span class="p">:</span>
@@ -174,12 +192,14 @@
         <span class="c1">#</span>
 
         <span class="c1"># Subtract all points (from all other points).</span>
-        <span class="n">diff</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">unique_points</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">unique_points</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+        <span class="n">diff</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">sample_points</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">sample_points</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+
+        <span class="c1"># Covert eps to [1, 1, n_dims].</span>
+        <span class="n">eps_batch</span> <span class="o">=</span> <span class="n">eps_arr</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
 
         <span class="c1"># This condition is for maximization problems.</span>
-        <span class="n">strictly_better</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">diff</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> \
-                                   <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">diff</span> <span class="o">&gt;</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-
+        <span class="n">strictly_better</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">diff</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">eps_batch</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> \
+                                   <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">diff</span> <span class="o">&gt;</span> <span class="n">eps_batch</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
         <span class="c1"># Get the pareto points mask.</span>
         <span class="n">is_pareto</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">strictly_better</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -187,45 +207,60 @@
         <span class="c1"># WARNING: This step is O(N x D) in memory allocation,</span>
         <span class="c1">#          but slow due to the loop!</span>
 
-        <span class="c1"># Initialize all unique points as Pareto optimal.</span>
+        <span class="c1"># For the loop branch eps [1, n_dims].</span>
+        <span class="n">eps_loop</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">eps_arr</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+
+        <span class="c1"># Initialize all sample points as Pareto optimal.</span>
         <span class="n">is_pareto</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
-        <span class="c1"># Check point by point.</span>
+        <span class="c1"># Check all pairs once, bidirectionally.</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_points</span><span class="p">):</span>
-            <span class="c1"># If i-th point is already dominated,</span>
-            <span class="c1"># no need to check what it dominates.</span>
+
+            <span class="c1"># If i-th point is already dominated.</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pareto</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="c1"># Skip.</span>
                 <span class="k">continue</span>
 
-            <span class="c1"># Only compare against points that haven&#39;t been dominated</span>
-            <span class="c1"># yet and are further down the list to avoid duplicate checks.</span>
-            <span class="n">remaining_indices</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">is_pareto</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">remaining_indices</span> <span class="o">=</span> <span class="n">remaining_indices</span><span class="p">[</span><span class="n">remaining_indices</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">]</span>
+            <span class="c1"># Compare i against all later points (j &gt; i).</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_points</span><span class="p">):</span>
 
-            <span class="c1"># Quick exit.</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">remaining_indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">break</span>
+                <span class="c1"># If j is already dominated.</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_pareto</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                    <span class="c1"># Skip.</span>
+                    <span class="k">continue</span>
 
-            <span class="c1"># Compare the i-th point against the surviving future points.</span>
-            <span class="n">diff</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">unique_points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">unique_points</span><span class="p">[</span><span class="n">remaining_indices</span><span class="p">]</span>
+                <span class="c1"># Compute difference once (reuse for both checks).</span>
+                <span class="n">diff</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">sample_points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">sample_points</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
 
-            <span class="c1"># Find which of the remaining points are dominated</span>
-            <span class="c1"># by current point i.</span>
-            <span class="n">dominating_others</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">diff</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span>\
-                                         <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">diff</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="c1"># Mark them as False.</span>
-            <span class="n">is_pareto</span><span class="p">[</span><span class="n">remaining_indices</span><span class="p">[</span><span class="n">dominating_others</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="c1"># Check if i dominates j.</span>
+                <span class="n">i_dominates_j</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">diff</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">eps_loop</span><span class="p">)</span> <span class="o">&amp;</span>
+                                 <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">diff</span> <span class="o">&gt;</span> <span class="n">eps_loop</span><span class="p">))</span>
+
+                <span class="c1"># Check if j dominates i (reverse the comparison).</span>
+                <span class="n">j_dominates_i</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="o">-</span><span class="n">diff</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">eps_loop</span><span class="p">)</span> <span class="o">&amp;</span>
+                                 <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="o">-</span><span class="n">diff</span> <span class="o">&gt;</span> <span class="n">eps_loop</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="n">i_dominates_j</span><span class="p">:</span>
+                    <span class="c1"># Flag for skipping.</span>
+                    <span class="n">is_pareto</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="k">elif</span> <span class="n">j_dominates_i</span><span class="p">:</span>
+                    <span class="c1"># Flag for skipping.</span>
+                    <span class="n">is_pareto</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">break</span>
+        <span class="c1"># _end_for_</span>
     <span class="c1"># _end_if_</span>
 
     <span class="c1"># Return the indexes.</span>
-    <span class="k">return</span> <span class="n">unique_indices</span><span class="p">[</span><span class="n">is_pareto</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="n">sample_indices</span><span class="p">[</span><span class="n">is_pareto</span><span class="p">]</span></div>
 
 <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="np_pareto_front">
 <a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.np_pareto_front">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">np_pareto_front</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">,</span>
-                    <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;max&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">np_pareto_front</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span>
+                    <span class="n">rel_eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-6</span><span class="p">,</span>
+                    <span class="n">exclude_duplicates</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fast (numpy - vectorized) function that calculates</span>
 <span class="sd">    the Pareto optimal front points from a given input</span>
@@ -239,17 +274,22 @@
 <span class="sd">    :param mode: &quot;max&quot; (maximize all objective) or</span>
 <span class="sd">                 &quot;min&quot; (minimize all objective).</span>
 
+<span class="sd">    :param rel_eps: relative eps threshold tolerance.</span>
+
+<span class="sd">    :param exclude_duplicates: whether to exclude duplicate</span>
+<span class="sd">                               points.</span>
+
 <span class="sd">    NOTE: Its memory complexity grows quadratically</span>
 <span class="sd">    with the number of points in the NDArray: O(N^2)!</span>
 
 <span class="sd">    :return: array of points that lie on the Pareto front.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># First get the indexes of the pareto front points,</span>
-    <span class="c1"># using the helper function.</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">np_pareto_front_index</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+    <span class="c1"># Get the indices of the points that lie on the pareto front.</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np_pareto_front_index</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">rel_eps</span><span class="o">=</span><span class="n">rel_eps</span><span class="p">,</span>
+                                <span class="n">exclude_duplicates</span><span class="o">=</span><span class="n">exclude_duplicates</span><span class="p">)</span>
 
-    <span class="c1"># Then return the actual points.</span>
+    <span class="c1"># Return the actual points.</span>
     <span class="k">return</span> <span class="n">points</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span></div>
 
 <span class="c1"># _end_def_</span>
