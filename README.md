@@ -59,6 +59,7 @@ The current implementation provides (out of the box) a wide variety of genetic o
   - [Partially Mapped Crossover (PMX)](pygenalgo/operators/crossover/partially_mapped_crossover.py)
   - [Position Based Crossover (POS)](pygenalgo/operators/crossover/position_based_crossover.py)
   - [Blend-α Crossover (BLX-α)*](pygenalgo/operators/crossover/blend_crossover.py)
+  - [Simulated Binary Crossover (SBX)*](pygenalgo/operators/crossover/simulated_binary_crossover.py)
 
 - **Mutation operators**:
   - [Random Mutator](pygenalgo/operators/mutation/random_mutator.py)
