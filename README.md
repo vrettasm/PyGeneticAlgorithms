@@ -172,7 +172,7 @@ Some optimization examples on how to use these algorithms:
 | [Sphere](examples/sphere.ipynb)                               |    M (=5)     |       1        |       no        |   single   |
 | [Rastrigin](examples/rastrigin.ipynb)                         |    M (=5)     |       1        |       no        |   single   |
 | [Rosenbrock](examples/rosenbrock_on_a_disk.ipynb)             |    M (=2)     |       1        |        1        |   single   |
-| [Binh & Korn](examples/binh_and_korn_multiobjective.ipynb)    |    M (=2)     |       2        |        2        |   single   |
+| [Binh & Korn](examples/binh_and_korn_multiobjective.ipynb)    |    M (=2)     |       2        |        2        |   Pareto   |
 | [Sphere (parallel)](examples/sphere_in_parallel.ipynb)        |    M (=10)    |       1        |       no        |   single   |
 | [Easom (parallel)](examples/easom_in_parallel.ipynb)          |    M (=2)     |       1        |       no        |   single   |
 | [Traveling Salesman](examples/tsp.ipynb)                      |    M (=10)    |       1        |       yes       |   single   |
@@ -182,9 +182,10 @@ Some optimization examples on how to use these algorithms:
 | [Shubert](examples/shubert_2D.ipynb)                          |       2       |       1        |       no        |  multiple  |
 | [Gaussian Mixture](examples/gaussian_mixture_2D.ipynb)        |       2       |       1        |       no        |  multiple  |
 | [Multi-Depot VRP](examples/mdvrp/mdvrp_with_clustering.ipynb) |       M       |       1        |       yes       |  multiple  |
-| [MOO: Binh & Korn](examples/moo_binh_and_korn.ipynb)          |    M (=2)     |       2        |        2        |   single   |
-| [MOO: Tanaka](examples/moo_tanaka.ipynb)                      |    M (=2)     |       2        |        2        |   single   |
-| [MOO: Osyczka & Kundu](examples/moo_osyczka_kundu.ipynb)      |       6       |       2        |        6        |   single   |
+| [MOO: Binh & Korn](examples/moo_binh_and_korn.ipynb)          |    M (=2)     |       2        |        2        |   Pareto   |
+| [MOO: Tanaka](examples/moo_tanaka.ipynb)                      |    M (=2)     |       2        |        2        |   Pareto   |
+| [MOO: Osyczka & Kundu](examples/moo_osyczka_kundu.ipynb)      |       6       |       2        |        6        |   Pareto   |
+| [MOO: DTLZ3](examples/moo_dtlz3.ipynb)                        |       N       |       3        |       no        |   Pareto   |
 
 Constraint optimization problems can be easily addressed using the [Penalty Method](https://en.wikipedia.org/wiki/Penalty_method).
 
