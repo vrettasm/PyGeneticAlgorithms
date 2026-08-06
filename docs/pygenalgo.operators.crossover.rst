@@ -76,6 +76,14 @@ pygenalgo.operators.crossover.blend\_crossover module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.crossover.simulated\_binary\_crossover module
+-----------------------------------------------------------------
+
+.. automodule:: pygenalgo.operators.crossover.simulated_binary_crossover
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
