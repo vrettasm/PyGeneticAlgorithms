@@ -41,17 +41,17 @@ class UniformCrossover(CrossoverOperator):
         if (parent1 != parent2) and self.is_operator_applicable():
 
             # Create the 1st offspring genome list.
-            genome_1: list[Gene] = [
+            child_1: list[Gene] = [
                 gene.clone() for gene in parent1.genome
             ]
 
             # Create the 2nd offspring genome list.
-            genome_2: list[Gene] = [
+            child_2: list[Gene] = [
                 gene.clone() for gene in parent2.genome
             ]
 
             # Find the minimum length of the two chromosomes.
-            min_length: int = min(len(genome_1), len(genome_2))
+            min_length: int = min(len(child_1), len(child_2))
 
             # Generate uniform random numbers and convert them to bool.
             swap_bool_flag = self.rng.random(size=min_length) > 0.5
@@ -59,23 +59,18 @@ class UniformCrossover(CrossoverOperator):
             # Swap the genes according to the probability.
             for i, swap_flag in enumerate(swap_bool_flag):
                 if swap_flag:
-                    genome_1[i], genome_2[i] = genome_2[i], genome_1[i]
+                    child_1[i], child_2[i] = child_2[i], child_1[i]
             # _end_for_
-
-            # Create two NEW offsprings.
-            child1 = Chromosome(genome_1)
-            child2 = Chromosome(genome_2)
 
             # Increase the crossover counter.
             self.inc_counter()
-        else:
-            # Each child points to a clone of a single parent.
-            child1 = parent1.clone()
-            child2 = parent2.clone()
+
+            # Return two new offsprings.
+            return Chromosome(child_1), Chromosome(child_2)
         # _end_if_
 
-        # Return the two offsprings.
-        return child1, child2
+        # Return two cloned offsprings.
+        return parent1.clone(), parent2.clone()
     # _end_def_
 
 # _end_class_

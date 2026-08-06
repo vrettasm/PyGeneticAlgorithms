@@ -54,19 +54,15 @@ class MetaCrossover(CrossoverOperator):
             # a crossover operator.
             idx: int = self.rng.integers(n_operators, dtype=int)
 
-            # Call its crossover method.
-            child1, child2 = self.items[idx].crossover(parent1, parent2)
-
             # Increase the crossover counter.
             self.inc_counter()
-        else:
-            # Otherwise each child points to a clone of a single parent.
-            child1 = parent1.clone()
-            child2 = parent2.clone()
+
+            # Call its crossover method.
+            return self.items[idx].crossover(parent1, parent2)
         # _end_if_
 
         # Return the two offsprings.
-        return child1, child2
+        return parent1.clone(), parent2.clone()
     # _end_def_
 
     @property

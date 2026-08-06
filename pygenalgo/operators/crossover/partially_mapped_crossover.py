@@ -45,8 +45,8 @@ class PartiallyMappedCrossover(CrossoverOperator):
 
             # Initialize the genome lists for the new
             # chromosomes to 'None'.
-            genome_1: list = number_of_genes * [None]
-            genome_2: list = number_of_genes * [None]
+            child_1: list = number_of_genes * [None]
+            child_2: list = number_of_genes * [None]
 
             # Select two random (distinct) crossover points.
             i, j = two_indices_fast(self.rng, number_of_genes, in_order=True)
@@ -56,13 +56,13 @@ class PartiallyMappedCrossover(CrossoverOperator):
 
             # Copy the relevant part of the segment.
             for k in id_segment:
-                genome_1[k] = parent1.genome[k].clone()
-                genome_2[k] = parent2.genome[k].clone()
+                child_1[k] = parent1.genome[k].clone()
+                child_2[k] = parent2.genome[k].clone()
             # _end_for_
 
             # Create auxiliary Sets for faster membership check.
-            segment_of_genome_1 = set(genome_1[i:j])
-            segment_of_genome_2 = set(genome_2[i:j])
+            segment_of_genome_1 = set(child_1[i:j])
+            segment_of_genome_2 = set(child_2[i:j])
 
             # Start building the offsprings.
             for n, (gene_x, gene_y) in enumerate(zip(parent2.genome[i:j],
@@ -76,7 +76,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
                     # Repeat until you find the right position.
                     while not found:
                         # Look for the position of gene[idx] in parent2.
-                        x_pos = parent2.genome.index(genome_1[idx])
+                        x_pos = parent2.genome.index(child_1[idx])
 
                         # If the position is inside the segment update
                         # the index and repeat the process.
@@ -84,7 +84,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
                             idx = x_pos
                         else:
                             # Copy the gene.
-                            genome_1[x_pos] = gene_x.clone()
+                            child_1[x_pos] = gene_x.clone()
 
                             # Break the loop.
                             found = True
@@ -98,7 +98,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
                     # Repeat until you find the right position.
                     while not found:
                         # Look for the position of gene[idx] in parent1.
-                        y_pos = parent1.genome.index(genome_2[idy])
+                        y_pos = parent1.genome.index(child_2[idy])
 
                         # If the position is inside the segment update
                         # the index and repeat the process.
@@ -106,7 +106,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
                             idy = y_pos
                         else:
                             # Copy the gene.
-                            genome_2[y_pos] = gene_y.clone()
+                            child_2[y_pos] = gene_y.clone()
 
                             # Break the loop.
                             found = True
@@ -117,28 +117,23 @@ class PartiallyMappedCrossover(CrossoverOperator):
             for k, (gene_a, gene_b) in enumerate(zip(parent1.genome,
                                                      parent2.genome)):
                 # Check if the gene exists.
-                if gene_a not in genome_2:
-                    genome_2[k] = gene_a.clone()
+                if gene_a not in child_2:
+                    child_2[k] = gene_a.clone()
 
                 # Check if the gene exists.
-                if gene_b not in genome_1:
-                    genome_1[k] = gene_b.clone()
+                if gene_b not in child_1:
+                    child_1[k] = gene_b.clone()
             # _end_for_
-
-            # Create two NEW offsprings.
-            child1 = Chromosome(genome_1)
-            child2 = Chromosome(genome_2)
 
             # Increase the crossover counter.
             self.inc_counter()
-        else:
-            # Each child points to a clone of a single parent.
-            child1 = parent1.clone()
-            child2 = parent2.clone()
+
+            # Return two new offsprings.
+            return Chromosome(child_1), Chromosome(child_2)
         # _end_if_
 
-        # Return the two offsprings.
-        return child1, child2
+        # Return two cloned offsprings.
+        return parent1.clone(), parent2.clone()
     # _end_def_
 
 # _end_class_

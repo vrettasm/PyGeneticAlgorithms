@@ -47,32 +47,26 @@ class OrderCrossover(CrossoverOperator):
             used_in_parent2 = set(parent2.genome[:loc2])
 
             # Construct 1st offspring genome list at locus.
-            genome_1: list[Gene] = [
+            child_1: list[Gene] = [
                 gene.clone() for gene in parent1.genome[:loc1] +
                                          [x for x in parent2 if x not in used_in_parent1]
             ]
 
             # Construct 2nd offspring genome list at locus.
-            genome_2: list[Gene] = [
+            child_2: list[Gene] = [
                 gene.clone() for gene in parent2.genome[:loc2] +
                                          [y for y in parent1 if y not in used_in_parent2]
             ]
 
-            # Create two NEW offsprings.
-            child1 = Chromosome(genome_1)
-            child2 = Chromosome(genome_2)
-
             # Increase the crossover counter.
             self.inc_counter()
-        else:
-            # Otherwise each child will point
-            # to a deepcopy of a single parent.
-            child1 = parent1.clone()
-            child2 = parent2.clone()
+
+            # Return two new offsprings.
+            return Chromosome(child_1), Chromosome(child_2)
         # _end_if_
 
-        # Return the two offsprings.
-        return child1, child2
+        # Return two cloned offsprings.
+        return parent1.clone(), parent2.clone()
     # _end_def_
 
 # _end_class_

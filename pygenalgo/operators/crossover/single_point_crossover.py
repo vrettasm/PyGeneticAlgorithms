@@ -47,32 +47,26 @@ class SinglePointCrossover(CrossoverOperator):
             idx: int = self.rng.integers(0, high=min_length, dtype=int)
 
             # Construct 1st offspring genome list at 'idx'.
-            genome_1: list[Gene] = [
+            child_1: list[Gene] = [
                 x.clone() for x in parent2.genome[:idx] +
                                    parent1.genome[idx:]
             ]
 
             # Construct 2nd offspring genome list at 'idx'.
-            genome_2: list[Gene] = [
+            child_2: list[Gene] = [
                 y.clone() for y in parent1.genome[:idx] +
                                    parent2.genome[idx:]
             ]
 
-            # Create two NEW offsprings.
-            child1 = Chromosome(genome_1)
-            child2 = Chromosome(genome_2)
-
             # Increase the crossover counter.
             self.inc_counter()
-        else:
-            # Otherwise each child will point
-            # to a deepcopy of a single parent.
-            child1 = parent1.clone()
-            child2 = parent2.clone()
+
+            # Return two new offsprings.
+            return Chromosome(child_1), Chromosome(child_2)
         # _end_if_
 
-        # Return the two offsprings.
-        return child1, child2
+        # Return two cloned offsprings.
+        return parent1.clone(), parent2.clone()
     # _end_def_
 
 # _end_class_

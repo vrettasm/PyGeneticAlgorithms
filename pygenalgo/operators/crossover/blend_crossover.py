@@ -88,10 +88,10 @@ class BlendCrossover(CrossoverOperator):
             len_2: int = len(parent2.genome)
 
             # Preallocate 1st child's genome.
-            genome_1: list = [None] * len_1
+            child_1: list = [None] * len_1
 
             # Preallocate 2nd child's genome.
-            genome_2: list = [None] * len_2
+            child_2: list = [None] * len_2
 
             # Find the minimum length of the two chromosomes.
             min_length: int = min(len_1, len_2)
@@ -149,24 +149,19 @@ class BlendCrossover(CrossoverOperator):
                 gene_function = parent_1[i].func
 
                 # Update the genome of the new offsprings with new Genes.
-                genome_1[i] = Gene(datum=new_value_1, func=gene_function)
-                genome_2[i] = Gene(datum=new_value_2, func=gene_function)
+                child_1[i] = Gene(datum=new_value_1, func=gene_function)
+                child_2[i] = Gene(datum=new_value_2, func=gene_function)
             # _end_for_
-
-            # Create two NEW offsprings.
-            child1 = Chromosome(genome_1)
-            child2 = Chromosome(genome_2)
 
             # Increase the crossover counter.
             self.inc_counter()
-        else:
-            # Each child points to a clone of a single parent.
-            child1 = parent1.clone()
-            child2 = parent2.clone()
+
+            # Return two new offsprings.
+            return Chromosome(child_1), Chromosome(child_2)
         # _end_if_
 
-        # Return the two offsprings.
-        return child1, child2
+        # Return two cloned offsprings.
+        return parent1.clone(), parent2.clone()
     # _end_def_
 
 # _end_class_
