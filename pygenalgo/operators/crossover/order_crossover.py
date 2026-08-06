@@ -1,7 +1,7 @@
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.utilities import two_indices_fast
-from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Parents)
+from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Offsprings)
 
 
 class OrderCrossover(CrossoverOperator):
@@ -24,7 +24,7 @@ class OrderCrossover(CrossoverOperator):
         super().__init__(crossover_probability=crossover_probability)
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Parents:
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Offsprings:
         """
         Perform the crossover operation on the two input parent chromosomes.
 
