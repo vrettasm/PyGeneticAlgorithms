@@ -147,8 +147,8 @@ class SimulatedBinaryCrossover(CrossoverOperator):
                 inv_eta_1: float = 1.0 / eta
 
                 # Compute separate alpha values for balancing distributions.
-                alpha1 = 2.0 - (beta1 ** -eta_1)
-                alpha2 = 2.0 - (beta2 ** -eta_1)
+                alpha1: float = 2.0 - (beta1 ** -eta_1)
+                alpha2: float = 2.0 - (beta2 ** -eta_1)
 
                 # Draw one random number to generate BOTH children.
                 rand = self.rng.random()
