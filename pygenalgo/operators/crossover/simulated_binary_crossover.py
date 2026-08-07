@@ -139,8 +139,8 @@ class SimulatedBinaryCrossover(CrossoverOperator):
                 xu: float = x_upper[i]
 
                 # Compute both distance factors to lower and upper bounds.
-                beta1 = 1.0 + (2.0 * (x1 - xl) / denominator)
-                beta2 = 1.0 + (2.0 * (xu - x2) / denominator)
+                beta1: float = 1.0 + (2.0 * (x1 - xl) / denominator)
+                beta2: float = 1.0 + (2.0 * (xu - x2) / denominator)
 
                 # Precompute repeated variables once.
                 eta_1: float = eta + 1.0
