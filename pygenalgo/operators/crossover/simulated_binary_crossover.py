@@ -179,12 +179,9 @@ class SimulatedBinaryCrossover(CrossoverOperator):
                 # Extract the gene function.
                 gene_function = child_1[i].func
 
-                if not swapped:
-                    child_1[i] = Gene(datum=c1, func=gene_function)
-                    child_2[i] = Gene(datum=c2, func=gene_function)
-                else:
-                    child_1[i] = Gene(datum=c2, func=gene_function)
-                    child_2[i] = Gene(datum=c1, func=gene_function)
+                # Update children's genomes.
+                child_1[i] = Gene(datum=c2 if swapped else c1, func=gene_function)
+                child_2[i] = Gene(datum=c1 if swapped else c2, func=gene_function)
             # _end_for_
 
             # Increase the crossover counter.
