@@ -1,6 +1,9 @@
+""" Pareto tournament selector module. """
+# Third party imports.
 import numpy as np
 from numpy.typing import NDArray
 
+# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.utilities import np_pareto_front_index
 from pygenalgo.operators.genetic_operator import increase_counter
@@ -83,7 +86,7 @@ class ParetoTournamentSelector(SelectionOperator):
         # _end_for_
 
         return [
-            # Ensure 'k' is passed as integer.
+            # Ensure 'k' is used as integer.
             population[int(k)] for k in chosen
         ]
     # _end_def_

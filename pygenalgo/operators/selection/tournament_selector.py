@@ -1,8 +1,11 @@
+""" Tournament selector module. """
 from operator import attrgetter
 
+# Third party code imports.
 from numpy.typing import NDArray
 from numpy import array as np_array
 
+# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator

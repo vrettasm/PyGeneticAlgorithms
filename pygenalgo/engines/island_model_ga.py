@@ -1,3 +1,4 @@
+""" Island model GA module. """
 import time
 from math import isclose
 from operator import attrgetter

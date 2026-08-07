@@ -1,8 +1,10 @@
+"""  Stochastic universal selector  module. """
 from typing import Generator
 from math import fsum, isclose
 from bisect import bisect_left
 from itertools import accumulate
 
+# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import (SelectionOperator,

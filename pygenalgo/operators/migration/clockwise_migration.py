@@ -1,5 +1,7 @@
+""" Clockwise migration module. """
 from operator import attrgetter
 
+# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.auxiliary import SubPopulation
 from pygenalgo.operators.migration.migration_operator import MigrationOperator

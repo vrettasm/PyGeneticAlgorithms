@@ -1,3 +1,5 @@
+""" Swap mutator module. """
+# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.utilities import two_indices_fast
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator

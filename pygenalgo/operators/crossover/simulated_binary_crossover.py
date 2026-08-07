@@ -1,9 +1,12 @@
+""" Simulated binary crossover (SBX) operator module. """
 from math import fabs, isclose
 
+# Third party imports.
 from numpy import asarray
 from numpy import any as np_any
 from numpy.typing import ArrayLike, NDArray
 
+# Custom code imports.
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Offsprings)

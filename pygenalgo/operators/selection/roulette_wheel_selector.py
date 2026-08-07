@@ -1,4 +1,7 @@
+""" Roulette wheel selection module. """
 from math import fsum, isclose
+
+# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import (SelectionOperator,
@@ -9,15 +12,15 @@ class RouletteWheelSelector(SelectionOperator):
     """
     Description:
 
-        Roulette Wheel Selection employs a probabilistic mechanism where
+        Roulette wheel selection employs a probabilistic mechanism where
         individuals are selected based on their fitness relative to the
         entire population. Each individual receives a slice of a wheel
         proportional to its fitness, similar to a casino roulette, where
         a random number determines the selected individual. This method
-        encourages selection of fitter individuals while allowing lower-fitness
-        individuals a chance to contribute. While effective, it can lead to
-        premature convergence if the population's fitness is skewed, often
-        referred to as the "selection pressure."
+        encourages selection of fitter individuals while allowing lower
+        fitness individuals a chance to contribute. While effective, it
+        can lead to premature convergence if the population's fitness is
+        skewed, often referred to as the "selection pressure."
 
     """
 

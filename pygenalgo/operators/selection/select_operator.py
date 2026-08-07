@@ -1,4 +1,7 @@
+""" Selection operator module. """
 from math import fabs, isclose
+
+# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import GeneticOperator
 

@@ -1,3 +1,4 @@
+""" Genetic Operator module. """
 from threading import Lock
 from functools import wraps
 from typing import Any, Optional

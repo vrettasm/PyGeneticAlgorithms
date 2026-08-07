@@ -1,3 +1,5 @@
+""" Random mutator module. """
+# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 

@@ -1,3 +1,4 @@
+""" Standard GA model module. """
 import time
 from math import isclose
 from typing import Optional

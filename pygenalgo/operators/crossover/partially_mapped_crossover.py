@@ -1,3 +1,5 @@
+""" Partially mapped crossover (PMX) operator module. """
+# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.utilities import two_indices_fast
 from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Offsprings)

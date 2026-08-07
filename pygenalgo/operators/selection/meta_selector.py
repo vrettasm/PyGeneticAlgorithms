@@ -1,8 +1,10 @@
+"""  Meta-selector module. """
+
+# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
-from pygenalgo.operators.selection.select_operator import SelectionOperator
-
 from pygenalgo.operators.selection.random_selector import RandomSelector
+from pygenalgo.operators.selection.select_operator import SelectionOperator
 from pygenalgo.operators.selection.tournament_selector import TournamentSelector
 from pygenalgo.operators.selection.linear_rank_selector import LinearRankSelector
 from pygenalgo.operators.selection.roulette_wheel_selector import RouletteWheelSelector

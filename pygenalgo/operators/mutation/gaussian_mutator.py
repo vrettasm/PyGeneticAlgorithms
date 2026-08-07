@@ -1,6 +1,9 @@
+""" Gaussian mutator module. """
+# Third party imports.
 import numpy as np
 from numpy.typing import NDArray, ArrayLike
 
+# Custom code imports.
 from pygenalgo.utils.utilities import clamp
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator

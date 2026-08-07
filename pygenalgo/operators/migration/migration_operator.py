@@ -1,3 +1,5 @@
+""" Migration operator module. """
+# Custom code imports.
 from pygenalgo.utils.auxiliary import SubPopulation
 from pygenalgo.operators.genetic_operator import GeneticOperator
 

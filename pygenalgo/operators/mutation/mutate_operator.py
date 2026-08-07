@@ -1,3 +1,5 @@
+""" Mutation operator module. """
+# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import GeneticOperator
 

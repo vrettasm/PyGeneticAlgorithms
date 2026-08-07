@@ -1,6 +1,9 @@
+""" Pareto front selector module. """
+# Third party imports.
 import numpy as np
 from numpy.typing import NDArray
 
+# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.utilities import np_pareto_front_index
 from pygenalgo.operators.genetic_operator import increase_counter

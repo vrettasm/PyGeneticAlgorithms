@@ -1,3 +1,5 @@
+""" Order crossover (OX1) operator module. """
+# Custom code imports.
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.utilities import two_indices_fast

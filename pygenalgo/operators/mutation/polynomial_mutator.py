@@ -1,7 +1,10 @@
+""" Polynomial mutator (PM-eta) module. """
+# Third party imports.
 from numpy import asarray
 from numpy import any as np_any
 from numpy.typing import ArrayLike
 
+# Custom code imports.
 from pygenalgo.utils.utilities import clamp
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator

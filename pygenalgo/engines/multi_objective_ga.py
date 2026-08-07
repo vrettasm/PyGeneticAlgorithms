@@ -1,3 +1,4 @@
+""" Multi-Objective GA model module. """
 import time
 from typing import Optional
 

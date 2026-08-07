@@ -1,3 +1,5 @@
+""" Meta-mutator module. """
+# Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.mutation.swap_mutator import SwapMutator
 from pygenalgo.operators.mutation.random_mutator import RandomMutator

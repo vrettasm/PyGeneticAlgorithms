@@ -1,8 +1,11 @@
+""" Neighborhood selector module. """
 from operator import attrgetter
 
+# Third party import.
 import numpy as np
 from numpy.typing import NDArray
 
+# Custom code imports.
 from pygenalgo.utils.utilities import np_cdist
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
@@ -13,7 +16,7 @@ class NeighborhoodSelector(SelectionOperator):
     """
     Description:
 
-        Neighborhood Selection focuses on leveraging local relationships within
+        Neighborhood selection focuses on leveraging local relationships within
         the population to guide the selection process. Unlike global methods it
         emphasizes individuals that are closely related in the solution space.
         This operator selects candidates based on their proximity, fostering local
