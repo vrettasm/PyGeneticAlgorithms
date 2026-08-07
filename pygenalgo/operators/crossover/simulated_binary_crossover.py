@@ -127,7 +127,7 @@ class SimulatedBinaryCrossover(CrossoverOperator):
 
                 # Compute the difference between the
                 # two gene values.
-                denominator: float = (x2 - x1)
+                denominator: float = x2 - x1
 
                 # Make the condition scale aware.
                 scale = max(1.0, abs(x1), abs(x2))
