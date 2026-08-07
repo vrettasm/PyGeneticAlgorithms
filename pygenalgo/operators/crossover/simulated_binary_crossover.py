@@ -151,7 +151,7 @@ class SimulatedBinaryCrossover(CrossoverOperator):
                 alpha2: float = 2.0 - (beta2 ** -eta_1)
 
                 # Draw one random number to generate BOTH children.
-                rand = self.rng.random()
+                rand: float = self.rng.random()
 
                 # Sample beta_q1 based on lower bound proximity.
                 if rand <= (1.0 / alpha1):
