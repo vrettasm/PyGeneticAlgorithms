@@ -5,7 +5,7 @@ with open("README.md", encoding="utf8") as readme_file:
 
 setup(
     name='pygenalgo',
-    version='2.1.1',
+    version='2.1.0',
     author='Michalis Vrettas, PhD',
     author_email='michail.vrettas@gmail.com',
     description='Genetic Algorithms toolbox in Python3',
