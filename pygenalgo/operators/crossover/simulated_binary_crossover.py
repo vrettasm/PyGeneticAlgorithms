@@ -135,7 +135,6 @@ class SimulatedBinaryCrossover(CrossoverOperator):
                 xl: float = x_lower[i]
                 xu: float = x_upper[i]
 
-                # Local bounds.
                 # Compute both distance factors to lower and upper bounds.
                 beta1 = 1.0 + (2.0 * (x1 - xl) / denominator)
                 beta2 = 1.0 + (2.0 * (xu - x2) / denominator)
