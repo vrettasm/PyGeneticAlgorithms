@@ -161,7 +161,7 @@ class SimulatedBinaryCrossover(CrossoverOperator):
 
                 # Sample beta_q2 based on upper bound proximity.
                 if rand <= (1.0 / alpha2):
-                    beta_q2 = (rand * alpha2) ** inv_eta_1
+                    beta_q2: float = (rand * alpha2) ** inv_eta_1
                 else:
                     beta_q2 = (1.0 / (2.0 - rand * alpha2)) ** inv_eta_1
 
