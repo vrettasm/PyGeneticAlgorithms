@@ -163,7 +163,7 @@ class SimulatedBinaryCrossover(CrossoverOperator):
                 if rand <= (1.0 / alpha2):
                     beta_q2: float = (rand * alpha2) ** inv_eta_1
                 else:
-                    beta_q2 = (1.0 / (2.0 - rand * alpha2)) ** inv_eta_1
+                    beta_q2: float = (1.0 / (2.0 - rand * alpha2)) ** inv_eta_1
 
                 # Precompute repeated variable once.
                 x1_plus_x2: float = x1 + x2
