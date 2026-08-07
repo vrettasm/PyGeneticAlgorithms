@@ -144,7 +144,7 @@ class SimulatedBinaryCrossover(CrossoverOperator):
 
                 # Precompute repeated variables once.
                 eta_1: float = eta + 1.0
-                inv_eta_1: float = 1.0 / eta
+                inv_eta_1: float = 1.0 / eta_1
 
                 # Compute separate alpha values for balancing distributions.
                 alpha1: float = 2.0 - (beta1 ** -eta_1)
