@@ -97,8 +97,8 @@ class IslandMutator(MutationOperator):
                  mutator methods.
         """
         return {
-            mut_op.__class__.__name__: mut_op.counter
-            for mut_op in self._items["operators"]
+            f"{n}-{mut_op.__class__.__name__}": mut_op.counter
+            for n, mut_op in enumerate(self._items["operators"])
         }
     # _end_def_
 
