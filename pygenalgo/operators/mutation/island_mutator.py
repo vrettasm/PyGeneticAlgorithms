@@ -68,6 +68,24 @@ class IslandMutator(MutationOperator):
             self.inc_counter()
     # _end_def_
 
+    def set_pointer(self, idx: int) -> None:
+        """
+        Set the pointer to the selection operator.
+
+        :param idx: the index of the selection operator.
+
+        :return: None.
+        """
+        # Sanity check.
+        if idx < 0 or idx >= len(self._items["operators"]):
+            raise IndexError(f"{self.__class__.__name__}: "
+                             f"selected index out of range.")
+        # _end_if_
+
+        # Update the index in the dict.
+        self._items["idx"] = idx
+    # _end_def_
+
     @property
     def all_counters(self) -> dict:
         """
