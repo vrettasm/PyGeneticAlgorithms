@@ -85,7 +85,7 @@ class MetaSelector(SelectionOperator):
         # First call the super() to reset the self internal counter.
         super().reset_counter()
 
-        # Here call explicitly the reset on each of the internal mutators.
+        # Here call explicitly the reset on each of the internal selectors.
         for op in self.items:
             op.reset_counter()
     # _end_def_
