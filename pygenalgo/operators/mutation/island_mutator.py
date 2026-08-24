@@ -12,7 +12,8 @@ class IslandMutator(MutationOperator):
         island. The object holds a list of MutationOperator objects along with a
         pointer that is unique for each island.
 
-        NOTE: In the future the equal probabilities can be amended.
+        Once the pointer is set, the mutation is performed using the predefined
+        MutationOperator that corresponds to the specific island.
     """
 
     def __init__(self, mutate_probability: float = 0.1,
