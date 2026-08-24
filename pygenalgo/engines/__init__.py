@@ -1,3 +1,4 @@
+""" Set up the logger of the library. """
 import logging
 
 # Create a logger object for the engine module.
