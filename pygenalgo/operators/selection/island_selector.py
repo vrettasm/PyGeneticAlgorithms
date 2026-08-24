@@ -97,8 +97,8 @@ class IslandSelector(SelectionOperator):
         :return: a dictionary with the counter calls for all selectors.
         """
         return {
-            sel_op.__class__.__name__: sel_op.counter
-            for sel_op in self._items["operators"]
+            f"{n}-{sel_op.__class__.__name__}": sel_op.counter
+            for n, sel_op in enumerate(self._items["operators"])
         }
     # _end_def_
 
