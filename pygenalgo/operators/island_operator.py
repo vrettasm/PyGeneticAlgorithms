@@ -1,28 +1,77 @@
+""" Island Operator module. """
+
 
 class IslandOperator:
+    """
+    TBD:
+    """
 
-    @staticmethod
-    def set_pointer(operators: list, idx: int) -> None:
+    __slots__ = ["_operators", "_idx"]
+
+    def __init__(self, operators: list) -> None:
         """
-        Set the pointer to the genetic operator that
-        we want to execute.
+        Construct a 'IslandOperator' object.
 
-        :param idx: the index of the mutation operator.
-        :param operators: a list with genetic operators.
+        :param operators: a list of genetic operators.
 
         :return: None.
         """
         # Sanity check.
-        if idx < 0 or idx >= len(operators):
-            raise IndexError("selected index out of range.")
+        if len(operators) == 0:
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"'operators' list is missing or empty.")
         # _end_if_
 
-        # Update the index in the dict.
-        operators["idx"] = idx
+        # Copy the operators list.
+        self._operators: list = operators
+
+        # Initialize the index.
+        self._idx: int = 0
     # _end_def_
 
-    @staticmethod
-    def all_counters(operators: list) -> dict:
+    @property
+    def operator(self) -> list:
+        """
+        TBD
+
+        :return:
+        """
+        return self._operators
+    # _end_def_
+
+    @property
+    def idx(self) -> int:
+        """
+        TBD
+        :return:
+        """
+        return self._idx
+    # _end_def_
+
+    @idx.setter
+    def idx(self, new_idx: int) -> None:
+        """
+        Set the pointer to the genetic operator that
+        we want to execute.
+
+        :param idx: the index of the genetic operator.
+
+        :return: None.
+        """
+        # Ensure correct type.
+        new_idx: int = int(new_idx)
+
+        # Sanity check.
+        if new_idx < 0 or new_idx >= len(self._operators):
+            raise IndexError(f"{self.__class__.__name__}: "
+                             f"selected index is out of range.")
+        # _end_if_
+
+        # Update the index.
+        self._idx = new_idx
+    # _end_def_
+
+    def all_counters(self) -> dict:
         """
         Accessor (getter) of the application counter from all
         the internal mutators. This is mostly to verify that
@@ -32,21 +81,9 @@ class IslandOperator:
                  mutator methods.
         """
         return {
-            f"{n}-{mut_op.__class__.__name__}": mut_op.counter
-            for n, mut_op in enumerate(operators)
+            f"{n}-{gen_op.__class__.__name__}": gen_op.counter
+            for n, gen_op in enumerate(self._operators)
         }
-    # _end_def_
-
-    @staticmethod
-    def reset_counter(operators: list) -> None:
-        """
-        Sets ALL the counters to zero.
-
-        :return: None.
-        """
-        # Call the reset on each of the internal operators.
-        for op in operators:
-            op.reset_counter()
     # _end_def_
 
 # _end_class_

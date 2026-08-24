@@ -1,6 +1,7 @@
 """ Island-crossover module. """
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.island_operator import IslandOperator
 from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Offsprings)
 
 
@@ -27,23 +28,18 @@ class IslandCrossover(CrossoverOperator):
 
         :return: None.
         """
-        # Call the super constructor with the provided initial value.
+        # Call the super constructors with the provided initial value.
         super().__init__(crossover_probability=crossover_probability)
 
         # Sanity check.
-        if crossx_ops is None or len(crossx_ops) == 0:
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"'crossx_ops' is missing or empty.")
-        # _end_if_
-
-        # Sanity check.
-        if any(not isinstance(op, CrossoverOperator) for op in crossx_ops):
+        if crossx_ops is None or any(not isinstance(op, CrossoverOperator)
+                                     for op in crossx_ops):
             raise TypeError(f"{self.__class__.__name__}: "
                             f"'crossx_ops' items must be of type CrossoverOperator.")
         # _end_if_
 
-        # Copy the variables locally.
-        self._items = {"operators": crossx_ops, "idx": 0}
+        # Create an IslandOperator.
+        self._items: IslandOperator = IslandOperator(operators=crossx_ops)
     # _end_def_
 
     def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Offsprings:
@@ -61,55 +57,21 @@ class IslandCrossover(CrossoverOperator):
         # random value and the parents aren't identical apply the
         # changes.
         if (parent1 != parent2) and self.is_operator_applicable():
-            # Get the pointer value.
-            idx: int = self._items["idx"]
+            # Local reference of island operator.
+            island_op = self._items
 
-            # Get the list of mutators.
-            crossx_op: list[CrossoverOperator] = self._items["operators"]
+            # Get the selected operator.
+            crossx_op: CrossoverOperator = island_op.operator[island_op.idx]
 
             # Increase the crossover counter.
             self.inc_counter()
 
             # Call its crossover method.
-            return crossx_op[idx].crossover(parent1, parent2)
+            return crossx_op.crossover(parent1, parent2)
         # _end_if_
 
-        # Return the two offsprings.
+        # Return two cloned offsprings.
         return parent1.clone(), parent2.clone()
-    # _end_def_
-
-    def set_pointer(self, idx: int) -> None:
-        """
-        Set the pointer to the crossover operator.
-
-        :param idx: the index of the crossover operator.
-
-        :return: None.
-        """
-        # Sanity check.
-        if idx < 0 or idx >= len(self._items["operators"]):
-            raise IndexError(f"{self.__class__.__name__}: "
-                             f"selected index out of range.")
-        # _end_if_
-
-        # Update the index in the dict.
-        self._items["idx"] = idx
-    # _end_def_
-
-    @property
-    def all_counters(self) -> dict:
-        """
-        Accessor (getter) of the application counter from all
-        the internal crossovers. This is mostly to verify that
-        everything is working as expected.
-
-        :return: a dictionary with the counter calls for all
-                 crossover methods.
-        """
-        return {
-            f"{n}-{crossx_op.__class__.__name__}": crossx_op.counter
-            for n, crossx_op in enumerate(self._items["operators"])
-        }
     # _end_def_
 
     def reset_counter(self) -> None:
@@ -120,12 +82,28 @@ class IslandCrossover(CrossoverOperator):
 
         :return: None.
         """
-        # First call the super() to reset the self internal counter.
+        # First call the super() to reset
+        # the self internal counter.
         super().reset_counter()
 
-        # Here call explicitly the reset on each of the internal crossx operators.
-        for op in self._items["operators"]:
+        # Then clear all the island counters.
+        for op in self._items.operator:
             op.reset_counter()
+    # _end_def_
+
+    def all_counters(self) -> dict:
+        """
+        Accessor (getter) of the application counter from all
+        the internal crossovers. This is mostly to verify that
+        everything is working as expected.
+
+        :return: a dictionary with the counter calls for all
+                 crossover methods.
+        """
+        return {
+            f"{n}-{gen_op.__class__.__name__}": gen_op.counter
+            for n, gen_op in enumerate(self._items.operator)
+        }
     # _end_def_
 
 # _end_class_

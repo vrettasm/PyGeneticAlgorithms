@@ -1,6 +1,8 @@
 """ Island-mutator module. """
+
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.operators.island_operator import IslandOperator
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
 
@@ -31,24 +33,19 @@ class IslandMutator(MutationOperator):
         super().__init__(mutation_probability=mutate_probability)
 
         # Sanity check.
-        if mutate_ops is None or len(mutate_ops) == 0:
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"'mutate_ops' is missing or empty.")
-        # _end_if_
-
-        # Sanity check.
-        if any(not isinstance(op, MutationOperator) for op in mutate_ops):
+        if mutate_ops is None or any(not isinstance(op, MutationOperator)
+                                     for op in mutate_ops):
             raise TypeError(f"{self.__class__.__name__}: "
                             f"'mutate_ops' items must be of type MutationOperator.")
         # _end_if_
 
-        # Copy the variables locally.
-        self._items = {"operators": mutate_ops, "idx": 0}
+        # Create an IslandOperator.
+        self._items: IslandOperator = IslandOperator(operators=mutate_ops)
     # _end_def_
 
     def mutate(self, individual: Chromosome) -> None:
         """
-        Perform the mutation operation by randomly applying another mutator.
+        Perform the mutation operation.
 
         :param individual: (Chromosome).
 
@@ -57,51 +54,17 @@ class IslandMutator(MutationOperator):
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
         if self.is_operator_applicable():
-            # Get the pointer value.
-            idx: int = self._items["idx"]
+            # Local reference of island operator.
+            island_op = self._items
 
-            # Get the list of mutators.
-            mutate_op: list[MutationOperator] = self._items["operators"]
+            # Get the selected operator.
+            mutate_op: MutationOperator = island_op.operator[island_op.idx]
 
             # Call its mutation method.
-            mutate_op[idx].mutate(individual)
+            mutate_op.mutate(individual)
 
             # Increase the mutator counter.
             self.inc_counter()
-    # _end_def_
-
-    def set_pointer(self, idx: int) -> None:
-        """
-        Set the pointer to the mutation operator.
-
-        :param idx: the index of the mutation operator.
-
-        :return: None.
-        """
-        # Sanity check.
-        if idx < 0 or idx >= len(self._items["operators"]):
-            raise IndexError(f"{self.__class__.__name__}: "
-                             f"selected index out of range.")
-        # _end_if_
-
-        # Update the index in the dict.
-        self._items["idx"] = idx
-    # _end_def_
-
-    @property
-    def all_counters(self) -> dict:
-        """
-        Accessor (getter) of the application counter from all
-        the internal mutators. This is mostly to verify that
-        everything is working as expected.
-
-        :return: a dictionary with the counter calls for all
-                 mutator methods.
-        """
-        return {
-            f"{n}-{mut_op.__class__.__name__}": mut_op.counter
-            for n, mut_op in enumerate(self._items["operators"])
-        }
     # _end_def_
 
     def reset_counter(self) -> None:
@@ -113,12 +76,28 @@ class IslandMutator(MutationOperator):
 
         :return: None.
         """
-        # First call the super() to reset the self internal counter.
+        # First call the super() to reset
+        # the self internal counter.
         super().reset_counter()
 
-        # Here call explicitly the reset on each of the internal mutators.
-        for op in self._items["operators"]:
+        # Then clear all the island counters.
+        for op in self._items.operator:
             op.reset_counter()
+    # _end_def_
+
+    def all_counters(self) -> dict:
+        """
+        Accessor (getter) of the application counter from all
+        the internal crossovers. This is mostly to verify that
+        everything is working as expected.
+
+        :return: a dictionary with the counter calls for all
+                 crossover methods.
+        """
+        return {
+            f"{n}-{gen_op.__class__.__name__}": gen_op.counter
+            for n, gen_op in enumerate(self._items.operator)
+        }
     # _end_def_
 
 # _end_class_

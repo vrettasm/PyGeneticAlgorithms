@@ -129,6 +129,15 @@ class IslandModelGA(GenericGA):
             self.mutate_op.probability = prob_mutate
         # _end_if_
 
+        # Update the pointers of the IslandOperators.
+        for gen_op in (self.select_op, self.mutate_op, self.crossx_op):
+            # Check if the feature exists.
+            feature = getattr(gen_op, "_items", None)
+
+            if isinstance(feature, IslandOperator):
+                feature.idx = island.id
+        # _end_for_
+
         # Start timing the loop.
         time_t0 = time.perf_counter()
 
@@ -472,6 +481,11 @@ class IslandModelGA(GenericGA):
                 delayed(fn_evolve)(island=pop_n, **common_parameters)
                 for pop_n in active_population
             )
+            '''
+            results = [
+                fn_evolve(island=pop_n, **common_parameters) for pop_n in active_population
+            ]
+            '''
 
             # Process the final results.
             for res_n in results:
