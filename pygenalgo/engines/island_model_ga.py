@@ -16,6 +16,7 @@ from pygenalgo.utils.auxiliary import (SubPopulation,
                                        average_hamming_distance)
 # Custom PyGenaAlgo code.
 from pygenalgo.engines.generic_ga import GenericGA, RunConfig
+from pygenalgo.operators.island_operator import IslandOperator
 from pygenalgo.operators.migration.meta_migration import MetaMigration
 from pygenalgo.operators.migration.migration_operator import MigrationOperator
 
