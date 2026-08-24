@@ -72,9 +72,9 @@ class IslandMutator(MutationOperator):
 
     def set_pointer(self, idx: int) -> None:
         """
-        Set the pointer to the selection operator.
+        Set the pointer to the mutation operator.
 
-        :param idx: the index of the selection operator.
+        :param idx: the index of the mutation operator.
 
         :return: None.
         """
