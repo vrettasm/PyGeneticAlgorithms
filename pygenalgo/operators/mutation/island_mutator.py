@@ -8,8 +8,9 @@ class IslandMutator(MutationOperator):
     """
     Description:
 
-        Meta-mutator, mutates the chromosome by applying randomly
-        all other mutators (one at a time), with equal probability.
+        Island-mutator performs the mutation of individuals (offspring) for each
+        island. The object holds a list of MutationOperator objects along with a
+        pointer that is unique for each island.
 
         NOTE: In the future the equal probabilities can be amended.
     """
