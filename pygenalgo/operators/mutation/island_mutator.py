@@ -41,10 +41,6 @@ class IslandMutator(MutationOperator):
         if any(not isinstance(op, MutationOperator) for op in mutate_ops):
             raise TypeError(f"{self.__class__.__name__}: "
                             f"'mutate_ops' items must be of type MutationOperator.")
-        # _end_if_
-
-        # Create an IslandOperator.
-        self._items: IslandOperator = IslandOperator(operators=mutate_ops)
     # _end_def_
 
     def mutate(self, individual: Chromosome) -> None:
