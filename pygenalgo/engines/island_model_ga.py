@@ -282,7 +282,7 @@ class IslandModelGA(GenericGA):
                                                   backend="loky")
             # Compute the initial mean/std values
             # and update the stats[pop_n.id].
-            _, _ = self.update_stats(fit_list_0, self.stats[pop_n.id])
+            _, _ = self.update_stats(fit_list_0, self.stats[p_id])
 
             # Store the initial crossover and mutation probabilities.
             self.stats[pop_n.id]["prob_crossx"].append(self.crossx_op.probability)
