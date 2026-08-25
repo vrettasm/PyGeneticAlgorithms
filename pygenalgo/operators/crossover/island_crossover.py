@@ -20,26 +20,26 @@ class IslandCrossover(CrossoverOperator):
     def __init__(self, crossover_probability: float = 0.9,
                  crossx_ops: list[CrossoverOperator] = None) -> None:
         """
-        Construct an 'IslandCrossover' object with a predefined probability
-        value and a list of CrossoverOperator objects.
+        Construct an 'IslandCrossover' object with a predefined
+        probability value and a list of CrossoverOperator objects.
 
         :param crossover_probability: (float).
         :param crossx_ops: a list of CrossoverOperator objects.
 
         :return: None.
         """
-        # Call the super constructors with the provided initial value.
+        # Call the super() constructor with an initial probability.
+        # Note: This probability is never used. We use directly the
+        # probability values of the genetic operators in the _items.
         super().__init__(crossover_probability=crossover_probability)
 
-        # Sanity check.
-        if crossx_ops is None or any(not isinstance(op, CrossoverOperator)
-                                     for op in crossx_ops):
+        # Create an IslandManager to handle the operators.
+        self._items: IslandManager = IslandManager(operators=crossx_ops)
+
+        # Sanity check: correct Type.
+        if any(not isinstance(op, CrossoverOperator) for op in crossx_ops):
             raise TypeError(f"{self.__class__.__name__}: "
                             f"'crossx_ops' items must be of type CrossoverOperator.")
-        # _end_if_
-
-        # Create an IslandOperator.
-        self._items: IslandOperator = IslandOperator(operators=crossx_ops)
     # _end_def_
 
     def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Offsprings:
@@ -53,18 +53,15 @@ class IslandCrossover(CrossoverOperator):
 
         :return: child1 and child2 (as Chromosomes).
         """
+        # Get the selected operator.
+        crossx_op: CrossoverOperator = self._items.operator()
+
         # If the crossover probability is higher than a uniformly
         # random value and the parents aren't identical apply the
         # changes.
-        if (parent1 != parent2) and self.is_operator_applicable():
-            # Local reference of island operator.
-            island_op = self._items
-
-            # Get the selected operator.
-            crossx_op: CrossoverOperator = island_op.operator[island_op.idx]
-
-            # Increase the crossover counter.
-            self.inc_counter()
+        if (parent1 != parent2) and crossx_op.is_operator_applicable():
+            # Increase its crossover counter.
+            crossx_op.inc_counter()
 
             # Call its crossover method.
             return crossx_op.crossover(parent1, parent2)
@@ -82,28 +79,11 @@ class IslandCrossover(CrossoverOperator):
 
         :return: None.
         """
-        # First call the super() to reset
-        # the self internal counter.
+        # First call the super() to reset the self counter.
         super().reset_counter()
 
-        # Then clear all the island counters.
-        for op in self._items.operator:
-            op.reset_counter()
-    # _end_def_
-
-    def all_counters(self) -> dict:
-        """
-        Accessor (getter) of the application counter from all
-        the internal crossovers. This is mostly to verify that
-        everything is working as expected.
-
-        :return: a dictionary with the counter calls for all
-                 crossover methods.
-        """
-        return {
-            f"{n}-{gen_op.__class__.__name__}": gen_op.counter
-            for n, gen_op in enumerate(self._items.operator)
-        }
+        # Then call the _items to reset the island counter.
+        self._items.reset_island_counters()
     # _end_def_
 
 # _end_class_

@@ -33,15 +33,13 @@ class IslandSelector(SelectionOperator):
         # Call the super() constructor with an initial probability.
         super().__init__(selection_probability=select_probability)
 
+        # Create an IslandOperator.
+        self._items: IslandManager = IslandManager(operators=select_ops)
+
         # Sanity check.
-        if select_ops is None or any(not isinstance(op, SelectionOperator)
-                                     for op in select_ops):
+        if any(not isinstance(op, SelectionOperator) for op in select_ops):
             raise TypeError(f"{self.__class__.__name__}: "
                             f"'select_ops' items must be of type SelectionOperator.")
-        # _end_if_
-
-        # Create an IslandOperator.
-        self._items: IslandOperator = IslandOperator(operators=select_ops)
     # _end_def_
 
     @increase_counter
@@ -55,11 +53,8 @@ class IslandSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
-        # Local reference of island operator.
-        island_op = self._items
-
         # Get the selected operator.
-        select_op: SelectionOperator = island_op.operator[island_op.idx]
+        select_op: SelectionOperator = self._items.operator()
 
         # Apply the specific select method.
         return select_op.select(population)
@@ -73,28 +68,11 @@ class IslandSelector(SelectionOperator):
 
         :return: None.
         """
-        # First call the super() to reset
-        # the self internal counter.
+        # First call the super() to reset the self counter.
         super().reset_counter()
 
-        # Then clear all the island counters.
-        for op in self._items.operator:
-            op.reset_counter()
-    # _end_def_
-
-    def all_counters(self) -> dict:
-        """
-        Accessor (getter) of the application counter from all
-        the internal crossovers. This is mostly to verify that
-        everything is working as expected.
-
-        :return: a dictionary with the counter calls for all
-                 crossover methods.
-        """
-        return {
-            f"{n}-{gen_op.__class__.__name__}": gen_op.counter
-            for n, gen_op in enumerate(self._items.operator)
-        }
+        # Then call the _items to reset the island counter.
+        self._items.reset_island_counters()
     # _end_def_
 
 # _end_class_
