@@ -131,13 +131,9 @@ class IslandModelGA(GenericGA):
 
         # Update the pointers of the IslandManagers.
         for gen_op in (self.select_op, self.mutate_op, self.crossx_op):
-            # Get the '_items' feature (or None).
-            feature = getattr(gen_op, "_items", None)
-
-            # If it is an IslandManager, then it
-            # will have the idx field to set up.
-            if isinstance(feature, IslandManager):
-                feature.idx = island.id
+            if hasattr(gen_op, "_items") and\
+                    isinstance(gen_op.items, IslandManager):
+                gen_op.items.idx = island.id
         # _end_for_
 
         # Start timing the loop.
