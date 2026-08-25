@@ -139,7 +139,7 @@ class IslandModelGA(GenericGA):
         # _end_for_
 
         # Start timing the loop.
-        time_t0 = time.perf_counter()
+        time_t0: float = time.perf_counter()
 
         # Repeat 'epoch' times.
         for i in range(epochs):
