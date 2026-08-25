@@ -626,17 +626,6 @@ class GenericGA:
         return [p.fitness for p in self.population]
     # _end_def_
 
-    def individual_fitness(self, index: int) -> float:
-        """
-        Get the fitness value of an individual member of the population.
-
-        :param index: Position of the individual in the population.
-
-        :return: The fitness value (float).
-        """
-        return self.population[index].fitness
-    # _end_def_
-
     def evaluate_fitness(self, input_population: list[Chromosome],
                          parallel_mode: bool = False,
                          backend: str = "threading") -> tuple[list[Fitness], bool]:
