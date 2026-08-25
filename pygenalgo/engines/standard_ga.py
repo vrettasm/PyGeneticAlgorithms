@@ -138,7 +138,6 @@ class StandardGA(GenericGA):
 
                     # Update the list of fitness values to reflect the update.
                     fit_list_i[locus] = population_i[locus].fitness
-                # _end_if_
             # _end_if_
 
             # Update the mean/std in the dictionary.
