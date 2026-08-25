@@ -33,7 +33,7 @@ class IslandManager:
     @property
     def operators_list(self) -> list[GeneticOperator]:
         """
-        TBD
+        Accessor (getter) of the genetic operator list.
 
         :return:
         """
