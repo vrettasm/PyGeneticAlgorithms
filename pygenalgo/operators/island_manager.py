@@ -56,6 +56,7 @@ class IslandManager:
         return self._idx
     # _end_def_
 
+    @property
     def operator(self) -> GeneticOperator:
         """
         Shortcut for the return of the genetic
