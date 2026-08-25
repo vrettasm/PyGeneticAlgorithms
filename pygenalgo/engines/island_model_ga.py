@@ -418,7 +418,7 @@ class IslandModelGA(GenericGA):
                             # Log an update of the progress.
                             logger.info(
                                 "Best Fitness in island %s is:= %.5f",
-                                island.id, best_fitness
+                                island_id, best_fitness
                             )
                         # _end_if_
 
@@ -435,7 +435,7 @@ class IslandModelGA(GenericGA):
                                 # Log a warning message to the screen.
                                 logger.warning(
                                     "Island population %s finished in %s iterations.",
-                                    island.id, itr
+                                    island_id, itr
                                 )
                             # _end_if_
                         else:
@@ -444,8 +444,8 @@ class IslandModelGA(GenericGA):
                         # _end_if_
 
                         # Update statistics.
-                        self.stats[island.id]["avg"].extend(local_stats["avg"])
-                        self.stats[island.id]["std"].extend(local_stats["std"])
+                        self.stats[island_id]["avg"].extend(local_stats["avg"])
+                        self.stats[island_id]["std"].extend(local_stats["std"])
 
                         # Check if we were adapting the probabilities.
                         if config.adapt_probs:
@@ -455,13 +455,13 @@ class IslandModelGA(GenericGA):
                             if len(local_stats["prob_crossx"]) > 0:
 
                                 # Update the values for the next interval.
-                                genetic_probs[island.id]["crossx"] = local_stats["prob_crossx"][-1]
-                                genetic_probs[island.id]["mutate"] = local_stats["prob_mutate"][-1]
+                                genetic_probs[island_id]["crossx"] = local_stats["prob_crossx"][-1]
+                                genetic_probs[island_id]["mutate"] = local_stats["prob_mutate"][-1]
                             # _end_if_
 
                             # Store the updated crossover and mutation values.
-                            self.stats[island.id]["prob_crossx"].extend(local_stats["prob_crossx"])
-                            self.stats[island.id]["prob_mutate"].extend(local_stats["prob_mutate"])
+                            self.stats[island_id]["prob_crossx"].extend(local_stats["prob_crossx"])
+                            self.stats[island_id]["prob_mutate"].extend(local_stats["prob_mutate"])
                         # _end_if_
 
                     # _end_for_
@@ -496,25 +496,28 @@ class IslandModelGA(GenericGA):
                 # Extract the results.
                 island, has_converged, local_stats, _ = res_n
 
+                # Extract the island id locally.
+                island_id: int = island.id
+
                 # Check if we want to log output.
                 if has_converged[0]:
                     logger.info(
                         "Island population %s, finished in %s iterations.",
-                        island.id, has_converged[1]
+                        island_id, has_converged[1]
                     )
 
                 # Copy only the population.
                 final_population.extend(island.population)
 
                 # Update the statistics.
-                self.stats[island.id]["avg"].extend(local_stats["avg"])
-                self.stats[island.id]["std"].extend(local_stats["std"])
+                self.stats[island_id]["avg"].extend(local_stats["avg"])
+                self.stats[island_id]["std"].extend(local_stats["std"])
 
                 # Check if we were adapting the probabilities.
                 if config.adapt_probs:
                     # Store the updated crossover and mutation values.
-                    self.stats[island.id]["prob_crossx"].extend(local_stats["prob_crossx"])
-                    self.stats[island.id]["prob_mutate"].extend(local_stats["prob_mutate"])
+                    self.stats[island_id]["prob_crossx"].extend(local_stats["prob_crossx"])
+                    self.stats[island_id]["prob_mutate"].extend(local_stats["prob_mutate"])
             # _end_for_
 
         # _end_if_
