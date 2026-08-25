@@ -1,7 +1,7 @@
 """ Island-crossover module. """
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.island_manager import IslandManager
+from engines.island_manager import IslandManager
 from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Offsprings)
 
 
