@@ -43,8 +43,9 @@ class IslandManager:
     @property
     def idx(self) -> int:
         """
-        TBD
-        :return:
+        Accessor (getter) of the genetic operator index.
+
+        :return: the index of the genetic operator.
         """
         return self._idx
     # _end_def_
