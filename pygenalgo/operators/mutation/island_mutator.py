@@ -34,9 +34,11 @@ class IslandMutator(MutationOperator):
         # probability values of the genetic operators in the _items.
         super().__init__(mutation_probability=mutate_probability)
 
-        # Sanity check.
-        if mutate_ops is None or any(not isinstance(op, MutationOperator)
-                                     for op in mutate_ops):
+        # Create an IslandManager to handle the operators.
+        self._items: IslandManager = IslandManager(operators=mutate_ops)
+
+        # Sanity check: correct Type.
+        if any(not isinstance(op, MutationOperator) for op in mutate_ops):
             raise TypeError(f"{self.__class__.__name__}: "
                             f"'mutate_ops' items must be of type MutationOperator.")
         # _end_if_
