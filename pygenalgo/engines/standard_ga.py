@@ -119,7 +119,6 @@ class StandardGA(GenericGA):
 
             # Check if 'elitism' is enabled.
             if config.elitism:
-
                 # Get the reference of the best chromosome
                 # from the previous generation.
                 previous_best = self.best_chromosome()
