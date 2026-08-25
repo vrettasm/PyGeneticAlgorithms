@@ -285,8 +285,8 @@ class IslandModelGA(GenericGA):
             _, _ = self.update_stats(fit_list_0, self.stats[p_id])
 
             # Store the initial crossover and mutation probabilities.
-            self.stats[pop_n.id]["prob_crossx"].append(self.crossx_op.probability)
-            self.stats[pop_n.id]["prob_mutate"].append(self.mutate_op.probability)
+            self.stats[p_id]["prob_crossx"].append(self.crossx_op.probability)
+            self.stats[p_id]["prob_mutate"].append(self.mutate_op.probability)
         # _end_for_
 
         # Set the predefined value.
