@@ -74,7 +74,7 @@ class IslandMutator(MutationOperator):
         :return: None.
         """
         # Get the selected (mutation) operator.
-        mutate_op: MutationOperator = self._items.operator()
+        mutate_op: MutationOperator = self._items.operator
 
         # Call its mutation method.
         mutate_op.mutate(individual)
