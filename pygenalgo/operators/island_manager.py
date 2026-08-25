@@ -35,7 +35,7 @@ class IslandManager:
         """
         Accessor (getter) of the genetic operator list.
 
-        :return:
+        :return: the operators list.
         """
         return self._operators
     # _end_def_
