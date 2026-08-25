@@ -12,7 +12,7 @@ class IslandMutator(MutationOperator):
 
         Island-mutator performs the mutation of individuals (offspring) for each
         island. The object holds a list of MutationOperator objects along with a
-        pointer that is unique for each island.
+        pointer (int) that is unique for each island.
 
         Once the pointer is set, the mutation is performed using the predefined
         MutationOperator that corresponds to the specific island.
