@@ -54,7 +54,7 @@ class IslandCrossover(CrossoverOperator):
         :return: child1 and child2 (as Chromosomes).
         """
         # Get the selected (crossover) operator.
-        crossx_op: CrossoverOperator = self._items.operator()
+        crossx_op: CrossoverOperator = self._items.operator
 
         # Call its crossover method.
         return crossx_op.crossover(parent1, parent2)
