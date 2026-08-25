@@ -236,7 +236,7 @@ class IslandModelGA(GenericGA):
         # _end_for_
 
         # Compute the elapsed time (in seconds).
-        elapsed_time = time.perf_counter() - time_t0
+        elapsed_time: float = time.perf_counter() - time_t0
 
         return island, has_converged, local_stats, elapsed_time
     # _end_def_
