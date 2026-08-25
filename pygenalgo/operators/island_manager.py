@@ -11,7 +11,7 @@ class IslandManager:
 
     def __init__(self, operators: list[GeneticOperator]) -> None:
         """
-        Construct a 'IslandOperator' object.
+        Construct a 'IslandManager' object.
 
         :param operators: a list of genetic operators.
 
