@@ -1,4 +1,5 @@
-""" Island Operator module. """
+""" Island manager module. """
+from pygenalgo.operators.genetic_operator import GeneticOperator
 
 
 class IslandOperator:
