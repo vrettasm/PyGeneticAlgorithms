@@ -272,7 +272,7 @@ class IslandModelGA(GenericGA):
             p_id: int = pop_n.id
 
             # Initialize the statistics dictionary.
-            self.stats[pop_n.id]: dict = {
+            self.stats[p_id]: dict = {
                 "avg": [], "std": [], "prob_crossx": [], "prob_mutate": []
             }
 
