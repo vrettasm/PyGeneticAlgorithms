@@ -73,8 +73,7 @@ class IslandMutator(MutationOperator):
 
         :return: None.
         """
-        # First call the super() to reset
-        # the self internal counter.
+        # First call the super() to reset the self counter.
         super().reset_counter()
 
         # Then clear all the island counters.
