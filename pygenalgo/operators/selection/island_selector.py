@@ -2,7 +2,7 @@
 
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.island_operator import IslandOperator
+from pygenalgo.operators.island_manager import IslandManager
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
 
