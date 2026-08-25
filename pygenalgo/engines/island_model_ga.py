@@ -337,8 +337,8 @@ class IslandModelGA(GenericGA):
         # Check if we allow migration among the populations.
         if config.allow_migration:
 
-            # Initial values for the crossover and mutation operators will be used
-            # to ensure continuity in the case of adaptable probabilities.
+            # Initial values for the crossover and mutation operators will be
+            # used to ensure continuity in the case of adaptable probabilities.
             genetic_probs = defaultdict(dict)
 
             # Initial assignment of the genetic probabilities.
