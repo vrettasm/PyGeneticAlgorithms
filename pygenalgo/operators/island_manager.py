@@ -71,7 +71,7 @@ class IslandOperator:
         self._idx = new_idx
     # _end_def_
 
-    def all_counters(self) -> dict:
+    def get_all_counters(self) -> dict:
         """
         Accessor (getter) of the application counter from all
         the internal mutators. This is mostly to verify that
