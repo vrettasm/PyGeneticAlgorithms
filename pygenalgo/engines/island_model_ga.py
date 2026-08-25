@@ -258,9 +258,9 @@ class IslandModelGA(GenericGA):
         # Reset stats dictionary.
         self.stats.clear()
 
-        # Initial random split of the total population
-        # in (active) subpopulations. Active here means
-        # 'still evolving'.
+        # Initial random split of the total population in active
+        # subpopulations. In this context 'active' means that is
+        # still evolving.
         active_population: list[SubPopulation] = [
             SubPopulation(i, self.population[i::self._num_islands])
             for i in range(self._num_islands)
