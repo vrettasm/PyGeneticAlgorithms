@@ -262,7 +262,7 @@ class IslandModelGA(GenericGA):
         # subpopulations. In this context 'active' means that is
         # still evolving.
         active_population: list[SubPopulation] = [
-            SubPopulation(i, self.population[i::self._num_islands])
+            SubPopulation(pop_id=i, population=self.population[i::self._num_islands])
             for i in range(self._num_islands)
         ]
 
