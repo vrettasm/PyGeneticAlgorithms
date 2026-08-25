@@ -50,6 +50,16 @@ class IslandManager:
         return self._idx
     # _end_def_
 
+    def operator(self) -> GeneticOperator:
+        """
+        Shortcut for the return of the genetic
+        operator at position idx.
+
+        :return: the GeneticOperator at idx.
+        """
+        return self._operators[self._idx]
+    # _end_def_
+
     @idx.setter
     def idx(self, new_idx: int) -> None:
         """
