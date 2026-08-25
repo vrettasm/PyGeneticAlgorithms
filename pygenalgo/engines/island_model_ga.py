@@ -403,6 +403,9 @@ class IslandModelGA(GenericGA):
                         # Extract the results.
                         island, has_converged, local_stats, _ = res
 
+                        # Extract the island id locally.
+                        island_id: int = island.id
+
                         # Check if we want information on the screen.
                         if config.verbose:
 
