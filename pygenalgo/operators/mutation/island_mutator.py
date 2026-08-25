@@ -51,11 +51,8 @@ class IslandMutator(MutationOperator):
 
         :return: None.
         """
-        # If the mutation probability is higher than
-        # a uniformly random value, make the changes.
-        if self.is_operator_applicable():
-            # Local reference of island operator.
-            island_op = self._items
+        # Get the selected (mutation) operator.
+        mutate_op: MutationOperator = self._items.operator()
 
             # Get the selected operator.
             mutate_op: MutationOperator = island_op.operator[island_op.idx]
