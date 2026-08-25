@@ -4,7 +4,12 @@ from pygenalgo.operators.genetic_operator import GeneticOperator
 
 class IslandManager:
     """
-    TBD:
+    Island manager class is used to manage the operators in the IslandModelGA.
+    It helps by keeping all the relevant operators in one list and then using
+    an index (idx), that is assigned uniquely to each island, to perform  the
+    correct operation.
+
+    The supported operators are: IslandMutator, IslandSelector, IslandCrossover.
     """
 
     __slots__ = ["_operators", "_idx"]
