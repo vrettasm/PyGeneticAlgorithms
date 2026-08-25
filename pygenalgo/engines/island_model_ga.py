@@ -341,6 +341,8 @@ class IslandModelGA(GenericGA):
 
             # Initial assignment of the genetic probabilities.
             for pop_n in active_population:
+                # Extract the population (island) id.
+                p_id: int = pop_n.id
 
                 # Use the values of the object operators itself.
                 genetic_probs[pop_n.id]["crossx"] = self.crossx_op.probability
