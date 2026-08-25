@@ -53,7 +53,7 @@ class IslandSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
-        # Get the selected operator.
+        # Get the selected (selection) operator.
         select_op: SelectionOperator = self._items.operator()
 
         # Apply the specific select method.
