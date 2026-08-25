@@ -56,19 +56,8 @@ class IslandCrossover(CrossoverOperator):
         # Get the selected operator.
         crossx_op: CrossoverOperator = self._items.operator()
 
-        # If the crossover probability is higher than a uniformly
-        # random value and the parents aren't identical apply the
-        # changes.
-        if (parent1 != parent2) and crossx_op.is_operator_applicable():
-            # Increase its crossover counter.
-            crossx_op.inc_counter()
-
-            # Call its crossover method.
-            return crossx_op.crossover(parent1, parent2)
-        # _end_if_
-
-        # Return two cloned offsprings.
-        return parent1.clone(), parent2.clone()
+        # Call its crossover method.
+        return crossx_op.crossover(parent1, parent2)
     # _end_def_
 
     def reset_counter(self) -> None:
