@@ -2,7 +2,7 @@
 
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
-from engines.island_manager import IslandManager
+from pygenalgo.engines.island_manager import IslandManager
 from pygenalgo.operators.mutation.mutate_operator import MutationOperator
 
 
