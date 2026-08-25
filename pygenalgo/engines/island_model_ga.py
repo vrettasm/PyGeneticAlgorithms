@@ -129,12 +129,14 @@ class IslandModelGA(GenericGA):
             self.mutate_op.probability = prob_mutate
         # _end_if_
 
-        # Update the pointers of the IslandOperators.
+        # Update the pointers of the IslandManagers.
         for gen_op in (self.select_op, self.mutate_op, self.crossx_op):
-            # Check if the feature exists.
+            # Get the '_items' feature (or None).
             feature = getattr(gen_op, "_items", None)
 
-            if isinstance(feature, IslandOperator):
+            # If it is an IslandManager, then it
+            # will have the idx field to set up.
+            if isinstance(feature, IslandManager):
                 feature.idx = island.id
         # _end_for_
 
