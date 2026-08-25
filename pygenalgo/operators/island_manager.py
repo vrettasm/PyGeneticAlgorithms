@@ -9,7 +9,7 @@ class IslandManager:
 
     __slots__ = ["_operators", "_idx"]
 
-    def __init__(self, operators: list) -> None:
+    def __init__(self, operators: list[GeneticOperator]) -> None:
         """
         Construct a 'IslandOperator' object.
 
