@@ -54,14 +54,8 @@ class IslandMutator(MutationOperator):
         # Get the selected (mutation) operator.
         mutate_op: MutationOperator = self._items.operator()
 
-        # If the mutation probability (of the selected operator!) is
-        # higher than a uniformly random value, perform its mutation.
-        if mutate_op.is_operator_applicable():
-            # Call its mutation method.
-            mutate_op.mutate(individual)
-
-            # Increase its mutator counter.
-            mutate_op.inc_counter()
+        # Call its mutation method.
+        mutate_op.mutate(individual)
     # _end_def_
 
     def reset_counter(self) -> None:
