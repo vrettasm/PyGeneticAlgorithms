@@ -43,6 +43,28 @@ class IslandMutator(MutationOperator):
                             f"'mutate_ops' items must be of type MutationOperator.")
     # _end_def_
 
+    @property
+    def probability(self) -> float:
+        """
+        Accessor (getter) of the _items probability.
+
+        :return: the float value of the probability.
+        """
+        return self._items.operator.probability
+    # _end_def_
+
+    @probability.setter
+    def probability(self, new_value: float) -> None:
+        """
+        Accessor (setter) of the _items probability.
+
+        :param new_value: (float) in [0, 1].
+        """
+        # Assign the new probability to the composed
+        # _items operator.
+        self._items.operator.probability = new_value
+    # _end_def_
+
     def mutate(self, individual: Chromosome) -> None:
         """
         Perform the mutation operation.
