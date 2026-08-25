@@ -330,7 +330,7 @@ class IslandModelGA(GenericGA):
         }
 
         # Initial time instant.
-        time_t0 = time.perf_counter()
+        time_t0: float = time.perf_counter()
 
         # Check if we allow migration among the populations.
         if config.allow_migration:
@@ -523,7 +523,7 @@ class IslandModelGA(GenericGA):
         avg_fitness_final = nanmean(fit_list_final, dtype=float)
 
         # Final time instant.
-        time_tf = time.perf_counter()
+        time_tf: float = time.perf_counter()
 
         # Print message.
         logger.info("Final Avg. Fitness = %.4f.", avg_fitness_final)
