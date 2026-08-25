@@ -24,7 +24,7 @@ class IslandMutator(MutationOperator):
         Construct an 'IslandMutator' object with a predefined probability
         value and a list of MutationOperator objects.
 
-        :param mutate_probability: (float).
+        :param mutate_probability: (float) for compatibility only.
         :param mutate_ops: a list of MutationOperator objects.
 
         :return: None.
