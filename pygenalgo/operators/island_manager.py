@@ -12,7 +12,8 @@ class IslandManager:
     The supported operators are: IslandMutator, IslandSelector, IslandCrossover.
     """
 
-    __slots__ = ["_operators", "_idx"]
+    # Object variables (specific for the IslandManager).
+    __slots__ = ("_operators", "_idx")
 
     def __init__(self, operators: list[GeneticOperator]) -> None:
         """
