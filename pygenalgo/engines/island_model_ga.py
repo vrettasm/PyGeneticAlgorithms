@@ -123,18 +123,18 @@ class IslandModelGA(GenericGA):
         # Initialize this auxiliary parameter to a large number.
         avg_fitness_0: float = 1.0e+100
 
-        # Check if initial probabilities have been given.
-        if prob_crossx is not None and prob_mutate is not None:
-            self.crossx_op.probability = prob_crossx
-            self.mutate_op.probability = prob_mutate
-        # _end_if_
-
         # WARNING: This step is CRITICAL for the remaining code.
         for gen_op in (self.select_op, self.mutate_op, self.crossx_op):
             # Update the pointers of the IslandManagers.
             if isinstance(gen_op.items, IslandManager):
                 gen_op.items.idx = island.id
         # _end_for_
+
+        # Check if initial probabilities have been given.
+        if prob_crossx is not None and prob_mutate is not None:
+            self.crossx_op.probability = prob_crossx
+            self.mutate_op.probability = prob_mutate
+        # _end_if_
 
         # Start timing the loop.
         time_t0: float = time.perf_counter()
