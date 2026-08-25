@@ -30,7 +30,7 @@ class IslandSelector(SelectionOperator):
 
         :return: None.
         """
-        # Call the super constructors with the provided initial value.
+        # Call the super() constructor with an initial probability.
         super().__init__(selection_probability=select_probability)
 
         # Sanity check.
