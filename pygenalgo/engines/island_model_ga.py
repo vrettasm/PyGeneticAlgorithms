@@ -129,8 +129,9 @@ class IslandModelGA(GenericGA):
             self.mutate_op.probability = prob_mutate
         # _end_if_
 
-        # Update the pointers of the IslandManagers.
+        # WARNING: This step is CRITICAL for the remaining code.
         for gen_op in (self.select_op, self.mutate_op, self.crossx_op):
+            # Update the pointers of the IslandManagers.
             if isinstance(gen_op.items, IslandManager):
                 gen_op.items.idx = island.id
         # _end_for_
