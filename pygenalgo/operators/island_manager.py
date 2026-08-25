@@ -18,7 +18,7 @@ class IslandManager:
         :return: None.
         """
         # Sanity check.
-        if len(operators) == 0:
+        if operators is None or len(operators) == 0:
             raise ValueError(f"{self.__class__.__name__}: "
                              f"'operators' list is missing or empty.")
         # _end_if_
