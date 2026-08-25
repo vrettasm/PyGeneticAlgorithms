@@ -24,7 +24,7 @@ class IslandManager:
         # _end_if_
 
         # Copy the operators list.
-        self._operators: list = operators
+        self._operators: list[GeneticOperator] = operators
 
         # Initialize the index.
         self._idx: int = 0
