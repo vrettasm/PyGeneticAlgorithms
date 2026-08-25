@@ -108,8 +108,8 @@ class IslandModelGA(GenericGA):
         # using the same seed value among different Parallel workers.
         self.rng_GA.bit_generator.state = bit_gen(seed=time.time_ns()).state
 
-        # Keeps track of the convergence /termination of the
-        # population, along with the iteration that happened.
+        # Keeps track of the convergence/termination of the
+        # population along with the iteration that happened.
         has_converged = (False, epochs)
 
         # Get the size of the population.
