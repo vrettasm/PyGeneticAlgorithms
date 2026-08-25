@@ -345,8 +345,8 @@ class IslandModelGA(GenericGA):
                 p_id: int = pop_n.id
 
                 # Use the values of the object operators itself.
-                genetic_probs[pop_n.id]["crossx"] = self.crossx_op.probability
-                genetic_probs[pop_n.id]["mutate"] = self.mutate_op.probability
+                genetic_probs[p_id]["crossx"] = self.crossx_op.probability
+                genetic_probs[p_id]["mutate"] = self.mutate_op.probability
             # _end_for_
 
             # Make sure 'n_periods' is integer.
