@@ -76,24 +76,8 @@ class IslandMutator(MutationOperator):
         # First call the super() to reset the self counter.
         super().reset_counter()
 
-        # Then clear all the island counters.
-        for op in self._items.operator:
-            op.reset_counter()
-    # _end_def_
-
-    def all_counters(self) -> dict:
-        """
-        Accessor (getter) of the application counter from all
-        the internal crossovers. This is mostly to verify that
-        everything is working as expected.
-
-        :return: a dictionary with the counter calls for all
-                 crossover methods.
-        """
-        return {
-            f"{n}-{gen_op.__class__.__name__}": gen_op.counter
-            for n, gen_op in enumerate(self._items.operator)
-        }
+        # Then call the _items to reset the island counter.
+        self._items.reset_island_counters()
     # _end_def_
 
 # _end_class_
