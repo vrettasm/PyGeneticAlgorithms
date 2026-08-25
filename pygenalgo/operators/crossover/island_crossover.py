@@ -42,6 +42,28 @@ class IslandCrossover(CrossoverOperator):
                             f"'crossx_ops' items must be of type CrossoverOperator.")
     # _end_def_
 
+    @property
+    def probability(self) -> float:
+        """
+        Accessor (getter) of the _items probability.
+
+        :return: the float value of the probability.
+        """
+        return self._items.operator.probability
+    # _end_def_
+
+    @probability.setter
+    def probability(self, new_value: float) -> None:
+        """
+        Accessor (setter) of the _items probability.
+
+        :param new_value: (float) in [0, 1].
+        """
+        # Assign the new probability to the composed
+        # _items operator.
+        self._items.operator.probability = new_value
+    # _end_def_
+
     def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Offsprings:
         """
         Perform the crossover operation on the two input parent
