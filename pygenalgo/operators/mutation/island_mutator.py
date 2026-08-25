@@ -29,7 +29,9 @@ class IslandMutator(MutationOperator):
 
         :return: None.
         """
-        # Call the super constructor with the provided initial value.
+        # Call the super() constructor with an initial probability.
+        # Note: This probability is never used. We use directly the
+        # probability values of the genetic operators in the _items.
         super().__init__(mutation_probability=mutate_probability)
 
         # Sanity check.
