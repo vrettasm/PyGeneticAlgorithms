@@ -2,7 +2,7 @@
 from pygenalgo.operators.genetic_operator import GeneticOperator
 
 
-class IslandOperator:
+class IslandManager:
     """
     TBD:
     """
