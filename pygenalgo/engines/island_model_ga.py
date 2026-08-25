@@ -280,8 +280,8 @@ class IslandModelGA(GenericGA):
             fit_list_0, _ = self.evaluate_fitness(pop_n.population,
                                                   parallel_mode=True,
                                                   backend="loky")
-            # Compute the initial mean/std values
-            # and update the stats[pop_n.id].
+
+            # Compute the initial mean/std values and update the stats[pop_n.id].
             _, _ = self.update_stats(fit_list_0, self.stats[p_id])
 
             # Store the initial crossover and mutation probabilities.
