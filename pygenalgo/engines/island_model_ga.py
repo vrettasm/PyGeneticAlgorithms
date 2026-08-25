@@ -131,8 +131,7 @@ class IslandModelGA(GenericGA):
 
         # Update the pointers of the IslandManagers.
         for gen_op in (self.select_op, self.mutate_op, self.crossx_op):
-            if hasattr(gen_op, "_items") and\
-                    isinstance(gen_op.items, IslandManager):
+            if isinstance(gen_op.items, IslandManager):
                 gen_op.items.idx = island.id
         # _end_for_
 
