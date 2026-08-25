@@ -31,7 +31,7 @@ class IslandManager:
     # _end_def_
 
     @property
-    def operator(self) -> list:
+    def operators_list(self) -> list[GeneticOperator]:
         """
         TBD
 
