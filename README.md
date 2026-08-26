@@ -37,6 +37,12 @@ in parallel mode by definition.
   > have also been added to demonstrate their use.
   > 
 
+  > **MORE NEWS!!**:
+  > The IslandModelGA engine has been enhanced and with the addition of three new 'IslandOperators' it can now
+  > use a different set of genetic operators for each island (subpopulation), thus allowing them to evolve in
+  > completely different ways.
+  > 
+
 The current implementation provides (out of the box) a wide variety of genetic operators, including:
 
 - **Selection operators**:
