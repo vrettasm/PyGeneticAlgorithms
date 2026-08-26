@@ -97,8 +97,7 @@ class MultiObjectiveGA(GenericGA):
         print_interval: int = config.epochs // 10 if config.epochs > 10 else 2
 
         # Display an information message.
-        logger.info("Initial Avg. Fitness = %s",
-                    _to_str(avg_fitness_0))
+        logger.info("Initial Avg. Fitness = %s", _to_str(avg_fitness_0))
 
         # Initial time instant.
         time_t0: float = time.perf_counter()
