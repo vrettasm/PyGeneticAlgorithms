@@ -80,6 +80,11 @@ The current implementation provides (out of the box) a wide variety of genetic o
   - [Meta Mutator](pygenalgo/operators/mutation/meta_mutator.py)
   - [Meta Migration](pygenalgo/operators/migration/meta_migration.py)
 
+- **Island operators**
+  - [Island Selector](pygenalgo/operators/selection/island_selector.py)
+  - [Island Crossover](pygenalgo/operators/crossover/island_crossover.py)
+  - [Island Mutator](pygenalgo/operators/mutation/island_mutator.py)
+
 **NOTE(1):** Meta operators call randomly other compatible operators (selection/crossover/mutation/migration)
 from a predefined set, with equal probability.
 
