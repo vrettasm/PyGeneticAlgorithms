@@ -33,7 +33,7 @@ class IslandSelector(SelectionOperator):
         # Call the super() constructor with an initial probability.
         super().__init__(selection_probability=select_probability)
 
-        # Create an IslandOperator.
+        # Create an IslandManager to handle the operators.
         self._items: IslandManager = IslandManager(operators=select_ops)
 
         # Sanity check.
