@@ -91,6 +91,13 @@ from a predefined set, with equal probability.
 **NOTE(2):** Crossover operators marked by '*' support variable chromosome lengths (VLC). By definition all
 mutation operators support VCL too, because they operate on a single chromosome at a time.
 
+**NOTE(3):** Island operators are intended to work only with the IslandModelGA. They are designed to hold a list
+of other operators (one for each island) and call its specific function according to the island that they belong.
+This way in the IslandModelGA all the subpopulations can evolve independently using a completely different set of
+operators.
+
+![Operators](./docs/pygenalgo_operators.png)
+
 Incorporating additional genetic operators is easily facilitated by inheriting from the base classes:
 - [SelectionOperator](pygenalgo/operators/selection/select_operator.py)
 - [CrossoverOperator](pygenalgo/operators/crossover/crossover_operator.py)
