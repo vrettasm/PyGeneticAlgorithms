@@ -76,6 +76,14 @@ pygenalgo.operators.mutation.polynomial\_mutator module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.mutation.island\_mutator module
+---------------------------------------------------
+
+.. automodule:: pygenalgo.operators.mutation.island_mutator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

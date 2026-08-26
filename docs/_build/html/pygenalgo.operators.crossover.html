@@ -468,6 +468,66 @@ from the parents is proportional to the distance between the parents themselves.
 </dd></dl>
 
 </section>
+<section id="module-pygenalgo.operators.crossover.island_crossover">
+<span id="pygenalgo-operators-crossover-island-crossover-module"></span><h2>pygenalgo.operators.crossover.island_crossover module<a class="headerlink" href="#module-pygenalgo.operators.crossover.island_crossover" title="Link to this heading"></a></h2>
+<p>Island-crossover module.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pygenalgo.operators.crossover.island_crossover.IslandCrossover">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.crossover.island_crossover.</span></span><span class="sig-name descname"><span class="pre">IslandCrossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crossover_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crossx_ops</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pygenalgo.operators.crossover.crossover_operator.CrossoverOperator" title="pygenalgo.operators.crossover.crossover_operator.CrossoverOperator"><span class="pre">CrossoverOperator</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/crossover/island_crossover.html#IslandCrossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.crossover.island_crossover.IslandCrossover" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.crossover.crossover_operator.CrossoverOperator" title="pygenalgo.operators.crossover.crossover_operator.CrossoverOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">CrossoverOperator</span></code></a></p>
+<p>Description:</p>
+<blockquote>
+<div><p>Island-crossover performs the crossover of individuals (offspring) for
+each island. The object holds a list of CrossoverOperator objects along
+with a pointer that is unique for each island.</p>
+<p>Once the pointer is set, the crossover is performed using the predefined
+CrossoverOperator that corresponds to the specific island.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.operators.crossover.island_crossover.IslandCrossover.crossover">
+<span class="sig-name descname"><span class="pre">crossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/crossover/island_crossover.html#IslandCrossover.crossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.crossover.island_crossover.IslandCrossover.crossover" title="Link to this definition"></a></dt>
+<dd><p>Perform the crossover operation on the two input parent
+chromosomes, by selecting randomly a predefined method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent1</strong> – (Chromosome).</p></li>
+<li><p><strong>parent2</strong> – (Chromosome).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>child1 and child2 (as Chromosomes).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pygenalgo.operators.crossover.island_crossover.IslandCrossover.probability">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probability</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#pygenalgo.operators.crossover.island_crossover.IslandCrossover.probability" title="Link to this definition"></a></dt>
+<dd><p>Accessor (getter) of the _items probability.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the float value of the probability.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.operators.crossover.island_crossover.IslandCrossover.reset_counter">
+<span class="sig-name descname"><span class="pre">reset_counter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/crossover/island_crossover.html#IslandCrossover.reset_counter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.crossover.island_crossover.IslandCrossover.reset_counter" title="Link to this definition"></a></dt>
+<dd><p>Sets ALL the counters to ‘zero’. We have to override the
+super().reset_counter() method,  because we have to call
+explicitly the reset_counter on all the internal operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-pygenalgo.operators.crossover">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pygenalgo.operators.crossover" title="Link to this heading"></a></h2>
 </section>
