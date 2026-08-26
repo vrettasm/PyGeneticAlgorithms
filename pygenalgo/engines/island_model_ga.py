@@ -182,11 +182,14 @@ class IslandModelGA(GenericGA):
 
             # Check if 'elitism' is enabled.
             if elitism:
+                # Define the key.
+                key_sort: Callable = attrgetter("fitness")
+
                 # Find the individual chromosome with the highest fitness
                 # value from the old subpopulation of the current island.
                 previous_best: Chromosome = max(
                     (p for p in island.population if p.fitness is not None),
-                    key=attrgetter("fitness"), default=None
+                    key=key_sort, default=None
                 )
 
                 # Check if the chromosome already exists.

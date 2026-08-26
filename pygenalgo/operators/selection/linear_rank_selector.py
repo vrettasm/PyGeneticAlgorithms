@@ -1,5 +1,6 @@
 """ Linear rank selector module. """
 from math import fsum
+from typing import Callable
 from operator import attrgetter
 from functools import lru_cache
 
@@ -119,9 +120,11 @@ class LinearRankSelector(SelectionOperator):
         # the pressure adjustment parameter 'eta' (as _items).
         selection_probs = LinearRankSelector.probabilities(pop_size,
                                                            eta=self._items)
+        # Define the key.
+        key_sort: Callable = attrgetter("fitness")
 
-        # Sort the population in ascending order using their fitness value.
-        sorted_population = sorted(population, key=attrgetter("fitness"))
+        # Sort the population in ascending order using fitness.
+        sorted_population = sorted(population, key=key_sort)
 
         # Select the new individuals (indexes).
         index = self.rng.choice(pop_size, size=pop_size, p=selection_probs,

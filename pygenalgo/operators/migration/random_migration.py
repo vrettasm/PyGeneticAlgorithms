@@ -1,4 +1,5 @@
 """ Random migration module. """
+from typing import Callable
 from operator import attrgetter
 
 # Custom code imports.
@@ -37,7 +38,7 @@ class RandomMigration(MigrationOperator):
         # active populations.
         if len(islands) > 1:
             # Define the key.
-            key_sort = attrgetter("fitness")
+            key_sort: Callable = attrgetter("fitness")
 
             # First find the best individual chromosome
             # FROM EACH island.

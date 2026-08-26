@@ -476,10 +476,13 @@ class GenericGA:
 
         :return: Return the chromosome with the highest fitness.
         """
+        # Define the key.
+        key_sort: Callable = attrgetter("fitness")
+
         # Return the chromosome with the highest fitness.
         return max(
             (p for p in self.population if p.fitness is not None),
-            key=attrgetter("fitness"), default=None
+            key=key_sort, default=None
         )
     # _end_def_
 
@@ -505,10 +508,13 @@ class GenericGA:
                                f"Best {n} exceeds population size.")
         # _end_if_
 
+        # Define the key.
+        key_sort: Callable = attrgetter("fitness")
+
         # Sort the population in descending order.
         sorted_population: list[Chromosome] = sorted(
             [p for p in self.population if p.fitness is not None],
-            key=attrgetter("fitness"), reverse=True
+            key=key_sort, reverse=True
         )
 
         # Return the best 'n' chromosomes.

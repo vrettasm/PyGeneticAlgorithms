@@ -1,4 +1,5 @@
 """ Neighborhood selector module. """
+from typing import Callable
 from operator import attrgetter
 
 # Third party import.
@@ -72,7 +73,7 @@ class NeighborhoodSelector(SelectionOperator):
         neighborhood: NDArray = x_sorted[:, :self._items]
 
         # Define the key.
-        key_sort = attrgetter("fitness")
+        key_sort: Callable = attrgetter("fitness")
 
         # Return the new parents.
         return [
