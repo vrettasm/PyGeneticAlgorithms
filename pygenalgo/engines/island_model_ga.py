@@ -444,10 +444,8 @@ class IslandModelGA(GenericGA):
                                 itr = int(i*n_epochs + has_converged[1])
 
                                 # Log a warning message to the screen.
-                                logger.warning(
-                                    "Island population %s finished in %s iterations.",
-                                    island_id, itr
-                                )
+                                logger.warning("Island population %s finished in %s iterations.",
+                                               island_id, itr)
                             # _end_if_
                         else:
                             # Add the island population to the new active list.
