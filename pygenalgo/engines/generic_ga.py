@@ -671,7 +671,7 @@ class GenericGA:
         p_size: int = len(fitness_i)
 
         # Preallocate the fitness list.
-        fitness_values: list[Fitness] = [None] * p_size
+        fitness_values: list[float] = [None] * p_size
 
         # Flag to indicate if a solution has been found.
         found_solution: bool = False
