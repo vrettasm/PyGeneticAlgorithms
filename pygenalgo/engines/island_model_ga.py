@@ -429,9 +429,8 @@ class IslandModelGA(GenericGA):
                             )
 
                             # Log an update of the progress.
-                            logger.info(
-                                "Best Fitness in island %s is:= %.5f",
-                                island_id, best_fitness)
+                            logger.info("Best Fitness in island %s is:= %.5f",
+                                        island_id, best_fitness)
                         # _end_if_
 
                         # First check if the island has converged.
