@@ -34,7 +34,7 @@ class IslandModelGA(GenericGA):
     """
 
     # Object variables (specific for the IslandModel).
-    __slots__ = ("_num_islands", "_migrate_op")
+    __slots__ = ("_num_islands", "_migrate_op", "_termination_order")
 
     def __init__(self, num_islands: int,
                  migrate_op: MigrationOperator, **kwargs) -> None:
@@ -67,6 +67,9 @@ class IslandModelGA(GenericGA):
 
         # Get Migration Operator.
         self._migrate_op: MigrationOperator = migrate_op
+
+        # It is used to keep the final order of termination.
+        self._termination_order: Optional[list[int]] = None
     # _end_def_
 
     @property
@@ -329,6 +332,9 @@ class IslandModelGA(GenericGA):
         # Final population.
         final_population = []
 
+        # Termination order list.
+        self._termination_order = []
+
         # Local copy of evolve population.
         fn_evolve: Callable = self._evolve_population
 
@@ -437,6 +443,9 @@ class IslandModelGA(GenericGA):
                             # Copy the population in the final list.
                             final_population.extend(island.population)
 
+                            # Update the termination list with the id.
+                            self._termination_order.append(island_id)
+
                             # Check for verbosity.
                             if config.verbose:
                                 # Compute the total number of iterations.
@@ -485,6 +494,7 @@ class IslandModelGA(GenericGA):
             # Get the rest of the populations that have not yet converged.
             for pop_n in active_population:
                 final_population.extend(pop_n.population)
+                self._termination_order.append(pop_n.id)
             # _end_for_
 
         else:
@@ -509,8 +519,11 @@ class IslandModelGA(GenericGA):
                                 island_id, has_converged[1])
                 # _end_if_
 
-                # Copy only the population.
+                # Copy the island population.
                 final_population.extend(island.population)
+
+                # Update the termination list with the id.
+                self._termination_order.append(island_id)
 
                 # Update the statistics.
                 self.stats[island_id]["avg"].extend(local_stats["avg"])
@@ -543,6 +556,16 @@ class IslandModelGA(GenericGA):
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
+    # _end_def_
+
+    @property
+    def termination_order(self) -> list[int] | None:
+        """
+        Provides access to the final termination order.
+
+        :return: the termination order (or None).
+        """
+        return self._termination_order
     # _end_def_
 
     def print_migration_stats(self) -> None:
