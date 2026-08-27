@@ -755,7 +755,6 @@ class GenericGA:
             for op in self._mutate_op.items:
                 print(op)
             # _end_for_
-
     # _end_def_
 
     def run(self, config: Optional[RunConfig] = None) -> None:
