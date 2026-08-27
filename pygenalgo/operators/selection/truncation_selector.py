@@ -1,10 +1,12 @@
 """ Truncation selection module. """
+from typing import Callable
 from operator import attrgetter
 
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.genetic_operator import increase_counter
 from pygenalgo.operators.selection.select_operator import SelectionOperator
+
 
 class TruncationSelector(SelectionOperator):
     """
@@ -51,10 +53,13 @@ class TruncationSelector(SelectionOperator):
         # Get the population size.
         pop_size: int = len(population)
 
+        # Define the key.
+        key_sort: Callable = attrgetter("fitness")
+
         # Sort the population in descending order using
         # their fitness value.
         sorted_population: list[Chromosome] = sorted(
-            population, key=attrgetter("fitness"), reverse=True
+            population, key=key_sort, reverse=True
         )
 
         # Set the upper value for the sample range.

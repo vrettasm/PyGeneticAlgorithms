@@ -1,4 +1,5 @@
 """ Random migration module. """
+from typing import Callable
 from operator import attrgetter
 
 # Custom code imports.
@@ -37,7 +38,7 @@ class RandomMigration(MigrationOperator):
         # active populations.
         if len(islands) > 1:
             # Define the key.
-            key_sort = attrgetter("fitness")
+            key_sort: Callable = attrgetter("fitness")
 
             # First find the best individual chromosome
             # FROM EACH island.
@@ -59,13 +60,11 @@ class RandomMigration(MigrationOperator):
                     pop_size: int = len(island_i.population)
 
                     # Select randomly one individual chromosome.
-                    idx: int = self.rng.integers(0, pop_size, dtype=int)
+                    idx: int = self.rng.integers(pop_size, dtype=int)
 
                     # Replace the randomly selected chromosome with
                     # the pre-selected best one from the list above.
                     island_i.population[idx] = best_j.clone()
-                # _end_if_
-
             # _end_for_
 
             # Increase the migration counter.

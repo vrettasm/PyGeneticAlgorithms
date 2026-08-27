@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; PyGenAlgo 2.1.1 documentation</title>
+  <title>Index &mdash; PyGenAlgo 2.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=841abef3"></script>
+      <script src="_static/documentation_options.js?v=b21de401"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -183,14 +183,16 @@
       </ul></li>
       <li><a href="pygenalgo.utils.html#pygenalgo.utils.utilities.cost_function">cost_function() (in module pygenalgo.utils.utilities)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.counter">counter (pygenalgo.operators.genetic_operator.GeneticOperator property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.blend_crossover.BlendCrossover.crossover">crossover() (pygenalgo.operators.crossover.blend_crossover.BlendCrossover method)</a>
 
       <ul>
         <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.crossover_operator.CrossoverOperator.crossover">(pygenalgo.operators.crossover.crossover_operator.CrossoverOperator method)</a>
+</li>
+        <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.island_crossover.IslandCrossover.crossover">(pygenalgo.operators.crossover.island_crossover.IslandCrossover method)</a>
 </li>
         <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.meta_crossover.MetaCrossover.crossover">(pygenalgo.operators.crossover.meta_crossover.MetaCrossover method)</a>
 </li>
@@ -303,13 +305,15 @@
 </li>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.gene.Gene">Gene (class in pygenalgo.genome.gene)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA">GenericGA (class in pygenalgo.engines.generic_ga)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator">GeneticOperator (class in pygenalgo.operators.genetic_operator)</a>
 </li>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.genome">genome (pygenalgo.genome.chromosome.Chromosome property)</a>
+</li>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_manager.IslandManager.get_all_counters">get_all_counters() (pygenalgo.engines.island_manager.IslandManager method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -331,23 +335,31 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.SubPopulation.id">id (pygenalgo.utils.auxiliary.SubPopulation property)</a>
 </li>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_manager.IslandManager.idx">idx (pygenalgo.engines.island_manager.IslandManager property)</a>
+</li>
       <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.inc_counter">inc_counter() (pygenalgo.operators.genetic_operator.GeneticOperator method)</a>
 </li>
       <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.increase_counter">increase_counter() (in module pygenalgo.operators.genetic_operator)</a>
-</li>
-      <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.individual_fitness">individual_fitness() (pygenalgo.engines.generic_ga.GenericGA method)</a>
 </li>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.invalidate_fitness">invalidate_fitness() (pygenalgo.genome.chromosome.Chromosome method)</a>
 </li>
       <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.inverse_mutator.InverseMutator">InverseMutator (class in pygenalgo.operators.mutation.inverse_mutator)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.is_operator_applicable">is_operator_applicable() (pygenalgo.operators.genetic_operator.GeneticOperator method)</a>
 </li>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.gene.Gene.is_valid">is_valid (pygenalgo.genome.gene.Gene property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.island_crossover.IslandCrossover">IslandCrossover (class in pygenalgo.operators.crossover.island_crossover)</a>
+</li>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_manager.IslandManager">IslandManager (class in pygenalgo.engines.island_manager)</a>
+</li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA">IslandModelGA (class in pygenalgo.engines.island_model_ga)</a>
+</li>
+      <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.island_mutator.IslandMutator">IslandMutator (class in pygenalgo.operators.mutation.island_mutator)</a>
+</li>
+      <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.island_selector.IslandSelector">IslandSelector (class in pygenalgo.operators.selection.island_selector)</a>
 </li>
       <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.items">items (pygenalgo.operators.genetic_operator.GeneticOperator property)</a>
 </li>
@@ -371,6 +383,8 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.make_islands">make_islands() (pygenalgo.engines.island_model_ga.IslandModelGA method)</a>
+</li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.MAX_CPUs">MAX_CPUs (pygenalgo.engines.generic_ga.GenericGA attribute)</a>
 </li>
       <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.meta_crossover.MetaCrossover">MetaCrossover (class in pygenalgo.operators.crossover.meta_crossover)</a>
@@ -405,6 +419,8 @@
 </li>
         <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.generic_ga">pygenalgo.engines.generic_ga</a>
 </li>
+        <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.island_manager">pygenalgo.engines.island_manager</a>
+</li>
         <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.island_model_ga">pygenalgo.engines.island_model_ga</a>
 </li>
         <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.multi_objective_ga">pygenalgo.engines.multi_objective_ga</a>
@@ -424,6 +440,8 @@
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.blend_crossover">pygenalgo.operators.crossover.blend_crossover</a>
 </li>
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.crossover_operator">pygenalgo.operators.crossover.crossover_operator</a>
+</li>
+        <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.island_crossover">pygenalgo.operators.crossover.island_crossover</a>
 </li>
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.meta_crossover">pygenalgo.operators.crossover.meta_crossover</a>
 </li>
@@ -461,6 +479,8 @@
 </li>
         <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.inverse_mutator">pygenalgo.operators.mutation.inverse_mutator</a>
 </li>
+        <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.island_mutator">pygenalgo.operators.mutation.island_mutator</a>
+</li>
         <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.meta_mutator">pygenalgo.operators.mutation.meta_mutator</a>
 </li>
         <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.mutate_operator">pygenalgo.operators.mutation.mutate_operator</a>
@@ -476,6 +496,8 @@
         <li><a href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection">pygenalgo.operators.selection</a>
 </li>
         <li><a href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.boltzmann_selector">pygenalgo.operators.selection.boltzmann_selector</a>
+</li>
+        <li><a href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.island_selector">pygenalgo.operators.selection.island_selector</a>
 </li>
         <li><a href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.linear_rank_selector">pygenalgo.operators.selection.linear_rank_selector</a>
 </li>
@@ -518,6 +540,8 @@
         <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.gaussian_mutator.GaussianMutator.mutate">(pygenalgo.operators.mutation.gaussian_mutator.GaussianMutator method)</a>
 </li>
         <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.inverse_mutator.InverseMutator.mutate">(pygenalgo.operators.mutation.inverse_mutator.InverseMutator method)</a>
+</li>
+        <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.island_mutator.IslandMutator.mutate">(pygenalgo.operators.mutation.island_mutator.IslandMutator method)</a>
 </li>
         <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.meta_mutator.MetaMutator.mutate">(pygenalgo.operators.mutation.meta_mutator.MetaMutator method)</a>
 </li>
@@ -574,8 +598,12 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.crossover_operator.Offsprings">Offsprings (in module pygenalgo.operators.crossover.crossover_operator)</a>
 </li>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_manager.IslandManager.operator">operator (pygenalgo.engines.island_manager.IslandManager property)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_manager.IslandManager.operators_list">operators_list (pygenalgo.engines.island_manager.IslandManager property)</a>
+</li>
       <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.order_crossover.OrderCrossover">OrderCrossover (class in pygenalgo.operators.crossover.order_crossover)</a>
 </li>
   </ul></td>
@@ -626,8 +654,16 @@
 </li>
       <li><a href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.Probability">Probability (class in pygenalgo.utils.auxiliary)</a>
 </li>
-      <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.probability">probability (pygenalgo.operators.genetic_operator.GeneticOperator property)</a>
+      <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.island_crossover.IslandCrossover.probability">probability (pygenalgo.operators.crossover.island_crossover.IslandCrossover property)</a>
+
+      <ul>
+        <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.probability">(pygenalgo.operators.genetic_operator.GeneticOperator property)</a>
 </li>
+        <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.island_mutator.IslandMutator.probability">(pygenalgo.operators.mutation.island_mutator.IslandMutator property)</a>
+</li>
+        <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.island_selector.IslandSelector.probability">(pygenalgo.operators.selection.island_selector.IslandSelector property)</a>
+</li>
+      </ul></li>
       <li>
     pygenalgo
 
@@ -647,6 +683,13 @@
 
       <ul>
         <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.generic_ga">module</a>
+</li>
+      </ul></li>
+      <li>
+    pygenalgo.engines.island_manager
+
+      <ul>
+        <li><a href="pygenalgo.engines.html#module-pygenalgo.engines.island_manager">module</a>
 </li>
       </ul></li>
       <li>
@@ -720,6 +763,13 @@
 </li>
       </ul></li>
       <li>
+    pygenalgo.operators.crossover.island_crossover
+
+      <ul>
+        <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.island_crossover">module</a>
+</li>
+      </ul></li>
+      <li>
     pygenalgo.operators.crossover.meta_crossover
 
       <ul>
@@ -775,6 +825,8 @@
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.uniform_crossover">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pygenalgo.operators.genetic_operator
 
@@ -782,8 +834,6 @@
         <li><a href="pygenalgo.operators.html#module-pygenalgo.operators.genetic_operator">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pygenalgo.operators.migration
 
@@ -848,6 +898,13 @@
 </li>
       </ul></li>
       <li>
+    pygenalgo.operators.mutation.island_mutator
+
+      <ul>
+        <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.island_mutator">module</a>
+</li>
+      </ul></li>
+      <li>
     pygenalgo.operators.mutation.meta_mutator
 
       <ul>
@@ -901,6 +958,13 @@
 
       <ul>
         <li><a href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.boltzmann_selector">module</a>
+</li>
+      </ul></li>
+      <li>
+    pygenalgo.operators.selection.island_selector
+
+      <ul>
+        <li><a href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.island_selector">module</a>
 </li>
       </ul></li>
       <li>
@@ -1015,26 +1079,34 @@
 </li>
       <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.random_selector.RandomSelector">RandomSelector (class in pygenalgo.operators.selection.random_selector)</a>
 </li>
-      <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.meta_crossover.MetaCrossover.reset_counter">reset_counter() (pygenalgo.operators.crossover.meta_crossover.MetaCrossover method)</a>
+      <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.island_crossover.IslandCrossover.reset_counter">reset_counter() (pygenalgo.operators.crossover.island_crossover.IslandCrossover method)</a>
 
       <ul>
+        <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.meta_crossover.MetaCrossover.reset_counter">(pygenalgo.operators.crossover.meta_crossover.MetaCrossover method)</a>
+</li>
         <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.reset_counter">(pygenalgo.operators.genetic_operator.GeneticOperator method)</a>
 </li>
         <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.meta_migration.MetaMigration.reset_counter">(pygenalgo.operators.migration.meta_migration.MetaMigration method)</a>
 </li>
+        <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.island_mutator.IslandMutator.reset_counter">(pygenalgo.operators.mutation.island_mutator.IslandMutator method)</a>
+</li>
         <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.meta_mutator.MetaMutator.reset_counter">(pygenalgo.operators.mutation.meta_mutator.MetaMutator method)</a>
+</li>
+        <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.island_selector.IslandSelector.reset_counter">(pygenalgo.operators.selection.island_selector.IslandSelector method)</a>
 </li>
         <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.meta_selector.MetaSelector.reset_counter">(pygenalgo.operators.selection.meta_selector.MetaSelector method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_manager.IslandManager.reset_island_counters">reset_island_counters() (pygenalgo.engines.island_manager.IslandManager method)</a>
+</li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.rng">rng (pygenalgo.engines.generic_ga.GenericGA property)</a>
 
       <ul>
         <li><a href="pygenalgo.operators.html#pygenalgo.operators.genetic_operator.GeneticOperator.rng">(pygenalgo.operators.genetic_operator.GeneticOperator property)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.rng_GA">rng_GA (pygenalgo.engines.generic_ga.GenericGA attribute)</a>
 </li>
       <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.roulette_wheel_selector.RouletteWheelSelector">RouletteWheelSelector (class in pygenalgo.operators.selection.roulette_wheel_selector)</a>
@@ -1068,6 +1140,8 @@
       <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.boltzmann_selector.BoltzmannSelector.select">select() (pygenalgo.operators.selection.boltzmann_selector.BoltzmannSelector method)</a>
 
       <ul>
+        <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.island_selector.IslandSelector.select">(pygenalgo.operators.selection.island_selector.IslandSelector method)</a>
+</li>
         <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector.select">(pygenalgo.operators.selection.linear_rank_selector.LinearRankSelector method)</a>
 </li>
         <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.meta_selector.MetaSelector.select">(pygenalgo.operators.selection.meta_selector.MetaSelector method)</a>
@@ -1137,6 +1211,8 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.termination_order">termination_order (pygenalgo.engines.island_model_ga.IslandModelGA property)</a>
+</li>
       <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.tournament_selector.TournamentSelector">TournamentSelector (class in pygenalgo.operators.selection.tournament_selector)</a>
 </li>
   </ul></td>

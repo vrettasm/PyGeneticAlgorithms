@@ -6,7 +6,7 @@
 
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 
-**Pylint score: 9.81 / 10**
+**Pylint score: 9.83 / 10**
 
 This repository implements a genetic algorithm toolbox in Python3 programming language, using only *Numpy* and *Joblib*
 as additional libraries. The toolbox offers the following implementations (as engines):
@@ -35,6 +35,12 @@ in parallel mode by definition.
   > using pareto-front selection techniques. Note that both of these classes provide a base for the development
   > of possible new selection methodologies for multi-objective problems. Examples that use the new techniques
   > have also been added to demonstrate their use.
+  > 
+
+  > **MORE NEWS!!**:
+  > The IslandModelGA engine has been enhanced and with the addition of three new 'IslandOperators' it can now
+  > use a different set of genetic operators for each island (subpopulation), thus allowing them to evolve in
+  > completely different ways.
   > 
 
 The current implementation provides (out of the box) a wide variety of genetic operators, including:
@@ -80,11 +86,23 @@ The current implementation provides (out of the box) a wide variety of genetic o
   - [Meta Mutator](pygenalgo/operators/mutation/meta_mutator.py)
   - [Meta Migration](pygenalgo/operators/migration/meta_migration.py)
 
+- **Island operators**
+  - [Island Selector](pygenalgo/operators/selection/island_selector.py)
+  - [Island Crossover](pygenalgo/operators/crossover/island_crossover.py)
+  - [Island Mutator](pygenalgo/operators/mutation/island_mutator.py)
+
 **NOTE(1):** Meta operators call randomly other compatible operators (selection/crossover/mutation/migration)
 from a predefined set, with equal probability.
 
 **NOTE(2):** Crossover operators marked by '*' support variable chromosome lengths (VLC). By definition all
 mutation operators support VCL too, because they operate on a single chromosome at a time.
+
+**NOTE(3):** Island operators are intended to work only with the IslandModelGA. They are designed to hold a list
+of other operators (one for each island) and call its specific function according to the island that they belong.
+This way in the IslandModelGA all the subpopulations can evolve independently using a completely different set of
+operators.
+
+![Operators](./docs/pygenalgo_operators.png)
 
 Incorporating additional genetic operators is easily facilitated by inheriting from the base classes:
 - [SelectionOperator](pygenalgo/operators/selection/select_operator.py)

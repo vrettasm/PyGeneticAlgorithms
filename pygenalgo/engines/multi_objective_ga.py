@@ -97,8 +97,7 @@ class MultiObjectiveGA(GenericGA):
         print_interval: int = config.epochs // 10 if config.epochs > 10 else 2
 
         # Display an information message.
-        logger.info("Initial Avg. Fitness = %s",
-                    _to_str(avg_fitness_0))
+        logger.info("Initial Avg. Fitness = %s", _to_str(avg_fitness_0))
 
         # Initial time instant.
         time_t0: float = time.perf_counter()
@@ -165,7 +164,6 @@ class MultiObjectiveGA(GenericGA):
 
                     # Update the list of fitness values to reflect the update.
                     fit_list_i[locus] = population_i[locus].fitness
-                # _end_if_
             # _end_if_
 
             # Update the mean / std in the dictionary.
@@ -173,10 +171,8 @@ class MultiObjectiveGA(GenericGA):
 
             # Log the information message.
             if config.verbose and (i % print_interval) == 0:
-                logger.info(
-                    "Epoch: %5d -> Avg. Fitness = %s, Spread = %s",
-                    i+1, _to_str(avg_fitness_i), _to_str(std_fitness_i)
-                )
+                logger.info("Epoch: %5d -> Avg. Fitness = %s, Spread = %s",
+                            i+1, _to_str(avg_fitness_i), _to_str(std_fitness_i))
             # _end_if_
 
             # Update the old population with the current.
@@ -186,10 +182,8 @@ class MultiObjectiveGA(GenericGA):
             if config.f_max_eval is not None and\
                     self.f_evals >= config.f_max_eval:
                 # Log a warning message.
-                logger.warning(
-                    "%s reached the maximum number of function evaluations: %d",
-                    self.__class__.__name__, config.f_max_eval
-                )
+                logger.warning("%s reached the maximum number of function evaluations: %d",
+                               self.__class__.__name__, config.f_max_eval)
 
                 # Final update the mean value.
                 avg_fitness_0 = avg_fitness_i
@@ -233,9 +227,7 @@ class MultiObjectiveGA(GenericGA):
         time_tf: float = time.perf_counter()
 
         # Display the final average fitness value.
-        logger.info(
-            "Final Avg. Fitness = %s", _to_str(avg_fitness_0)
-        )
+        logger.info("Final Avg. Fitness = %s", _to_str(avg_fitness_0))
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")

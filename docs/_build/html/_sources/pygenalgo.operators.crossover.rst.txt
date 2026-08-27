@@ -84,6 +84,15 @@ pygenalgo.operators.crossover.simulated\_binary\_crossover module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.crossover.island\_crossover module
+------------------------------------------------------
+
+.. automodule:: pygenalgo.operators.crossover.island_crossover
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 Module contents
 ---------------
 

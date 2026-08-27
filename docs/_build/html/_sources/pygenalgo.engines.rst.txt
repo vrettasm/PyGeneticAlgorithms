@@ -36,6 +36,14 @@ pygenalgo.engines.multi\_objective\_ga module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.engines.island\_manager module
+----------------------------------------
+
+.. automodule:: pygenalgo.engines.island_manager
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

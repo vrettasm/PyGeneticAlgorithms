@@ -1,4 +1,5 @@
 """ Tournament selector module. """
+from typing import Callable
 from operator import attrgetter
 
 # Third party code imports.
@@ -71,7 +72,7 @@ class TournamentSelector(SelectionOperator):
         ], dtype=int)
 
         # Define the key.
-        key_sort = attrgetter("fitness")
+        key_sort: Callable = attrgetter("fitness")
 
         # Return the new parents.
         return [

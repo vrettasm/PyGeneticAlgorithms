@@ -476,10 +476,13 @@ class GenericGA:
 
         :return: Return the chromosome with the highest fitness.
         """
+        # Define the key.
+        key_sort: Callable = attrgetter("fitness")
+
         # Return the chromosome with the highest fitness.
         return max(
             (p for p in self.population if p.fitness is not None),
-            key=attrgetter("fitness"), default=None
+            key=key_sort, default=None
         )
     # _end_def_
 
@@ -505,10 +508,13 @@ class GenericGA:
                                f"Best {n} exceeds population size.")
         # _end_if_
 
+        # Define the key.
+        key_sort: Callable = attrgetter("fitness")
+
         # Sort the population in descending order.
         sorted_population: list[Chromosome] = sorted(
             [p for p in self.population if p.fitness is not None],
-            key=attrgetter("fitness"), reverse=True
+            key=key_sort, reverse=True
         )
 
         # Return the best 'n' chromosomes.
@@ -626,17 +632,6 @@ class GenericGA:
         return [p.fitness for p in self.population]
     # _end_def_
 
-    def individual_fitness(self, index: int) -> float:
-        """
-        Get the fitness value of an individual member of the population.
-
-        :param index: Position of the individual in the population.
-
-        :return: The fitness value (float).
-        """
-        return self.population[index].fitness
-    # _end_def_
-
     def evaluate_fitness(self, input_population: list[Chromosome],
                          parallel_mode: bool = False,
                          backend: str = "threading") -> tuple[list[Fitness], bool]:
@@ -657,19 +652,19 @@ class GenericGA:
         :return: a list with the fitness values and the found solution flag.
         """
         # Get a local copy of the fitness function.
-        fit_func: Callable = self.fitness_func
+        fit_func = self.fitness_func
 
         # Check the 'parallel_mode' flag.
         if parallel_mode:
 
             # Evaluate the chromosomes in parallel mode.
-            fitness_i = Parallel(n_jobs=self._n_cpus, backend=backend)(
+            fitness_i: list = Parallel(n_jobs=self._n_cpus, backend=backend)(
                 delayed(fit_func)(p) for p in input_population
             )
         else:
 
             # Evaluate the chromosomes in serial mode.
-            fitness_i = [fit_func(p) for p in input_population]
+            fitness_i: list = [fit_func(p) for p in input_population]
         # _end_if_
 
         # Get the size of the population.
@@ -723,10 +718,8 @@ class GenericGA:
             self._f_evals += f_counts
 
             # Log the corrections.
-            logger.debug(
-                "> %d correction(s) took place at epoch: %d",
-                total_corrections, self._iteration
-            )
+            logger.debug("> %d correction(s) took place at epoch: %d",
+                         total_corrections, self._iteration)
 
             # Enable the flag.
             has_been_corrected = True
@@ -762,7 +755,6 @@ class GenericGA:
             for op in self._mutate_op.items:
                 print(op)
             # _end_for_
-
     # _end_def_
 
     def run(self, config: Optional[RunConfig] = None) -> None:

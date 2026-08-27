@@ -100,6 +100,14 @@ pygenalgo.operators.selection.meta\_selector module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.selection.island\_selector module
+-----------------------------------------------------
+
+.. automodule:: pygenalgo.operators.selection.island_selector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

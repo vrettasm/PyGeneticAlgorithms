@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PyGenAlgo &mdash; PyGenAlgo 2.1.1 documentation</title>
+  <title>PyGenAlgo &mdash; PyGenAlgo 2.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=841abef3"></script>
+      <script src="_static/documentation_options.js?v=b21de401"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -107,7 +107,6 @@
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.evaluate_fitness"><code class="docutils literal notranslate"><span class="pre">GenericGA.evaluate_fitness()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.f_evals"><code class="docutils literal notranslate"><span class="pre">GenericGA.f_evals</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.fitness_func"><code class="docutils literal notranslate"><span class="pre">GenericGA.fitness_func</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.individual_fitness"><code class="docutils literal notranslate"><span class="pre">GenericGA.individual_fitness()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.iteration"><code class="docutils literal notranslate"><span class="pre">GenericGA.iteration</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.mutate_op"><code class="docutils literal notranslate"><span class="pre">GenericGA.mutate_op</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.n_cpus"><code class="docutils literal notranslate"><span class="pre">GenericGA.n_cpus</span></code></a></li>
@@ -141,10 +140,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pygenalgo.engines.html#module-pygenalgo.engines.island_model_ga">pygenalgo.engines.island_model_ga module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA"><code class="docutils literal notranslate"><span class="pre">IslandModelGA</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.make_islands"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.make_islands()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.migrate_op"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.migrate_op</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.num_islands"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.num_islands</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.print_migration_stats"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.print_migration_stats()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.run"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.termination_order"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.termination_order</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.RunConfig"><code class="docutils literal notranslate"><span class="pre">RunConfig</span></code></a><ul>
@@ -209,6 +210,17 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="pygenalgo.engines.html#module-pygenalgo.engines.island_manager">pygenalgo.engines.island_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_manager.IslandManager"><code class="docutils literal notranslate"><span class="pre">IslandManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_manager.IslandManager.get_all_counters"><code class="docutils literal notranslate"><span class="pre">IslandManager.get_all_counters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_manager.IslandManager.idx"><code class="docutils literal notranslate"><span class="pre">IslandManager.idx</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_manager.IslandManager.operator"><code class="docutils literal notranslate"><span class="pre">IslandManager.operator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_manager.IslandManager.operators_list"><code class="docutils literal notranslate"><span class="pre">IslandManager.operators_list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_manager.IslandManager.reset_island_counters"><code class="docutils literal notranslate"><span class="pre">IslandManager.reset_island_counters()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="pygenalgo.engines.html#module-pygenalgo.engines">Module contents</a></li>
 </ul>
 </li>
@@ -257,6 +269,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.uniform_crossover">pygenalgo.operators.crossover.uniform_crossover module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.blend_crossover">pygenalgo.operators.crossover.blend_crossover module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.simulated_binary_crossover">pygenalgo.operators.crossover.simulated_binary_crossover module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.island_crossover">pygenalgo.operators.crossover.island_crossover module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover">Module contents</a></li>
 </ul>
 </li>
@@ -280,6 +293,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.shuffle_mutator">pygenalgo.operators.mutation.shuffle_mutator module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.swap_mutator">pygenalgo.operators.mutation.swap_mutator module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.polynomial_mutator">pygenalgo.operators.mutation.polynomial_mutator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation.island_mutator">pygenalgo.operators.mutation.island_mutator module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation">Module contents</a></li>
 </ul>
 </li>
@@ -297,6 +311,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.pareto_front_selector">pygenalgo.operators.selection.pareto_front_selector module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.pareto_tournament_selector">pygenalgo.operators.selection.pareto_tournament_selector module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.meta_selector">pygenalgo.operators.selection.meta_selector module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection.island_selector">pygenalgo.operators.selection.island_selector module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.selection.html#module-pygenalgo.operators.selection">Module contents</a></li>
 </ul>
 </li>

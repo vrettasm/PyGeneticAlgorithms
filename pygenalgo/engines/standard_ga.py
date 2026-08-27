@@ -119,7 +119,6 @@ class StandardGA(GenericGA):
 
             # Check if 'elitism' is enabled.
             if config.elitism:
-
                 # Get the reference of the best chromosome
                 # from the previous generation.
                 previous_best = self.best_chromosome()
@@ -138,7 +137,6 @@ class StandardGA(GenericGA):
 
                     # Update the list of fitness values to reflect the update.
                     fit_list_i[locus] = population_i[locus].fitness
-                # _end_if_
             # _end_if_
 
             # Update the mean/std in the dictionary.
@@ -146,10 +144,8 @@ class StandardGA(GenericGA):
 
             # Log the information message.
             if config.verbose and (i % print_interval) == 0:
-                logger.info(
-                    "Epoch: %5d -> Avg. Fitness = %.4f, Spread = %.4f",
-                    i + 1, avg_fitness_i, std_fitness_i
-                )
+                logger.info("Epoch: %5d -> Avg. Fitness = %.4f, Spread = %.4f",
+                            i + 1, avg_fitness_i, std_fitness_i)
             # _end_if_
 
             # Update the old population with current.
@@ -159,10 +155,8 @@ class StandardGA(GenericGA):
             if config.f_max_eval is not None and\
                     self.f_evals >= config.f_max_eval:
                 # Log a warning message.
-                logger.warning(
-                    "%s reached the maximum number of function evaluations: %d",
-                    self.__class__.__name__, config.f_max_eval
-                )
+                logger.warning("%s reached the maximum number of function evaluations: %d",
+                               self.__class__.__name__, config.f_max_eval)
 
                 # Final update the mean value.
                 avg_fitness_0 = avg_fitness_i

@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.engines.standard_ga &mdash; PyGenAlgo 2.1.1 documentation</title>
+  <title>pygenalgo.engines.standard_ga &mdash; PyGenAlgo 2.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=841abef3"></script>
+      <script src="../../../_static/documentation_options.js?v=b21de401"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -195,7 +195,6 @@
 
             <span class="c1"># Check if &#39;elitism&#39; is enabled.</span>
             <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">elitism</span><span class="p">:</span>
-
                 <span class="c1"># Get the reference of the best chromosome</span>
                 <span class="c1"># from the previous generation.</span>
                 <span class="n">previous_best</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_chromosome</span><span class="p">()</span>
@@ -214,7 +213,6 @@
 
                     <span class="c1"># Update the list of fitness values to reflect the update.</span>
                     <span class="n">fit_list_i</span><span class="p">[</span><span class="n">locus</span><span class="p">]</span> <span class="o">=</span> <span class="n">population_i</span><span class="p">[</span><span class="n">locus</span><span class="p">]</span><span class="o">.</span><span class="n">fitness</span>
-                <span class="c1"># _end_if_</span>
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Update the mean/std in the dictionary.</span>
@@ -222,10 +220,8 @@
 
             <span class="c1"># Log the information message.</span>
             <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">verbose</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="n">print_interval</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                    <span class="s2">&quot;Epoch: </span><span class="si">%5d</span><span class="s2"> -&gt; Avg. Fitness = </span><span class="si">%.4f</span><span class="s2">, Spread = </span><span class="si">%.4f</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">avg_fitness_i</span><span class="p">,</span> <span class="n">std_fitness_i</span>
-                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Epoch: </span><span class="si">%5d</span><span class="s2"> -&gt; Avg. Fitness = </span><span class="si">%.4f</span><span class="s2">, Spread = </span><span class="si">%.4f</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">avg_fitness_i</span><span class="p">,</span> <span class="n">std_fitness_i</span><span class="p">)</span>
             <span class="c1"># _end_if_</span>
 
             <span class="c1"># Update the old population with current.</span>
@@ -235,10 +231,8 @@
             <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">f_max_eval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span>\
                     <span class="bp">self</span><span class="o">.</span><span class="n">f_evals</span> <span class="o">&gt;=</span> <span class="n">config</span><span class="o">.</span><span class="n">f_max_eval</span><span class="p">:</span>
                 <span class="c1"># Log a warning message.</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                    <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> reached the maximum number of function evaluations: </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">f_max_eval</span>
-                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> reached the maximum number of function evaluations: </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">f_max_eval</span><span class="p">)</span>
 
                 <span class="c1"># Final update the mean value.</span>
                 <span class="n">avg_fitness_0</span> <span class="o">=</span> <span class="n">avg_fitness_i</span>
