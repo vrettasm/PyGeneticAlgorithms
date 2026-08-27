@@ -471,8 +471,6 @@ class IslandModelGA(GenericGA):
                             # Store the updated crossover and mutation values.
                             self.stats[island_id]["prob_crossx"].extend(local_stats["prob_crossx"])
                             self.stats[island_id]["prob_mutate"].extend(local_stats["prob_mutate"])
-                        # _end_if_
-
                     # _end_for_
 
                     # Check for early termination.
@@ -483,8 +481,6 @@ class IslandModelGA(GenericGA):
 
                     # Here we call the migration policy.
                     self._migrate_op(active_population)
-                # _end_for_
-
             # _end_parallel_with_
 
             # Get the rest of the populations that have not yet converged.
