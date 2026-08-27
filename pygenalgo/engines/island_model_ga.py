@@ -538,7 +538,7 @@ class IslandModelGA(GenericGA):
                                                   parallel_mode=True,
                                                   backend="loky")
         # Compute the mean value.
-        avg_fitness_final = nanmean(fit_list_final, dtype=float)
+        avg_fitness_final: float = nanmean(fit_list_final, dtype=float)
 
         # Final time instant.
         time_tf: float = time.perf_counter()
