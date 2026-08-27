@@ -277,10 +277,7 @@ class IslandModelGA(GenericGA):
         # Initial random split of the total population in active
         # subpopulations. In this context 'active' means that is
         # still evolving.
-        active_population: list[SubPopulation] = [
-            SubPopulation(pop_id=i, population=self.population[i::self._num_islands])
-            for i in range(self._num_islands)
-        ]
+        active_population: list[SubPopulation] = self.make_islands(self.population)
 
         # Initial evaluation of the subpopulations.
         for pop_n in active_population:
