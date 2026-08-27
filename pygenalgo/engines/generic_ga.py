@@ -718,10 +718,8 @@ class GenericGA:
             self._f_evals += f_counts
 
             # Log the corrections.
-            logger.debug(
-                "> %d correction(s) took place at epoch: %d",
-                total_corrections, self._iteration
-            )
+            logger.debug("> %d correction(s) took place at epoch: %d",
+                         total_corrections, self._iteration)
 
             # Enable the flag.
             has_been_corrected = True
