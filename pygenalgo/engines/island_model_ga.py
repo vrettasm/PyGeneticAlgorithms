@@ -510,10 +510,9 @@ class IslandModelGA(GenericGA):
 
                 # Check if we want to log output.
                 if has_converged[0]:
-                    logger.info(
-                        "Island population %s, finished in %s iterations.",
-                        island_id, has_converged[1]
-                    )
+                    logger.info("Island population %s, finished in %s iterations.",
+                                island_id, has_converged[1])
+                # _end_if_
 
                 # Copy only the population.
                 final_population.extend(island.population)
