@@ -168,7 +168,7 @@ class IslandModelGA(GenericGA):
                 island.population = population_i
 
                 # Update the average statistics in the local_stats.
-                _, _ = self.update_stats(fit_list_i, local_stats)
+                self.update_stats(fit_list_i, local_stats)
 
                 # Exit from the loop.
                 break
