@@ -658,7 +658,7 @@ class GenericGA:
         if parallel_mode:
 
             # Evaluate the chromosomes in parallel mode.
-            fitness_i = Parallel(n_jobs=self._n_cpus, backend=backend)(
+            fitness_i: list[Fitness] = Parallel(n_jobs=self._n_cpus, backend=backend)(
                 delayed(fit_func)(p) for p in input_population
             )
         else:
