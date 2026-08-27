@@ -317,10 +317,9 @@ class IslandModelGA(GenericGA):
             new_epochs = int(total_f_counts / len(self.population))
 
             # Display a warning message.
-            logger.warning(
-                "The 'f_max_eval' parameter has been set to: %s. "
-                "The 'epochs' value has been re-adjusted to: %s\n",
-                config.f_max_eval, new_epochs)
+            logger.warning("The 'f_max_eval' parameter has been set to: %s. "
+                           "The 'epochs' value has been re-adjusted to: %s\n",
+                           config.f_max_eval, new_epochs)
         # _end_if_
 
         # Display an information message.
