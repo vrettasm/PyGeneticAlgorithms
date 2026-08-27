@@ -144,10 +144,8 @@ class StandardGA(GenericGA):
 
             # Log the information message.
             if config.verbose and (i % print_interval) == 0:
-                logger.info(
-                    "Epoch: %5d -> Avg. Fitness = %.4f, Spread = %.4f",
-                    i + 1, avg_fitness_i, std_fitness_i
-                )
+                logger.info("Epoch: %5d -> Avg. Fitness = %.4f, Spread = %.4f",
+                            i + 1, avg_fitness_i, std_fitness_i)
             # _end_if_
 
             # Update the old population with current.
