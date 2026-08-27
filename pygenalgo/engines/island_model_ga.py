@@ -242,6 +242,23 @@ class IslandModelGA(GenericGA):
         return island, has_converged, local_stats, elapsed_time
     # _end_def_
 
+    def make_islands(self, population: list[Chromosome]) -> list[SubPopulation]:
+        """
+        Creates a list of island subpopulations.
+
+        :param population: the population we want to split.
+
+        :return: a list of subpopulations.
+        """
+        # Get the total number of islands.
+        n_islands: int = self._num_islands
+
+        return [
+            SubPopulation(pop_id=i, population=population[i::n_islands])
+            for i in range(n_islands)
+        ]
+    # _end_def_
+
     def run(self, config: Optional[RunConfig] = None) -> None:
         """
         Main method of the IslandModelGA class that implements
