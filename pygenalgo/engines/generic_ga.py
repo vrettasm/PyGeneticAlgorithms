@@ -652,19 +652,19 @@ class GenericGA:
         :return: a list with the fitness values and the found solution flag.
         """
         # Get a local copy of the fitness function.
-        fit_func: Callable[[Chromosome], Fitness] = self.fitness_func
+        fit_func = self.fitness_func
 
         # Check the 'parallel_mode' flag.
         if parallel_mode:
 
             # Evaluate the chromosomes in parallel mode.
-            fitness_i: list[Fitness] = Parallel(n_jobs=self._n_cpus, backend=backend)(
+            fitness_i: list = Parallel(n_jobs=self._n_cpus, backend=backend)(
                 delayed(fit_func)(p) for p in input_population
             )
         else:
 
             # Evaluate the chromosomes in serial mode.
-            fitness_i = [fit_func(p) for p in input_population]
+            fitness_i: list = [fit_func(p) for p in input_population]
         # _end_if_
 
         # Get the size of the population.
