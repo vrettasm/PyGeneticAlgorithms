@@ -250,7 +250,7 @@ class GenericGA:
         self.population: list[Chromosome] = initial_pop.copy()
 
         # Get the fitness function.
-        self.fitness_func: Callable[[Chromosome], Fitness] = fit_func
+        self.fitness_func: Callable = fit_func
 
         # Get Selection Operator.
         self._select_op: SelectionOperator = select_op
@@ -652,7 +652,7 @@ class GenericGA:
         :return: a list with the fitness values and the found solution flag.
         """
         # Get a local copy of the fitness function.
-        fit_func: Callable[[Chromosome], Fitness] = self.fitness_func
+        fit_func: Callable = self.fitness_func
 
         # Check the 'parallel_mode' flag.
         if parallel_mode:
