@@ -64,7 +64,7 @@ class TestMetaCrossover(unittest.TestCase):
         child1, child2 = None, None
 
         # Perform the crossover n=10 times.
-        for i in range(10):
+        for _ in range(10):
             child1, child2 = self.cross_op(parent1, parent2)
         # _end_for_
 

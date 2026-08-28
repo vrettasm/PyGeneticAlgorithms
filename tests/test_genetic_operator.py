@@ -67,7 +67,7 @@ class TestGeneticOperator(unittest.TestCase):
         # Number of repetitions.
         n_repeat = 10
 
-        for i in range(n_repeat):
+        for _ in range(n_repeat):
             self.gen_op.inc_counter()
         # _end_for_
 

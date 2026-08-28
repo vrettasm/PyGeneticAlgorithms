@@ -50,8 +50,7 @@ class TestMetaMutator(unittest.TestCase):
         print("Before: ", " ".join([xi.value for xi in chromo]))
 
         # Perform the mutation 10 times.
-        for i in range(10):
-
+        for _ in range(10):
             # Perform the mutation (in place).
             self.mut_op(chromo)
         # _end_for_

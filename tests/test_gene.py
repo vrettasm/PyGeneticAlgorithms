@@ -53,10 +53,10 @@ class TestGene(unittest.TestCase):
         """
 
         # Number of Genes.
-        M = 5
+        n_genes = 5
 
         # Create a "test gene".
-        gene_1 = Gene([i for i in range(M)], lambda: randint(M))
+        gene_1 = Gene([i for i in range(n_genes)], lambda: randint(n_genes))
 
         # Make a "clone" of the first gene.
         gene_2 = gene_1.clone()

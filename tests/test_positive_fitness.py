@@ -97,8 +97,7 @@ class TestPositiveFitness(unittest.TestCase):
         expected: list[float] = []
 
         # Set the fitness values.
-        for n, p in enumerate(self.population,
-                              start=0):
+        for p in self.population:
             p.fitness = 0
             expected.append(1)
         # _end_for_

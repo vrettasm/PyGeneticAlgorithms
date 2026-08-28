@@ -54,11 +54,11 @@ class TestAuxiliary(unittest.TestCase):
         # Number of repetitions.
         n_repeats = 10
 
-        for i in range(n_repeats):
+        for _ in range(n_repeats):
             x_lower = np.random.randint(0, 5)
             x_upper = np.random.randint(6, 9)
 
-            xi = 9.0*np.random.random()
+            xi = 9.0 * np.random.random()
 
             r1 = min(max(xi, x_lower), x_upper)
             r2 = clamp(xi, x_lower, x_upper)
