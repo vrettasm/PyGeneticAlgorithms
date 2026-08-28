@@ -97,7 +97,7 @@ class IslandManager:
         everything is working as expected.
 
         :return: a dictionary with the counter calls for all
-                 mutator methods.
+                 genetic operator methods.
         """
         return {
             f"{n}-{gen_op.__class__.__name__}": gen_op.counter
