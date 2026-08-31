@@ -141,6 +141,12 @@
 <span class="sd">    solution. Default is set to False.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
+    <span class="n">only_the_best</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    If enabled it will construct the new generation (i.e. the new population)</span>
+<span class="sd">    using only the best chromosomes between the offsprings and their parents.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="c1"># Runtime settings.</span>
     <span class="n">parallel</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
@@ -258,6 +264,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_bool</span><span class="p">(</span><span class="s2">&quot;parallel&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_bool</span><span class="p">(</span><span class="s2">&quot;correction&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">correction</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_bool</span><span class="p">(</span><span class="s2">&quot;adapt_probs&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">adapt_probs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_bool</span><span class="p">(</span><span class="s2">&quot;only_the_best&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_the_best</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_bool</span><span class="p">(</span><span class="s2">&quot;allow_migration&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">allow_migration</span><span class="p">)</span>
 
         <span class="c1"># Check integer parameters.</span>
@@ -509,6 +516,34 @@
 
     <span class="c1"># _end_def_</span>
 
+<div class="viewcode-block" id="GenericGA.update_population">
+<a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.update_population">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span>
+                          <span class="n">only_the_best</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the self population. It will either accept the new</span>
+<span class="sd">        input population, or (optionallY) it will select the best</span>
+<span class="sd">        chromosome among offsprings and parents.</span>
+
+<span class="sd">        :param new_population: a list of chromosomes (offsprings) that</span>
+<span class="sd">                               have been generated at iteration &#39;i&#39;.</span>
+<span class="sd">        :param only_the_best: if enabled (set to True), it will select</span>
+<span class="sd">                              the best chromosome between the offspring</span>
+<span class="sd">                              and its parent.</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">only_the_best</span><span class="p">:</span>
+            <span class="c1"># Check every pair: (offspring, parent).</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">c1</span> <span class="k">if</span> <span class="n">c1</span><span class="o">.</span><span class="n">fitness</span> <span class="o">&gt;=</span> <span class="n">c2</span><span class="o">.</span><span class="n">fitness</span> <span class="k">else</span> <span class="n">c2</span>
+                <span class="k">for</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">new_population</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+            <span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Default setting.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">new_population</span></div>
+
+    <span class="c1"># _end_def_</span>
+
 <div class="viewcode-block" id="GenericGA.update_stats">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.update_stats">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">update_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fit_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
@@ -755,7 +790,7 @@
 <span class="sd">        :return: a list with the fitness values and the found solution flag.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get a local copy of the fitness function.</span>
-        <span class="n">fit_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_func</span>
+        <span class="n">fit_func</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_func</span>
 
         <span class="c1"># Check the &#39;parallel_mode&#39; flag.</span>
         <span class="k">if</span> <span class="n">parallel_mode</span><span class="p">:</span>
