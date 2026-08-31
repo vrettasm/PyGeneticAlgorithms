@@ -175,8 +175,9 @@ class MultiObjectiveGA(GenericGA):
                             i+1, _to_str(avg_fitness_i), _to_str(std_fitness_i))
             # _end_if_
 
-            # Update the old population with the current.
-            self.population = population_i
+            # Update the old population for the new iteration.
+            self.update_population(population_i,
+                                   config.only_the_best)
 
             # Check for the maximum function evaluations.
             if config.f_max_eval is not None and\
