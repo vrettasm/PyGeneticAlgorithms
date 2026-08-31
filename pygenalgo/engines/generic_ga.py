@@ -69,8 +69,8 @@ class RunConfig:
 
     only_the_best: bool = False
     '''
-    If enabled it will construct the new generation (new population) using
-    only the best chromosomes between the offsprings and their parents.
+    If enabled it will construct the new generation (i.e. the new population)
+    using only the best chromosomes between the offsprings and their parents.
     '''
 
     # Runtime settings.
