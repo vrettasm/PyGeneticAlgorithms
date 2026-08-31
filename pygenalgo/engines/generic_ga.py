@@ -433,6 +433,31 @@ class GenericGA:
         logger.debug("%s cleared.", self.__class__.__name__)
     # _end_def_
 
+    def update_population(self, new_population: list[Chromosome],
+                          only_the_best: bool = False) -> None:
+        """
+        Updates the self population. It will either accept the new
+        input population, or (optionallY) it will select the best
+        chromosome among offsprings and parents.
+
+        :param new_population: a list of chromosomes (offsprings) that
+                               have been generated at iteration 'i'.
+        :param only_the_best: if enabled (set to True), it will select
+                              the best chromosome between the offspring
+                              and its parent.
+        :return: None
+        """
+        if only_the_best:
+            # Check every pair: (offspring, parent).
+            self.population = [
+                c1 if c1.fitness >= c2.fitness else c2
+                for c1, c2 in zip(new_population, self.population)
+            ]
+        else:
+            # Default setting.
+            self.population = new_population
+    # _end_def_
+
     def update_stats(self, fit_list: list[float],
                      other_stats: dict = None) -> tuple:
         """
