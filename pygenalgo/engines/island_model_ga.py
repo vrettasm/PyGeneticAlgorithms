@@ -552,7 +552,7 @@ class IslandModelGA(GenericGA):
         time_tf: float = time.perf_counter()
 
         # Print message.
-        logger.info("Final Avg. Fitness = %.4f.", avg_fitness_final)
+        logger.info("Final: Avg. Fitness = %.4f.", avg_fitness_final)
 
         # Print final duration in seconds.
         print(f"Elapsed time: {(time_tf - time_t0):.3f} seconds.")
