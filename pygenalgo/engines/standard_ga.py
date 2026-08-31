@@ -112,7 +112,6 @@ class StandardGA(GenericGA):
 
             # Check if 'corrections' are enabled.
             if config.correction and self.correct_genome(population_i):
-
                 # Update the fitness list to ensure consistency.
                 fit_list_i = [p.fitness for p in population_i]
             # _end_if_
