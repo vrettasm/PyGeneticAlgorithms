@@ -67,6 +67,12 @@ class RunConfig:
     solution. Default is set to False.
     '''
 
+    only_the_best: bool = False
+    '''
+    If enabled it will construct the new generation (new population) using
+    only the best chromosomes between the offsprings and their parents.
+    '''
+
     # Runtime settings.
     parallel: bool = False
     '''
