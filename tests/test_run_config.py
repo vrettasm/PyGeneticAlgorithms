@@ -27,6 +27,7 @@ class TestRunConfig(unittest.TestCase):
         self.assertTrue(config.elitism)
         self.assertTrue(config.shuffle)
         self.assertFalse(config.correction)
+        self.assertFalse(config.only_the_best)
         self.assertFalse(config.adapt_probs)
         self.assertFalse(config.parallel)
         self.assertFalse(config.verbose)
@@ -51,6 +52,7 @@ class TestRunConfig(unittest.TestCase):
             verbose=True,
             f_tol=0.001,
             f_max_eval=1000,
+            only_the_best=True,
             allow_migration=True
         )
 
@@ -59,6 +61,7 @@ class TestRunConfig(unittest.TestCase):
         self.assertFalse(config.shuffle)
         self.assertTrue(config.correction)
         self.assertTrue(config.adapt_probs)
+        self.assertTrue(config.only_the_best)
         self.assertTrue(config.parallel)
         self.assertTrue(config.verbose)
         self.assertEqual(config.f_tol, 0.001)
