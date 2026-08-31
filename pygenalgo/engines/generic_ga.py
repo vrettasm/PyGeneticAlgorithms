@@ -190,6 +190,7 @@ class RunConfig:
         self._check_bool("parallel", self.parallel)
         self._check_bool("correction", self.correction)
         self._check_bool("adapt_probs", self.adapt_probs)
+        self._check_bool("only_the_best", self.only_the_best)
         self._check_bool("allow_migration", self.allow_migration)
 
         # Check integer parameters.
