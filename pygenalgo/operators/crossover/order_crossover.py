@@ -39,7 +39,7 @@ class OrderCrossover(CrossoverOperator):
         # If the crossover probability is higher than a uniformly
         # random value and the parents aren't identical apply the
         # changes.
-        if (parent1 != parent2) and self.is_operator_applicable():
+        if self.is_operator_applicable() and (parent1 != parent2):
 
             # Select two random (distinct) crossover points.
             loc1, loc2 = two_indices_fast(self.rng, len(parent1))

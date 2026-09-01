@@ -83,7 +83,7 @@ class SimulatedBinaryCrossover(CrossoverOperator):
         # If the crossover probability is higher than a uniformly
         # random value and the parents aren't identical apply the
         # changes.
-        if (parent1 != parent2) and self.is_operator_applicable():
+        if self.is_operator_applicable() and (parent1 != parent2):
 
             # Extract the values from the placeholder.
             eta, x_lower, x_upper = self._items

@@ -43,7 +43,7 @@ class MetaMigration(MigrationOperator):
         # Perform the migration only if we have more than one
         # active populations and the migration probability is
         # higher than a uniformly random value.
-        if len(islands) > 1 and self.is_operator_applicable():
+        if self.is_operator_applicable() and len(islands) > 1:
             # Get the number of migrators.
             n_operators: int = len(self.items)
 
