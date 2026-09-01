@@ -364,7 +364,7 @@ chosen, site (locus).</p>
 </section>
 <section id="module-pygenalgo.operators.crossover.uniform_crossover">
 <span id="pygenalgo-operators-crossover-uniform-crossover-module"></span><h2>pygenalgo.operators.crossover.uniform_crossover module<a class="headerlink" href="#module-pygenalgo.operators.crossover.uniform_crossover" title="Link to this heading"></a></h2>
-<p>Uniform crossover operator module.</p>
+<p>Uniform crossover (UX) operator module.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pygenalgo.operators.crossover.uniform_crossover.UniformCrossover">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.crossover.uniform_crossover.</span></span><span class="sig-name descname"><span class="pre">UniformCrossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crossover_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/crossover/uniform_crossover.html#UniformCrossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.crossover.uniform_crossover.UniformCrossover" title="Link to this definition"></a></dt>
@@ -379,6 +379,43 @@ other location.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.crossover.uniform_crossover.UniformCrossover.crossover">
 <span class="sig-name descname"><span class="pre">crossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/crossover/uniform_crossover.html#UniformCrossover.crossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.crossover.uniform_crossover.UniformCrossover.crossover" title="Link to this definition"></a></dt>
+<dd><p>Perform the crossover operation on the two input parent chromosomes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent1</strong> – (Chromosome).</p></li>
+<li><p><strong>parent2</strong> – (Chromosome).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>child1 and child2 (as Chromosomes).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pygenalgo.operators.crossover.half_uniform_crossover">
+<span id="pygenalgo-operators-crossover-half-uniform-crossover-module"></span><h2>pygenalgo.operators.crossover.half_uniform_crossover module<a class="headerlink" href="#module-pygenalgo.operators.crossover.half_uniform_crossover" title="Link to this heading"></a></h2>
+<p>Half uniform crossover (HUX) operator module.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pygenalgo.operators.crossover.half_uniform_crossover.HalfUniformCrossover">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.crossover.half_uniform_crossover.</span></span><span class="sig-name descname"><span class="pre">HalfUniformCrossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crossover_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/crossover/half_uniform_crossover.html#HalfUniformCrossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.crossover.half_uniform_crossover.HalfUniformCrossover" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.crossover.crossover_operator.CrossoverOperator" title="pygenalgo.operators.crossover.crossover_operator.CrossoverOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">CrossoverOperator</span></code></a></p>
+<p>Description:</p>
+<blockquote>
+<div><p>Half uniform crossover (HUX) creates two children chromosomes
+(offsprings). It identifies the positions where the parents differ,
+then swaps exactly half of those differing genes. Positions where
+the parents are identical remain unchanged.</p>
+<p>The primary benefit of Half Uniform Crossover (HUX) over Uniform
+Crossover (UX) is the preservation of genetic diversity and the
+prevention of premature convergence.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.operators.crossover.half_uniform_crossover.HalfUniformCrossover.crossover">
+<span class="sig-name descname"><span class="pre">crossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/crossover/half_uniform_crossover.html#HalfUniformCrossover.crossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.crossover.half_uniform_crossover.HalfUniformCrossover.crossover" title="Link to this definition"></a></dt>
 <dd><p>Perform the crossover operation on the two input parent chromosomes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

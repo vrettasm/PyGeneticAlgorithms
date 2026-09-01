@@ -68,6 +68,14 @@ pygenalgo.operators.crossover.uniform\_crossover module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.crossover.half\_uniform\_crossover module
+-------------------------------------------------------------
+
+.. automodule:: pygenalgo.operators.crossover.half_uniform_crossover
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pygenalgo.operators.crossover.blend\_crossover module
 -----------------------------------------------------
 
