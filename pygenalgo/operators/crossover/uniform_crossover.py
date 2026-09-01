@@ -40,7 +40,7 @@ class UniformCrossover(CrossoverOperator):
         # If the crossover probability is higher than a uniformly
         # random value and the parents aren't identical apply the
         # changes.
-        if (parent1 != parent2) and self.is_operator_applicable():
+        if self.is_operator_applicable() and (parent1 != parent2):
 
             # Create the 1st offspring genome list.
             child_1: list[Gene] = [
