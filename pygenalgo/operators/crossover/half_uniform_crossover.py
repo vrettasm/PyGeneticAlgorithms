@@ -61,10 +61,10 @@ class HalfUniformCrossover(CrossoverOperator):
             ]
 
             # Determine exactly half to swap.
-            num_swap: int = len(diff_indices) // 2
+            n_swap: int = len(diff_indices) // 2
 
             # Randomly sample num_swap indices.
-            swap_indices = self.rng.choice(diff_indices, size=num_swap,
+            swap_indices = self.rng.choice(diff_indices, size=n_swap,
                                            replace=False)
 
             # Swap the genes at random locations.
