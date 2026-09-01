@@ -61,6 +61,7 @@ The current implementation provides (out of the box) a wide variety of genetic o
   - [Single-Point Crossover*](pygenalgo/operators/crossover/single_point_crossover.py)
   - [Multi-Point Crossover*](pygenalgo/operators/crossover/multi_point_crossover.py)
   - [Uniform Crossover*](pygenalgo/operators/crossover/uniform_crossover.py)
+  - [Half Uniform Crossover](pygenalgo/operators/crossover/half_uniform_crossover.py)
   - [Order Crossover (OX1)](pygenalgo/operators/crossover/order_crossover.py)
   - [Partially Mapped Crossover (PMX)](pygenalgo/operators/crossover/partially_mapped_crossover.py)
   - [Position Based Crossover (POS)](pygenalgo/operators/crossover/position_based_crossover.py)
