@@ -200,6 +200,11 @@ class RunConfig:
 
         # Check float parameters.
         self._check_float_non_negative("f_tol", self.f_tol)
+
+        # Check for incompatible options.
+        if self.shuffle and self.only_the_best:
+            raise ValueError(f"{self.__class__.__name__}: You can't have both "
+                             f"'shuffle' and 'only_the_best' options enabled.")
     # _end_def_
 # _end_class_
 
