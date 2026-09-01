@@ -29,6 +29,7 @@ class MetaCrossover(CrossoverOperator):
         self._items: tuple[CrossoverOperator, ...] = (
             UniformCrossover(1.0),
             MultiPointCrossover(1.0),
+            HalfUniformCrossover(1.0),
             SinglePointCrossover(1.0)
         )
     # _end_def_
