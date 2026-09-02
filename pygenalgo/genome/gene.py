@@ -4,8 +4,10 @@ from __future__ import annotations
 from copy import deepcopy
 from typing import Any, Callable
 
-import numpy as np
-from numpy import ndarray
+# Third part imports.
+from numpy import (ndarray,
+                   array_equal,
+                   ascontiguousarray)
 
 # Public interface.
 __all__ = ["Gene"]
@@ -187,7 +189,7 @@ class Gene:
 
         # In case of Numpy arrays / lists or tuples.
         if isinstance(a, ndarray) or isinstance(b, ndarray):
-            return np.array_equal(a, b)
+            return array_equal(a, b)
         # _end_if_
 
         # Make the comparison.
@@ -206,7 +208,7 @@ class Gene:
         # Extra care for numpy arrays.
         if isinstance(_data, ndarray):
             # Ensure the data are continuous.
-            a = np.ascontiguousarray(_data)
+            a = ascontiguousarray(_data)
 
             # Convert everything to python scalars.
             values = a.ravel(order="C").astype(object).tolist()
