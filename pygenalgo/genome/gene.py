@@ -187,8 +187,12 @@ class Gene:
         a = self._datum
         b = other._datum
 
+        # Local inline declaration of supported types.
+        _array_like_types: tuple = (ndarray, list, tuple)
+
         # In case of Numpy arrays / lists or tuples.
-        if isinstance(a, ndarray) or isinstance(b, ndarray):
+        if isinstance(a, _array_like_types) or\
+                isinstance(b, _array_like_types):
             return array_equal(a, b)
         # _end_if_
 
