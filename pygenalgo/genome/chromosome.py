@@ -277,15 +277,6 @@ class Chromosome:
         return self._genome == other.genome
     # _end_def_
 
-    def __hash__(self) -> int:
-        """
-        Auxiliary method to hash the Chromosome object.
-
-        :return: the hash value of the genome.
-        """
-        return hash(tuple(self._genome))
-    # _end_def_
-
     def __len__(self) -> int:
         """
         Accessor of the total length of the genome.
