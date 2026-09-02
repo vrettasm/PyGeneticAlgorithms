@@ -63,7 +63,7 @@ class HalfUniformCrossover(CrossoverOperator):
             # Determine exactly half to swap.
             n_swap: int = len(diff_indices) // 2
 
-            # Randomly sample num_swap indices.
+            # Randomly sample n_swap indices.
             swap_indices = self.rng.choice(diff_indices, size=n_swap,
                                            replace=False)
 
