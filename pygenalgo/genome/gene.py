@@ -54,6 +54,11 @@ class Gene:
         # Get the random function.
         self._func: Callable = func
 
+        # Sanity check.
+        if not isinstance(valid, bool):
+            raise TypeError(f"{self.__class__.__name__}: valid must be bool.")
+        # _end_if_
+
         # Copy the valid flag. Note that if the _datum field
         # is set to None, the Gene is automatically invalid.
         self._valid: bool = False if self._datum is None else valid
