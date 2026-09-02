@@ -27,6 +27,9 @@ class Chromosome:
     # Object variables.
     __slots__ = ("_genome", "_fitness", "_valid")
 
+    # Make the class unhashable.
+    __hash__ = None
+
     def __init__(self, genome: list[Gene],
                  fitness: Optional[Fitness] = None,
                  valid: bool = True) -> None:
