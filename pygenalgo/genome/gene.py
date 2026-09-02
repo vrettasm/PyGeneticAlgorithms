@@ -29,6 +29,11 @@ class Gene:
         int, float, complex, str, bytes, bool, type(None)
     )
 
+    # Auxiliary tuple.
+    _ARRAY_LIKE_TYPES: tuple[Any, ...] = (
+        ndarray, list, tuple
+    )
+
     # Object variables.
     __slots__ = ("_datum", "_func", "_valid")
 
@@ -81,7 +86,12 @@ class Gene:
 
         :return: None.
         """
+        # Assign the new value.
         self._datum = new_value
+
+        # Enforce Gene validity.
+        if new_value is None:
+            self._valid = False
     # _end_def_
 
     @property
@@ -135,7 +145,7 @@ class Gene:
         :return: None.
         """
         # Use the random function to set a new value at the data.
-        self._datum = self._func()
+        self.value = self._func()
     # _end_def_
 
     def flip(self) -> None:
@@ -149,8 +159,13 @@ class Gene:
 
         :return: None.
         """
+        # Sanity check.
+        if self._datum not in (0, 1):
+            raise ValueError("Gene value must be 0 or 1.")
+        # _end_if_
+
         # Flip the current gene value.
-        self._datum = int(not self._datum)
+        self._datum = 1 - self._datum
     # _end_def_
 
     def clone(self) -> Gene:
@@ -192,17 +207,14 @@ class Gene:
         a = self._datum
         b = other._datum
 
-        # Local inline declaration of supported types.
-        _array_like_types: tuple = (ndarray, list, tuple)
-
         # In case of Numpy arrays / lists or tuples.
-        if isinstance(a, _array_like_types) or\
-                isinstance(b, _array_like_types):
-            return array_equal(a, b)
+        if (isinstance(a, Gene._ARRAY_LIKE_TYPES) or
+                isinstance(b, Gene._ARRAY_LIKE_TYPES)):
+            return bool(array_equal(a, b))
         # _end_if_
 
         # Make the comparison.
-        return a == b
+        return bool(a == b)
     # _end_def_
 
     def __hash__(self) -> int:
@@ -212,31 +224,23 @@ class Gene:
         :return: the hash value of the datum.
         """
         # Local copy of _datum field.
-        _data = self._datum
+        data = self._datum
 
-        # Extra care for numpy arrays.
-        if isinstance(_data, ndarray):
+        # Extra care for array like objects.
+        if isinstance(data, Gene._ARRAY_LIKE_TYPES):
             # Ensure the data are continuous.
-            a = ascontiguousarray(_data)
+            array = ascontiguousarray(data)
 
             # Convert everything to python scalars.
-            values = a.ravel(order="C").astype(object).tolist()
+            values = array.ravel(order="C").tolist()
 
-            # Hash the tuple.
             return hash(
-                ("__ndarray__", a.shape, tuple(values))
+                ("array_like", array.shape, tuple(values))
             )
         # _end_if_
 
-        try:
-            # Return directly the hash
-            # value of the datum field.
-            return hash(_data)
-
-        except TypeError:
-            # Try to convert it to a
-            # tuple (before hashing).
-            return hash(tuple(_data))
+        # Raises TypeError if data is not hashable.
+        return hash(data)
     # _end_def_
 
     def __str__(self) -> str:
