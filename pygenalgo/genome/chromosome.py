@@ -56,6 +56,12 @@ class Chromosome:
             self._fitness = Chromosome._normalize_fitness(fitness)
         # _end_if_
 
+        # Sanity check.
+        if not isinstance(valid, bool):
+            raise TypeError(f"{self.__class__.__name__}: valid must be bool; "
+                            f"got {type(valid).__name__}.")
+        # _end_if_
+
         # Set the bool flag.
         self._valid: bool = valid
     # _end_def_
