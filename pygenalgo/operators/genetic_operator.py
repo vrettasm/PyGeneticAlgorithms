@@ -223,6 +223,48 @@ class GeneticOperator:
         return self._probability.value > self._rng.random()
     # _end_def_
 
+    def validate_bounds(self,
+                        lower_lim: ArrayLike,
+                        upper_lim: ArrayLike) -> tuple[NDArray, NDArray]:
+        """
+        Validate and normalize array-like upper and lower boundaries.
+
+        :param lower_lim: ArrayLike object that contains the lower boundaries.
+        :param upper_lim: ArrayLike object that contains the lower boundaries.
+        :return: The validated lower and upper boundaries.
+        """
+        # Make sure the limits are numpy arrays.
+        lower_lim = asarray(lower_lim, dtype=float)
+        upper_lim = asarray(upper_lim, dtype=float)
+
+        # Check if either array contains zero elements.
+        if lower_lim.size == 0 or upper_lim.size == 0:
+            raise ValueError(
+                f"{self.__class__.__name__}: Boundaries cannot be empty. "
+                f"Received lower size {lower_lim.size}, upper size {upper_lim.size}."
+            )
+
+        # Match exact structural shape.
+        if lower_lim.shape != upper_lim.shape:
+            raise ValueError(
+                f"{self.__class__.__name__}: "
+                f"Lower and Upper limits shapes do not match."
+            )
+
+        # Fail fast on NaN values to protect boundary logic.
+        if np_isnan(lower_lim).any() or np_isnan(lower_lim).any():
+            raise ValueError(f"{self.__class__.__name__}:"
+                             f"Limits cannot contain NaN.")
+
+        # Check if the boundaries are set correctly.
+        if (upper_lim <= lower_lim).any():
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Lower and Upper limits are set incorrectly.")
+
+        # Return the validated arrays.
+        return lower_lim, upper_lim
+    # _end_def_
+
     def __str__(self) -> str:
         """
         Description:
