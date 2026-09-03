@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.engines.generic_ga &mdash; PyGenAlgo 2.2.0 documentation</title>
+  <title>pygenalgo.engines.generic_ga &mdash; PyGenAlgo 2.2.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=b21de401"></script>
+      <script src="../../../_static/documentation_options.js?v=16656018"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -273,7 +273,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_int_positive</span><span class="p">(</span><span class="s2">&quot;f_max_eval&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_max_eval</span><span class="p">)</span>
 
         <span class="c1"># Check float parameters.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_check_float_non_negative</span><span class="p">(</span><span class="s2">&quot;f_tol&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_tol</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_float_non_negative</span><span class="p">(</span><span class="s2">&quot;f_tol&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_tol</span><span class="p">)</span>
+
+        <span class="c1"># Check for incompatible options.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_the_best</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: You can&#39;t have both &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;&#39;shuffle&#39; and &#39;only_the_best&#39; options enabled.&quot;</span><span class="p">)</span></div>
 
     <span class="c1"># _end_def_</span>
 <span class="c1"># _end_class_</span>

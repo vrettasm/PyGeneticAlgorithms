@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.genome.gene &mdash; PyGenAlgo 2.2.0 documentation</title>
+  <title>pygenalgo.genome.gene &mdash; PyGenAlgo 2.2.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=b21de401"></script>
+      <script src="../../../_static/documentation_options.js?v=16656018"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -76,8 +76,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">ndarray</span>
+<span class="c1"># Third part imports.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">ndarray</span><span class="p">,</span>
+                   <span class="n">array_equal</span><span class="p">,</span>
+                   <span class="n">ascontiguousarray</span><span class="p">)</span>
 
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Gene&quot;</span><span class="p">]</span>
@@ -99,6 +101,11 @@
     <span class="c1"># Auxiliary tuple.</span>
     <span class="n">_IMMUTABLE_TYPES</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">complex</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Auxiliary tuple.</span>
+    <span class="n">_ARRAY_LIKE_TYPES</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span>
     <span class="p">)</span>
 
     <span class="c1"># Object variables.</span>
@@ -126,6 +133,11 @@
         <span class="c1"># Get the random function.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">func</span>
 
+        <span class="c1"># Sanity check.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">valid</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: valid must be bool.&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
         <span class="c1"># Copy the valid flag. Note that if the _datum field</span>
         <span class="c1"># is set to None, the Gene is automatically invalid.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">valid</span>
@@ -148,7 +160,12 @@
 
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Assign the new value.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="n">new_value</span>
+
+        <span class="c1"># Enforce Gene validity.</span>
+        <span class="k">if</span> <span class="n">new_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_valid</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -204,7 +221,7 @@
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Use the random function to set a new value at the data.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">()</span></div>
 
     <span class="c1"># _end_def_</span>
 
@@ -221,8 +238,13 @@
 
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Sanity check.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Gene value must be 0 or 1.&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
         <span class="c1"># Flip the current gene value.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span></div>
 
     <span class="c1"># _end_def_</span>
 
@@ -269,12 +291,13 @@
         <span class="n">b</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">_datum</span>
 
         <span class="c1"># In case of Numpy arrays / lists or tuples.</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">ndarray</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">ndarray</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">Gene</span><span class="o">.</span><span class="n">_ARRAY_LIKE_TYPES</span><span class="p">)</span> <span class="ow">or</span>
+                <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">Gene</span><span class="o">.</span><span class="n">_ARRAY_LIKE_TYPES</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">array_equal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Make the comparison.</span>
-        <span class="k">return</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -284,31 +307,23 @@
 <span class="sd">        :return: the hash value of the datum.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Local copy of _datum field.</span>
-        <span class="n">_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datum</span>
 
-        <span class="c1"># Extra care for numpy arrays.</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">ndarray</span><span class="p">):</span>
+        <span class="c1"># Extra care for array like objects.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Gene</span><span class="o">.</span><span class="n">_ARRAY_LIKE_TYPES</span><span class="p">):</span>
             <span class="c1"># Ensure the data are continuous.</span>
-            <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">_data</span><span class="p">)</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
             <span class="c1"># Convert everything to python scalars.</span>
-            <span class="n">values</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
-            <span class="c1"># Hash the tuple.</span>
             <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span>
-                <span class="p">(</span><span class="s2">&quot;__ndarray__&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+                <span class="p">(</span><span class="s2">&quot;array_like&quot;</span><span class="p">,</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
             <span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
-        <span class="k">try</span><span class="p">:</span>
-            <span class="c1"># Return directly the hash</span>
-            <span class="c1"># value of the datum field.</span>
-            <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="n">_data</span><span class="p">)</span>
-
-        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-            <span class="c1"># Try to convert it to a</span>
-            <span class="c1"># tuple (before hashing).</span>
-            <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">_data</span><span class="p">))</span>
+        <span class="c1"># Raises TypeError if data is not hashable.</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
