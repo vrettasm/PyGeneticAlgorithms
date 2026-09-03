@@ -2,8 +2,6 @@
 from math import fabs, isclose
 
 # Third party imports.
-from numpy import asarray
-from numpy import any as np_any
 from numpy.typing import ArrayLike, NDArray
 
 # Custom code imports.
@@ -45,24 +43,9 @@ class SimulatedBinaryCrossover(CrossoverOperator):
         # Call the super constructor with the provided initial value.
         super().__init__(crossover_probability=crossover_probability)
 
-        # Check if the lower and upper bounds are set.
-        if (lower_lim is None) or (upper_lim is None):
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"Lower or Upper limits are missing.")
-
-        # Make sure the limits are numpy arrays.
-        lower_lim = asarray(lower_lim, dtype=float)
-        upper_lim = asarray(upper_lim, dtype=float)
-
-        # Check if there is a size mismatch.
-        if lower_lim.size != upper_lim.size:
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"Lower and Upper limits sizes do not match.")
-
-        # Check if the boundaries are set correctly.
-        if np_any(upper_lim <= lower_lim):
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"Lower and Upper limits are set incorrectly.")
+        # Validate the bounds.
+        lower_lim, upper_lim = self.validate_bounds(lower_lim,
+                                                    upper_lim)
 
         # Assign variables to the _items placeholder.
         self._items: tuple[float, NDArray, NDArray] = (

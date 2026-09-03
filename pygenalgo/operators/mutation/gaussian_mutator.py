@@ -44,25 +44,9 @@ class GaussianMutator(MutationOperator):
                              f"Standard deviation must be positive.")
         # _end_if_
 
-        # Check if the lower and upper bounds are set.
-        if (lower_lim is None) or (upper_lim is None):
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"Lower or Upper limits are missing.")
-        # _end_if_
-
-        # Make sure the limits are numpy arrays.
-        lower_lim: NDArray = np.asarray(lower_lim, dtype=float)
-        upper_lim: NDArray = np.asarray(upper_lim, dtype=float)
-
-        # Check if there is a size mismatch.
-        if lower_lim.size != upper_lim.size:
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"Lower and Upper limits sizes do not match.")
-
-        # Check if the boundaries are set correctly.
-        if np.any(upper_lim <= lower_lim):
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"Lower and Upper limits are set incorrectly.")
+        # Validate the bounds.
+        lower_lim, upper_lim = self.validate_bounds(lower_lim,
+                                                    upper_lim)
 
         # Assign variables to the _items placeholder.
         self._items: tuple[float, ...] = (
