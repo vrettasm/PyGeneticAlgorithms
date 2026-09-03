@@ -4,6 +4,9 @@ from functools import wraps
 from typing import Any, Optional
 
 # Third party imports.
+from numpy import asarray
+from numpy import isnan as np_isnan
+from numpy.typing import ArrayLike, NDArray
 from numpy.random import default_rng, Generator
 
 # Custom code imports.
