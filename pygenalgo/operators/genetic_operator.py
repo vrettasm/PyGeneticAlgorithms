@@ -236,8 +236,8 @@ class GeneticOperator:
         :return: The validated lower and upper boundaries.
         """
         # Make sure the limits are numpy arrays.
-        lower_lim = asarray(lower_lim, dtype=float)
-        upper_lim = asarray(upper_lim, dtype=float)
+        lower_lim: NDArray = asarray(lower_lim, dtype=float)
+        upper_lim: NDArray = asarray(upper_lim, dtype=float)
 
         # Check if either array contains zero elements.
         if lower_lim.size == 0 or upper_lim.size == 0:
