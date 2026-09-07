@@ -11,10 +11,9 @@ __all__ = ["SelectionOperator", "ensure_positive_fitness"]
 
 def _shift_up_values(population: list[Chromosome]) -> list[float]:
     """
-    Ensures that the fitness value of each chromosome is a positive number.
-
-    This is useful because some of the selection methods require a positive
-    fitness to operate.
+    Ensures that the fitness value of each chromosome is a positive
+    number. This is useful because some selection methods require a
+    positive fitness to operate.
 
     :param population: (list) of chromosomes.
 

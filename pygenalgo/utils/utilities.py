@@ -175,7 +175,7 @@ def np_pareto_front_index(points: NDArray,
     # maximize in all objectives function values.
     x_points = points if mode == "max" else -points
 
-    # Check for deduplicates.
+    # Check for duplicates.
     if exclude_duplicates:
 
         # Remove duplicate points to speed up the

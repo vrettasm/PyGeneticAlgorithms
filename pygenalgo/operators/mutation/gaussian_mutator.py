@@ -28,9 +28,9 @@ class GaussianMutator(MutationOperator):
 
         :param sigma: (ArrayLike) standard deviation of the Gaussian N(0, sigma).
 
-        :param lower_val: (ArrayLike) lower limit value for the gene mutation.
+        :param lower_lim: (ArrayLike) lower limit value for the gene mutation.
 
-        :param upper_val: (ArrayLike) upper limit value for the gene mutation.
+        :param upper_lim: (ArrayLike) upper limit value for the gene mutation.
         """
         # Call the super constructor with the provided initial value.
         super().__init__(mutation_probability=mutate_probability)

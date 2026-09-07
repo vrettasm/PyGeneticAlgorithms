@@ -73,7 +73,7 @@ class IslandManager:
         Set the pointer to the genetic operator that
         we want to execute.
 
-        :param idx: the index of the genetic operator.
+        :param new_idx: the index of the genetic operator.
 
         :return: None.
         """

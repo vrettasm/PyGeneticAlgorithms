@@ -208,6 +208,7 @@ class RunConfig:
     # _end_def_
 # _end_class_
 
+
 # Public interface.
 __all__ = ["GenericGA", "RunConfig", "Fitness"]
 
@@ -442,7 +443,7 @@ class GenericGA:
                           only_the_best: bool = False) -> None:
         """
         Updates the self population. It will either accept the new
-        input population, or (optionallY) it will select the best
+        input population, or (optionally) it will select the best
         chromosome among offsprings and parents.
 
         :param new_population: a list of chromosomes (offsprings) that
