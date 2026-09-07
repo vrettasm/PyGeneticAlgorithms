@@ -370,7 +370,7 @@ class Probability:
 
         # Sanity check (finite value).
         if not isfinite(tmp_value):
-            raise ValueError(f"Probability must finite, not {tmp_value}.")
+            raise ValueError(f"Probability must be finite, not {tmp_value}.")
 
         # Sanity check (correct range).
         if not 0.0 <= tmp_value <= 1.0:
