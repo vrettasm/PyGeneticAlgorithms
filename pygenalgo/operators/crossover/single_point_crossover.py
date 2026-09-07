@@ -50,14 +50,14 @@ class SinglePointCrossover(CrossoverOperator):
 
             # Construct 1st offspring genome list at 'idx'.
             child_1: list[Gene] = [
-                x.clone() for x in parent2.genome[:idx] +
-                                   parent1.genome[idx:]
+                x.clone()
+                for x in parent2.genome[:idx] + parent1.genome[idx:]
             ]
 
             # Construct 2nd offspring genome list at 'idx'.
             child_2: list[Gene] = [
-                y.clone() for y in parent1.genome[:idx] +
-                                   parent2.genome[idx:]
+                y.clone()
+                for y in parent1.genome[:idx] + parent2.genome[idx:]
             ]
 
             # Increase the crossover counter.
