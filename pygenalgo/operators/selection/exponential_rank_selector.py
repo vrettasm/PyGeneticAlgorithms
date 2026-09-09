@@ -18,7 +18,7 @@ class ExponentialRankSelector(SelectionOperator):
         selection probabilities based on an exponentially decreasing function of
         their rank. By utilizing relative ranking instead of raw fitness values, it
         avoids scale-dependency issues (such as negative fitness values) while maintaining
-        strong selective pressure on top-performing  individuals to accelerate convergence.
+        strong selective pressure on top-performing individuals to accelerate convergence.
     """
 
     def __init__(self, select_probability: float = 1.0, c_base: float = 0.95) -> None:
