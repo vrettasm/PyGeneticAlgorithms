@@ -73,12 +73,9 @@ class BoltzmannSelector(SelectionOperator):
         # fall back to uniform random selection so every
         # individual has equal chance.
         if isclose(sum_fitness, 0.0):
-            # Select chromosomes randomly with equal probability.
-            safe_index = self.rng.choice(pop_size, size=pop_size,
-                                         replace=True, shuffle=False)
-
-            # Return the new parents to a list.
-            return [population[i] for i in safe_index]
+            # Return the new parents.
+            return self.safety_option(population,
+                                      pop_size)
         # _end_if_
 
         # Calculate the selection probabilities of each member
