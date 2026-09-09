@@ -119,7 +119,7 @@ class ExponentialRankSelector(SelectionOperator):
 
         # Sort the population in ascending order using fitness.
         # - Worst individual is at index 0 (rank 1).
-        # - Best individual is at index N-1 (rank N).
+        # - Best individual is at index pop_size-1 (rank pop_size).
         sorted_population = sorted(population, key=key_sort)
 
         # Select the new individuals (indexes).
