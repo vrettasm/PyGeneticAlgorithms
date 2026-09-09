@@ -50,6 +50,48 @@ class ExponentialRankSelector(SelectionOperator):
         self._items: float = c_base
     # _end_def_
 
+    @staticmethod
+    @lru_cache(maxsize=64)
+    def probabilities(pop_size: int, c_base: float) -> list[float]:
+        """
+        Calculate the probabilities for the population using the exponential
+        rank formula. The function is lru_cached so that repeated calls with
+        the same input should not recompute the same array, since the population
+        size of the chromosomes is not expected to change dynamically.
+
+        Formula for rank index 'idx' (0 to N-1):
+        Weight = c^(N - 1 - idx)
+
+        This gives the best individual (idx = N-1) a weight of c^0 = 1,
+        and the worst individual (idx = 0) a weight of c^(N-1).
+
+        :param pop_size: (int) population size.
+        :param c_base: (float) exponential base parameter.
+
+        :return: (list) probabilities in ascending order.
+        """
+        # Sanity check.
+        if pop_size <= 0:
+            raise ValueError(f"Population size {pop_size} must be > 0.")
+        # _end_if_
+
+        # Handle edge case where population size is 1.
+        if pop_size == 1:
+            return [1.0]
+        # _end_if_
+
+        # Calculate the weights for each rank.
+        weights: list[float] = [
+            c_base ** (pop_size - 1 - idx) for idx in range(pop_size)
+        ]
+
+        # Sum all the weights to compute the normalization constant.
+        total_weight: float = fsum(weights)
+
+        # Normalize weights to return a true probability distribution.
+        return [w / total_weight for w in weights]
+    # _end_def_
+
     @increase_counter
     def select(self, population: list[Chromosome]) -> list[Chromosome]:
         """
