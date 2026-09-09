@@ -45,11 +45,9 @@ class RandomSelector(SelectionOperator):
         # Get the population size.
         pop_size: int = len(population)
 
-        # Select the new individuals indexes.
-        index = self.rng.choice(pop_size, size=pop_size, replace=True, shuffle=False)
-
-        # Return the new parents (individuals).
-        return [population[i] for i in index]
+        # Return the new parents.
+        return self.safety_option(population,
+                                  pop_size)
     # _end_def_
 
 # _end_class_
