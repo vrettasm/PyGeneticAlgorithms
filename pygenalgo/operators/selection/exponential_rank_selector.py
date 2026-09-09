@@ -63,8 +63,8 @@ class ExponentialRankSelector(SelectionOperator):
         Formula for rank index 'idx' (0 to pop_size-1):
         Weight = c^(pop_size - 1 - idx)
 
-        This gives the best individual (idx = N-1) a weight of c^0 = 1,
-        and the worst individual (idx = 0) a weight of c^(N-1).
+        This gives the best individual (idx = pop_size-1) a weight of c^0 = 1,
+        and the worst individual (idx = 0) a weight of c^(pop_size-1).
 
         :param pop_size: (int) population size.
         :param c_base: (float) exponential base parameter.
