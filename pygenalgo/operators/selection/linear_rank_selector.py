@@ -66,12 +66,10 @@ class LinearRankSelector(SelectionOperator):
         provides a means to adjust the pressure from total random (eta = 1.0)
         to the highest possible rank (eta = 2.0).
 
-        NOTE: Probabilities are returned in ascending order.
-
         :param pop_size: (int) population size.
         :param eta: (float) pressure adjustment factor.
 
-        :return: (list) rank probability distribution in ascending order.
+        :return: (list) probability distribution in ascending order.
         """
         # Sanity check.
         if pop_size <= 0:
