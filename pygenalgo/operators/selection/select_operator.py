@@ -142,4 +142,29 @@ class SelectionOperator(GeneticOperator):
         return self.select(*args, **kwargs)
     # _end_def_
 
+    def safety_option(self, population: list[Chromosome],
+                      pop_size: int) -> list[Chromosome]:
+        """
+        Select randomly the individuals, from the input population,
+        that will be passed on to the variation step (crossover and
+        mutation).
+
+        It provides the main operation of the RandomSelector and the
+        "safety option" for other Selection operators, such as:
+        i) RouletteWheel, ii) Boltzmann, and iii) Stochastic Universal
+        Sampling. It will always return a list of chromosomes since there
+        is no usage of the fitness values.
+
+        :param population: a list of chromosomes to select the parents.
+        :param pop_size: (int) the population size to select.
+
+        :return: the selected list of chromosomes.
+        """
+        # Select all individual indices with equal probability.
+        random_index = self.rng.choice(pop_size, size=pop_size,
+                                       replace=True, shuffle=False)
+        # Return the new parents.
+        return [population[i] for i in random_index]
+    # _end_def_
+
 # _end_class_
