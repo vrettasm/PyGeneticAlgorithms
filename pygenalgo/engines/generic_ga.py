@@ -658,7 +658,7 @@ class GenericGA:
         return have_changed
     # _end_def_
 
-    def population_fitness(self) -> list[float]:
+    def population_fitness(self) -> list[Fitness]:
         """
         Get the fitness values of all the population.
 
