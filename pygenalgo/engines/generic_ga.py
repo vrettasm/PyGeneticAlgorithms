@@ -485,23 +485,20 @@ class GenericGA:
         # Compute the standard deviation value.
         std_fitness: NDArray = nanstd(arr, axis=0, dtype=float)
 
-        # Update the population mean / std.
-        if np_all(isfinite([avg_fitness, std_fitness])):
-
-            if other_stats:
-                # Store them in the input dictionary.
-                other_stats["avg"].append(avg_fitness)
-                other_stats["std"].append(std_fitness)
-            else:
-                # Store them in the self dictionary.
-                self._stats["avg"].append(avg_fitness)
-                self._stats["std"].append(std_fitness)
-        else:
+        # Sanity check.
+        if not np_all(isfinite([avg_fitness, std_fitness])):
             raise RuntimeError(f"{self.__class__.__name__}:"
                                f"Something went wrong at {self._iteration} "
                                f"iteration. Mean={avg_fitness:.5f}, "
                                f"Std={std_fitness:.5f}.")
         # _end_if_
+
+        # Point to the right dictionary.
+        stats = other_stats if other_stats is not None else self._stats
+
+        # Update the population mean/std.
+        stats["avg"].append(avg_fitness)
+        stats["std"].append(std_fitness)
 
         # Return the average statistics.
         return avg_fitness, std_fitness
