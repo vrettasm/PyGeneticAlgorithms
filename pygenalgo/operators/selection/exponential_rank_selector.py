@@ -42,7 +42,7 @@ class ExponentialRankSelector(SelectionOperator):
         # _end_if_
 
         # Sanity check (correct range).
-        if not (0.0 < c_base < 1.0):
+        if not 0.0 < c_base < 1.0:
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Exponential base must be in (0.0, 1.0). ")
         # _end_if_
