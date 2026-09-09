@@ -69,7 +69,7 @@ class ExponentialRankSelector(SelectionOperator):
         :param pop_size: (int) population size.
         :param c_base: (float) exponential base parameter.
 
-        :return: (list) probabilities in ascending order.
+        :return: (list) probability distribution in ascending order.
         """
         # Sanity check.
         if pop_size <= 0:
