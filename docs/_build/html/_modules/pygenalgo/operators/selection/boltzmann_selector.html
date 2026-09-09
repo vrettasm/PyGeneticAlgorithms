@@ -149,12 +149,9 @@
         <span class="c1"># fall back to uniform random selection so every</span>
         <span class="c1"># individual has equal chance.</span>
         <span class="k">if</span> <span class="n">isclose</span><span class="p">(</span><span class="n">sum_fitness</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">):</span>
-            <span class="c1"># Select chromosomes randomly with equal probability.</span>
-            <span class="n">safe_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pop_size</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">pop_size</span><span class="p">,</span>
-                                         <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-            <span class="c1"># Return the new parents to a list.</span>
-            <span class="k">return</span> <span class="p">[</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">safe_index</span><span class="p">]</span>
+            <span class="c1"># Return the new parents.</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety_option</span><span class="p">(</span><span class="n">population</span><span class="p">,</span>
+                                      <span class="n">pop_size</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Calculate the selection probabilities of each member</span>

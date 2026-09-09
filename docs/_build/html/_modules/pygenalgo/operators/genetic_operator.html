@@ -326,12 +326,12 @@
 <span class="sd">        Validate and normalize array-like upper and lower boundaries.</span>
 
 <span class="sd">        :param lower_lim: ArrayLike object that contains the lower boundaries.</span>
-<span class="sd">        :param upper_lim: ArrayLike object that contains the lower boundaries.</span>
+<span class="sd">        :param upper_lim: ArrayLike object that contains the upper boundaries.</span>
 <span class="sd">        :return: The validated lower and upper boundaries.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Make sure the limits are numpy arrays.</span>
-        <span class="n">lower_lim</span> <span class="o">=</span> <span class="n">asarray</span><span class="p">(</span><span class="n">lower_lim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-        <span class="n">upper_lim</span> <span class="o">=</span> <span class="n">asarray</span><span class="p">(</span><span class="n">upper_lim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">lower_lim</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">asarray</span><span class="p">(</span><span class="n">lower_lim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">upper_lim</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">asarray</span><span class="p">(</span><span class="n">upper_lim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
         <span class="c1"># Check if either array contains zero elements.</span>
         <span class="k">if</span> <span class="n">lower_lim</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">upper_lim</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>

@@ -283,6 +283,7 @@
     <span class="c1"># _end_def_</span>
 <span class="c1"># _end_class_</span>
 
+
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GenericGA&quot;</span><span class="p">,</span> <span class="s2">&quot;RunConfig&quot;</span><span class="p">,</span> <span class="s2">&quot;Fitness&quot;</span><span class="p">]</span>
 
@@ -527,7 +528,7 @@
                           <span class="n">only_the_best</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the self population. It will either accept the new</span>
-<span class="sd">        input population, or (optionallY) it will select the best</span>
+<span class="sd">        input population, or (optionally) it will select the best</span>
 <span class="sd">        chromosome among offsprings and parents.</span>
 
 <span class="sd">        :param new_population: a list of chromosomes (offsprings) that</span>
@@ -572,23 +573,20 @@
         <span class="c1"># Compute the standard deviation value.</span>
         <span class="n">std_fitness</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">nanstd</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
-        <span class="c1"># Update the population mean / std.</span>
-        <span class="k">if</span> <span class="n">np_all</span><span class="p">(</span><span class="n">isfinite</span><span class="p">([</span><span class="n">avg_fitness</span><span class="p">,</span> <span class="n">std_fitness</span><span class="p">])):</span>
-
-            <span class="k">if</span> <span class="n">other_stats</span><span class="p">:</span>
-                <span class="c1"># Store them in the input dictionary.</span>
-                <span class="n">other_stats</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_fitness</span><span class="p">)</span>
-                <span class="n">other_stats</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_fitness</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># Store them in the self dictionary.</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_fitness</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_fitness</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Sanity check.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np_all</span><span class="p">(</span><span class="n">isfinite</span><span class="p">([</span><span class="n">avg_fitness</span><span class="p">,</span> <span class="n">std_fitness</span><span class="p">])):</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">:&quot;</span>
                                <span class="sa">f</span><span class="s2">&quot;Something went wrong at </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_iteration</span><span class="si">}</span><span class="s2"> &quot;</span>
                                <span class="sa">f</span><span class="s2">&quot;iteration. Mean=</span><span class="si">{</span><span class="n">avg_fitness</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">, &quot;</span>
                                <span class="sa">f</span><span class="s2">&quot;Std=</span><span class="si">{</span><span class="n">std_fitness</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Point to the right dictionary.</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">other_stats</span> <span class="k">if</span> <span class="n">other_stats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span>
+
+        <span class="c1"># Update the population mean/std.</span>
+        <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_fitness</span><span class="p">)</span>
+        <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_fitness</span><span class="p">)</span>
 
         <span class="c1"># Return the average statistics.</span>
         <span class="k">return</span> <span class="n">avg_fitness</span><span class="p">,</span> <span class="n">std_fitness</span></div>
@@ -763,7 +761,7 @@
 
 <div class="viewcode-block" id="GenericGA.population_fitness">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.population_fitness">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">population_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">population_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Fitness</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the fitness values of all the population.</span>
 
