@@ -111,12 +111,9 @@ class ExponentialRankSelector(SelectionOperator):
         if pop_size <= 1:
             return list(population)
 
-        # Extract exponential base.
-        c_base: float = self._items
-
         # Get the (cached) probability distribution.
-        selection_probs: list[float] = ExponentialRankSelector.probabilities(pop_size, c_base)
-
+        selection_probs: list[float] = ExponentialRankSelector.probabilities(pop_size,
+                                                                             c_base=self._items)
         # Define the key.
         key_sort: Callable = attrgetter("fitness")
 
