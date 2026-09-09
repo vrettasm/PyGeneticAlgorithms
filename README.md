@@ -47,6 +47,7 @@ The current implementation provides (out of the box) a wide variety of genetic o
 
 - **Selection operators**:
   - [Linear Rank Selector](pygenalgo/operators/selection/linear_rank_selector.py)
+  - [Exponential Rank Selector](pygenalgo/operators/selection/exponential_rank_selector.py)
   - [Neighborhood Selector](pygenalgo/operators/selection/neighborhood_selector.py)
   - [Random Selector](pygenalgo/operators/selection/random_selector.py)
   - [Roulette Wheel Selector](pygenalgo/operators/selection/roulette_wheel_selector.py)
