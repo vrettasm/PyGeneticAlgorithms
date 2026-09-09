@@ -60,11 +60,11 @@ class ExponentialRankSelector(SelectionOperator):
         the same input should not recompute the same array, since the population
         size of the chromosomes is not expected to change dynamically.
 
-        Formula for rank index 'idx' (0 to pop_size-1):
-        Weight = c^(pop_size - 1 - idx)
+        Formula for rank index 'i' (0 to pop_size-1):
+        weight = c^(pop_size - 1 - i)
 
-        This gives the best individual (idx = pop_size-1) a weight of c^0 = 1,
-        and the worst individual (idx = 0) a weight of c^(pop_size-1).
+        This gives the best individual (i = pop_size-1) a weight of c^0 = 1,
+        and the worst individual (i = 0) a weight of c^(pop_size-1).
 
         :param pop_size: (int) population size.
         :param c_base: (float) exponential base parameter.
@@ -83,7 +83,7 @@ class ExponentialRankSelector(SelectionOperator):
 
         # Calculate the weights for each rank.
         weights: list[float] = [
-            c_base ** (pop_size - 1 - idx) for idx in range(pop_size)
+            c_base ** (pop_size - 1 - i) for i in range(pop_size)
         ]
 
         # Sum all the weights to compute the normalization constant.
