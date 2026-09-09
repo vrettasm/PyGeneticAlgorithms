@@ -125,24 +125,6 @@ class ExponentialRankSelector(SelectionOperator):
         # - Best individual is at index N-1 (rank N).
         sorted_population = sorted(population, key=key_sort)
 
-        # Extract exponential base.
-        c_base: float = self._items
-
-        # Calculate exponential weights for each rank.
-        # Formula for rank index 'idx' (0 to N-1):
-        # Weight = c^(N - 1 - idx)
-        # This gives the best individual (idx = N-1) a weight of c^0 = 1,
-        # and the worst individual (idx = 0) a weight of c^(N-1).
-        weights: list[float] = [
-            c_base ** (pop_size - 1 - idx) for idx in range(pop_size)
-        ]
-
-        # Normalize weights to create a true probability distribution.
-        total_weight: float = fsum(weights)
-        selection_probs: list[float] = [
-            w / total_weight for w in weights
-        ]
-
         # Select the new individuals (indexes).
         index = self.rng.choice(pop_size, size=pop_size, p=selection_probs,
                                 replace=True, shuffle=False)
