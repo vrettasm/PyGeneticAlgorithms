@@ -115,6 +115,10 @@ class LinearRankSelector(SelectionOperator):
         # Get the population size.
         pop_size: int = len(population)
 
+        # Quick exit for empty or single-individual populations.
+        if pop_size <= 1:
+            return list(population)
+
         # Calculate the selection probabilities of each member
         # in the population, using their ranking position. Use
         # the pressure adjustment parameter 'eta' (as _items).
