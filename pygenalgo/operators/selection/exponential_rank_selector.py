@@ -2,6 +2,7 @@
 from math import fsum
 from typing import Callable
 from operator import attrgetter
+from functools import lru_cache
 
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
