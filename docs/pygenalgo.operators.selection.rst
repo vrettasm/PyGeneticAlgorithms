@@ -20,6 +20,14 @@ pygenalgo.operators.selection.linear\_rank\_selector module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.selection.exponential\_rank\_selector module
+----------------------------------------------------------------
+
+.. automodule:: pygenalgo.operators.selection.exponential_rank_selector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pygenalgo.operators.selection.random\_selector module
 -----------------------------------------------------
 
