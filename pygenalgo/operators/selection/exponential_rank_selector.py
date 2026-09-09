@@ -60,8 +60,8 @@ class ExponentialRankSelector(SelectionOperator):
         the same input should not recompute the same array, since the population
         size of the chromosomes is not expected to change dynamically.
 
-        Formula for rank index 'idx' (0 to N-1):
-        Weight = c^(N - 1 - idx)
+        Formula for rank index 'idx' (0 to pop_size-1):
+        Weight = c^(pop_size - 1 - idx)
 
         This gives the best individual (idx = N-1) a weight of c^0 = 1,
         and the worst individual (idx = 0) a weight of c^(N-1).
