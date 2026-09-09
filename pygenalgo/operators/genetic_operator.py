@@ -232,7 +232,7 @@ class GeneticOperator:
         Validate and normalize array-like upper and lower boundaries.
 
         :param lower_lim: ArrayLike object that contains the lower boundaries.
-        :param upper_lim: ArrayLike object that contains the lower boundaries.
+        :param upper_lim: ArrayLike object that contains the upper boundaries.
         :return: The validated lower and upper boundaries.
         """
         # Make sure the limits are numpy arrays.
