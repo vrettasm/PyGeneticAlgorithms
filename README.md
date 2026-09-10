@@ -30,18 +30,15 @@ close the parallel pool). So the default setting here is "parallel=False". Regar
 in parallel mode by definition.
 
   > **NEWS**:
-  > In this new release two additional selection operators have been implemented (i.e. ParetoFrontSelector and
-  > ParetoTournamentSelector) that are used exclusively with the 'MultiObjectiveGA' and select the new parents
-  > using pareto-front selection techniques. Note that both of these classes provide a base for the development
-  > of possible new selection methodologies for multi-objective problems. Examples that use the new techniques
-  > have also been added to demonstrate their use.
-  > 
-
-  > **MORE NEWS!!**:
-  > The IslandModelGA engine has been enhanced and with the addition of three new 'IslandOperators' it can now
-  > use a different set of genetic operators for each island (subpopulation), thus allowing them to evolve in
-  > completely different ways.
-  > 
+  > The latest release includes three additional selection operators: (i) ExponentialRank, (ii) ParetoFrontSelector and
+  > (iii) ParetoTournamentSelector. The last two are used exclusively with the 'MultiObjectiveGA' engine using pareto-
+  > front selection techniques. Note that both of these classes provide a base for the development of possible new
+  > selection methodologies for multi-objective problems. Examples that use the new techniques have also been added to
+  > demonstrate their use. In addition, the IslandModelGA engine has been enhanced and with three new three 'IslandOperators'.
+  > This new approach allows the use a different set of genetic operators for each island  (i.e. subpopulation), thus
+  > allowing them to evolve in completely different ways. Finally, the HalfUniformCrossover (HUX) has also been added,
+  > to provide an alternative recombination option.
+  >
 
 The current implementation provides (out of the box) a wide variety of genetic operators, including:
 
@@ -96,8 +93,8 @@ The current implementation provides (out of the box) a wide variety of genetic o
 **NOTE(1):** Meta operators call randomly other compatible operators (selection/crossover/mutation/migration)
 from a predefined set, with equal probability.
 
-**NOTE(2):** Crossover operators marked by '*' support variable chromosome lengths (VLC). By definition all
-mutation operators support VCL too, because they operate on a single chromosome at a time.
+**NOTE(2):** Crossover operators marked by '*' support variable length chromosomes (VLC). By definition all
+mutation operators support VLC too, because they operate on a single chromosome at a time.
 
 **NOTE(3):** Island operators are intended to work only with the IslandModelGA. They are designed to hold a list
 of other operators (one for each island) and call its specific function according to the island that they belong.
@@ -113,8 +110,8 @@ Incorporating additional genetic operators is easily facilitated by inheriting f
 - [MigrationOperator](pygenalgo/operators/migration/migration_operator.py)
 
 and implementing the basic interface as described therein. In the examples that follow I show how one can use this code
-to run a GA for optimization problems (maximization/minimization) with and without constraints. The project is ongoing
-so new things might come along the way.
+to run a GA for (single/multi-) optimization problems (maximization or minimization) with and without constraints. The
+project is ongoing so new things might come along the way.
 
 ### Installation
 
