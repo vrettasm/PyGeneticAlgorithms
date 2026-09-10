@@ -160,7 +160,6 @@ should not recompute the same array, since the population size of the
 chromosomes is not expected to change dynamically. The eta parameter
 provides a means to adjust the pressure from total random (eta = 1.0)
 to the highest possible rank (eta = 2.0).</p>
-<p>NOTE: Probabilities are returned in ascending order.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -169,7 +168,7 @@ to the highest possible rank (eta = 2.0).</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(list) rank probability distribution in ascending order.</p>
+<dd class="field-even"><p>(list) probability distribution in ascending order.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -209,6 +208,30 @@ their rank. By utilizing relative ranking instead of raw fitness values, it
 avoids scale-dependency issues (such as negative fitness values) while maintaining
 strong selective pressure on top-performing individuals to accelerate convergence.</p>
 </div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.operators.selection.exponential_rank_selector.ExponentialRankSelector.probabilities">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pop_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/selection/exponential_rank_selector.html#ExponentialRankSelector.probabilities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.exponential_rank_selector.ExponentialRankSelector.probabilities" title="Link to this definition"></a></dt>
+<dd><p>Calculate the probabilities for the population using the exponential
+rank formula. The function is lru_cached so that repeated calls with
+the same input should not recompute the same array, since the population
+size of the chromosomes is not expected to change dynamically.</p>
+<p>Formula for rank index ‘i’ (0 to pop_size-1):
+weight = c^(pop_size - 1 - i)</p>
+<p>This gives the best individual (i = pop_size-1) a weight of c^0 = 1,
+and the worst individual (i = 0) a weight of c^(pop_size-1).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pop_size</strong> – (int) population size.</p></li>
+<li><p><strong>c_base</strong> – (float) exponential base parameter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(list) probability distribution in ascending order.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="pygenalgo.operators.selection.exponential_rank_selector.ExponentialRankSelector.select">
 <span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome" title="pygenalgo.genome.chromosome.Chromosome"><span class="pre">Chromosome</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/selection/exponential_rank_selector.html#ExponentialRankSelector.select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.selection.exponential_rank_selector.ExponentialRankSelector.select" title="Link to this definition"></a></dt>

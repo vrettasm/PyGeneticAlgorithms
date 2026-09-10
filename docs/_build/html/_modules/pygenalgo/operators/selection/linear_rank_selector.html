@@ -142,12 +142,10 @@
 <span class="sd">        provides a means to adjust the pressure from total random (eta = 1.0)</span>
 <span class="sd">        to the highest possible rank (eta = 2.0).</span>
 
-<span class="sd">        NOTE: Probabilities are returned in ascending order.</span>
-
 <span class="sd">        :param pop_size: (int) population size.</span>
 <span class="sd">        :param eta: (float) pressure adjustment factor.</span>
 
-<span class="sd">        :return: (list) rank probability distribution in ascending order.</span>
+<span class="sd">        :return: (list) probability distribution in ascending order.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Sanity check.</span>
         <span class="k">if</span> <span class="n">pop_size</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
@@ -193,6 +191,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get the population size.</span>
         <span class="n">pop_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+
+        <span class="c1"># Quick exit for empty or single-individual populations.</span>
+        <span class="k">if</span> <span class="n">pop_size</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
 
         <span class="c1"># Calculate the selection probabilities of each member</span>
         <span class="c1"># in the population, using their ranking position. Use</span>
