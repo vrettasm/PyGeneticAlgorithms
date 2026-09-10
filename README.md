@@ -180,6 +180,8 @@ def fitness_func(individual: Chromosome):
 # _end_def_
 ```
 Once the fitness function is defined correctly the next steps are straightforward as described in the examples.
+Note that for multi-objective problems, using the MultiObjectiveGA engine, the fitness_func is expected to return
+a tuple: $(penalty, f_1, f_2, ..., f_n)$, grouping all the penalties together, and each objective function separately.
 
 ### Examples
 
