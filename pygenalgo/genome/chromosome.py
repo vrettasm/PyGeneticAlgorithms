@@ -173,9 +173,19 @@ class Chromosome:
         """
         Accessor of the genome list of the chromosome.
 
-        :return: the list (of Genes) of the chromosome.
+        :return: provides access to the container (list
+                 of Genes) of the chromosome.
         """
         return self._genome
+    # _end_def_
+
+    def clone_genome(self) -> list[Gene]:
+        """
+        Return a clone of the genome as list of the Genes.
+
+        :return: a new list (of Genes) of the genome.
+        """
+        return [gene.clone() for gene in self._genome]
     # _end_def_
 
     def invalidate_fitness(self) -> None:
