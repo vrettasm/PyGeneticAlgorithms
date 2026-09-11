@@ -145,32 +145,29 @@
             <span class="c1"># Extract the values from the placeholder.</span>
             <span class="n">p_alpha</span><span class="p">,</span> <span class="n">x_lower</span><span class="p">,</span> <span class="n">x_upper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span>
 
-            <span class="c1"># Get the lengths of both parents.</span>
-            <span class="n">len_1</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">)</span>
-            <span class="n">len_2</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">)</span>
+            <span class="c1"># Create the 1st offspring genome list.</span>
+            <span class="n">child_1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">gene</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span>
+            <span class="p">]</span>
 
-            <span class="c1"># Preallocate 1st child&#39;s genome.</span>
-            <span class="n">child_1</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">len_1</span>
-
-            <span class="c1"># Preallocate 2nd child&#39;s genome.</span>
-            <span class="n">child_2</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">len_2</span>
+            <span class="c1"># Create the 2nd offspring genome list.</span>
+            <span class="n">child_2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">gene</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span>
+            <span class="p">]</span>
 
             <span class="c1"># Find the minimum length of the two chromosomes.</span>
-            <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">len_1</span><span class="p">,</span> <span class="n">len_2</span><span class="p">)</span>
+            <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">child_1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">child_2</span><span class="p">))</span>
 
             <span class="c1"># Generate uniform random numbers in the [0.0, 1.0).</span>
             <span class="n">random_uniform</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">min_length</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 
-            <span class="c1"># Extract locally the parents genomes.</span>
-            <span class="n">parent_1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span>
-            <span class="n">parent_2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span>
-
             <span class="c1"># Set the new gene values iteratively.</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">min_length</span><span class="p">):</span>
 
-                <span class="c1"># Extract the gene values once.</span>
-                <span class="n">g1</span> <span class="o">=</span> <span class="n">parent_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
-                <span class="n">g2</span> <span class="o">=</span> <span class="n">parent_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+                <span class="c1"># Get the i-th position gene values</span>
+                <span class="c1"># from both offspring.</span>
+                <span class="n">g1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">child_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+                <span class="n">g2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">child_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
 
                 <span class="c1"># Get the min / max values.</span>
                 <span class="k">if</span> <span class="n">g1</span> <span class="o">&lt;</span> <span class="n">g2</span><span class="p">:</span>
@@ -206,13 +203,9 @@
                 <span class="n">new_value_1</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">new_value_1</span><span class="p">,</span> <span class="n">xl</span><span class="p">),</span> <span class="n">xu</span><span class="p">)</span>
                 <span class="n">new_value_2</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">new_value_2</span><span class="p">,</span> <span class="n">xl</span><span class="p">),</span> <span class="n">xu</span><span class="p">)</span>
 
-                <span class="c1"># Extract the gene function. Note that at index &#39;i&#39;</span>
-                <span class="c1"># both children will always have the exact same logic.</span>
-                <span class="n">gene_function</span> <span class="o">=</span> <span class="n">parent_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">func</span>
-
                 <span class="c1"># Update the genome of the new offsprings with new Genes.</span>
-                <span class="n">child_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Gene</span><span class="p">(</span><span class="n">datum</span><span class="o">=</span><span class="n">new_value_1</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">gene_function</span><span class="p">)</span>
-                <span class="n">child_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Gene</span><span class="p">(</span><span class="n">datum</span><span class="o">=</span><span class="n">new_value_2</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">gene_function</span><span class="p">)</span>
+                <span class="n">child_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">new_value_1</span>
+                <span class="n">child_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">new_value_2</span>
             <span class="c1"># _end_for_</span>
 
             <span class="c1"># Increase the crossover counter.</span>
