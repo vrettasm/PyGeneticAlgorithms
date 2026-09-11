@@ -46,14 +46,10 @@ class HalfUniformCrossover(CrossoverOperator):
         if self.is_operator_applicable() and (parent1 != parent2):
 
             # Create the 1st offspring genome list.
-            child_1: list[Gene] = [
-                gene.clone() for gene in parent1.genome
-            ]
+            child_1: list[Gene] = parent1.clone_genome()
 
             # Create the 2nd offspring genome list.
-            child_2: list[Gene] = [
-                gene.clone() for gene in parent2.genome
-            ]
+            child_2: list[Gene] = parent2.clone_genome()
 
             # Find differences in the genomes.
             diff_indices: list[int] = [

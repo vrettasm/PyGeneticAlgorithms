@@ -70,14 +70,10 @@ class BlendCrossover(CrossoverOperator):
             p_alpha, x_lower, x_upper = self._items
 
             # Create the 1st offspring genome list.
-            child_1: list[Gene] = [
-                gene.clone() for gene in parent1.genome
-            ]
+            child_1: list[Gene] = parent1.clone_genome()
 
             # Create the 2nd offspring genome list.
-            child_2: list[Gene] = [
-                gene.clone() for gene in parent2.genome
-            ]
+            child_2: list[Gene] = parent2.clone_genome()
 
             # Find the minimum length of the two chromosomes.
             min_length: int = min(len(child_1), len(child_2))

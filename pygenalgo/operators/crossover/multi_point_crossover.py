@@ -68,14 +68,10 @@ class MultiPointCrossover(CrossoverOperator):
                                           replace=False, shuffle=False))
 
             # Create the 1st offspring genome list.
-            child_1: list[Gene] = [
-                gene.clone() for gene in parent1.genome
-            ]
+            child_1: list[Gene] = parent1.clone_genome()
 
             # Create the 2nd offspring genome list.
-            child_2: list[Gene] = [
-                gene.clone() for gene in parent2.genome
-            ]
+            child_2: list[Gene] = parent2.clone_genome()
 
             # Initialize a set of hyperparameters.
             reset_flag, upper_lim, j = True, loci[0], 0
