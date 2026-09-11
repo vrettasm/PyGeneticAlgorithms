@@ -69,32 +69,29 @@ class BlendCrossover(CrossoverOperator):
             # Extract the values from the placeholder.
             p_alpha, x_lower, x_upper = self._items
 
-            # Get the lengths of both parents.
-            len_1: int = len(parent1.genome)
-            len_2: int = len(parent2.genome)
+            # Create the 1st offspring genome list.
+            child_1: list[Gene] = [
+                gene.clone() for gene in parent1.genome
+            ]
 
-            # Preallocate 1st child's genome.
-            child_1: list = [None] * len_1
-
-            # Preallocate 2nd child's genome.
-            child_2: list = [None] * len_2
+            # Create the 2nd offspring genome list.
+            child_2: list[Gene] = [
+                gene.clone() for gene in parent2.genome
+            ]
 
             # Find the minimum length of the two chromosomes.
-            min_length: int = min(len_1, len_2)
+            min_length: int = min(len(child_1), len(child_2))
 
             # Generate uniform random numbers in the [0.0, 1.0).
             random_uniform: NDArray = self.rng.random(size=(min_length, 2))
 
-            # Extract locally the parents genomes.
-            parent_1: list[Gene] = parent1.genome
-            parent_2: list[Gene] = parent2.genome
-
             # Set the new gene values iteratively.
             for i in range(min_length):
 
-                # Extract the gene values once.
-                g1 = parent_1[i].value
-                g2 = parent_2[i].value
+                # Get the i-th position gene values
+                # from both offspring.
+                g1: float = child_1[i].value
+                g2: float = child_2[i].value
 
                 # Get the min / max values.
                 if g1 < g2:
@@ -130,13 +127,9 @@ class BlendCrossover(CrossoverOperator):
                 new_value_1 = min(max(new_value_1, xl), xu)
                 new_value_2 = min(max(new_value_2, xl), xu)
 
-                # Extract the gene function. Note that at index 'i'
-                # both children will always have the exact same logic.
-                gene_function = parent_1[i].func
-
                 # Update the genome of the new offsprings with new Genes.
-                child_1[i] = Gene(datum=new_value_1, func=gene_function)
-                child_2[i] = Gene(datum=new_value_2, func=gene_function)
+                child_1[i].value = new_value_1
+                child_2[i].value = new_value_2
             # _end_for_
 
             # Increase the crossover counter.
