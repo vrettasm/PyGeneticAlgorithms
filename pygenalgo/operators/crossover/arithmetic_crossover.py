@@ -1,4 +1,5 @@
 """ Arithmetic crossover (whole/linear) operator module. """
+from math import isclose
 from typing import Optional
 
 # Third party imports.
