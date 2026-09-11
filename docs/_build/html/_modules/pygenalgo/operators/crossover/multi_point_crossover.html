@@ -144,14 +144,10 @@
                                           <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
 
             <span class="c1"># Create the 1st offspring genome list.</span>
-            <span class="n">child_1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">gene</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span>
-            <span class="p">]</span>
+            <span class="n">child_1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">clone_genome</span><span class="p">()</span>
 
             <span class="c1"># Create the 2nd offspring genome list.</span>
-            <span class="n">child_2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">gene</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span>
-            <span class="p">]</span>
+            <span class="n">child_2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">clone_genome</span><span class="p">()</span>
 
             <span class="c1"># Initialize a set of hyperparameters.</span>
             <span class="n">reset_flag</span><span class="p">,</span> <span class="n">upper_lim</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">loci</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span>

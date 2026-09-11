@@ -146,14 +146,10 @@
             <span class="n">p_alpha</span><span class="p">,</span> <span class="n">x_lower</span><span class="p">,</span> <span class="n">x_upper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span>
 
             <span class="c1"># Create the 1st offspring genome list.</span>
-            <span class="n">child_1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">gene</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span>
-            <span class="p">]</span>
+            <span class="n">child_1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">clone_genome</span><span class="p">()</span>
 
             <span class="c1"># Create the 2nd offspring genome list.</span>
-            <span class="n">child_2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">gene</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span>
-            <span class="p">]</span>
+            <span class="n">child_2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">clone_genome</span><span class="p">()</span>
 
             <span class="c1"># Find the minimum length of the two chromosomes.</span>
             <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">child_1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">child_2</span><span class="p">))</span>
