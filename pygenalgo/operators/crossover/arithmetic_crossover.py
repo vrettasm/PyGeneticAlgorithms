@@ -117,6 +117,11 @@ class ArithmeticCrossover(CrossoverOperator):
                 v1: float = child_1[i].value
                 v2: float = child_2[i].value
 
+                # Skip if parents are (almost) identical.
+                if isclose(v1, v2, rel_tol=1.0e-9, abs_tol=1.0e-15):
+                    continue
+                # _end_if_
+
                 # Compute the new gene values.
                 c1: float = _alpha * v1 + (1.0 - _alpha) * v2
                 c2: float = (1.0 - _alpha) * v1 + _alpha * v2
