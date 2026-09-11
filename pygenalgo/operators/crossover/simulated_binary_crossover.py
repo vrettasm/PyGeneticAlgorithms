@@ -159,12 +159,9 @@ class SimulatedBinaryCrossover(CrossoverOperator):
                 c1 = max(xl, min(c1, xu))
                 c2 = max(xl, min(c2, xu))
 
-                # Extract the gene function.
-                gene_function = child_1[i].func
-
                 # Update children's genomes.
-                child_1[i] = Gene(datum=c2 if swapped else c1, func=gene_function)
-                child_2[i] = Gene(datum=c1 if swapped else c2, func=gene_function)
+                child_1[i].value = c2 if swapped else c1
+                child_2[i].value = c1 if swapped else c2
             # _end_for_
 
             # Increase the crossover counter.
