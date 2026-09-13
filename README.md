@@ -5,6 +5,10 @@
 [![DOI](https://zenodo.org/badge/311952715.svg)](https://doi.org/10.5281/zenodo.18171837)
 
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+[![Supports Python 3.10](https://img.shields.io/badge/python-3.10-blue?logo=python)](https://www.python.org/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![PyPI version](https://img.shields.io/pypi/v/pygenalgo.svg)](https://pypi.org/project/pygenalgo/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/pygenalgo.svg)](https://pypi.org/project/pygenalgo/)
 
 **Pylint score: 9.85 / 10**
 
