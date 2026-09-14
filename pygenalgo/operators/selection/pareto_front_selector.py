@@ -57,7 +57,7 @@ class ParetoFrontSelector(SelectionOperator):
         # Remaining size (non-pareto).
         rem_size: int = n_size - n_pareto
 
-        # Edge case (all chromosome are on the Pareto).
+        # Edge case (all chromosomes are on the Pareto).
         if rem_size == 0:
 
             # Return the same.
