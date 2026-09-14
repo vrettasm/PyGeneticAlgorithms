@@ -81,12 +81,21 @@ class ParetoFrontSelector(SelectionOperator):
         # Count the non-pareto flags.
         count_non_pareto: int = np.sum(non_pareto_flags)
 
-        # Combined both results in one array.
-        chosen: NDArray = np.concatenate((pareto_idx, extras))
+        # First group selects randomly from the non-pareto indices.
+        extras_a: NDArray = choose_randomly(remaining_idx,
+                                            size=count_non_pareto,
+                                            replace=True)
 
+        # Second group selects randomly from the pareto indices.
+        extras_b: NDArray = choose_randomly(pareto_idx,
+                                            size=rem_size-count_non_pareto,
+                                            replace=True)
+        # Combine all groups in one array.
+        chosen: NDArray = np.concatenate((pareto_idx, extras_a, extras_b),
+                                         axis=0, dtype=int)
         return [
             # Ensure 'k' is passed as integer.
-            population[int(k)] for k in chosen
+            population[k] for k in chosen
         ]
     # _end_def_
 
