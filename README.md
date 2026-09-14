@@ -197,6 +197,7 @@ Some optimization examples on how to use these algorithms:
 | [Sphere](examples/sphere.ipynb)                               |    M (=5)     |       1        |       no        |   single   |
 | [Rastrigin](examples/rastrigin.ipynb)                         |    M (=5)     |       1        |       no        |   single   |
 | [Rosenbrock](examples/rosenbrock_on_a_disk.ipynb)             |    M (=2)     |       1        |        1        |   single   |
+| [Knapsack 0/1](examples/knapsack_01.ipynb)                    |    M (=50)    |       1        |       yes       |   single   |
 | [Binh & Korn](examples/binh_and_korn_multiobjective.ipynb)    |    M (=2)     |       2        |        2        |   Pareto   |
 | [Sphere (parallel)](examples/sphere_in_parallel.ipynb)        |    M (=10)    |       1        |       no        |   single   |
 | [Easom (parallel)](examples/easom_in_parallel.ipynb)          |    M (=2)     |       1        |       no        |   single   |
