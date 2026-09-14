@@ -81,7 +81,7 @@ class ParetoFrontSelector(SelectionOperator):
         # Fill the extras list.
         extras: list[int] = [
             choose_randomly(remaining_idx) if flag else choose_randomly(pareto_idx)
-            for flag in pareto_flag
+            for flag in non_pareto_flags
         ]
 
         # Combined both results in one array.
