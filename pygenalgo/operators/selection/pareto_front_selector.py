@@ -76,7 +76,7 @@ class ParetoFrontSelector(SelectionOperator):
         pareto_probability: float = n_pareto / n_size
 
         # Generate uniform random numbers and convert them to bool.
-        pareto_flag: NDArray = self.rng.random(size=rem_size) > pareto_probability
+        non_pareto_flags: NDArray = self.rng.random(size=rem_size) > pareto_probability
 
         # Fill the extras list.
         extras: list[int] = [
