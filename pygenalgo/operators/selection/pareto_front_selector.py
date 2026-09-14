@@ -78,11 +78,8 @@ class ParetoFrontSelector(SelectionOperator):
         # Generate uniform random numbers and convert them to bool.
         non_pareto_flags: NDArray = self.rng.random(size=rem_size) > pareto_probability
 
-        # Fill the extras list.
-        extras: list[int] = [
-            choose_randomly(remaining_idx) if flag else choose_randomly(pareto_idx)
-            for flag in non_pareto_flags
-        ]
+        # Count the non-pareto flags.
+        count_non_pareto: int = np.sum(non_pareto_flags)
 
         # Combined both results in one array.
         chosen: NDArray = np.concatenate((pareto_idx, extras))
