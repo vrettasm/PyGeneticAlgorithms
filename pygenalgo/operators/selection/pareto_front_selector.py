@@ -67,35 +67,25 @@ class ParetoFrontSelector(SelectionOperator):
         # Local copy of random choice.
         choose_randomly = self.rng.choice
 
-        # Edge case no.2:
-        if rem_size == 1:
+        # Extract the remaining (non-pareto) indices.
+        remaining_idx: NDArray = np.setdiff1d(np.arange(n_size),
+                                              pareto_idx,
+                                              assume_unique=True)
 
-            # Select one pareto index at random.
-            extra_idx: int = choose_randomly(pareto_idx)
+        # Compute dynamically the pareto probability.
+        pareto_probability: float = n_pareto / n_size
 
-            # Set up the chosen array.
-            chosen: NDArray = np.append(pareto_idx, extra_idx)
-        else:
+        # Generate uniform random numbers and convert them to bool.
+        pareto_flag: NDArray = self.rng.random(size=rem_size) > pareto_probability
 
-            # Extract the remaining (non-pareto) indices.
-            remaining_idx: NDArray = np.setdiff1d(np.arange(n_size),
-                                                  pareto_idx,
-                                                  assume_unique=True)
+        # Fill the extras list.
+        extras: list[int] = [
+            choose_randomly(remaining_idx) if flag else choose_randomly(pareto_idx)
+            for flag in pareto_flag
+        ]
 
-            # Compute dynamically the pareto probability.
-            pareto_probability: float = n_pareto / n_size
-
-            # Generate uniform random numbers and convert them to bool.
-            pareto_flag: NDArray = self.rng.random(size=rem_size) > pareto_probability
-
-            # Fill the extras list.
-            extras: list[int] = [
-                choose_randomly(remaining_idx) if flag else choose_randomly(pareto_idx)
-                for flag in pareto_flag
-            ]
-
-            # Combined both results in one array.
-            chosen: NDArray = np.concatenate((pareto_idx, extras))
+        # Combined both results in one array.
+        chosen: NDArray = np.concatenate((pareto_idx, extras))
 
         return [
             # Ensure 'k' is passed as integer.
