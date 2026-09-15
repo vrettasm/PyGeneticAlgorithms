@@ -90,11 +90,8 @@ class BlendCrossover(CrossoverOperator):
                 g2: float = child_2[i].value
 
                 # Get the min / max values.
-                if g1 < g2:
-                    min_value, max_value = g1, g2
-                else:
-                    min_value, max_value = g2, g1
-                # _end_if_
+                min_value: float = min(g1, g2)
+                max_value: float = max(g1, g2)
 
                 # Get the offset by scaling the distance
                 # between the two gene values with alpha.
