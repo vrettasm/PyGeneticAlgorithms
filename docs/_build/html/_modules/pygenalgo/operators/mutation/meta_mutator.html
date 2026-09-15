@@ -122,15 +122,17 @@
         <span class="c1"># If the mutation probability is higher than</span>
         <span class="c1"># a uniformly random value, make the changes.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
+            <span class="c1"># Access the mutation operators.</span>
+            <span class="n">mutate_op</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span>
 
             <span class="c1"># Get the number of available mutators.</span>
-            <span class="n">n_operators</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
+            <span class="n">n_operators</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mutate_op</span><span class="p">)</span>
 
             <span class="c1"># Select randomly with equal probability.</span>
             <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_operators</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
             <span class="c1"># Call its mutation method.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+            <span class="n">mutate_op</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
 
             <span class="c1"># Increase the mutator counter.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span></div>

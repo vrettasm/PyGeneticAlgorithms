@@ -120,14 +120,17 @@
         <span class="c1"># active populations and the migration probability is</span>
         <span class="c1"># higher than a uniformly random value.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">islands</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># Access the migration operators.</span>
+            <span class="n">migrate_op</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span>
+
             <span class="c1"># Get the number of migrators.</span>
-            <span class="n">n_operators</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
+            <span class="n">n_operators</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">migrate_op</span><span class="p">)</span>
 
             <span class="c1"># Select randomly (with equal probability) a method.</span>
             <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_operators</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
             <span class="c1"># Call its own migrate method.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">migrate</span><span class="p">(</span><span class="n">islands</span><span class="p">)</span>
+            <span class="n">migrate_op</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">migrate</span><span class="p">(</span><span class="n">islands</span><span class="p">)</span>
 
             <span class="c1"># Increase the migration counter.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span></div>

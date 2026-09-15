@@ -166,15 +166,12 @@
                 <span class="n">g2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">child_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
 
                 <span class="c1"># Get the min / max values.</span>
-                <span class="k">if</span> <span class="n">g1</span> <span class="o">&lt;</span> <span class="n">g2</span><span class="p">:</span>
-                    <span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span> <span class="o">=</span> <span class="n">g1</span><span class="p">,</span> <span class="n">g2</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span> <span class="o">=</span> <span class="n">g2</span><span class="p">,</span> <span class="n">g1</span>
-                <span class="c1"># _end_if_</span>
+                <span class="n">min_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">)</span>
+                <span class="n">max_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">)</span>
 
                 <span class="c1"># Get the offset by scaling the distance</span>
                 <span class="c1"># between the two gene values with alpha.</span>
-                <span class="n">offset_distance</span> <span class="o">=</span> <span class="n">p_alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_value</span> <span class="o">-</span> <span class="n">min_value</span><span class="p">)</span>
+                <span class="n">offset_distance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">p_alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_value</span> <span class="o">-</span> <span class="n">min_value</span><span class="p">)</span>
 
                 <span class="c1"># Compute the lower and upper limits by</span>
                 <span class="c1"># removing / adding the offset distance.</span>
@@ -185,23 +182,19 @@
                 <span class="n">rv_1</span><span class="p">,</span> <span class="n">rv_2</span> <span class="o">=</span> <span class="n">random_uniform</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
                 <span class="c1"># Compute the difference.</span>
-                <span class="n">diff</span> <span class="o">=</span> <span class="n">max_value</span> <span class="o">-</span> <span class="n">min_value</span>
+                <span class="n">diff</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">max_value</span> <span class="o">-</span> <span class="n">min_value</span>
 
                 <span class="c1"># Create two new gene values.</span>
-                <span class="n">new_value_1</span> <span class="o">=</span> <span class="n">min_value</span> <span class="o">+</span> <span class="p">(</span><span class="n">diff</span> <span class="o">*</span> <span class="n">rv_1</span><span class="p">)</span>
-                <span class="n">new_value_2</span> <span class="o">=</span> <span class="n">min_value</span> <span class="o">+</span> <span class="p">(</span><span class="n">diff</span> <span class="o">*</span> <span class="n">rv_2</span><span class="p">)</span>
+                <span class="n">new_value_1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">min_value</span> <span class="o">+</span> <span class="p">(</span><span class="n">diff</span> <span class="o">*</span> <span class="n">rv_1</span><span class="p">)</span>
+                <span class="n">new_value_2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">min_value</span> <span class="o">+</span> <span class="p">(</span><span class="n">diff</span> <span class="o">*</span> <span class="n">rv_2</span><span class="p">)</span>
 
                 <span class="c1"># Local bounds lookups.</span>
                 <span class="n">xl</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">x_lower</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                 <span class="n">xu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">x_upper</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
                 <span class="c1"># Ensure the new values are within limits.</span>
-                <span class="n">new_value_1</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">new_value_1</span><span class="p">,</span> <span class="n">xl</span><span class="p">),</span> <span class="n">xu</span><span class="p">)</span>
-                <span class="n">new_value_2</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">new_value_2</span><span class="p">,</span> <span class="n">xl</span><span class="p">),</span> <span class="n">xu</span><span class="p">)</span>
-
-                <span class="c1"># Update the genome of the new offsprings with new Genes.</span>
-                <span class="n">child_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">new_value_1</span>
-                <span class="n">child_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">new_value_2</span>
+                <span class="n">child_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">new_value_1</span><span class="p">,</span> <span class="n">xl</span><span class="p">),</span> <span class="n">xu</span><span class="p">)</span>
+                <span class="n">child_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">new_value_2</span><span class="p">,</span> <span class="n">xl</span><span class="p">),</span> <span class="n">xu</span><span class="p">)</span>
             <span class="c1"># _end_for_</span>
 
             <span class="c1"># Increase the crossover counter.</span>
