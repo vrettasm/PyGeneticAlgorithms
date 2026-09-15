@@ -98,7 +98,7 @@ class BlendCrossover(CrossoverOperator):
 
                 # Get the offset by scaling the distance
                 # between the two gene values with alpha.
-                offset_distance = p_alpha * (max_value - min_value)
+                offset_distance: float = p_alpha * (max_value - min_value)
 
                 # Compute the lower and upper limits by
                 # removing / adding the offset distance.
@@ -109,23 +109,19 @@ class BlendCrossover(CrossoverOperator):
                 rv_1, rv_2 = random_uniform[i]
 
                 # Compute the difference.
-                diff = max_value - min_value
+                diff: float = max_value - min_value
 
                 # Create two new gene values.
-                new_value_1 = min_value + (diff * rv_1)
-                new_value_2 = min_value + (diff * rv_2)
+                new_value_1: float = min_value + (diff * rv_1)
+                new_value_2: float = min_value + (diff * rv_2)
 
                 # Local bounds lookups.
                 xl: float = x_lower[i]
                 xu: float = x_upper[i]
 
                 # Ensure the new values are within limits.
-                new_value_1 = min(max(new_value_1, xl), xu)
-                new_value_2 = min(max(new_value_2, xl), xu)
-
-                # Update the genome of the new offsprings with new Genes.
-                child_1[i].value = new_value_1
-                child_2[i].value = new_value_2
+                child_1[i].value = min(max(new_value_1, xl), xu)
+                child_2[i].value = min(max(new_value_2, xl), xu)
             # _end_for_
 
             # Increase the crossover counter.
