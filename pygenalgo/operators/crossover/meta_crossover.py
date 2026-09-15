@@ -50,9 +50,11 @@ class MetaCrossover(CrossoverOperator):
         # random value and the parents aren't identical apply the
         # changes.
         if self.is_operator_applicable() and (parent1 != parent2):
+            # Access the crossover operators.
+            crossx_op: tuple = self.items
 
             # Get the number of available crossovers.
-            n_operators: int = len(self.items)
+            n_operators: int = len(crossx_op)
 
             # Select randomly, with equal probability
             # a crossover operator.
@@ -62,7 +64,7 @@ class MetaCrossover(CrossoverOperator):
             self.inc_counter()
 
             # Call its crossover method.
-            return self.items[idx].crossover(parent1, parent2)
+            return crossx_op[idx].crossover(parent1, parent2)
         # _end_if_
 
         # Return the two offsprings.
