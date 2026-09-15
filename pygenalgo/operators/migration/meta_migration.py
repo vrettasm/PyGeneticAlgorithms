@@ -44,14 +44,17 @@ class MetaMigration(MigrationOperator):
         # active populations and the migration probability is
         # higher than a uniformly random value.
         if self.is_operator_applicable() and len(islands) > 1:
+            # Access the migration operators.
+            migrate_op: tuple = self.items
+
             # Get the number of migrators.
-            n_operators: int = len(self.items)
+            n_operators: int = len(migrate_op)
 
             # Select randomly (with equal probability) a method.
             idx: int = self.rng.integers(n_operators, dtype=int)
 
             # Call its own migrate method.
-            self.items[idx].migrate(islands)
+            migrate_op[idx].migrate(islands)
 
             # Increase the migration counter.
             self.inc_counter()

@@ -50,14 +50,17 @@ class MetaSelector(SelectionOperator):
 
         :return: the selected parents population (as list of chromosomes).
         """
+        # Access the selector operators.
+        select_op: tuple = self.items
+
         # Get the number of available selectors.
-        n_operators: int = len(self.items)
+        n_operators: int = len(select_op)
 
         # Select randomly with equal probability.
         idx: int = self.rng.integers(n_operators, dtype=int)
 
         # Apply its own select method.
-        return self.items[idx].select(population)
+        return select_op[idx].select(population)
     # _end_def_
 
     @property
