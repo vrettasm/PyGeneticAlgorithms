@@ -92,10 +92,10 @@ class ParetoFrontSelector(SelectionOperator):
                                             replace=True)
         # Combine all groups in one array.
         chosen: NDArray = np.concatenate((pareto_idx, extras_a, extras_b),
-                                         axis=0, dtype=int)
+                                         axis=0)
         return [
             # Ensure 'k' is passed as integer.
-            population[k] for k in chosen
+            population[int(k)] for k in chosen
         ]
     # _end_def_
 
