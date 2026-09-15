@@ -131,13 +131,9 @@ class ArithmeticCrossover(CrossoverOperator):
                 xl: float = x_lower[i]
                 xu: float = x_upper[i]
 
-                # Apply Mirroring strategy for out of bounds.
-                c1 = self._reflect_boundary(c1, xl, xu)
-                c2 = self._reflect_boundary(c2, xl, xu)
-
-                # Update children's genomes.
-                child_1[i].value = c1
-                child_2[i].value = c2
+                # Update the genomes by applying mirroring strategy for out of bounds.
+                child_1[i].value = self._reflect_boundary(c1, xl, xu)
+                child_2[i].value = self._reflect_boundary(c2, xl, xu)
             # _end_for_
 
             # Increase the crossover counter.
