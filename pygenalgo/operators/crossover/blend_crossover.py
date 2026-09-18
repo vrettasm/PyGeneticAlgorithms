@@ -122,8 +122,8 @@ class BlendCrossover(CrossoverOperator):
                 xu: float = x_upper[i]
 
                 # Ensure the new values are within limits.
-                child_1[i].value = min(max(new_value_1, xl), xu)
-                child_2[i].value = min(max(new_value_2, xl), xu)
+                child_1[i].value = clamp(new_value_1, xl, xu)
+                child_2[i].value = clamp(new_value_2, xl, xu)
             # _end_for_
 
             # Increase the crossover counter.
