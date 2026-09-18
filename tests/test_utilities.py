@@ -2,7 +2,8 @@ import unittest
 import numpy as np
 
 from utils.utilities import (np_pareto_front,
-                             np_pareto_front_index)
+                             np_pareto_front_index,
+                             reflect_boundary)
 from pygenalgo.utils.utilities import two_indices_fast
 
 
@@ -265,6 +266,28 @@ class TestUtilities(unittest.TestCase):
                                     exclude_duplicates=False)
         # Expected set.
         self.assertFrontEqual(idx, expected_set={123, 456})
+    # _end_def_
+
+    def test_reflect_boundary(self):
+        # Basic checks.
+        self.assertEqual(reflect_boundary(5, 0, 10), 5)
+        self.assertEqual(reflect_boundary(0, 0, 10), 0)
+        self.assertEqual(reflect_boundary(10, 0, 10), 10)
+
+        # 15 is 5 beyond 10, so it reflects to 5.
+        self.assertEqual(reflect_boundary(15, 0, 10), 5)
+
+        # -5 is 5 below 0, so it reflects to 5.
+        self.assertEqual(reflect_boundary(-5, 0, 10), 5)
+
+        # 35 -> -15 -> 15 -> 5
+        self.assertEqual(reflect_boundary(35, 0, 10), 5)
+
+        # -25 -> 25 -> -5 -> 5
+        self.assertEqual(reflect_boundary(-25, 0, 10), 5)
+
+        self.assertAlmostEqual(reflect_boundary(12.5, 0, 10), 7.5)
+        self.assertAlmostEqual(reflect_boundary(-2.5, 0, 10), 2.5)
     # _end_def_
 
 # _end_class_
