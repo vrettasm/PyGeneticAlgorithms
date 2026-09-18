@@ -81,13 +81,11 @@ class SimulatedBinaryCrossover(CrossoverOperator):
             min_length: int = min(len(child_1), len(child_2))
 
             for i in range(min_length):
-
-                # Get the i-th position gene values
-                # from both parents.
+                # Extract gene values from both parents.
                 x1: float = child_1[i].value
                 x2: float = child_2[i].value
 
-                # Skip if parents are (almost) identical.
+                # Skip if genes are (almost) identical.
                 if isclose(x1, x2, rel_tol=1.0e-9, abs_tol=1.0e-15):
                     continue
                 # _end_if_
