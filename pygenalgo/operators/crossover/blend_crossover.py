@@ -1,4 +1,6 @@
 """ Blend-a crossover (BLX-a) operator module. """
+from math import isclose
+
 # Third party imports.
 from numpy.typing import ArrayLike, NDArray
 
