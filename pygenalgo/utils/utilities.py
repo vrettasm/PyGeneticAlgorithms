@@ -54,22 +54,21 @@ def reflect_boundary(value: Number, low: Number, high: Number) -> Number:
 
     :return: reflected value.
     """
-    # Handles extreme cases where value is out
-    # of bounds recursively via reflection.
-    while value > high or value < low:
+    # Compute the span between the two limits.
+    span: float = high - low
 
-        # Check upper limit.
-        if value > high:
-            overshoot = value - high
-            value = high - overshoot
-        # Check lower limit.
-        elif value < low:
-            undershoot = low - value
-            value = low + undershoot
-    # _end_while_
+    # Shift value to be relative to zero, then wrap
+    # it within 2 * span. This creates a cycle that
+    # represents one full bounce (forth and back).
+    relative_value: float = (value - low) % (2 * span)
 
-    # Return the value.
-    return value
+    # If the value is in the second half of the cycle
+    # (span -> 2*span), it is currently reflecting
+    # back from the high boundary.
+    if relative_value > span:
+        return high - (relative_value - span)
+
+    return low + relative_value
 # _end_def_
 
 def _dominance_batch(sample_points: NDArray, eps_arr: NDArray) -> NDArray:
