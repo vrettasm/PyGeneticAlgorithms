@@ -93,19 +93,17 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generator</span>
 
 <span class="c1"># Public interface.</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;cost_function&quot;</span><span class="p">,</span> <span class="s2">&quot;np_cdist&quot;</span><span class="p">,</span> <span class="s2">&quot;two_indices_fast&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;np_pareto_front&quot;</span><span class="p">,</span> <span class="s2">&quot;clamp&quot;</span><span class="p">,</span>  <span class="s2">&quot;np_pareto_front_index&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;cost_function&quot;</span><span class="p">,</span> <span class="s2">&quot;np_cdist&quot;</span><span class="p">,</span> <span class="s2">&quot;two_indices_fast&quot;</span><span class="p">,</span> <span class="s2">&quot;clamp&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;np_pareto_front&quot;</span><span class="p">,</span> <span class="s2">&quot;np_pareto_front_index&quot;</span><span class="p">,</span> <span class="s2">&quot;reflect_boundary&quot;</span><span class="p">]</span>
 
 <span class="c1"># Declare a union type.</span>
 <span class="n">Number</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
 
 <div class="viewcode-block" id="clamp">
 <a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.clamp">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">clamp</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span>
-          <span class="n">x_lower</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span>
-          <span class="n">x_upper</span><span class="p">:</span> <span class="n">Number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">clamp</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> <span class="n">x_lower</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> <span class="n">x_upper</span><span class="p">:</span> <span class="n">Number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Clamps a value within a specified range.</span>
+<span class="sd">    Clamps the input value &#39;x&#39; within a specified range.</span>
 
 <span class="sd">    :param x: value to clamp.</span>
 
@@ -116,6 +114,39 @@
 <span class="sd">    :return: clamped value.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_lower</span><span class="p">),</span> <span class="n">x_upper</span><span class="p">)</span></div>
+
+<span class="c1"># _end_def_</span>
+
+<div class="viewcode-block" id="reflect_boundary">
+<a class="viewcode-back" href="../../../pygenalgo.utils.html#pygenalgo.utils.utilities.reflect_boundary">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">reflect_boundary</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> <span class="n">low</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> <span class="n">high</span><span class="p">:</span> <span class="n">Number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies mirroring (reflection) strategy for out-of-bounds values.</span>
+
+<span class="sd">    :param value: value to reflect.</span>
+
+<span class="sd">    :param low: lower bound.</span>
+
+<span class="sd">    :param high: upper bound.</span>
+
+<span class="sd">    :return: reflected value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Handles extreme cases where value is out</span>
+    <span class="c1"># of bounds recursively via reflection.</span>
+    <span class="k">while</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">high</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">low</span><span class="p">:</span>
+
+        <span class="c1"># Check upper limit.</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">high</span><span class="p">:</span>
+            <span class="n">overshoot</span> <span class="o">=</span> <span class="n">value</span> <span class="o">-</span> <span class="n">high</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">high</span> <span class="o">-</span> <span class="n">overshoot</span>
+        <span class="c1"># Check lower limit.</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">low</span><span class="p">:</span>
+            <span class="n">undershoot</span> <span class="o">=</span> <span class="n">low</span> <span class="o">-</span> <span class="n">value</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">low</span> <span class="o">+</span> <span class="n">undershoot</span>
+    <span class="c1"># _end_while_</span>
+
+    <span class="c1"># Return the value.</span>
+    <span class="k">return</span> <span class="n">value</span></div>
 
 <span class="c1"># _end_def_</span>
 

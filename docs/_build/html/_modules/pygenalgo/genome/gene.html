@@ -80,6 +80,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">ndarray</span><span class="p">,</span>
                    <span class="n">array_equal</span><span class="p">,</span>
                    <span class="n">ascontiguousarray</span><span class="p">)</span>
+<span class="c1"># Third part imports.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
 
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Gene&quot;</span><span class="p">]</span>
@@ -312,10 +314,10 @@
         <span class="c1"># Extra care for array like objects.</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Gene</span><span class="o">.</span><span class="n">_ARRAY_LIKE_TYPES</span><span class="p">):</span>
             <span class="c1"># Ensure the data are continuous.</span>
-            <span class="n">array</span> <span class="o">=</span> <span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">array</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
             <span class="c1"># Convert everything to python scalars.</span>
-            <span class="n">values</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">values</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
             <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span>
                 <span class="p">(</span><span class="s2">&quot;array_like&quot;</span><span class="p">,</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>

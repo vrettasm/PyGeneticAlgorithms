@@ -230,7 +230,7 @@ for choosing 2 items from a set.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pygenalgo.utils.utilities.clamp">
 <span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">clamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_lower</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_upper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#clamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.clamp" title="Link to this definition"></a></dt>
-<dd><p>Clamps a value within a specified range.</p>
+<dd><p>Clamps the input value ‘x’ within a specified range.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -343,6 +343,24 @@ points.</p></li>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>array of indexes (from the points that lie on
 the Pareto front).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygenalgo.utils.utilities.reflect_boundary">
+<span class="sig-prename descclassname"><span class="pre">pygenalgo.utils.utilities.</span></span><span class="sig-name descname"><span class="pre">reflect_boundary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pygenalgo/utils/utilities.html#reflect_boundary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.utils.utilities.reflect_boundary" title="Link to this definition"></a></dt>
+<dd><p>Applies mirroring (reflection) strategy for out-of-bounds values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – value to reflect.</p></li>
+<li><p><strong>low</strong> – lower bound.</p></li>
+<li><p><strong>high</strong> – upper bound.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>reflected value.</p>
 </dd>
 </dl>
 </dd></dl>
