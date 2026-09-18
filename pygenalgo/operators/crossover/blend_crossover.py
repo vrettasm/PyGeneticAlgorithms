@@ -83,9 +83,7 @@ class BlendCrossover(CrossoverOperator):
 
             # Set the new gene values iteratively.
             for i in range(min_length):
-
-                # Get the i-th position gene values
-                # from both offspring.
+                # Extract gene values from both parents.
                 g1: float = child_1[i].value
                 g2: float = child_2[i].value
 
