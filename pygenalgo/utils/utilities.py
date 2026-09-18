@@ -21,17 +21,15 @@ from numpy.typing import NDArray
 from numpy.random import Generator
 
 # Public interface.
-__all__ = ["cost_function", "np_cdist", "two_indices_fast",
-           "np_pareto_front", "clamp",  "np_pareto_front_index"]
+__all__ = ["cost_function", "np_cdist", "two_indices_fast", "clamp",
+           "np_pareto_front", "np_pareto_front_index", "reflect_boundary"]
 
 # Declare a union type.
 Number = Union[int, float]
 
-def clamp(x: Number,
-          x_lower: Number,
-          x_upper: Number) -> Number:
+def clamp(x: Number, x_lower: Number, x_upper: Number) -> Number:
     """
-    Clamps a value within a specified range.
+    Clamps the input value 'x' within a specified range.
 
     :param x: value to clamp.
 
@@ -42,6 +40,36 @@ def clamp(x: Number,
     :return: clamped value.
     """
     return min(max(x, x_lower), x_upper)
+# _end_def_
+
+def reflect_boundary(value: Number, low: Number, high: Number) -> Number:
+    """
+    Applies mirroring (reflection) strategy for out-of-bounds values.
+
+    :param value: value to reflect.
+
+    :param low: lower bound.
+
+    :param high: upper bound.
+
+    :return: reflected value.
+    """
+    # Handles extreme cases where value is out
+    # of bounds recursively via reflection.
+    while value > high or value < low:
+
+        # Check upper limit.
+        if value > high:
+            overshoot = value - high
+            value = high - overshoot
+        # Check lower limit.
+        elif value < low:
+            undershoot = low - value
+            value = low + undershoot
+    # _end_while_
+
+    # Return the value.
+    return value
 # _end_def_
 
 def _dominance_batch(sample_points: NDArray, eps_arr: NDArray) -> NDArray:
