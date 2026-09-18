@@ -7,8 +7,8 @@ from numpy.typing import ArrayLike, NDArray
 
 # Custom code imports.
 from pygenalgo.genome.gene import Gene
-from pygenalgo.utils.utilities import clamp
 from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.utils.utilities import clamp, reflect_boundary
 from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Offsprings)
 
 
@@ -57,29 +57,6 @@ class ArithmeticCrossover(CrossoverOperator):
         self._items: tuple[Optional[float], NDArray, NDArray] = (
             p_alpha, lower_lim, upper_lim
         )
-    # _end_def_
-
-    @staticmethod
-    def _reflect_boundary(value: float, low: float, high: float) -> float:
-        """
-        Applies Mirroring (Reflection) strategy for out-of-bounds values.
-        If reflection still falls outside the range, it clamps to safety.
-        """
-        # Handles extreme cases where value is out of bounds recursively
-        # via reflection.
-        while value > high or value < low:
-            # Check upper limit.
-            if value > high:
-                overshoot = value - high
-                value = high - overshoot
-            # Check lower limit.
-            elif value < low:
-                undershoot = low - value
-                value = low + undershoot
-        # _end_while_
-
-        # Return the value.
-        return value
     # _end_def_
 
     def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Offsprings:
@@ -132,8 +109,8 @@ class ArithmeticCrossover(CrossoverOperator):
                 xu: float = x_upper[i]
 
                 # Update the genomes by applying mirroring strategy for out of bounds.
-                child_1[i].value = self._reflect_boundary(c1, xl, xu)
-                child_2[i].value = self._reflect_boundary(c2, xl, xu)
+                child_1[i].value = reflect_boundary(c1, xl, xu)
+                child_2[i].value = reflect_boundary(c2, xl, xu)
             # _end_for_
 
             # Increase the crossover counter.
