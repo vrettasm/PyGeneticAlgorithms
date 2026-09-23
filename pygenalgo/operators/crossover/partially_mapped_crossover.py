@@ -67,8 +67,12 @@ class PartiallyMappedCrossover(CrossoverOperator):
             segment_of_genome_2 = set(child_2[i:j])
 
             # Pre-compute gene positions into dictionaries for O(1) lookups.
-            p1_pos_map: dict = {gene: idx for idx, gene in enumerate(parent1.genome)}
-            p2_pos_map: dict = {gene: idx for idx, gene in enumerate(parent2.genome)}
+            p1_pos_map: dict = {
+                gene_1: idx_1 for idx_1, gene_1 in enumerate(parent1.genome)
+            }
+            p2_pos_map: dict = {
+                gene_2: idx_2 for idx_2, gene_2 in enumerate(parent2.genome)
+            }
 
             # Start building the offsprings.
             for n, (gene_x, gene_y) in enumerate(zip(parent2.genome[i:j],
