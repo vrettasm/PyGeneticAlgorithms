@@ -53,7 +53,7 @@ class PrefixOrderCrossover(CrossoverOperator):
             prefix_p1: set[Gene] = set(parent1.genome[:loc1])
             prefix_p2: set[Gene] = set(parent2.genome[:loc2])
 
-            # Construct 1st offspring genome list at locus.
+            # Construct 1st offspring genome list at loc1.
             child_1: list[Gene] = [
                 gene.clone() for gene in parent1.genome[:loc1] +
                                          [x for x in parent2 if x not in used_in_parent1]
