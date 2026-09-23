@@ -71,6 +71,9 @@
              
   <h1>Source code for pygenalgo.operators.crossover.order_crossover</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot; Order crossover (OX1) operator module. &quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+
 <span class="c1"># Custom code imports.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.gene</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gene</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
@@ -84,10 +87,9 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Order crossover (OX1) creates two children chromosomes, by ensuring that the original</span>
-<span class="sd">        genome (from both parents) isn&#39;t repeated, thus creating invalid offsprings.</span>
-
-<span class="sd">        It is used predominantly in combinatorial problems.</span>
+<span class="sd">    Order crossover (OX1) creates offspring that preserve a contiguous segment</span>
+<span class="sd">    from one parent and preserve the relative order of the remaining genes from</span>
+<span class="sd">    the other parent. It is commonly used for permutation-based problems.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crossover_probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -98,6 +100,34 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Call the super constructor with the provided initial value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">crossover_probability</span><span class="o">=</span><span class="n">crossover_probability</span><span class="p">)</span>
+    <span class="c1"># _end_def_</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ox1_mix_genomes</span><span class="p">(</span><span class="n">g1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">],</span> <span class="n">g2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">],</span> <span class="n">loc1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">loc2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                         <span class="n">n_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper method to execute standard OX1 logic on raw lists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Slice and clone the middle segment in a single pass.</span>
+        <span class="n">mid_segment</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">gene</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">g1</span><span class="p">[</span><span class="n">loc1</span><span class="p">:</span><span class="n">loc2</span><span class="p">]</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Convert to set for O(1) tracking.</span>
+        <span class="n">copied_set</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">mid_segment</span><span class="p">)</span>
+
+        <span class="c1"># Extract the remaining items from g2 starting from loc2.</span>
+        <span class="n">remaining</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">gene</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="p">(</span><span class="n">g2</span><span class="p">[</span><span class="n">loc2</span><span class="p">:]</span> <span class="o">+</span> <span class="n">g2</span><span class="p">[:</span><span class="n">loc2</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">gene</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">copied_set</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Reconstruct the child&#39;s genome by splitting</span>
+        <span class="c1"># the remaining list around the middle segment.</span>
+        <span class="n">split</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">n_size</span> <span class="o">-</span> <span class="n">loc2</span>
+
+        <span class="k">return</span> <span class="n">remaining</span><span class="p">[</span><span class="n">split</span><span class="p">:]</span> <span class="o">+</span> <span class="n">mid_segment</span> <span class="o">+</span> <span class="n">remaining</span><span class="p">[:</span><span class="n">split</span><span class="p">]</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="OrderCrossover.crossover">
@@ -117,24 +147,21 @@
         <span class="c1"># changes.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="n">parent1</span> <span class="o">!=</span> <span class="n">parent2</span><span class="p">):</span>
 
+            <span class="c1"># Get the number of genes.</span>
+            <span class="n">n_genes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span>
+
             <span class="c1"># Select two random (distinct) crossover points.</span>
-            <span class="n">loc1</span><span class="p">,</span> <span class="n">loc2</span> <span class="o">=</span> <span class="n">two_indices_fast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">))</span>
+            <span class="c1"># The values are returned in order: loc1 &lt; loc2.</span>
+            <span class="n">loc1</span><span class="p">,</span> <span class="n">loc2</span> <span class="o">=</span> <span class="n">two_indices_fast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="p">,</span> <span class="n">n_genes</span><span class="p">,</span>
+                                          <span class="n">in_order</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="c1"># Local (partial) function.</span>
+            <span class="n">make_child_genome</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ox1_mix_genomes</span><span class="p">,</span>
+                                                  <span class="n">loc1</span><span class="o">=</span><span class="n">loc1</span><span class="p">,</span> <span class="n">loc2</span><span class="o">=</span><span class="n">loc2</span><span class="p">,</span> <span class="n">n_size</span><span class="o">=</span><span class="n">n_genes</span><span class="p">)</span>
+            <span class="c1"># Generate child1 genome.</span>
+            <span class="n">child_1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_child_genome</span><span class="p">(</span><span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">,</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">)</span>
 
-            <span class="c1"># Create auxiliary Sets for faster membership check.</span>
-            <span class="n">used_in_parent1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[:</span><span class="n">loc1</span><span class="p">])</span>
-            <span class="n">used_in_parent2</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[:</span><span class="n">loc2</span><span class="p">])</span>
-
-            <span class="c1"># Construct 1st offspring genome list at locus.</span>
-            <span class="n">child_1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">gene</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[:</span><span class="n">loc1</span><span class="p">]</span> <span class="o">+</span>
-                                         <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parent2</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">used_in_parent1</span><span class="p">]</span>
-            <span class="p">]</span>
-
-            <span class="c1"># Construct 2nd offspring genome list at locus.</span>
-            <span class="n">child_2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">gene</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[:</span><span class="n">loc2</span><span class="p">]</span> <span class="o">+</span>
-                                         <span class="p">[</span><span class="n">y</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">parent1</span> <span class="k">if</span> <span class="n">y</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">used_in_parent2</span><span class="p">]</span>
-            <span class="p">]</span>
+            <span class="c1"># Generate child2 genome.</span>
+            <span class="n">child_2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_child_genome</span><span class="p">(</span><span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">,</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">)</span>
 
             <span class="c1"># Increase the crossover counter.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span>
