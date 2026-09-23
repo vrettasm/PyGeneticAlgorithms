@@ -36,6 +36,14 @@ pygenalgo.operators.crossover.order\_crossover module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.crossover.prefix\_order\_crossover module
+-------------------------------------------------------------
+
+.. automodule:: pygenalgo.operators.crossover.prefix_order_crossover
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pygenalgo.operators.crossover.partially\_mapped\_crossover module
 -----------------------------------------------------------------
 
