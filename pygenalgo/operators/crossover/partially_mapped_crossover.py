@@ -66,6 +66,10 @@ class PartiallyMappedCrossover(CrossoverOperator):
             segment_of_genome_1 = set(child_1[i:j])
             segment_of_genome_2 = set(child_2[i:j])
 
+            # Pre-compute gene positions into dictionaries for O(1) lookups.
+            p1_pos_map: dict = {gene: idx for idx, gene in enumerate(parent1.genome)}
+            p2_pos_map: dict = {gene: idx for idx, gene in enumerate(parent2.genome)}
+
             # Start building the offsprings.
             for n, (gene_x, gene_y) in enumerate(zip(parent2.genome[i:j],
                                                      parent1.genome[i:j]), start=i):
@@ -78,7 +82,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
                     # Repeat until you find the right position.
                     while not found:
                         # Look for the position of gene[idx] in parent2.
-                        x_pos = parent2.genome.index(child_1[idx])
+                        x_pos = p2_pos_map[child_1[idx]]
 
                         # If the position is inside the segment update
                         # the index and repeat the process.
@@ -100,7 +104,7 @@ class PartiallyMappedCrossover(CrossoverOperator):
                     # Repeat until you find the right position.
                     while not found:
                         # Look for the position of gene[idx] in parent1.
-                        y_pos = parent1.genome.index(child_2[idy])
+                        y_pos = p1_pos_map[child_2[idy]]
 
                         # If the position is inside the segment update
                         # the index and repeat the process.
@@ -115,16 +119,18 @@ class PartiallyMappedCrossover(CrossoverOperator):
                 # _end_if_
             # _end_for_
 
-            # Final step to fill child1/2 genomes.
-            for k, (gene_a, gene_b) in enumerate(zip(parent1.genome,
-                                                     parent2.genome)):
-                # Check if the gene exists.
-                if gene_a not in child_2:
-                    child_2[k] = gene_a.clone()
+            # Final step: fill remaining empty slots
+            # directly from the matching parent position.
+            for k in range(number_of_genes):
 
-                # Check if the gene exists.
-                if gene_b not in child_1:
-                    child_1[k] = gene_b.clone()
+                if k not in id_segment:
+                    # Check if a gene exists.
+                    if child_1[k] is None:
+                        child_1[k] = parent2.genome[k].clone()
+
+                    # Check if a gene exists.
+                    if child_2[k] is None:
+                        child_2[k] = parent1.genome[k].clone()
             # _end_for_
 
             # Increase the crossover counter.
