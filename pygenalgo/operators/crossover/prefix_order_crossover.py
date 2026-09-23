@@ -49,9 +49,9 @@ class PrefixOrderCrossover(CrossoverOperator):
             # Select two random (distinct) crossover points.
             loc1, loc2 = two_indices_fast(self.rng, len(parent1))
 
-            # Create auxiliary Sets for faster membership check.
-            used_in_parent1 = set(parent1.genome[:loc1])
-            used_in_parent2 = set(parent2.genome[:loc2])
+            # Make auxiliary sets for faster membership check.
+            prefix_p1: set[Gene] = set(parent1.genome[:loc1])
+            prefix_p2: set[Gene] = set(parent2.genome[:loc2])
 
             # Construct 1st offspring genome list at locus.
             child_1: list[Gene] = [
