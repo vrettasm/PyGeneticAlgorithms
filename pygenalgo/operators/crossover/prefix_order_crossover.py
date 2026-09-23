@@ -62,7 +62,7 @@ class PrefixOrderCrossover(CrossoverOperator):
             # Construct 2nd offspring genome list at loc2.
             child_2: list[Gene] = [
                 gene.clone() for gene in parent2.genome[:loc2] +
-                                         [y for y in parent1 if y not in used_in_parent2]
+                                         [y for y in parent1 if y not in prefix_p2]
             ]
 
             # Increase the crossover counter.
