@@ -72,6 +72,7 @@
   <h1>Source code for pygenalgo.operators.crossover.position_based_crossover</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot; Position based crossover (POS) operator module. &quot;&quot;&quot;</span>
 <span class="c1"># Custom code imports.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.gene</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gene</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.crossover.crossover_operator</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">CrossoverOperator</span><span class="p">,</span> <span class="n">Offsprings</span><span class="p">)</span>
 
@@ -132,34 +133,53 @@
             <span class="n">child_1</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">number_of_genes</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
             <span class="n">child_2</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">number_of_genes</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
 
+            <span class="c1"># Create empty sets for fast lookups.</span>
+            <span class="n">added_to_c1</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="n">added_to_c2</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
             <span class="c1"># Copy the genes of the parents at</span>
             <span class="c1"># the preselected gene cross points.</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cross_points</span><span class="p">:</span>
-                <span class="n">child_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
-                <span class="n">child_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+                <span class="n">child_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+                <span class="n">child_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+
+                <span class="c1"># Update the sets.</span>
+                <span class="n">added_to_c1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">added_to_c2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
             <span class="c1"># _end_for_</span>
 
-            <span class="c1"># Fill the rest with the positions in both offsprings.</span>
-            <span class="k">for</span> <span class="n">gene1</span><span class="p">,</span> <span class="n">gene2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">,</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">):</span>
+            <span class="c1"># Fill remaining slots keeping the relative order of the OTHER parent.</span>
+            <span class="n">idx_c1</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">idx_c2</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
-                <span class="c1"># Check if &#39;gene1&#39; exists in 1st offspring.</span>
-                <span class="k">if</span> <span class="n">gene1</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">child_1</span><span class="p">:</span>
-                    <span class="c1"># Find the first &#39;None&#39; entry.</span>
-                    <span class="n">j</span> <span class="o">=</span> <span class="n">child_1</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="c1"># Fill Child 1 using Parent 2&#39;s remaining sequence.</span>
+            <span class="k">for</span> <span class="n">gene2</span> <span class="ow">in</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">gene2</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">added_to_c1</span><span class="p">:</span>
+                    <span class="c1"># Find the next available empty slot</span>
+                    <span class="c1"># in child_1.</span>
+                    <span class="k">while</span> <span class="n">child_1</span><span class="p">[</span><span class="n">idx_c1</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">idx_c1</span> <span class="o">+=</span> <span class="mi">1</span>
 
-                    <span class="c1"># Assign the current gene value.</span>
-                    <span class="n">child_1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene1</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
-                <span class="c1"># _end_if_</span>
+                    <span class="c1"># Clone the gene.</span>
+                    <span class="n">child_1</span><span class="p">[</span><span class="n">idx_c1</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene2</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
 
-                <span class="c1"># Check if &#39;gene2&#39; exists in 2nd offspring.</span>
-                <span class="k">if</span> <span class="n">gene2</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">child_2</span><span class="p">:</span>
-                    <span class="c1"># Find the first &#39;None&#39; entry.</span>
-                    <span class="n">k</span> <span class="o">=</span> <span class="n">child_2</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+                    <span class="c1"># Update the set.</span>
+                    <span class="n">added_to_c1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">gene2</span><span class="p">)</span>
+            <span class="c1"># _end_for_</span>
 
-                    <span class="c1"># Assign the current gene value.</span>
-                    <span class="n">child_2</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene2</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
-                <span class="c1"># _end_if_</span>
+            <span class="c1"># Fill Child 2 using Parent 1&#39;s remaining sequence.</span>
+            <span class="k">for</span> <span class="n">gene1</span> <span class="ow">in</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">gene1</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">added_to_c2</span><span class="p">:</span>
+                    <span class="c1"># Find the next available empty slot</span>
+                    <span class="c1"># in child_2.</span>
+                    <span class="k">while</span> <span class="n">child_2</span><span class="p">[</span><span class="n">idx_c2</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">idx_c2</span> <span class="o">+=</span> <span class="mi">1</span>
 
+                    <span class="c1"># Clone the gene.</span>
+                    <span class="n">child_2</span><span class="p">[</span><span class="n">idx_c2</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene1</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+
+                    <span class="c1"># Update the set.</span>
+                    <span class="n">added_to_c2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">gene1</span><span class="p">)</span>
             <span class="c1"># _end_for_</span>
 
             <span class="c1"># Increase the crossover counter.</span>

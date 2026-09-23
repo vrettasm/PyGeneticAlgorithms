@@ -28,6 +28,14 @@ pygenalgo.operators.crossover.multi\_point\_crossover module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.crossover.cycle\_crossover module
+-----------------------------------------------------
+
+.. automodule:: pygenalgo.operators.crossover.cycle_crossover
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pygenalgo.operators.crossover.order\_crossover module
 -----------------------------------------------------
 

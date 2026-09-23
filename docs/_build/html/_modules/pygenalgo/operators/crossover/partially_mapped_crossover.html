@@ -142,6 +142,14 @@
             <span class="n">segment_of_genome_1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">child_1</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">])</span>
             <span class="n">segment_of_genome_2</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">child_2</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">])</span>
 
+            <span class="c1"># Pre-compute gene positions into dictionaries for O(1) lookups.</span>
+            <span class="n">p1_pos_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">gene_1</span><span class="p">:</span> <span class="n">idx_1</span> <span class="k">for</span> <span class="n">idx_1</span><span class="p">,</span> <span class="n">gene_1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="n">p2_pos_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">gene_2</span><span class="p">:</span> <span class="n">idx_2</span> <span class="k">for</span> <span class="n">idx_2</span><span class="p">,</span> <span class="n">gene_2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">)</span>
+            <span class="p">}</span>
+
             <span class="c1"># Start building the offsprings.</span>
             <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="n">gene_x</span><span class="p">,</span> <span class="n">gene_y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span>
                                                      <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]),</span> <span class="n">start</span><span class="o">=</span><span class="n">i</span><span class="p">):</span>
@@ -154,7 +162,7 @@
                     <span class="c1"># Repeat until you find the right position.</span>
                     <span class="k">while</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
                         <span class="c1"># Look for the position of gene[idx] in parent2.</span>
-                        <span class="n">x_pos</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">child_1</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+                        <span class="n">x_pos</span> <span class="o">=</span> <span class="n">p2_pos_map</span><span class="p">[</span><span class="n">child_1</span><span class="p">[</span><span class="n">idx</span><span class="p">]]</span>
 
                         <span class="c1"># If the position is inside the segment update</span>
                         <span class="c1"># the index and repeat the process.</span>
@@ -176,7 +184,7 @@
                     <span class="c1"># Repeat until you find the right position.</span>
                     <span class="k">while</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
                         <span class="c1"># Look for the position of gene[idx] in parent1.</span>
-                        <span class="n">y_pos</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">child_2</span><span class="p">[</span><span class="n">idy</span><span class="p">])</span>
+                        <span class="n">y_pos</span> <span class="o">=</span> <span class="n">p1_pos_map</span><span class="p">[</span><span class="n">child_2</span><span class="p">[</span><span class="n">idy</span><span class="p">]]</span>
 
                         <span class="c1"># If the position is inside the segment update</span>
                         <span class="c1"># the index and repeat the process.</span>
@@ -191,16 +199,18 @@
                 <span class="c1"># _end_if_</span>
             <span class="c1"># _end_for_</span>
 
-            <span class="c1"># Final step to fill child1/2 genomes.</span>
-            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">gene_a</span><span class="p">,</span> <span class="n">gene_b</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">,</span>
-                                                     <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">)):</span>
-                <span class="c1"># Check if the gene exists.</span>
-                <span class="k">if</span> <span class="n">gene_a</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">child_2</span><span class="p">:</span>
-                    <span class="n">child_2</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene_a</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+            <span class="c1"># Final step: fill remaining empty slots</span>
+            <span class="c1"># directly from the matching parent position.</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_genes</span><span class="p">):</span>
 
-                <span class="c1"># Check if the gene exists.</span>
-                <span class="k">if</span> <span class="n">gene_b</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">child_1</span><span class="p">:</span>
-                    <span class="n">child_1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene_b</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">id_segment</span><span class="p">:</span>
+                    <span class="c1"># Check if a gene exists.</span>
+                    <span class="k">if</span> <span class="n">child_1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">child_1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+
+                    <span class="c1"># Check if a gene exists.</span>
+                    <span class="k">if</span> <span class="n">child_2</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">child_2</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
             <span class="c1"># _end_for_</span>
 
             <span class="c1"># Increase the crossover counter.</span>
