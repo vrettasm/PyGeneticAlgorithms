@@ -10,10 +10,9 @@ class OrderCrossover(CrossoverOperator):
     """
     Description:
 
-        Order crossover (OX1) creates two children chromosomes, by ensuring that the original
-        genome (from both parents) isn't repeated, thus creating invalid offsprings.
-
-        It is used predominantly in combinatorial problems.
+    Order crossover (OX1) creates offspring that preserve a contiguous segment
+    from one parent and preserve the relative order of the remaining genes from
+    the other parent. It is commonly used for permutation-based problems.
     """
 
     def __init__(self, crossover_probability: float = 0.9) -> None:
