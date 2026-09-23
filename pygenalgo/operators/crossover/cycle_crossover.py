@@ -64,7 +64,7 @@ class CycleCrossover(CrossoverOperator):
                 # Alternating cycles get assigned to different parents.
                 # Cycle 0, 2, 4... copies P1 -> C1 and P2 -> C2
                 # Cycle 1, 3, 5... copies P2 -> C1 and P1 -> C2
-                use_parent1_first: int = (cycle_count % 2 == 0)
+                use_parent1_first: int = cycle_count % 2 == 0
 
                 # Auxiliary index.
                 current_idx: int = idx
