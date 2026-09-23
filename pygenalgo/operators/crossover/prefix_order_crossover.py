@@ -59,7 +59,7 @@ class PrefixOrderCrossover(CrossoverOperator):
                                          [x for x in parent2 if x not in used_in_parent1]
             ]
 
-            # Construct 2nd offspring genome list at locus.
+            # Construct 2nd offspring genome list at loc2.
             child_2: list[Gene] = [
                 gene.clone() for gene in parent2.genome[:loc2] +
                                          [y for y in parent1 if y not in used_in_parent2]
