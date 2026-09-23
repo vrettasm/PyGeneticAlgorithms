@@ -1,4 +1,7 @@
 """ Order crossover (OX1) operator module. """
+from typing import Callable
+from functools import partial
+
 # Custom code imports.
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
@@ -25,6 +28,34 @@ class OrderCrossover(CrossoverOperator):
         super().__init__(crossover_probability=crossover_probability)
     # _end_def_
 
+    @staticmethod
+    def _ox1_mix_genomes(g1: list[Gene], g2: list[Gene], loc1: int, loc2: int,
+                         n_size: int) -> list[Gene]:
+        """
+        Helper method to execute standard OX1 logic on raw lists.
+        """
+        # Slice and clone the middle segment in a single pass.
+        mid_segment: list[Gene] = [
+            gene.clone() for gene in g1[loc1:loc2]
+        ]
+
+        # Convert to set for O(1) tracking.
+        copied_set: set[Gene] = set(mid_segment)
+
+        # Extract the remaining items from g2 starting from loc2.
+        remaining: list[Gene] = [
+            gene.clone()
+            for gene in (g2[loc2:] + g2[:loc2])
+            if gene not in copied_set
+        ]
+
+        # Reconstruct the child's genome by splitting
+        # the remaining list around the middle segment.
+        split: int = n_size - loc2
+
+        return remaining[split:] + mid_segment + remaining[:split]
+    # _end_def_
+
     def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Offsprings:
         """
         Perform the crossover operation on the two input parent chromosomes.
@@ -40,24 +71,21 @@ class OrderCrossover(CrossoverOperator):
         # changes.
         if self.is_operator_applicable() and (parent1 != parent2):
 
+            # Get the number of genes.
+            n_genes: int = len(parent1)
+
             # Select two random (distinct) crossover points.
-            loc1, loc2 = two_indices_fast(self.rng, len(parent1))
+            # The values are returned in order: loc1 < loc2.
+            loc1, loc2 = two_indices_fast(self.rng, n_genes,
+                                          in_order=True)
+            # Local (partial) function.
+            make_child_genome: Callable = partial(self._ox1_mix_genomes,
+                                                  loc1=loc1, loc2=loc2, n_size=n_genes)
+            # Generate child1 genome.
+            child_1: list[Gene] = make_child_genome(parent1.genome, parent2.genome)
 
-            # Create auxiliary Sets for faster membership check.
-            used_in_parent1 = set(parent1.genome[:loc1])
-            used_in_parent2 = set(parent2.genome[:loc2])
-
-            # Construct 1st offspring genome list at locus.
-            child_1: list[Gene] = [
-                gene.clone() for gene in parent1.genome[:loc1] +
-                                         [x for x in parent2 if x not in used_in_parent1]
-            ]
-
-            # Construct 2nd offspring genome list at locus.
-            child_2: list[Gene] = [
-                gene.clone() for gene in parent2.genome[:loc2] +
-                                         [y for y in parent1 if y not in used_in_parent2]
-            ]
+            # Generate child2 genome.
+            child_2: list[Gene] = make_child_genome(parent2.genome, parent1.genome)
 
             # Increase the crossover counter.
             self.inc_counter()
