@@ -1,5 +1,6 @@
 """ Position based crossover (POS) operator module. """
 # Custom code imports.
+from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Offsprings)
 
@@ -56,34 +57,53 @@ class PositionBasedCrossover(CrossoverOperator):
             child_1: list = number_of_genes * [None]
             child_2: list = number_of_genes * [None]
 
+            # Create empty sets for fast lookups.
+            added_to_c1: set[Gene] = set()
+            added_to_c2: set[Gene] = set()
+
             # Copy the genes of the parents at
             # the preselected gene cross points.
             for i in cross_points:
-                child_1[i] = parent2.genome[i].clone()
-                child_2[i] = parent1.genome[i].clone()
+                child_1[i] = parent1.genome[i].clone()
+                child_2[i] = parent2.genome[i].clone()
+
+                # Update the sets.
+                added_to_c1.add(parent1.genome[i])
+                added_to_c2.add(parent2.genome[i])
             # _end_for_
 
-            # Fill the rest with the positions in both offsprings.
-            for gene1, gene2 in zip(parent1.genome, parent2.genome):
+            # Fill remaining slots keeping the relative order of the OTHER parent.
+            idx_c1: int = 0
+            idx_c2: int = 0
 
-                # Check if 'gene1' exists in 1st offspring.
-                if gene1 not in child_1:
-                    # Find the first 'None' entry.
-                    j = child_1.index(None)
+            # Fill Child 1 using Parent 2's remaining sequence.
+            for gene2 in parent2.genome:
+                if gene2 not in added_to_c1:
+                    # Find the next available empty slot
+                    # in child_1.
+                    while child_1[idx_c1] is not None:
+                        idx_c1 += 1
 
-                    # Assign the current gene value.
-                    child_1[j] = gene1.clone()
-                # _end_if_
+                    # Clone the gene.
+                    child_1[idx_c1] = gene2.clone()
 
-                # Check if 'gene2' exists in 2nd offspring.
-                if gene2 not in child_2:
-                    # Find the first 'None' entry.
-                    k = child_2.index(None)
+                    # Update the set.
+                    added_to_c1.add(gene2)
+            # _end_for_
 
-                    # Assign the current gene value.
-                    child_2[k] = gene2.clone()
-                # _end_if_
+            # Fill Child 2 using Parent 1's remaining sequence.
+            for gene1 in parent1.genome:
+                if gene1 not in added_to_c2:
+                    # Find the next available empty slot
+                    # in child_2.
+                    while child_2[idx_c2] is not None:
+                        idx_c2 += 1
 
+                    # Clone the gene.
+                    child_2[idx_c2] = gene1.clone()
+
+                    # Update the set.
+                    added_to_c2.add(gene1)
             # _end_for_
 
             # Increase the crossover counter.
