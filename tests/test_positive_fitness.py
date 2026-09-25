@@ -29,7 +29,7 @@ class TestPositiveFitness(unittest.TestCase):
 
         # Create a demo population.
         self.population = [
-            Chromosome(Gene(i, func), None, True)
+            Chromosome(Gene(i, func), None)
             for i in range(10)
         ]
     # _end_def_
