@@ -240,7 +240,7 @@ class Chromosome:
         # _end_if_
 
         # Quick exit if both objects are the same or equal.
-        if self is other or self == other:
+        if self is other:
             return 0
         # _end_if_
 
