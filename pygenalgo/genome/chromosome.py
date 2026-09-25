@@ -213,8 +213,8 @@ class Chromosome:
         # _end_if_
 
         # Extract genomes.
-        genome_1 = self._genome
-        genome_2 = other.genome
+        genome_1: list[Gene] = self._genome
+        genome_2: list[Gene] = other.genome
 
         # Compute the dissimilarities in their genomes.
         return sum([k != l for k, l in zip(genome_1, genome_2, strict=True)])
