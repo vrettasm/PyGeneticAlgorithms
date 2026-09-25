@@ -83,8 +83,8 @@ class CycleCrossover(CrossoverOperator):
                         child_1[current_idx] = p1_genome[current_idx].clone()
                         child_2[current_idx] = p2_genome[current_idx].clone()
                     else:
-                        child_1[current_idx] = parent2.genome[current_idx].clone()
-                        child_2[current_idx] = parent1.genome[current_idx].clone()
+                        child_1[current_idx] = p2_genome[current_idx].clone()
+                        child_2[current_idx] = p1_genome[current_idx].clone()
 
                     # Look up where the gene from parent2
                     # at current_idx lives in parent1.
