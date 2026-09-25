@@ -249,7 +249,7 @@ class Chromosome:
                             f"Can't compute Hamming distance in different type objects.")
         # _end_if_
 
-        # Quick exit if both objects are the same or equal.
+        # Quick exit if both objects are the same.
         if self is other:
             return 0
         # _end_if_
