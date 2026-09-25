@@ -141,7 +141,7 @@ class TestPositiveFitness(unittest.TestCase):
             pass
 
         population = [
-            Chromosome(Gene(0, func), f_value, True)
+            Chromosome(Gene(0, func), f_value)
             for f_value in expected
         ]
 
