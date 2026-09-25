@@ -297,6 +297,15 @@ class Chromosome:
         return len(self._genome)
     # _end_def_
 
+    def __iter__(self) -> Iterator[Gene]:
+        """
+        Returns an iterator over the genome's genes.
+
+        :return: an iterator of Genes.
+        """
+        return iter(self._genome)
+    # _end_def_
+
     def __getitem__(self, index: int) -> Gene:
         """
         Get the item at position 'index'.
