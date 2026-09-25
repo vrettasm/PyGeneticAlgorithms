@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from typing import Any, Optional
+from collections.abc import Iterator
 
 from numpy import ndarray
 
