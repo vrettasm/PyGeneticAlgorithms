@@ -88,7 +88,7 @@ class CycleCrossover(CrossoverOperator):
 
                     # Look up where the gene from parent2
                     # at current_idx lives in parent1.
-                    next_gene = parent2.genome[current_idx]
+                    next_gene = p2_genome[current_idx]
                     current_idx = p1_pos_map[next_gene]
                 # _end_while_
 
