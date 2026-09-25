@@ -53,7 +53,7 @@ class TestChromosome(unittest.TestCase):
         ch_1 = Chromosome(genome=[Gene(0, func),
                                   Gene(1, func),
                                   Gene(2, func)],
-                          fitness=0.0, valid=True)
+                          fitness=0.0)
 
         # This genome SHOULD be valid.
         self.assertTrue(ch_1.has_valid_genome())
