@@ -231,13 +231,10 @@ class Gene:
         # Extra care for array like objects.
         if isinstance(data, Gene._ARRAY_LIKE_TYPES):
             # Ensure the data are continuous.
-            array: NDArray = ascontiguousarray(data)
-
-            # Convert everything to python scalars.
-            values: list = array.ravel(order="C").tolist()
+            array: NDArray = ascontiguousarray(data, dtype=float)
 
             return hash(
-                ("array_like", array.shape, tuple(values))
+                ("array_like", array.shape, array.dtype, array.tobytes())
             )
         # _end_if_
 
