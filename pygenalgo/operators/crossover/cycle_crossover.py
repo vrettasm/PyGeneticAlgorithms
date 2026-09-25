@@ -80,8 +80,8 @@ class CycleCrossover(CrossoverOperator):
                     visited[current_idx] = True
 
                     if use_parent1_first:
-                        child_1[current_idx] = parent1.genome[current_idx].clone()
-                        child_2[current_idx] = parent2.genome[current_idx].clone()
+                        child_1[current_idx] = p1_genome[current_idx].clone()
+                        child_2[current_idx] = p2_genome[current_idx].clone()
                     else:
                         child_1[current_idx] = parent2.genome[current_idx].clone()
                         child_2[current_idx] = parent1.genome[current_idx].clone()
