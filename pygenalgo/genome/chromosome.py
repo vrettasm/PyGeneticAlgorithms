@@ -70,6 +70,16 @@ class Chromosome:
         self._valid: bool = valid
     # _end_def_
 
+    @property
+    def is_evaluated(self) -> bool:
+        """
+        Checks if the chromosome has a valid, calculated fitness score.
+        A fitness of 'None' implies the chromosome was mutated or just
+        created.
+        """
+        return self._fitness is not None
+    # _end_def_
+
     @staticmethod
     def _normalize_fitness(value: object) -> Fitness:
         """
