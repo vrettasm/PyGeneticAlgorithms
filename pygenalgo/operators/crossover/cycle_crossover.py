@@ -47,8 +47,14 @@ class CycleCrossover(CrossoverOperator):
             child_1: list = number_of_genes * [None]
             child_2: list = number_of_genes * [None]
 
-            # Pre-compute positions for O(1) lookups instead of using .index().
-            p1_pos_map = {gene: idx for idx, gene in enumerate(parent1.genome)}
+            # Local copy of parent genomes.
+            p1_genome: list[Gene] = parent1.genome
+            p2_genome: list[Gene] = parent2.genome
+
+            # Pre-compute positions for fast O(1) lookups.
+            p1_pos_map: dict[Gene, int] = {
+                gene: idx for idx, gene in enumerate(p1_genome)
+            }
 
             # Track which indices have been visited/assigned.
             visited: list[bool] = [False] * number_of_genes
