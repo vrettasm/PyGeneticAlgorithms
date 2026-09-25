@@ -248,10 +248,8 @@ class GeneticOperator:
 
         # Match exact structural shape.
         if lower_lim.shape != upper_lim.shape:
-            raise ValueError(
-                f"{self.__class__.__name__}: "
-                f"Lower and Upper limits shapes do not match."
-            )
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Lower and Upper limits shapes do not match.")
 
         # Fail fast on NaN values to protect boundary logic.
         if np_isnan(lower_lim).any() or np_isnan(lower_lim).any():
