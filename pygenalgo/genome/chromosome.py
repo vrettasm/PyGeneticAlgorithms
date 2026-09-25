@@ -217,10 +217,7 @@ class Chromosome:
         genome_2 = other.genome
 
         # Compute the dissimilarities in their genomes.
-        return sum(
-            k != l
-            for k, l in zip(genome_1, genome_2, strict=True)
-        )
+        return sum([k != l for k, l in zip(genome_1, genome_2, strict=True)])
     # _end_def_
 
     def clone(self) -> Chromosome:
