@@ -26,14 +26,13 @@ class Chromosome:
     """
 
     # Object variables.
-    __slots__ = ("_genome", "_fitness", "_valid")
+    __slots__ = ("_genome", "_fitness")
 
     # Make the class unhashable.
     __hash__ = None
 
     def __init__(self, genome: list[Gene],
-                 fitness: Optional[Fitness] = None,
-                 valid: bool = True) -> None:
+                 fitness: Optional[Fitness] = None) -> None:
         """
         Initialize a Chromosome object.
 
@@ -43,10 +42,7 @@ class Chromosome:
         :param fitness: the fitness of the chromosome (float or tuple).
                         Default value is None, which indicates invalid
                         chromosome.
-
-        :param valid: whether the chromosome is valid.
         """
-
         # Assign locally the genome.
         self._genome: list[Gene] = genome
 
@@ -54,20 +50,9 @@ class Chromosome:
         if fitness is None:
             # Default assignment.
             self._fitness = None
-
         else:
             # Apply normalization to the variable.
             self._fitness = Chromosome._normalize_fitness(fitness)
-        # _end_if_
-
-        # Sanity check.
-        if not isinstance(valid, bool):
-            raise TypeError(f"{self.__class__.__name__}: valid must be bool; "
-                            f"got {type(valid).__name__}.")
-        # _end_if_
-
-        # Set the bool flag.
-        self._valid: bool = valid
     # _end_def_
 
     @property
@@ -128,33 +113,6 @@ class Chromosome:
             f"{Chromosome.__name__}: Fitness should be float or tuple[float, ...]; "
             f"got {type(value).__name__} instead."
         )
-    # _end_def_
-
-    @property
-    def valid(self) -> bool:
-        """
-        Accessor (getter) of the validity parameter.
-
-        :return: the valid value.
-        """
-        return self._valid
-    # _end_def_
-
-    @valid.setter
-    def valid(self, new_value: bool) -> None:
-        """
-        Accessor (setter) of the validity flag.
-
-        :param new_value: (bool).
-        """
-        # Check for the correct type.
-        if not isinstance(new_value, bool):
-            raise TypeError(f"{self.__class__.__name__}: Validity flag "
-                            f"should be bool: {new_value.__class__.__name__}.")
-        # _end_if_
-
-        # Update the flag value.
-        self._valid = new_value
     # _end_def_
 
     @property
@@ -272,7 +230,7 @@ class Chromosome:
 
         :return: a "deep-copy" of the object.
         """
-        return Chromosome(deepcopy(self._genome), self._fitness, self._valid)
+        return Chromosome(deepcopy(self._genome), self._fitness)
     # _end_def_
 
     def __eq__(self, other: object) -> bool:
@@ -360,7 +318,7 @@ class Chromosome:
         :return: a (shallow) copy of the self object.
         """
         # Return the new copy.
-        return Chromosome(self._genome, self._fitness, self._valid)
+        return Chromosome(self._genome, self._fitness)
     # _end_copy_
 
     def __deepcopy__(self, memo: dict[int, Any]) -> Chromosome:
@@ -385,9 +343,6 @@ class Chromosome:
 
         # Simply copy the fitness value.
         new_object._fitness = self._fitness
-
-        # Simply copy the boolean flag.
-        new_object._valid = self._valid
 
         # Return identical instance.
         return new_object
