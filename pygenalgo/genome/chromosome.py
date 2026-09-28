@@ -77,7 +77,6 @@ class Chromosome:
 
         :return: float | tuple[float, ...]
         """
-
         # First check if it is scalar
         # (most frequent case).
         if isinstance(value, (int, float)):
