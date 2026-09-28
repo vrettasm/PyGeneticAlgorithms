@@ -8,7 +8,7 @@ from typing import Any, Callable
 from numpy import (ndarray,
                    array_equal,
                    ascontiguousarray)
-# Third part imports.
+
 from numpy.typing import NDArray
 
 # Public interface.
