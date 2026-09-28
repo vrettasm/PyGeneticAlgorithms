@@ -99,7 +99,7 @@ class Chromosome:
                 raise TypeError("Fitness numpy array must be 1D.")
 
             # Convert everything to tuple[float, ...].
-            t = tuple(float(x) for x in value.tolist())
+            t = tuple(map(float, value))
 
             # Avoid single element tuples.
             return t[0] if len(t) == 1 else t
