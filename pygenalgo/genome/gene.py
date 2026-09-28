@@ -177,7 +177,6 @@ class Gene:
 
         :return: a (deep) clone of the object.
         """
-
         # Avoid costly deepcopy if datum is immutable.
         if isinstance(self._datum, Gene._IMMUTABLE_TYPES):
             return Gene(self._datum, self._func, self._valid)
