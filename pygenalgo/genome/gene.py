@@ -129,6 +129,11 @@ class Gene:
                             f"should be bool: {new_value.__class__.__name__}.")
         # _end_if_
 
+        if self._datum is None and new_value:
+            raise ValueError(f"{self.__class__.__name__}:"
+                             f"A Gene with value None cannot be valid.")
+        # _end_if_
+
         # Update the flag value.
         self._valid = new_value
     # _end_def_
