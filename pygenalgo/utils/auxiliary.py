@@ -344,7 +344,7 @@ class SubPopulation:
     # _end_def_
 # _end_class_
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Probability:
     """
     Auxiliary class that models a probability value.
