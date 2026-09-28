@@ -84,8 +84,8 @@ class PolynomialMutator(MutationOperator):
 
             # Normalize variable to [0, 1]
             # distance to bounds.
-            delta1 = (old_value - xl) / bound_span
-            delta2 = (xu - old_value) / bound_span
+            delta1: float = (old_value - xl) / bound_span
+            delta2: float = (xu - old_value) / bound_span
 
             # Generate a random number in [0, 1).
             rand_u: float = self.rng.random()
