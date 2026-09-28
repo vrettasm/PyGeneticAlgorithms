@@ -43,7 +43,6 @@ class BlendCrossover(CrossoverOperator):
         # Validate the bounds.
         lower_lim, upper_lim = self.validate_bounds(lower_lim,
                                                     upper_lim)
-
         # Ensure p_alpha parameter is float.
         p_alpha = clamp(float(p_alpha), 0.0, 1.0)
 
