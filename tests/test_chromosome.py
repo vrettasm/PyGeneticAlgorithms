@@ -239,20 +239,20 @@ class TestChromosome(unittest.TestCase):
         Test shallow and deep copy magic methods.
         :return: None.
         """
-        # Shallow copy (__copy__)
+        # Shallow copy (__copy__).
         shallow = copy(self.chromosome)
         self.assertEqual(shallow, self.chromosome)
         self.assertIsNot(shallow, self.chromosome)
-        self.assertIs(shallow.genome, self.chromosome.genome)  # Shared list reference
+        self.assertIs(shallow.genome, self.chromosome.genome)
 
-        # Deep copy (__deepcopy__ / clone)
+        # Deep copy (__deepcopy__ / clone).
         deep = deepcopy(self.chromosome)
         self.assertEqual(deep, self.chromosome)
         self.assertIsNot(deep, self.chromosome)
-        self.assertIsNot(deep.genome, self.chromosome.genome)  # Completely separate list
+        self.assertIsNot(deep.genome, self.chromosome.genome)
         self.assertEqual(deep.fitness, self.chromosome.fitness)
 
-        # Test explicit .clone() method
+        # Test explicit .clone() method.
         cloned = self.chromosome.clone()
         self.assertIsNot(cloned, self.chromosome)
         self.assertIsNot(cloned.genome, self.chromosome.genome)
