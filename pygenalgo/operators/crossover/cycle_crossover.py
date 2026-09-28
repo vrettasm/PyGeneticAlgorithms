@@ -2,7 +2,7 @@
 # Custom code imports.
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
-from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Offsprings)
+from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Offspring)
 
 
 class CycleCrossover(CrossoverOperator):
@@ -26,7 +26,7 @@ class CycleCrossover(CrossoverOperator):
         super().__init__(crossover_probability=crossover_probability)
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Offsprings:
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Offspring:
         """
         Perform the cycle crossover operation on the two input parent chromosomes.
 

@@ -5,7 +5,7 @@ from pygenalgo.operators.crossover.uniform_crossover import UniformCrossover
 from pygenalgo.operators.crossover.multi_point_crossover import MultiPointCrossover
 from pygenalgo.operators.crossover.half_uniform_crossover import HalfUniformCrossover
 from pygenalgo.operators.crossover.single_point_crossover import SinglePointCrossover
-from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Offsprings)
+from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Offspring)
 
 
 class MetaCrossover(CrossoverOperator):
@@ -35,7 +35,7 @@ class MetaCrossover(CrossoverOperator):
         )
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Offsprings:
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Offspring:
         """
         Perform the crossover operation on the two input parent
         chromosomes, by selecting randomly a predefined method.

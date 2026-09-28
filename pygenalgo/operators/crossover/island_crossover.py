@@ -2,7 +2,7 @@
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.engines.island_manager import IslandManager
-from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Offsprings)
+from pygenalgo.operators.crossover.crossover_operator import (CrossoverOperator, Offspring)
 
 
 class IslandCrossover(CrossoverOperator):
@@ -64,7 +64,7 @@ class IslandCrossover(CrossoverOperator):
         self._items.operator.probability = new_value
     # _end_def_
 
-    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Offsprings:
+    def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Offspring:
         """
         Perform the crossover operation on the two input parent
         chromosomes, by selecting randomly a predefined method.
