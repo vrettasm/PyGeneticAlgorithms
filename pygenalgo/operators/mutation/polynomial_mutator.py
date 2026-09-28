@@ -82,8 +82,7 @@ class PolynomialMutator(MutationOperator):
             # Compute the difference.
             bound_span: float = xu - xl
 
-            # Normalize variable to [0, 1]
-            # distance to bounds.
+            # Normalize variable to [0, 1] distance to bounds.
             delta1: float = (old_value - xl) / bound_span
             delta2: float = (xu - old_value) / bound_span
 
