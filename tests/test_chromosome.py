@@ -1,5 +1,8 @@
 import unittest
-from numpy.random import randint
+from copy import copy, deepcopy
+
+import numpy as np
+
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 
@@ -16,7 +19,23 @@ class TestChromosome(unittest.TestCase):
         print(">> TestChromosome - FINISH -", end='\n\n')
     # _end_def_
 
-    def test_fitness(self):
+    def setUp(self) -> None:
+        """
+        Create a test chromosome.
+
+        :return: None.
+        """
+        # Dummy function.
+        func = lambda x: x
+
+        # Test chromosome.
+        self.chromosome = Chromosome(genome=[
+            Gene(10, func, valid=True),
+            Gene(20, func, valid=True),
+            Gene(30, func, valid=False)], fitness=4.2)
+    # _end_def_
+
+    def test_fitness(self) -> None:
         """
         Check if the 'fitness' is float.
 
@@ -37,7 +56,7 @@ class TestChromosome(unittest.TestCase):
         # _end_with_
     # _end_def_
 
-    def test_genome_validity(self):
+    def test_genome_validity(self) -> None:
         """
         Check if the genome is valid.
 
@@ -65,7 +84,7 @@ class TestChromosome(unittest.TestCase):
         self.assertFalse(ch_1.has_valid_genome())
     # _end_def_
 
-    def test_clone(self):
+    def test_clone(self) -> None:
         """
         Make sure the clone method is working as intended.
 
@@ -89,7 +108,7 @@ class TestChromosome(unittest.TestCase):
         self.assertTrue(chromo_1 is not chromo_2)
     # _end_def_
 
-    def test_equal(self):
+    def test_equal(self) -> None:
         """
         Make sure the equal method is working as intended.
 
@@ -116,7 +135,7 @@ class TestChromosome(unittest.TestCase):
         self.assertNotEqual(chromo_1, chromo_2)
     # _end_def_
 
-    def test_humming_distance(self):
+    def test_humming_distance(self) -> None:
         """
         Check the Hamming distances of two identical
         and two completely different chromosomes.
@@ -153,6 +172,90 @@ class TestChromosome(unittest.TestCase):
         # Check if the chromosomes have the same length.
         with self.assertRaises(ValueError):
             ch_1.hamming_distance(ch_3)
+    # _end_def_
+
+    def test_fitness_normalization_scalar(self) -> None:
+        """
+        Test scalar normalization (ints and floats).
+        """
+        self.chromosome.fitness = 10
+        self.assertEqual(self.chromosome.fitness, 10.0)
+        self.assertIsInstance(self.chromosome.fitness, float)
+    # _end_def_
+
+    def test_fitness_normalization_tuple(self) -> None:
+        """
+        Test tuple normalization and single-element squeezing.
+        """
+        # Single element tuple should squeeze to a float.
+        self.chromosome.fitness = (5.5,)
+        self.assertEqual(self.chromosome.fitness, 5.5)
+
+        # Multi element tuple should stay a tuple of floats.
+        self.chromosome.fitness = (1, 2.5, 3)
+        self.assertEqual(self.chromosome.fitness, (1.0, 2.5, 3.0))
+    # _end_def_
+
+    def test_fitness_normalization_numpy(self) -> None:
+        """
+        Test numpy array normalization and validation.
+        """
+        # 1D array with single element.
+        self.chromosome.fitness = np.array([4.5])
+        self.assertEqual(self.chromosome.fitness, 4.5)
+
+        # 1D array with multiple elements.
+        self.chromosome.fitness = np.array([1.0, 2.0, 3.0])
+        self.assertEqual(self.chromosome.fitness, (1.0, 2.0, 3.0))
+
+        # 2D array should raise TypeError.
+        with self.assertRaises(TypeError):
+            self.chromosome.fitness = np.array([[1.0, 2.0]])
+
+        # Invalid type should raise TypeError.
+        with self.assertRaises(TypeError):
+            self.chromosome.fitness = "invalid_fitness_string"
+    # _end_def_
+
+    def test_invalidate_fitness(self) -> None:
+        """
+        Test that invalidating fitness resets it to None.
+        """
+        self.assertTrue(self.chromosome.is_evaluated)
+        self.chromosome.invalidate_fitness()
+        self.assertIsNone(self.chromosome.fitness)
+        self.assertFalse(self.chromosome.is_evaluated)
+    # _end_def_
+
+    def test_values_accessor(self) -> None:
+        """
+        Test extracting raw gene values.
+        """
+        self.assertEqual(self.chromosome.values(), [10, 20, 30])
+    # _end_def_
+
+    def test_copy_and_deepcopy(self) -> None:
+        """
+        Test shallow and deep copy magic methods.
+        :return: None.
+        """
+        # Shallow copy (__copy__)
+        shallow = copy(self.chromosome)
+        self.assertEqual(shallow, self.chromosome)
+        self.assertIsNot(shallow, self.chromosome)
+        self.assertIs(shallow.genome, self.chromosome.genome)  # Shared list reference
+
+        # Deep copy (__deepcopy__ / clone)
+        deep = deepcopy(self.chromosome)
+        self.assertEqual(deep, self.chromosome)
+        self.assertIsNot(deep, self.chromosome)
+        self.assertIsNot(deep.genome, self.chromosome.genome)  # Completely separate list
+        self.assertEqual(deep.fitness, self.chromosome.fitness)
+
+        # Test explicit .clone() method
+        cloned = self.chromosome.clone()
+        self.assertIsNot(cloned, self.chromosome)
+        self.assertIsNot(cloned.genome, self.chromosome.genome)
     # _end_def_
 
 # _end_class_
