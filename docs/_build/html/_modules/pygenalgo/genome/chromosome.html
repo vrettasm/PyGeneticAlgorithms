@@ -121,12 +121,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_genome</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">genome</span>
 
         <span class="c1"># Get the initial fitness value.</span>
-        <span class="k">if</span> <span class="n">fitness</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># Default assignment.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Apply normalization to the variable.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span> <span class="o">=</span> <span class="n">Chromosome</span><span class="o">.</span><span class="n">_normalize_fitness</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="kc">None</span> <span class="k">if</span> <span class="n">fitness</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="n">Chromosome</span><span class="o">.</span><span class="n">_normalize_fitness</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+        <span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -151,7 +149,6 @@
 
 <span class="sd">        :return: float | tuple[float, ...]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="c1"># First check if it is scalar</span>
         <span class="c1"># (most frequent case).</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
@@ -176,7 +173,7 @@
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Fitness numpy array must be 1D.&quot;</span><span class="p">)</span>
 
             <span class="c1"># Convert everything to tuple[float, ...].</span>
-            <span class="n">t</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
 
             <span class="c1"># Avoid single element tuples.</span>
             <span class="k">return</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">t</span>
