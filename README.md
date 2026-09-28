@@ -40,8 +40,8 @@ in parallel mode by definition.
   > selection methodologies for multi-objective problems. Examples that use the new techniques have also been added to
   > demonstrate their use. In addition, the IslandModelGA engine has been enhanced and with three new three 'IslandOperators'.
   > This new approach allows the use a different set of genetic operators for each island  (i.e. subpopulation), thus
-  > allowing them to evolve in completely different ways. Finally, the HalfUniformCrossover (HUX) has also been added,
-  > to provide an alternative recombination option.
+  > allowing them to evolve in completely different ways. Finally, the HalfUniformCrossover (HUX), PrefixOrderCrossover
+  > (POX) and WholeArithmeticCrossover (WAX) have also been added, to provide alternative recombination options.
   >
 
 The current implementation provides (out of the box) a wide variety of genetic operators, including:
