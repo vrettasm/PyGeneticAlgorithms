@@ -98,11 +98,12 @@ class Chromosome:
             if value.ndim != 1:
                 raise TypeError("Fitness numpy array must be 1D.")
 
-            # Convert everything to tuple[float, ...].
-            t = tuple(map(float, value))
-
             # Avoid single element tuples.
-            return t[0] if len(t) == 1 else t
+            if value.size == 1:
+                return float(value[0])
+
+            # Convert array to tuple[float].
+            return tuple(map(float, value))
         # _end_if_
 
         # Otherwise raise a Type error.
