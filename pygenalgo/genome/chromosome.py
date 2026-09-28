@@ -47,12 +47,10 @@ class Chromosome:
         self._genome: list[Gene] = genome
 
         # Get the initial fitness value.
-        if fitness is None:
-            # Default assignment.
-            self._fitness = None
-        else:
-            # Apply normalization to the variable.
-            self._fitness = Chromosome._normalize_fitness(fitness)
+        self._fitness = (
+            None if fitness is None
+            else Chromosome._normalize_fitness(fitness)
+        )
     # _end_def_
 
     @property
