@@ -4,7 +4,7 @@ from __future__ import annotations
 from copy import deepcopy
 from typing import Any, Callable
 
-# Third part imports.
+# Third party imports.
 from numpy import (ndarray,
                    array_equal,
                    ascontiguousarray)
