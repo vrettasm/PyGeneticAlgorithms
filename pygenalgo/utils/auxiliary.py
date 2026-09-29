@@ -17,6 +17,7 @@ from typing import Callable
 from functools import lru_cache
 from itertools import zip_longest
 from collections import defaultdict
+from collections.abc import Iterator
 from dataclasses import dataclass, field
 from pygenalgo.genome.chromosome import Chromosome
 
@@ -308,6 +309,15 @@ class SubPopulation:
         :return: the length (int) of the population.
         """
         return len(self.population)
+    # _end_def_
+
+    def __iter__(self) -> Iterator[Chromosome]:
+        """
+        Returns an iterator over the population.
+
+        :return: an iterator of Chromosome.
+        """
+        return iter(self.population)
     # _end_def_
 
     def __getitem__(self, index: int) -> Chromosome:
