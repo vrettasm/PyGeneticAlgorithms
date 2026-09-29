@@ -27,7 +27,7 @@ from pygenalgo.operators.crossover.meta_crossover import MetaCrossover
 # Define a fitness type.
 Fitness = float | tuple[float, ...]
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class RunConfig:
     """
     Auxiliary dataclass to set the configuration parameters
