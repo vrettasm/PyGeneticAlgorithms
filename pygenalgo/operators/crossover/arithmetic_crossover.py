@@ -47,14 +47,17 @@ class ArithmeticCrossover(CrossoverOperator):
         # Validate the bounds.
         lower_lim, upper_lim = self.validate_bounds(lower_lim,
                                                     upper_lim)
-
-        # Ensure that if p_alpha is given then it is float.
-        if p_alpha is not None:
+        # Check if p_alpha is provided.
+        if p_alpha is None:
+            # Choose a value at random.
+            p_alpha = self.rng.random()
+        else:
+            # Ensure that it is a float number within range (0, 1).
             p_alpha = clamp(float(p_alpha), 0.0, 1.0)
         # _end_if_
 
         # Assign variables to the _items placeholder.
-        self._items: tuple[Optional[float], NDArray, NDArray] = (
+        self._items: tuple[float, NDArray, NDArray] = (
             p_alpha, lower_lim, upper_lim
         )
     # _end_def_
@@ -76,9 +79,6 @@ class ArithmeticCrossover(CrossoverOperator):
 
             # Extract values from the placeholder.
             p_alpha, x_lower, x_upper = self._items
-
-            # If alpha is not given choose one at random.
-            _alpha: float = self.rng.random() if p_alpha is None else p_alpha
 
             # Create the 1st offspring genome list.
             child_1: list[Gene] = parent1.clone_genome()
