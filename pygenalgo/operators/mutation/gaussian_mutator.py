@@ -44,6 +44,12 @@ class GaussianMutator(MutationOperator):
                              f"Standard deviation must be positive.")
         # _end_if_
 
+        # Ensure standard deviation does not contain NaN.
+        if np.isnan(sigma).any():
+            raise ValueError(f"{self.__class__.__name__}:"
+                             f"Sigma cannot contain NaN.")
+        # _end_if_
+
         # Validate the bounds.
         lower_lim, upper_lim = self.validate_bounds(lower_lim,
                                                     upper_lim)
