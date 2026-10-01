@@ -35,26 +35,8 @@ class GaussianMutator(MutationOperator):
         # Call the super constructor with the provided initial value.
         super().__init__(mutation_probability=mutate_probability)
 
-        # Ensure sigma parameter is float.
-        sigma: NDArray = np.asarray(sigma, dtype=float)
-
-        # Ensure standard deviation does not contain NaN.
-        if np.isnan(sigma).any():
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"Sigma contains NaN values.")
-        # _end_if_
-
-        # Ensure standard deviation does not contain Inf.
-        if np.isinf(sigma).any():
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"Sigma contains Inf values.")
-        # _end_if_
-
-        # Ensure standard deviation is positive.
-        if (sigma <= 0.0).any():
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"Sigma must be positive.")
-        # _end_if_
+        # Validate sigma parameter(s).
+        sigma: NDArray = self.validate_sigma(sigma)
 
         # Validate the bounds.
         lower_lim, upper_lim = self.validate_bounds(lower_lim,
@@ -69,6 +51,39 @@ class GaussianMutator(MutationOperator):
         self._items: tuple[float, ...] = (
             sigma, lower_lim, upper_lim
         )
+    # _end_def_
+
+    def validate_sigma(self, sigma: ArrayLike | float) -> NDArray:
+        """
+        Validate and normalize standard deviation.
+
+        :param sigma: standard deviation of the Gaussian
+                      N(0, sigma).
+
+        :return: the sigma as ndarray.
+        """
+        # Ensure sigma parameter is float.
+        sigma_arr: NDArray = np.asarray(sigma, dtype=float)
+
+        # Ensure standard deviation does not contain NaN.
+        if np.isnan(sigma_arr).any():
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Sigma contains NaN values. ")
+        # _end_if_
+
+        # Ensure standard deviation does not contain Inf.
+        if np.isinf(sigma_arr).any():
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Sigma contains Inf values. ")
+        # _end_if_
+
+        # Ensure standard deviation is positive.
+        if (sigma_arr <= 0.0).any():
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Sigma must be positive.")
+        # _end_if_
+
+        return sigma_arr
     # _end_def_
 
     def mutate(self, individual: Chromosome) -> None:
