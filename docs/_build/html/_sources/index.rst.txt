@@ -19,7 +19,7 @@ to solve general purpose optimization problems (constrained and unconstrained).
 * **Python dependencies:** NumPy, JobLib
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents:
 
    modules

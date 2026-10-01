@@ -47,7 +47,143 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="pygenalgo.html">PyGenAlgo</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="pygenalgo.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Engines</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Engines</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-pygenalgo.engines.generic_ga">pygenalgo.engines.generic_ga module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA"><code class="docutils literal notranslate"><span class="pre">GenericGA</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.MAX_CPUs"><code class="docutils literal notranslate"><span class="pre">GenericGA.MAX_CPUs</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.adapt_probabilities"><code class="docutils literal notranslate"><span class="pre">GenericGA.adapt_probabilities()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.best_chromosome"><code class="docutils literal notranslate"><span class="pre">GenericGA.best_chromosome()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.best_n"><code class="docutils literal notranslate"><span class="pre">GenericGA.best_n()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.clear_all"><code class="docutils literal notranslate"><span class="pre">GenericGA.clear_all()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.correct_genome"><code class="docutils literal notranslate"><span class="pre">GenericGA.correct_genome()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.crossover_mutate"><code class="docutils literal notranslate"><span class="pre">GenericGA.crossover_mutate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.crossx_op"><code class="docutils literal notranslate"><span class="pre">GenericGA.crossx_op</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.evaluate_fitness"><code class="docutils literal notranslate"><span class="pre">GenericGA.evaluate_fitness()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.f_evals"><code class="docutils literal notranslate"><span class="pre">GenericGA.f_evals</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.fitness_func"><code class="docutils literal notranslate"><span class="pre">GenericGA.fitness_func</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.iteration"><code class="docutils literal notranslate"><span class="pre">GenericGA.iteration</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.mutate_op"><code class="docutils literal notranslate"><span class="pre">GenericGA.mutate_op</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.n_cpus"><code class="docutils literal notranslate"><span class="pre">GenericGA.n_cpus</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.population"><code class="docutils literal notranslate"><span class="pre">GenericGA.population</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.population_fitness"><code class="docutils literal notranslate"><span class="pre">GenericGA.population_fitness()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.print_operator_stats"><code class="docutils literal notranslate"><span class="pre">GenericGA.print_operator_stats()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.rng"><code class="docutils literal notranslate"><span class="pre">GenericGA.rng</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.rng_GA"><code class="docutils literal notranslate"><span class="pre">GenericGA.rng_GA</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.run"><code class="docutils literal notranslate"><span class="pre">GenericGA.run()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.select_op"><code class="docutils literal notranslate"><span class="pre">GenericGA.select_op</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.set_seed"><code class="docutils literal notranslate"><span class="pre">GenericGA.set_seed()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.stats"><code class="docutils literal notranslate"><span class="pre">GenericGA.stats</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.update_population"><code class="docutils literal notranslate"><span class="pre">GenericGA.update_population()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.GenericGA.update_stats"><code class="docutils literal notranslate"><span class="pre">GenericGA.update_stats()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig"><code class="docutils literal notranslate"><span class="pre">RunConfig</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig.adapt_probs"><code class="docutils literal notranslate"><span class="pre">RunConfig.adapt_probs</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig.allow_migration"><code class="docutils literal notranslate"><span class="pre">RunConfig.allow_migration</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig.correction"><code class="docutils literal notranslate"><span class="pre">RunConfig.correction</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig.elitism"><code class="docutils literal notranslate"><span class="pre">RunConfig.elitism</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig.epochs"><code class="docutils literal notranslate"><span class="pre">RunConfig.epochs</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig.f_max_eval"><code class="docutils literal notranslate"><span class="pre">RunConfig.f_max_eval</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig.f_tol"><code class="docutils literal notranslate"><span class="pre">RunConfig.f_tol</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig.n_periods"><code class="docutils literal notranslate"><span class="pre">RunConfig.n_periods</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig.only_the_best"><code class="docutils literal notranslate"><span class="pre">RunConfig.only_the_best</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig.parallel"><code class="docutils literal notranslate"><span class="pre">RunConfig.parallel</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig.shuffle"><code class="docutils literal notranslate"><span class="pre">RunConfig.shuffle</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.generic_ga.RunConfig.verbose"><code class="docutils literal notranslate"><span class="pre">RunConfig.verbose</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#module-pygenalgo.engines.island_model_ga">pygenalgo.engines.island_model_ga module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.IslandModelGA"><code class="docutils literal notranslate"><span class="pre">IslandModelGA</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.IslandModelGA.make_islands"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.make_islands()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.IslandModelGA.migrate_op"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.migrate_op</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.IslandModelGA.num_islands"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.num_islands</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.IslandModelGA.print_migration_stats"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.print_migration_stats()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.IslandModelGA.run"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.run()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.IslandModelGA.termination_order"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.termination_order</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.RunConfig"><code class="docutils literal notranslate"><span class="pre">RunConfig</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.RunConfig.adapt_probs"><code class="docutils literal notranslate"><span class="pre">RunConfig.adapt_probs</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.RunConfig.allow_migration"><code class="docutils literal notranslate"><span class="pre">RunConfig.allow_migration</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.RunConfig.correction"><code class="docutils literal notranslate"><span class="pre">RunConfig.correction</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.RunConfig.elitism"><code class="docutils literal notranslate"><span class="pre">RunConfig.elitism</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.RunConfig.epochs"><code class="docutils literal notranslate"><span class="pre">RunConfig.epochs</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.RunConfig.f_max_eval"><code class="docutils literal notranslate"><span class="pre">RunConfig.f_max_eval</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.RunConfig.f_tol"><code class="docutils literal notranslate"><span class="pre">RunConfig.f_tol</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.RunConfig.n_periods"><code class="docutils literal notranslate"><span class="pre">RunConfig.n_periods</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.RunConfig.only_the_best"><code class="docutils literal notranslate"><span class="pre">RunConfig.only_the_best</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.RunConfig.parallel"><code class="docutils literal notranslate"><span class="pre">RunConfig.parallel</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.RunConfig.shuffle"><code class="docutils literal notranslate"><span class="pre">RunConfig.shuffle</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_model_ga.RunConfig.verbose"><code class="docutils literal notranslate"><span class="pre">RunConfig.verbose</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#module-pygenalgo.engines.standard_ga">pygenalgo.engines.standard_ga module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#pygenalgo.engines.standard_ga.RunConfig"><code class="docutils literal notranslate"><span class="pre">RunConfig</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.RunConfig.adapt_probs"><code class="docutils literal notranslate"><span class="pre">RunConfig.adapt_probs</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.RunConfig.allow_migration"><code class="docutils literal notranslate"><span class="pre">RunConfig.allow_migration</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.RunConfig.correction"><code class="docutils literal notranslate"><span class="pre">RunConfig.correction</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.RunConfig.elitism"><code class="docutils literal notranslate"><span class="pre">RunConfig.elitism</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.RunConfig.epochs"><code class="docutils literal notranslate"><span class="pre">RunConfig.epochs</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.RunConfig.f_max_eval"><code class="docutils literal notranslate"><span class="pre">RunConfig.f_max_eval</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.RunConfig.f_tol"><code class="docutils literal notranslate"><span class="pre">RunConfig.f_tol</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.RunConfig.n_periods"><code class="docutils literal notranslate"><span class="pre">RunConfig.n_periods</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.RunConfig.only_the_best"><code class="docutils literal notranslate"><span class="pre">RunConfig.only_the_best</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.RunConfig.parallel"><code class="docutils literal notranslate"><span class="pre">RunConfig.parallel</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.RunConfig.shuffle"><code class="docutils literal notranslate"><span class="pre">RunConfig.shuffle</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.RunConfig.verbose"><code class="docutils literal notranslate"><span class="pre">RunConfig.verbose</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#pygenalgo.engines.standard_ga.StandardGA"><code class="docutils literal notranslate"><span class="pre">StandardGA</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.StandardGA.fitness_func"><code class="docutils literal notranslate"><span class="pre">StandardGA.fitness_func</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.StandardGA.population"><code class="docutils literal notranslate"><span class="pre">StandardGA.population</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.standard_ga.StandardGA.run"><code class="docutils literal notranslate"><span class="pre">StandardGA.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#module-pygenalgo.engines.multi_objective_ga">pygenalgo.engines.multi_objective_ga module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA"><code class="docutils literal notranslate"><span class="pre">MultiObjectiveGA</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.fitness_func"><code class="docutils literal notranslate"><span class="pre">MultiObjectiveGA.fitness_func</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.population"><code class="docutils literal notranslate"><span class="pre">MultiObjectiveGA.population</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.MultiObjectiveGA.run"><code class="docutils literal notranslate"><span class="pre">MultiObjectiveGA.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.RunConfig"><code class="docutils literal notranslate"><span class="pre">RunConfig</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.RunConfig.adapt_probs"><code class="docutils literal notranslate"><span class="pre">RunConfig.adapt_probs</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.RunConfig.allow_migration"><code class="docutils literal notranslate"><span class="pre">RunConfig.allow_migration</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.RunConfig.correction"><code class="docutils literal notranslate"><span class="pre">RunConfig.correction</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.RunConfig.elitism"><code class="docutils literal notranslate"><span class="pre">RunConfig.elitism</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.RunConfig.epochs"><code class="docutils literal notranslate"><span class="pre">RunConfig.epochs</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.RunConfig.f_max_eval"><code class="docutils literal notranslate"><span class="pre">RunConfig.f_max_eval</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.RunConfig.f_tol"><code class="docutils literal notranslate"><span class="pre">RunConfig.f_tol</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.RunConfig.n_periods"><code class="docutils literal notranslate"><span class="pre">RunConfig.n_periods</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.RunConfig.only_the_best"><code class="docutils literal notranslate"><span class="pre">RunConfig.only_the_best</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.RunConfig.parallel"><code class="docutils literal notranslate"><span class="pre">RunConfig.parallel</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.RunConfig.shuffle"><code class="docutils literal notranslate"><span class="pre">RunConfig.shuffle</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.multi_objective_ga.RunConfig.verbose"><code class="docutils literal notranslate"><span class="pre">RunConfig.verbose</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#module-pygenalgo.engines.island_manager">pygenalgo.engines.island_manager module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#pygenalgo.engines.island_manager.IslandManager"><code class="docutils literal notranslate"><span class="pre">IslandManager</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_manager.IslandManager.get_all_counters"><code class="docutils literal notranslate"><span class="pre">IslandManager.get_all_counters()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_manager.IslandManager.idx"><code class="docutils literal notranslate"><span class="pre">IslandManager.idx</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_manager.IslandManager.operator"><code class="docutils literal notranslate"><span class="pre">IslandManager.operator</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_manager.IslandManager.operators_list"><code class="docutils literal notranslate"><span class="pre">IslandManager.operators_list</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#pygenalgo.engines.island_manager.IslandManager.reset_island_counters"><code class="docutils literal notranslate"><span class="pre">IslandManager.reset_island_counters()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#module-pygenalgo.engines">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.genome.html">Genome</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.operators.html">Operators</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pygenalgo.utils.html">Utils</a></li>
@@ -324,7 +460,7 @@ the fitness function.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pygenalgo.engines.generic_ga.GenericGA.rng_GA">
-<span class="sig-name descname"><span class="pre">rng_GA</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Generator(PCG64)</span> <span class="pre">at</span> <span class="pre">0x1044C5380</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.rng_GA" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rng_GA</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Generator(PCG64)</span> <span class="pre">at</span> <span class="pre">0x104E95380</span></em><a class="headerlink" href="#pygenalgo.engines.generic_ga.GenericGA.rng_GA" title="Link to this definition"></a></dt>
 <dd><p>Random Number Generator for the whole class.</p>
 </dd></dl>
 
