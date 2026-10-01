@@ -51,5 +51,6 @@ html_theme_path = ["_themes"]
 html_theme = "sphinx_rtd_theme"
 
 html_theme_options = {
-    "navigation_depth": 8
+    "collapse_navigation": False,
+    "navigation_depth": 8,
 }

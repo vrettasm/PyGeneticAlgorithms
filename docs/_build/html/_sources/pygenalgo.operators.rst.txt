@@ -6,6 +6,7 @@ Subpackages
 
 .. toctree::
    :maxdepth: 4
+   :hidden:
 
    pygenalgo.operators.crossover
    pygenalgo.operators.migration
