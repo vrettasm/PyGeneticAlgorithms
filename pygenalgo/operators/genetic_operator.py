@@ -3,9 +3,9 @@ from threading import Lock
 from functools import wraps
 from typing import Any, Optional
 
+import numpy as np
 # Third party imports.
 from numpy import asarray
-from numpy import isnan as np_isnan
 from numpy.typing import ArrayLike, NDArray
 from numpy.random import default_rng, Generator
 
@@ -252,9 +252,14 @@ class GeneticOperator:
                              f"Lower and Upper limits shapes do not match.")
 
         # Fail fast on NaN values to protect boundary logic.
-        if np_isnan(lower_lim).any() or np_isnan(upper_lim).any():
-            raise ValueError(f"{self.__class__.__name__}:"
-                             f"Limits cannot contain NaN.")
+        if np.isnan(lower_lim).any() or np.isnan(upper_lim).any():
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Limits cannot contain NaN values.")
+
+        # Fail fast on Inf values to protect boundary logic.
+        if np.isinf(lower_lim).any() or np.isinf(upper_lim).any():
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Limits cannot contain Inf values.")
 
         # Check if the boundaries are set correctly.
         if (upper_lim <= lower_lim).any():
