@@ -9,9 +9,9 @@ class UniformCrossover(CrossoverOperator):
     """
     Description:
 
-        Uniform crossover creates two children chromosomes (offsprings),
-        by taking two parent chromosomes and swap their genes in every
-        other location.
+        Uniform crossover creates two children chromosomes (offspring),
+        by taking two parent chromosomes and swap their genes independently
+        at each location based on a uniform random coin flip.
 
         It produces fast mixing, compared with single-point crossover.
     """
