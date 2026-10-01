@@ -64,8 +64,11 @@ class MultiPointCrossover(CrossoverOperator):
             # _end_def_
 
             # Select randomly the crossover points and sort them.
-            loci = sorted(self.rng.choice(min_length, size=num_points,
+            loci = sorted(self.rng.choice(range(1, min_length), size=num_points,
                                           replace=False, shuffle=False))
+
+            # Create a list with 'boundary' indices.
+            boundaries: list[int] = [0, *loci, min_length]
 
             # Create the 1st offspring genome list.
             child_1: list[Gene] = parent1.clone_genome()
@@ -73,32 +76,16 @@ class MultiPointCrossover(CrossoverOperator):
             # Create the 2nd offspring genome list.
             child_2: list[Gene] = parent2.clone_genome()
 
-            # Initialize a set of hyperparameters.
-            reset_flag, upper_lim, j = True, loci[0], 0
+            for i in range(len(boundaries) - 1):
+                # 'from' index.
+                f: int = boundaries[i]
 
-            # Scan the genomes up to min_length.
-            for i in range(min_length):
+                # 'to' index.
+                t: int = boundaries[i + 1]
 
-                # Once we surpass the upper limit (in loci)
-                # we reset the  flag value to allow changes
-                # to take place within that range.
-                if i >= upper_lim:
-
-                    # Swap the reset flag.
-                    reset_flag = not reset_flag
-
-                    # Increase the index of the loci.
-                    j += 1
-
-                    # We make sure the upper limit value does not exceed
-                    # the number of genes. Also, this avoids the out of
-                    # bound IndexError.
-                    upper_lim = loci[j] if j < num_points else min_length
-                # _end_if_
-
-                # Check the flag value.
-                if not reset_flag:
-                    child_1[i], child_2[i] = child_2[i], child_1[i]
+                # Swap every second segment.
+                if i % 2 == 1:
+                    child_1[f:t], child_2[f:t] = child_2[f:t], child_1[f:t]
             # _end_for_
 
             # Increase the crossover counter.
