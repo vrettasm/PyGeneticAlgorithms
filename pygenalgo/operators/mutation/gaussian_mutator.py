@@ -38,16 +38,22 @@ class GaussianMutator(MutationOperator):
         # Ensure sigma parameter is float.
         sigma: NDArray = np.asarray(sigma, dtype=float)
 
-        # Ensure standard deviation is positive.
-        if np.any(sigma <= 0.0):
-            raise ValueError(f"{self.__class__.__name__}: "
-                             f"Standard deviation must be positive.")
-        # _end_if_
-
         # Ensure standard deviation does not contain NaN.
         if np.isnan(sigma).any():
-            raise ValueError(f"{self.__class__.__name__}:"
-                             f"Sigma cannot contain NaN.")
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Sigma contains NaN values.")
+        # _end_if_
+
+        # Ensure standard deviation does not contain Inf.
+        if np.isinf(sigma).any():
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Sigma contains Inf values.")
+        # _end_if_
+
+        # Ensure standard deviation is positive.
+        if (sigma <= 0.0).any():
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Sigma must be positive.")
         # _end_if_
 
         # Validate the bounds.
