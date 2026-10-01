@@ -57,7 +57,7 @@ class RouletteWheelSelector(SelectionOperator):
         # If total fitness is zero (or effectively zero),
         # fall back to uniform random selection so every
         # individual has equal chance.
-        if isclose(sum_fitness, 0.0):
+        if isclose(sum_fitness, 0.0, abs_tol=1e-12):
             # Return the new parents.
             return self.safety_option(population,
                                       pop_size)
