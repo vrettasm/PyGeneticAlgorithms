@@ -17,15 +17,83 @@ class TestMultiPointCrossover(unittest.TestCase):
         print(">> TestMultiPointCrossover - FINISH -", end='\n\n')
     # _end_def_
 
-    def setUp(self) -> None:
+    def setUp(self):
         """
-        Creates the test object with default settings.
+        Set up mock parents and the crossover operator.
+        """
+        # Setup two unique permutation parents.
+        p1_genome = [1, 2, 3, 4, 5]
+        p2_genome = [6, 7, 8, 9, 0]
 
-        :return: None.
+        # Dummy function.
+        func = lambda x: _
+
+        # Create two parents.
+        self.parent1 = Chromosome([Gene(i, func) for i in p1_genome])
+        self.parent2 = Chromosome([Gene(j, func) for j in p2_genome])
+
+        # Basic instantiation (default 2 points)
+        self.operator = MultiPointCrossover(crossover_probability=1.0, n_points=2)
+    # _end_def_
+
+    def test_constructor_enforces_minimum_points(self):
         """
-        # Create an object with a crossover probability of 1.0.
-        self.cross_op = MultiPointCrossover(crossover_probability=1.0,
-                                            n_points=3)
+        Ensure that n_points lower than 2 defaults to 2.
+        """
+        # Create an operator with low value.
+        op_low = MultiPointCrossover(n_points=1)
+
+        # Should default to 2.
+        self.assertEqual(op_low._items, 2)
+    # _end_def_
+
+    def test_crossover_not_applicable(self):
+        """
+        Ensure original clones are returned if operator is not applicable.
+        """
+        # Set the probability to zero.
+        self.operator.probability = 0.0
+
+        # Crossover should not happen here.
+        ch1, ch2 = self.operator.crossover(self.parent1, self.parent2)
+
+        # Each child should be a clone of its parent.
+        self.assertEqual(ch1, self.parent1)
+        self.assertEqual(ch2, self.parent2)
+
+        # Verifies that they are not the same object.s
+        self.assertIsNot(ch1, self.parent1)
+        self.assertIsNot(ch2, self.parent2)
+
+        # Restore the probability to one.
+        self.operator.probability = 1.0
+    # _end_def_
+
+    def test_crossover_identical_parents(self):
+        """
+        Ensure clones are returned if parents are identical.
+        """
+        # Perform the crossover one the same parent.
+        ch1, ch2 = self.operator.crossover(self.parent1, self.parent1)
+
+        # Each child should be a clone of its parent.
+        self.assertEqual(ch1, self.parent1)
+        self.assertEqual(ch2, self.parent1)
+
+        # Verifies that they are not the same object.s
+        self.assertIsNot(ch1, self.parent1)
+        self.assertIsNot(ch2, self.parent1)
+    # _end_def_
+
+    def test_crossover_points_exceed_length_raises_error(self):
+        """
+        Ensure ValueError is raised if requested cuts exceed chromosome length.
+        """
+        # 5 cut points on chromosome of length 5 should fail.
+        test_operator = MultiPointCrossover(crossover_probability=1.0, n_points=5)
+
+        with self.assertRaises(ValueError):
+            _ = test_operator.crossover(self.parent1, self.parent2)
     # _end_def_
 
     def test_crossover(self):
@@ -61,7 +129,7 @@ class TestMultiPointCrossover(unittest.TestCase):
         print("Parent-2: ", " ".join([xi.value for xi in parent2]))
 
         # Perform the crossover.
-        child1, child2 = self.cross_op(parent1, parent2)
+        child1, child2 = self.operator.crossover(parent1, parent2)
         print("---------")
 
         # Print offsprings AFTER crossover.
@@ -102,7 +170,7 @@ class TestMultiPointCrossover(unittest.TestCase):
         print("Parent-2: ", " ".join([xi.value for xi in parent2]))
 
         # Perform the crossover.
-        child1, child2 = self.cross_op(parent1, parent2)
+        child1, child2 = self.operator.crossover(parent1, parent2)
         print("---------")
 
         # Print offsprings AFTER crossover.
