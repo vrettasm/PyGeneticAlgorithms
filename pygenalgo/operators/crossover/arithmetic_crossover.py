@@ -101,8 +101,8 @@ class ArithmeticCrossover(CrossoverOperator):
                 # _end_if_
 
                 # Compute the new gene values.
-                c1: float = _alpha * v1 + (1.0 - _alpha) * v2
-                c2: float = (1.0 - _alpha) * v1 + _alpha * v2
+                c1: float = p_alpha * v1 + (1.0 - p_alpha) * v2
+                c2: float = (1.0 - p_alpha) * v1 + p_alpha * v2
 
                 # Get the limits.
                 xl: float = x_lower[i]
