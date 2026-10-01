@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.operators.mutation.gaussian_mutator &mdash; PyGenAlgo 2.3.0 documentation</title>
+  <title>pygenalgo.operators.mutation.gaussian_mutator &mdash; PyGenAlgo 2.3.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=c3c8ae58"></script>
+      <script src="../../../../_static/documentation_options.js?v=67b02a41"></script>
       <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -109,23 +109,58 @@
         <span class="c1"># Call the super constructor with the provided initial value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mutation_probability</span><span class="o">=</span><span class="n">mutate_probability</span><span class="p">)</span>
 
-        <span class="c1"># Ensure sigma parameter is float.</span>
-        <span class="n">sigma</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-        <span class="c1"># Ensure standard deviation is positive.</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">sigma</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;Standard deviation must be positive.&quot;</span><span class="p">)</span>
-        <span class="c1"># _end_if_</span>
+        <span class="c1"># Validate sigma parameter(s).</span>
+        <span class="n">sigma</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_sigma</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
 
         <span class="c1"># Validate the bounds.</span>
         <span class="n">lower_lim</span><span class="p">,</span> <span class="n">upper_lim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_bounds</span><span class="p">(</span><span class="n">lower_lim</span><span class="p">,</span>
                                                     <span class="n">upper_lim</span><span class="p">)</span>
 
+        <span class="c1"># If sigma is scalar use the same value for all gene positions.</span>
+        <span class="k">if</span> <span class="n">sigma</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">lower_lim</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
         <span class="c1"># Assign variables to the _items placeholder.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">sigma</span><span class="p">,</span> <span class="n">lower_lim</span><span class="p">,</span> <span class="n">upper_lim</span>
         <span class="p">)</span>
+    <span class="c1"># _end_def_</span>
+
+<div class="viewcode-block" id="GaussianMutator.validate_sigma">
+<a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.gaussian_mutator.GaussianMutator.validate_sigma">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_sigma</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">|</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validate and normalize standard deviation.</span>
+
+<span class="sd">        :param sigma: standard deviation of the Gaussian</span>
+<span class="sd">                      N(0, sigma).</span>
+
+<span class="sd">        :return: the sigma as ndarray.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Ensure sigma parameter is float.</span>
+        <span class="n">sigma_arr</span><span class="p">:</span> <span class="n">NDArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="c1"># Ensure standard deviation does not contain NaN.</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">sigma_arr</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;Sigma contains NaN values. &quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Ensure standard deviation does not contain Inf.</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">sigma_arr</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;Sigma contains Inf values. &quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Ensure standard deviation is positive.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">sigma_arr</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;Sigma must be positive.&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="k">return</span> <span class="n">sigma_arr</span></div>
+
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="GaussianMutator.mutate">
@@ -148,11 +183,6 @@
 
             <span class="c1"># Extract the variables from the placeholder.</span>
             <span class="n">sigma</span><span class="p">,</span> <span class="n">xl</span><span class="p">,</span> <span class="n">xu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span>
-
-            <span class="c1"># If sigma is scalar use the same</span>
-            <span class="c1"># value for all gene positions.</span>
-            <span class="k">if</span> <span class="n">sigma</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">xl</span><span class="p">)</span>
 
             <span class="c1"># Select a random position in the genome.</span>
             <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_genes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
