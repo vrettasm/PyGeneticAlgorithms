@@ -48,6 +48,11 @@ class GaussianMutator(MutationOperator):
         lower_lim, upper_lim = self.validate_bounds(lower_lim,
                                                     upper_lim)
 
+        # If sigma is scalar use the same value for all gene positions.
+        if sigma.size == 1:
+            sigma = sigma * np.ones_like(lower_lim)
+        # _end_if_
+
         # Assign variables to the _items placeholder.
         self._items: tuple[float, ...] = (
             sigma, lower_lim, upper_lim
@@ -72,11 +77,6 @@ class GaussianMutator(MutationOperator):
 
             # Extract the variables from the placeholder.
             sigma, xl, xu = self._items
-
-            # If sigma is scalar use the same
-            # value for all gene positions.
-            if sigma.size == 1:
-                sigma = sigma * np.ones_like(xl)
 
             # Select a random position in the genome.
             idx = self.rng.integers(n_genes, dtype=int)
