@@ -1,4 +1,6 @@
 """ Polynomial mutator (PM-eta) module. """
+import warnings
+
 # Third party imports.
 from numpy.typing import ArrayLike
 
@@ -40,9 +42,19 @@ class PolynomialMutator(MutationOperator):
         # Validate the bounds.
         lower_lim, upper_lim = self.validate_bounds(lower_lim,
                                                     upper_lim)
-
         # Ensure eta_pm parameter is float.
         eta_pm = float(eta_pm)
+
+        # Hard constraint.
+        if eta_pm <= 0.0:
+            raise ValueError(f"{self.__class__.__name__}: eta_pm must be > 0")
+        # _end_if_
+
+        # Soft warning for impractical ranges.
+        if eta_pm > 150.0:
+            warnings.warn(f"{self.__class__.__name__}: eta_pm ({eta_pm}) "
+                          f"is exceptionally high.",UserWarning)
+        # _end_if_
 
         # Assign variables to the _items placeholder.
         self._items: tuple[float, ...] = (
