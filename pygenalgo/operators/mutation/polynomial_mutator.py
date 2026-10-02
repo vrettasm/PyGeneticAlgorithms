@@ -57,7 +57,7 @@ class PolynomialMutator(MutationOperator):
         # _end_if_
 
         # Assign variables to the _items placeholder.
-        self._items: tuple[float, ...] = (
+        self._items: tuple[float, NDArray, NDArray] = (
             eta_pm, lower_lim, upper_lim
         )
     # _end_def_
