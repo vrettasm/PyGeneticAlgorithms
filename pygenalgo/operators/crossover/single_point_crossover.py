@@ -42,24 +42,21 @@ class SinglePointCrossover(CrossoverOperator):
         # changes.
         if self.is_operator_applicable() and (parent1 != parent2):
 
+            # Create the 1st offspring genome list.
+            child_1: list[Gene] = parent1.clone_genome()
+
+            # Create the 2nd offspring genome list.
+            child_2: list[Gene] = parent2.clone_genome()
+
             # Find the minimum length of the two chromosomes.
-            min_length: int = min(len(parent1), len(parent2))
+            min_length: int = min(len(child_1), len(child_2))
 
-            # Select randomly a crossover point from [0, min_length-1].
-            idx: int = self.rng.integers(0, high=min_length, dtype=int)
+            # Select randomly a crossover point from [1, min_length-1].
+            idx: int = self.rng.integers(1, high=min_length, dtype=int)
 
-            # Construct 1st offspring genome list at 'idx'.
-            child_1: list[Gene] = [
-                x.clone()
-                for x in parent2.genome[:idx] + parent1.genome[idx:]
-            ]
-
-            # Construct 2nd offspring genome list at 'idx'.
-            child_2: list[Gene] = [
-                y.clone()
-                for y in parent1.genome[:idx] + parent2.genome[idx:]
-            ]
-
+            # Swap their genes in the range idx to min_length.
+            child_1[idx:min_length], child_2[idx:min_length] = (child_2[idx:min_length],
+                                                                child_1[idx:min_length])
             # Increase the crossover counter.
             self.inc_counter()
 
