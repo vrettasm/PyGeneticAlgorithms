@@ -27,6 +27,22 @@ class PartiallyMappedCrossover(CrossoverOperator):
         super().__init__(crossover_probability=crossover_probability)
     # _end_def_
 
+    @staticmethod
+    def _get_genome_map(genome: list[Gene])-> dict[Gene, int]:
+        """
+        Return a map using the genes as keys and their
+        position in the genome as values. This is used
+        for O(1) fast lookups.
+
+        :param genome: list of Genes.
+
+        :return: dictionary[Gene, int].
+        """
+        return {
+            gene: idx for idx, gene in enumerate(genome)
+        }
+    # _end_def_
+
     def crossover(self, parent1: Chromosome, parent2: Chromosome) -> Offspring:
         """
         Perform the crossover operation on the two input parent chromosomes.
