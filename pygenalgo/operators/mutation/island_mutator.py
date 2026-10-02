@@ -78,6 +78,9 @@ class IslandMutator(MutationOperator):
 
         # Call its mutation method.
         mutate_op.mutate(individual)
+
+        # Increase the mutator counter.
+        self.inc_counter()
     # _end_def_
 
     def reset_counter(self) -> None:
