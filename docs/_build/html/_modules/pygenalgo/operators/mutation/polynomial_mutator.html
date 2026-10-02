@@ -552,8 +552,10 @@
              
   <h1>Source code for pygenalgo.operators.mutation.polynomial_mutator</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot; Polynomial mutator (PM-eta) module. &quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
 <span class="c1"># Third party imports.</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArrayLike</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span><span class="p">,</span> <span class="n">ArrayLike</span>
 
 <span class="c1"># Custom code imports.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">clamp</span>
@@ -595,12 +597,22 @@
         <span class="c1"># Validate the bounds.</span>
         <span class="n">lower_lim</span><span class="p">,</span> <span class="n">upper_lim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_bounds</span><span class="p">(</span><span class="n">lower_lim</span><span class="p">,</span>
                                                     <span class="n">upper_lim</span><span class="p">)</span>
-
         <span class="c1"># Ensure eta_pm parameter is float.</span>
         <span class="n">eta_pm</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">eta_pm</span><span class="p">)</span>
 
+        <span class="c1"># Hard constraint.</span>
+        <span class="k">if</span> <span class="n">eta_pm</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: eta_pm must be &gt; 0&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Soft warning for impractical ranges.</span>
+        <span class="k">if</span> <span class="n">eta_pm</span> <span class="o">&gt;</span> <span class="mf">150.0</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: eta_pm (</span><span class="si">{</span><span class="n">eta_pm</span><span class="si">}</span><span class="s2">) &quot;</span>
+                          <span class="sa">f</span><span class="s2">&quot;is exceptionally high.&quot;</span><span class="p">,</span><span class="ne">UserWarning</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
         <span class="c1"># Assign variables to the _items placeholder.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">eta_pm</span><span class="p">,</span> <span class="n">lower_lim</span><span class="p">,</span> <span class="n">upper_lim</span>
         <span class="p">)</span>
     <span class="c1"># _end_def_</span>
