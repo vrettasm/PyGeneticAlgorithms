@@ -8,8 +8,9 @@ class RandomMutator(MutationOperator):
     """
     Description:
 
-        Random mutator, mutates the chromosome by selecting randomly a position and replace
-        the Gene with a new one that has been generated randomly (uniform probability).
+        Random mutator, mutates the chromosome by selecting randomly
+        a position and replace the Gene with a new one that has been
+        generated randomly (uniform probability).
     """
 
     def __init__(self, mutate_probability: float = 0.1) -> None:
