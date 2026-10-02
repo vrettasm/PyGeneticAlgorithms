@@ -2,7 +2,7 @@
 import warnings
 
 # Third party imports.
-from numpy.typing import ArrayLike
+from numpy.typing import NDArray, ArrayLike
 
 # Custom code imports.
 from pygenalgo.utils.utilities import clamp
