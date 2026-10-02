@@ -78,6 +78,9 @@ class IslandCrossover(CrossoverOperator):
         # Get the selected (crossover) operator.
         crossx_op: CrossoverOperator = self._items.operator
 
+        # Increase the crossover counter.
+        self.inc_counter()
+
         # Call its crossover method.
         return crossx_op.crossover(parent1, parent2)
     # _end_def_
