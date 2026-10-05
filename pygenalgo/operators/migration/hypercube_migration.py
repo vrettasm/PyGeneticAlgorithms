@@ -37,21 +37,6 @@ class HypercubeMigration(MigrationOperator):
         self._items: MigrationOperator = RingMigration(1.0)
     # _end_def_
 
-    @staticmethod
-    @cache
-    def _get_dimension(n_islands: int) -> int:
-        """
-        Return the hypercube dimension for a given number of islands.
-
-        A d-dimensional hypercube requires exactly pow(2, d) islands.
-
-        :param n_islands: Number of islands.
-
-        :return: The hypercube dimension.
-        """
-        return n_islands.bit_length() - 1
-    # _end_def_
-
     def migrate(self, islands: list[SubPopulation]) -> None:
         """
         Perform hypercube migration.
