@@ -54,9 +54,11 @@ class HypercubeMigration(MigrationOperator):
         # and only if we have more than 1 active populations.
         if self.is_operator_applicable() and n_active > 1:
 
-            # Check if n_active is not a power of 2.
+            # Use a fallback migration policy when
+            # a hypercube can't be formed from the
+            # current number of active islands.
             if (n_active & (n_active - 1)) != 0:
-                # Local copy of the safety operator.
+                # Local reference of the operator.
                 fallback_operator = self._items
 
                 # Call its fallback migration policy.
