@@ -60,7 +60,7 @@ class HypercubeMigration(MigrationOperator):
                 fallback_operator = self._items
 
                 # Call its fallback migration policy.
-                ring_operator.migrate(islands)
+                fallback_operator.migrate(islands)
 
                 # Increase the self migration counter.
                 self.inc_counter()
