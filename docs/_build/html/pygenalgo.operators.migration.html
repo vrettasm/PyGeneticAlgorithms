@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Migration Operators &mdash; PyGenAlgo 2.4.0 documentation</title>
+  <title>Migration Operators &mdash; PyGenAlgo 2.4.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=4d935f96"></script>
+      <script src="_static/documentation_options.js?v=e9ebdb8f"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -296,6 +296,10 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="#module-pygenalgo.operators.migration.random_migration">pygenalgo.operators.migration.random_migration module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="#pygenalgo.operators.migration.random_migration.RandomMigration"><code class="docutils literal notranslate"><span class="pre">RandomMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#module-pygenalgo.operators.migration.hypercube_migration">pygenalgo.operators.migration.hypercube_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#pygenalgo.operators.migration.hypercube_migration.HypercubeMigration"><code class="docutils literal notranslate"><span class="pre">HypercubeMigration</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="#module-pygenalgo.operators.migration.random_graph_migration">pygenalgo.operators.migration.random_graph_migration module</a><ul>
@@ -649,6 +653,39 @@ each island migrates its best chromosome to a randomly selected population.</p>
 <dt class="sig sig-object py" id="pygenalgo.operators.migration.random_migration.RandomMigration.migrate">
 <span class="sig-name descname"><span class="pre">migrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">islands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.SubPopulation" title="pygenalgo.utils.auxiliary.SubPopulation"><span class="pre">SubPopulation</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/migration/random_migration.html#RandomMigration.migrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.migration.random_migration.RandomMigration.migrate" title="Link to this definition"></a></dt>
 <dd><p>Perform the migration operation on the list of SubPopulations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>islands</strong> – list[SubPopulation].</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pygenalgo.operators.migration.hypercube_migration">
+<span id="pygenalgo-operators-migration-hypercube-migration-module"></span><h2>pygenalgo.operators.migration.hypercube_migration module<a class="headerlink" href="#module-pygenalgo.operators.migration.hypercube_migration" title="Link to this heading"></a></h2>
+<p>Hypercube migration module.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pygenalgo.operators.migration.hypercube_migration.HypercubeMigration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygenalgo.operators.migration.hypercube_migration.</span></span><span class="sig-name descname"><span class="pre">HypercubeMigration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">migration_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygenalgo/operators/migration/hypercube_migration.html#HypercubeMigration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.migration.hypercube_migration.HypercubeMigration" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.migration.migration_operator.MigrationOperator" title="pygenalgo.operators.migration.migration_operator.MigrationOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">MigrationOperator</span></code></a></p>
+<p>Hypercube island migration.</p>
+<p>For N = pow(2, d) islands, each island is assigned an integer ID
+from 0 to N - 1. Two islands are neighbors when their IDs differ
+in exactly one binary bit.</p>
+<p>If the number of active islands is not a power of two, migration
+falls back to ring migration to preserve gene flow among islands.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pygenalgo.operators.migration.hypercube_migration.HypercubeMigration.migrate">
+<span class="sig-name descname"><span class="pre">migrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">islands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pygenalgo.utils.html#pygenalgo.utils.auxiliary.SubPopulation" title="pygenalgo.utils.auxiliary.SubPopulation"><span class="pre">SubPopulation</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pygenalgo/operators/migration/hypercube_migration.html#HypercubeMigration.migrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygenalgo.operators.migration.hypercube_migration.HypercubeMigration.migrate" title="Link to this definition"></a></dt>
+<dd><p>Perform hypercube migration.</p>
+<p>Each island sends its best chromosome to every hypercube neighbor.
+The receiving island replaces one randomly selected chromosome for
+each incoming migrant.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>islands</strong> – list[SubPopulation].</p>

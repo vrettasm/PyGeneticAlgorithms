@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.operators.migration.random_migration &mdash; PyGenAlgo 2.4.0 documentation</title>
+  <title>pygenalgo.operators.migration.random_migration &mdash; PyGenAlgo 2.4.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=4d935f96"></script>
+      <script src="../../../../_static/documentation_options.js?v=e9ebdb8f"></script>
       <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -293,6 +293,10 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_migration">pygenalgo.operators.migration.random_migration module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_migration.RandomMigration"><code class="docutils literal notranslate"><span class="pre">RandomMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.hypercube_migration">pygenalgo.operators.migration.hypercube_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.hypercube_migration.HypercubeMigration"><code class="docutils literal notranslate"><span class="pre">HypercubeMigration</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_graph_migration">pygenalgo.operators.migration.random_graph_migration module</a><ul>
@@ -617,27 +621,23 @@
             <span class="p">]</span>
 
             <span class="c1"># Shuffle the order of the best chromosomes</span>
-            <span class="c1"># list to introduce some randomness.</span>
+            <span class="c1"># list to introduce some local randomness.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">best_chromosomes</span><span class="p">)</span>
 
             <span class="c1"># Go through all the destination islands.</span>
-            <span class="k">for</span> <span class="n">island</span><span class="p">,</span> <span class="n">best_j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">islands</span><span class="p">,</span> <span class="n">best_chromosomes</span><span class="p">):</span>
-                <span class="c1"># Extract the values of the tuple.</span>
-                <span class="n">n</span><span class="p">,</span> <span class="n">best_c</span> <span class="o">=</span> <span class="n">best_j</span>
-
+            <span class="k">for</span> <span class="n">island</span><span class="p">,</span> <span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">best_chromosome</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">islands</span><span class="p">,</span>
+                                                            <span class="n">best_chromosomes</span><span class="p">):</span>
                 <span class="c1"># Prevents self migration.</span>
-                <span class="k">if</span> <span class="n">island</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">island</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">source_id</span><span class="p">:</span>
                     <span class="k">continue</span>
 
-                <span class="c1"># Get the population size of the island.</span>
-                <span class="n">pop_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
-
-                <span class="c1"># Select randomly one individual chromosome.</span>
-                <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">pop_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+                <span class="c1"># Select randomly one individual chromosome location.</span>
+                <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">),</span>
+                                             <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
                 <span class="c1"># Replace the randomly selected chromosome with</span>
                 <span class="c1"># the pre-selected best one from the list above.</span>
-                <span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_c</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+                <span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_chromosome</span>
             <span class="c1"># _end_for_</span>
 
             <span class="c1"># Increase the migration counter.</span>

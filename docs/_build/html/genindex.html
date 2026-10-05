@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; PyGenAlgo 2.4.0 documentation</title>
+  <title>Index &mdash; PyGenAlgo 2.4.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=4d935f96"></script>
+      <script src="_static/documentation_options.js?v=e9ebdb8f"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -293,6 +293,10 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_migration">pygenalgo.operators.migration.random_migration module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_migration.RandomMigration"><code class="docutils literal notranslate"><span class="pre">RandomMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.hypercube_migration">pygenalgo.operators.migration.hypercube_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.hypercube_migration.HypercubeMigration"><code class="docutils literal notranslate"><span class="pre">HypercubeMigration</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_graph_migration">pygenalgo.operators.migration.random_graph_migration module</a><ul>
@@ -832,11 +836,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.half_uniform_crossover.HalfUniformCrossover">HalfUniformCrossover (class in pygenalgo.operators.crossover.half_uniform_crossover)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.hamming_distance">hamming_distance() (pygenalgo.genome.chromosome.Chromosome method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.has_valid_genome">has_valid_genome() (pygenalgo.genome.chromosome.Chromosome method)</a>
+</li>
+      <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.hypercube_migration.HypercubeMigration">HypercubeMigration (class in pygenalgo.operators.migration.hypercube_migration)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -911,6 +917,8 @@
       <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.fully_connected_migration.FullyConnectedMigration.migrate">migrate() (pygenalgo.operators.migration.fully_connected_migration.FullyConnectedMigration method)</a>
 
       <ul>
+        <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.hypercube_migration.HypercubeMigration.migrate">(pygenalgo.operators.migration.hypercube_migration.HypercubeMigration method)</a>
+</li>
         <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.meta_migration.MetaMigration.migrate">(pygenalgo.operators.migration.meta_migration.MetaMigration method)</a>
 </li>
         <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.migration_operator.MigrationOperator.migrate">(pygenalgo.operators.migration.migration_operator.MigrationOperator method)</a>
@@ -991,6 +999,8 @@
         <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration">pygenalgo.operators.migration</a>
 </li>
         <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.fully_connected_migration">pygenalgo.operators.migration.fully_connected_migration</a>
+</li>
+        <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.hypercube_migration">pygenalgo.operators.migration.hypercube_migration</a>
 </li>
         <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.meta_migration">pygenalgo.operators.migration.meta_migration</a>
 </li>
@@ -1397,8 +1407,6 @@
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.single_point_crossover">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pygenalgo.operators.crossover.uniform_crossover
 
@@ -1406,6 +1414,8 @@
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.uniform_crossover">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pygenalgo.operators.genetic_operator
 
@@ -1425,6 +1435,13 @@
 
       <ul>
         <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.fully_connected_migration">module</a>
+</li>
+      </ul></li>
+      <li>
+    pygenalgo.operators.migration.hypercube_migration
+
+      <ul>
+        <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.hypercube_migration">module</a>
 </li>
       </ul></li>
       <li>
