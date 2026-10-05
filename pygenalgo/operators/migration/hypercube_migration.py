@@ -71,7 +71,7 @@ class HypercubeMigration(MigrationOperator):
         # and only if we have more than 1 active populations.
         if self.is_operator_applicable() and n_active > 1:
 
-            # Check if n_active is a power of 2.
+            # Check if n_active is not a power of 2.
             if (n_active & (n_active - 1)) != 0:
                 # Local copy of the safety operator.
                 ring_operator = self._items
