@@ -55,9 +55,12 @@ class RandomMigration(MigrationOperator):
                 # Extract the values of the tiple.
                 n, best_c = best_j
 
+                # Prevents self migration.
+                if island_i.id == n:
+                    continue
+
                 # Perform the migration with a predefined probability.
-                # The second condition prevents self migration.
-                if self.is_operator_applicable() and island_i.id != n:
+                if self.is_operator_applicable():
 
                     # Get the population size of the island.
                     pop_size: int = len(island_i.population)
