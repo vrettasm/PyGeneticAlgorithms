@@ -64,7 +64,7 @@ class RingMigration(MigrationOperator):
                 source_idx: int = (i - 1) % n_active
 
                 # Replace the chromosome with the best one from its left.
-                island.population[idx] = best_chromosomes[source_idx].clone()
+                island.population[idx] = best_chromosomes[source_idx]
             # _end_for_
 
             # Increase the migration counter.
