@@ -31,8 +31,9 @@ class HypercubeMigration(MigrationOperator):
         """
         super().__init__(migration_probability=migration_probability)
 
-        # Create an auxiliary ring migration operator with 100% probability.
-        # It is important because it will act as a safety fallback operator.
+        # Create an auxiliary ring migration operator with 100%
+        # probability. It is important because it will act as a
+        # safety fallback operator.
         self._items: MigrationOperator = RingMigration(1.0)
     # _end_def_
 
