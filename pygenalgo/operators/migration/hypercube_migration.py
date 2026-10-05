@@ -39,6 +39,10 @@ class HypercubeMigration(MigrationOperator):
         Return the hypercube dimension for a given number of islands.
 
         A d-dimensional hypercube requires exactly pow(2, d) islands.
+
+        :param n_islands: Number of islands.
+
+        :return: The hypercube dimension.
         """
         # Sanity check.
         if n_islands < 1 or (n_islands & (n_islands - 1)) != 0:
