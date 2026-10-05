@@ -52,7 +52,7 @@ class RandomGraphMigration(MigrationOperator):
             # First find the best individual chromosome
             # FROM EACH island.
             best_chromosomes: list[tuple[int, Chromosome]] = [
-                (n, max(island.population, key=key_sort))
+                (n, max(island.population, key=key_sort).clone())
                 for n, island in enumerate(islands)
             ]
 
