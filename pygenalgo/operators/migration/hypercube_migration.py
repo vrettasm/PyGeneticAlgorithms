@@ -19,11 +19,6 @@ class HypercubeMigration(MigrationOperator):
 
     If the number of active islands is not a power of two, migration
     falls back to ring migration to preserve gene flow among islands.
-
-    Example with 8 islands:
-
-        Island 2: 010
-        Neighbors: 011, 000, 110
     """
 
     def __init__(self, migration_probability: float = 0.95) -> None:
