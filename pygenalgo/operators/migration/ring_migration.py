@@ -47,21 +47,21 @@ class RingMigration(MigrationOperator):
             # First find the best individual chromosome
             # FROM EACH island.
             best_chromosomes: list[Chromosome] = [
-                max(island_i.population, key=key_sort)
-                for island_i in islands
+                max(island.population, key=key_sort)
+                for island in islands
             ]
 
             # Go through all the destination islands.
-            for i, island_i in enumerate(islands):
+            for i, island in enumerate(islands):
 
                 # Get the population size of the island.
-                pop_size: int = len(island_i.population)
+                pop_size: int = len(island.population)
 
                 # Select randomly one individual chromosome.
                 idx: int = self.rng.integers(pop_size, dtype=np.int8)
 
                 # Replace the chromosome with the best one from its left.
-                island_i.population[idx] = best_chromosomes[i-1].clone()
+                island.population[idx] = best_chromosomes[i-1].clone()
             # _end_for_
 
             # Increase the migration counter.
