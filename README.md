@@ -83,7 +83,7 @@ The current implementation provides (out of the box) a wide variety of genetic o
   - [Polynomial Mutator](pygenalgo/operators/mutation/polynomial_mutator.py)
 
 - **Migration operators**
-  - [Clockwise Migrator](pygenalgo/operators/migration/clockwise_migration.py)
+  - [Clockwise Migrator](pygenalgo/operators/migration/ring_migration.py)
   - [Random Migrator](pygenalgo/operators/migration/random_migration.py)
 
 - **Meta operators**
