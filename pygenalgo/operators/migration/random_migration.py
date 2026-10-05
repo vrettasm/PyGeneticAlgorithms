@@ -2,6 +2,9 @@
 from typing import Callable
 from operator import attrgetter
 
+# Third party  imports.
+import numpy as np
+
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.auxiliary import SubPopulation
@@ -34,9 +37,9 @@ class RandomMigration(MigrationOperator):
 
         :return: None.
         """
-        # Perform the migration only if we have more than one
-        # active populations.
-        if len(islands) > 1:
+        # Perform the migration with a specified probability
+        # and only if we have more than 1 active populations.
+        if self.is_operator_applicable() and len(islands) > 1:
             # Define the key.
             key_sort: Callable = attrgetter("fitness")
 
@@ -47,10 +50,11 @@ class RandomMigration(MigrationOperator):
                 for island_i in islands
             ]
 
-            # Shuffle the order of the best chromosomes list.
+            # Shuffle the order of the best chromosomes
+            # list to introduce some randomness.
             self.rng.shuffle(best_chromosomes)
 
-            # Go through all the islands.
+            # Go through all the destination islands.
             for island_i, best_j in zip(islands, best_chromosomes):
                 # Extract the values of the tuple.
                 n, best_c = best_j
@@ -59,18 +63,15 @@ class RandomMigration(MigrationOperator):
                 if island_i.id == n:
                     continue
 
-                # Perform the migration with a predefined probability.
-                if self.is_operator_applicable():
+                # Get the population size of the island.
+                pop_size: int = len(island_i.population)
 
-                    # Get the population size of the island.
-                    pop_size: int = len(island_i.population)
+                # Select randomly one individual chromosome.
+                idx: int = self.rng.integers(pop_size, dtype=np.int8)
 
-                    # Select randomly one individual chromosome.
-                    idx: int = self.rng.integers(pop_size, dtype=int)
-
-                    # Replace the randomly selected chromosome with
-                    # the pre-selected best one from the list above.
-                    island_i.population[idx] = best_c.clone()
+                # Replace the randomly selected chromosome with
+                # the pre-selected best one from the list above.
+                island_i.population[idx] = best_c.clone()
             # _end_for_
 
             # Increase the migration counter.
