@@ -283,20 +283,32 @@
 </li>
 <li class="toctree-l6"><a class="reference internal" href="../../../pygenalgo.operators.migration.html">Migration Operators</a><ul>
 <li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#submodules">Submodules</a></li>
-<li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.clockwise_migration">pygenalgo.operators.migration.clockwise_migration module</a><ul>
-<li class="toctree-l8"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.clockwise_migration.ClockwiseMigration"><code class="docutils literal notranslate"><span class="pre">ClockwiseMigration</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.meta_migration">pygenalgo.operators.migration.meta_migration module</a><ul>
-<li class="toctree-l8"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.meta_migration.MetaMigration"><code class="docutils literal notranslate"><span class="pre">MetaMigration</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.migration_operator">pygenalgo.operators.migration.migration_operator module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.migration_operator.MigrationOperator"><code class="docutils literal notranslate"><span class="pre">MigrationOperator</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.ring_migration">pygenalgo.operators.migration.ring_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.ring_migration.RingMigration"><code class="docutils literal notranslate"><span class="pre">RingMigration</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_migration">pygenalgo.operators.migration.random_migration module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_migration.RandomMigration"><code class="docutils literal notranslate"><span class="pre">RandomMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_graph_migration">pygenalgo.operators.migration.random_graph_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_graph_migration.RandomGraphMigration"><code class="docutils literal notranslate"><span class="pre">RandomGraphMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.star_connected_migration">pygenalgo.operators.migration.star_connected_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.star_connected_migration.StarConnectedMigration"><code class="docutils literal notranslate"><span class="pre">StarConnectedMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.fully_connected_migration">pygenalgo.operators.migration.fully_connected_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.fully_connected_migration.FullyConnectedMigration"><code class="docutils literal notranslate"><span class="pre">FullyConnectedMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.meta_migration">pygenalgo.operators.migration.meta_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.meta_migration.MetaMigration"><code class="docutils literal notranslate"><span class="pre">MetaMigration</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration">Module contents</a></li>
@@ -784,9 +796,7 @@
         <span class="n">genome_2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">genome</span>
 
         <span class="c1"># Compute the dissimilarities in their genomes.</span>
-        <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span>
-            <span class="n">k</span> <span class="o">!=</span> <span class="n">l</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">genome_1</span><span class="p">,</span> <span class="n">genome_2</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="p">])</span></div>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">k</span> <span class="o">!=</span> <span class="n">l</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">genome_1</span><span class="p">,</span> <span class="n">genome_2</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span></div>
 
     <span class="c1"># _end_def_</span>
 

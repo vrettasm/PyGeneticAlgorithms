@@ -283,20 +283,32 @@
 </li>
 <li class="toctree-l6"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html">Migration Operators</a><ul>
 <li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#submodules">Submodules</a></li>
-<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.clockwise_migration">pygenalgo.operators.migration.clockwise_migration module</a><ul>
-<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.clockwise_migration.ClockwiseMigration"><code class="docutils literal notranslate"><span class="pre">ClockwiseMigration</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.meta_migration">pygenalgo.operators.migration.meta_migration module</a><ul>
-<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.meta_migration.MetaMigration"><code class="docutils literal notranslate"><span class="pre">MetaMigration</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.migration_operator">pygenalgo.operators.migration.migration_operator module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.migration_operator.MigrationOperator"><code class="docutils literal notranslate"><span class="pre">MigrationOperator</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.ring_migration">pygenalgo.operators.migration.ring_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.ring_migration.RingMigration"><code class="docutils literal notranslate"><span class="pre">RingMigration</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_migration">pygenalgo.operators.migration.random_migration module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_migration.RandomMigration"><code class="docutils literal notranslate"><span class="pre">RandomMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_graph_migration">pygenalgo.operators.migration.random_graph_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_graph_migration.RandomGraphMigration"><code class="docutils literal notranslate"><span class="pre">RandomGraphMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.star_connected_migration">pygenalgo.operators.migration.star_connected_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.star_connected_migration.StarConnectedMigration"><code class="docutils literal notranslate"><span class="pre">StarConnectedMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.fully_connected_migration">pygenalgo.operators.migration.fully_connected_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.fully_connected_migration.FullyConnectedMigration"><code class="docutils literal notranslate"><span class="pre">FullyConnectedMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.meta_migration">pygenalgo.operators.migration.meta_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.meta_migration.MetaMigration"><code class="docutils literal notranslate"><span class="pre">MetaMigration</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration">Module contents</a></li>
@@ -553,6 +565,7 @@
   <h1>Source code for pygenalgo.operators.crossover.partially_mapped_crossover</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot; Partially mapped crossover (PMX) operator module. &quot;&quot;&quot;</span>
 <span class="c1"># Custom code imports.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.gene</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gene</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.genome.chromosome</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chromosome</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">two_indices_fast</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.crossover.crossover_operator</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">CrossoverOperator</span><span class="p">,</span> <span class="n">Offspring</span><span class="p">)</span>
@@ -580,6 +593,22 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Call the super constructor with the provided initial value.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">crossover_probability</span><span class="o">=</span><span class="n">crossover_probability</span><span class="p">)</span>
+    <span class="c1"># _end_def_</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_genome_map</span><span class="p">(</span><span class="n">genome</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Gene</span><span class="p">])</span><span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Gene</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a map using the genes as keys and their</span>
+<span class="sd">        position in the genome as values. This is used</span>
+<span class="sd">        for O(1) fast lookups.</span>
+
+<span class="sd">        :param genome: list of Genes.</span>
+
+<span class="sd">        :return: dictionary[Gene, int].</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">gene</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">gene</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">genome</span><span class="p">)</span>
+        <span class="p">}</span>
     <span class="c1"># _end_def_</span>
 
 <div class="viewcode-block" id="PartiallyMappedCrossover.crossover">
@@ -623,13 +652,10 @@
             <span class="n">segment_of_genome_1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">child_1</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">])</span>
             <span class="n">segment_of_genome_2</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">child_2</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">])</span>
 
-            <span class="c1"># Pre-compute gene positions into dictionaries for O(1) lookups.</span>
-            <span class="n">p1_pos_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="n">gene_1</span><span class="p">:</span> <span class="n">idx_1</span> <span class="k">for</span> <span class="n">idx_1</span><span class="p">,</span> <span class="n">gene_1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">)</span>
-            <span class="p">}</span>
-            <span class="n">p2_pos_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="n">gene_2</span><span class="p">:</span> <span class="n">idx_2</span> <span class="k">for</span> <span class="n">idx_2</span><span class="p">,</span> <span class="n">gene_2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">)</span>
-            <span class="p">}</span>
+            <span class="c1"># Pre-compute gene positions into dictionaries for O(1)</span>
+            <span class="c1"># lookups.</span>
+            <span class="n">p1_pos_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_genome_map</span><span class="p">(</span><span class="n">parent1</span><span class="o">.</span><span class="n">genome</span><span class="p">)</span>
+            <span class="n">p2_pos_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_genome_map</span><span class="p">(</span><span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">)</span>
 
             <span class="c1"># Start building the offsprings.</span>
             <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="n">gene_x</span><span class="p">,</span> <span class="n">gene_y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">parent2</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span>

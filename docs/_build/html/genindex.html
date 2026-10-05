@@ -283,20 +283,32 @@
 </li>
 <li class="toctree-l6"><a class="reference internal" href="pygenalgo.operators.migration.html">Migration Operators</a><ul>
 <li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#submodules">Submodules</a></li>
-<li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.clockwise_migration">pygenalgo.operators.migration.clockwise_migration module</a><ul>
-<li class="toctree-l8"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.clockwise_migration.ClockwiseMigration"><code class="docutils literal notranslate"><span class="pre">ClockwiseMigration</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.meta_migration">pygenalgo.operators.migration.meta_migration module</a><ul>
-<li class="toctree-l8"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.meta_migration.MetaMigration"><code class="docutils literal notranslate"><span class="pre">MetaMigration</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.migration_operator">pygenalgo.operators.migration.migration_operator module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.migration_operator.MigrationOperator"><code class="docutils literal notranslate"><span class="pre">MigrationOperator</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.ring_migration">pygenalgo.operators.migration.ring_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.ring_migration.RingMigration"><code class="docutils literal notranslate"><span class="pre">RingMigration</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_migration">pygenalgo.operators.migration.random_migration module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_migration.RandomMigration"><code class="docutils literal notranslate"><span class="pre">RandomMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_graph_migration">pygenalgo.operators.migration.random_graph_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_graph_migration.RandomGraphMigration"><code class="docutils literal notranslate"><span class="pre">RandomGraphMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.star_connected_migration">pygenalgo.operators.migration.star_connected_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.star_connected_migration.StarConnectedMigration"><code class="docutils literal notranslate"><span class="pre">StarConnectedMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.fully_connected_migration">pygenalgo.operators.migration.fully_connected_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.fully_connected_migration.FullyConnectedMigration"><code class="docutils literal notranslate"><span class="pre">FullyConnectedMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.meta_migration">pygenalgo.operators.migration.meta_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.meta_migration.MetaMigration"><code class="docutils literal notranslate"><span class="pre">MetaMigration</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration">Module contents</a></li>
@@ -642,8 +654,6 @@
 </li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.clear_all">clear_all() (pygenalgo.engines.generic_ga.GenericGA method)</a>
 </li>
-      <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.clockwise_migration.ClockwiseMigration">ClockwiseMigration (class in pygenalgo.operators.migration.clockwise_migration)</a>
-</li>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.chromosome.Chromosome.clone">clone() (pygenalgo.genome.chromosome.Chromosome method)</a>
 
       <ul>
@@ -790,6 +800,8 @@
 </li>
       <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.flip_mutator.FlipMutator">FlipMutator (class in pygenalgo.operators.mutation.flip_mutator)</a>
 </li>
+      <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.fully_connected_migration.FullyConnectedMigration">FullyConnectedMigration (class in pygenalgo.operators.migration.fully_connected_migration)</a>
+</li>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.gene.Gene.func">func (pygenalgo.genome.gene.Gene property)</a>
 </li>
   </ul></td>
@@ -896,14 +908,20 @@
 </li>
       <li><a href="pygenalgo.operators.selection.html#pygenalgo.operators.selection.meta_selector.MetaSelector">MetaSelector (class in pygenalgo.operators.selection.meta_selector)</a>
 </li>
-      <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.clockwise_migration.ClockwiseMigration.migrate">migrate() (pygenalgo.operators.migration.clockwise_migration.ClockwiseMigration method)</a>
+      <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.fully_connected_migration.FullyConnectedMigration.migrate">migrate() (pygenalgo.operators.migration.fully_connected_migration.FullyConnectedMigration method)</a>
 
       <ul>
         <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.meta_migration.MetaMigration.migrate">(pygenalgo.operators.migration.meta_migration.MetaMigration method)</a>
 </li>
         <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.migration_operator.MigrationOperator.migrate">(pygenalgo.operators.migration.migration_operator.MigrationOperator method)</a>
 </li>
+        <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_graph_migration.RandomGraphMigration.migrate">(pygenalgo.operators.migration.random_graph_migration.RandomGraphMigration method)</a>
+</li>
         <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_migration.RandomMigration.migrate">(pygenalgo.operators.migration.random_migration.RandomMigration method)</a>
+</li>
+        <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.ring_migration.RingMigration.migrate">(pygenalgo.operators.migration.ring_migration.RingMigration method)</a>
+</li>
+        <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.star_connected_migration.StarConnectedMigration.migrate">(pygenalgo.operators.migration.star_connected_migration.StarConnectedMigration method)</a>
 </li>
       </ul></li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.migrate_op">migrate_op (pygenalgo.engines.island_model_ga.IslandModelGA property)</a>
@@ -972,13 +990,19 @@
 </li>
         <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration">pygenalgo.operators.migration</a>
 </li>
-        <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.clockwise_migration">pygenalgo.operators.migration.clockwise_migration</a>
+        <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.fully_connected_migration">pygenalgo.operators.migration.fully_connected_migration</a>
 </li>
         <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.meta_migration">pygenalgo.operators.migration.meta_migration</a>
 </li>
         <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.migration_operator">pygenalgo.operators.migration.migration_operator</a>
 </li>
+        <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_graph_migration">pygenalgo.operators.migration.random_graph_migration</a>
+</li>
         <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_migration">pygenalgo.operators.migration.random_migration</a>
+</li>
+        <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.ring_migration">pygenalgo.operators.migration.ring_migration</a>
+</li>
+        <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.star_connected_migration">pygenalgo.operators.migration.star_connected_migration</a>
 </li>
         <li><a href="pygenalgo.operators.mutation.html#module-pygenalgo.operators.mutation">pygenalgo.operators.mutation</a>
 </li>
@@ -1366,8 +1390,6 @@
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.simulated_binary_crossover">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pygenalgo.operators.crossover.single_point_crossover
 
@@ -1375,6 +1397,8 @@
         <li><a href="pygenalgo.operators.crossover.html#module-pygenalgo.operators.crossover.single_point_crossover">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pygenalgo.operators.crossover.uniform_crossover
 
@@ -1397,10 +1421,10 @@
 </li>
       </ul></li>
       <li>
-    pygenalgo.operators.migration.clockwise_migration
+    pygenalgo.operators.migration.fully_connected_migration
 
       <ul>
-        <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.clockwise_migration">module</a>
+        <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.fully_connected_migration">module</a>
 </li>
       </ul></li>
       <li>
@@ -1418,10 +1442,31 @@
 </li>
       </ul></li>
       <li>
+    pygenalgo.operators.migration.random_graph_migration
+
+      <ul>
+        <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_graph_migration">module</a>
+</li>
+      </ul></li>
+      <li>
     pygenalgo.operators.migration.random_migration
 
       <ul>
         <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_migration">module</a>
+</li>
+      </ul></li>
+      <li>
+    pygenalgo.operators.migration.ring_migration
+
+      <ul>
+        <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.ring_migration">module</a>
+</li>
+      </ul></li>
+      <li>
+    pygenalgo.operators.migration.star_connected_migration
+
+      <ul>
+        <li><a href="pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.star_connected_migration">module</a>
 </li>
       </ul></li>
       <li>
@@ -1635,6 +1680,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.genome.html#pygenalgo.genome.gene.Gene.random">random() (pygenalgo.genome.gene.Gene method)</a>
 </li>
+      <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_graph_migration.RandomGraphMigration">RandomGraphMigration (class in pygenalgo.operators.migration.random_graph_migration)</a>
+</li>
       <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_migration.RandomMigration">RandomMigration (class in pygenalgo.operators.migration.random_migration)</a>
 </li>
       <li><a href="pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.random_mutator.RandomMutator">RandomMutator (class in pygenalgo.operators.mutation.random_mutator)</a>
@@ -1664,6 +1711,8 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.island_manager.IslandManager.reset_island_counters">reset_island_counters() (pygenalgo.engines.island_manager.IslandManager method)</a>
+</li>
+      <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.ring_migration.RingMigration">RingMigration (class in pygenalgo.operators.migration.ring_migration)</a>
 </li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.rng">rng (pygenalgo.engines.generic_ga.GenericGA property)</a>
 
@@ -1764,6 +1813,8 @@
       <li><a href="pygenalgo.operators.crossover.html#pygenalgo.operators.crossover.single_point_crossover.SinglePointCrossover">SinglePointCrossover (class in pygenalgo.operators.crossover.single_point_crossover)</a>
 </li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.standard_ga.StandardGA">StandardGA (class in pygenalgo.engines.standard_ga)</a>
+</li>
+      <li><a href="pygenalgo.operators.migration.html#pygenalgo.operators.migration.star_connected_migration.StarConnectedMigration">StarConnectedMigration (class in pygenalgo.operators.migration.star_connected_migration)</a>
 </li>
       <li><a href="pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.stats">stats (pygenalgo.engines.generic_ga.GenericGA property)</a>
 </li>

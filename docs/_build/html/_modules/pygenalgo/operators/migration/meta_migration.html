@@ -283,20 +283,32 @@
 </li>
 <li class="toctree-l6"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html">Migration Operators</a><ul>
 <li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#submodules">Submodules</a></li>
-<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.clockwise_migration">pygenalgo.operators.migration.clockwise_migration module</a><ul>
-<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.clockwise_migration.ClockwiseMigration"><code class="docutils literal notranslate"><span class="pre">ClockwiseMigration</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.meta_migration">pygenalgo.operators.migration.meta_migration module</a><ul>
-<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.meta_migration.MetaMigration"><code class="docutils literal notranslate"><span class="pre">MetaMigration</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.migration_operator">pygenalgo.operators.migration.migration_operator module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.migration_operator.MigrationOperator"><code class="docutils literal notranslate"><span class="pre">MigrationOperator</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.ring_migration">pygenalgo.operators.migration.ring_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.ring_migration.RingMigration"><code class="docutils literal notranslate"><span class="pre">RingMigration</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_migration">pygenalgo.operators.migration.random_migration module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_migration.RandomMigration"><code class="docutils literal notranslate"><span class="pre">RandomMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.random_graph_migration">pygenalgo.operators.migration.random_graph_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.random_graph_migration.RandomGraphMigration"><code class="docutils literal notranslate"><span class="pre">RandomGraphMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.star_connected_migration">pygenalgo.operators.migration.star_connected_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.star_connected_migration.StarConnectedMigration"><code class="docutils literal notranslate"><span class="pre">StarConnectedMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.fully_connected_migration">pygenalgo.operators.migration.fully_connected_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.fully_connected_migration.FullyConnectedMigration"><code class="docutils literal notranslate"><span class="pre">FullyConnectedMigration</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration.meta_migration">pygenalgo.operators.migration.meta_migration module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#pygenalgo.operators.migration.meta_migration.MetaMigration"><code class="docutils literal notranslate"><span class="pre">MetaMigration</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.operators.migration.html#module-pygenalgo.operators.migration">Module contents</a></li>
@@ -554,9 +566,12 @@
 <span></span><span class="sd">&quot;&quot;&quot; Meta-migrator module. &quot;&quot;&quot;</span>
 <span class="c1"># Custom code imports.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.utils.auxiliary</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubPopulation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.migration.ring_migration</span><span class="w"> </span><span class="kn">import</span> <span class="n">RingMigration</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.migration.random_migration</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomMigration</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.migration.migration_operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MigrationOperator</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.migration.clockwise_migration</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClockwiseMigration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.migration.random_graph_migration</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomGraphMigration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.migration.star_connected_migration</span><span class="w"> </span><span class="kn">import</span> <span class="n">StarConnectedMigration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygenalgo.operators.migration.fully_connected_migration</span><span class="w"> </span><span class="kn">import</span> <span class="n">FullyConnectedMigration</span>
 
 
 <div class="viewcode-block" id="MetaMigration">
@@ -565,8 +580,9 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        Meta-migrator, performs the migration between the subpopulations by applying</span>
-<span class="sd">        randomly all other migrators (one at a time), with equal probability.</span>
+<span class="sd">        Meta-migrator, performs the migration between the subpopulations</span>
+<span class="sd">        by applying randomly all other migrators, one at a time, with equal</span>
+<span class="sd">        probability.</span>
 
 <span class="sd">        NOTE: In the future the equal probabilities can be amended.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -583,7 +599,9 @@
         <span class="c1"># NOTE: In here the migration probabilities</span>
         <span class="c1"># for each policy are set to 1.0 (i.e. 100%).</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">MigrationOperator</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">RandomMigration</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">ClockwiseMigration</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+            <span class="n">RandomMigration</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">StarConnectedMigration</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+            <span class="n">RingMigration</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">FullyConnectedMigration</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+            <span class="n">RandomGraphMigration</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
         <span class="p">)</span>
     <span class="c1"># _end_def_</span>
 
