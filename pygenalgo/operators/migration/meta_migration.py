@@ -10,8 +10,9 @@ class MetaMigration(MigrationOperator):
     """
     Description:
 
-        Meta-migrator, performs the migration between the subpopulations by applying
-        randomly all other migrators (one at a time), with equal probability.
+        Meta-migrator, performs the migration between the subpopulations
+        by applying randomly all other migrators, one at a time, with equal
+        probability.
 
         NOTE: In the future the equal probabilities can be amended.
     """
