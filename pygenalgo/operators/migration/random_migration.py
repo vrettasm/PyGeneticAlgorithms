@@ -48,27 +48,23 @@ class RandomMigration(MigrationOperator):
             ]
 
             # Shuffle the order of the best chromosomes
-            # list to introduce some randomness.
+            # list to introduce some local randomness.
             self.rng.shuffle(best_chromosomes)
 
             # Go through all the destination islands.
-            for island, best_j in zip(islands, best_chromosomes):
-                # Extract the values of the tuple.
-                n, best_c = best_j
-
+            for island, (source_id, best_chromosome) in zip(islands,
+                                                            best_chromosomes):
                 # Prevents self migration.
-                if island.id == n:
+                if island.id == source_id:
                     continue
 
-                # Get the population size of the island.
-                pop_size: int = len(island.population)
-
-                # Select randomly one individual chromosome.
-                idx: int = self.rng.integers(pop_size, dtype=int)
+                # Select randomly one individual chromosome location.
+                idx: int = self.rng.integers(len(island.population),
+                                             dtype=int)
 
                 # Replace the randomly selected chromosome with
                 # the pre-selected best one from the list above.
-                island.population[idx] = best_c
+                island.population[idx] = best_chromosome
             # _end_for_
 
             # Increase the migration counter.
