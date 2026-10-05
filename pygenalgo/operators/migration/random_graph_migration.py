@@ -75,7 +75,7 @@ class RandomGraphMigration(MigrationOperator):
                         pop_k: int = len(islands[k].population)
 
                         # Select randomly one individual chromosome.
-                        idx: int = self.rng.integers(pop_k, dtype=int)
+                        idx: int = self.rng.integers(pop_k, dtype=np.int8)
 
                         # Replace the randomly selected chromosome with
                         # the pre-selected best one from the list above.
