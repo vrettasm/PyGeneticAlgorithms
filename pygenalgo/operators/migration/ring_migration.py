@@ -2,6 +2,9 @@
 from typing import Callable
 from operator import attrgetter
 
+# Third party code imports.
+import numpy as np
+
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.auxiliary import SubPopulation
@@ -55,7 +58,7 @@ class RingMigration(MigrationOperator):
                 pop_size: int = len(island_i.population)
 
                 # Select randomly one individual chromosome.
-                idx: int = self.rng.integers(pop_size, dtype=int)
+                idx: int = self.rng.integers(pop_size, dtype=np.int8)
 
                 # Replace the chromosome with the best one from its left.
                 island_i.population[idx] = best_chromosomes[i-1].clone()
