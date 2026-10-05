@@ -88,7 +88,7 @@ class HypercubeMigration(MigrationOperator):
 
             # Validate the number of islands and obtain
             # the hypercube dimension.
-            dimension: int = n_islands.bit_length() - 1
+            dimension: int = n_active.bit_length() - 1
 
             # Define the key.
             key_sort: Callable = attrgetter("fitness")
