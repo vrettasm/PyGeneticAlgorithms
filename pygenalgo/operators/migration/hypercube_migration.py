@@ -6,6 +6,7 @@ from operator import attrgetter
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.auxiliary import SubPopulation
+from pygenalgo.operators.migration.ring_migration import RingMigration
 from pygenalgo.operators.migration.migration_operator import MigrationOperator
 
 
@@ -30,6 +31,10 @@ class HypercubeMigration(MigrationOperator):
         :param migration_probability: (float) in [0, 1].
         """
         super().__init__(migration_probability=migration_probability)
+
+        # Create an auxiliary ring migration operator with 100% probability.
+        # It is important because it will act as a safety fallback operator.
+        self._items: MigrationOperator = RingMigration(1.0)
     # _end_def_
 
     @staticmethod
@@ -44,12 +49,6 @@ class HypercubeMigration(MigrationOperator):
 
         :return: The hypercube dimension.
         """
-        # Sanity check.
-        if n_islands < 1 or (n_islands & (n_islands - 1)) != 0:
-            raise ValueError("Hypercube migration requires a "
-                             "power-of-two number of islands,"
-                             "such as 2, 4, 8, or 16.")
-
         return n_islands.bit_length() - 1
     # _end_def_
 
@@ -71,6 +70,21 @@ class HypercubeMigration(MigrationOperator):
         # Perform the migration with a specified probability
         # and only if we have more than 1 active populations.
         if self.is_operator_applicable() and n_active > 1:
+
+            # Check if n_active is a power of 2.
+            if (n_active & (n_active - 1)) != 0:
+                # Local copy of the safety operator.
+                ring_operator = self._items
+
+                # Call its fallback migration policy.
+                ring_operator.migrate(islands)
+
+                # Increase the self migration counter.
+                self.inc_counter()
+
+                # Exit the call.
+                return
+            # _end_if_
 
             # Validate the number of islands and obtain
             # the hypercube dimension.
