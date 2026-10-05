@@ -52,7 +52,7 @@ class RandomMigration(MigrationOperator):
 
             # Go through all the islands.
             for island_i, best_j in zip(islands, best_chromosomes):
-                # Extract the values of the tiple.
+                # Extract the values of the tuple.
                 n, best_c = best_j
 
                 # Prevents self migration.
