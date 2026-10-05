@@ -34,14 +34,12 @@ close the parallel pool). So the default setting here is "parallel=False". Regar
 in parallel mode by definition.
 
   > **NEWS**:
-  > The latest release includes three additional selection operators: (i) ExponentialRank, (ii) ParetoFrontSelector and
-  > (iii) ParetoTournamentSelector. The last two are used exclusively with the 'MultiObjectiveGA' engine using pareto-
-  > front selection techniques. Note that both of these classes provide a base for the development of possible new
-  > selection methodologies for multi-objective problems. Examples that use the new techniques have also been added to
-  > demonstrate their use. In addition, the IslandModelGA engine has been enhanced and with three new three 'IslandOperators'.
-  > This new approach allows the use a different set of genetic operators for each island  (i.e. subpopulation), thus
-  > allowing them to evolve in completely different ways. Finally, the HalfUniformCrossover (HUX), PrefixOrderCrossover
-  > (POX) and WholeArithmeticCrossover (WAX) have also been added, to provide alternative recombination options.
+  > The latest release includes three additional migration operators:
+  > 1. Random-graph,
+  > 2. Star-connected,
+  > 3. Fully-connected.
+  > 
+  > In addition, the MetaMigrator has been update with all the new policies.
   >
 
 The current implementation provides (out of the box) a wide variety of genetic operators, including:
@@ -83,8 +81,11 @@ The current implementation provides (out of the box) a wide variety of genetic o
   - [Polynomial Mutator](pygenalgo/operators/mutation/polynomial_mutator.py)
 
 - **Migration operators**
-  - [Clockwise Migrator](pygenalgo/operators/migration/ring_migration.py)
+  - [Ring Migrator](pygenalgo/operators/migration/ring_migration.py)
   - [Random Migrator](pygenalgo/operators/migration/random_migration.py)
+  - [Random Graph Migrator](pygenalgo/operators/migration/random_graph_migration.py)
+  - [Star Connected Migrator](pygenalgo/operators/migration/star_connected_migration.py)
+  - [Fully Connected Migrator](pygenalgo/operators/migration/fully_connected_migration.py)
 
 - **Meta operators**
   - [Meta Selector](pygenalgo/operators/selection/meta_selector.py)
