@@ -17,6 +17,9 @@ class HypercubeMigration(MigrationOperator):
     from 0 to N - 1. Two islands are neighbors when their IDs differ
     in exactly one binary bit.
 
+    If the number of active islands is not a power of two, migration
+    falls back to ring migration to preserve gene flow among islands.
+
     Example with 8 islands:
 
         Island 2: 010
