@@ -1,0 +1,121 @@
+""" Hypercube migration module. """
+from typing import Callable
+from functools import cache
+from operator import attrgetter
+
+# Custom code imports.
+from pygenalgo.genome.chromosome import Chromosome
+from pygenalgo.utils.auxiliary import SubPopulation
+from pygenalgo.operators.migration.migration_operator import MigrationOperator
+
+
+class HypercubeMigration(MigrationOperator):
+    """
+    Hypercube island migration.
+
+    For N = pow(2, d) islands, each island is assigned an integer ID
+    from 0 to N - 1. Two islands are neighbors when their IDs differ
+    in exactly one binary bit.
+
+    Example with 8 islands:
+
+        Island 2: 010
+        Neighbors: 011, 000, 110
+    """
+
+    def __init__(self, migration_probability: float = 0.95) -> None:
+        """
+        Construct a HypercubeMigration object.
+
+        :param migration_probability: (float) in [0, 1].
+        """
+        super().__init__(migration_probability=migration_probability)
+    # _end_def_
+
+    @staticmethod
+    @cache
+    def _get_dimension(n_islands: int) -> int:
+        """
+        Return the hypercube dimension for a given number of islands.
+
+        A d-dimensional hypercube requires exactly pow(2, d) islands.
+        """
+        # Sanity check.
+        if n_islands < 1 or (n_islands & (n_islands - 1)) != 0:
+            raise ValueError("Hypercube migration requires a "
+                             "power-of-two number of islands,"
+                             "such as 2, 4, 8, or 16.")
+
+        return n_islands.bit_length() - 1
+    # _end_def_
+
+    def migrate(self, islands: list[SubPopulation]) -> None:
+        """
+        Perform hypercube migration.
+
+        Each island sends its best chromosome to every hypercube neighbor.
+        The receiving island replaces one randomly selected chromosome for
+        each incoming migrant.
+
+        :param islands: list[SubPopulation].
+
+        :return: None.
+        """
+        # Get the size of active islands.
+        n_active: int = len(islands)
+
+        # Perform the migration with a specified probability
+        # and only if we have more than 1 active populations.
+        if self.is_operator_applicable() and n_active > 1:
+
+            # Validate the number of islands and obtain
+            # the hypercube dimension.
+            dimension: int = self._get_dimension(n_active)
+
+            # Define the key.
+            key_sort: Callable = attrgetter("fitness")
+
+            # Snapshot the best chromosome from every island before any
+            # migration occurs. This prevents migrations in the current
+            # round from affecting later source selections.
+            best_chromosomes: list[tuple[int, Chromosome]] = [
+                (n, max(island.population, key=key_sort).clone())
+                for n, island in enumerate(islands)
+            ]
+
+            # Each dimension corresponds to one bit position.
+            # Flipping that bit identifies one hypercube neighbor.
+            #
+            # For island i:
+            #
+            #     neighbor = i XOR (1 << bit)
+            #
+            # Example:
+            #
+            #     i = 2       -> binary 010
+            #     bit = 0     -> 010 XOR 001 = 011 -> island 3
+            #     bit = 1     -> 010 XOR 010 = 000 -> island 0
+            #     bit = 2     -> 010 XOR 100 = 110 -> island 6
+            for source_id, best_chromosome in best_chromosomes:
+                # Find the destination islands for each source.
+                for bit in range(dimension):
+                    # Compute the destination index.
+                    dest_k: int = source_id ^ (1 << bit)
+
+                    # Local copy of the destination population.
+                    dest_population = islands[dest_k].population
+
+                    # Select a random individual in the destination island.
+                    idx: int = self.rng.integers(len(dest_population),
+                                                 dtype=int)
+
+                    # Insert a clone so that islands do not share
+                    # the same mutable chromosome object.
+                    dest_population[idx] = best_chromosome.clone()
+            # _end_for_
+
+            # Increase the migration counter.
+            self.inc_counter()
+    # _end_def_
+
+# _end_class_
