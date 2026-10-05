@@ -68,7 +68,7 @@ class RandomMigration(MigrationOperator):
 
                 # Replace the randomly selected chromosome with
                 # the pre-selected best one from the list above.
-                island.population[idx] = best_c.clone()
+                island.population[idx] = best_c
             # _end_for_
 
             # Increase the migration counter.
