@@ -34,10 +34,11 @@ close the parallel pool). So the default setting here is "parallel=False". Regar
 in parallel mode by definition.
 
   > **NEWS**:
-  > The latest release includes three additional migration operators:
+  > The latest release includes four additional migration operators:
   > 1. Random-graph,
   > 2. Star-connected,
   > 3. Fully-connected.
+  > 4. Hypercube.
   > 
   > In addition, the MetaMigrator has been update with all the new policies.
   >
@@ -83,6 +84,7 @@ The current implementation provides (out of the box) a wide variety of genetic o
 - **Migration operators**
   - [Ring Migrator](pygenalgo/operators/migration/ring_migration.py)
   - [Random Migrator](pygenalgo/operators/migration/random_migration.py)
+  - [Hypercube Migrator](pygenalgo/operators/migration/hypercube_migration.py)
   - [Random Graph Migrator](pygenalgo/operators/migration/random_graph_migration.py)
   - [Star Connected Migrator](pygenalgo/operators/migration/star_connected_migration.py)
   - [Fully Connected Migrator](pygenalgo/operators/migration/fully_connected_migration.py)
