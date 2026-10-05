@@ -1,6 +1,5 @@
 """ Hypercube migration module. """
 from typing import Callable
-from functools import cache
 from operator import attrgetter
 
 # Custom code imports.
