@@ -57,7 +57,7 @@ class HypercubeMigration(MigrationOperator):
             # Check if n_active is not a power of 2.
             if (n_active & (n_active - 1)) != 0:
                 # Local copy of the safety operator.
-                ring_operator = self._items
+                fallback_operator = self._items
 
                 # Call its fallback migration policy.
                 ring_operator.migrate(islands)
