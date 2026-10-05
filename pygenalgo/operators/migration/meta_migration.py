@@ -9,7 +9,6 @@ from pygenalgo.operators.migration.star_connected_migration import StarConnected
 from pygenalgo.operators.migration.fully_connected_migration import FullyConnectedMigration
 
 
-
 class MetaMigration(MigrationOperator):
     """
     Description:
