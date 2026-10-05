@@ -28,6 +28,14 @@ pygenalgo.operators.migration.random\_migration module
    :undoc-members:
    :show-inheritance:
 
+pygenalgo.operators.migration.hypercube\_migration module
+---------------------------------------------------------
+
+.. automodule:: pygenalgo.operators.migration.hypercube_migration
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pygenalgo.operators.migration.random\_graph\_migration module
 -------------------------------------------------------------
 
