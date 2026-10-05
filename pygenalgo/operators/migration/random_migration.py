@@ -43,7 +43,7 @@ class RandomMigration(MigrationOperator):
             # First find the best individual chromosome
             # FROM EACH island.
             best_chromosomes: list[tuple[int, Chromosome]] = [
-                (island.id, max(island.population, key=key_sort))
+                (island.id, max(island.population, key=key_sort).clone())
                 for island in islands
             ]
 
