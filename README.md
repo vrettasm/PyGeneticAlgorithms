@@ -10,7 +10,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/pygenalgo.svg)](https://pypi.org/project/pygenalgo/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/pygenalgo.svg)](https://pypi.org/project/pygenalgo/)
 
-**Pylint score: 9.85 / 10**
+**Pylint score: 9.86 / 10**
 
 This repository implements a genetic algorithm toolbox in Python3 programming language, using only *Numpy* and *Joblib*
 as additional libraries. The toolbox offers the following implementations (as engines):
