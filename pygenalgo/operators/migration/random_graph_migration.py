@@ -53,8 +53,8 @@ class RandomGraphMigration(MigrationOperator):
             # First find the best individual chromosome
             # FROM EACH island.
             best_chromosomes: list[tuple[int, Chromosome]] = [
-                (n, max(island_i.population, key=key_sort))
-                for n, island_i in enumerate(islands)
+                (n, max(island.population, key=key_sort))
+                for n, island in enumerate(islands)
             ]
 
             # Generate a random matrix of True and False.
