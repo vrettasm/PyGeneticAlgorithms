@@ -3,6 +3,7 @@ from typing import Callable
 from operator import attrgetter
 
 # Third party imports.
+import numpy as np
 from numpy.typing import NDArray
 
 # Custom code imports.
