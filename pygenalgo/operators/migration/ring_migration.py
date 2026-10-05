@@ -35,9 +35,9 @@ class RingMigration(MigrationOperator):
 
         :return: None.
         """
-        # Perform the migration only if we have more than one
-        # active populations.
-        if len(islands) > 1:
+        # Perform the migration with a specified probability
+        # and only if we have more than 1 active populations.
+        if self.is_operator_applicable() and len(islands) > 1:
             # Define the key.
             key_sort: Callable = attrgetter("fitness")
 
@@ -48,20 +48,17 @@ class RingMigration(MigrationOperator):
                 for island_i in islands
             ]
 
-            # Go through all the islands.
+            # Go through all the destination islands.
             for i, island_i in enumerate(islands):
 
-                # Perform the migration.
-                if self.is_operator_applicable():
+                # Get the population size of the island.
+                pop_size: int = len(island_i.population)
 
-                    # Get the population size of the island.
-                    pop_size: int = len(island_i.population)
+                # Select randomly one individual chromosome.
+                idx: int = self.rng.integers(pop_size, dtype=int)
 
-                    # Select randomly one individual chromosome.
-                    idx: int = self.rng.integers(pop_size, dtype=int)
-
-                    # Replace the chromosome with the best one from its left.
-                    island_i.population[idx] = best_chromosomes[i-1].clone()
+                # Replace the chromosome with the best one from its left.
+                island_i.population[idx] = best_chromosomes[i-1].clone()
             # _end_for_
 
             # Increase the migration counter.
