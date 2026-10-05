@@ -4,6 +4,9 @@ from pygenalgo.utils.auxiliary import SubPopulation
 from pygenalgo.operators.migration.ring_migration import RingMigration
 from pygenalgo.operators.migration.random_migration import RandomMigration
 from pygenalgo.operators.migration.migration_operator import MigrationOperator
+from pygenalgo.operators.migration.random_graph_migration import RandomGraphMigration
+from pygenalgo.operators.migration.fully_connected_migration import FullyConnectedMigration
+
 
 
 class MetaMigration(MigrationOperator):
@@ -29,7 +32,8 @@ class MetaMigration(MigrationOperator):
         # NOTE: In here the migration probabilities
         # for each policy are set to 1.0 (i.e. 100%).
         self._items: tuple[MigrationOperator, ...] = (
-            RandomMigration(1.0), RingMigration(1.0)
+            RingMigration(1.0), FullyConnectedMigration(1.0),
+            RandomMigration(1.0), RandomGraphMigration(1.0)
         )
     # _end_def_
 
