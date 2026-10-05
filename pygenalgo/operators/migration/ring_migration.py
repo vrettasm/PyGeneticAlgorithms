@@ -1,4 +1,4 @@
-""" Clockwise migration module. """
+""" Ring migration module. """
 from typing import Callable
 from operator import attrgetter
 
@@ -8,13 +8,13 @@ from pygenalgo.utils.auxiliary import SubPopulation
 from pygenalgo.operators.migration.migration_operator import MigrationOperator
 
 
-class ClockwiseMigration(MigrationOperator):
+class RingMigration(MigrationOperator):
     """
     Description:
 
-        Clockwise Migration implements a "very basic" migration policy in which
-        each island migrates its best chromosome to the population on its right,
-        following a "clockwise" rotation movement.
+        Ring Migration implements a "very basic" migration policy in which
+        each island migrates its best chromosome to the population on its
+        right, following a "clockwise" (ring) rotation movement.
     """
 
     def __init__(self, migration_probability: float = 0.95) -> None:

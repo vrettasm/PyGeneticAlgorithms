@@ -4,7 +4,7 @@ from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
 
 from pygenalgo.utils.auxiliary import SubPopulation
-from pygenalgo.operators.migration.ring_migration import ClockwiseMigration
+from pygenalgo.operators.migration.ring_migration import RingMigration
 
 
 class TestClockwiseMigration(unittest.TestCase):
@@ -27,7 +27,7 @@ class TestClockwiseMigration(unittest.TestCase):
         :return: None.
         """
         # Create an object with a migration probability of 1.0.
-        self.mig_op = ClockwiseMigration(migration_probability=1.0)
+        self.mig_op = RingMigration(migration_probability=1.0)
     # _end_def_
 
     def test_migrate(self):
