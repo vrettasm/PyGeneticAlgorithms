@@ -3,7 +3,6 @@ from typing import Callable
 from operator import attrgetter
 
 # Third party imports.
-import numpy as np
 from numpy.typing import NDArray
 
 # Custom code imports.
@@ -75,7 +74,7 @@ class RandomGraphMigration(MigrationOperator):
                         pop_k: int = len(islands[k].population)
 
                         # Select randomly one individual chromosome.
-                        idx: int = self.rng.integers(pop_k, dtype=np.int8)
+                        idx: int = self.rng.integers(pop_k, dtype=int)
 
                         # Replace the randomly selected chromosome with
                         # the pre-selected best one from the list above.

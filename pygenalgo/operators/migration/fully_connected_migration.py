@@ -2,9 +2,6 @@
 from typing import Callable
 from operator import attrgetter
 
-# Third party imports.
-import numpy as np
-
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.auxiliary import SubPopulation
@@ -72,7 +69,7 @@ class FullyConnectedMigration(MigrationOperator):
                     pop_size: int = len(island.population)
 
                     # Select randomly one individual chromosome.
-                    idx: int = self.rng.integers(pop_size, dtype=np.int8)
+                    idx: int = self.rng.integers(pop_size, dtype=int)
 
                     # Replace the randomly selected chromosome with
                     # the pre-selected best one from the list above.

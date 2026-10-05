@@ -2,9 +2,6 @@
 from typing import Callable
 from operator import attrgetter
 
-# Third party code imports.
-import numpy as np
-
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.auxiliary import SubPopulation
@@ -38,9 +35,12 @@ class RingMigration(MigrationOperator):
 
         :return: None.
         """
+        # Get the size of active islands.
+        n_active: int = len(islands)
+
         # Perform the migration with a specified probability
         # and only if we have more than 1 active populations.
-        if self.is_operator_applicable() and len(islands) > 1:
+        if self.is_operator_applicable() and n_active > 1:
             # Define the key.
             key_sort: Callable = attrgetter("fitness")
 
@@ -58,10 +58,13 @@ class RingMigration(MigrationOperator):
                 pop_size: int = len(island.population)
 
                 # Select randomly one individual chromosome.
-                idx: int = self.rng.integers(pop_size, dtype=np.int8)
+                idx: int = self.rng.integers(pop_size, dtype=int)
+
+                # Compute the source island.
+                source_idx: int = (i - 1) % n_active
 
                 # Replace the chromosome with the best one from its left.
-                island.population[idx] = best_chromosomes[i-1].clone()
+                island.population[idx] = best_chromosomes[source_idx].clone()
             # _end_for_
 
             # Increase the migration counter.
