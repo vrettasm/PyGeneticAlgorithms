@@ -73,11 +73,9 @@ class RandomGraphMigration(MigrationOperator):
                     # Check if the link is available.
                     if is_available:
 
-                        # Get the population size of the destination island.
-                        pop_k: int = len(islands[k].population)
-
-                        # Select randomly one individual chromosome.
-                        idx: int = self.rng.integers(pop_k, dtype=int)
+                        # Select the individual with the lowest (worst)
+                        # fitness to be replaced.
+                        idx: int = self.find_worst_index(islands[k].population)
 
                         # Replace the randomly selected chromosome with
                         # the pre-selected best one from the list above.
