@@ -142,8 +142,8 @@ class SelectionOperator(GeneticOperator):
         return self.select(*args, **kwargs)
     # _end_def_
 
-    def safety_option(self, population: list[Chromosome],
-                      pop_size: int | None = None) -> list[Chromosome]:
+    def _safety_option(self, population: list[Chromosome],
+                       pop_size: int | None = None) -> list[Chromosome]:
         """
         Select randomly the individuals, from the input population,
         that will be passed on to the variation step (crossover and

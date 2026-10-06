@@ -74,7 +74,7 @@ class BoltzmannSelector(SelectionOperator):
         # individual has equal chance.
         if isclose(sum_fitness, 0.0, abs_tol=1e-12):
             # Return a new random list of parents.
-            return self.safety_option(population)
+            return self._safety_option(population)
         # _end_if_
 
         # Calculate the selection probabilities of each member

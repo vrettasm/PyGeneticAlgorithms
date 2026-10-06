@@ -43,7 +43,7 @@ class RandomSelector(SelectionOperator):
         :return: the selected parents population (as list of chromosomes).
         """
         # Return a new random list of parents.
-        return self.safety_option(population)
+        return self._safety_option(population)
     # _end_def_
 
 # _end_class_
