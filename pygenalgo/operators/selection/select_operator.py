@@ -143,7 +143,7 @@ class SelectionOperator(GeneticOperator):
     # _end_def_
 
     def safety_option(self, population: list[Chromosome],
-                      pop_size: int) -> list[Chromosome]:
+                      pop_size: int | None = None) -> list[Chromosome]:
         """
         Select randomly the individuals, from the input population,
         that will be passed on to the variation step (crossover and
@@ -156,10 +156,17 @@ class SelectionOperator(GeneticOperator):
         is no usage of the fitness values.
 
         :param population: a list of chromosomes to select the parents.
-        :param pop_size: (int) the population size to select.
+        :param pop_size: (int) the population size to select. Defaults
+                         is set to None. This means the whole population
+                         size is returned.
 
         :return: the selected list of chromosomes.
         """
+        # Check if pop_size is not provided.
+        if pop_size is None:
+            pop_size = len(population)
+        # _end_def_
+
         # Select all individual indices with equal probability.
         random_index = self.rng.choice(pop_size, size=pop_size,
                                        replace=True, shuffle=False)
