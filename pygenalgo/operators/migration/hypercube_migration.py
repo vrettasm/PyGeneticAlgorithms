@@ -108,9 +108,9 @@ class HypercubeMigration(MigrationOperator):
                     # Local copy of the destination population.
                     dest_population = islands[dest_k].population
 
-                    # Select a random individual in the destination island.
-                    idx: int = self.rng.integers(len(dest_population),
-                                                 dtype=int)
+                    # Select the individual with the lowest (worst)
+                    # fitness to be replaced.
+                    idx: int = self.find_worst_index(dest_population)
 
                     # Insert a clone so that islands do not share
                     # the same mutable chromosome object.
