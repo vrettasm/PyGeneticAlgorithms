@@ -609,18 +609,14 @@
         <span class="c1"># If the mutation probability is higher than</span>
         <span class="c1"># a uniformly random value, make the changes.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
-
             <span class="c1"># Select two random (distinct) values.</span>
             <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">two_indices_fast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">))</span>
 
             <span class="c1"># Swap in place between the two positions.</span>
             <span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">individual</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">individual</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">individual</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
-            <span class="c1"># Set the fitness to None.</span>
-            <span class="n">individual</span><span class="o">.</span><span class="n">invalidate_fitness</span><span class="p">()</span>
-
-            <span class="c1"># Increase the mutator counter.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span></div>
+            <span class="c1"># Finalize the mutation.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_finalize_mutation</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span></div>
 </div>
 
     <span class="c1"># _end_def_</span>

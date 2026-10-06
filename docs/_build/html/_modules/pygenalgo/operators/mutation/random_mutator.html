@@ -610,7 +610,6 @@
         <span class="c1"># If the mutation probability is higher than</span>
         <span class="c1"># a uniformly random value, make the changes.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
-
             <span class="c1"># Get the size of the chromosome.</span>
             <span class="n">n_genes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
 
@@ -620,11 +619,8 @@
             <span class="c1"># Replace the old gene with a random one.</span>
             <span class="n">individual</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
 
-            <span class="c1"># Set the fitness to None.</span>
-            <span class="n">individual</span><span class="o">.</span><span class="n">invalidate_fitness</span><span class="p">()</span>
-
-            <span class="c1"># Increase the mutator counter.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span></div>
+            <span class="c1"># Finalize the mutation.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_finalize_mutation</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span></div>
 </div>
 
     <span class="c1"># _end_def_</span>

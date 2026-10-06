@@ -631,9 +631,8 @@
         <span class="c1"># fall back to uniform random selection so every</span>
         <span class="c1"># individual has equal chance.</span>
         <span class="k">if</span> <span class="n">isclose</span><span class="p">(</span><span class="n">sum_fitness</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">):</span>
-            <span class="c1"># Return the new parents.</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety_option</span><span class="p">(</span><span class="n">population</span><span class="p">,</span>
-                                      <span class="n">pop_size</span><span class="p">)</span>
+            <span class="c1"># Return a new random list of parents.</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">safety_option</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Distance between pointers.</span>

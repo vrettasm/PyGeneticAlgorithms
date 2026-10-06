@@ -611,6 +611,23 @@
 
     <span class="c1"># _end_def_</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_finalize_mutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finalize the mutation operation by invalidating the</span>
+<span class="sd">        fitness of individual chromosome and increasing the</span>
+<span class="sd">        operations counter of the mutator.</span>
+
+<span class="sd">        :param individual: the chromosome to be mutated.</span>
+
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Set the fitness to None.</span>
+        <span class="n">individual</span><span class="o">.</span><span class="n">invalidate_fitness</span><span class="p">()</span>
+
+        <span class="c1"># Increase the mutator counter.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span>
+    <span class="c1"># _end_def_</span>
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is only a wrapper of the &quot;mutate&quot; method.</span>

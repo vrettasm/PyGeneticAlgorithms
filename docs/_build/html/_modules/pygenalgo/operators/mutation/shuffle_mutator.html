@@ -599,8 +599,8 @@
 <a class="viewcode-back" href="../../../../pygenalgo.operators.mutation.html#pygenalgo.operators.mutation.shuffle_mutator.ShuffleMutator.mutate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="n">Chromosome</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Perform the mutation operation by shuffling the genes</span>
-<span class="sd">        between at two random positions.</span>
+<span class="sd">        Perform the mutation operation by shuffling</span>
+<span class="sd">        the genes between at two random positions.</span>
 
 <span class="sd">        :param individual: (Chromosome).</span>
 
@@ -609,7 +609,6 @@
         <span class="c1"># If the mutation probability is higher than</span>
         <span class="c1"># a uniformly random value, make the changes.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">():</span>
-
             <span class="c1"># Get the size of the chromosome.</span>
             <span class="n">n_genes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
 
@@ -626,11 +625,8 @@
             <span class="c1"># Put back the shuffled items.</span>
             <span class="n">individual</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">sliced_chromosome</span>
 
-            <span class="c1"># Set the fitness to None.</span>
-            <span class="n">individual</span><span class="o">.</span><span class="n">invalidate_fitness</span><span class="p">()</span>
-
-            <span class="c1"># Increase the mutator counter.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inc_counter</span><span class="p">()</span></div>
+            <span class="c1"># Finalize the mutation.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_finalize_mutation</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span></div>
 </div>
 
     <span class="c1"># _end_def_</span>
