@@ -53,11 +53,9 @@ class StarConnectedMigration(MigrationOperator):
                 if n == hub_k:
                     continue
 
-                # Get the population size of the destination island.
-                pop_size: int = len(island.population)
-
-                # Select randomly one individual chromosome.
-                idx: int = self.rng.integers(pop_size, dtype=int)
+                # Select the individual with the lowest (worst)
+                # fitness to be replaced.
+                idx: int = self.find_worst_index(island.population)
 
                 # Replace the randomly selected chromosome with
                 # the pre-selected best one from the list above.
