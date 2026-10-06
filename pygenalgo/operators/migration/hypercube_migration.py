@@ -71,8 +71,7 @@ class HypercubeMigration(MigrationOperator):
                 return
             # _end_if_
 
-            # Validate the number of islands and obtain
-            # the hypercube dimension.
+            # Obtain the hypercube dimension.
             dimension: int = n_active.bit_length() - 1
 
             # Define the key.
