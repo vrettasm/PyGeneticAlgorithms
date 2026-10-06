@@ -41,11 +41,10 @@ class GaussianMutator(MutationOperator):
         # Validate the bounds.
         lower_lim, upper_lim = self.validate_bounds(lower_lim,
                                                     upper_lim)
-
-        # If sigma is scalar use the same value for all gene positions.
+        # If sigma is scalar.
         if sigma.size == 1:
+            # Use the same value for all genes.
             sigma = sigma * np.ones_like(lower_lim)
-        # _end_if_
 
         # Assign variables to the _items placeholder.
         self._items: tuple[float, ...] = (
