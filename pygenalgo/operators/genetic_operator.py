@@ -3,8 +3,8 @@ from threading import Lock
 from functools import wraps
 from typing import (Any, Callable, Optional)
 
-import numpy as np
 # Third party imports.
+import numpy as np
 from numpy import asarray
 from numpy.typing import ArrayLike, NDArray
 from numpy.random import default_rng, Generator
