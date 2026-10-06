@@ -54,17 +54,13 @@ class RingMigration(MigrationOperator):
             # Go through all the destination islands.
             for i, island in enumerate(islands):
 
-                # Get the population size of the island.
-                pop_size: int = len(island.population)
+                # Select the individual with the lowest (worst)
+                # fitness to be replaced.
+                idx: int = self.find_worst_index(island.population)
 
-                # Select randomly one individual chromosome.
-                idx: int = self.rng.integers(pop_size, dtype=int)
-
-                # Compute the source island.
-                source_idx: int = (i - 1) % n_active
-
-                # Replace the chromosome with the best one from its left.
-                island.population[idx] = best_chromosomes[source_idx]
+                # Replace the worst chromosome with the best one
+                # from its left.
+                island.population[idx] = best_chromosomes[i - 1]
             # _end_for_
 
             # Increase the migration counter.
