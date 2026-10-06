@@ -58,9 +58,8 @@ class RouletteWheelSelector(SelectionOperator):
         # fall back to uniform random selection so every
         # individual has equal chance.
         if isclose(sum_fitness, 0.0, abs_tol=1e-12):
-            # Return the new parents.
-            return self.safety_option(population,
-                                      pop_size)
+            # Return a new random list of parents.
+            return self.safety_option(population)
         # _end_if_
 
         # Calculate the "selection probability"
