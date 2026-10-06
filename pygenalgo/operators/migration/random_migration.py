@@ -50,26 +50,25 @@ class RandomMigration(MigrationOperator):
                 for island in islands
             ]
 
-            # Go through all the islands.
-            for source_idx, source_island in enumerate(islands):
+            # Compute all available indices.
+            all_indices: list[int] = list(range(n_active))
 
-                # Prevents self migration.
-                valid_destinations: list[int] = [
-                    i for i in range(n_active) if i != source_idx
-                ]
+            # Go through all the indices.
+            for source_idx in all_indices:
+                # Omit the current index without rebuilding a full list.
+                valid_destinations: list[int] = (all_indices[:source_idx] +
+                                                 all_indices[source_idx + 1:])
 
                 # Pick a random destination index.
-                dest_idx = self.rng.choice(valid_destinations)
+                dest_idx: int = self.rng.choice(valid_destinations)
 
                 # Get the island it points to.
                 dest_island = islands[dest_idx]
 
-                # Select the individual with the lowest (worst) fitness
-                # to be replaced.
+                # Select the individual with the lowest fitness.
                 idx: int = self.find_worst_index(dest_island.population)
 
-                # Replace the randomly selected chromosome with
-                # the pre-selected best one from the list above.
+                # Overwrite the worst target chromosome with the best.
                 dest_island.population[idx] = best_chromosomes[source_idx]
             # _end_for_
 
