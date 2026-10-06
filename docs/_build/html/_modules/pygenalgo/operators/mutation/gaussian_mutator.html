@@ -613,11 +613,10 @@
         <span class="c1"># Validate the bounds.</span>
         <span class="n">lower_lim</span><span class="p">,</span> <span class="n">upper_lim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_bounds</span><span class="p">(</span><span class="n">lower_lim</span><span class="p">,</span>
                                                     <span class="n">upper_lim</span><span class="p">)</span>
-
-        <span class="c1"># If sigma is scalar use the same value for all gene positions.</span>
+        <span class="c1"># If sigma is scalar.</span>
         <span class="k">if</span> <span class="n">sigma</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># Use the same value for all the genes.</span>
             <span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">lower_lim</span><span class="p">)</span>
-        <span class="c1"># _end_if_</span>
 
         <span class="c1"># Assign variables to the _items placeholder.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>

@@ -640,7 +640,7 @@
                 <span class="n">dest_island</span> <span class="o">=</span> <span class="n">islands</span><span class="p">[</span><span class="n">dest_idx</span><span class="p">]</span>
 
                 <span class="c1"># Select the individual with the lowest fitness.</span>
-                <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_worst_index</span><span class="p">(</span><span class="n">dest_island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+                <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_worst_index</span><span class="p">(</span><span class="n">dest_island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
 
                 <span class="c1"># Overwrite the worst target chromosome with the best.</span>
                 <span class="n">dest_island</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_chromosomes</span><span class="p">[</span><span class="n">source_idx</span><span class="p">]</span>
