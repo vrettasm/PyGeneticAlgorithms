@@ -48,9 +48,8 @@ class MigrationOperator(GeneticOperator):
         :return: The index (int) of the chromosome with the
                  maximum fitness.
         """
-        return max(enumerate(population),
-                   key=lambda x: x[1].fitness
-                   )[0]
+        return max(range(len(population)),
+                   key=lambda i: population[i].fitness)
     # _end_def_
 
     @staticmethod
@@ -64,9 +63,8 @@ class MigrationOperator(GeneticOperator):
         :return: The index (int) of the chromosome with the
                  lowest fitness.
         """
-        return min(enumerate(population),
-                   key=lambda x: x[1].fitness
-                   )[0]
+        return min(range(len(population)),
+                   key=lambda i: population[i].fitness)
     # _end_def_
 
     def __call__(self, *args, **kwargs) -> None:
