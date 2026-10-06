@@ -16,7 +16,7 @@ from pygenalgo.utils.auxiliary import Probability
 __all__ = ["GeneticOperator", "increase_counter"]
 
 
-def increase_counter(method):
+def increase_counter(method: Callable[..., Any]) -> Callable[..., Any]:
     """
     Decorator function that is used in the derived
     classes main operation to increase the counter
