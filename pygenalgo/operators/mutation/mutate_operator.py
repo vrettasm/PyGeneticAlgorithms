@@ -36,6 +36,23 @@ class MutationOperator(GeneticOperator):
                                   f"You should implement this method!")
     # _end_def_
 
+    def _finalize_mutation(self, individual: Chromosome) -> None:
+        """
+        Finalize the mutation operation by invalidating the
+        fitness of individual chromosome and increasing the
+        operations counter of the mutator.
+
+        :param individual: the chromosome to be mutated.
+
+        :return: None.
+        """
+        # Set the fitness to None.
+        individual.invalidate_fitness()
+
+        # Increase the mutator counter.
+        self.inc_counter()
+    # _end_def_
+
     def __call__(self, *args, **kwargs) -> None:
         """
         This is only a wrapper of the "mutate" method.
