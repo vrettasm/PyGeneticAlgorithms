@@ -1,7 +1,7 @@
 """ Genetic Operator module. """
 from threading import Lock
 from functools import wraps
-from typing import Any, Optional
+from typing import (Any, Callable, Optional)
 
 import numpy as np
 # Third party imports.
