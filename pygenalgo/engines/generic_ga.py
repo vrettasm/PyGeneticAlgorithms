@@ -521,6 +521,23 @@ class GenericGA:
         )
     # _end_def_
 
+    def worst_chromosome(self) -> Optional[Chromosome]:
+        """
+        Auxiliary method that returns the chromosome with the
+        lowest fitness value. Safeguarded with ignoring None.
+
+        :return: Return the chromosome with the lowest fitness.
+        """
+        # Define the key.
+        key_sort: Callable = attrgetter("fitness")
+
+        # Return the chromosome with the lowest fitness.
+        return min(
+            (p for p in self.population if p.fitness is not None),
+            key=key_sort, default=None
+        )
+    # _end_def_
+
     def best_n(self, n: int = 1) -> list[Chromosome]:
         """
         Auxiliary method that returns the best 'n' chromosomes
