@@ -1,5 +1,6 @@
 """ Migration operator module. """
 # Custom code imports.
+from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.auxiliary import SubPopulation
 from pygenalgo.operators.genetic_operator import GeneticOperator
 
@@ -34,6 +35,38 @@ class MigrationOperator(GeneticOperator):
         """
         raise NotImplementedError(f"{self.__class__.__name__}: "
                                   f"You should implement this method!")
+    # _end_def_
+
+    @staticmethod
+    def find_best_index(population: list[Chromosome])-> int:
+        """
+        Finds the index of the chromosome with the highest
+        fitness value within the given population.
+
+        :param population: A list of Chromosome objects to
+                           evaluate.
+        :return: The index (int) of the chromosome with the
+                 maximum fitness.
+        """
+        return max(enumerate(population),
+                   key=lambda x: x[1].fitness
+                   )[0]
+    # _end_def_
+
+    @staticmethod
+    def find_worst_index(population: list[Chromosome]) -> int:
+        """
+        Finds the index of the chromosome with the lowest
+        fitness value within the given population.
+
+        :param population: A list of Chromosome objects to
+                           evaluate.
+        :return: The index (int) of the chromosome with the
+                 lowest fitness.
+        """
+        return min(enumerate(population),
+                   key=lambda x: x[1].fitness
+                   )[0]
     # _end_def_
 
     def __call__(self, *args, **kwargs) -> None:
