@@ -73,6 +73,7 @@
 <li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.stats"><code class="docutils literal notranslate"><span class="pre">GenericGA.stats</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.update_population"><code class="docutils literal notranslate"><span class="pre">GenericGA.update_population()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.update_stats"><code class="docutils literal notranslate"><span class="pre">GenericGA.update_stats()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.GenericGA.worst_chromosome"><code class="docutils literal notranslate"><span class="pre">GenericGA.worst_chromosome()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l6"><a class="reference internal" href="../../../../pygenalgo.engines.html#pygenalgo.engines.generic_ga.RunConfig"><code class="docutils literal notranslate"><span class="pre">RunConfig</span></code></a><ul>
@@ -607,37 +608,42 @@
 
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the size of active islands.</span>
+        <span class="n">n_active</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">islands</span><span class="p">)</span>
+
         <span class="c1"># Perform the migration with a specified probability</span>
         <span class="c1"># and only if we have more than 1 active populations.</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">islands</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_operator_applicable</span><span class="p">()</span> <span class="ow">and</span> <span class="n">n_active</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="c1"># Define the key.</span>
             <span class="n">key_sort</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;fitness&quot;</span><span class="p">)</span>
 
             <span class="c1"># First find the best individual chromosome</span>
-            <span class="c1"># FROM EACH island.</span>
-            <span class="n">best_chromosomes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Chromosome</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key_sort</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">())</span>
+            <span class="c1"># FROM EACH island (and clone it).</span>
+            <span class="n">best_chromosomes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="nb">max</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key_sort</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
                 <span class="k">for</span> <span class="n">island</span> <span class="ow">in</span> <span class="n">islands</span>
             <span class="p">]</span>
 
-            <span class="c1"># Shuffle the order of the best chromosomes</span>
-            <span class="c1"># list to introduce some local randomness.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">best_chromosomes</span><span class="p">)</span>
+            <span class="c1"># Compute all available indices.</span>
+            <span class="n">all_indices</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_active</span><span class="p">))</span>
 
-            <span class="c1"># Go through all the destination islands.</span>
-            <span class="k">for</span> <span class="n">island</span><span class="p">,</span> <span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">best_chromosome</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">islands</span><span class="p">,</span>
-                                                            <span class="n">best_chromosomes</span><span class="p">):</span>
-                <span class="c1"># Prevents self migration.</span>
-                <span class="k">if</span> <span class="n">island</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">source_id</span><span class="p">:</span>
-                    <span class="k">continue</span>
+            <span class="c1"># Go through all the indices.</span>
+            <span class="k">for</span> <span class="n">source_idx</span> <span class="ow">in</span> <span class="n">all_indices</span><span class="p">:</span>
+                <span class="c1"># Omit the current index without rebuilding a full list.</span>
+                <span class="n">valid_destinations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">all_indices</span><span class="p">[:</span><span class="n">source_idx</span><span class="p">]</span> <span class="o">+</span>
+                                                 <span class="n">all_indices</span><span class="p">[</span><span class="n">source_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:])</span>
 
-                <span class="c1"># Select randomly one individual chromosome location.</span>
-                <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">),</span>
-                                             <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+                <span class="c1"># Pick a random destination index.</span>
+                <span class="n">dest_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">valid_destinations</span><span class="p">)</span>
 
-                <span class="c1"># Replace the randomly selected chromosome with</span>
-                <span class="c1"># the pre-selected best one from the list above.</span>
-                <span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_chromosome</span>
+                <span class="c1"># Get the island it points to.</span>
+                <span class="n">dest_island</span> <span class="o">=</span> <span class="n">islands</span><span class="p">[</span><span class="n">dest_idx</span><span class="p">]</span>
+
+                <span class="c1"># Select the individual with the lowest fitness.</span>
+                <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_worst_index</span><span class="p">(</span><span class="n">dest_island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
+
+                <span class="c1"># Overwrite the worst target chromosome with the best.</span>
+                <span class="n">dest_island</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_chromosomes</span><span class="p">[</span><span class="n">source_idx</span><span class="p">]</span>
             <span class="c1"># _end_for_</span>
 
             <span class="c1"># Increase the migration counter.</span>
