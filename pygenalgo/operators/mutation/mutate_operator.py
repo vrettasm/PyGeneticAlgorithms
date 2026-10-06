@@ -53,11 +53,11 @@ class MutationOperator(GeneticOperator):
         self.inc_counter()
     # _end_def_
 
-    def __call__(self, *args, **kwargs) -> None:
+    def __call__(self, individual: Chromosome) -> None:
         """
         This is only a wrapper of the "mutate" method.
         """
-        return self.mutate(*args, **kwargs)
+        return self.mutate(individual)
     # _end_def_
 
 # _end_class_

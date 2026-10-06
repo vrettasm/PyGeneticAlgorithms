@@ -45,11 +45,11 @@ class CrossoverOperator(GeneticOperator):
                                   f"You should implement this method!")
     # _end_def_
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, parent1: Chromosome, parent2: Chromosome)-> Offspring:
         """
         This is only a wrapper of the "crossover" method.
         """
-        return self.crossover(*args, **kwargs)
+        return self.crossover(parent1, parent1)
     # _end_def_
 
 # _end_class_

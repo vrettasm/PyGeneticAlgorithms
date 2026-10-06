@@ -67,11 +67,11 @@ class MigrationOperator(GeneticOperator):
                    key=lambda i: population[i].fitness)
     # _end_def_
 
-    def __call__(self, *args, **kwargs) -> None:
+    def __call__(self, islands: list[SubPopulation]) -> None:
         """
         This is only a wrapper of the "migrate" method.
         """
-        return self.migrate(*args, **kwargs)
+        return self.migrate(islands)
     # _end_def_
 
 # _end_class_

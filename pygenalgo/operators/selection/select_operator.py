@@ -135,11 +135,11 @@ class SelectionOperator(GeneticOperator):
                                   f"You should implement this method!")
     # _end_def_
 
-    def __call__(self, *args, **kwargs) -> list[Chromosome]:
+    def __call__(self, population: list[Chromosome]) -> list[Chromosome]:
         """
         This is only a wrapper of the "select" method.
         """
-        return self.select(*args, **kwargs)
+        return self.select(population)
     # _end_def_
 
     def _safety_option(self, population: list[Chromosome],
