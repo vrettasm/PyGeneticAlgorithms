@@ -43,7 +43,7 @@ class GaussianMutator(MutationOperator):
                                                     upper_lim)
         # If sigma is scalar.
         if sigma.size == 1:
-            # Use the same value for all genes.
+            # Use the same value for all the genes.
             sigma = sigma * np.ones_like(lower_lim)
 
         # Assign variables to the _items placeholder.
