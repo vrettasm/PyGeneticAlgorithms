@@ -98,7 +98,6 @@ class GaussianMutator(MutationOperator):
         # If the mutation probability is higher than
         # a uniformly random value, make the changes.
         if self.is_operator_applicable():
-
             # Get the size of the chromosome.
             n_genes: int = len(individual)
 
@@ -117,11 +116,8 @@ class GaussianMutator(MutationOperator):
             # Ensure it stays within limits.
             individual[idx].value = clamp(new_value, xl[idx], xu[idx])
 
-            # Set the fitness to None.
-            individual.invalidate_fitness()
-
-            # Increase the mutator counter.
-            self.inc_counter()
+            # Finalize the mutation.
+            self._finalize_mutation(individual)
     # _end_def_
 
 # _end_class_
