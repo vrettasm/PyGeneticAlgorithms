@@ -24,7 +24,8 @@ class FlipMutator(MutationOperator):
 
     def mutate(self, individual: Chromosome) -> None:
         """
-        Perform the mutation operation by randomly flipping a gene.
+        Perform the mutation operation by randomly
+        flipping a gene value between 0 <---> 1.
 
         :param individual: (Chromosome).
 
