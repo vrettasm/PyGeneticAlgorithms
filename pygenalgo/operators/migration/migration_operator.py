@@ -38,7 +38,7 @@ class MigrationOperator(GeneticOperator):
     # _end_def_
 
     @staticmethod
-    def find_best_index(population: list[Chromosome])-> int:
+    def _find_best_index(population: list[Chromosome])-> int:
         """
         Finds the index of the chromosome with the highest
         fitness value within the given population.
@@ -53,7 +53,7 @@ class MigrationOperator(GeneticOperator):
     # _end_def_
 
     @staticmethod
-    def find_worst_index(population: list[Chromosome]) -> int:
+    def _find_worst_index(population: list[Chromosome]) -> int:
         """
         Finds the index of the chromosome with the lowest
         fitness value within the given population.

@@ -66,7 +66,7 @@ class RandomMigration(MigrationOperator):
                 dest_island = islands[dest_idx]
 
                 # Select the individual with the lowest fitness.
-                idx: int = self.find_worst_index(dest_island.population)
+                idx: int = self._find_worst_index(dest_island.population)
 
                 # Overwrite the worst target chromosome with the best.
                 dest_island.population[idx] = best_chromosomes[source_idx]

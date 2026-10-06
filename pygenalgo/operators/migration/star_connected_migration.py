@@ -55,7 +55,7 @@ class StarConnectedMigration(MigrationOperator):
 
                 # Select the individual with the lowest (worst)
                 # fitness to be replaced.
-                idx: int = self.find_worst_index(island.population)
+                idx: int = self._find_worst_index(island.population)
 
                 # Replace the randomly selected chromosome with
                 # the pre-selected best one from the list above.

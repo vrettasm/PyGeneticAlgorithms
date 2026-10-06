@@ -109,7 +109,7 @@ class HypercubeMigration(MigrationOperator):
 
                     # Select the individual with the lowest (worst)
                     # fitness to be replaced.
-                    idx: int = self.find_worst_index(dest_population)
+                    idx: int = self._find_worst_index(dest_population)
 
                     # Insert a clone so that islands do not share
                     # the same mutable chromosome object.
