@@ -34,37 +34,43 @@ class RandomMigration(MigrationOperator):
 
         :return: None.
         """
+        # Get the size of active islands.
+        n_active: int = len(islands)
+
         # Perform the migration with a specified probability
         # and only if we have more than 1 active populations.
-        if self.is_operator_applicable() and len(islands) > 1:
+        if self.is_operator_applicable() and n_active > 1:
             # Define the key.
             key_sort: Callable = attrgetter("fitness")
 
             # First find the best individual chromosome
-            # FROM EACH island.
-            best_chromosomes: list[tuple[int, Chromosome]] = [
-                (island.id, max(island.population, key=key_sort).clone())
+            # FROM EACH island (and clone it).
+            best_chromosomes: list[Chromosome] = [
+                max(island.population, key=key_sort).clone()
                 for island in islands
             ]
 
-            # Shuffle the order of the best chromosomes
-            # list to introduce some local randomness.
-            self.rng.shuffle(best_chromosomes)
+            # Go through all the islands.
+            for source_idx, source_island in enumerate(islands):
 
-            # Go through all the destination islands.
-            for island, (source_id, best_chromosome) in zip(islands,
-                                                            best_chromosomes):
                 # Prevents self migration.
-                if island.id == source_id:
-                    continue
+                valid_destinations: list[int] = [
+                    i for i in range(n_active) if i != source_idx
+                ]
 
-                # Select randomly one individual chromosome location.
-                idx: int = self.rng.integers(len(island.population),
-                                             dtype=int)
+                # Pick a random destination index.
+                dest_idx = self.rng.choice(valid_destinations)
+
+                # Get the island it points to.
+                dest_island = islands[dest_idx]
+
+                # Select the individual with the lowest (worst) fitness
+                # to be replaced.
+                idx: int = self.find_worst_index(dest_island.population)
 
                 # Replace the randomly selected chromosome with
                 # the pre-selected best one from the list above.
-                island.population[idx] = best_chromosome
+                dest_island.population[idx] = best_chromosomes[source_idx]
             # _end_for_
 
             # Increase the migration counter.
