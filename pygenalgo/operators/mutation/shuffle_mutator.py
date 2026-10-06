@@ -25,8 +25,8 @@ class ShuffleMutator(MutationOperator):
 
     def mutate(self, individual: Chromosome) -> None:
         """
-        Perform the mutation operation by shuffling the genes
-        between at two random positions.
+        Perform the mutation operation by shuffling
+        the genes between at two random positions.
 
         :param individual: (Chromosome).
 
