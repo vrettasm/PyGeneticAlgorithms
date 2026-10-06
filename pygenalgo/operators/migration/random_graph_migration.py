@@ -3,6 +3,7 @@ from typing import Callable
 from operator import attrgetter
 
 # Third party imports.
+import numpy as np
 from numpy.typing import NDArray
 
 # Custom code imports.
@@ -60,6 +61,9 @@ class RandomGraphMigration(MigrationOperator):
             neighbour: NDArray = self.rng.integers(0, 2,
                                                    size=(n_active, n_active),
                                                    dtype=bool)
+            # Avoid self migration.
+            np.fill_diagonal(neighbour, False)
+
             # Go through all the best chromosomes.
             for n, best_c in best_chromosomes:
 
@@ -67,8 +71,7 @@ class RandomGraphMigration(MigrationOperator):
                 for k, is_available in enumerate(neighbour[n]):
 
                     # Check if the link is available.
-                    # Also, avoid self migration.
-                    if is_available and k != n:
+                    if is_available:
 
                         # Get the population size of the destination island.
                         pop_k: int = len(islands[k].population)
