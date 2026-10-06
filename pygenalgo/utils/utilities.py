@@ -420,5 +420,5 @@ def two_indices_fast(rng: Generator, num: int,
 
     # Default is random order.
     # Exclude 'i' from the second index via a mapped draw.
-    return i, k if k < i else k + 1
+    return i, (k if k < i else k + 1)
 # _end_def_
