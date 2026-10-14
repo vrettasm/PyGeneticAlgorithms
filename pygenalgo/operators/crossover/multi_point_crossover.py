@@ -76,17 +76,16 @@ class MultiPointCrossover(CrossoverOperator):
             # Create the 2nd offspring genome list.
             child_2: list[Gene] = parent2.clone_genome()
 
-            for i in range(len(boundaries) - 1):
-                # Swap every second segment.
-                if i % 2 == 1:
-                    # 'from' index.
-                    f: int = boundaries[i]
+            # Swap every second segment.
+            for i in range(1, len(boundaries) - 1, 2):
+                # 'from' index.
+                f: int = boundaries[i]
 
-                    # 'to' index.
-                    t: int = boundaries[i + 1]
+                # 'to' index.
+                t: int = boundaries[i + 1]
 
-                    # Swap the genomes.
-                    child_1[f:t], child_2[f:t] = child_2[f:t], child_1[f:t]
+                # Swap the genomes.
+                child_1[f:t], child_2[f:t] = child_2[f:t], child_1[f:t]
             # _end_for_
 
             # Increase the crossover counter.
