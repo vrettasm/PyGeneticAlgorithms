@@ -1,4 +1,7 @@
 """ Uniform crossover (UX) operator module. """
+# Third party import.
+import numpy as np
+
 # Custom code imports.
 from pygenalgo.genome.gene import Gene
 from pygenalgo.genome.chromosome import Chromosome
