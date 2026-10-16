@@ -51,13 +51,15 @@ class UniformCrossover(CrossoverOperator):
             # Find the minimum length of the two chromosomes.
             min_length: int = min(len(child_1), len(child_2))
 
-            # Generate uniform random numbers and convert them to bool.
-            swap_bool_flag = self.rng.random(size=min_length) > 0.5
+            # Generate uniform random probabilities in [0, 1].
+            swap_probabilities = self.rng.random(size=min_length)
+
+            # Keep only those indices that are higher than 50%.
+            swap_indices = np.where(swap_probabilities > 0.5)[0]
 
             # Swap the genes according to the probability.
-            for i, swap_flag in enumerate(swap_bool_flag):
-                if swap_flag:
-                    child_1[i], child_2[i] = child_2[i], child_1[i]
+            for i in swap_indices:
+                child_1[i], child_2[i] = child_2[i], child_1[i]
             # _end_for_
 
             # Increase the crossover counter.
