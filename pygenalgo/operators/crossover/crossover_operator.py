@@ -49,7 +49,7 @@ class CrossoverOperator(GeneticOperator):
         """
         This is only a wrapper of the "crossover" method.
         """
-        return self.crossover(parent1, parent1)
+        return self.crossover(parent1, parent2)
     # _end_def_
 
 # _end_class_
