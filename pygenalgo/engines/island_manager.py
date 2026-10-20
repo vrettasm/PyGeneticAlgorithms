@@ -13,7 +13,7 @@ class IslandManager:
     """
 
     # Object variables (specific for the IslandManager).
-    __slots__ = ("_operators", "_idx")
+    __slots__ = ("_operators", "_idx", "_max_len")
 
     def __init__(self, operators: list[GeneticOperator]) -> None:
         """
@@ -24,16 +24,20 @@ class IslandManager:
         :return: None.
         """
         # Sanity check.
-        if operators is None or len(operators) == 0:
+        if not operators:
             raise ValueError(f"{self.__class__.__name__}: "
-                             f"'operators' list is missing or empty.")
+                             f"operators list is missing or empty.")
         # _end_if_
 
-        # Copy the operators list.
-        self._operators: list[GeneticOperator] = operators
+        # Shallow copy the operators list.
+        self._operators: list[GeneticOperator] = list(operators)
 
-        # Initialize the index.
-        self._idx: int = 0
+        # Cache the length of the list.
+        self._max_len: int = len(operators)
+
+        # Initialize the index to an invalid value
+        # that will case an error if it is called.
+        self._idx: int = self._max_len + 1
     # _end_def_
 
     @property
@@ -78,12 +82,15 @@ class IslandManager:
         :return: None.
         """
         # Ensure correct type.
-        new_idx: int = int(new_idx)
+        if not isinstance(new_idx, int):
+            raise TypeError(f"{self.__class__.__name__}: "
+                            f"new index must be an integer.")
+        # _end_if_
 
         # Sanity check.
-        if new_idx < 0 or new_idx >= len(self._operators):
+        if new_idx < 0 or new_idx >= self._max_len:
             raise IndexError(f"{self.__class__.__name__}: "
-                             f"selected index is out of range.")
+                             f"new index is out of range. ")
         # _end_if_
 
         # Update the index.
