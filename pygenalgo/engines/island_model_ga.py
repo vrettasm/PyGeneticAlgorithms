@@ -307,6 +307,9 @@ class IslandModelGA(GenericGA):
                 "avg": [], "std": [], "prob_crossx": [], "prob_mutate": []
             }
 
+            # WARNING: This step is SUPER CRITICAL.
+            self._update_island_manager_index(p_id)
+
             # Initial evaluation of the population.
             fit_list_0, _ = self.evaluate_fitness(pop_n.population,
                                                   parallel_mode=True,
