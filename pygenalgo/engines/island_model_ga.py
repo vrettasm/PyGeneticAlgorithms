@@ -93,6 +93,24 @@ class IslandModelGA(GenericGA):
         return self._migrate_op
     # _end_def_
 
+    def _update_island_manager_index(self, idx: int) -> None:
+        """
+        This is an auxiliary internal method that plays a very critical role.
+        It updates the island manager indices for all the genetic operators.
+        This is VERY important because if the indices are not updated to the
+        current subpopulation the operations will not be applied correctly.
+
+        :param idx: the new index of the island manager.
+        :return: None
+        """
+        # Update all three genetic operators.
+        for gen_op in (self.select_op, self.mutate_op, self.crossx_op):
+            # Make sure the _items is an IslandManager.
+            if isinstance(gen_op.items, IslandManager):
+                # Update its pointer.
+                gen_op.items.idx = idx
+    # _end_def_
+
     def _evolve_population(self, island: SubPopulation, epochs: int, shuffle: bool,
                            correction: bool, elitism: bool, f_tol: float, adapt_probs: bool,
                            prob_crossx: Optional[float] = None,
