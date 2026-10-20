@@ -422,8 +422,8 @@ class IslandModelGA(GenericGA):
             # Make sure 'n_periods' is integer.
             n_periods = int(config.n_periods)
 
-            # Compute the in-between evolving epochs
-            # and the remainder (if any).
+            # Compute the in-between evolving epochs along with
+            # the remainder (if any).
             n_epochs, rem_epochs = divmod(new_epochs, n_periods)
 
             # Type hint the work_parallel to avoid warnings.
