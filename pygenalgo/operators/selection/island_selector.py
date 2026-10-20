@@ -22,8 +22,8 @@ class IslandSelector(SelectionOperator):
     def __init__(self, select_probability: float = 1.0,
                  select_ops: list[SelectionOperator] = None) -> None:
         """
-        Construct an 'IslandSelector' object with a predefined probability
-        value and a list of SelectionOperator objects.
+        Construct an 'IslandSelector' object with a predefined
+        probability value and a list of SelectionOperator objects.
 
         :param select_probability: (float).
         :param select_ops: a list of SelectionOperator objects.
