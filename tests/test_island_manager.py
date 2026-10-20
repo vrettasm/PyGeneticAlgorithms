@@ -37,7 +37,7 @@ class TestIslandManager(unittest.TestCase):
         """
         # Correct configuration.
         self.assertEqual(set(IslandManager.__slots__),
-                         {"_operators", "_idx"})
+                         {"_operators", "_idx", "_max_len"})
 
         # Adding new fields should not be allowed.
         with self.assertRaises(AttributeError):
