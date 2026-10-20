@@ -94,11 +94,12 @@ class TestIslandManager(unittest.TestCase):
 
         :return: None.
         """
-        self.manager.idx = "1"
-        self.assertEqual(self.manager.idx, 1)
+        # Converting from str should not be allowed.
+        with self.assertRaises(TypeError):
+            self.manager.idx = "1"
 
-        # Converting from float should not be allowed
-        with self.assertRaises(ValueError):
+        # Converting from float should not be allowed.
+        with self.assertRaises(TypeError):
             self.manager.idx = "1.0"
     # _end_def_
 
