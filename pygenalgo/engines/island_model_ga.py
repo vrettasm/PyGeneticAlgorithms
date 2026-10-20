@@ -68,18 +68,27 @@ class IslandModelGA(GenericGA):
         super().__init__(**kwargs)
 
         # Ensure the number of islands is integer.
-        num_islands = int(num_islands)
+        if not isinstance(num_islands, int):
+            raise TypeError(f"{self.__class__.__name__}: "
+                            f"Number of requested islands must be an integer")
+        # _end_if_
 
-        # Sanity check.
+        # Sanity check: low-end edge case.
+        if num_islands < 1:
+            raise ValueError(f"{self.__class__.__name__}: "
+                             f"Number of requested islands ({num_islands}) "
+                             f"should be a positive integer.")
+        # _end_if_
+
+        # Sanity check: high-end edge case.
         if num_islands > len(self.population):
-            # Raise an error if number of islands is too high.
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Number of requested islands ({num_islands}) "
                              f"exceeds the size of the population.")
         # _end_if_
 
         # Assign the number of islands to the object.
-        self._num_islands: int = max(1, num_islands)
+        self._num_islands: int = num_islands
 
         # Get Migration Operator.
         self._migrate_op: MigrationOperator = migrate_op
