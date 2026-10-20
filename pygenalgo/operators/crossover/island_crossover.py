@@ -1,4 +1,5 @@
 """ Island-crossover module. """
+
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.engines.island_manager import IslandManager
@@ -9,9 +10,9 @@ class IslandCrossover(CrossoverOperator):
     """
     Description:
 
-        Island-crossover performs the crossover of individuals (offspring) for
-        each island. The object holds a list of CrossoverOperator objects along
-        with a pointer that is unique for each island.
+        Island-crossover performs the crossover of individuals (offspring)
+        for each island. The object holds a list of CrossoverOperator
+        objects along with a pointer (int) that is unique for each island.
 
         Once the pointer is set, the crossover is performed using the predefined
         CrossoverOperator that corresponds to the specific island.

@@ -11,9 +11,9 @@ class IslandSelector(SelectionOperator):
     """
     Description:
 
-        Island-selector performs the selection of individuals (parents) for each
-        island. The object holds a list of SelectionOperator objects along with a
-        pointer that is unique for each island.
+        Island-selector performs the selection of individuals (parents)
+        for each island. The object holds a list of SelectionOperator
+        objects along with a pointer (int) that is unique for each island.
 
         Once the pointer is set, the selection is performed using the predefined
         SelectionOperator that corresponds to the specific island.
