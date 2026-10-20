@@ -28,9 +28,9 @@ class IslandModelGA(GenericGA):
     """
     Description:
 
-        In Island Model GA we run in parallel a number of "islands", each one evolving its own
-        (sub)-population. Optionally we can allow "migration", among the best individuals from
-        each island.
+        In Island Model GA we run in parallel a number of "islands",
+        each one evolving its own (sub)-population. Optionally we can
+        allow "migration", among the best individuals from each island.
     """
 
     # Object variables (specific for the IslandModel).
