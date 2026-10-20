@@ -126,7 +126,7 @@ class IslandModelGA(GenericGA):
         current subpopulation the operations will not be applied correctly.
 
         :param idx: the new index of the island manager.
-        :return: None
+        :return: None.
         """
         # Update all three genetic operators.
         for gen_op in (self.select_op, self.mutate_op, self.crossx_op):
