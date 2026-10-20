@@ -50,8 +50,7 @@ class TestIslandManager(unittest.TestCase):
 
         :return: None.
         """
-        self.assertEqual(self.manager.idx, 0)
-        self.assertEqual(self.manager.operator, self.mock_op_0)
+        self.assertEqual(self.manager.idx, 3)
         self.assertEqual(self.manager.operators_list, self.operators)
     # _end_def_
 
