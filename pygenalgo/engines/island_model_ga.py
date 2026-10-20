@@ -126,7 +126,7 @@ class IslandModelGA(GenericGA):
         # Initialize this auxiliary parameter to a large number.
         avg_fitness_0: float = 1.0e+100
 
-        # WARNING: This step is CRITICAL for the remaining code.
+        # WARNING: This step is SUPER CRITICAL for the remaining code.
         for gen_op in (self.select_op, self.mutate_op, self.crossx_op):
             # Update the pointers of the IslandManagers.
             if isinstance(gen_op.items, IslandManager):
