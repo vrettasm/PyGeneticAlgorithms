@@ -23,6 +23,22 @@ from pygenalgo.operators.migration.migration_operator import MigrationOperator
 # Public interface.
 __all__ = ["IslandModelGA", "RunConfig"]
 
+def make_islands(population: list[Chromosome], n_islands: int) -> list[SubPopulation]:
+    """
+    Auxiliary function that splits a large population
+    into a list of island subpopulations.
+
+    :param population: the population we want to split.
+    :param n_islands: the number of islands.
+
+    :return: a list of subpopulations.
+    """
+    return [
+        SubPopulation(pop_id=i, population=population[i::n_islands])
+        for i in range(n_islands)
+    ]
+# _end_def_
+
 
 class IslandModelGA(GenericGA):
     """
@@ -260,23 +276,6 @@ class IslandModelGA(GenericGA):
         return island, has_converged, local_stats, elapsed_time
     # _end_def_
 
-    def make_islands(self, population: list[Chromosome]) -> list[SubPopulation]:
-        """
-        Creates a list of island subpopulations.
-
-        :param population: the population we want to split.
-
-        :return: a list of subpopulations.
-        """
-        # Get the total number of islands.
-        n_islands: int = self._num_islands
-
-        return [
-            SubPopulation(pop_id=i, population=population[i::n_islands])
-            for i in range(n_islands)
-        ]
-    # _end_def_
-
     def run(self, config: Optional[RunConfig] = None) -> None:
         """
         Main method of the IslandModelGA class that implements
@@ -295,8 +294,8 @@ class IslandModelGA(GenericGA):
         # Initial random split of the total population in active
         # subpopulations. In this context 'active' means that is
         # still evolving.
-        active_population: list[SubPopulation] = self.make_islands(self.population)
-
+        active_population: list[SubPopulation] = make_islands(self.population,
+                                                              self.num_islands)
         # Initial evaluation of the subpopulations.
         for pop_n in active_population:
             # Extract the population id.
