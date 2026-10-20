@@ -21,8 +21,8 @@ class IslandMutator(MutationOperator):
     def __init__(self, mutate_probability: float = 0.1,
                  mutate_ops: list[MutationOperator] = None) -> None:
         """
-        Construct an 'IslandMutator' object with a predefined probability
-        value and a list of MutationOperator objects.
+        Construct an 'IslandMutator' object with a predefined
+        probability value and a list of MutationOperator objects.
 
         :param mutate_probability: (float) for compatibility only.
         :param mutate_ops: a list of MutationOperator objects.
