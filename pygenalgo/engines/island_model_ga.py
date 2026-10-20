@@ -382,6 +382,9 @@ class IslandModelGA(GenericGA):
                 # Extract the population (island) id.
                 p_id: int = pop_n.id
 
+                # Ensure consistency.
+                self._update_island_manager_index(p_id)
+
                 # Use the values of the object operators itself.
                 genetic_probs[p_id]["crossx"] = self.crossx_op.probability
                 genetic_probs[p_id]["mutate"] = self.mutate_op.probability
