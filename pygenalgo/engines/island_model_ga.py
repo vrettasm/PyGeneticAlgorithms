@@ -456,7 +456,7 @@ class IslandModelGA(GenericGA):
                     for res in results_i:
 
                         # Extract the results.
-                        island, has_converged, local_stats, _ = res
+                        island, has_converged, local_stats, elapsed_time = res
 
                         # Extract the island id locally.
                         island_id: int = island.id
@@ -489,8 +489,9 @@ class IslandModelGA(GenericGA):
                                 itr = int(i*epochs + has_converged[1])
 
                                 # Log a warning message to the screen.
-                                logger.warning("Island population %s finished in %s iterations.",
-                                               island_id, itr)
+                                logger.warning("Island population %s finished "
+                                               "in %s iterations in %.3f seconds.",
+                                               island_id, itr, elapsed_time)
                             # _end_if_
                         else:
                             # Add the island population to the new active list.
@@ -546,15 +547,16 @@ class IslandModelGA(GenericGA):
             for res_n in results:
 
                 # Extract the results.
-                island, has_converged, local_stats, _ = res_n
+                island, has_converged, local_stats, elapsed_time = res_n
 
                 # Extract the island id locally.
                 island_id: int = island.id
 
                 # Check if we want to log output.
                 if has_converged[0]:
-                    logger.info("Island population %s, finished in %s iterations.",
-                                island_id, has_converged[1])
+                    logger.info("Island population %s, finished "
+                                "in %s iterations in %.3f seconds.",
+                                island_id, has_converged[1], elapsed_time)
                 # _end_if_
 
                 # Copy the island population.
