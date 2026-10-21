@@ -430,25 +430,17 @@ class IslandModelGA(GenericGA):
             with Parallel(n_jobs=self.n_cpus, backend="loky") as work_parallel:
 
                 # Break the total 'epochs' in n_periods.
-                for i in range(n_periods):
+                for i, epochs in enumerate(n_epochs):
 
                     # Check if we want information on to be logged.
                     if config.verbose:
                         logger.info("Current period %s / %s:", i + 1, n_periods)
                     # _end_if_
 
-                    # If the remainder epochs is not zero, add them in the
-                    # last iteration to complete the total number of epochs.
-                    if rem_epochs and i == n_periods-1:
+                    # Update the common parameters with epochs.
+                    common_parameters["epochs"] = epochs
 
-                        # Update the n_epochs ONLY in the last period.
-                        n_epochs += rem_epochs
-                    # _end_if_
-
-                    # Update epochs to 'n_epochs'.
-                    common_parameters["epochs"] = n_epochs
-
-                    # Evolve the subpopulations in parallel for 'n_epochs'.
+                    # Evolve the subpopulations in parallel.
                     results_i = work_parallel(
                         delayed(fn_evolve)(island=pop_i,
                                            prob_crossx=genetic_probs[pop_i.id]["crossx"],
@@ -494,7 +486,7 @@ class IslandModelGA(GenericGA):
                             # Check for verbosity.
                             if config.verbose:
                                 # Compute the total number of iterations.
-                                itr = int(i*n_epochs + has_converged[1])
+                                itr = int(i*epochs + has_converged[1])
 
                                 # Log a warning message to the screen.
                                 logger.warning("Island population %s finished in %s iterations.",
