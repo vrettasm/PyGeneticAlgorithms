@@ -450,7 +450,7 @@ class IslandModelGA(GenericGA):
                     )
 
                     # Empty the list of active populations.
-                    active_population = []
+                    active_population.clear()
 
                     # Process the results if the i-th period.
                     for res in results_i:
