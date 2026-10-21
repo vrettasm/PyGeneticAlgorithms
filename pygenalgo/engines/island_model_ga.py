@@ -39,6 +39,26 @@ def make_islands(population: list[Chromosome], n_islands: int) -> list[SubPopula
     ]
 # _end_def_
 
+def split_epochs_evenly(total: int, n_parts: int) -> list[int]:
+    """
+    Split 'total' into 'n_parts', distributing remainder evenly.
+
+    :param total: the total number to split.
+    :param n_parts: the number of parts to split.
+
+    :return: a list of evenly split numbers.
+    """
+    # Get the quotient and remainder of the integer division.
+    quotient, remainder = divmod(total, n_parts)
+
+    # Split the total number as evenly as possible in n_parts.
+    return [
+        quotient + (1 if i < remainder else 0)
+        for i in range(n_parts)
+    ]
+# _end_def_
+
+
 class IslandModelGA(GenericGA):
     """
     Description:
