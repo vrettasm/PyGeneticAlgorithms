@@ -95,7 +95,6 @@
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../pygenalgo.engines.html#module-pygenalgo.engines.island_model_ga">pygenalgo.engines.island_model_ga module</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA"><code class="docutils literal notranslate"><span class="pre">IslandModelGA</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.make_islands"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.make_islands()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.migrate_op"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.migrate_op</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.num_islands"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.num_islands</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.print_migration_stats"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.print_migration_stats()</span></code></a></li>
@@ -593,6 +592,41 @@
 <span class="c1"># Public interface.</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;IslandModelGA&quot;</span><span class="p">,</span> <span class="s2">&quot;RunConfig&quot;</span><span class="p">]</span>
 
+<span class="k">def</span><span class="w"> </span><span class="nf">make_islands</span><span class="p">(</span><span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">],</span> <span class="n">n_islands</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">SubPopulation</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Auxiliary function that splits a large population</span>
+<span class="sd">    into a list of island subpopulations.</span>
+
+<span class="sd">    :param population: the population we want to split.</span>
+<span class="sd">    :param n_islands: the number of islands.</span>
+
+<span class="sd">    :return: a list of subpopulations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">SubPopulation</span><span class="p">(</span><span class="n">pop_id</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">population</span><span class="o">=</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="n">n_islands</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_islands</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="c1"># _end_def_</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">split_epochs_evenly</span><span class="p">(</span><span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_parts</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Split &#39;total&#39; into &#39;n_parts&#39;, distributing remainder evenly.</span>
+
+<span class="sd">    :param total: the total number to split.</span>
+<span class="sd">    :param n_parts: the number of parts to split.</span>
+
+<span class="sd">    :return: a list of evenly split numbers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Get the quotient and remainder of the integer division.</span>
+    <span class="n">quotient</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">n_parts</span><span class="p">)</span>
+
+    <span class="c1"># Split the total number as evenly as possible in n_parts.</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">quotient</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">remainder</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_parts</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="c1"># _end_def_</span>
+
 
 <div class="viewcode-block" id="IslandModelGA">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA">[docs]</a>
@@ -600,9 +634,9 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Description:</span>
 
-<span class="sd">        In Island Model GA we run in parallel a number of &quot;islands&quot;, each one evolving its own</span>
-<span class="sd">        (sub)-population. Optionally we can allow &quot;migration&quot;, among the best individuals from</span>
-<span class="sd">        each island.</span>
+<span class="sd">        In Island Model GA we run in parallel a number of &quot;islands&quot;,</span>
+<span class="sd">        each one evolving its own (sub)-population. Optionally we can</span>
+<span class="sd">        allow &quot;migration&quot;, among the best individuals from each island.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Object variables (specific for the IslandModel).</span>
@@ -624,18 +658,27 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># Ensure the number of islands is integer.</span>
-        <span class="n">num_islands</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_islands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">num_islands</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;Number of requested islands must be an integer&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
 
-        <span class="c1"># Sanity check.</span>
+        <span class="c1"># Sanity check: low-end edge case.</span>
+        <span class="k">if</span> <span class="n">num_islands</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;Number of requested islands (</span><span class="si">{</span><span class="n">num_islands</span><span class="si">}</span><span class="s2">) &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;should be a positive integer.&quot;</span><span class="p">)</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Sanity check: high-end edge case.</span>
         <span class="k">if</span> <span class="n">num_islands</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">):</span>
-            <span class="c1"># Raise an error if number of islands is too high.</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
                              <span class="sa">f</span><span class="s2">&quot;Number of requested islands (</span><span class="si">{</span><span class="n">num_islands</span><span class="si">}</span><span class="s2">) &quot;</span>
                              <span class="sa">f</span><span class="s2">&quot;exceeds the size of the population.&quot;</span><span class="p">)</span>
         <span class="c1"># _end_if_</span>
 
         <span class="c1"># Assign the number of islands to the object.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_islands</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">num_islands</span>
 
         <span class="c1"># Get Migration Operator.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_migrate_op</span><span class="p">:</span> <span class="n">MigrationOperator</span> <span class="o">=</span> <span class="n">migrate_op</span>
@@ -663,6 +706,24 @@
 <span class="sd">        :return: the MigrationOperator.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_migrate_op</span>
+    <span class="c1"># _end_def_</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_island_manager_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is an auxiliary internal method that plays a very critical role.</span>
+<span class="sd">        It updates the island manager indices for all the genetic operators.</span>
+<span class="sd">        This is VERY important because if the indices are not updated to the</span>
+<span class="sd">        current subpopulation the operations will not be applied correctly.</span>
+
+<span class="sd">        :param idx: the new index of the island manager.</span>
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Update all three genetic operators.</span>
+        <span class="k">for</span> <span class="n">gen_op</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">select_op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutate_op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">crossx_op</span><span class="p">):</span>
+            <span class="c1"># Make sure the _items is an IslandManager.</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gen_op</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="n">IslandManager</span><span class="p">):</span>
+                <span class="c1"># Update its pointer.</span>
+                <span class="n">gen_op</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span>
     <span class="c1"># _end_def_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_evolve_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">island</span><span class="p">:</span> <span class="n">SubPopulation</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
@@ -698,12 +759,9 @@
         <span class="c1"># Initialize this auxiliary parameter to a large number.</span>
         <span class="n">avg_fitness_0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e+100</span>
 
-        <span class="c1"># WARNING: This step is CRITICAL for the remaining code.</span>
-        <span class="k">for</span> <span class="n">gen_op</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">select_op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutate_op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">crossx_op</span><span class="p">):</span>
-            <span class="c1"># Update the pointers of the IslandManagers.</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gen_op</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="n">IslandManager</span><span class="p">):</span>
-                <span class="n">gen_op</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="n">island</span><span class="o">.</span><span class="n">id</span>
-        <span class="c1"># _end_for_</span>
+        <span class="c1"># WARNING: -- This step is SUPER CRITICAL for</span>
+        <span class="c1"># the correct execution of the remaining code.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_island_manager_index</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
         <span class="c1"># Check if initial probabilities have been given.</span>
         <span class="k">if</span> <span class="n">prob_crossx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">prob_mutate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -817,26 +875,6 @@
         <span class="k">return</span> <span class="n">island</span><span class="p">,</span> <span class="n">has_converged</span><span class="p">,</span> <span class="n">local_stats</span><span class="p">,</span> <span class="n">elapsed_time</span>
     <span class="c1"># _end_def_</span>
 
-<div class="viewcode-block" id="IslandModelGA.make_islands">
-<a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.make_islands">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">make_islands</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Chromosome</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">SubPopulation</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a list of island subpopulations.</span>
-
-<span class="sd">        :param population: the population we want to split.</span>
-
-<span class="sd">        :return: a list of subpopulations.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Get the total number of islands.</span>
-        <span class="n">n_islands</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_islands</span>
-
-        <span class="k">return</span> <span class="p">[</span>
-            <span class="n">SubPopulation</span><span class="p">(</span><span class="n">pop_id</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">population</span><span class="o">=</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="n">n_islands</span><span class="p">])</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_islands</span><span class="p">)</span>
-        <span class="p">]</span></div>
-
-    <span class="c1"># _end_def_</span>
-
 <div class="viewcode-block" id="IslandModelGA.run">
 <a class="viewcode-back" href="../../../pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RunConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -857,8 +895,8 @@
         <span class="c1"># Initial random split of the total population in active</span>
         <span class="c1"># subpopulations. In this context &#39;active&#39; means that is</span>
         <span class="c1"># still evolving.</span>
-        <span class="n">active_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SubPopulation</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_islands</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
-
+        <span class="n">active_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SubPopulation</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_islands</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
+                                                              <span class="bp">self</span><span class="o">.</span><span class="n">num_islands</span><span class="p">)</span>
         <span class="c1"># Initial evaluation of the subpopulations.</span>
         <span class="k">for</span> <span class="n">pop_n</span> <span class="ow">in</span> <span class="n">active_population</span><span class="p">:</span>
             <span class="c1"># Extract the population id.</span>
@@ -868,6 +906,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="n">p_id</span><span class="p">]:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s2">&quot;avg&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_crossx&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prob_mutate&quot;</span><span class="p">:</span> <span class="p">[]</span>
             <span class="p">}</span>
+
+            <span class="c1"># WARNING: This step is SUPER CRITICAL.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_island_manager_index</span><span class="p">(</span><span class="n">p_id</span><span class="p">)</span>
 
             <span class="c1"># Initial evaluation of the population.</span>
             <span class="n">fit_list_0</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">(</span><span class="n">pop_n</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
@@ -941,6 +982,9 @@
                 <span class="c1"># Extract the population (island) id.</span>
                 <span class="n">p_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">pop_n</span><span class="o">.</span><span class="n">id</span>
 
+                <span class="c1"># Ensure consistency.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_island_manager_index</span><span class="p">(</span><span class="n">p_id</span><span class="p">)</span>
+
                 <span class="c1"># Use the values of the object operators itself.</span>
                 <span class="n">genetic_probs</span><span class="p">[</span><span class="n">p_id</span><span class="p">][</span><span class="s2">&quot;crossx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crossx_op</span><span class="o">.</span><span class="n">probability</span>
                 <span class="n">genetic_probs</span><span class="p">[</span><span class="n">p_id</span><span class="p">][</span><span class="s2">&quot;mutate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutate_op</span><span class="o">.</span><span class="n">probability</span>
@@ -949,11 +993,8 @@
             <span class="c1"># Make sure &#39;n_periods&#39; is integer.</span>
             <span class="n">n_periods</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">n_periods</span><span class="p">)</span>
 
-            <span class="c1"># Compute the in-between evolving epochs.</span>
-            <span class="n">n_epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">new_epochs</span> <span class="o">/</span> <span class="n">n_periods</span><span class="p">)</span>
-
-            <span class="c1"># Compute the remainder epochs (if any).</span>
-            <span class="n">rem_epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">new_epochs</span> <span class="o">%</span> <span class="n">n_periods</span><span class="p">)</span>
+            <span class="c1"># Compute the in-between evolving epochs along with the remainder.</span>
+            <span class="n">n_epochs</span> <span class="o">=</span> <span class="n">split_epochs_evenly</span><span class="p">(</span><span class="n">new_epochs</span><span class="p">,</span> <span class="n">n_periods</span><span class="p">)</span>
 
             <span class="c1"># Type hint the work_parallel to avoid warnings.</span>
             <span class="n">work_parallel</span><span class="p">:</span> <span class="n">Parallel</span>
@@ -962,25 +1003,17 @@
             <span class="k">with</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_cpus</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;loky&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">work_parallel</span><span class="p">:</span>
 
                 <span class="c1"># Break the total &#39;epochs&#39; in n_periods.</span>
-                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_periods</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">epochs</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
 
                     <span class="c1"># Check if we want information on to be logged.</span>
                     <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Current period </span><span class="si">%s</span><span class="s2"> / </span><span class="si">%s</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_periods</span><span class="p">)</span>
                     <span class="c1"># _end_if_</span>
 
-                    <span class="c1"># If the remainder epochs is not zero, add them in the</span>
-                    <span class="c1"># last iteration to complete the total number of epochs.</span>
-                    <span class="k">if</span> <span class="n">rem_epochs</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">==</span> <span class="n">n_periods</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># Update the common parameters with epochs.</span>
+                    <span class="n">common_parameters</span><span class="p">[</span><span class="s2">&quot;epochs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epochs</span>
 
-                        <span class="c1"># Update the n_epochs ONLY in the last period.</span>
-                        <span class="n">n_epochs</span> <span class="o">+=</span> <span class="n">rem_epochs</span>
-                    <span class="c1"># _end_if_</span>
-
-                    <span class="c1"># Update epochs to &#39;n_epochs&#39;.</span>
-                    <span class="n">common_parameters</span><span class="p">[</span><span class="s2">&quot;epochs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_epochs</span>
-
-                    <span class="c1"># Evolve the subpopulations in parallel for &#39;n_epochs&#39;.</span>
+                    <span class="c1"># Evolve the subpopulations in parallel.</span>
                     <span class="n">results_i</span> <span class="o">=</span> <span class="n">work_parallel</span><span class="p">(</span>
                         <span class="n">delayed</span><span class="p">(</span><span class="n">fn_evolve</span><span class="p">)(</span><span class="n">island</span><span class="o">=</span><span class="n">pop_i</span><span class="p">,</span>
                                            <span class="n">prob_crossx</span><span class="o">=</span><span class="n">genetic_probs</span><span class="p">[</span><span class="n">pop_i</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;crossx&quot;</span><span class="p">],</span>
@@ -1026,7 +1059,7 @@
                             <span class="c1"># Check for verbosity.</span>
                             <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                                 <span class="c1"># Compute the total number of iterations.</span>
-                                <span class="n">itr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">n_epochs</span> <span class="o">+</span> <span class="n">has_converged</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                                <span class="n">itr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">epochs</span> <span class="o">+</span> <span class="n">has_converged</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
                                 <span class="c1"># Log a warning message to the screen.</span>
                                 <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Island population </span><span class="si">%s</span><span class="s2"> finished in </span><span class="si">%s</span><span class="s2"> iterations.&quot;</span><span class="p">,</span>
@@ -1066,7 +1099,8 @@
 
                     <span class="c1"># Here we call the migration policy.</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_migrate_op</span><span class="p">(</span><span class="n">active_population</span><span class="p">)</span>
-            <span class="c1"># _end_parallel_with_</span>
+                <span class="c1"># _end_for_</span>
+            <span class="c1"># _end_with_</span>
 
             <span class="c1"># Get the rest of the populations that have not yet converged.</span>
             <span class="k">for</span> <span class="n">pop_n</span> <span class="ow">in</span> <span class="n">active_population</span><span class="p">:</span>
@@ -1118,10 +1152,9 @@
         <span class="c1"># Update the population in the class.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">final_population</span>
 
-        <span class="c1"># Make a final fitness evaluation (to ensure consistency).</span>
-        <span class="n">fit_list_final</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
-                                                  <span class="n">parallel_mode</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                                  <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;loky&quot;</span><span class="p">)</span>
+        <span class="c1"># List with final fitness values.</span>
+        <span class="n">fit_list_final</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">population_fitness</span><span class="p">()</span>
+
         <span class="c1"># Compute the mean value.</span>
         <span class="n">avg_fitness_final</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">nanmean</span><span class="p">(</span><span class="n">fit_list_final</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 

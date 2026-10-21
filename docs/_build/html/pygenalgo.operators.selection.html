@@ -98,7 +98,6 @@
 </li>
 <li class="toctree-l5"><a class="reference internal" href="pygenalgo.engines.html#module-pygenalgo.engines.island_model_ga">pygenalgo.engines.island_model_ga module</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA"><code class="docutils literal notranslate"><span class="pre">IslandModelGA</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.make_islands"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.make_islands()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.migrate_op"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.migrate_op</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.num_islands"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.num_islands</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="pygenalgo.engines.html#pygenalgo.engines.island_model_ga.IslandModelGA.print_migration_stats"><code class="docutils literal notranslate"><span class="pre">IslandModelGA.print_migration_stats()</span></code></a></li>
@@ -1129,9 +1128,9 @@ to form the new population of solutions.</p>
 <dd><p>Bases: <a class="reference internal" href="#pygenalgo.operators.selection.select_operator.SelectionOperator" title="pygenalgo.operators.selection.select_operator.SelectionOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionOperator</span></code></a></p>
 <p>Description:</p>
 <blockquote>
-<div><p>Island-selector performs the selection of individuals (parents) for each
-island. The object holds a list of SelectionOperator objects along with a
-pointer that is unique for each island.</p>
+<div><p>Island-selector performs the selection of individuals (parents)
+for each island. The object holds a list of SelectionOperator
+objects along with a pointer (int) that is unique for each island.</p>
 <p>Once the pointer is set, the selection is performed using the predefined
 SelectionOperator that corresponds to the specific island.</p>
 </div></blockquote>
