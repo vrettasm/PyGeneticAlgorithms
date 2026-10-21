@@ -578,10 +578,11 @@ class IslandModelGA(GenericGA):
         # Update the population in the class.
         self.population = final_population
 
-        # Make a final fitness evaluation (to ensure consistency).
-        fit_list_final, _ = self.evaluate_fitness(self.population,
-                                                  parallel_mode=True,
-                                                  backend="loky")
+        # List with final fitness values.
+        fit_list_final: list[float] = [
+            p.fitness for p in self.population
+        ]
+
         # Compute the mean value.
         avg_fitness_final: float = nanmean(fit_list_final, dtype=float)
 
