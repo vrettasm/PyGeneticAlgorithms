@@ -526,7 +526,8 @@ class IslandModelGA(GenericGA):
 
                     # Here we call the migration policy.
                     self._migrate_op(active_population)
-            # _end_parallel_with_
+                # _end_for_
+            # _end_with_
 
             # Get the rest of the populations that have not yet converged.
             for pop_n in active_population:
