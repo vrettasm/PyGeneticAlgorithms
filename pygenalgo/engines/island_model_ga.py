@@ -492,7 +492,6 @@ class IslandModelGA(GenericGA):
                                 logger.warning("Island population %s finished "
                                                "in %s iterations in %.3f seconds.",
                                                island_id, itr, elapsed_time)
-                            # _end_if_
                         else:
                             # Add the island population to the new active list.
                             active_population.append(island)
@@ -574,8 +573,6 @@ class IslandModelGA(GenericGA):
                     # Store the updated crossover and mutation values.
                     self.stats[island_id]["prob_crossx"].extend(local_stats["prob_crossx"])
                     self.stats[island_id]["prob_mutate"].extend(local_stats["prob_mutate"])
-            # _end_for_
-
         # _end_if_
 
         # Update the population in the class.
