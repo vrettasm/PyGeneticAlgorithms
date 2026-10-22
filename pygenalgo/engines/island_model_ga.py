@@ -89,7 +89,7 @@ class IslandModelGA(GenericGA):
         # Ensure the number of islands is integer.
         if not isinstance(num_islands, int):
             raise TypeError(f"{self.__class__.__name__}: "
-                            f"Number of requested islands must be an integer")
+                            f"Number of requested islands must be an integer.")
         # _end_if_
 
         # Sanity check: low-end edge case.
