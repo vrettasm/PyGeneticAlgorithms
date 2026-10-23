@@ -427,7 +427,7 @@ class IslandModelGA(GenericGA):
             work_parallel: Parallel
 
             # Reuse the pool of workers.
-            with Parallel(n_jobs=self.n_cpus, backend="loky") as work_parallel:
+            with Parallel(n_jobs=self.n_cpus, backend="loky", batch_size="auto") as work_parallel:
 
                 # Break the total 'epochs' in n_periods.
                 for i, epochs in enumerate(n_epochs):
