@@ -69,7 +69,8 @@ class IslandModelGA(GenericGA):
     """
 
     # Object variables (specific for the IslandModel).
-    __slots__ = ("_num_islands", "_migrate_op", "_termination_order")
+    __slots__ = ("_migrate_op", "_num_islands", "_termination_order",
+                 "_operators_with_island_manager")
 
     def __init__(self, num_islands: int,
                  migrate_op: MigrationOperator, **kwargs) -> None:
@@ -114,6 +115,14 @@ class IslandModelGA(GenericGA):
 
         # It is used to keep the final order of termination.
         self._termination_order: Optional[list[int]] = None
+
+        # Cache the genetic operators with an IslandManager.
+        self._operators_with_island_manager = [
+            gen_op for gen_op in (self.select_op,
+                                  self.mutate_op,
+                                  self.crossx_op)
+            if isinstance(getattr(gen_op, "items", None), IslandManager)
+        ]
     # _end_def_
 
     @property
@@ -147,12 +156,9 @@ class IslandModelGA(GenericGA):
         :param idx: the new index of the island manager.
         :return: None.
         """
-        # Update all three genetic operators.
-        for gen_op in (self.select_op, self.mutate_op, self.crossx_op):
-            # Make sure the _items is an IslandManager.
-            if isinstance(gen_op.items, IslandManager):
-                # Update its pointer.
-                gen_op.items.idx = idx
+        # Update all the genetic operators in the list.
+        for gen_op in self._operators_with_island_manager:
+            gen_op.items.idx = idx
     # _end_def_
 
     def _evolve_population(self, island: SubPopulation, epochs: int, shuffle: bool,
