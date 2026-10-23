@@ -175,7 +175,7 @@ class IslandModelGA(GenericGA):
 
         # Keeps track of the convergence/termination of the
         # population along with the iteration that happened.
-        has_converged = (False, epochs)
+        has_converged: tuple[bool, int] = (False, epochs)
 
         # Get the size of the population.
         pop_size: int = len(island.population)
