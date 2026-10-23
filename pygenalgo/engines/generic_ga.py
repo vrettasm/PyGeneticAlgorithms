@@ -753,7 +753,7 @@ class GenericGA:
             p.fitness = f_val
 
             # Collect the fitness in a separate list.
-            fitness_values[n] = fit_result["f_value"]
+            fitness_values[n] = f_val
 
             # Update the "found solution".
             found_solution |= fit_result["solution_is_found"]
