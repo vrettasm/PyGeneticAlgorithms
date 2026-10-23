@@ -685,16 +685,20 @@ class GenericGA:
     # _end_def_
 
     @staticmethod
-    def _dispatch_worker(func: Callable, x_position: NDArray) -> dict:
+    def _dispatch_worker(func: Callable, position: Any, **kwargs) -> Any:
         """
-        Stateless worker that executes the objective function.
+        This stateless worker is used by  the Joblib framework to dispatch
+        the work in parallel.  The position input, in the generic class is
+        understood as a single Chromosome whereas in the IslandModel it is
+        interpreted as as a SubPopulation. This is to keep the dispatch of
+        the workers uniform across all the engines.
 
-        :param func: the objective function.
-        :param x_position: the position of the objective function.
+        :param func: the parallelized function.
+        :param position: the input we want to evaluate.
 
-        :return: the result of the objective function (a dict).
+        :return: the result of the objective function.
         """
-        return func(x_position)
+        return func(position, **kwargs)
     # _end_def_
 
     def evaluate_fitness(self, input_population: list[Chromosome],
