@@ -746,8 +746,11 @@ class GenericGA:
         # Update all chromosomes with their fitness and
         # check if a solution has been found.
         for n, (p, fit_result) in enumerate(zip(input_population, fitness_i)):
-            # Attach the fitness to each chromosome.
-            p.fitness = fit_result["f_value"]
+            # Extract the fitness value once.
+            f_val = fit_result["f_value"]
+
+            # Attach the fitness to the chromosome.
+            p.fitness = f_val
 
             # Collect the fitness in a separate list.
             fitness_values[n] = fit_result["f_value"]
