@@ -684,6 +684,19 @@ class GenericGA:
         return [p.fitness for p in self.population]
     # _end_def_
 
+    @staticmethod
+    def _dispatch_worker(func: Callable, x_position: NDArray) -> dict:
+        """
+        Stateless worker that executes the objective function.
+
+        :param func: the objective function.
+        :param x_position: the position of the objective function.
+
+        :return: the result of the objective function (a dict).
+        """
+        return func(x_position)
+    # _end_def_
+
     def evaluate_fitness(self, input_population: list[Chromosome],
                          parallel_mode: bool = False,
                          backend: str = "threading") -> tuple[list[Fitness], bool]:
