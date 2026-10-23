@@ -3,7 +3,7 @@ from os import cpu_count
 from operator import attrgetter
 from dataclasses import dataclass
 from collections import defaultdict
-from typing import Callable, Optional
+from typing import Callable, Optional, Any
 
 from joblib import (Parallel, delayed)
 
