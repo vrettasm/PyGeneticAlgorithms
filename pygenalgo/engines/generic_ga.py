@@ -729,7 +729,9 @@ class GenericGA:
         else:
 
             # Evaluate the chromosomes in serial mode.
-            fitness_i: list = [fit_func(p) for p in input_population]
+            fitness_i: list = [
+                fit_func(p) for p in input_population
+            ]
         # _end_if_
 
         # Get the size of the population.
