@@ -537,7 +537,7 @@ class IslandModelGA(GenericGA):
 
         else:
             # Evolve the subpopulations in parallel for 'epoch' iterations.
-            results = Parallel(n_jobs=self.n_cpus, backend="loky")(
+            results = Parallel(n_jobs=self.n_cpus, backend="loky", batch_size="auto")(
                 delayed(fn_evolve)(island=pop_n, **common_parameters)
                 for pop_n in active_population
             )
