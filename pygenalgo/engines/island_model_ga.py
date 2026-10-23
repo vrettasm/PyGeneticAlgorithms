@@ -380,9 +380,6 @@ class IslandModelGA(GenericGA):
         # Termination order list.
         self._termination_order = []
 
-        # Local copy of evolve population.
-        fn_evolve: Callable = self._evolve_population
-
         # Local copy of all the common parameters.
         # NOTE: 'epochs' value might have changed!
         common_parameters: dict = {
