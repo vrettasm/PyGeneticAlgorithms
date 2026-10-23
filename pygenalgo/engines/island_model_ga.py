@@ -192,9 +192,13 @@ class IslandModelGA(GenericGA):
         # the correct execution of the remaining code.
         self._update_island_manager_index(island.id)
 
-        # Check if initial probabilities have been given.
-        if prob_crossx is not None and prob_mutate is not None:
+        # Safely update crossover probability.
+        if prob_crossx is not None:
             self.crossx_op.probability = prob_crossx
+        # _end_if_
+
+        # Safely update mutation probability.
+        if prob_mutate is not None:
             self.mutate_op.probability = prob_mutate
         # _end_if_
 
