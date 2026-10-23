@@ -438,12 +438,11 @@ class IslandModelGA(GenericGA):
                     common_parameters["epochs"] = epochs
 
                     # Evolve the subpopulations in parallel.
-                    results_i = work_parallel(
-                        delayed(fn_evolve)(island=pop_i,
-                                           prob_crossx=genetic_probs[pop_i.id]["crossx"],
-                                           prob_mutate=genetic_probs[pop_i.id]["mutate"],
-                                           **common_parameters)
-                        for pop_i in active_population
+                    results_i = work_parallel(delayed(GenericGA._dispatch_worker)(
+                        self._evolve_population, pop_i,
+                        prob_crossx=genetic_probs[pop_i.id]["crossx"],
+                        prob_mutate=genetic_probs[pop_i.id]["mutate"],
+                        **common_parameters) for pop_i in active_population
                     )
 
                     # Empty the list of active populations.
@@ -535,7 +534,8 @@ class IslandModelGA(GenericGA):
         else:
             # Evolve the subpopulations in parallel for 'epoch' iterations.
             results = Parallel(n_jobs=self.n_cpus, backend="loky", batch_size="auto")(
-                delayed(fn_evolve)(island=pop_n, **common_parameters)
+                delayed(GenericGA._dispatch_worker)(self._evolve_population, pop_n,
+                                                    **common_parameters)
                 for pop_n in active_population
             )
 
