@@ -1,4 +1,4 @@
-"""  Meta-selector module. """
+""" Meta-selector module. """
 
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome

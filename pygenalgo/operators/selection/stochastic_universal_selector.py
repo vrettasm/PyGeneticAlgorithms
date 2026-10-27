@@ -1,4 +1,4 @@
-"""  Stochastic universal selector  module. """
+""" Stochastic universal selector  module. """
 from typing import Generator
 from math import fsum, isclose
 from bisect import bisect_left

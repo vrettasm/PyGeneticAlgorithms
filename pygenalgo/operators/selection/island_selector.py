@@ -1,4 +1,4 @@
-"""  Island-selector module. """
+""" Island-selector module. """
 
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome

@@ -1,4 +1,4 @@
-"""  Inverse mutator module. """
+""" Inverse mutator module. """
 # Custom code imports.
 from pygenalgo.genome.chromosome import Chromosome
 from pygenalgo.utils.utilities import two_indices_fast
