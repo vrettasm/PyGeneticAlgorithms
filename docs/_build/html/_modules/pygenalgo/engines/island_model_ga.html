@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pygenalgo.engines.island_model_ga &mdash; PyGenAlgo 2.4.2 documentation</title>
+  <title>pygenalgo.engines.island_model_ga &mdash; PyGenAlgo 2.4.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=de1351e5"></script>
+      <script src="../../../_static/documentation_options.js?v=7a6bd5fc"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -640,7 +640,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Object variables (specific for the IslandModel).</span>
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_num_islands&quot;</span><span class="p">,</span> <span class="s2">&quot;_migrate_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_termination_order&quot;</span><span class="p">)</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_migrate_op&quot;</span><span class="p">,</span> <span class="s2">&quot;_num_islands&quot;</span><span class="p">,</span> <span class="s2">&quot;_termination_order&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;_operators_with_island_manager&quot;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_islands</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
                  <span class="n">migrate_op</span><span class="p">:</span> <span class="n">MigrationOperator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -685,6 +686,14 @@
 
         <span class="c1"># It is used to keep the final order of termination.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_termination_order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Cache the genetic operators with an IslandManager.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_operators_with_island_manager</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">gen_op</span> <span class="k">for</span> <span class="n">gen_op</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">select_op</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">mutate_op</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">crossx_op</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">gen_op</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">IslandManager</span><span class="p">)</span>
+        <span class="p">]</span>
     <span class="c1"># _end_def_</span>
 
     <span class="nd">@property</span>
@@ -718,12 +727,9 @@
 <span class="sd">        :param idx: the new index of the island manager.</span>
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Update all three genetic operators.</span>
-        <span class="k">for</span> <span class="n">gen_op</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">select_op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutate_op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">crossx_op</span><span class="p">):</span>
-            <span class="c1"># Make sure the _items is an IslandManager.</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gen_op</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="n">IslandManager</span><span class="p">):</span>
-                <span class="c1"># Update its pointer.</span>
-                <span class="n">gen_op</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="c1"># Update all the genetic operators in the list.</span>
+        <span class="k">for</span> <span class="n">gen_op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operators_with_island_manager</span><span class="p">:</span>
+            <span class="n">gen_op</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span>
     <span class="c1"># _end_def_</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_evolve_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">island</span><span class="p">:</span> <span class="n">SubPopulation</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
@@ -746,7 +752,7 @@
 
         <span class="c1"># Keeps track of the convergence/termination of the</span>
         <span class="c1"># population along with the iteration that happened.</span>
-        <span class="n">has_converged</span> <span class="o">=</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
+        <span class="n">has_converged</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
 
         <span class="c1"># Get the size of the population.</span>
         <span class="n">pop_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
@@ -763,9 +769,13 @@
         <span class="c1"># the correct execution of the remaining code.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_island_manager_index</span><span class="p">(</span><span class="n">island</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
-        <span class="c1"># Check if initial probabilities have been given.</span>
-        <span class="k">if</span> <span class="n">prob_crossx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">prob_mutate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Safely update crossover probability.</span>
+        <span class="k">if</span> <span class="n">prob_crossx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">crossx_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="n">prob_crossx</span>
+        <span class="c1"># _end_if_</span>
+
+        <span class="c1"># Safely update mutation probability.</span>
+        <span class="k">if</span> <span class="n">prob_mutate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mutate_op</span><span class="o">.</span><span class="n">probability</span> <span class="o">=</span> <span class="n">prob_mutate</span>
         <span class="c1"># _end_if_</span>
 
@@ -953,9 +963,6 @@
         <span class="c1"># Termination order list.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_termination_order</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="c1"># Local copy of evolve population.</span>
-        <span class="n">fn_evolve</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evolve_population</span>
-
         <span class="c1"># Local copy of all the common parameters.</span>
         <span class="c1"># NOTE: &#39;epochs&#39; value might have changed!</span>
         <span class="n">common_parameters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
@@ -1014,12 +1021,11 @@
                     <span class="n">common_parameters</span><span class="p">[</span><span class="s2">&quot;epochs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epochs</span>
 
                     <span class="c1"># Evolve the subpopulations in parallel.</span>
-                    <span class="n">results_i</span> <span class="o">=</span> <span class="n">work_parallel</span><span class="p">(</span>
-                        <span class="n">delayed</span><span class="p">(</span><span class="n">fn_evolve</span><span class="p">)(</span><span class="n">island</span><span class="o">=</span><span class="n">pop_i</span><span class="p">,</span>
-                                           <span class="n">prob_crossx</span><span class="o">=</span><span class="n">genetic_probs</span><span class="p">[</span><span class="n">pop_i</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;crossx&quot;</span><span class="p">],</span>
-                                           <span class="n">prob_mutate</span><span class="o">=</span><span class="n">genetic_probs</span><span class="p">[</span><span class="n">pop_i</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;mutate&quot;</span><span class="p">],</span>
-                                           <span class="o">**</span><span class="n">common_parameters</span><span class="p">)</span>
-                        <span class="k">for</span> <span class="n">pop_i</span> <span class="ow">in</span> <span class="n">active_population</span>
+                    <span class="n">results_i</span> <span class="o">=</span> <span class="n">work_parallel</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">GenericGA</span><span class="o">.</span><span class="n">_dispatch_worker</span><span class="p">)(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_evolve_population</span><span class="p">,</span> <span class="n">pop_i</span><span class="p">,</span>
+                        <span class="n">prob_crossx</span><span class="o">=</span><span class="n">genetic_probs</span><span class="p">[</span><span class="n">pop_i</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;crossx&quot;</span><span class="p">],</span>
+                        <span class="n">prob_mutate</span><span class="o">=</span><span class="n">genetic_probs</span><span class="p">[</span><span class="n">pop_i</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;mutate&quot;</span><span class="p">],</span>
+                        <span class="o">**</span><span class="n">common_parameters</span><span class="p">)</span> <span class="k">for</span> <span class="n">pop_i</span> <span class="ow">in</span> <span class="n">active_population</span>
                     <span class="p">)</span>
 
                     <span class="c1"># Empty the list of active populations.</span>
@@ -1111,7 +1117,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Evolve the subpopulations in parallel for &#39;epoch&#39; iterations.</span>
             <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_cpus</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;loky&quot;</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)(</span>
-                <span class="n">delayed</span><span class="p">(</span><span class="n">fn_evolve</span><span class="p">)(</span><span class="n">island</span><span class="o">=</span><span class="n">pop_n</span><span class="p">,</span> <span class="o">**</span><span class="n">common_parameters</span><span class="p">)</span>
+                <span class="n">delayed</span><span class="p">(</span><span class="n">GenericGA</span><span class="o">.</span><span class="n">_dispatch_worker</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">_evolve_population</span><span class="p">,</span>
+                                                    <span class="n">pop_n</span><span class="p">,</span> <span class="o">**</span><span class="n">common_parameters</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">pop_n</span> <span class="ow">in</span> <span class="n">active_population</span>
             <span class="p">)</span>
 
