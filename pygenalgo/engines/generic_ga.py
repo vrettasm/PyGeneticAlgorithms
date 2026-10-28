@@ -612,29 +612,24 @@ class GenericGA:
             self._mutate_op(input_population[-1])
     # _end_def_
 
-    def adapt_probabilities(self, threshold: Optional[float] = None) -> bool:
+    def adapt_probabilities(self, threshold: float) -> bool:
         """
-        This method is used (optionally) to adjust simultaneously the crossover
+        This method is used optionally to adjust simultaneously the crossover
         and mutation parameters of the GenericGA object.
 
-        :param threshold: This float parameter is used to determine whether we are
-                          going to increase or decrease the crossover and mutation
-                          parameters.
+        :param threshold: This float parameter  is used to determine whether
+                          we are going to increase or decrease the crossover
+                          and mutation parameters.
+
         :return: True if the parameters have changed, else False.
         """
-        # Check if the threshold value is missing.
-        if threshold is None:
-            raise RuntimeError(f"{self.__class__.__name__}: "
-                               f"Threshold parameter is missing.")
-        # _end_if_
-
         # Sanity check.
-        if not (isinstance(threshold, float) and 0.0 <= threshold <= 1.0):
+        if not (0.0 <= threshold <= 1.0):
             raise ValueError(f"{self.__class__.__name__}: "
                              f"Threshold value must be float in [0.0, 1.0].")
         # _end_if_
 
-        # Initialize the trial values with the current
+        # Initialize the trial values at the current
         # probabilities to avoid going out of limits.
         trial_pc: float = self._crossx_op.probability
         trial_pm: float = self._mutate_op.probability
@@ -646,23 +641,25 @@ class GenericGA:
         # Use the threshold value to adjust
         # the probabilities accordingly.
         if threshold < 0.1:
-
-            trial_pc *= 0.9
-            trial_pm *= 1.1
+            # STAGNATION:
+            # Decrease exploitation, increase exploration.
+            trial_pc *= 0.995
+            trial_pm *= 1.055
             have_changed = True
 
         elif threshold > 0.8:
-
-            trial_pc *= 1.1
-            trial_pm *= 0.9
+            # CHAOS:
+            # Increase exploitation, decrease exploration.
+            trial_pc *= 1.005
+            trial_pm *= 0.950
             have_changed = True
         # _end_if_
 
         # Check if the probabilities have changed.
         if have_changed:
-            # Ensure the probabilities stay within the range [0, 1].
-            self._crossx_op.probability = min(max(trial_pc, 0.0), 1.0)
-            self._mutate_op.probability = min(max(trial_pm, 0.0), 1.0)
+            # Ensure the probabilities stay within the range [0.05, 1].
+            self._crossx_op.probability = min(max(trial_pc, 0.05), 1.0)
+            self._mutate_op.probability = min(max(trial_pm, 0.05), 1.0)
 
             # Log the update of the parameters.
             logger.debug("%s probabilities have been updated.",
