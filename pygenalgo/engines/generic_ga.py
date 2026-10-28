@@ -589,20 +589,12 @@ class GenericGA:
         # Get the size of the input population.
         pop_size: int = len(input_population)
 
+        # Calculate the limit for the pairwise loop.
+        pairwise_limit: int = pop_size - (pop_size % 2)
+
         # CROSSOVER and MUTATE to produce the new offsprings.
-        for j in range(0, pop_size, 2):
-
-            # In case of 'odd sized' populations.
-            if j == pop_size-1:
-
-                # MUTATE in place the last offspring.
-                self._mutate_op(input_population[j])
-
-                # Exit the loop.
-                break
-            # _end_if_
-
-            # Get the index of the next chromosome.
+        for j in range(0, pairwise_limit, 2):
+            # Get the next index.
             k: int = j+1
 
             # Replace directly the OLD parents with the NEW offsprings.
@@ -613,6 +605,11 @@ class GenericGA:
 
             # MUTATE in place the 2nd offspring.
             self._mutate_op(input_population[k])
+        # _end_for_
+
+        # Edge case: Handle the leftover odd element.
+        if pop_size % 2 == 1:
+            self._mutate_op(input_population[-1])
     # _end_def_
 
     def adapt_probabilities(self, threshold: Optional[float] = None) -> bool:
