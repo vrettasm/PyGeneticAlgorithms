@@ -1,4 +1,5 @@
 """ Generic GA module. """
+import heapq
 from os import cpu_count
 from operator import attrgetter
 from dataclasses import dataclass
@@ -560,17 +561,14 @@ class GenericGA:
                                f"Best {n} exceeds population size.")
         # _end_if_
 
-        # Define the key.
-        key_sort: Callable = attrgetter("fitness")
-
-        # Sort the population in descending order.
-        sorted_population: list[Chromosome] = sorted(
-            [p for p in self.population if p.fitness is not None],
-            key=key_sort, reverse=True
-        )
+        # Filter out chromosomes without fitness.
+        valid_population: list[Chromosome] = [
+            p for p in self.population if p.fitness is not None
+        ]
 
         # Return the best 'n' chromosomes.
-        return sorted_population[0:n]
+        return heapq.nlargest(n, valid_population,
+                              key=attrgetter("fitness"))
     # _end_def_
 
     def crossover_mutate(self, input_population: list[Chromosome]) -> None:
