@@ -17,7 +17,7 @@ setup(
         'Intended Audience :: Developers',
         'Intended Audience :: Education',
         'Intended Audience :: Science/Research',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.13',
         'License :: GPL-3.0 License',
         'Operating System :: OS Independent',
     ],
