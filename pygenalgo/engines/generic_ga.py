@@ -554,9 +554,14 @@ class GenericGA:
                              f"Input must be a positive integer.")
         # _end_if_
 
-        # Ensure the number of return chromosome
-        # do not exceed the size of the population.
-        if n > len(self.population):
+        # Filter out chromosomes without fitness.
+        valid_population: list[Chromosome] = [
+            p for p in self.population if p.fitness is not None
+        ]
+
+        # Ensure the number of return chromosomes
+        # don't exceed the size of the population.
+        if n > len(valid_population):
             raise RuntimeError(f"{self.__class__.__name__}: "
                                f"Best {n} exceeds population size.")
         # _end_if_
