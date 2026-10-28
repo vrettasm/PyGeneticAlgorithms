@@ -756,8 +756,9 @@ class GenericGA:
             # Collect the fitness in a separate list.
             fitness_values[n] = f_val
 
-            # Update the "found solution".
-            found_solution |= fit_result["solution_is_found"]
+            # Update the "found solution" only ONCE.
+            if not found_solution and fit_result["solution_is_found"]:
+                found_solution = True
         # _end_for_
 
         # Update the counter of function evaluations.
