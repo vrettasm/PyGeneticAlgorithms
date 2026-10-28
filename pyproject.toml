@@ -14,7 +14,7 @@ authors = [
 ]
 keywords = ["optimization", "genetic algorithms", "island model"]
 classifiers = [
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
     "Operating System :: OS Independent",
 ]
 dependencies = [
