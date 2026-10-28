@@ -566,11 +566,6 @@ class GenericGA:
                                f"Best {n} exceeds population size.")
         # _end_if_
 
-        # Filter out chromosomes without fitness.
-        valid_population: list[Chromosome] = [
-            p for p in self.population if p.fitness is not None
-        ]
-
         # Return the best 'n' chromosomes.
         return heapq.nlargest(n, valid_population,
                               key=attrgetter("fitness"))
