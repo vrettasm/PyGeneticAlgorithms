@@ -1,4 +1,5 @@
 """ Selection operator module. """
+from functools import wraps
 from math import fabs, isclose
 
 # Custom code imports.
