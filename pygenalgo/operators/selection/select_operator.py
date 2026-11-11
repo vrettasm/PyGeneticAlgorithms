@@ -121,6 +121,39 @@ class SelectionOperator(GeneticOperator):
         super().__init__(probability=selection_probability)
     # _end_def_
 
+    def __init_subclass__(cls, *args, **kwargs) -> None:
+        """
+        This is used when a new subclass of SelectionOperator is implemented.
+        It wraps the selection implementation method and validates its input
+        so that if the population is empty, raises an error.
+
+        :param args: (tuple) of positional arguments.
+        :param kwargs: (dict) of keyword arguments.
+        """
+        # Call the subclass initialization.
+        super().__init_subclass__(*args, **kwargs)
+
+        # Make sure the select method is part of the subclass.
+        if "select" in cls.__dict__:
+            # Get a reference of the original method.
+            original_select = cls.__dict__["select"]
+
+            @wraps(original_select)
+            def validated_select(self, population: list[Chromosome],
+                                 *args, **kwargs) -> list[Chromosome]:
+                # Check the population.
+                if not population:
+                    raise ValueError(f"{self.__class__.__name__}: "
+                                     f"Input population cannot be empty.")
+
+                # Call the original select method.
+                return original_select(self, population, *args, **kwargs)
+            # _end_def_
+
+            # Set the validated method in the class.
+            setattr(cls, "select", validated_select)
+    # _end_def_
+
     def select(self, population: list[Chromosome]) -> list[Chromosome]:
         """
         Abstract method that "reminds" the user that if they want to
