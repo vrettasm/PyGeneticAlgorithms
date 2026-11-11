@@ -127,7 +127,7 @@ class SelectionOperator(GeneticOperator):
         implement a select method.
 
         :param population: is a list, with the chromosomes, to select
-                           he parents for the next generation
+                           the parents for the next generation
 
         :return: Nothing but raising an error.
         """
